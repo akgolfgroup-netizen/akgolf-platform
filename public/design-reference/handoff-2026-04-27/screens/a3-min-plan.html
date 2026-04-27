@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A3 — Min plan · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* North-star plan card */
+  .plan-hero {
+    background:
+      radial-gradient(circle at 80% 20%, rgba(209,248,67,0.18), transparent 50%),
+      linear-gradient(135deg, rgba(13,46,35,0.95), rgba(10,31,24,1));
+    border: 1.5px solid rgba(209,248,67,0.25);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-hero::after {
+    content: '';
+    position: absolute; right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(209,248,67,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .plan-hero h1 {
+    margin: 0;
+    font-size: 44px; font-weight: 800;
+    letter-spacing: -0.035em;
+    color: #fff;
+    line-height: 1.05;
+    max-width: 16ch;
+    position: relative; z-index: 2;
+  }
+  .plan-hero .accent { color: var(--akgolf-accent); }
+  .plan-hero .lede {
+    margin: 14px 0 24px; max-width: 56ch;
+    color: rgba(255,255,255,0.7); font-size: 15px;
+    position: relative; z-index: 2;
+  }
+  .plan-meta {
+    display: flex; gap: 32px; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .plan-meta-item .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .plan-meta-item .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: #fff; letter-spacing: -0.02em;
+    margin-top: 2px; font-variant-numeric: tabular-nums;
+  }
+  .plan-meta-item .v.lime { color: var(--akgolf-accent); }
+
+  /* Goal hierarchy */
+  .goals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .goal-tier {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+  }
+  .tier-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+  }
+  .tier-h {
+    font-size: 17px; font-weight: 700;
+    color: #fff; letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .tier-meta {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 14px;
+  }
+  .tier-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+  .progress-bar {
+    height: 6px; border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 999px;
+    background: var(--akgolf-accent);
+  }
+  .progress-text {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+  }
+  .goal-tier.year { border-color: rgba(209,248,67,0.30); background: linear-gradient(180deg, rgba(209,248,67,0.04), transparent 50%); }
+
+  /* Focus areas */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .focus-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .focus-card .top {
+    display: flex; justify-content: space-between; align-items: start;
+  }
+  .focus-card .ico {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .focus-card .ico [data-lucide] { width: 16px; height: 16px; }
+  .focus-card.putt .ico { background: rgba(118,193,156,0.18); color:#6FCBA1; }
+  .focus-card.iron .ico { background: rgba(126,158,255,0.20); color:#8AA8FF; }
+  .focus-card.short .ico { background: rgba(232,185,103,0.20); color:#E8B967; }
+  .focus-card.driver .ico { background: rgba(244,146,131,0.20); color:#F49283; }
+  .focus-card .name {
+    font-size: 15px; font-weight: 700;
+    color: #fff; letter-spacing: -0.01em;
+  }
+  .focus-card .sg {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .focus-card .sg small { color: #6FCBA1; font-size: 12px; margin-left: 4px; }
+  .focus-card .desc {
+    font-size: 13px; color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+  .focus-card .meta-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--akgolf-line-dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .focus-card .meta-row strong { color: var(--akgolf-accent); font-weight: 600; }
+
+  /* Coach + plan card */
+  .plan-coach {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .plan-coach .av {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 16px;
+  }
+  .plan-coach .body { flex: 1; }
+  .plan-coach .body .l { color: rgba(255,255,255,0.55); font-size: 12px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+  .plan-coach .body .v { color: #fff; font-weight: 700; font-size: 16px; margin-top: 2px; }
+
+  /* Sec heading */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 32px 0 14px;
+  }
+  .sec-h h2 {
+    margin: 0; font-family: 'Inter', sans-serif;
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.025em; color: #fff;
+  }
+  .sec-h .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Quarterly milestones */
+  .milestones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .ms {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .ms .q {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .ms .h { font-size: 14px; font-weight: 700; color: #fff; margin: 6px 0 10px; }
+  .ms .target { font-family:'Inter',sans-serif; font-size: 24px; font-weight: 800; color: var(--akgolf-accent); letter-spacing: -0.02em; line-height: 1; }
+  .ms .desc { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 6px; line-height: 1.4; }
+  .ms.done { background: rgba(209,248,67,0.05); border-color: rgba(209,248,67,0.25); }
+  .ms.done .target { color: #6FCBA1; }
+  .ms.done .check { color: #6FCBA1; float: right; }
+  .ms.now { border-color: rgba(209,248,67,0.40); box-shadow: 0 0 0 3px rgba(209,248,67,0.05); }
+  .ms.now::after { content: 'NÅ'; position:absolute; top: 8px; right: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--akgolf-accent); letter-spacing: 0.1em; }
+  .ms { position: relative; }
+
+  @media (max-width: 1100px) {
+    .goals-grid { grid-template-columns: 1fr; }
+    .milestones { grid-template-columns: repeat(2, 1fr); }
+    .focus-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item active"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+    <div class="phq-nav-item"><i data-lucide="bar-chart-3"></i> Statistikk</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Min plan<span class="date">PERFORMANCE 12 MND · ANDERS K.</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">Spill · Min plan</div>
+    </div>
+
+    <!-- HERO -->
+    <section class="plan-hero">
+      <h1>Bli <span class="accent">single-handicap</span> innen sesongslutt 2025.</h1>
+      <p class="lede">Eid sammen med Anders K. Re-evalueres månedlig. Drives av tre fokusområder med målbar Strokes-Gained-effekt.</p>
+      <div class="plan-meta">
+        <div class="plan-meta-item">
+          <div class="l">Måned 4 av 12</div>
+          <div class="v">33%</div>
+        </div>
+        <div class="plan-meta-item">
+          <div class="l">HCP nå → mål</div>
+          <div class="v">7.4 → <span class="lime">5.0</span></div>
+        </div>
+        <div class="plan-meta-item">
+          <div class="l">Neste milestone</div>
+          <div class="v">HCP 6.5</div>
+        </div>
+        <div style="margin-left:auto;">
+          <button class="phq-btn primary lg"><i data-lucide="message-circle"></i> Snakk med Anders</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COACH -->
+    <div class="plan-coach">
+      <div class="av">AK</div>
+      <div class="body">
+        <div class="l">Hovedcoach</div>
+        <div class="v">Anders Karlsen</div>
+      </div>
+      <span class="phq-pill lime">Performance 12 mnd</span>
+      <button class="phq-btn ghost sm"><i data-lucide="external-link"></i> Plan-detaljer</button>
+    </div>
+
+    <!-- GOAL HIERARCHY -->
+    <div class="sec-h">
+      <h2>Mål-hierarki</h2>
+      <div class="sub">ÅR · KVARTAL · MÅNED</div>
+    </div>
+    <div class="goals-grid">
+      <div class="goal-tier year">
+        <div class="tier-label">ÅRSMÅL · 2025</div>
+        <div class="tier-h">HCP 5.0 — single-handicap</div>
+        <div class="tier-meta"><span>SG-mål: <strong style="color:#fff;">+0.65</strong></span><span class="dot"></span><span>14 runder igjen</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:33%; background:var(--akgolf-accent);"></div></div>
+        <div class="progress-text"><span>33%</span><span>Måned 4/12</span></div>
+      </div>
+      <div class="goal-tier">
+        <div class="tier-label">KVARTAL · Q2 (apr–jun)</div>
+        <div class="tier-h">HCP 6.5 + jevnere putt-resultat</div>
+        <div class="tier-meta"><span>Mål-runder: <strong style="color:#fff;">5</strong></span><span class="dot"></span><span>2 spilt</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:48%;"></div></div>
+        <div class="progress-text"><span>48%</span><span>Uke 2/12</span></div>
+      </div>
+      <div class="goal-tier">
+        <div class="tier-label">MÅNED · APRIL</div>
+        <div class="tier-h">8 økter · putt 3-fot 88%</div>
+        <div class="tier-meta"><span>Aktuell: <strong style="color:#fff;">84%</strong></span><span class="dot"></span><span>5 økter loggført</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:62%;"></div></div>
+        <div class="progress-text"><span>62%</span><span>5/8 økter</span></div>
+      </div>
+    </div>
+
+    <!-- KVARTALS-MILESTONES -->
+    <div class="sec-h">
+      <h2>Milestones 2025</h2>
+      <div class="sub">Q1 ✓ · Q2 PÅGÅR · Q3+Q4 KOMMER</div>
+    </div>
+    <div class="milestones">
+      <div class="ms done">
+        <div class="check"><i data-lucide="check-circle-2" style="width:16px;height:16px;"></i></div>
+        <div class="q">Q1 · JAN–MAR</div>
+        <div class="h">Re-build sving</div>
+        <div class="target">HCP 8.0</div>
+        <div class="desc">Trackman-baseline · 12 økter logged</div>
+      </div>
+      <div class="ms now">
+        <div class="q">Q2 · APR–JUN</div>
+        <div class="h">Putting + Iron 100m</div>
+        <div class="target">HCP 6.5</div>
+        <div class="desc">3-fot 88% · iron-spredning ↓ 25%</div>
+      </div>
+      <div class="ms">
+        <div class="q">Q3 · JUL–SEP</div>
+        <div class="h">Driver + scoring</div>
+        <div class="target">HCP 5.5</div>
+        <div class="desc">Klubbmesterskap · 5 turneringer</div>
+      </div>
+      <div class="ms">
+        <div class="q">Q4 · OKT–DES</div>
+        <div class="h">Mental + indoor</div>
+        <div class="target">HCP 5.0</div>
+        <div class="desc">Indoor-volum · 2026-plan</div>
+      </div>
+    </div>
+
+    <!-- FOKUSOMRÅDER -->
+    <div class="sec-h">
+      <h2>Fokusområder</h2>
+      <div class="sub">DRIVES AV STROKES-GAINED</div>
+    </div>
+    <div class="focus-grid">
+      <div class="focus-card putt">
+        <div class="top">
+          <div>
+            <div class="phq-pill" style="margin-bottom:4px;">Prioritet 1</div>
+            <div class="name">Putting 3–10 fot</div>
+          </div>
+          <div class="ico"><i data-lucide="circle-dot"></i></div>
+        </div>
+        <div class="sg">+0.32 <small>SG/runde</small></div>
+        <div class="desc">Største svakhet i datasett. Mål: 3-fot &gt;88%, 6-fot &gt;65%. Drill: 100-ball-rutine før hver runde.</div>
+        <div class="meta-row">
+          <span>NESTE ØKT · MAN 09:00</span>
+          <strong>3 ØKTER / UKE</strong>
+        </div>
+      </div>
+
+      <div class="focus-card iron">
+        <div class="top">
+          <div>
+            <div class="phq-pill" style="margin-bottom:4px;">Prioritet 2</div>
+            <div class="name">Iron 100–150m</div>
+          </div>
+          <div class="ico"><i data-lucide="target"></i></div>
+        </div>
+        <div class="sg">+0.18 <small>SG/runde</small></div>
+        <div class="desc">Spredning på Trackman: 8.2m → mål 6.0m. Fokus: tempo + lave hender ved impakt.</div>
+        <div class="meta-row">
+          <span>NESTE ØKT · ONS 17:30</span>
+          <strong>2 ØKTER / UKE</strong>
+        </div>
+      </div>
+
+      <div class="focus-card short">
+        <div class="top">
+          <div>
+            <div class="phq-pill" style="margin-bottom:4px;">Prioritet 3</div>
+            <div class="name">Short game 30–60m</div>
+          </div>
+          <div class="ico"><i data-lucide="flag-triangle-right"></i></div>
+        </div>
+        <div class="sg">+0.10 <small>SG/runde</small></div>
+        <div class="desc">Loft-kontroll og lie-tilpasning. Fra «trygg på fairway» til «trygg fra rough».</div>
+        <div class="meta-row">
+          <span>NESTE ØKT · LØR 11:00</span>
+          <strong>1 ØKT / UKE</strong>
+        </div>
+      </div>
+
+      <div class="focus-card driver">
+        <div class="top">
+          <div>
+            <div class="phq-pill" style="margin-bottom:4px;">Vedlikehold</div>
+            <div class="name">Driver / tee-shot</div>
+          </div>
+          <div class="ico"><i data-lucide="zap"></i></div>
+        </div>
+        <div class="sg">+0.05 <small>SG/runde</small></div>
+        <div class="desc">Allerede i mål — fokus på treff-konsistens, ikke distanse. Speed-trening 1× uke.</div>
+        <div class="meta-row">
+          <span>NESTE ØKT · LØR 12:30</span>
+          <strong>1 ØKT / UKE</strong>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; display:flex; gap:10px;">
+      <button class="phq-btn primary"><i data-lucide="calendar-plus"></i> Planlegg uken</button>
+      <button class="phq-btn"><i data-lucide="message-circle"></i> Spør Anders om planen</button>
+      <button class="phq-btn ghost"><i data-lucide="history"></i> Se tidligere planer</button>
+    </div>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="calendar"></i>Plan</button>
+    <button class="tab active"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

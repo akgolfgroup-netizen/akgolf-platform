@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D24 — Treningsplan-bygger · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .build-grid { display:grid; grid-template-columns: 280px 1fr 300px; gap:14px; align-items:start; }
+  .lib { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:16px; position:sticky; top:80px; max-height:calc(100vh - 100px); overflow-y:auto; }
+  .lib h4 { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:14px 4px 6px; font-weight:700; }
+  .lib h4:first-child { margin-top:0; }
+  .lib-item { display:flex; gap:10px; padding:10px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:8px; margin-bottom:6px; cursor:grab; align-items:start; }
+  .lib-item:hover { border-color: rgba(209,248,67,0.30); }
+  .lib-item .ic { width:28px; height:28px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); border-radius:6px; display:grid; place-items:center; flex-shrink:0; }
+  .lib-item .ic [data-lucide]{ width:14px; height:14px; }
+  .lib-item .nm { font-size:12.5px; color:#fff; font-weight:600; line-height:1.3; }
+  .lib-item .meta { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:3px; letter-spacing:0.06em; }
+
+  /* Builder */
+  .plan-info { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 22px; margin-bottom:14px; }
+  .plan-info .row { display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap:14px; }
+  .field .l { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; font-weight:700; margin-bottom:5px; }
+  .field input, .field .pick { width:100%; background:rgba(0,0,0,0.20); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:9px 12px; color:#fff; font-size:13px; font-family:inherit; outline:none; }
+
+  .week-tabs { display:flex; gap:8px; margin-bottom:14px; }
+  .wk { flex:1; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:10px 14px; cursor:pointer; }
+  .wk.active { border-color: rgba(209,248,67,0.40); background: rgba(209,248,67,0.06); }
+  .wk .l { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; text-transform:uppercase; font-weight:700; }
+  .wk.active .l { color:var(--akgolf-accent); }
+  .wk .v { font-size:13px; color:#fff; font-weight:700; margin-top:2px; }
+  .wk .sub { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:1px; }
+
+  .day-board { display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; }
+  .day-col { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:10px; min-height:380px; }
+  .day-col .dh { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55); padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:8px; font-weight:700; display:flex; justify-content:space-between; }
+  .day-col .dh .ct { color: var(--akgolf-accent); }
+  .blk { padding:9px 10px; border-radius:7px; margin-bottom:6px; font-size:11.5px; line-height:1.4; cursor:grab; position:relative; border:1px solid rgba(255,255,255,0.08); }
+  .blk .nm { color:#fff; font-weight:700; }
+  .blk .meta { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.6); margin-top:2px; letter-spacing:0.05em; }
+  .blk.range { background: rgba(209,248,67,0.12); border-color: rgba(209,248,67,0.30); }
+  .blk.short { background: rgba(107,177,255,0.14); border-color: rgba(107,177,255,0.30); }
+  .blk.putt { background: rgba(175,82,222,0.14); border-color: rgba(175,82,222,0.30); }
+  .blk.fysisk { background: rgba(232,185,103,0.14); border-color: rgba(232,185,103,0.30); }
+  .blk.runde { background: rgba(42,125,90,0.20); border-color: rgba(42,125,90,0.40); }
+  .blk.rest { background: rgba(255,255,255,0.04); border-style:dashed; color:rgba(255,255,255,0.5); }
+  .day-col .add { padding:8px; border:1px dashed rgba(255,255,255,0.10); border-radius:7px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.4); letter-spacing:0.10em; cursor:pointer; margin-top:4px; }
+
+  /* Right summary */
+  .sum-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 20px; margin-bottom:14px; }
+  .sum-card h4 { margin:0 0 12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:700; }
+  .alloc { font-size:12.5px; }
+  .alloc-row { display:grid; grid-template-columns: 1fr auto; padding:7px 0; border-top:1px solid rgba(255,255,255,0.04); }
+  .alloc-row:first-of-type { border-top:none; }
+  .alloc-row .lab { color:rgba(255,255,255,0.85); display:flex; align-items:center; gap:8px; }
+  .alloc-row .lab .sw { width:8px; height:8px; border-radius:2px; }
+  .alloc-row .v { font-family:'JetBrains Mono',monospace; color:#fff; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  .bar-mini { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; display:flex; margin-top:10px; }
+  .bar-mini span { height:100%; }
+
+  .ai-suggest { padding:12px 14px; background:linear-gradient(160deg, rgba(209,248,67,0.10), rgba(13,46,35,0)); border-radius:10px; border:1px solid rgba(209,248,67,0.20); font-size:12.5px; line-height:1.5; color:#fff; }
+  .ai-suggest .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; font-weight:700; margin-bottom:6px; display:flex; gap:6px; align-items:center; }
+  .ai-suggest .lab [data-lucide]{ width:11px; height:11px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="layers"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="library"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Treningsplaner</div>
+    <div class="chq-nav-item"><i data-lucide="layers"></i>Mine planer</div>
+    <div class="chq-nav-item active"><i data-lucide="hammer"></i>Bygger<span class="badge">UTKAST</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-template"></i>Maler</div>
+    <div class="chq-nav-item"><i data-lucide="library"></i>Drill-bibliotek</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Treningsplan-bygger</div>
+    <div class="chq-top-meta">UTKAST · ANDERS K · 4 UKER · DRA &amp; SLIPP DRILLS</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk drills…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ TRENING · BYGGER</div>
+        <h1 class="chq-h1">Bygg en 4-ukers plan til Anders.</h1>
+        <p>Dra &amp; slipp drills og økter inn i ukene. AI foreslår fordeling basert på siste 90-dagers data — du tilpasser. Send til spiller når du er ferdig.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="layout-template"></i>Lagre som mal</button>
+        <button class="chq-btn"><i data-lucide="eye"></i>Forhåndsvis</button>
+        <button class="chq-btn primary"><i data-lucide="send"></i>Send til Anders</button>
+      </div>
+    </div>
+
+    <div class="build-grid">
+      <!-- Library -->
+      <aside class="lib">
+        <h4>Søk</h4>
+        <div style="background:rgba(0,0,0,0.20); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:8px 10px; display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+          <i data-lucide="search" style="width:13px; height:13px; color:rgba(255,255,255,0.45);"></i>
+          <input style="background:transparent; border:none; outline:none; color:#fff; font-size:12px; flex:1;" placeholder="Drill-navn…">
+        </div>
+
+        <h4>Drills · Putting</h4>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(175,82,222,0.18); color:#C99CF3;"><i data-lucide="circle-dot"></i></div>
+          <div><div class="nm">Gate-drill 1.5m</div><div class="meta">10 MIN · QUINTIC</div></div>
+        </div>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(175,82,222,0.18); color:#C99CF3;"><i data-lucide="circle-dot"></i></div>
+          <div><div class="nm">Lag-putt klokke</div><div class="meta">15 MIN · 6M+</div></div>
+        </div>
+
+        <h4>Drills · Long-game</h4>
+        <div class="lib-item">
+          <div class="ic"><i data-lucide="target"></i></div>
+          <div><div class="nm">Alignment-stick gate</div><div class="meta">20 MIN · DRIVER</div></div>
+        </div>
+        <div class="lib-item">
+          <div class="ic"><i data-lucide="target"></i></div>
+          <div><div class="nm">Tempo-trener 3-2-1</div><div class="meta">15 MIN · IRONS</div></div>
+        </div>
+        <div class="lib-item">
+          <div class="ic"><i data-lucide="target"></i></div>
+          <div><div class="nm">9-shot ladder</div><div class="meta">25 MIN · ALLE</div></div>
+        </div>
+
+        <h4>Drills · Short-game</h4>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(107,177,255,0.18); color:#6BB1FF;"><i data-lucide="flag"></i></div>
+          <div><div class="nm">Wedge ¾-swing klokke</div><div class="meta">20 MIN · 50/75/100M</div></div>
+        </div>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(107,177,255,0.18); color:#6BB1FF;"><i data-lucide="flag"></i></div>
+          <div><div class="nm">Bunker · ut og ned</div><div class="meta">15 MIN · BUNKER</div></div>
+        </div>
+
+        <h4>Fysisk</h4>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(232,185,103,0.18); color:#E8B967;"><i data-lucide="dumbbell"></i></div>
+          <div><div class="nm">TPI mobilitet 20-min</div><div class="meta">HOFTE · SKULDER</div></div>
+        </div>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(232,185,103,0.18); color:#E8B967;"><i data-lucide="dumbbell"></i></div>
+          <div><div class="nm">Styrke · 30-min</div><div class="meta">UNDERKROPP · CORE</div></div>
+        </div>
+
+        <h4>Mental</h4>
+        <div class="lib-item">
+          <div class="ic" style="background:rgba(196,138,50,0.20); color:#E8B967;"><i data-lucide="brain"></i></div>
+          <div><div class="nm">Pre-shot routine</div><div class="meta">10 MIN</div></div>
+        </div>
+      </aside>
+
+      <!-- Builder canvas -->
+      <div>
+        <section class="plan-info">
+          <div class="row">
+            <div class="field">
+              <div class="l">Plan-navn</div>
+              <input type="text" value="Anders · mai-blokk · alignment + putt 6m">
+            </div>
+            <div class="field"><div class="l">Spiller</div><div class="pick">Anders Kristiansen ▾</div></div>
+            <div class="field"><div class="l">Lengde</div><div class="pick">4 uker ▾</div></div>
+            <div class="field"><div class="l">Start</div><div class="pick">Man 6. mai ▾</div></div>
+          </div>
+        </section>
+
+        <div class="week-tabs">
+          <div class="wk active"><div class="l">Uke 1</div><div class="v">6.–12. mai</div><div class="sub">12 BLOKKER · 8.5 t</div></div>
+          <div class="wk"><div class="l">Uke 2</div><div class="v">13.–19. mai</div><div class="sub">10 BLOKKER · 7 t</div></div>
+          <div class="wk"><div class="l">Uke 3</div><div class="v">20.–26. mai</div><div class="sub">14 BLOKKER · 10 t</div></div>
+          <div class="wk"><div class="l">Uke 4</div><div class="v">27.–02. juni</div><div class="sub">8 BLOKKER · 6 t · TAPER</div></div>
+        </div>
+
+        <div class="day-board">
+          <div class="day-col">
+            <div class="dh"><span>Man 6.</span><span class="ct">2</span></div>
+            <div class="blk range"><div class="nm">Range · alignment</div><div class="meta">45 MIN · DRILL S3</div></div>
+            <div class="blk fysisk"><div class="nm">TPI mobilitet</div><div class="meta">20 MIN</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Tir 7.</span><span class="ct">2</span></div>
+            <div class="blk putt"><div class="nm">Gate 1.5m + lag-putt</div><div class="meta">25 MIN</div></div>
+            <div class="blk short"><div class="nm">Wedge klokke</div><div class="meta">20 MIN</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Ons 8.</span><span class="ct">1</span></div>
+            <div class="blk rest"><div class="nm">Rest-dag</div><div class="meta">LETT TUR EVT.</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Tor 9.</span><span class="ct">2</span></div>
+            <div class="blk range"><div class="nm">Coaching-økt</div><div class="meta">60 MIN · ERIK · ALIGNMENT</div></div>
+            <div class="blk fysisk"><div class="nm">Styrke 30-min</div><div class="meta">UNDERKROPP</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Fre 10.</span><span class="ct">2</span></div>
+            <div class="blk range"><div class="nm">Tempo 3-2-1</div><div class="meta">20 MIN · IRONS</div></div>
+            <div class="blk putt"><div class="nm">6m putt fokus</div><div class="meta">15 MIN</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Lør 11.</span><span class="ct">1</span></div>
+            <div class="blk runde"><div class="nm">Runde · Bogstad</div><div class="meta">18 HULL · LOGG SG</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+
+          <div class="day-col">
+            <div class="dh"><span>Søn 12.</span><span class="ct">2</span></div>
+            <div class="blk short"><div class="nm">Bunker ut + ned</div><div class="meta">15 MIN</div></div>
+            <div class="blk fysisk"><div class="nm">TPI mob.</div><div class="meta">20 MIN</div></div>
+            <div class="add">+ legg til</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right summary -->
+      <aside>
+        <div class="sum-card">
+          <h4>Tids-allokering · uke 1</h4>
+          <div class="alloc">
+            <div class="alloc-row"><span class="lab"><span class="sw" style="background:var(--akgolf-accent);"></span>Long-game</span><span class="v">2.0 t</span></div>
+            <div class="alloc-row"><span class="lab"><span class="sw" style="background:#C99CF3;"></span>Putting</span><span class="v">0.7 t</span></div>
+            <div class="alloc-row"><span class="lab"><span class="sw" style="background:#6BB1FF;"></span>Short-game</span><span class="v">0.6 t</span></div>
+            <div class="alloc-row"><span class="lab"><span class="sw" style="background:#E8B967;"></span>Fysisk</span><span class="v">1.2 t</span></div>
+            <div class="alloc-row"><span class="lab"><span class="sw" style="background:#6FCBA1;"></span>På bane</span><span class="v">3.5 t</span></div>
+            <div class="alloc-row" style="border-top:1px solid rgba(255,255,255,0.10); margin-top:6px; padding-top:9px;"><span class="lab" style="color:#fff; font-weight:700;">Sum</span><span class="v" style="color:var(--akgolf-accent);">8.0 t</span></div>
+          </div>
+          <div class="bar-mini">
+            <span style="background:var(--akgolf-accent); width:25%;"></span>
+            <span style="background:#C99CF3; width:9%;"></span>
+            <span style="background:#6BB1FF; width:7.5%;"></span>
+            <span style="background:#E8B967; width:15%;"></span>
+            <span style="background:#6FCBA1; width:43.5%;"></span>
+          </div>
+        </div>
+
+        <div class="sum-card">
+          <h4>Match-up med dataen</h4>
+          <div class="ai-suggest">
+            <div class="lab"><i data-lucide="sparkles"></i> AI-NAV</div>
+            Anders sin svake 6m-putt og driver-spredning matches godt mot fordelingen denne uka. Vurder å øke putting i uke 2 (nå 9 % — bør være 12–15 %).
+          </div>
+        </div>
+
+        <div class="sum-card">
+          <h4>Mål for plan</h4>
+          <div class="alloc-row"><span class="lab"><i data-lucide="target" style="width:14px; height:14px; color:var(--akgolf-accent);"></i>Driver-spredning ↓ 20 %</span></div>
+          <div class="alloc-row"><span class="lab"><i data-lucide="circle-dot" style="width:14px; height:14px; color:#C99CF3;"></i>6m-putt make % 15 → 22</span></div>
+          <div class="alloc-row"><span class="lab"><i data-lucide="trophy" style="width:14px; height:14px; color:#E8B967;"></i>Klar for Tjuvholmen Open</span></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile · Booking — AK Golf</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_mobile.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Booking flow — light mode, public */
+  .bk-top { padding: 6px 4px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .bk-top .back { width:36px; height:36px; border-radius:50%; background:rgba(10,31,24,0.05); display:grid; place-items:center; color:var(--akgolf-ink); }
+  .bk-top .back [data-lucide]{ width:16px; height:16px; }
+  .bk-top .step { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.16em; color:rgba(10,31,24,0.55); text-transform:uppercase; font-weight:700; }
+  .bk-top .close { width:36px; height:36px; border-radius:50%; background:transparent; display:grid; place-items:center; color:rgba(10,31,24,0.55); font-size:14px; }
+
+  .bk-progress { padding: 0 4px; margin-bottom: 16px; }
+  .bk-progress-track { height:3px; background:rgba(10,31,24,0.08); border-radius:99px; overflow:hidden; }
+  .bk-progress-track span { display:block; height:100%; background:var(--akgolf-primary); border-radius:99px; }
+
+  .bk-h1 { padding: 0 4px; }
+  .bk-h1 h2 { margin:0; font-size:26px; font-weight:800; letter-spacing:-0.025em; line-height:1.1; }
+  .bk-h1 h2 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); }
+  .bk-h1 p { margin:8px 0 0; font-size:13.5px; color:rgba(10,31,24,0.65); line-height:1.5; max-width: 36ch; }
+
+  /* Step 1: tjeneste-kort */
+  .svc { background:#fff; border:1.5px solid rgba(10,31,24,0.06); border-radius:16px; padding: 18px 18px 16px; margin-bottom:10px; position:relative; }
+  .svc.on { border-color: var(--akgolf-primary); background: rgba(0,88,64,0.04); }
+  .svc.on::after { content:'✓'; position:absolute; top:14px; right:14px; width:24px; height:24px; border-radius:50%; background: var(--akgolf-primary); color: var(--akgolf-accent); display:grid; place-items:center; font-weight:800; font-size:13px; }
+  .svc .ic { width:40px; height:40px; border-radius:11px; background:rgba(0,88,64,0.10); color:var(--akgolf-primary); display:grid; place-items:center; margin-bottom:12px; }
+  .svc.on .ic { background: var(--akgolf-primary); color: var(--akgolf-accent); }
+  .svc .ic [data-lucide]{ width:18px; height:18px; }
+  .svc h4 { margin: 0 0 4px; font-size:15.5px; font-weight:700; color:var(--akgolf-ink); letter-spacing:-0.015em; }
+  .svc h4 em { font-family:'Fraunces',serif; font-style:italic; color:var(--akgolf-primary); font-weight:500; }
+  .svc p { margin:0 0 12px; font-size:12.5px; color:rgba(10,31,24,0.65); line-height:1.45; }
+  .svc-meta { display:flex; gap:14px; align-items:center; padding-top:12px; border-top:1px solid rgba(10,31,24,0.06); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(10,31,24,0.6); font-weight:700; }
+  .svc-meta .pr { color:var(--akgolf-ink); font-size:14px; font-weight:800; letter-spacing:-0.01em; }
+
+  /* Step 2: calendar/time */
+  .cal-mini { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:14px; padding:14px; margin-bottom:14px; }
+  .cal-h { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:13.5px; font-weight:700; }
+  .cal-h .arr { width:28px; height:28px; border-radius:7px; background:rgba(10,31,24,0.04); display:grid; place-items:center; }
+  .cal-h .arr [data-lucide]{ width:14px; height:14px; }
+  .cal-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:3px; }
+  .cal-grid .h { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(10,31,24,0.45); text-align:center; padding:6px 0; letter-spacing:0.10em; font-weight:700; }
+  .cal-grid .d { aspect-ratio:1/1; display:grid; place-items:center; font-size:13px; font-weight:600; color:var(--akgolf-ink); border-radius:8px; }
+  .cal-grid .d.muted { color: rgba(10,31,24,0.30); }
+  .cal-grid .d.has::after { content:''; display:block; width:4px; height:4px; background:var(--akgolf-primary); border-radius:50%; margin-top:1px; }
+  .cal-grid .d.has { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .cal-grid .d.today { background: rgba(10,31,24,0.05); }
+  .cal-grid .d.sel { background: var(--akgolf-primary); color: var(--akgolf-accent); }
+  .cal-grid .d.sel.has::after { background: var(--akgolf-accent); }
+  .cal-grid .d.full { color: rgba(10,31,24,0.20); position:relative; }
+  .cal-grid .d.full::before { content:''; position:absolute; left:6px; right:6px; top:50%; height:1px; background: rgba(10,31,24,0.15); transform: rotate(-12deg); }
+
+  .ts-h { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(10,31,24,0.6); margin: 4px 4px 8px; font-weight:700; text-transform:uppercase; }
+  .ts-block { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:11px; padding: 12px 14px; margin-bottom:8px; }
+  .ts-block .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(10,31,24,0.5); font-weight:700; margin-bottom:8px; }
+  .ts-row { display:grid; grid-template-columns: repeat(4, 1fr); gap:5px; }
+  .ts { aspect-ratio: 2.4/1; border-radius:8px; background:rgba(0,88,64,0.06); border:1px solid rgba(0,88,64,0.10); color:var(--akgolf-primary); display:grid; place-items:center; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.02em; }
+  .ts.full { background:rgba(10,31,24,0.04); border-color: transparent; color: rgba(10,31,24,0.30); position:relative; }
+  .ts.full::after { content:''; position:absolute; left:8px; right:8px; top:50%; height:1px; background:rgba(10,31,24,0.20); transform:rotate(-12deg); }
+  .ts.sel { background: var(--akgolf-primary); border-color: var(--akgolf-primary); color: var(--akgolf-accent); }
+  .ts.popular { border-color: var(--akgolf-accent); }
+  .ts-block .pop-tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:0.10em; color:#0A1F18; background: var(--akgolf-accent); padding: 2px 6px; border-radius:4px; font-weight:700; margin-left:6px; }
+
+  /* Sticky CTA */
+  .bk-cta {
+    position:absolute; left:0; right:0; bottom: 26px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(10,31,24,0.08);
+  }
+  .bk-cta-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .bk-cta .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(10,31,24,0.55); font-weight:700; }
+  .bk-cta .pr { font-size:18px; font-weight:800; color:var(--akgolf-ink); letter-spacing:-0.02em; }
+  .bk-cta .pr small { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(10,31,24,0.5); margin-left:4px; font-weight:600; }
+  .bk-btn { background: var(--akgolf-primary); color: var(--akgolf-accent); border-radius:99px; padding: 14px; font-size:14.5px; font-weight:700; text-align:center; display:flex; gap:8px; justify-content:center; align-items:center; }
+  .bk-btn [data-lucide]{ width:14px; height:14px; }
+  .bk-btn.ink { background: var(--akgolf-ink); color:#fff; }
+
+  /* Step 3 — confirmation */
+  .conf { padding: 0 4px; }
+  .conf-hero { margin: 18px 0 22px; text-align:center; }
+  .conf-hero .check {
+    width:90px; height:90px; border-radius:50%;
+    background: var(--akgolf-accent);
+    display:grid; place-items:center;
+    margin: 0 auto 18px;
+    box-shadow: 0 0 0 8px rgba(209,248,67,0.20), 0 0 0 18px rgba(209,248,67,0.10);
+  }
+  .conf-hero .check [data-lucide]{ width:46px; height:46px; color:#0A1F18; stroke-width:3; }
+  .conf-hero h2 { margin:0 0 6px; font-size:28px; font-weight:800; letter-spacing:-0.025em; line-height:1.1; }
+  .conf-hero h2 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); }
+  .conf-hero p { font-size:13.5px; color:rgba(10,31,24,0.65); line-height:1.5; max-width: 32ch; margin: 0 auto; }
+
+  .conf-card { background:#fff; border:1px solid rgba(10,31,24,0.08); border-radius:16px; padding:18px; }
+  .conf-row { display:grid; grid-template-columns: 28px 1fr auto; gap:10px; padding: 13px 0; align-items:center; border-top:1px solid rgba(10,31,24,0.06); }
+  .conf-row:first-child { border-top:none; padding-top:4px; }
+  .conf-row .ic { color: var(--akgolf-primary); }
+  .conf-row .ic [data-lucide]{ width:16px; height:16px; }
+  .conf-row .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(10,31,24,0.5); text-transform:uppercase; font-weight:700; }
+  .conf-row .v { font-size:13.5px; font-weight:600; color:var(--akgolf-ink); margin-top:1px; }
+  .conf-row .v small { display:block; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(10,31,24,0.55); margin-top:1px; font-weight:600; }
+  .conf-row .right { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--akgolf-primary); font-weight:700; letter-spacing:0.04em; }
+
+  .conf-tip { background: rgba(0,88,64,0.05); border:1px solid rgba(0,88,64,0.15); border-radius:12px; padding:12px 14px; display:flex; gap:10px; margin-top:12px; }
+  .conf-tip .ico { width:28px; height:28px; border-radius:7px; background:var(--akgolf-primary); color:var(--akgolf-accent); display:grid; place-items:center; flex-shrink:0; }
+  .conf-tip .ico [data-lucide]{ width:14px; height:14px; }
+  .conf-tip p { margin:0; font-size:12px; line-height:1.5; color:var(--akgolf-ink); }
+  .conf-tip p strong { font-weight:700; }
+
+  .conf-acts { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:14px; }
+  .conf-acts .a { padding:10px; background:rgba(10,31,24,0.05); border-radius:10px; text-align:center; font-size:12px; font-weight:700; display:flex; gap:5px; justify-content:center; align-items:center; }
+  .conf-acts .a [data-lucide]{ width:13px; height:13px; }
+
+  .header-mob {
+    text-align:center; max-width: 720px; margin: 0 auto 40px;
+  }
+  .header-mob .tag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; color:var(--akgolf-primary); text-transform:uppercase; font-weight:700; }
+  .header-mob h1 { font-size:48px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin:14px 0 14px; line-height:1.05; }
+  .header-mob h1 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color: var(--akgolf-primary); }
+  .header-mob p { font-size:15px; color:rgba(10,31,24,0.7); line-height:1.6; max-width: 56ch; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="header-mob" style="padding-top:60px;">
+  <div class="tag">BOOKING · MOBILE · 3-STEG-FLYT</div>
+  <h1>Book på 3 steg. <em>Mindre enn et minutt.</em></h1>
+  <p>Velg tjeneste, velg tid, bekreft. Designet for å være den enkleste delen av dagen — så folk faktisk fullfører bookingen.</p>
+</div>
+
+<div class="mob-stage" style="padding-top:0;">
+
+  <!-- ============ STEP 1 — TJENESTE ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="padding: 4px 18px 100px;">
+
+          <div class="bk-top">
+            <div class="back"><i data-lucide="arrow-left"></i></div>
+            <div class="step">STEG 1 AV 3 · TJENESTE</div>
+            <div class="close">✕</div>
+          </div>
+
+          <div class="bk-progress">
+            <div class="bk-progress-track"><span style="width:33%;"></span></div>
+          </div>
+
+          <div class="bk-h1">
+            <h2>Hva vil du <em>jobbe med?</em></h2>
+            <p>Velg én tjeneste — du kan alltid endre fokus med Erik når dere møtes.</p>
+          </div>
+
+          <div style="margin-top: 22px;"></div>
+
+          <article class="svc on">
+            <div class="ic"><i data-lucide="user"></i></div>
+            <h4>1:1 coaching <em>med Erik</em></h4>
+            <p>60 minutter på range eller bay. Trackman tilgjengelig. Mest fleksibel — Erik tilpasser etter behov.</p>
+            <div class="svc-meta">
+              <span class="pr">1 200 KR</span>
+              <span>· 60 MIN</span>
+              <span style="margin-left:auto; color:var(--akgolf-primary);">★ MEST POPULÆR</span>
+            </div>
+          </article>
+
+          <article class="svc">
+            <div class="ic"><i data-lucide="target"></i></div>
+            <h4>Trackman-økt</h4>
+            <p>Datadrevet teknikk-økt med Trackman 4. 60 min · spin, attack-angle, club-path.</p>
+            <div class="svc-meta">
+              <span class="pr">1 400 KR</span>
+              <span>· 60 MIN · BAY 3</span>
+            </div>
+          </article>
+
+          <article class="svc">
+            <div class="ic"><i data-lucide="zap"></i></div>
+            <h4>Quick-fix · 30 min</h4>
+            <p>Kort tune-up før runde eller konkurranse. Egnet for ett spesifikt problem.</p>
+            <div class="svc-meta">
+              <span class="pr">700 KR</span>
+              <span>· 30 MIN</span>
+            </div>
+          </article>
+
+          <article class="svc">
+            <div class="ic"><i data-lucide="users"></i></div>
+            <h4>Junior-time · prøve</h4>
+            <p>For barn 8–17 år. Første time alltid gratis — book uforpliktende.</p>
+            <div class="svc-meta">
+              <span class="pr" style="color:var(--akgolf-primary);">GRATIS</span>
+              <span>· 45 MIN · FØRSTE GANG</span>
+            </div>
+          </article>
+
+        </div>
+        <div class="bk-cta">
+          <div class="bk-cta-row">
+            <div>
+              <div class="lab">VALGT</div>
+              <div style="font-size:13px; font-weight:700; margin-top:2px;">1:1 med Erik · 60 min</div>
+            </div>
+            <div class="pr">1 200<small>KR</small></div>
+          </div>
+          <div class="bk-btn">Velg tid <i data-lucide="arrow-right"></i></div>
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>1 · Velg tjeneste</strong>4 ALTERNATIVER · STICKY CTA</div>
+  </div>
+
+  <!-- ============ STEP 2 — DATO/TID ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="padding: 4px 18px 130px;">
+
+          <div class="bk-top">
+            <div class="back"><i data-lucide="arrow-left"></i></div>
+            <div class="step">STEG 2 AV 3 · TID</div>
+            <div class="close">✕</div>
+          </div>
+
+          <div class="bk-progress">
+            <div class="bk-progress-track"><span style="width:66%;"></span></div>
+          </div>
+
+          <div class="bk-h1">
+            <h2>Når <em>passer det?</em></h2>
+          </div>
+
+          <div style="margin-top: 16px;"></div>
+
+          <div class="cal-mini">
+            <div class="cal-h">
+              <div class="arr"><i data-lucide="chevron-left"></i></div>
+              <span>Mai 2026</span>
+              <div class="arr"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="cal-grid">
+              <div class="h">M</div><div class="h">T</div><div class="h">O</div><div class="h">T</div><div class="h">F</div><div class="h">L</div><div class="h">S</div>
+              <div class="d muted">28</div><div class="d muted today">29</div><div class="d muted">30</div>
+              <div class="d has">1</div><div class="d full">2</div><div class="d has">3</div><div class="d has">4</div>
+              <div class="d has">5</div><div class="d full">6</div><div class="d sel has">7</div><div class="d has">8</div><div class="d has">9</div><div class="d has">10</div><div class="d full">11</div>
+              <div class="d has">12</div><div class="d has">13</div><div class="d has">14</div><div class="d has">15</div><div class="d full">16</div><div class="d has">17</div><div class="d has">18</div>
+              <div class="d has">19</div><div class="d has">20</div><div class="d has">21</div><div class="d has">22</div><div class="d has">23</div><div class="d has">24</div><div class="d has">25</div>
+              <div class="d has">26</div><div class="d has">27</div><div class="d has">28</div><div class="d has">29</div><div class="d has">30</div><div class="d has">31</div><div class="d muted">1</div>
+            </div>
+          </div>
+
+          <div class="ts-h">FRE · 7. MAI · 8 LEDIGE TIDER</div>
+
+          <div class="ts-block">
+            <div class="lab">FORMIDDAG</div>
+            <div class="ts-row">
+              <div class="ts">09:00</div>
+              <div class="ts full">10:00</div>
+              <div class="ts">11:00</div>
+              <div class="ts">12:00</div>
+            </div>
+          </div>
+
+          <div class="ts-block">
+            <div class="lab">ETTERMIDDAG <span class="pop-tag">POPULÆR</span></div>
+            <div class="ts-row">
+              <div class="ts full">13:00</div>
+              <div class="ts">14:00</div>
+              <div class="ts sel">15:00</div>
+              <div class="ts popular">16:00</div>
+            </div>
+          </div>
+
+          <div class="ts-block">
+            <div class="lab">KVELD</div>
+            <div class="ts-row">
+              <div class="ts">17:00</div>
+              <div class="ts full">18:00</div>
+              <div class="ts full">19:00</div>
+              <div class="ts">20:00</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="bk-cta">
+          <div class="bk-cta-row">
+            <div>
+              <div class="lab">FREDAG · 7. MAI · 15:00</div>
+              <div style="font-size:13px; font-weight:700; margin-top:2px;">1:1 m/ Erik · 60 min</div>
+            </div>
+            <div class="pr">1 200<small>KR</small></div>
+          </div>
+          <div class="bk-btn">Bekreft &amp; betal <i data-lucide="arrow-right"></i></div>
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>2 · Velg tid</strong>KALENDER · TIDSGRUPPER · POPULÆR-TAG</div>
+  </div>
+
+  <!-- ============ STEP 3 — BEKREFTET ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="padding: 4px 18px 100px;">
+
+          <div class="bk-top">
+            <div></div>
+            <div class="step">BEKREFTET · 3 AV 3</div>
+            <div class="close">✕</div>
+          </div>
+
+          <div class="bk-progress">
+            <div class="bk-progress-track"><span style="width:100%;"></span></div>
+          </div>
+
+          <div class="conf">
+            <div class="conf-hero">
+              <div class="check"><i data-lucide="check"></i></div>
+              <h2>Vi <em>sees fredag.</em></h2>
+              <p>Bekreftelse og kart sendt til marius@aas.no. Tilføyd i kalender automatisk.</p>
+            </div>
+
+            <div class="conf-card">
+              <div class="conf-row">
+                <div class="ic"><i data-lucide="calendar"></i></div>
+                <div>
+                  <div class="lab">DATO &amp; TID</div>
+                  <div class="v">Fredag 7. mai · 15:00<small>60 MIN · TIL 16:00</small></div>
+                </div>
+                <div class="right">+9 D</div>
+              </div>
+              <div class="conf-row">
+                <div class="ic"><i data-lucide="user"></i></div>
+                <div>
+                  <div class="lab">COACH</div>
+                  <div class="v">Erik Solheim<small>PGA MASTER PRO</small></div>
+                </div>
+                <div class="right" style="color:rgba(10,31,24,0.4);">→</div>
+              </div>
+              <div class="conf-row">
+                <div class="ic"><i data-lucide="map-pin"></i></div>
+                <div>
+                  <div class="lab">LOKASJON</div>
+                  <div class="v">Skullerud Indoor Golf<small>BAY 3 · KAN ENDRES</small></div>
+                </div>
+                <div class="right" style="color:rgba(10,31,24,0.4);">→</div>
+              </div>
+              <div class="conf-row">
+                <div class="ic"><i data-lucide="receipt"></i></div>
+                <div>
+                  <div class="lab">BETALT</div>
+                  <div class="v">1 200 kr<small>STRIPE · ****1234 · I DAG 09:14</small></div>
+                </div>
+                <div class="right" style="color: var(--akgolf-primary);">OK</div>
+              </div>
+            </div>
+
+            <div class="conf-tip">
+              <div class="ico"><i data-lucide="info"></i></div>
+              <p><strong>Tips:</strong> Erik leser alle bookings-notater. Har du noe spesifikt du vil jobbe med, skriv det inn nå — så er han forberedt.</p>
+            </div>
+
+            <div class="conf-acts">
+              <div class="a"><i data-lucide="calendar-plus"></i>Til kalender</div>
+              <div class="a"><i data-lucide="message-circle"></i>Send notat</div>
+              <div class="a"><i data-lucide="map"></i>Veibeskrivelse</div>
+              <div class="a"><i data-lucide="x-circle"></i>Avbestill</div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>3 · Bekreftet</strong>STOR ✓ · KVITTERING · TIPS · ACTIONS</div>
+  </div>
+
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A19 — Turneringer · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Top tabs */
+  .tour-tabs {
+    display: flex; gap: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 18px;
+  }
+  .tour-tabs button {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 12.5px; font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tour-tabs button.active { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .tour-tabs .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255,255,255,0.10);
+    padding: 1px 5px; border-radius: 4px;
+  }
+  .tour-tabs button.active .badge { background: rgba(0,0,0,0.20); }
+
+  /* Hero next tournament */
+  .next-card {
+    background:
+      radial-gradient(circle at 80% 20%, rgba(209,248,67,0.10), transparent 55%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+  }
+  .next-card .lab { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; margin-bottom: 8px; }
+  .next-card h2 { margin: 0; font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.15; }
+  .next-card .sub { margin: 8px 0 0; font-size: 13px; color: rgba(255,255,255,0.65); }
+  .next-card .meta-row {
+    display: flex; gap: 18px; margin: 18px 0;
+    color: rgba(255,255,255,0.7); font-size: 13px;
+  }
+  .next-card .meta-row span { display: flex; align-items: center; gap: 6px; }
+  .next-card .meta-row [data-lucide] { width: 14px; height: 14px; color: rgba(255,255,255,0.5); }
+  .next-card .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+  .countdown-block { display: flex; align-items: center; gap: 18px; }
+  .countdown-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    flex: 1;
+  }
+  .cd {
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .cd .v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px; color: #fff; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .cd .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-top: 4px;
+  }
+  .ready-pill {
+    background: rgba(42,125,90,0.20);
+    border: 1px solid rgba(42,125,90,0.35);
+    color: #6FCBA1;
+    padding: 5px 12px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 14px;
+  }
+  .ready-pill [data-lucide] { width: 12px; height: 12px; }
+
+  /* Section header */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 28px 0 14px;
+  }
+  .sec-h h3 { margin: 0; font-size: 18px; color: #fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  /* Upcoming cards */
+  .up-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tour-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .tc-top { display: flex; justify-content: space-between; align-items: start; gap: 10px; }
+  .tc-date {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+    flex-shrink: 0;
+    width: 56px;
+  }
+  .tc-date .d { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+  .tc-date .m { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .tc-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .tc-pill.confirmed { background: rgba(42,125,90,0.20); color: #6FCBA1; }
+  .tc-pill.signup { background: rgba(196,138,50,0.22); color: #E8B967; }
+  .tc-pill.invited { background: rgba(107,177,255,0.18); color: #6BB1FF; }
+
+  .tc-body { flex: 1; }
+  .tc-name { font-size: 15px; color: #fff; font-weight: 700; letter-spacing: -0.005em; line-height: 1.3; }
+  .tc-name small { display: block; font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 500; margin-top: 2px; letter-spacing: 0; }
+
+  .tc-meta { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .tc-meta .row { display: flex; justify-content: space-between; font-size: 11.5px; }
+  .tc-meta .row .l { color: rgba(255,255,255,0.5); }
+  .tc-meta .row .v { color: #fff; font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .tc-foot { display: flex; gap: 6px; margin-top: 4px; }
+  .tc-foot button {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    padding: 8px 10px; border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .tc-foot [data-lucide] { width: 13px; height: 13px; }
+  .tc-foot button.primary { background: var(--akgolf-accent); color: #0A1F18; border-color: var(--akgolf-accent); }
+
+  /* Past results table */
+  .results-table {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .results-row {
+    display: grid;
+    grid-template-columns: 80px 1.6fr 1fr 100px 100px 80px 70px;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 12.5px;
+  }
+  .results-row.head {
+    background: rgba(255,255,255,0.02);
+    color: rgba(255,255,255,0.5);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700;
+    padding: 12px 22px;
+  }
+  .results-row:last-child { border-bottom: none; }
+  .results-row .date { color: rgba(255,255,255,0.7); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .results-row .name { color: #fff; font-weight: 600; }
+  .results-row .name small { display: block; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 400; margin-top: 1px; }
+  .results-row .course { color: rgba(255,255,255,0.7); }
+  .results-row .pos {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 700;
+    color: #fff;
+  }
+  .results-row .pos small { font-size: 11px; color: rgba(255,255,255,0.5); margin-left: 2px; font-weight: 500; }
+  .results-row .pos.top { color: var(--akgolf-accent); }
+  .results-row .score {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fff; font-weight: 700;
+  }
+  .results-row .delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .results-row .delta.neg { color: #6FCBA1; }
+  .results-row .delta.pos { color: #F49283; }
+  .results-row .arrow {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.7);
+    display: grid; place-items: center;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .results-row .arrow [data-lucide] { width: 13px; height: 13px; }
+
+  /* KPI strip */
+  .kpi-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 24px;
+  }
+  .kpi {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .kpi .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .kpi .v { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .kpi .v small { font-size: 13px; color: rgba(255,255,255,0.5); margin-left: 3px; font-weight: 500; }
+  .kpi .delta { margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6FCBA1; font-weight: 700; }
+  .kpi .delta.neg { color: #F49283; }
+
+  @media (max-width: 1100px) {
+    .next-card { grid-template-columns: 1fr; }
+    .up-grid { grid-template-columns: 1fr; }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .results-row { grid-template-columns: 60px 1fr 60px; }
+    .results-row .course, .results-row .score, .results-row .delta, .results-row .arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="trophy"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item active"><i data-lucide="trophy"></i> Turneringer</div>
+    <div class="phq-nav-section">Statistikk</div>
+    <div class="phq-nav-item"><i data-lucide="bar-chart-3"></i> Sammenligning</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Turneringer<span class="date">SESONG 2025 · 4 PÅMELDT · 3 GJENNOMFØRT</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk turnering, bane…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ KAMPSESONG 2025</div>
+      <h1 class="phq-h1">Sesongen er i gang.</h1>
+      <p class="lede">4 turneringer påmeldt, 3 gjennomført. Snitt-score 77.4 (+6.4) — bedre enn i fjor på samme tidspunkt. Ranking-poeng oppdateres etter NM amatør i juli.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tour-tabs">
+      <button class="active"><i data-lucide="calendar"></i>Kommende <span class="badge">4</span></button>
+      <button><i data-lucide="check-circle-2"></i>Gjennomførte <span class="badge">3</span></button>
+      <button><i data-lucide="search"></i>Utforsk <span class="badge">28</span></button>
+    </div>
+
+    <!-- KPI strip -->
+    <div class="kpi-strip">
+      <div class="kpi"><div class="l">Snitt-score sesong</div><div class="v">77.4 <small>(+6.4)</small></div><div class="delta">−1.2 vs 2024</div></div>
+      <div class="kpi"><div class="l">Beste runde</div><div class="v">73 <small>(+2)</small></div><div class="delta">Sandvika · 14. apr</div></div>
+      <div class="kpi"><div class="l">Cuts gjort</div><div class="v">2<small> / 3</small></div><div class="delta">67 % cut-rate</div></div>
+      <div class="kpi"><div class="l">Ranking-poeng</div><div class="v">142</div><div class="delta">Topp 38 % NSF</div></div>
+    </div>
+
+    <!-- Next tournament hero -->
+    <section class="next-card">
+      <div>
+        <div class="lab">Neste turnering</div>
+        <h2>NM Amatør 2025</h2>
+        <div class="sub">Kvalifisering · 36 hull strokeplay</div>
+        <div class="meta-row">
+          <span><i data-lucide="map-pin"></i>Hauger Golfklubb</span>
+          <span><i data-lucide="calendar"></i>14.–15. juli</span>
+          <span><i data-lucide="users"></i>156 spillere</span>
+          <span><i data-lucide="trophy"></i>Cut · topp 60</span>
+        </div>
+        <div class="ready-pill"><i data-lucide="check-circle-2"></i>Påmelding bekreftet</div>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="map"></i>Bygg strategi</button>
+          <button class="phq-btn"><i data-lucide="calendar"></i>Tee-tid · ikke tildelt</button>
+          <button class="phq-btn ghost"><i data-lucide="external-link"></i>NSF turneringside</button>
+        </div>
+      </div>
+      <div class="countdown-block">
+        <div style="flex:1;">
+          <div style="font-family:'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 10px;">Tid til tee-off</div>
+          <div class="countdown-grid">
+            <div class="cd"><div class="v">76</div><div class="l">Dager</div></div>
+            <div class="cd"><div class="v">14</div><div class="l">Timer</div></div>
+            <div class="cd"><div class="v">22</div><div class="l">Min</div></div>
+            <div class="cd"><div class="v">08</div><div class="l">Sek</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming -->
+    <div class="sec-h">
+      <h3>Andre kommende</h3>
+      <div class="sub">3 TURNERINGER · MAI – AUG</div>
+    </div>
+    <div class="up-grid">
+      <div class="tour-card">
+        <div class="tc-top">
+          <div class="tc-date"><div class="d">11</div><div class="m">Mai</div></div>
+          <span class="tc-pill confirmed">Påmeldt</span>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Holtsmark Open<small>4-ball · netto · 18 hull</small></div>
+        </div>
+        <div class="tc-meta">
+          <div class="row"><span class="l">Bane</span><span class="v">Holtsmark GK</span></div>
+          <div class="row"><span class="l">Format</span><span class="v">Strokeplay</span></div>
+          <div class="row"><span class="l">Tee-tid</span><span class="v">10:24</span></div>
+        </div>
+        <div class="tc-foot">
+          <button><i data-lucide="map"></i>Strategi</button>
+          <button class="primary"><i data-lucide="check"></i>Klar</button>
+        </div>
+      </div>
+
+      <div class="tour-card">
+        <div class="tc-top">
+          <div class="tc-date"><div class="d">02</div><div class="m">Jun</div></div>
+          <span class="tc-pill signup">Påmelding åpen</span>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Sandvika Klubbmesterskap<small>2 dager · 36 hull strokeplay</small></div>
+        </div>
+        <div class="tc-meta">
+          <div class="row"><span class="l">Bane</span><span class="v">Sandvika</span></div>
+          <div class="row"><span class="l">Frist</span><span class="v">26. mai</span></div>
+          <div class="row"><span class="l">Plasser</span><span class="v">28 / 64</span></div>
+        </div>
+        <div class="tc-foot">
+          <button><i data-lucide="info"></i>Detaljer</button>
+          <button class="primary"><i data-lucide="check-circle-2"></i>Meld på</button>
+        </div>
+      </div>
+
+      <div class="tour-card">
+        <div class="tc-top">
+          <div class="tc-date"><div class="d">23</div><div class="m">Aug</div></div>
+          <span class="tc-pill invited">Foreslått</span>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">Vestfold Classic<small>2-mannsslag · foursome</small></div>
+        </div>
+        <div class="tc-meta">
+          <div class="row"><span class="l">Bane</span><span class="v">Borre GK</span></div>
+          <div class="row"><span class="l">Partner</span><span class="v">Tor Erling</span></div>
+          <div class="row"><span class="l">Frist</span><span class="v">15. aug</span></div>
+        </div>
+        <div class="tc-foot">
+          <button><i data-lucide="x"></i>Avslå</button>
+          <button class="primary"><i data-lucide="check"></i>Aksepter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Past results -->
+    <div class="sec-h">
+      <h3>Gjennomførte 2025</h3>
+      <div class="sub">3 RUNDER · GJENNOMSNITT 77.4</div>
+    </div>
+    <section class="results-table">
+      <div class="results-row head">
+        <div>Dato</div>
+        <div>Turnering</div>
+        <div>Bane</div>
+        <div>Plassering</div>
+        <div>Score</div>
+        <div>vs felt</div>
+        <div></div>
+      </div>
+      <div class="results-row">
+        <div class="date">14. apr</div>
+        <div class="name">Sandvika Vårcup<small>4-ball netto · 1 runde</small></div>
+        <div class="course">Sandvika GK</div>
+        <div class="pos top">7<small> / 84</small></div>
+        <div class="score">73 <small style="color:rgba(255,255,255,0.5);">(+2)</small></div>
+        <div class="delta neg">−2.4</div>
+        <div><div class="arrow"><i data-lucide="arrow-right"></i></div></div>
+      </div>
+      <div class="results-row">
+        <div class="date">31. mar</div>
+        <div class="name">Tjuvholmen Open<small>Strokeplay · 18 hull</small></div>
+        <div class="course">Tyrifjord GK</div>
+        <div class="pos">38<small> / 112</small></div>
+        <div class="score">79 <small style="color:rgba(255,255,255,0.5);">(+8)</small></div>
+        <div class="delta pos">+1.2</div>
+        <div><div class="arrow"><i data-lucide="arrow-right"></i></div></div>
+      </div>
+      <div class="results-row">
+        <div class="date">15. mar</div>
+        <div class="name">Sesongåpning Klubb<small>Stableford · 18 hull</small></div>
+        <div class="course">Holtsmark GK</div>
+        <div class="pos">22<small> / 96</small></div>
+        <div class="score">80 <small style="color:rgba(255,255,255,0.5);">(+9)</small></div>
+        <div class="delta neg">−0.4</div>
+        <div><div class="arrow"><i data-lucide="arrow-right"></i></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

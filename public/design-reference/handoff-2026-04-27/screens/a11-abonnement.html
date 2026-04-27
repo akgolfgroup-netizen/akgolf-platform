@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A11 — Mitt abonnement · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* ── Page-specific ───────────────────────────── */
+  .abo-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 18px;
+    align-items: start;
+  }
+
+  /* Hero plan card — the ONE glow card per page */
+  .plan-hero {
+    grid-column: 1 / -1;
+    background:
+      radial-gradient(circle at 90% 0%, rgba(209,248,67,0.16), transparent 55%),
+      linear-gradient(160deg, rgba(209,248,67,0.04), rgba(13,46,35,0.0)),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.10);
+    border-radius: 22px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1.1fr;
+    gap: 36px;
+  }
+  .plan-hero .divider { background: rgba(255,255,255,0.06); }
+  .plan-hero .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    font-weight: 700;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .plan-hero .lab .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 8px rgba(209,248,67,0.8);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.45; } }
+
+  .plan-hero .name {
+    font-size: 44px; font-weight: 800;
+    color: #fff; letter-spacing: -0.035em;
+    line-height: 1.0;
+    margin: 0;
+  }
+  .plan-hero .name em {
+    font-style: normal;
+    color: var(--akgolf-accent);
+  }
+  .plan-hero .price {
+    margin-top: 16px;
+    display: flex; align-items: baseline; gap: 6px;
+    color: #fff;
+  }
+  .plan-hero .price .v {
+    font-size: 38px; font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .plan-hero .price .per {
+    color: rgba(255,255,255,0.55);
+    font-size: 14px; font-weight: 500;
+  }
+  .plan-hero .features {
+    margin-top: 20px;
+    display: grid; gap: 9px;
+    list-style: none; padding: 0;
+  }
+  .plan-hero .features li {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13.5px;
+  }
+  .plan-hero .features [data-lucide] {
+    color: var(--akgolf-accent);
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Right side: billing summary */
+  .plan-bill { display: flex; flex-direction: column; gap: 18px; padding-top: 4px; }
+  .bill-row {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .bill-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .bill-row .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 6px;
+  }
+  .bill-row .v {
+    font-size: 18px; font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .bill-row .v small {
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin-left: 4px;
+    letter-spacing: 0;
+  }
+  .bill-row .badge {
+    background: rgba(42,125,90,0.25);
+    color: #6FCBA1;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .bill-row .badge [data-lucide] { width: 11px; height: 11px; }
+
+  .plan-actions { display: flex; gap: 10px; margin-top: 6px; }
+
+  /* Quota strip */
+  .quota-card { padding: 22px 24px; }
+  .quota-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 18px;
+  }
+  .quota-h h3 { margin:0; font-size: 14px; color: #fff; font-weight: 600; letter-spacing: -0.01em; }
+  .quota-h .period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .quota-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .quota-item .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .quota-item .lab {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+  .quota-item .frac {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; color: #fff; font-weight: 600;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .quota-item .frac small {
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+  }
+  .quota-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .quota-bar .fill {
+    height: 100%;
+    background: var(--akgolf-accent);
+    border-radius: inherit;
+  }
+  .quota-bar .fill.warn { background: #E8B967; }
+  .quota-item .meta {
+    margin-top: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* History table */
+  .history-card { padding: 0; overflow: hidden; }
+  .history-h {
+    padding: 20px 24px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .history-h h3 { margin:0; font-size: 14px; color:#fff; font-weight:600; letter-spacing:-0.01em; }
+  .history-h .filter-group { display: flex; gap: 4px; }
+  .history-h .pill {
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .history-h .pill.active {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-color: rgba(255,255,255,0.12);
+  }
+  table.history {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table.history th {
+    text-align: left;
+    padding: 12px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  table.history td {
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+  table.history tr:last-child td { border-bottom: none; }
+  table.history tr:hover td { background: rgba(255,255,255,0.02); }
+  table.history td.amt {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  table.history td.date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+  }
+  table.history td .desc {
+    font-weight: 500;
+    color: #fff;
+  }
+  table.history td .desc small {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  table.history .stat {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10.5px; font-weight: 600;
+    background: rgba(42,125,90,0.20);
+    color: #6FCBA1;
+  }
+  table.history .stat [data-lucide] { width: 10px; height: 10px; }
+  table.history .stat.fail { background: rgba(184,66,51,0.20); color: #F49283; }
+  table.history .stat.refund { background: rgba(196,138,50,0.22); color: #E8B967; }
+  table.history .dl-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 9px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    font-size: 11px; font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  table.history .dl-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  table.history .dl-btn [data-lucide] { width: 11px; height: 11px; }
+
+  /* Right column */
+  .side-stack { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 18px; }
+  .tier-switch { padding: 22px 24px; }
+  .tier-switch h3 { margin: 0 0 4px; font-size: 14px; color:#fff; font-weight:600; letter-spacing:-0.01em; }
+  .tier-switch .lede { font-size: 12.5px; color: rgba(255,255,255,0.55); margin: 0 0 18px; line-height: 1.5; }
+  .tier-list { display: flex; flex-direction: column; gap: 10px; }
+  .tier {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tier:hover { border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); }
+  .tier.current {
+    border-color: rgba(209,248,67,0.30);
+    background: rgba(209,248,67,0.05);
+    cursor: default;
+  }
+  .tier-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .tier-top .name { font-size: 14px; font-weight: 700; color:#fff; letter-spacing: -0.01em; }
+  .tier-top .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-weight: 700;
+  }
+  .tier .price-row {
+    display: flex; align-items: baseline; gap: 4px;
+    color: rgba(255,255,255,0.85);
+  }
+  .tier .price-row .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: #fff; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .tier .price-row .per { font-size: 12px; color: rgba(255,255,255,0.4); }
+  .tier .meta {
+    margin-top: 6px;
+    font-size: 11.5px; color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .tier-switch .all-link {
+    margin-top: 14px;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 14px;
+    text-decoration: none;
+  }
+  .tier-switch .all-link [data-lucide] { width: 12px; height: 12px; }
+
+  /* Info card (smaller) */
+  .info-card { padding: 18px 22px; }
+  .info-card h4 {
+    margin: 0 0 6px;
+    font-size: 13px; font-weight: 600; color:#fff;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-card h4 [data-lucide] { color: var(--akgolf-accent); width: 14px; height: 14px; }
+  .info-card p {
+    margin: 0; font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+  }
+  .info-card .actions {
+    margin-top: 12px;
+    display: flex; gap: 6px;
+  }
+  .ic-link {
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 10px;
+    border-radius: 7px;
+    display: inline-flex; align-items: center; gap: 5px;
+    text-decoration: none;
+  }
+  .ic-link:hover { background: rgba(255,255,255,0.08); }
+  .ic-link [data-lucide] { width: 11px; height: 11px; }
+  .ic-link.danger { color: #F49283; }
+  .ic-link.danger:hover { background: rgba(184,66,51,0.14); border-color: rgba(184,66,51,0.30); }
+
+  /* Empty state for downloads etc */
+  @media (max-width: 1100px) {
+    .abo-grid { grid-template-columns: 1fr; }
+    .side-stack { position: static; }
+    .plan-hero { grid-template-columns: 1fr; }
+    .plan-hero .divider { display: none; }
+    .quota-grid { grid-template-columns: 1fr; gap: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <!-- Rail -->
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <!-- Nav -->
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item active"><i data-lucide="credit-card"></i> Abonnement</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <!-- Topbar -->
+  <header class="phq-top">
+    <div class="phq-greeting">Mitt abonnement<span class="date">FAKTURA-PERIODE 28 APR – 27 MAI 2026</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i fakturaer…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <!-- Main -->
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ KONTO · FAKTURERING</div>
+      <h1 class="phq-h1">Mitt abonnement</h1>
+      <p class="lede">Aktiv plan, neste betaling, sesjons-kvota og full faktureringshistorikk. Bytt eller kanseller når som helst — endringer trer i kraft fra neste fakturaperiode.</p>
+    </div>
+
+    <div class="abo-grid">
+
+      <!-- HERO PLAN CARD -->
+      <section class="plan-hero">
+        <div>
+          <div class="lab"><span class="dot"></span>Aktiv plan</div>
+          <h2 class="name">AK <em>Plus</em></h2>
+          <div class="price">
+            <span class="v" class="tabular">2 490 kr</span>
+            <span class="per">/ måned</span>
+          </div>
+          <ul class="features">
+            <li><i data-lucide="check"></i>4 individuelle coaching-økter pr. måned</li>
+            <li><i data-lucide="check"></i>Ubegrenset Trackman-tilgang Sandvika</li>
+            <li><i data-lucide="check"></i>AI Coach 24/7 med video-analyse</li>
+            <li><i data-lucide="check"></i>Strategisk match-planlegging pr. bane</li>
+            <li><i data-lucide="check"></i>Prioritert booking 14 dager i forveien</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="plan-bill">
+          <div class="bill-row">
+            <div>
+              <div class="l">Neste betaling</div>
+              <div class="v tabular">2 490 kr <small>· 28. mai 2026</small></div>
+            </div>
+            <span class="badge"><i data-lucide="check"></i>Aktiv</span>
+          </div>
+          <div class="bill-row">
+            <div>
+              <div class="l">Betalingsmetode</div>
+              <div class="v" style="font-size:14px; font-weight:600;">Visa <span style="color:rgba(255,255,255,0.5);">·· 4242</span></div>
+            </div>
+            <button class="phq-btn sm"><i data-lucide="pencil"></i>Endre</button>
+          </div>
+          <div class="bill-row">
+            <div>
+              <div class="l">Medlem siden</div>
+              <div class="v" style="font-size:14px; font-weight:600;">3. mars 2024 <small>· 26 måneder</small></div>
+            </div>
+          </div>
+          <div class="bill-row">
+            <div>
+              <div class="l">Bindingstid</div>
+              <div class="v" style="font-size:14px; font-weight:600;">Ingen <small>· kanseller når som helst</small></div>
+            </div>
+          </div>
+          <div class="plan-actions">
+            <button class="phq-btn primary"><i data-lucide="arrow-up-right"></i>Oppgrader til Pro</button>
+            <button class="phq-btn"><i data-lucide="settings"></i>Administrer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUOTA -->
+      <section class="phq-card quota-card" style="grid-column: 1 / 2;">
+        <div class="quota-h">
+          <h3>Forbruk denne perioden</h3>
+          <div class="period">28 APR – 27 MAI · 12 dager igjen</div>
+        </div>
+        <div class="quota-grid">
+          <div class="quota-item">
+            <div class="top">
+              <span class="lab">Coaching-økter</span>
+              <span class="frac">2 <small>/ 4</small></span>
+            </div>
+            <div class="quota-bar"><div class="fill" style="width:50%;"></div></div>
+            <div class="meta">2 ØKTER IGJEN · NESTE 30. APR · KL 14:00</div>
+          </div>
+          <div class="quota-item">
+            <div class="top">
+              <span class="lab">Trackman-timer</span>
+              <span class="frac">8.5 <small>/ ∞</small></span>
+            </div>
+            <div class="quota-bar"><div class="fill" style="width:42%;"></div></div>
+            <div class="meta">SANDVIKA · UBEGRENSET PÅ PLUS</div>
+          </div>
+          <div class="quota-item">
+            <div class="top">
+              <span class="lab">AI Coach-minutter</span>
+              <span class="frac">147 <small>/ 240</small></span>
+            </div>
+            <div class="quota-bar"><div class="fill warn" style="width:61%;"></div></div>
+            <div class="meta">93 MIN IGJEN · RESETTES 28. MAI</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY -->
+      <section class="phq-card history-card" style="grid-column: 1 / 2;">
+        <div class="history-h">
+          <h3>Betalingshistorikk</h3>
+          <div class="filter-group">
+            <button class="pill active">Alle</button>
+            <button class="pill">2026</button>
+            <button class="pill">2025</button>
+            <button class="pill">Refunderte</button>
+          </div>
+        </div>
+        <table class="history">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Dato</th>
+              <th>Beskrivelse</th>
+              <th style="width: 130px;">Status</th>
+              <th style="width: 110px; text-align:right;">Beløp</th>
+              <th style="width: 110px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="date">28. APR 2026</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2026-0428-1142</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">28. MAR 2026</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2026-0328-1098</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">14. MAR 2026</td>
+              <td><div class="desc">Junior-camp · Holtsmark · Markus<small>Engangskjøp · 2 dagers påskecamp</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">3 200 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">28. FEB 2026</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2026-0228-1054</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">12. FEB 2026</td>
+              <td><div class="desc">Refundert · feil booking 8. feb<small>Tilbakebetalt til Visa ·· 4242</small></div></td>
+              <td><span class="stat refund"><i data-lucide="undo-2"></i>Refundert</span></td>
+              <td class="amt" style="color:#E8B967;">−890 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">28. JAN 2026</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2026-0128-1011</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+            <tr>
+              <td class="date">28. DES 2025</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2025-1228-0967</small></div></td>
+              <td><span class="stat fail"><i data-lucide="x"></i>Mislyktes</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="refresh-cw"></i>Prøv igjen</a></td>
+            </tr>
+            <tr>
+              <td class="date">28. NOV 2025</td>
+              <td><div class="desc">AK Plus · månedsabonnement<small>Faktura #INV-2025-1128-0921</small></div></td>
+              <td><span class="stat"><i data-lucide="check"></i>Betalt</span></td>
+              <td class="amt">2 490 kr</td>
+              <td><a class="dl-btn"><i data-lucide="download"></i>PDF</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- RIGHT SIDE STACK -->
+      <aside class="side-stack" style="grid-column: 2 / 3; grid-row: 2 / 5;">
+
+        <!-- Tier switcher -->
+        <section class="phq-card tier-switch">
+          <h3>Bytt plan</h3>
+          <p class="lede">Endring trer i kraft fra neste fakturaperiode (28. mai). Du beholder nåværende fordeler ut perioden.</p>
+          <div class="tier-list">
+            <div class="tier">
+              <div class="tier-top">
+                <span class="name">Free</span>
+              </div>
+              <div class="price-row"><span class="v tabular">0 kr</span><span class="per">/ mnd</span></div>
+              <div class="meta">Trackman pay-per-hour · ingen coaching · grunnstats</div>
+            </div>
+            <div class="tier current">
+              <div class="tier-top">
+                <span class="name">Plus</span>
+                <span class="badge">Din plan</span>
+              </div>
+              <div class="price-row"><span class="v tabular">2 490 kr</span><span class="per">/ mnd</span></div>
+              <div class="meta">4 coaching-økter · ubegr. Trackman · AI Coach</div>
+            </div>
+            <div class="tier">
+              <div class="tier-top">
+                <span class="name">Pro</span>
+              </div>
+              <div class="price-row"><span class="v tabular">4 990 kr</span><span class="per">/ mnd</span></div>
+              <div class="meta">8 økter · prioritert booking · video-bibliotek · turneringscoach</div>
+            </div>
+          </div>
+          <a class="all-link"><i data-lucide="arrow-right"></i>Sammenlign alle planer</a>
+        </section>
+
+        <!-- Pause / cancel -->
+        <section class="phq-card info-card">
+          <h4><i data-lucide="pause"></i>Sett på pause</h4>
+          <p>Reise eller skade? Pause planen i opptil 3 måneder uten å miste medlems-rabatten.</p>
+          <div class="actions">
+            <a class="ic-link"><i data-lucide="pause"></i>Pause i 30 dager</a>
+          </div>
+        </section>
+
+        <section class="phq-card info-card">
+          <h4><i data-lucide="life-buoy"></i>Trenger du hjelp?</h4>
+          <p>Faktureringsspørsmål, refusjoner eller bytte. Vi svarer innen 24 timer på hverdager.</p>
+          <div class="actions">
+            <a class="ic-link"><i data-lucide="mail"></i>Kontakt support</a>
+            <a class="ic-link danger"><i data-lucide="x-circle"></i>Kanseller</a>
+          </div>
+        </section>
+
+      </aside>
+
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

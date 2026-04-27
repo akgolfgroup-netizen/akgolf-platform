@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D27 — Hub-oversikt · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .hub-hero { background: linear-gradient(160deg, rgba(209,248,67,0.08), rgba(13,46,35,0.0)), var(--akgolf-card-dark); border:1.5px solid rgba(209,248,67,0.25); border-radius:20px; padding:28px 32px; margin-bottom:24px; display:grid; grid-template-columns: 1.4fr 1fr; gap:28px; align-items:center; }
+  .hub-hero .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.16em; color:var(--akgolf-accent); text-transform:uppercase; font-weight:700; }
+  .hub-hero h2 { margin:6px 0 0; font-size:30px; color:#fff; font-weight:800; letter-spacing:-0.025em; }
+  .hub-hero h2 em { font-style:normal; color:var(--akgolf-accent); }
+  .hub-hero p { margin:14px 0 0; color:rgba(255,255,255,0.7); font-size:14px; line-height:1.6; max-width:55ch; }
+  .hub-stats { display:grid; grid-template-columns: repeat(2,1fr); gap:12px; }
+  .hs { background:rgba(0,0,0,0.20); border-radius:12px; padding:14px 16px; }
+  .hs .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; font-weight:700; }
+  .hs .v { font-size:22px; color:#fff; font-weight:800; line-height:1; margin-top:6px; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; }
+  .hs .v small { font-size:12px; color:rgba(255,255,255,0.5); margin-left:3px; font-weight:500; }
+
+  /* Module strip */
+  .strip { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:24px; }
+  .mod-card { background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 20px; cursor:pointer; transition: all 200ms; position:relative; }
+  .mod-card:hover { border-color: rgba(209,248,67,0.30); transform:translateY(-2px); }
+  .mod-card .ic { width:40px; height:40px; border-radius:10px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); display:grid; place-items:center; margin-bottom:14px; }
+  .mod-card .ic [data-lucide]{ width:18px; height:18px; }
+  .mod-card .ttl { font-size:14px; color:#fff; font-weight:700; }
+  .mod-card .sub { font-size:12px; color:rgba(255,255,255,0.55); line-height:1.5; margin-top:4px; }
+  .mod-card .badge { position:absolute; top:14px; right:14px; font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:3px 7px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); border-radius:5px; font-weight:700; letter-spacing:0.06em; }
+  .mod-card .badge.warn { background: rgba(232,185,103,0.18); color:#E8B967; }
+
+  /* Bottom split */
+  .bsplit { display:grid; grid-template-columns: 1.5fr 1fr; gap:18px; }
+  .panel { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:22px 26px; }
+  .panel h3 { margin:0 0 14px; font-size:15px; color:#fff; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .panel h3 .more { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); font-weight:700; }
+
+  .activity-row { padding:11px 0; display:grid; grid-template-columns: 28px 1fr auto; gap:12px; border-top:1px solid rgba(255,255,255,0.04); align-items:center; }
+  .activity-row:first-of-type { border-top:none; }
+  .activity-row .ic { width:28px; height:28px; border-radius:6px; display:grid; place-items:center; background: rgba(255,255,255,0.05); }
+  .activity-row .ic [data-lucide]{ width:13px; height:13px; color:rgba(255,255,255,0.7); }
+  .activity-row .ic.green { background:rgba(42,125,90,0.30); }
+  .activity-row .ic.green [data-lucide]{ color:#6FCBA1; }
+  .activity-row .ic.amber { background:rgba(232,185,103,0.20); }
+  .activity-row .ic.amber [data-lucide]{ color:#E8B967; }
+  .activity-row .ic.purple { background:rgba(175,82,222,0.18); }
+  .activity-row .ic.purple [data-lucide]{ color:#C99CF3; }
+  .activity-row .body { font-size:13px; color:rgba(255,255,255,0.85); line-height:1.45; }
+  .activity-row .body strong { color:#fff; font-weight:700; }
+  .activity-row .when { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.06em; }
+
+  .quick { display:flex; flex-direction:column; gap:10px; }
+  .quick-row { padding: 14px 16px; background:rgba(0,0,0,0.20); border-radius:10px; display:flex; gap:12px; align-items:center; cursor:pointer; }
+  .quick-row:hover { background:rgba(255,255,255,0.04); }
+  .quick-row .ic { width:32px; height:32px; border-radius:7px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); display:grid; place-items:center; }
+  .quick-row .ic [data-lucide]{ width:14px; height:14px; }
+  .quick-row .nm { font-size:13px; color:#fff; font-weight:600; }
+  .quick-row .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-top:1px; }
+  .quick-row .arrow { margin-left:auto; color: rgba(255,255,255,0.4); }
+  .quick-row .arrow [data-lucide]{ width:14px; height:14px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn active"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">CoachHQ</div>
+    <div class="chq-nav-item active"><i data-lucide="layout-dashboard"></i>Hub-oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i>Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i>Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i>Coaching board</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">CoachHQ Hub</div>
+    <div class="chq-top-meta">ERIK SOLHEIM · ALL DRIFT EN PLASS</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk overalt…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <section class="hub-hero">
+      <div>
+        <div class="lab">/ HUB · TIRSDAG 30. APRIL · 09:14</div>
+        <h2>God morgen, Erik. <em>Tett uke foran deg.</em></h2>
+        <p>4 økter i dag, 3 godkjenninger venter, refusjon Per Rasmussen er klar. Sofie ned 0.4 i HCP — ny PB! Trackman på Anders i går viste +2 mph, alignment-arbeidet sitter.</p>
+      </div>
+      <div class="hub-stats">
+        <div class="hs"><div class="l">Spillere · aktive</div><div class="v">42</div></div>
+        <div class="hs"><div class="l">Økter · denne uka</div><div class="v">28</div></div>
+        <div class="hs"><div class="l">Belegg</div><div class="v">94<small>%</small></div></div>
+        <div class="hs"><div class="l">Inntekt · mai</div><div class="v">142k</div></div>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="mod-card"><span class="badge">4 I DAG</span><div class="ic"><i data-lucide="target"></i></div><div class="ttl">Dagens fokus</div><div class="sub">3 prioriterte oppgaver + dagsplan</div></div>
+      <div class="mod-card"><span class="badge warn">3 VENTER</span><div class="ic"><i data-lucide="check-square"></i></div><div class="ttl">Godkjenninger</div><div class="sub">Bookinger og refusjoner som krever deg</div></div>
+      <div class="mod-card"><div class="ic"><i data-lucide="users"></i></div><div class="ttl">Spillere</div><div class="sub">42 aktive · 5 nye denne måneden</div></div>
+      <div class="mod-card"><span class="badge">7 ULESTE</span><div class="ic"><i data-lucide="message-circle"></i></div><div class="ttl">Meldinger</div><div class="sub">3 urgent · foreldre Hansen, Holtsmark, Markus</div></div>
+      <div class="mod-card"><div class="ic"><i data-lucide="calendar"></i></div><div class="ttl">Kalender</div><div class="sub">Uke 18 · 28 økter · 94 % belegg</div></div>
+      <div class="mod-card"><div class="ic"><i data-lucide="package"></i></div><div class="ttl">Tjenester</div><div class="sub">12 aktive · pakker, abo, drop-in, camp</div></div>
+      <div class="mod-card"><div class="ic"><i data-lucide="credit-card"></i></div><div class="ttl">Økonomi</div><div class="sub">142k mai · 4 fakturaer ute · P&amp;L grønt</div></div>
+      <div class="mod-card"><div class="ic"><i data-lucide="bar-chart-3"></i></div><div class="ttl">Rapporter</div><div class="sub">Coach-effekt · 12-mnd snitt HCP −2.6</div></div>
+    </div>
+
+    <div class="bsplit">
+      <section class="panel">
+        <h3>Aktivitet · siste 24 timer<span class="more">SE ALLE</span></h3>
+        <div class="activity-row">
+          <div class="ic green"><i data-lucide="trending-down"></i></div>
+          <div class="body"><strong>Sofie Aas</strong> — HCP 8.1 → 7.7 etter helgen på Bogstad. Ny PB! Trening sitter.</div>
+          <span class="when">2 t SIDEN</span>
+        </div>
+        <div class="activity-row">
+          <div class="ic amber"><i data-lucide="alert-circle"></i></div>
+          <div class="body"><strong>Foreldre Hansen</strong> — ber om å flytte tor 9. mai til man 12. mai 16:30 (skoletur). Foreslått tid sendt — venter på bekreftelse.</div>
+          <span class="when">3 t SIDEN</span>
+        </div>
+        <div class="activity-row">
+          <div class="ic green"><i data-lucide="check-circle"></i></div>
+          <div class="body"><strong>Anders Kristiansen</strong> · Trackman re-test fullført. Driver +2 mph club speed, spin-axis +12° → +8.4° — alignment-arbeidet sitter.</div>
+          <span class="when">I GÅR 14:30</span>
+        </div>
+        <div class="activity-row">
+          <div class="ic purple"><i data-lucide="rotate-ccw"></i></div>
+          <div class="body"><strong>Refusjon</strong> · Per Rasmussen, NOK 1 200 prosessert via Stripe (booking 25. apr). Kunden er notifisert.</div>
+          <span class="when">I GÅR 09:00</span>
+        </div>
+        <div class="activity-row">
+          <div class="ic"><i data-lucide="user-plus"></i></div>
+          <div class="body"><strong>Ny spiller</strong> · Lina Holm registrert · Junior Mid · invitert til kohort onsdager 17:00.</div>
+          <span class="when">I GÅR 16:42</span>
+        </div>
+        <div class="activity-row">
+          <div class="ic green"><i data-lucide="dollar-sign"></i></div>
+          <div class="body">12 fakturaer for april sendt automatisk · 142 000 kr · 4 ute (forventet betaling innen 7 dager)</div>
+          <span class="when">2 D SIDEN</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Hurtig-handlinger<span class="more">SHORTCUTS</span></h3>
+        <div class="quick">
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="plus"></i></div>
+            <div><div class="nm">Ny booking</div><div class="meta">CMD + B</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="user-plus"></i></div>
+            <div><div class="nm">Ny spiller</div><div class="meta">+ INVITE</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="layers"></i></div>
+            <div><div class="nm">Bygg treningsplan</div><div class="meta">FOR EN SPILLER</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="message-circle"></i></div>
+            <div><div class="nm">Send kringkast</div><div class="meta">TIL KOHORT</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="file-down"></i></div>
+            <div><div class="nm">Eksport · måneds-PDF</div><div class="meta">TIL STYRET</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+          <div class="quick-row">
+            <div class="ic"><i data-lucide="sparkles"></i></div>
+            <div><div class="nm">Spør AI-assistent</div><div class="meta">«HVEM TRENGER OPPFØLG?»</div></div>
+            <div class="arrow"><i data-lucide="arrow-right"></i></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

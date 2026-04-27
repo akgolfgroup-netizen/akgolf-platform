@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A13 — Sammenligning · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Filter bar */
+  .cmp-filter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .filt {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .filt .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 4px;
+  }
+  .filt .v { color: #fff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .filt .v [data-lucide] { width: 14px; height: 14px; color: var(--akgolf-accent); }
+  .filt .pill-group { display: flex; gap: 4px; margin-top: 6px; }
+  .filt .pill-group button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.6);
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .filt .pill-group button.active { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); }
+
+  /* Top hero (one glow) */
+  .hero-card {
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.10);
+    background: linear-gradient(160deg, rgba(209,248,67,0.05), rgba(13,46,35,0.0)), var(--akgolf-card-dark);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+  }
+  .hero-card .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .hero-card h2 {
+    margin: 0; font-size: 28px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em; line-height: 1.2;
+    text-wrap: balance;
+  }
+  .hero-card h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .hero-card .lede {
+    margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7);
+    line-height: 1.6; max-width: 50ch;
+  }
+  .hero-card .actions { margin-top: 20px; display: flex; gap: 8px; }
+
+  /* Big percentile dial */
+  .perc-dial {
+    display: flex; align-items: center; gap: 24px;
+    justify-content: end;
+  }
+  .dial {
+    width: 200px; height: 200px;
+    position: relative;
+  }
+  .dial svg { transform: rotate(-90deg); }
+  .dial .center {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    text-align: center;
+  }
+  .dial .v {
+    font-size: 48px; font-weight: 800;
+    color: var(--akgolf-accent); letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .dial .v small { font-size: 18px; }
+  .dial .lab2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+  }
+  .perc-dial .meta {
+    font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6;
+  }
+  .perc-dial .meta strong { color:#fff; }
+  .perc-dial .meta .delta {
+    font-family: 'JetBrains Mono', monospace;
+    color: #6FCBA1; font-size: 13px; font-weight: 700;
+    margin-top: 6px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .perc-dial .meta .delta [data-lucide] { width: 13px; height: 13px; }
+
+  /* Section header */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 32px 0 14px;
+  }
+  .sec-h h3 { margin: 0; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .sec-h .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Compare grid (4 cards) */
+  .cmp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .cmp-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .cmp-card .top { display: flex; justify-content: space-between; align-items: start; margin-bottom: 18px; }
+  .cmp-card .top .name { font-size: 14px; font-weight: 600; color: #fff; }
+  .cmp-card .top .name small { display: block; font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; font-weight: 400; }
+  .cmp-card .top .perc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    padding: 4px 9px; border-radius: 6px;
+    font-weight: 700;
+  }
+  .cmp-card .top .perc.below { background: rgba(196,138,50,0.22); color: #E8B967; }
+  .cmp-card .top .perc.way-below { background: rgba(184,66,51,0.22); color: #F49283; }
+
+  /* Bar set: me / peer / AK pyramid */
+  .bar-set { display: flex; flex-direction: column; gap: 12px; }
+  .bar-row { }
+  .bar-row .meta-row {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;
+  }
+  .bar-row .meta-row .lbl { font-size: 12px; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 6px; }
+  .bar-row .meta-row .lbl .swatch { width: 8px; height: 8px; border-radius: 2px; }
+  .bar-row .meta-row .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: #fff; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .bar-track {
+    height: 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-track .fill {
+    height: 100%;
+    border-radius: inherit;
+  }
+  .bar-track .fill.me { background: var(--akgolf-accent); }
+  .bar-track .fill.peer { background: #6BB1FF; }
+  .bar-track .fill.pyramid { background: rgba(255,255,255,0.30); }
+
+  .cmp-card .delta-row {
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cmp-card .delta-row .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .cmp-card .delta-row .v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700; color: #6FCBA1;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .cmp-card .delta-row .v.neg { color: #F49283; }
+  .cmp-card .delta-row .v [data-lucide] { width: 13px; height: 13px; }
+
+  /* Focus callout */
+  .focus-callout {
+    background: linear-gradient(160deg, rgba(209,248,67,0.06), rgba(13,46,35,0.0)), var(--akgolf-card-dark);
+    border: 1px solid rgba(209,248,67,0.20);
+    border-radius: 18px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .focus-callout .ic {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+  }
+  .focus-callout .ic [data-lucide] { width: 28px; height: 28px; stroke-width: 2.2; }
+  .focus-callout h4 {
+    margin: 0 0 4px; font-size: 16px; color: #fff; font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .focus-callout h4 .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    padding: 2px 7px; border-radius: 5px;
+    margin-left: 8px; font-weight: 700;
+  }
+  .focus-callout p { margin: 0; font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+
+  /* Pyramid section */
+  .pyramid-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 24px 28px;
+  }
+  .pyramid-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    align-items: center;
+  }
+  .ak-pyramid {
+    display: flex; flex-direction: column; gap: 5px;
+    padding: 14px 0;
+  }
+  .pyr-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 80px 60px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
+  }
+  .pyr-row.you {
+    border-color: rgba(209,248,67,0.40);
+    background: rgba(209,248,67,0.06);
+    box-shadow: 0 0 0 1px rgba(209,248,67,0.20);
+  }
+  .pyr-row .lvl {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7);
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 700;
+  }
+  .pyr-row.you .lvl {
+    background: var(--akgolf-accent); color: #0A1F18;
+  }
+  .pyr-row .name { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .pyr-row.you .name { color: #fff; font-weight: 700; }
+  .pyr-row .name small { display: block; font-size: 10.5px; color: rgba(255,255,255,0.4); font-weight: 400; margin-top: 1px; letter-spacing: 0.04em; }
+  .pyr-row .hcp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    font-variant-numeric: tabular-nums;
+  }
+  .pyr-row .pop {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    text-align: right;
+  }
+
+  .pyr-info h4 { margin: 0 0 10px; color:#fff; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  .pyr-info h4 em { font-style: normal; color: var(--akgolf-accent); }
+  .pyr-info p { margin: 0 0 16px; font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .pyr-info .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pyr-info .stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .pyr-info .stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin-bottom: 4px;
+  }
+  .pyr-info .stat .v {
+    font-size: 22px; font-weight: 800; color: #fff;
+    letter-spacing: -0.02em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .pyr-info .stat .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 4px; font-weight: 500; letter-spacing: 0; }
+
+  @media (max-width: 1100px) {
+    .cmp-grid { grid-template-columns: 1fr; }
+    .hero-card { grid-template-columns: 1fr; }
+    .perc-dial { justify-content: center; }
+    .pyramid-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="bar-chart-3"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Statistikk</div>
+    <div class="phq-nav-item"><i data-lucide="trending-up"></i> Mine tall</div>
+    <div class="phq-nav-item active"><i data-lucide="bar-chart-3"></i> Sammenligning</div>
+    <div class="phq-nav-item"><i data-lucide="award"></i> Talent-status</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Sammenligning<span class="date">SISTE 90 DAGER · 12 RUNDER · 24 ØKTER</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i stats…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ STATISTIKK · BENCHMARK</div>
+      <h1 class="phq-h1">Hvordan ligger du an?</h1>
+      <p class="lede">Sammenlignet mot peer-gruppe (HCP 6–10) og AK-pyramiden. Tallene oppdateres etter hver runde og økt — siste sync 14:32 i dag.</p>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="cmp-filter">
+      <div class="filt">
+        <div class="l">Periode</div>
+        <div class="pill-group">
+          <button>30d</button>
+          <button class="active">90d</button>
+          <button>Sesong</button>
+          <button>Alle</button>
+        </div>
+      </div>
+      <div class="filt">
+        <div class="l">Sammenlign mot</div>
+        <div class="v"><i data-lucide="users"></i>Peer (HCP 6–10)</div>
+      </div>
+      <div class="filt">
+        <div class="l">Datatype</div>
+        <div class="v"><i data-lucide="layers"></i>Alle stats</div>
+      </div>
+      <button class="phq-btn"><i data-lucide="download"></i>Eksporter</button>
+    </div>
+
+    <!-- Hero (the ONE glow) -->
+    <section class="hero-card">
+      <div>
+        <div class="lab">Total benchmark</div>
+        <h2>Du ligger over <em>78 % av spillere</em> i din peer-gruppe.</h2>
+        <p class="lede">Sterk på greens og approach. Hovedmulighet: SG Off-the-tee ligger på 23. percentil — størst potensial for poengforbedring.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="target"></i>Sett som fokus</button>
+          <button class="phq-btn"><i data-lucide="message-circle"></i>Diskuter med Erik</button>
+        </div>
+      </div>
+      <div class="perc-dial">
+        <div class="dial">
+          <svg viewBox="0 0 200 200" width="200" height="200">
+            <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14"/>
+            <circle cx="100" cy="100" r="84"
+              fill="none"
+              stroke="url(#g1)"
+              stroke-width="14"
+              stroke-linecap="round"
+              stroke-dasharray="527.8"
+              stroke-dashoffset="116.1"/>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#D1F843"/>
+                <stop offset="100%" stop-color="#6FCBA1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="center">
+            <div>
+              <div class="v">78<small>%</small></div>
+              <div class="lab2">Percentil</div>
+            </div>
+          </div>
+        </div>
+        <div class="meta">
+          <strong>Topp 22 %</strong> av peer-gruppen<br>
+          (n = 142 spillere, HCP 6–10)
+          <div class="delta"><i data-lucide="trending-up"></i>+7 percentiler · 90d</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Focus callout -->
+    <div class="focus-callout">
+      <div class="ic"><i data-lucide="zap"></i></div>
+      <div>
+        <h4>Største mulighet: SG Off-the-tee <span class="tag">−1.2 stroke / runde</span></h4>
+        <p>Drives havner i feil semi-rough (snitt 12 yds høyre av target). Erik foreslår alignment-drill 3 dager før neste turnering — kan flytte deg fra 23. til 50. percentil på 6 uker.</p>
+      </div>
+      <div>
+        <button class="phq-btn primary"><i data-lucide="arrow-right"></i>Lag plan</button>
+      </div>
+    </div>
+
+    <!-- Detailed bar comparison -->
+    <div class="sec-h">
+      <h3>Detaljert sammenligning</h3>
+      <div class="sub">
+        <span style="color:var(--akgolf-accent);">●</span> Du
+        &nbsp;&nbsp;<span style="color:#6BB1FF;">●</span> Peer (HCP 6–10)
+        &nbsp;&nbsp;<span style="color:rgba(255,255,255,0.45);">●</span> AK-pyramide median
+      </div>
+    </div>
+    <div class="cmp-grid">
+
+      <!-- Driving Distance -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">Driver Carry<small>Yards · gjennomsnitt</small></div>
+          <span class="perc">82. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">258 yds</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 86%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">241 yds</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 80%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">228 yds</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 76%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v"><i data-lucide="trending-up"></i>+17 yds (+7.0%)</span>
+        </div>
+      </div>
+
+      <!-- SG Off-tee -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">SG · Off-the-tee<small>Strokes Gained per runde</small></div>
+          <span class="perc way-below">23. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">−1.2</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 28%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">+0.4</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 58%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">+0.0</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 50%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v neg"><i data-lucide="trending-down"></i>−1.6 strokes</span>
+        </div>
+      </div>
+
+      <!-- GIR % -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">GIR-prosent<small>Greens in Regulation</small></div>
+          <span class="perc">71. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">58 %</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 58%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">52 %</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 52%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">48 %</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 48%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v"><i data-lucide="trending-up"></i>+6 %-poeng</span>
+        </div>
+      </div>
+
+      <!-- Putts per round -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">Putts pr. runde<small>Lavere er bedre</small></div>
+          <span class="perc">68. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">30.2</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 68%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">31.4</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 60%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">32.1</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 54%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v"><i data-lucide="trending-up"></i>−1.2 putt</span>
+        </div>
+      </div>
+
+      <!-- Scrambling -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">Scrambling-prosent<small>Par fra rough/bunker</small></div>
+          <span class="perc below">34. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">42 %</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 42%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">51 %</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 51%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">46 %</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 46%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v neg"><i data-lucide="trending-down"></i>−9 %-poeng</span>
+        </div>
+      </div>
+
+      <!-- Approach prox -->
+      <div class="cmp-card">
+        <div class="top">
+          <div class="name">Approach prox.<small>Avstand til hull · 100–150 yds</small></div>
+          <span class="perc">76. PERC</span>
+        </div>
+        <div class="bar-set">
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:var(--akgolf-accent);"></span>Du</span><span class="num">7.4 m</span></div>
+            <div class="bar-track"><div class="fill me" style="width: 76%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:#6BB1FF;"></span>Peer</span><span class="num">9.1 m</span></div>
+            <div class="bar-track"><div class="fill peer" style="width: 60%;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="meta-row"><span class="lbl"><span class="swatch" style="background:rgba(255,255,255,0.30);"></span>Pyramide</span><span class="num">10.2 m</span></div>
+            <div class="bar-track"><div class="fill pyramid" style="width: 52%;"></div></div>
+          </div>
+        </div>
+        <div class="delta-row">
+          <span class="lab">vs peer</span>
+          <span class="v"><i data-lucide="trending-up"></i>−1.7 m nærmere</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pyramid -->
+    <div class="sec-h">
+      <h3>Plassering i AK-pyramiden</h3>
+      <div class="sub">A–K · talentutviklingsmodell</div>
+    </div>
+    <section class="pyramid-card">
+      <div class="pyramid-grid">
+        <div class="ak-pyramid">
+          <div class="pyr-row"><div class="lvl">A</div><div class="name">Tour-spiller<small>HOVEDTOUR · TOPP 0,1 %</small></div><div class="hcp">+5.0 ↓</div><div class="pop">12</div></div>
+          <div class="pyr-row"><div class="lvl">B</div><div class="name">Challenge-tour<small>SCRATCH · TOPP 1 %</small></div><div class="hcp">+2.0 ↓</div><div class="pop">38</div></div>
+          <div class="pyr-row"><div class="lvl">C</div><div class="name">Elite amatør<small>NORD · TOPP 5 %</small></div><div class="hcp">0–4.0</div><div class="pop">94</div></div>
+          <div class="pyr-row"><div class="lvl">D</div><div class="name">Klubbelite<small>TOPP KLUBB-AMATØRER</small></div><div class="hcp">4.1–7.5</div><div class="pop">218</div></div>
+          <div class="pyr-row you"><div class="lvl">E</div><div class="name">Kompetent klubbspiller<small>DIN POSISJON · 47. PERC</small></div><div class="hcp">7.6–11.0</div><div class="pop">412</div></div>
+          <div class="pyr-row"><div class="lvl">F</div><div class="name">Erfaren spiller<small>HOVEDTYNGDE</small></div><div class="hcp">11.1–15.0</div><div class="pop">684</div></div>
+          <div class="pyr-row"><div class="lvl">G</div><div class="name">Bogey-spiller<small>JEVN UTVIKLING</small></div><div class="hcp">15.1–20.0</div><div class="pop">540</div></div>
+          <div class="pyr-row"><div class="lvl">H–K</div><div class="name">Mosjonist · ny spiller<small>OPPLÆRING & KLUBBLIV</small></div><div class="hcp">20.1+</div><div class="pop">820</div></div>
+        </div>
+        <div class="pyr-info">
+          <h4>Du er på <em>nivå E.</em></h4>
+          <p>Kompetent klubbspiller — én av 412 i AK-pyramiden. For å nå nivå D (klubbelite) trenger du HCP under 7.5 og minst 8 turneringsrunder under 80 strokes. Realistisk i løpet av 12 måneder med nåværende utvikling.</p>
+          <div class="stats">
+            <div class="stat"><div class="l">Din HCP</div><div class="v">8.4</div></div>
+            <div class="stat"><div class="l">Til nivå D</div><div class="v">−0.9 <small>HCP</small></div></div>
+            <div class="stat"><div class="l">Trend 90d</div><div class="v" style="color:var(--akgolf-accent);">−1.4</div></div>
+            <div class="stat"><div class="l">Prognose 12mnd</div><div class="v">7.0 ± 1.2</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

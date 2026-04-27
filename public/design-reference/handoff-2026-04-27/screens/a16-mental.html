@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A16 — Mental · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero with IZOF zone meter */
+  .mental-hero {
+    background:
+      radial-gradient(circle at 75% 30%, rgba(175,82,222,0.10), transparent 55%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(175,82,222,0.30);
+    box-shadow: 0 0 32px rgba(175,82,222,0.10);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px;
+  }
+  .mental-hero .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #C99CF3; font-weight: 700; margin-bottom: 10px;
+  }
+  .mental-hero h2 {
+    margin: 0; font-size: 28px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em; line-height: 1.2;
+  }
+  .mental-hero h2 em { font-style: normal; color: #D4AAF7; }
+  .mental-hero .lede {
+    margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7);
+    line-height: 1.6; max-width: 50ch;
+  }
+  .mental-hero .actions { margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* IZOF meter */
+  .izof {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(175,82,222,0.20);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .izof .h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .izof .h-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); font-weight: 700;
+  }
+  .izof .h-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+    color: #D1F843;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .izof .h-status .pulse { width: 7px; height: 7px; border-radius: 50%; background: #D1F843; box-shadow: 0 0 8px rgba(209,248,67,0.6); }
+
+  .meter {
+    height: 28px; border-radius: 14px;
+    background: linear-gradient(to right, #6BB1FF 0%, #D1F843 35%, #D1F843 65%, #F49283 100%);
+    position: relative;
+    margin: 6px 0 8px;
+  }
+  .meter .zone {
+    position: absolute; top: 0; bottom: 0;
+    left: 30%; right: 30%;
+    background: rgba(255,255,255,0.10);
+    border-left: 1.5px dashed rgba(255,255,255,0.50);
+    border-right: 1.5px dashed rgba(255,255,255,0.50);
+  }
+  .meter .marker {
+    position: absolute; top: -6px; bottom: -6px;
+    left: 56%; width: 4px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.7);
+  }
+  .meter .marker::after {
+    content: 'DU';
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; color: #fff;
+    background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 3px;
+  }
+  .meter-labels {
+    display: grid; grid-template-columns: 30% 40% 30%;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .meter-labels span { text-align: center; color: rgba(255,255,255,0.55); }
+  .meter-labels span.opt { color: #D1F843; font-weight: 700; }
+
+  .izof-foot { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .izof-foot .it { font-size: 11px; color: rgba(255,255,255,0.55); }
+  .izof-foot .it strong { display: block; color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 1px; }
+
+  /* Section header */
+  .sec-h { display: flex; justify-content: space-between; align-items: end; margin: 28px 0 14px; }
+  .sec-h h3 { margin: 0; font-size: 18px; color:#fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  /* Routine builder */
+  .routine-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+  }
+  .routine-card h4 { margin: 0 0 4px; color: #fff; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .routine-card .sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+
+  .routine-steps {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    position: relative;
+  }
+  .routine-steps::before {
+    content: ''; position: absolute; top: 28px; left: 8%; right: 8%;
+    height: 2px; background: rgba(255,255,255,0.06);
+    z-index: 0;
+  }
+  .step {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 14px 16px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .step .num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; font-weight: 800;
+    margin-bottom: 10px;
+    box-shadow: 0 0 0 4px #0D2E23;
+  }
+  .step .ic { color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+  .step .ic [data-lucide] { width: 20px; height: 20px; }
+  .step .name { font-size: 13px; color: #fff; font-weight: 600; line-height: 1.3; }
+  .step .dur {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+  }
+  .step.locked .num { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.55); box-shadow: 0 0 0 4px #0D2E23; }
+
+  .routine-foot {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .routine-foot .l { font-size: 12px; color: rgba(255,255,255,0.5); display: flex; align-items: center; gap: 8px; }
+  .routine-foot .l strong { color: #fff; font-weight: 600; }
+
+  /* Two-column: drills + journal */
+  .col-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+
+  /* Drill library */
+  .drill-card { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 16px; padding: 22px 24px; }
+  .drill-tabs { display: flex; gap: 4px; padding: 4px; background: rgba(255,255,255,0.04); border-radius: 9px; margin-bottom: 16px; }
+  .drill-tabs button {
+    flex: 1; padding: 7px 10px; border-radius: 6px;
+    background: transparent; border: none;
+    font-size: 11.5px; color: rgba(255,255,255,0.55); font-weight: 600; cursor: pointer;
+  }
+  .drill-tabs button.active { background: rgba(175,82,222,0.20); color: #D4AAF7; }
+  .drill-list { display: flex; flex-direction: column; gap: 10px; }
+  .drill {
+    display: flex; gap: 14px; align-items: center;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .drill:hover { background: rgba(255,255,255,0.04); }
+  .drill .ic {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: rgba(175,82,222,0.15); color: #C99CF3;
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .drill .ic [data-lucide] { width: 17px; height: 17px; }
+  .drill .body { flex: 1; min-width: 0; }
+  .drill .name { font-size: 13px; color: #fff; font-weight: 600; }
+  .drill .desc { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .drill .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    display: flex; gap: 10px; align-items: center;
+    flex-shrink: 0;
+  }
+  .drill .meta .play {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(209,248,67,0.18); color: var(--akgolf-accent);
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .drill .meta .play [data-lucide] { width: 12px; height: 12px; }
+  .drill.completed { opacity: 0.6; }
+  .drill.completed .name { text-decoration: line-through; }
+
+  /* Journal */
+  .journal-card { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 16px; padding: 22px 24px; display: flex; flex-direction: column; }
+  .j-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .j-h h4 { margin: 0; font-size: 15px; color: #fff; font-weight: 700; letter-spacing: -0.01em; }
+  .j-new {
+    width: 28px; height: 28px;
+    background: var(--akgolf-accent); color: #0A1F18;
+    border-radius: 7px; display: grid; place-items: center;
+    border: none; cursor: pointer;
+  }
+  .j-new [data-lucide] { width: 13px; height: 13px; stroke-width: 2.4; }
+  .j-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .j-entry {
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--akgolf-accent);
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .j-entry.mid { border-left-color: #E8B967; }
+  .j-entry.low { border-left-color: #F49283; }
+  .j-entry .top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .j-entry .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .j-entry .mood {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    color: #6FCBA1;
+  }
+  .j-entry.mid .mood { color: #E8B967; }
+  .j-entry.low .mood { color: #F49283; }
+  .j-entry .text {
+    font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55;
+  }
+  .j-entry .tags {
+    margin-top: 8px;
+    display: flex; gap: 5px;
+    flex-wrap: wrap;
+  }
+  .j-entry .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.6);
+    padding: 2px 6px; border-radius: 4px;
+  }
+
+  /* Mood week */
+  .mood-week { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 16px; padding: 22px 24px; }
+  .mood-week .h { display: flex; justify-content: space-between; align-items: end; margin-bottom: 16px; }
+  .mood-week h4 { margin: 0; font-size: 15px; color: #fff; font-weight: 700; }
+  .mood-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
+  }
+  .mood-day {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .mood-day .d {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .mood-day .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #fff; font-weight: 700;
+    margin-top: 2px;
+  }
+  .mood-day .face {
+    font-size: 24px; margin-top: 6px;
+  }
+  .mood-day .score {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--akgolf-accent); font-weight: 700;
+  }
+  .mood-day.today {
+    border-color: rgba(209,248,67,0.30);
+    background: rgba(209,248,67,0.06);
+  }
+  .mood-day.empty { opacity: 0.4; }
+  .mood-day.empty .face { font-size: 18px; color: rgba(255,255,255,0.30); }
+  .mood-day.empty .score { color: rgba(255,255,255,0.30); }
+
+  @media (max-width: 1100px) {
+    .mental-hero, .col-grid { grid-template-columns: 1fr; }
+    .routine-steps { grid-template-columns: repeat(2, 1fr); }
+    .routine-steps::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="activity"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="brain"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Utvikling</div>
+    <div class="phq-nav-item"><i data-lucide="activity"></i> Tester</div>
+    <div class="phq-nav-item active"><i data-lucide="brain"></i> Mentalt</div>
+    <div class="phq-nav-item"><i data-lucide="award"></i> Talent-status</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Mental performance<span class="date">JOURNAL · IZOF · 5-STEG ROUTINE · 12 DRILLS</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk drills, øvelser…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ MENTALT · IZOF + ROUTINE</div>
+      <h1 class="phq-h1">Spill med roen din.</h1>
+      <p class="lede">IZOF (Individual Zone of Optimal Functioning), pre-shot routine og en privat journal. Erik ser kun det du eksplisitt deler. Mental score 7.8 / 10 — opp 0.4 siden mars.</p>
+    </div>
+
+    <!-- Hero with IZOF -->
+    <section class="mental-hero">
+      <div>
+        <div class="lab">IZOF · today</div>
+        <h2>Du er <em>i sonen.</em><br>Bra dag for skills-trening.</h2>
+        <p class="lede">Optimal arousal er 5.5–7.0 for deg. Du logget 6.4 i morges (sov 7:12 t, RHR 54). Spar krevende putting-arbeid til lørdagen — det er da fokuset dipper for deg.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="check-circle-2"></i>Logg dagens state</button>
+          <button class="phq-btn"><i data-lucide="play"></i>3-min breath drill</button>
+          <button class="phq-btn ghost"><i data-lucide="book-open"></i>Ny journal</button>
+        </div>
+      </div>
+
+      <div class="izof">
+        <div class="h">
+          <span class="h-l">Arousal · selvrapport</span>
+          <span class="h-status"><span class="pulse"></span>I sonen · 6.4 / 10</span>
+        </div>
+        <div class="meter">
+          <div class="zone"></div>
+          <div class="marker"></div>
+        </div>
+        <div class="meter-labels">
+          <span>Underaktivert</span>
+          <span class="opt">Optimal sone</span>
+          <span>Overaktivert</span>
+        </div>
+        <div class="izof-foot">
+          <div class="it"><strong>7:12 t</strong>Søvn i natt</div>
+          <div class="it"><strong>54 bpm</strong>Hvilepuls</div>
+          <div class="it"><strong>Lav</strong>Selvrapportert stress</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Routine builder -->
+    <section class="routine-card">
+      <div style="display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 18px;">
+        <div>
+          <h4>Pre-shot routine · <span style="color:rgba(255,255,255,0.45); font-weight: 600;">5 steg · 14 sek</span></h4>
+          <div class="sub">Konsistens er målt på siste 3 runder · 84 % treff på rutinen</div>
+        </div>
+        <button class="phq-btn"><i data-lucide="settings-2"></i>Tilpass</button>
+      </div>
+
+      <div class="routine-steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div class="ic"><i data-lucide="eye"></i></div>
+          <div class="name">Pust + se mål</div>
+          <div class="dur">3 sek</div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div class="ic"><i data-lucide="brain-circuit"></i></div>
+          <div class="name">Visualiser ballbanen</div>
+          <div class="dur">4 sek</div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div class="ic"><i data-lucide="zap"></i></div>
+          <div class="name">Trigger-ord: «smooth»</div>
+          <div class="dur">1 sek</div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div class="ic"><i data-lucide="hand"></i></div>
+          <div class="name">Ett practice-svv</div>
+          <div class="dur">3 sek</div>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <div class="ic"><i data-lucide="play"></i></div>
+          <div class="name">Step in &amp; commit</div>
+          <div class="dur">3 sek</div>
+        </div>
+      </div>
+
+      <div class="routine-foot">
+        <div class="l">
+          <i data-lucide="info" style="width:14px;height:14px;color:var(--akgolf-accent);"></i>
+          <span>Bygget med <strong>Erik Solvang</strong> · 22. apr 2024 · forsterket av <strong>Hege Lerø</strong> (mental coach)</span>
+        </div>
+        <button class="phq-btn primary"><i data-lucide="play-circle"></i>Trening m/ rytme-coach</button>
+      </div>
+    </section>
+
+    <!-- Two columns: drills + journal -->
+    <div class="col-grid">
+      <!-- Drill library -->
+      <section class="drill-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h4 style="margin: 0; font-size: 16px; color: #fff; font-weight: 700; letter-spacing: -0.01em;">Mental drill-bibliotek</h4>
+          <button class="phq-btn ghost"><i data-lucide="plus"></i>Legg til</button>
+        </div>
+        <div class="drill-tabs">
+          <button class="active">Alle (12)</button>
+          <button>Pust (4)</button>
+          <button>Visualisering (3)</button>
+          <button>Fokus (5)</button>
+        </div>
+        <div class="drill-list">
+          <div class="drill">
+            <div class="ic"><i data-lucide="wind"></i></div>
+            <div class="body">
+              <div class="name">Box breathing · 4-4-4-4</div>
+              <div class="desc">2 minutter · før runde eller når presset bygger seg</div>
+            </div>
+            <div class="meta"><span>02:00</span><div class="play"><i data-lucide="play"></i></div></div>
+          </div>
+          <div class="drill">
+            <div class="ic"><i data-lucide="film"></i></div>
+            <div class="body">
+              <div class="name">Mental rehearsal · drive-hull 7</div>
+              <div class="desc">Visualiser perfekt sving + landing 3× før hull</div>
+            </div>
+            <div class="meta"><span>03:30</span><div class="play"><i data-lucide="play"></i></div></div>
+          </div>
+          <div class="drill completed">
+            <div class="ic"><i data-lucide="anchor"></i></div>
+            <div class="body">
+              <div class="name">Anchor-ord etter dårlig hull</div>
+              <div class="desc">«Neste shot» · reset etter bogey eller verre</div>
+            </div>
+            <div class="meta"><i data-lucide="check-circle-2" style="width:18px;height:18px;color:#6FCBA1;"></i></div>
+          </div>
+          <div class="drill">
+            <div class="ic"><i data-lucide="target"></i></div>
+            <div class="body">
+              <div class="name">Eksternt fokus · spike i bakken</div>
+              <div class="desc">Velg objekt 3 m foran ballen for alignment</div>
+            </div>
+            <div class="meta"><span>01:00</span><div class="play"><i data-lucide="play"></i></div></div>
+          </div>
+          <div class="drill">
+            <div class="ic"><i data-lucide="repeat"></i></div>
+            <div class="body">
+              <div class="name">5-4-3-2-1 grounding</div>
+              <div class="desc">Når roen er borte: 5 du ser, 4 du hører, …</div>
+            </div>
+            <div class="meta"><span>04:00</span><div class="play"><i data-lucide="play"></i></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Journal -->
+      <section class="journal-card">
+        <div class="j-h">
+          <h4>Privat journal · 28d</h4>
+          <button class="j-new"><i data-lucide="pen-line"></i></button>
+        </div>
+        <div class="j-list">
+          <div class="j-entry">
+            <div class="top"><span class="date">I dag · 09:14</span><span class="mood">8.0 / 10</span></div>
+            <div class="text">Sov bra (7:12). Føler meg klar. Vurderer å gå range før jobb. Driveren sitter mer i hodet enn jeg vil — må slippe.</div>
+            <div class="tags"><span class="tag">Søvn</span><span class="tag">Driver</span></div>
+          </div>
+          <div class="j-entry mid">
+            <div class="top"><span class="date">I går · 21:02</span><span class="mood">6.5 / 10</span></div>
+            <div class="text">Runde gikk +6. Hadde det travelt på de første 4 hullene. Pre-shot routine hoppet jeg over på 3 og 5 — bogey på begge.</div>
+            <div class="tags"><span class="tag">Runde</span><span class="tag">Routine</span></div>
+          </div>
+          <div class="j-entry">
+            <div class="top"><span class="date">26. apr</span><span class="mood">8.5 / 10</span></div>
+            <div class="text">Trackman-test gikk over forventet. Ser progresjon på smash factor. Erik ringte etterpå, godt humør.</div>
+            <div class="tags"><span class="tag">Test</span><span class="tag">Coaching</span></div>
+          </div>
+          <div class="j-entry low">
+            <div class="top"><span class="date">23. apr</span><span class="mood">4.0 / 10</span></div>
+            <div class="text">Sov dårlig (5:30). Slet med konsentrasjon på range. Avbrøt tidlig, droppet Trackman-økt.</div>
+            <div class="tags"><span class="tag">Søvn</span><span class="tag">Droppet</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Mood week -->
+    <div class="sec-h">
+      <h3>Mental score · denne uken</h3>
+      <div class="sub">SNITT 7.1 · OPP 0.3 VS FORRIGE UKE</div>
+    </div>
+    <section class="mood-week">
+      <div class="mood-grid">
+        <div class="mood-day"><div class="d">Man</div><div class="num">22</div><div class="face">😌</div><div class="score">7.5</div></div>
+        <div class="mood-day"><div class="d">Tir</div><div class="num">23</div><div class="face">😞</div><div class="score">4.0</div></div>
+        <div class="mood-day"><div class="d">Ons</div><div class="num">24</div><div class="face">😐</div><div class="score">6.0</div></div>
+        <div class="mood-day"><div class="d">Tor</div><div class="num">25</div><div class="face">🙂</div><div class="score">7.0</div></div>
+        <div class="mood-day"><div class="d">Fre</div><div class="num">26</div><div class="face">😄</div><div class="score">8.5</div></div>
+        <div class="mood-day"><div class="d">Lør</div><div class="num">27</div><div class="face">🙂</div><div class="score">6.5</div></div>
+        <div class="mood-day today"><div class="d">Søn · i dag</div><div class="num">28</div><div class="face">😊</div><div class="score">8.0</div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

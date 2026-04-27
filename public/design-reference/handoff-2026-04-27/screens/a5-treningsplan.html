@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A5 — Treningsplan · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Week strip */
+  .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .day-card {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    min-height: 110px;
+  }
+  .day-card:hover { border-color: rgba(255,255,255,0.18); }
+  .day-card .dow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.5); text-transform: uppercase;
+  }
+  .day-card .num {
+    font-family:'Inter',sans-serif;
+    font-size: 24px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em;
+    margin: 4px 0 8px;
+  }
+  .day-card .session-pill {
+    display: inline-block;
+    margin: 2px 0;
+    width: 100%;
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .session-pill.putt { background: rgba(118,193,156,0.20); color:#6FCBA1; }
+  .session-pill.iron { background: rgba(126,158,255,0.22); color:#8AA8FF; }
+  .session-pill.short { background: rgba(232,185,103,0.20); color:#E8B967; }
+  .session-pill.driver { background: rgba(244,146,131,0.20); color:#F49283; }
+  .session-pill.round { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .day-card.today { border-color: var(--akgolf-accent); background: rgba(209,248,67,0.06); }
+  .day-card.today .num { color: var(--akgolf-accent); }
+  .day-card.rest .num { color: rgba(255,255,255,0.3); }
+  .day-card.rest .rest-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .mini-stat {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .mini-stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .mini-stat .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .mini-stat .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 4px; font-weight: 400; }
+  .mini-stat .bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .mini-stat .bar > span {
+    display: block;
+    height: 100%;
+    background: var(--akgolf-accent);
+    border-radius: 999px;
+  }
+
+  /* Sec heading */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 32px 0 14px;
+  }
+  .sec-h h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.025em; color: #fff; }
+  .sec-h .sub { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+  /* Today's plan */
+  .today-card {
+    background: linear-gradient(135deg, rgba(13,46,35,0.95), rgba(10,31,24,1));
+    border: 1.5px solid rgba(209,248,67,0.30);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .today-card::before {
+    content: ''; position: absolute; top:0; left:0; right:0; height: 3px;
+    background: var(--akgolf-accent);
+  }
+  .today-card .eyebrow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    margin-bottom: 8px;
+  }
+  .today-card h2 {
+    margin: 0 0 6px; font-size: 28px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em;
+  }
+  .today-card .lede {
+    color: rgba(255,255,255,0.7); margin: 0 0 18px;
+    font-size: 14px;
+  }
+  .today-list {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .today-ex {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .today-ex:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); }
+  .today-ex .num {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: rgba(209,248,67,0.15);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+  }
+  .today-ex .name { font-size: 14px; font-weight: 600; color: #fff; }
+  .today-ex .meta { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+  .today-ex .dur { font-family:'JetBrains Mono',monospace; font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 0.06em; text-transform: uppercase; }
+  .today-ex.done {
+    background: rgba(118,193,156,0.06);
+    border-color: rgba(118,193,156,0.20);
+    opacity: 0.85;
+  }
+  .today-ex.done .num { background: rgba(118,193,156,0.20); color: #6FCBA1; }
+  .today-ex.done .name { text-decoration: line-through; color: rgba(255,255,255,0.5); }
+
+  /* Library cards */
+  .lib-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .lib-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lib-card:hover { border-color: rgba(255,255,255,0.20); transform: translateY(-2px); }
+  .lib-thumb {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, rgba(209,248,67,0.12), rgba(13,46,35,0.4));
+    position: relative;
+    display: grid; place-items: center;
+  }
+  .lib-thumb [data-lucide] { width: 36px; height: 36px; color: rgba(255,255,255,0.6); }
+  .lib-thumb .badge {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(0,0,0,0.50);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .lib-thumb .duration {
+    position: absolute;
+    bottom: 10px; right: 10px;
+    background: rgba(0,0,0,0.60);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .lib-body { padding: 14px 16px 16px; }
+  .lib-body .h { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .lib-body .d { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .lib-body .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--akgolf-line-dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Filter chips */
+  .filter-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .chip {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .chip.active { background: rgba(209,248,67,0.12); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); }
+
+  @media (max-width: 1100px) {
+    .week-strip { grid-template-columns: repeat(7, minmax(80px, 1fr)); overflow-x: auto; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .lib-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .lib-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item active"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Treningsplan<span class="date">UKE 18 · 28 APR – 4 MAI</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i øvelser…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head" style="display:flex; justify-content:space-between; align-items:end;">
+      <div>
+        <div class="phq-eyebrow accent">Spill · Treningsplan</div>
+        <h1 class="phq-h1">Uke 18</h1>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="phq-btn"><i data-lucide="chevron-left"></i></button>
+        <button class="phq-btn"><i data-lucide="calendar"></i> I dag</button>
+        <button class="phq-btn"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- WEEK STRIP -->
+    <div class="week-strip">
+      <div class="day-card today">
+        <div class="dow">Man</div>
+        <div class="num">28</div>
+        <div class="session-pill putt">Putt 60m</div>
+        <div class="session-pill round">Range 30m</div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Tir</div>
+        <div class="num">29</div>
+        <div class="rest-label" style="margin-top:18px;">— Hvile —</div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Ons</div>
+        <div class="num">30</div>
+        <div class="session-pill iron">Iron 60m</div>
+        <div class="session-pill" style="background:rgba(209,248,67,0.10); color:rgba(255,255,255,0.7);">Coach</div>
+      </div>
+      <div class="day-card rest">
+        <div class="dow">Tor</div>
+        <div class="num">01</div>
+        <div class="rest-label" style="margin-top:18px;">— Hvile —</div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Fre</div>
+        <div class="num">02</div>
+        <div class="session-pill short">Short 45m</div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Lør</div>
+        <div class="num">03</div>
+        <div class="session-pill putt">Clinic 90m</div>
+        <div class="session-pill driver">Driver 30m</div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Søn</div>
+        <div class="num">04</div>
+        <div class="session-pill round" style="background:rgba(209,248,67,0.18); color:var(--akgolf-accent);">Runde 18h</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="mini-stat">
+        <div class="l">Volum denne uka</div>
+        <div class="v">5.5t <small>/ 8t</small></div>
+        <div class="bar"><span style="width:69%;"></span></div>
+      </div>
+      <div class="mini-stat">
+        <div class="l">Økter</div>
+        <div class="v">4 <small>/ 6 plan</small></div>
+        <div class="bar"><span style="width:67%; background:#6FCBA1;"></span></div>
+      </div>
+      <div class="mini-stat">
+        <div class="l">Putt 3-fot</div>
+        <div class="v">86% <small>+2pp</small></div>
+        <div class="bar"><span style="width:86%;"></span></div>
+      </div>
+      <div class="mini-stat">
+        <div class="l">Streak</div>
+        <div class="v">12 <small>dager</small></div>
+        <div class="bar"><span style="width:60%; background:#E8B967;"></span></div>
+      </div>
+    </div>
+
+    <!-- TODAY -->
+    <div class="sec-h">
+      <h2>Dagens økt</h2>
+      <div class="sub">MAN 28. APR · 90 MIN</div>
+    </div>
+    <div class="today-card">
+      <div class="eyebrow">Putt 60m + Range 30m · av Anders K.</div>
+      <h2>Stødig putt-base og light range-oppvarming</h2>
+      <p class="lede">Tre øvelser. Logger automatisk fra appen når du markerer hver som ferdig. Video-notat fra Anders ligger på øvelse 2.</p>
+
+      <div class="today-list">
+        <div class="today-ex done">
+          <div class="num"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+          <div>
+            <div class="name">100-baller fra 3 fot</div>
+            <div class="meta">Mål: 88% inn · Ditt resultat: 91% (2 stk bom)</div>
+          </div>
+          <div class="dur">25 min</div>
+          <button class="phq-btn ghost sm"><i data-lucide="check-circle-2" style="color:#6FCBA1;"></i></button>
+        </div>
+        <div class="today-ex">
+          <div class="num">2</div>
+          <div>
+            <div class="name">Tempo-drill 6 fot · metronom 80bpm</div>
+            <div class="meta"><i data-lucide="video" style="width:11px;height:11px;color:var(--akgolf-accent);"></i> Anders sendte 32s video-notat · Mål: 70% inn</div>
+          </div>
+          <div class="dur">20 min</div>
+          <button class="phq-btn primary sm">Start</button>
+        </div>
+        <div class="today-ex">
+          <div class="num">3</div>
+          <div>
+            <div class="name">Range warm-up · 9-jern halv-svinger</div>
+            <div class="meta">Tempo og treff-konsistens · 30 baller</div>
+          </div>
+          <div class="dur">30 min</div>
+          <button class="phq-btn ghost sm">Senere</button>
+        </div>
+      </div>
+
+      <div style="margin-top:18px; display:flex; gap:8px; align-items:center;">
+        <button class="phq-btn primary"><i data-lucide="play"></i> Start hele økten</button>
+        <button class="phq-btn"><i data-lucide="message-circle"></i> Spør Anders</button>
+        <button class="phq-btn ghost sm"><i data-lucide="x"></i> Hopp over i dag</button>
+      </div>
+    </div>
+
+    <!-- LIBRARY -->
+    <div class="sec-h">
+      <h2>Øvelses-bibliotek</h2>
+      <div class="sub">TILDELT AV ANDERS · 14 ØVELSER</div>
+    </div>
+    <div class="filter-row">
+      <button class="chip active">Alle</button>
+      <button class="chip">Putting</button>
+      <button class="chip">Iron</button>
+      <button class="chip">Short game</button>
+      <button class="chip">Driver</button>
+      <button class="chip">Mental</button>
+      <button class="chip">Med video</button>
+    </div>
+
+    <div class="lib-grid">
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(118,193,156,0.18), rgba(13,46,35,0.6));">
+          <i data-lucide="circle-dot"></i>
+          <div class="badge" style="background:rgba(118,193,156,0.30); color:#6FCBA1;">Putting</div>
+          <div class="duration">25 min</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">100-baller fra 3 fot</div>
+          <div class="d">Standard putt-base. Mål 88%+ inn for å bestå.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span style="color:#6FCBA1;">✓ DAGLIG</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(126,158,255,0.20), rgba(13,46,35,0.6));">
+          <i data-lucide="play-circle"></i>
+          <div class="badge" style="background:rgba(126,158,255,0.30); color:#8AA8FF;">Iron · video</div>
+          <div class="duration">2:14</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">Tempo + lave hender · 7-jern</div>
+          <div class="d">Slow-mo demo + 3 nøkkelpunkter ved impakt. Drill følger.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span>NY · 3 DAGER SIDEN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(232,185,103,0.20), rgba(13,46,35,0.6));">
+          <i data-lucide="flag-triangle-right"></i>
+          <div class="badge" style="background:rgba(232,185,103,0.30); color:#E8B967;">Short game</div>
+          <div class="duration">45 min</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">Lie-tilpasning fra rough</div>
+          <div class="d">3 ulike lies × 4 lengder. Loft-kontroll i fokus.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span>UKENTLIG</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(118,193,156,0.18), rgba(13,46,35,0.6));">
+          <i data-lucide="circle-dot"></i>
+          <div class="badge" style="background:rgba(118,193,156,0.30); color:#6FCBA1;">Putting</div>
+          <div class="duration">20 min</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">Tempo-drill 6 fot · metronom</div>
+          <div class="d">80bpm. Drill mot tempo-konsistens på lengre putts.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span>2× UKE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(244,146,131,0.20), rgba(13,46,35,0.6));">
+          <i data-lucide="zap"></i>
+          <div class="badge" style="background:rgba(244,146,131,0.30); color:#F49283;">Driver</div>
+          <div class="duration">30 min</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">Speed-trening · overspeed</div>
+          <div class="d">Stack &amp; tilt med Speed Stick. 3 sett × 8 svinger.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span>1× UKE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lib-card">
+        <div class="lib-thumb" style="background:linear-gradient(135deg, rgba(200,150,232,0.20), rgba(13,46,35,0.6));">
+          <i data-lucide="brain"></i>
+          <div class="badge" style="background:rgba(200,150,232,0.30); color:#C896E8;">Mental</div>
+          <div class="duration">10 min</div>
+        </div>
+        <div class="lib-body">
+          <div class="h">Pre-shot-rutine · 4 trinn</div>
+          <div class="d">Konsistent pre-shot. Audio-guide for tempo + visualisering.</div>
+          <div class="footer">
+            <span><i data-lucide="user" style="width:11px;height:11px;vertical-align:-1px;"></i> ANDERS K.</span>
+            <span>FØR HVER RUNDE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px; text-align:center;">
+      <button class="phq-btn ghost"><i data-lucide="plus"></i> Vis alle 14 øvelser</button>
+    </div>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab active"><i data-lucide="clipboard-list"></i>Plan</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

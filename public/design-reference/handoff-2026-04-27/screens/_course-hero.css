@@ -1,0 +1,488 @@
+/* ============================================================
+   AK Golf · Course Hero v4 — shared primitives
+   Inspirert av: foto-hero + glass paneler + shot-tracking
+   ============================================================ */
+@import url("../tokens.css");
+
+/* ---------- Glass surfaces ---------- */
+:root {
+  --ch-glass-dark: rgba(12, 22, 17, 0.62);
+  --ch-glass-dark-strong: rgba(10, 20, 15, 0.82);
+  --ch-glass-light: rgba(248, 250, 246, 0.78);
+  --ch-stroke-light: rgba(255, 255, 255, 0.14);
+  --ch-stroke-lighter: rgba(255, 255, 255, 0.08);
+  --ch-stroke-dark: rgba(10, 31, 24, 0.08);
+  --ch-blur: saturate(130%) blur(22px);
+  --ch-blur-strong: saturate(140%) blur(36px);
+}
+
+/* ---------- Base dark canvas ---------- */
+body.course-hero {
+  background: #0a0f0c;
+  color: #F2F5F1;
+  overflow: hidden;
+}
+
+.ch-screen {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  height: 100vh;
+  background: #0a0f0c;
+}
+.ch-screen.no-rail { grid-template-columns: 1fr; }
+
+/* ---------- Slim icon rail (inspired by Harvesta/IQMS) ---------- */
+.ch-rail {
+  background: rgba(10, 20, 15, 0.55);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border-right: 1px solid var(--ch-stroke-lighter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0 14px;
+  gap: 4px;
+  z-index: 10;
+}
+.ch-rail-logo {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: #fff;
+  display: grid; place-items: center;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.ch-rail-logo img { width: 28px; height: auto; display: block; }
+.ch-rail-spacer { flex: 1; }
+
+.ch-rail-item {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  color: rgba(242, 245, 241, 0.55);
+  cursor: pointer;
+  transition: all 0.18s var(--ak-ease);
+  position: relative;
+}
+.ch-rail-item svg { width: 18px; height: 18px; }
+.ch-rail-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.ch-rail-item.active {
+  background: #D1F843;
+  color: #0A1F18;
+}
+.ch-rail-item .badge-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #D1F843; color: #0A1F18;
+  font-size: 8px; font-weight: 800;
+  display: grid; place-items: center;
+  border: 2px solid #0a0f0c;
+}
+.ch-rail-item.active .badge-dot { background: #0A1F18; color: #D1F843; border-color: #D1F843; }
+
+.ch-rail-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #005840, #0A1F18);
+  color: #D1F843;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* ---------- Main stage ---------- */
+.ch-main {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Course photo background (placeholder: layered SVG satellite-look) */
+.ch-course-bg {
+  position: absolute;
+  inset: 0;
+  background: #1a2a1e;
+  overflow: hidden;
+}
+.ch-course-bg::after {
+  /* subtle vignette */
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 30%, transparent 40%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none;
+}
+.ch-course-bg svg { width: 100%; height: 100%; display: block; }
+
+/* ---------- Top chrome (floating tabs + actions) ---------- */
+.ch-topbar {
+  position: absolute;
+  top: 20px; left: 24px; right: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 5;
+  pointer-events: none;
+}
+.ch-topbar > * { pointer-events: auto; }
+
+.ch-crumbs {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: var(--ch-glass-dark);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  border-radius: 999px;
+  font-size: 12px; color: rgba(255,255,255,0.88);
+}
+.ch-crumbs .dot { width: 4px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 50%; }
+.ch-crumbs strong { font-weight: 600; color: #fff; }
+.ch-crumbs .meta { color: rgba(255,255,255,0.55); font-size: 11px; }
+
+/* ---------- Segmented pill (Strikes / Statistics style) ---------- */
+.ch-segmented {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--ch-glass-dark);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  border-radius: 999px;
+  gap: 2px;
+}
+.ch-segmented button {
+  padding: 7px 18px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.18s var(--ak-ease);
+}
+.ch-segmented button.active {
+  background: #0A1F18;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.ch-segmented.light {
+  background: var(--ch-glass-light);
+  border-color: var(--ch-stroke-dark);
+}
+.ch-segmented.light button { color: var(--ak-g-500); }
+.ch-segmented.light button.active { background: #0A1F18; color: #fff; }
+
+/* ---------- Floating pill button group ---------- */
+.ch-actions { display: flex; align-items: center; gap: 8px; }
+
+.ch-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  transition: all 0.18s var(--ak-ease);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ch-btn-glass {
+  background: var(--ch-glass-dark);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  color: #fff;
+}
+.ch-btn-glass:hover { background: rgba(12, 22, 17, 0.78); }
+.ch-btn-lime {
+  background: #D1F843;
+  color: #0A1F18;
+  border: 1px solid rgba(10, 31, 24, 0.08);
+}
+.ch-btn-lime:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(209, 248, 67, 0.35); }
+.ch-btn-amber {
+  background: #F5C542;
+  color: #0A1F18;
+}
+.ch-btn-icon {
+  width: 36px; height: 36px; padding: 0;
+  display: grid; place-items: center;
+}
+
+/* ---------- Shot tracking overlay ---------- */
+.ch-shot-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.ch-shot-marker {
+  position: absolute;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+.ch-shot-marker.dark { background: #0A1F18; color: #fff; border: 1.5px solid rgba(255,255,255,0.2); }
+.ch-shot-marker.lime { background: #D1F843; color: #0A1F18; }
+.ch-shot-marker.flag {
+  background: #0A1F18; color: #D1F843;
+  width: 30px; height: 30px;
+}
+
+.ch-shot-cluster {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.ch-shot-cluster .dots {
+  position: relative;
+  width: 44px; height: 44px;
+}
+.ch-shot-cluster .dots span {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+.ch-distance-pill {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 5px 11px;
+  background: rgba(255,255,255,0.92);
+  color: #0A1F18;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+.ch-distance-pill.dark {
+  background: rgba(10, 31, 24, 0.88);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- Glass panels (stats drawer, caddie card) ---------- */
+.ch-panel {
+  background: var(--ch-glass-dark-strong);
+  backdrop-filter: var(--ch-blur-strong);
+  -webkit-backdrop-filter: var(--ch-blur-strong);
+  border: 1px solid var(--ch-stroke-light);
+  border-radius: 24px;
+  color: #F2F5F1;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.ch-panel.light {
+  background: var(--ch-glass-light);
+  border-color: var(--ch-stroke-dark);
+  color: var(--ak-g-900);
+  box-shadow: 0 20px 60px rgba(10,31,24,0.18);
+}
+
+.ch-panel-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ch-stroke-lighter);
+  font-size: 13px;
+}
+.ch-panel.light .ch-panel-row { border-bottom-color: rgba(10,31,24,0.06); }
+.ch-panel-row:last-child { border-bottom: none; }
+.ch-panel-row .label { color: rgba(255,255,255,0.58); font-size: 12px; }
+.ch-panel.light .ch-panel-row .label { color: var(--ak-g-500); }
+.ch-panel-row .val { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ch-panel-row .val .unit { font-weight: 400; opacity: 0.5; font-size: 11px; margin-left: 3px; }
+
+/* Dotted separator for KPI pairs inside glass */
+.ch-kpi-dotted {
+  border-top: 1px dashed rgba(255,255,255,0.12);
+  margin-top: 10px; padding-top: 10px;
+}
+
+/* ---------- Eyebrow/label for panels ---------- */
+.ch-eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.ch-eyebrow .dot { width: 5px; height: 5px; background: #D1F843; border-radius: 50%; }
+.ch-panel.light .ch-eyebrow { color: var(--ak-g-400); }
+
+/* ---------- Display headline ---------- */
+.ch-display {
+  font-size: 44px; font-weight: 700; letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: #fff;
+}
+.ch-display .accent { color: #D1F843; }
+.ch-display-sm {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+/* ---------- Compass ---------- */
+.ch-compass {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: #F5C542;
+  color: #0A1F18;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 13px;
+  box-shadow: 0 6px 18px rgba(245, 197, 66, 0.4);
+  position: relative;
+}
+.ch-compass::before {
+  content: '';
+  position: absolute;
+  top: 4px; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 6px solid #0A1F18;
+}
+
+/* ---------- Big KPI block ---------- */
+.ch-kpi-big { font-variant-numeric: tabular-nums; }
+.ch-kpi-big .n {
+  font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+}
+.ch-kpi-big .d {
+  font-size: 12px; color: rgba(255,255,255,0.55);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-top: 8px; font-weight: 600;
+}
+.ch-panel.light .ch-kpi-big .d { color: var(--ak-g-500); }
+
+/* ---------- Lime ring (score/quality) ---------- */
+.ch-ring-wrap { position: relative; display: inline-flex; }
+.ch-ring-wrap .ring-center {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  text-align: center;
+}
+.ch-ring-value {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.03em;
+}
+.ch-ring-label {
+  font-size: 10px; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ---------- Bento grid over hero ---------- */
+.ch-bento {
+  display: grid;
+  gap: 16px;
+}
+.ch-bento-3 { grid-template-columns: repeat(3, 1fr); }
+.ch-bento-4 { grid-template-columns: repeat(4, 1fr); }
+
+.ch-bento-card {
+  padding: 18px 20px;
+  background: var(--ch-glass-dark-strong);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  border-radius: 20px;
+  color: #F2F5F1;
+  transition: transform 0.2s var(--ak-ease), border-color 0.2s var(--ak-ease);
+  cursor: pointer;
+}
+.ch-bento-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(209, 248, 67, 0.3);
+}
+.ch-bento-card.accent {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: transparent;
+}
+.ch-bento-card.accent .ch-eyebrow { color: rgba(10,31,24,0.55); }
+.ch-bento-card.accent .ch-eyebrow .dot { background: #0A1F18; }
+
+/* ---------- Tabular mini-list ---------- */
+.ch-mini-list { display: flex; flex-direction: column; gap: 6px; }
+.ch-mini-list .row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+  padding: 4px 0;
+}
+.ch-mini-list .row .k { color: rgba(255,255,255,0.6); }
+.ch-mini-list .row .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---------- Wind visualization ---------- */
+.ch-wind-dial {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255,255,255,0.3);
+  display: grid; place-items: center;
+  position: relative;
+}
+.ch-wind-dial .arrow {
+  width: 2px; height: 18px;
+  background: #D1F843;
+  position: absolute;
+  top: 8px;
+  transform-origin: bottom center;
+}
+.ch-wind-dial .val {
+  font-size: 11px; font-weight: 700;
+  color: #fff;
+}
+
+/* ---------- Scrollable hole strip ---------- */
+.ch-hole-strip {
+  display: flex; gap: 8px;
+  padding: 10px;
+  overflow-x: auto;
+}
+.ch-hole-chip {
+  flex-shrink: 0;
+  min-width: 62px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--ch-stroke-lighter);
+  border-radius: 14px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s var(--ak-ease);
+}
+.ch-hole-chip:hover { background: rgba(255,255,255,0.1); }
+.ch-hole-chip.active {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: transparent;
+}
+.ch-hole-chip .n { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; }
+.ch-hole-chip.active .n { opacity: 0.7; }
+.ch-hole-chip .num { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.ch-hole-chip .par { font-size: 10px; margin-top: 2px; opacity: 0.55; }
+
+/* ---------- Hero label (course name etc) ---------- */
+.ch-hero-label {
+  position: absolute;
+  z-index: 4;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--ch-glass-dark);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  color: rgba(255,255,255,0.88);
+  font-size: 11px; font-weight: 500;
+}
+.ch-hero-label .sep { color: rgba(255,255,255,0.3); }
+.ch-hero-label strong { color: #fff; font-weight: 600; }
+
+/* ---------- Plus/minus zoom ---------- */
+.ch-zoom-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--ch-glass-dark);
+  backdrop-filter: var(--ch-blur);
+  -webkit-backdrop-filter: var(--ch-blur);
+  border: 1px solid var(--ch-stroke-light);
+  color: #fff;
+  display: grid; place-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}

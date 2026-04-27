@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Personvern</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+  .pv-hero { padding: 170px 0 30px; }
+  .pv-hero h1 { font-size: clamp(48px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.035em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 18px; max-width: 18ch; }
+  .pv-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .pv-hero .meta { display: flex; gap: 24px; padding: 18px 0; border-top: 1px solid var(--akgolf-line-light); border-bottom: 1px solid var(--akgolf-line-light); margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--akgolf-muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+  .pv-hero .meta strong { color: var(--akgolf-ink); margin-right: 8px; }
+
+  .pv-body { padding: 50px 0 100px; }
+  .pv-grid { display: grid; grid-template-columns: 240px 1fr 220px; gap: 50px; align-items: start; }
+
+  .toc { position: sticky; top: 100px; }
+  .toc-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 14px; }
+  .toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocn; }
+  .toc ol li { counter-increment: tocn; padding: 8px 0; border-top: 1px solid var(--akgolf-line-light); }
+  .toc ol li:last-child { border-bottom: 1px solid var(--akgolf-line-light); }
+  .toc ol li a { font-size: 13px; color: var(--akgolf-text); text-decoration: none; display: flex; gap: 10px; transition: color 0.15s; }
+  .toc ol li a::before { content: counter(tocn, decimal-leading-zero); font-family: 'JetBrains Mono', monospace; color: var(--akgolf-muted); font-size: 11px; flex-shrink: 0; }
+  .toc ol li a:hover, .toc ol li a.active { color: var(--akgolf-primary); }
+
+  .pv-content { max-width: 65ch; }
+  .pv-content section { padding-bottom: 40px; }
+  .pv-content h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; color: var(--akgolf-ink); margin: 0 0 18px; line-height: 1.2; }
+  .pv-content h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .pv-content h3 { font-size: 18px; font-weight: 700; color: var(--akgolf-ink); margin: 28px 0 10px; letter-spacing: -0.01em; }
+  .pv-content p { font-size: 15px; color: var(--akgolf-text); line-height: 1.7; margin: 0 0 14px; }
+  .pv-content p strong { color: var(--akgolf-ink); }
+  .pv-content ul { padding-left: 20px; margin: 0 0 16px; }
+  .pv-content ul li { font-size: 15px; color: var(--akgolf-text); line-height: 1.65; margin-bottom: 8px; }
+  .pv-content a { color: var(--akgolf-primary); text-decoration: underline; }
+
+  .pv-callout { background: var(--akgolf-ink); color: #fff; border-radius: 22px; padding: 28px 32px; margin: 24px 0; }
+  .pv-callout h4 { font-size: 16px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--akgolf-accent); }
+  .pv-callout p { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.65; margin: 0; }
+
+  .pv-table { width: 100%; border-collapse: collapse; margin: 16px 0 6px; font-size: 13px; border: 1.5px solid var(--akgolf-line-light); border-radius: 16px; overflow: hidden; }
+  .pv-table th { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; padding: 12px 14px; text-align: left; background: #fff; border-bottom: 1.5px solid var(--akgolf-line-light); }
+  .pv-table td { padding: 12px 14px; color: var(--akgolf-text); line-height: 1.55; border-top: 1px solid var(--akgolf-line-light); background: #fff; }
+  .pv-table td:first-child { color: var(--akgolf-ink); font-weight: 600; }
+
+  .pv-side { position: sticky; top: 100px; }
+  .pv-side-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 20px; padding: 24px 26px; }
+  .pv-side-card h4 { font-size: 14px; font-weight: 800; color: var(--akgolf-ink); margin: 0 0 8px; letter-spacing: -0.005em; }
+  .pv-side-card p { font-size: 13px; color: var(--akgolf-text); line-height: 1.55; margin: 0 0 14px; }
+  .pv-side-card .web-btn { width: 100%; justify-content: center; padding: 10px 14px; font-size: 13px; }
+
+  @media (max-width: 1100px) {
+    .pv-grid { grid-template-columns: 1fr; }
+    .toc, .pv-side { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html">Utvikling</a>
+    <a href="g9-om-oss.html">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<section class="pv-hero">
+  <div class="web-container">
+    <div class="web-eyebrow">Personvern &amp; vilkår</div>
+    <h1>Vi behandler dataene <em>dine med omhu.</em></h1>
+    <p style="font-size: 17px; color: var(--akgolf-text); max-width: 56ch; line-height: 1.6; margin: 0;">Klart språk, ingen jusspråk. Hvis noe er uklart — skriv til <a href="mailto:personvern@akgolf.no" style="color:var(--akgolf-primary);">personvern@akgolf.no</a>.</p>
+    <div class="meta">
+      <span><strong>Sist oppdatert</strong>15. mars 2026</span>
+      <span><strong>Versjon</strong>3.2</span>
+      <span><strong>Behandlingsansvarlig</strong>AK Golf Group AS</span>
+    </div>
+  </div>
+</section>
+
+<section class="pv-body">
+  <div class="web-container">
+    <div class="pv-grid">
+      <!-- TOC -->
+      <aside class="toc">
+        <div class="toc-h">Innhold</div>
+        <ol>
+          <li><a href="#s1" class="active">Hvem vi er</a></li>
+          <li><a href="#s2">Hva vi samler inn</a></li>
+          <li><a href="#s3">Hvorfor og hjemmel</a></li>
+          <li><a href="#s4">Hvor lenge vi lagrer</a></li>
+          <li><a href="#s5">Deling med tredjeparter</a></li>
+          <li><a href="#s6">Dine rettigheter</a></li>
+          <li><a href="#s7">Cookies</a></li>
+          <li><a href="#s8">Junior &amp; foreldre</a></li>
+          <li><a href="#s9">Kontakt</a></li>
+        </ol>
+      </aside>
+
+      <!-- Content -->
+      <div class="pv-content">
+        <section id="s1">
+          <h2>1. Hvem <em>vi er.</em></h2>
+          <p><strong>AK Golf Group AS</strong> (org.nr. 925 884 102, Hamangsletta 4, 1336 Sandvika) er behandlingsansvarlig for personopplysningene som behandles i forbindelse med våre coaching-tjenester, medlemskap, app-tjenester (PlayerHQ + CoachHQ) og nettsider.</p>
+          <p>Vi følger personvernforordningen (GDPR) og norsk personopplysningslov. Datatilsynet er tilsynsmyndighet.</p>
+          <div class="pv-callout">
+            <h4>Vårt løfte</h4>
+            <p>Vi samler bare det vi trenger. Vi selger aldri data. Vi sletter når formålet er oppnådd. Du kan be om innsyn, retting eller sletting når som helst.</p>
+          </div>
+        </section>
+
+        <section id="s2">
+          <h2>2. Hva vi <em>samler inn.</em></h2>
+          <h3>Når du blir medlem</h3>
+          <ul>
+            <li>Navn, e-post, telefon, fødselsdato, postadresse</li>
+            <li>Handicap, hjemklubb, golf-bakgrunn</li>
+            <li>Helseopplysninger relevant for coaching (skader, allergier — kun hvis du oppgir dem)</li>
+            <li>Faktureringsinfo (håndteres av Stripe — vi lagrer aldri kortnummer)</li>
+          </ul>
+
+          <h3>Når du bruker PlayerHQ-appen</h3>
+          <ul>
+            <li>Trackman-data, runde-score, treningslogger</li>
+            <li>Video du laster opp til coach-godkjenning</li>
+            <li>Chat-meldinger med coach (E2E-kryptert)</li>
+            <li>Bruksdata (åpningstid, hvilke skjermer, klikk) — kun for å forbedre appen</li>
+          </ul>
+
+          <h3>Når du besøker nettsiden</h3>
+          <ul>
+            <li>IP-adresse (anonymisert), nettleser, sidehenvisning</li>
+            <li>Kun strengt nødvendige cookies som standard — se §7</li>
+          </ul>
+        </section>
+
+        <section id="s3">
+          <h2>3. Hvorfor og <em>på hvilken hjemmel.</em></h2>
+          <table class="pv-table">
+            <thead><tr><th>Formål</th><th>Hjemmel</th></tr></thead>
+            <tbody>
+              <tr><td>Levere coaching og medlemskap</td><td>Avtale (art. 6.1.b)</td></tr>
+              <tr><td>Fakturering og regnskap</td><td>Rettslig forpliktelse (6.1.c)</td></tr>
+              <tr><td>SG-rapport og treningsanalyse</td><td>Avtale (6.1.b)</td></tr>
+              <tr><td>Markedsføring (nyhetsbrev)</td><td>Samtykke (6.1.a)</td></tr>
+              <tr><td>Forbedre app/tjenester</td><td>Berettiget interesse (6.1.f)</td></tr>
+              <tr><td>Helseopplysninger (skader)</td><td>Uttrykkelig samtykke (9.2.a)</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="s4">
+          <h2>4. Hvor lenge <em>vi lagrer.</em></h2>
+          <ul>
+            <li><strong>Aktivt medlemskap</strong> — så lenge du er kunde + 6 måneder etter avslutning</li>
+            <li><strong>Regnskapsdata</strong> — 5 år (lovkrav, bokføringsloven)</li>
+            <li><strong>Trackman/treningsdata</strong> — så lenge du er kunde, du kan eksportere før sletting</li>
+            <li><strong>Chat-historikk</strong> — 12 måneder rullerende, med mindre du ber om sletting</li>
+            <li><strong>Markedsføringsliste</strong> — til du melder deg av</li>
+            <li><strong>Nettsidedata</strong> — anonymisert etter 30 dager</li>
+          </ul>
+        </section>
+
+        <section id="s5">
+          <h2>5. Deling med <em>tredjeparter.</em></h2>
+          <p>Vi deler bare når det er nødvendig for å levere tjenesten. Alle databehandlere har skriftlig avtale (DPA).</p>
+          <ul>
+            <li><strong>Stripe</strong> — betalingsbehandling (Irland/EU)</li>
+            <li><strong>Trackman</strong> — treningsdata-integrasjon (Danmark/EU)</li>
+            <li><strong>Apple/Google</strong> — push-varsler (USA, Standard Contractual Clauses)</li>
+            <li><strong>Norsk hosting</strong> — driftspartner (Oslo)</li>
+            <li><strong>Mailchimp</strong> — nyhetsbrev (USA, SCC)</li>
+          </ul>
+          <p>Vi selger <strong>aldri</strong> data til tredjeparter for markedsføring.</p>
+        </section>
+
+        <section id="s6">
+          <h2>6. Dine <em>rettigheter.</em></h2>
+          <ul>
+            <li><strong>Innsyn</strong> — be om kopi av alle data vi har om deg</li>
+            <li><strong>Retting</strong> — få feil rettet</li>
+            <li><strong>Sletting</strong> — bli "glemt" (med unntak av regnskap)</li>
+            <li><strong>Begrensning</strong> — be oss pause behandling</li>
+            <li><strong>Dataportabilitet</strong> — få data i åpent format (JSON/CSV)</li>
+            <li><strong>Innsigelse</strong> — protestere mot berettiget-interesse-behandling</li>
+            <li><strong>Klage</strong> — til <a href="https://datatilsynet.no" target="_blank">Datatilsynet</a></li>
+          </ul>
+          <p>Send forespørsler til <a href="mailto:personvern@akgolf.no">personvern@akgolf.no</a>. Vi svarer innen 30 dager.</p>
+        </section>
+
+        <section id="s7">
+          <h2>7. <em>Cookies.</em></h2>
+          <p>Vi bruker så få cookies som mulig. Bare strengt nødvendige er på som standard — analyse og markedsføring krever samtykke.</p>
+          <table class="pv-table">
+            <thead><tr><th>Type</th><th>Formål</th><th>Varighet</th></tr></thead>
+            <tbody>
+              <tr><td>session_id</td><td>Innlogging</td><td>Sesjon</td></tr>
+              <tr><td>cookie_consent</td><td>Husk valg</td><td>12 mnd</td></tr>
+              <tr><td>_ga</td><td>Statistikk (samtykke)</td><td>13 mnd</td></tr>
+            </tbody>
+          </table>
+          <p><a href="#">Endre cookie-innstillinger →</a></p>
+        </section>
+
+        <section id="s8">
+          <h2>8. Junior &amp; <em>foreldresamtykke.</em></h2>
+          <p>For spillere under 16 år krever vi skriftlig samtykke fra foreldre/verge før vi behandler personopplysninger. Foreldre har full innsyn i barnets PlayerHQ-konto via foreldre-modus.</p>
+          <p>Vi deler aldri bilder eller video av juniorer offentlig uten eksplisitt samtykke fra foreldre — selv ikke i markedsmateriell.</p>
+        </section>
+
+        <section id="s9">
+          <h2>9. <em>Kontakt</em> oss om personvern.</h2>
+          <p><strong>Personvernombud</strong>: Eline Hauge<br>
+          <strong>E-post</strong>: <a href="mailto:personvern@akgolf.no">personvern@akgolf.no</a><br>
+          <strong>Post</strong>: AK Golf Group AS, Personvern, Hamangsletta 4, 1336 Sandvika</p>
+          <p>Vi behandler henvendelser uten unødig opphold, normalt innen 14 dager.</p>
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="pv-side">
+        <div class="pv-side-card">
+          <h4>Last ned dataene dine</h4>
+          <p>Få en eksport av alt vi har om deg som JSON eller CSV — levert innen 30 dager.</p>
+          <a href="mailto:personvern@akgolf.no" class="web-btn primary">Be om eksport <i data-lucide="download"></i></a>
+        </div>
+        <div class="pv-side-card" style="margin-top: 14px;">
+          <h4>Slett kontoen</h4>
+          <p>Du kan be om sletting når som helst. Regnskap beholdes som lovpålagt (5 år).</p>
+          <a href="mailto:personvern@akgolf.no" class="web-btn ghost">Be om sletting</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom"><span>© 2026 AK Golf Group AS · ORG 925 884 102</span><div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div></div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

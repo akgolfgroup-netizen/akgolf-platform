@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard V2 · Night Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #0A1F18; color: #E6EAE8; }
+  .screen { background: #0A1F18; }
+  .main { color: #E6EAE8; background: #0A1F18; }
+  .night-bg {
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(0, 88, 64, 0.35), transparent 50%),
+      radial-gradient(ellipse at 100% 0%, rgba(209, 248, 67, 0.06), transparent 50%),
+      #0A1F18;
+  }
+  .n-card {
+    background: #112a21;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+    padding: 20px;
+    position: relative;
+  }
+  .n-card.accent {
+    background: linear-gradient(160deg, #D1F843, #B8DB3A);
+    color: #0A1F18;
+    border: none;
+  }
+  .n-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C85;
+  }
+  .n-card.accent .n-label { color: rgba(10, 31, 24, 0.55); }
+  .n-val {
+    font-size: 48px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: #F7FAF8;
+    margin-top: 6px;
+  }
+  .n-card.accent .n-val { color: #0A1F18; }
+  .n-val .u { font-size: 14px; color: rgba(255,255,255,0.4); margin-left: 6px; font-weight: 500; }
+  .n-card.accent .n-val .u { color: rgba(10,31,24,0.5); }
+  .n-delta {
+    display: inline-flex; gap: 4px; align-items: center;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(42, 125, 90, 0.2);
+    color: #7fd4a8;
+  }
+  .n-delta.down { background: rgba(232, 93, 78, 0.2); color: #f59e88; }
+  /* Rings */
+  .ring-card {
+    grid-column: span 4;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 20px;
+  }
+  .rings { position: relative; width: 180px; height: 180px; margin: 10px auto; }
+  .rings svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring-bg { stroke: rgba(255,255,255,0.08); fill: none; }
+  .ring-center-txt {
+    position: absolute; inset: 0;
+    display: grid; place-items: center; text-align: center;
+  }
+  .ring-center-txt .big { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .ring-center-txt .sml { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #7A8C85; margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ring-legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 18px; width: 100%; }
+  .ring-leg { text-align: left; display: flex; align-items: center; gap: 10px; }
+  .ring-leg .sw { width: 10px; height: 10px; border-radius: 3px; }
+  .ring-leg .lbl { font-size: 11px; color: #A5B2AD; }
+  .ring-leg .v { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F7FAF8; font-weight: 600; margin-left: auto; }
+
+  .course-hero {
+    grid-column: span 8;
+    background:
+      linear-gradient(90deg, rgba(10,31,24,0.95), rgba(10,31,24,0.4) 60%, transparent),
+      linear-gradient(135deg, #1a3f30, #0A1F18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+    padding: 26px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 260px;
+    position: relative; overflow: hidden;
+  }
+  .course-hero::after {
+    content: ""; position: absolute; right: -30px; top: -30px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(209, 248, 67, 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .course-hero .eyebrow-row {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: #D1F843;
+  }
+  .course-hero h1 {
+    margin: 12px 0 8px;
+    font-size: 34px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
+    color: #F7FAF8;
+    max-width: 560px;
+  }
+  .course-hero h1 em { font-style: normal; color: #D1F843; }
+  .course-hero p { margin: 0; color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.6; max-width: 500px; }
+  .course-hero .chips { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .course-hero .chip {
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    font-size: 11px;
+    color: #E6EAE8;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .course-hero .chip.hot { background: rgba(232, 93, 78, 0.15); color: #f59e88; border-color: rgba(232, 93, 78, 0.3); }
+  .course-hero .chip.good { background: rgba(209, 248, 67, 0.1); color: #D1F843; border-color: rgba(209, 248, 67, 0.25); }
+
+  /* SG CLUSTERED BARS */
+  .sg-compare {
+    grid-column: span 6;
+  }
+  .sg-lg { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+  .sg-row-lg { }
+  .sg-row-lg .top { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; }
+  .sg-row-lg .cat { font-weight: 600; color: #F7FAF8; }
+  .sg-row-lg .values { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A5B2AD; }
+  .sg-row-lg .values b { color: #D1F843; }
+  .sg-row-lg .track {
+    position: relative; height: 14px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .sg-row-lg .zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.15); }
+  .sg-row-lg .f { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .sg-row-lg .f.me.pos { background: #D1F843; }
+  .sg-row-lg .f.me.neg { background: #E85D4E; }
+  .sg-row-lg .f.peer { background: rgba(255,255,255,0.15); border-radius: 3px; height: 4px; top: 5px; }
+
+  /* Activity strip */
+  .activity {
+    grid-column: span 6;
+  }
+  .act-grid { display: flex; gap: 3px; margin-top: 16px; }
+  .act-col { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .act-cell { height: 10px; border-radius: 2px; background: rgba(255,255,255,0.05); }
+  .act-cell.l1 { background: rgba(209, 248, 67, 0.18); }
+  .act-cell.l2 { background: rgba(209, 248, 67, 0.4); }
+  .act-cell.l3 { background: rgba(209, 248, 67, 0.7); }
+  .act-cell.l4 { background: #D1F843; }
+  .act-scale { display: flex; align-items: center; gap: 6px; margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #7A8C85; }
+  .act-scale .sw { width: 10px; height: 10px; border-radius: 2px; }
+
+  .timeline-card {
+    grid-column: span 4;
+    padding: 20px;
+  }
+  .tl { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
+  .tl-item {
+    display: flex; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7A8C85; width: 50px; flex-shrink: 0; padding-top: 2px; }
+  .tl-body { flex: 1; }
+  .tl-body .t { font-size: 13px; font-weight: 600; color: #F7FAF8; }
+  .tl-body .s { font-size: 11px; color: #7A8C85; margin-top: 2px; }
+  .tl-dot { width: 6px; height: 6px; border-radius: 50%; background: #D1F843; margin-top: 6px; flex-shrink: 0; }
+  .tl-dot.muted { background: #5A6E66; }
+
+  /* AI Card dark */
+  .ai-dark {
+    grid-column: span 8;
+    background: linear-gradient(135deg, rgba(175, 82, 222, 0.12), rgba(17, 42, 33, 1) 60%);
+    border: 1px solid rgba(175, 82, 222, 0.2);
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .ai-dark .row { display: flex; align-items: center; gap: 10px; }
+  .ai-dark .ai-icon {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: #AF52DE; color: #fff;
+    display: grid; place-items: center; font-size: 11px; font-weight: 800;
+  }
+  .ai-dark .ttl { font-size: 13px; font-weight: 700; color: #F7FAF8; }
+  .ai-dark .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #AF52DE; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ai-dark .body { margin-top: 14px; font-size: 15px; line-height: 1.55; color: #E6EAE8; }
+  .ai-dark .body em { color: #D1F843; font-style: normal; font-weight: 600; background: rgba(209, 248, 67, 0.1); padding: 0 4px; border-radius: 3px; }
+  .ai-dark .srcs { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .ai-dark .src { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 5px; background: rgba(255,255,255,0.04); color: #A5B2AD; border: 1px solid rgba(255,255,255,0.06); }
+</style>
+</head>
+<body class="night-bg">
+<div class="screen">
+  <aside class="sidebar dark">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title" style="color:#fff;">AK Golf</div><div class="sub">NIGHT · ELITE</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> <span>Oversikt</span></div>
+      <div class="nav-item">◱ <span>Planlegg</span><span class="count">3</span></div>
+      <div class="nav-item">◎ <span>Tren</span></div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> <span>Spill</span></div>
+      <div class="nav-item">△ <span>Analyser</span></div>
+      <div style="height: 14px;"></div>
+      <div class="eyebrow" style="padding: 6px 10px; color: #7A8C85;">Verktøy</div>
+      <div class="nav-item">◈ <span>AI Coach</span></div>
+      <div class="nav-item">⊙ <span>TrackMan</span></div>
+      <div class="nav-item">◉ <span>Dagbok</span></div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> <span>Bookinger</span></div>
+    </nav>
+    <div class="sidebar-cta">+ Ny økt</div>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div>
+        <div class="name">Marius A.</div>
+        <div class="tier">Elite · Night</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main night-bg">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" style="color:#F7FAF8;">Session Zero <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#7A8C85;">/ 04:38:12</span></div>
+        <div class="topbar-sub" style="color:#A5B2AD;font-family:'JetBrains Mono',monospace;font-size:12px;">0421.26 · OSL-GK · 11°C · WIND 4m/s NE · BAROMETER 1013</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill dark"><span class="dot" style="background: #D1F843;"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;">SYSTEMS · NOMINAL</span></span>
+        <button class="btn btn-ghost" style="color:#A5B2AD;">⚲</button>
+        <button class="btn btn-accent">+ LOG ROUND</button>
+      </div>
+    </div>
+
+    <div class="grid grid-12">
+      <!-- COURSE HERO -->
+      <div class="course-hero">
+        <div>
+          <div class="eyebrow-row">
+            <span style="width:6px;height:6px;background:#D1F843;border-radius:50%;box-shadow:0 0 10px #D1F843;"></span>
+            <span>UKE 17 · DELTA +5.4</span>
+            <span style="color:#5A6E66;">/</span>
+            <span style="color:#A5B2AD;">TARGET HCP 3.0 · 41 DAYS</span>
+          </div>
+          <h1>Kalibreringsuke.<br><em>Approach +0.82</em>. Chip −0.31 — fiks.</h1>
+          <p>Trend-analyse over 10 runder viser approach som din strongest vector. Chipping fra 10–25m lekker slag. AI foreslår 3 mikro-sessions denne uken.</p>
+        </div>
+        <div class="chips">
+          <div class="chip good">▲ APPROACH +0.82</div>
+          <div class="chip hot">▼ CHIP −0.31</div>
+          <div class="chip">SESSIONS · 24</div>
+          <div class="chip">STREAK · 28d</div>
+          <div class="chip">PLAN · 92%</div>
+        </div>
+      </div>
+
+      <!-- RING CARD: SG Radar concept -->
+      <div class="n-card ring-card">
+        <div class="n-label">SG · ACTIVE RINGS</div>
+        <div class="rings">
+          <svg viewBox="0 0 200 200">
+            <!-- 4 rings, each category -->
+            <circle cx="100" cy="100" r="82" class="ring-bg" stroke-width="6"/>
+            <circle cx="100" cy="100" r="82" fill="none" stroke="#D1F843" stroke-width="6" stroke-dasharray="515" stroke-dashoffset="180" stroke-linecap="round"/>
+
+            <circle cx="100" cy="100" r="68" class="ring-bg" stroke-width="6"/>
+            <circle cx="100" cy="100" r="68" fill="none" stroke="#2A7D5A" stroke-width="6" stroke-dasharray="427" stroke-dashoffset="80" stroke-linecap="round"/>
+
+            <circle cx="100" cy="100" r="54" class="ring-bg" stroke-width="6"/>
+            <circle cx="100" cy="100" r="54" fill="none" stroke="#E85D4E" stroke-width="6" stroke-dasharray="340" stroke-dashoffset="260" stroke-linecap="round"/>
+
+            <circle cx="100" cy="100" r="40" class="ring-bg" stroke-width="6"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="#007AFF" stroke-width="6" stroke-dasharray="252" stroke-dashoffset="145" stroke-linecap="round"/>
+          </svg>
+          <div class="ring-center-txt">
+            <div>
+              <div class="big tabular">+1.15</div>
+              <div class="sml">SG · TOTAL</div>
+            </div>
+          </div>
+        </div>
+        <div class="ring-legend">
+          <div class="ring-leg"><div class="sw" style="background:#D1F843;"></div><div class="lbl">Approach</div><div class="v">+0.82</div></div>
+          <div class="ring-leg"><div class="sw" style="background:#2A7D5A;"></div><div class="lbl">Off-tee</div><div class="v">+0.42</div></div>
+          <div class="ring-leg"><div class="sw" style="background:#E85D4E;"></div><div class="lbl">Chip/pitch</div><div class="v">−0.31</div></div>
+          <div class="ring-leg"><div class="sw" style="background:#007AFF;"></div><div class="lbl">Putt</div><div class="v">+0.22</div></div>
+        </div>
+      </div>
+
+      <!-- KPIs: 4 across -->
+      <div class="n-card" style="grid-column: span 3;">
+        <div class="n-label">Handicap · active</div>
+        <div class="n-val tabular">3.4</div>
+        <div class="n-delta">▼ 0.3 · 30d</div>
+        <svg style="margin-top:12px;width:100%;height:36px;" viewBox="0 0 160 40" preserveAspectRatio="none">
+          <path d="M0,18 L20,22 L40,16 L60,18 L80,14 L100,12 L120,8 L140,10 L160,4" fill="none" stroke="#D1F843" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="n-card" style="grid-column: span 3;">
+        <div class="n-label">Rounds · 30d</div>
+        <div class="n-val tabular">9</div>
+        <div class="n-delta">▲ 2 · vs 30d</div>
+        <div style="display:flex;gap:3px;margin-top:14px;align-items:flex-end;height:36px;">
+          <div style="flex:1;background:rgba(255,255,255,0.06);height:40%;border-radius:2px;"></div>
+          <div style="flex:1;background:rgba(255,255,255,0.1);height:60%;border-radius:2px;"></div>
+          <div style="flex:1;background:rgba(255,255,255,0.1);height:45%;border-radius:2px;"></div>
+          <div style="flex:1;background:#D1F843;height:78%;border-radius:2px;"></div>
+          <div style="flex:1;background:#D1F843;height:55%;border-radius:2px;"></div>
+          <div style="flex:1;background:#D1F843;height:85%;border-radius:2px;"></div>
+          <div style="flex:1;background:#D1F843;height:100%;border-radius:2px;"></div>
+        </div>
+      </div>
+      <div class="n-card" style="grid-column: span 3;">
+        <div class="n-label">Sessions · month</div>
+        <div class="n-val tabular">24</div>
+        <div class="n-delta">▲ 6 · vs prior</div>
+        <svg style="margin-top:12px;width:100%;height:36px;" viewBox="0 0 160 40" preserveAspectRatio="none">
+          <path d="M0,30 Q40,14 80,16 T160,8" fill="none" stroke="#7fd4a8" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="n-card accent" style="grid-column: span 3;">
+        <div class="n-label">Next · 14:30</div>
+        <div class="n-val tabular" style="font-size:26px;">Coach Thomas</div>
+        <div class="n-delta" style="background:rgba(10,31,24,0.15);color:#0A1F18;">60 MIN · OSL-GK</div>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(10,31,24,0.7);">
+          TEK · IMPACT · IRON 6–8
+        </div>
+      </div>
+
+      <!-- SG COMPARE -->
+      <div class="n-card sg-compare">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div>
+            <div class="n-label">Strokes Gained · me vs peer (HCP 3)</div>
+            <div style="font-size:16px;font-weight:700;margin-top:4px;color:#F7FAF8;">10-runders snitt</div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7A8C85;">Δ vs PEER</div>
+        </div>
+        <div class="sg-lg">
+          <div class="sg-row-lg">
+            <div class="top"><span class="cat">Off-the-tee</span><span class="values">me <b>+0.42</b> · peer +0.00</span></div>
+            <div class="track"><div class="zero"></div><div class="f peer" style="left:50%;width:0%;"></div><div class="f me pos" style="left:50%;width:18%;"></div></div>
+          </div>
+          <div class="sg-row-lg">
+            <div class="top"><span class="cat">Approach</span><span class="values">me <b>+0.82</b> · peer +0.12</span></div>
+            <div class="track"><div class="zero"></div><div class="f peer" style="left:50%;width:5%;"></div><div class="f me pos" style="left:50%;width:36%;"></div></div>
+          </div>
+          <div class="sg-row-lg">
+            <div class="top"><span class="cat">Around green</span><span class="values">me <b>−0.31</b> · peer +0.08</span></div>
+            <div class="track"><div class="zero"></div><div class="f peer" style="left:50%;width:3%;"></div><div class="f me neg" style="right:50%;width:14%;"></div></div>
+          </div>
+          <div class="sg-row-lg">
+            <div class="top"><span class="cat">Putting</span><span class="values">me <b>+0.22</b> · peer −0.04</span></div>
+            <div class="track"><div class="zero"></div><div class="f peer" style="right:50%;width:2%;"></div><div class="f me pos" style="left:50%;width:10%;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY HEATMAP -->
+      <div class="n-card activity">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div>
+            <div class="n-label">Training intensity · 90 days</div>
+            <div style="font-size:16px;font-weight:700;margin-top:4px;color:#F7FAF8;">Konsistens: <span style="color:#D1F843;">94%</span></div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7A8C85;">28-day streak</div>
+        </div>
+        <div class="act-grid" id="actGrid"></div>
+        <div class="act-scale">
+          <span>Less</span>
+          <div class="sw" style="background:rgba(255,255,255,0.05);"></div>
+          <div class="sw" style="background:rgba(209, 248, 67, 0.18);"></div>
+          <div class="sw" style="background:rgba(209, 248, 67, 0.4);"></div>
+          <div class="sw" style="background:rgba(209, 248, 67, 0.7);"></div>
+          <div class="sw" style="background:#D1F843;"></div>
+          <span>More</span>
+          <span style="margin-left:auto;">WEEK 04 — 17</span>
+        </div>
+      </div>
+
+      <!-- AI INSIGHT DARK -->
+      <div class="ai-dark">
+        <div class="row">
+          <div class="ai-icon">AI</div>
+          <div>
+            <div class="ttl">Pattern detected · chip 10–25m</div>
+            <div class="meta">CONFIDENCE 87% · REFRESHED 02:14</div>
+          </div>
+        </div>
+        <div class="body">
+          Du mister <em>0.31 SG per runde</em> på chip fra 10–25m. Korrelasjon: høy skulder-åpning i impact (3 av 4 videoer, coach-notat 04-17). Anbefaling: <em>Clock drill · 15 min</em> onsdag + video-review fredag med Thomas. Forventet gevinst: <em>+0.22 SG over 3 uker</em>.
+        </div>
+        <div class="srcs">
+          <span class="src">round/2026-042-018</span>
+          <span class="src">round/2026-042-015</span>
+          <span class="src">round/2026-042-011</span>
+          <span class="src">trackman/04-18 · 162 shots</span>
+          <span class="src">video/04-17-chip</span>
+          <span class="src">coach/thomas-04-17</span>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="n-card timeline-card">
+        <div class="n-label">Today · 04.21</div>
+        <div style="font-size:16px;font-weight:700;margin-top:4px;color:#F7FAF8;">4 events</div>
+        <div class="tl">
+          <div class="tl-item">
+            <div class="tl-time">06:30</div>
+            <div class="tl-dot muted"></div>
+            <div class="tl-body">
+              <div class="t" style="color:#7A8C85;text-decoration:line-through;">Mobility · 20 min</div>
+              <div class="s">Fullført</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">14:30</div>
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <div class="t">Coach Thomas · privat 1:1</div>
+              <div class="s">TEK · Impact · 60 min · Oslo GK</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">16:00</div>
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <div class="t">Range · 30 min</div>
+              <div class="s">SLAG · Jern 6–8 · fokus dispersion</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">19:30</div>
+            <div class="tl-dot"></div>
+            <div class="tl-body">
+              <div class="t">Video-review</div>
+              <div class="s">2 klipp fra økta med Thomas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script>
+  // Activity heatmap
+  const grid = document.getElementById('actGrid');
+  const weeks = 13;
+  const days = 7;
+  const pattern = [0,1,0,2,3,4,1, 1,2,3,1,0,2,4, 0,3,4,2,1,0,3, 2,3,2,4,3,1,0, 1,4,3,2,1,3,4, 3,4,4,3,2,4,3, 2,3,4,4,3,4,4, 4,3,4,4,4,3,4, 3,4,4,3,4,4,4, 4,4,3,4,4,4,3, 4,4,4,4,3,4,4, 4,4,4,4,4,3,4, 4,4,3,4,4,4,4];
+  for (let w = 0; w < weeks; w++) {
+    const col = document.createElement('div');
+    col.className = 'act-col';
+    for (let d = 0; d < days; d++) {
+      const cell = document.createElement('div');
+      const lvl = pattern[w * days + d] ?? 0;
+      cell.className = 'act-cell' + (lvl ? ' l' + lvl : '');
+      col.appendChild(cell);
+    }
+    grid.appendChild(col);
+  }
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

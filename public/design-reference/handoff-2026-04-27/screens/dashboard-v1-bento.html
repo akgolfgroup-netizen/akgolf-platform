@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard V1 · Bento Clean</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: var(--ak-bg); }
+  .hero {
+    grid-column: span 8;
+    background: linear-gradient(135deg, #0A1F18 0%, #0F2E22 60%, #1a3f30 100%);
+    color: #fff;
+    padding: 28px;
+    border-radius: 22px;
+    position: relative; overflow: hidden;
+    min-height: 260px;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(209, 248, 67, 0.16), transparent 70%);
+  }
+  .hero-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #D1F843; }
+  .hero-eyebrow .dot { width: 6px; height: 6px; background: #D1F843; border-radius: 50%; box-shadow: 0 0 8px #D1F843; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .hero h1 { margin: 18px 0 10px; font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+  .hero h1 span { color: #D1F843; }
+  .hero p { margin: 0; font-size: 14px; color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.55; }
+  .hero-stats { display: flex; gap: 32px; margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1; }
+  .hero-stat .lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .hero-stat .val { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .hero-stat .val .unit { font-size: 13px; color: rgba(255,255,255,0.5); margin-left: 4px; font-weight: 500; }
+
+  .next-session {
+    grid-column: span 4;
+    background: #fff;
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: var(--ak-shadow);
+    display: flex; flex-direction: column;
+    min-height: 260px;
+  }
+  .next-session .label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ak-g-400); }
+  .next-session .when { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; color: var(--ak-g-900); }
+  .next-session .who { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px 12px; background: var(--ak-g-50); border-radius: 10px; }
+  .next-session .who .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #005840, #0A1F18); color: #D1F843; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+  .next-session .who .info .n { font-size: 13px; font-weight: 600; }
+  .next-session .who .info .r { font-size: 11px; color: var(--ak-g-500); margin-top: 1px; }
+  .next-session .focus { margin-top: 14px; padding: 12px; background: #D1F843; border-radius: 10px; display: flex; align-items: center; gap: 10px; }
+  .next-session .focus-icon { width: 28px; height: 28px; background: var(--ak-g-900); color: #D1F843; border-radius: 8px; display: grid; place-items: center; font-weight: 800; font-size: 11px; }
+  .next-session .focus .t { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(10, 31, 24, 0.6); }
+  .next-session .focus .v { font-size: 13px; font-weight: 600; color: var(--ak-g-900); margin-top: 1px; }
+  .next-session .actions { margin-top: auto; display: flex; gap: 8px; padding-top: 14px; }
+  .next-session .btn-link { flex: 1; text-align: center; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .next-session .btn-link.primary { background: var(--ak-g-900); color: #fff; }
+  .next-session .btn-link.ghost { background: var(--ak-g-50); color: var(--ak-g-700); }
+
+  .kpi-card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 18px;
+    box-shadow: var(--ak-shadow);
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 140px;
+  }
+  .kpi-card .lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ak-g-400); }
+  .kpi-card .val { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--ak-g-900); font-variant-numeric: tabular-nums; }
+  .kpi-card .val .unit { font-size: 13px; color: var(--ak-g-400); margin-left: 4px; font-weight: 500; }
+  .kpi-card .change { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; }
+  .kpi-card .spark-wrap { margin-top: auto; }
+
+  .sg-card {
+    grid-column: span 6;
+    background: #fff; padding: 22px; border-radius: 22px;
+    box-shadow: var(--ak-shadow);
+  }
+  .sg-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .sg-bar { display: flex; align-items: center; gap: 12px; }
+  .sg-bar .cat { width: 90px; font-size: 12px; font-weight: 600; color: var(--ak-g-700); }
+  .sg-bar .track { flex: 1; height: 28px; background: var(--ak-g-50); border-radius: 8px; position: relative; overflow: hidden; }
+  .sg-bar .zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ak-g-200); z-index: 1; }
+  .sg-bar .fill { position: absolute; top: 4px; bottom: 4px; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .sg-bar .fill.pos { background: var(--ak-success); color: #fff; }
+  .sg-bar .fill.neg { background: var(--ak-error); color: #fff; }
+  .sg-bar .val { width: 48px; font-size: 12px; font-weight: 700; color: var(--ak-g-700); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .trend-card {
+    grid-column: span 6;
+    background: #fff; padding: 22px; border-radius: 22px;
+    box-shadow: var(--ak-shadow);
+  }
+
+  .ai-card {
+    grid-column: span 8;
+    background: linear-gradient(135deg, #FAF5FF, #fff 60%);
+    padding: 22px; border-radius: 22px;
+    box-shadow: var(--ak-shadow);
+    border: 1px solid rgba(175, 82, 222, 0.15);
+    position: relative; overflow: hidden;
+  }
+  .ai-card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, #AF52DE, transparent);
+  }
+  .ai-card .ai-header { display: flex; align-items: center; gap: 10px; }
+  .ai-card .ai-icon { width: 32px; height: 32px; border-radius: 10px; background: #AF52DE; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .ai-card h3 { margin: 0; font-size: 14px; font-weight: 700; color: var(--ak-g-800); }
+  .ai-card .ai-sub { font-size: 11px; color: #AF52DE; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ai-card .ai-body { margin-top: 14px; font-size: 15px; line-height: 1.55; color: var(--ak-g-800); font-weight: 500; }
+  .ai-card .ai-body strong { color: var(--ak-g-900); background: rgba(175, 82, 222, 0.12); padding: 0 4px; border-radius: 3px; }
+  .ai-card .ai-sources { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .ai-card .src { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 6px; background: #fff; border: 1px solid var(--ak-border); color: var(--ak-g-600); font-family: 'JetBrains Mono', monospace; }
+
+  .streak-card {
+    grid-column: span 4;
+    background: linear-gradient(160deg, #0A1F18, #0F2E22);
+    color: #fff;
+    padding: 22px; border-radius: 22px;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .streak-card::before {
+    content: ""; position: absolute; bottom: -40px; right: -40px; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(209, 248, 67, 0.18), transparent 70%);
+  }
+  .streak-card .lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .streak-card .days { font-size: 56px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-top: 6px; }
+  .streak-card .days .unit { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.5); margin-left: 6px; letter-spacing: 0; }
+  .streak-card .streak-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 10px; }
+  .streak-card .streak-sub b { color: #D1F843; }
+  .streak-card .streak-dots { display: flex; gap: 4px; margin-top: 18px; }
+  .streak-card .sd { flex: 1; height: 24px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+  .streak-card .sd.on { background: #D1F843; }
+
+  .shortcuts {
+    grid-column: span 12;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;
+  }
+  .shortcut {
+    background: #fff; padding: 14px; border-radius: 14px;
+    border: 1px solid var(--ak-border);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 600; color: var(--ak-g-700);
+    transition: all 0.15s var(--ak-ease);
+  }
+  .shortcut:hover { transform: translateY(-2px); box-shadow: var(--ak-shadow); border-color: transparent; }
+  .shortcut-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--ak-g-50); display: grid; place-items: center; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div>
+        <div class="title">AK Golf</div>
+        <div class="sub">Academy · Elite</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> <span>Oversikt</span></div>
+      <div class="nav-item">◱ <span>Planlegg</span><span class="count">3</span></div>
+      <div class="nav-item">◎ <span>Tren</span></div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> <span>Spill</span></div>
+      <div class="nav-item">△ <span>Analyser</span></div>
+      <div style="height: 14px;"></div>
+      <div class="eyebrow" style="padding: 6px 10px;">Verktøy</div>
+      <div class="nav-item">◈ <span>AI Coach</span><span class="count" style="background:#FAF5FF;color:#AF52DE;">nytt</span></div>
+      <div class="nav-item">⊙ <span>TrackMan</span></div>
+      <div class="nav-item">◉ <span>Dagbok</span></div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> <span>Bookinger</span></div>
+    </nav>
+    <div class="sidebar-cta">+ Ny økt</div>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div>
+        <div class="name">Marius A.</div>
+        <div class="tier">Elite</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">God morgen, Marius</div>
+        <div class="topbar-sub">Tirsdag 21. april · Oslo GK · 11° · vind 4 m/s</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill"><span class="dot" style="background: #2A7D5A;"></span>Synkronisert · GolfBox</span>
+        <button class="btn btn-outline">⚲</button>
+        <button class="btn btn-accent">+ Logg runde</button>
+      </div>
+    </div>
+
+    <div class="grid grid-12">
+      <!-- HERO: trenings-status -->
+      <div class="hero">
+        <div class="hero-eyebrow"><span class="dot"></span>Uke 17 · I rute</div>
+        <h1>Du er <span>5.4 slag</span> bedre enn målkurven for april.</h1>
+        <p>Fokus denne uken: innspill 80–120m. Neste milepæl: HCP 3.0 innen 1. juni.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="lbl">Handicap</div>
+            <div class="val">3.4<span class="unit">▼ 0.3</span></div>
+          </div>
+          <div class="hero-stat">
+            <div class="lbl">SG Total 10r</div>
+            <div class="val">+2.1<span class="unit">vs peer</span></div>
+          </div>
+          <div class="hero-stat">
+            <div class="lbl">Streak</div>
+            <div class="val">28<span class="unit">dager</span></div>
+          </div>
+          <div class="hero-stat">
+            <div class="lbl">Plan</div>
+            <div class="val">92%<span class="unit">fullført</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NESTE ØKT -->
+      <div class="next-session">
+        <div class="label">Neste økt</div>
+        <div class="when">I dag · 14:30</div>
+        <div class="who">
+          <div class="avatar">TJ</div>
+          <div class="info">
+            <div class="n">Coach Thomas Johansen</div>
+            <div class="r">Privat · 60 min · Oslo GK range</div>
+          </div>
+        </div>
+        <div class="focus">
+          <div class="focus-icon">TEK</div>
+          <div>
+            <div class="t">Fokus</div>
+            <div class="v">Impact-kontroll · jern 6–8</div>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="btn-link primary">Åpne økt</a>
+          <a class="btn-link ghost">Flytt</a>
+        </div>
+      </div>
+
+      <!-- KPI row (4 på rad, span 3 hver) -->
+      <div class="kpi-card" style="grid-column: span 3;">
+        <div class="lbl">Handicap</div>
+        <div class="val tabular">3.4</div>
+        <div class="change"><span class="kpi-change pos">▼ 0.3</span> <span class="muted">siste 30d</span></div>
+        <div class="spark-wrap">
+          <svg class="spark" viewBox="0 0 160 40" preserveAspectRatio="none">
+            <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#005840" stop-opacity="0.3"/><stop offset="1" stop-color="#005840" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,22 L20,28 L40,18 L60,24 L80,14 L100,20 L120,8 L140,14 L160,6" fill="none" stroke="#005840" stroke-width="2"/>
+            <path d="M0,22 L20,28 L40,18 L60,24 L80,14 L100,20 L120,8 L140,14 L160,6 L160,40 L0,40 Z" fill="url(#g1)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="grid-column: span 3;">
+        <div class="lbl">Runder · 30d</div>
+        <div class="val tabular">9</div>
+        <div class="change"><span class="kpi-change pos">+2</span><span class="muted">vs forrige mnd</span></div>
+        <div class="spark-wrap">
+          <svg class="spark" viewBox="0 0 160 40" preserveAspectRatio="none">
+            <g fill="#E85D4E">
+              <rect x="4" y="20" width="14" height="20" rx="2"/>
+              <rect x="24" y="16" width="14" height="24" rx="2"/>
+              <rect x="44" y="24" width="14" height="16" rx="2"/>
+              <rect x="64" y="12" width="14" height="28" rx="2"/>
+              <rect x="84" y="18" width="14" height="22" rx="2"/>
+              <rect x="104" y="8" width="14" height="32" rx="2"/>
+              <rect x="124" y="14" width="14" height="26" rx="2"/>
+              <rect x="144" y="6" width="14" height="34" rx="2"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="grid-column: span 3;">
+        <div class="lbl">Treningsøkter</div>
+        <div class="val tabular">24</div>
+        <div class="change"><span class="kpi-change pos">+6</span><span class="muted">denne mnd</span></div>
+        <div class="spark-wrap">
+          <svg class="spark" viewBox="0 0 160 40" preserveAspectRatio="none">
+            <path d="M0,30 Q20,22 40,24 T80,16 T120,10 T160,14" fill="none" stroke="#0A1F18" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="grid-column: span 3; background: linear-gradient(160deg, #D1F843, #c4e83a);">
+        <div class="lbl" style="color: rgba(10, 31, 24, 0.6);">SG Approach</div>
+        <div class="val tabular">+0.82</div>
+        <div class="change"><span class="kpi-change pos" style="background: rgba(10, 31, 24, 0.1); color: var(--ak-g-900);">▲ 0.34</span><span style="color: rgba(10, 31, 24, 0.6);">vs 4 uker</span></div>
+        <div class="spark-wrap">
+          <svg class="spark" viewBox="0 0 160 40" preserveAspectRatio="none">
+            <path d="M0,34 L20,30 L40,28 L60,24 L80,18 L100,20 L120,10 L140,8 L160,4" fill="none" stroke="#0A1F18" stroke-width="2.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- SG CARD -->
+      <div class="sg-card">
+        <div class="row-between">
+          <div>
+            <div class="eyebrow">Strokes Gained · Siste 10 runder</div>
+            <h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">Hvor vinner du slagene?</h3>
+          </div>
+          <div class="row">
+            <span class="pill" style="font-size: 11px;">vs peer HCP 3</span>
+          </div>
+        </div>
+        <div class="sg-bars">
+          <div class="sg-bar">
+            <div class="cat">Off-the-tee</div>
+            <div class="track">
+              <div class="zero"></div>
+              <div class="fill pos" style="left: 50%; width: 18%;">+0.42</div>
+            </div>
+            <div class="val" style="color: var(--ak-success)">+0.42</div>
+          </div>
+          <div class="sg-bar">
+            <div class="cat">Approach</div>
+            <div class="track">
+              <div class="zero"></div>
+              <div class="fill pos" style="left: 50%; width: 36%;">+0.82</div>
+            </div>
+            <div class="val" style="color: var(--ak-success)">+0.82</div>
+          </div>
+          <div class="sg-bar">
+            <div class="cat">Around green</div>
+            <div class="track">
+              <div class="zero"></div>
+              <div class="fill neg" style="right: 50%; width: 14%;">−0.31</div>
+            </div>
+            <div class="val" style="color: var(--ak-error)">−0.31</div>
+          </div>
+          <div class="sg-bar">
+            <div class="cat">Putting</div>
+            <div class="track">
+              <div class="zero"></div>
+              <div class="fill pos" style="left: 50%; width: 10%;">+0.22</div>
+            </div>
+            <div class="val" style="color: var(--ak-success)">+0.22</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TREND CARD -->
+      <div class="trend-card">
+        <div class="row-between">
+          <div>
+            <div class="eyebrow">Handicap · 12 mnd</div>
+            <h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">3.4 <span style="font-size: 13px; color: var(--ak-g-400); font-weight: 500;">aktiv</span></h3>
+          </div>
+          <span class="badge sage">▼ 2.1 i år</span>
+        </div>
+        <svg viewBox="0 0 400 180" style="width: 100%; margin-top: 10px;">
+          <defs>
+            <linearGradient id="gT" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#D1F843" stop-opacity="0.5"/>
+              <stop offset="1" stop-color="#D1F843" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="#ECF0EF" stroke-width="1">
+            <line x1="0" y1="30" x2="400" y2="30"/>
+            <line x1="0" y1="80" x2="400" y2="80"/>
+            <line x1="0" y1="130" x2="400" y2="130"/>
+          </g>
+          <g fill="#A5B2AD" font-size="10" font-family="JetBrains Mono">
+            <text x="0" y="26">6.0</text>
+            <text x="0" y="76">4.0</text>
+            <text x="0" y="126">2.0</text>
+          </g>
+          <path d="M30,40 L60,45 L90,38 L120,55 L150,62 L180,70 L210,75 L240,90 L270,95 L300,110 L330,118 L360,124 L390,132"
+                fill="none" stroke="#0A1F18" stroke-width="2.5"/>
+          <path d="M30,40 L60,45 L90,38 L120,55 L150,62 L180,70 L210,75 L240,90 L270,95 L300,110 L330,118 L360,124 L390,132 L390,180 L30,180 Z"
+                fill="url(#gT)"/>
+          <circle cx="390" cy="132" r="5" fill="#D1F843" stroke="#0A1F18" stroke-width="2"/>
+          <g fill="#A5B2AD" font-size="9" font-family="JetBrains Mono">
+            <text x="28" y="175">MAI 25</text>
+            <text x="198" y="175">OKT 25</text>
+            <text x="360" y="175">APR 26</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- AI INSIGHT -->
+      <div class="ai-card">
+        <div class="ai-header">
+          <div class="ai-icon">AI</div>
+          <div>
+            <h3>AI Coach · Ukens innsikt</h3>
+            <div class="ai-sub">Oppdatert for 2 timer siden</div>
+          </div>
+        </div>
+        <p class="ai-body">
+          Tre av dine fire siste runder viste <strong>GIR 54%</strong> fra 140–170m. Dette er <strong>8% lavere</strong> enn vanlig. Dispersion-data fra TrackMan-sesjonen 18. april viser at du pushet <strong>jern 7</strong> konsekvent til høyre. Anbefalt: 20 min gate-drill og video-review før neste runde onsdag.
+        </p>
+        <div class="ai-sources">
+          <span class="src">round/2026-042-018</span>
+          <span class="src">round/2026-042-015</span>
+          <span class="src">trackman/04-18-session</span>
+          <span class="src">coach-note/thomas-04-17</span>
+        </div>
+      </div>
+
+      <!-- STREAK -->
+      <div class="streak-card">
+        <div class="lbl">Konsistens-streak</div>
+        <div class="days tabular">28<span class="unit">dager</span></div>
+        <div class="streak-sub">Personlig rekord på <b>42 dager</b> venter. 14 dager igjen.</div>
+        <div class="streak-dots">
+          <div class="sd on"></div><div class="sd on"></div><div class="sd on"></div><div class="sd on"></div>
+          <div class="sd on"></div><div class="sd on"></div><div class="sd on"></div>
+          <div class="sd on"></div><div class="sd on"></div><div class="sd on"></div><div class="sd on"></div>
+          <div class="sd on"></div><div class="sd on"></div><div class="sd on"></div>
+        </div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 8px; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace;">— SISTE 14 DAGER —</div>
+      </div>
+
+      <!-- SHORTCUTS -->
+      <div class="shortcuts">
+        <div class="shortcut"><div class="shortcut-icon"><i data-lucide="flag-triangle-right" class="icon-md"></i></div>Logg runde</div>
+        <div class="shortcut"><div class="shortcut-icon">◱</div>Ukesplan</div>
+        <div class="shortcut"><div class="shortcut-icon">⊙</div>TrackMan</div>
+        <div class="shortcut"><div class="shortcut-icon">◈</div>AI Coach</div>
+        <div class="shortcut"><div class="shortcut-icon">△</div>Statistikk</div>
+        <div class="shortcut"><div class="shortcut-icon"><i data-lucide="menu" class="icon-md"></i></div>Bookinger</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('message', (e) => {
+    if (e.data?.type !== 'ak-tweaks') return;
+    const s = e.data.state;
+    const root = document.documentElement;
+    root.classList.remove('d-compact', 'd-comfortable', 'd-spacious');
+    root.classList.add('d-' + s.density);
+    root.classList.remove('a-lime', 'a-forest', 'a-neutral');
+    root.classList.add('a-' + s.accent);
+    root.style.fontSize = s.font === 'sm' ? '13px' : s.font === 'lg' ? '15px' : '14px';
+  });
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Runde · Hull 10 — Course Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_course-hero.css">
+<style>
+  /* Course layout specifics */
+  .runde-hero { position: relative; }
+
+  /* Shot trajectory SVG layer */
+  .shot-svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .shot-svg .traj {
+    stroke: rgba(255,255,255,0.9);
+    stroke-width: 2;
+    stroke-dasharray: 4 6;
+    fill: none;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+  .shot-svg .traj-planned {
+    stroke: #D1F843;
+    stroke-width: 2;
+    stroke-dasharray: 2 5;
+  }
+
+  /* Caddie panel (right side) */
+  .caddie-panel {
+    position: absolute;
+    top: 96px; right: 24px;
+    width: 300px;
+    padding: 22px;
+    z-index: 4;
+  }
+  .caddie-panel h4 {
+    margin: 0 0 4px;
+    font-size: 17px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .caddie-panel .sub {
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    margin-bottom: 18px;
+  }
+
+  /* Weather panel (right, below caddie) */
+  .weather-panel {
+    position: absolute;
+    top: 360px; right: 24px;
+    width: 300px;
+    padding: 18px 20px;
+    z-index: 4;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .weather-panel .w-text { flex: 1; }
+  .weather-panel .w-title {
+    font-size: 13px; font-weight: 600; margin-bottom: 6px;
+  }
+  .weather-panel .w-meta {
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    display: flex; gap: 12px;
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute;
+    bottom: 24px; left: 24px; right: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 4;
+  }
+  .bottom-left { display: flex; align-items: center; gap: 10px; }
+
+  /* Compass + zoom cluster */
+  .compass-cluster {
+    position: absolute;
+    right: 24px; bottom: 120px;
+    display: flex; flex-direction: column; gap: 10px;
+    align-items: center;
+    z-index: 4;
+  }
+
+  /* Hole navigator */
+  .hole-nav {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px;
+    background: var(--ch-glass-dark);
+    backdrop-filter: var(--ch-blur);
+    border: 1px solid var(--ch-stroke-light);
+    border-radius: 999px;
+    color: #fff;
+  }
+  .hole-nav button {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+  }
+  .hole-nav button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .hole-nav .current {
+    padding: 7px 16px;
+    background: #D1F843;
+    color: #0A1F18;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+  }
+</style>
+</head>
+<body class="course-hero">
+
+<div class="ch-screen">
+  <!-- Slim rail -->
+  <aside class="ch-rail">
+    <div class="ch-rail-logo"><img src="../assets/ak-logo.png" alt="AK"></div>
+    <button class="ch-rail-item" title="Hjem">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1V9.5z"/></svg>
+    </button>
+    <button class="ch-rail-item active" title="Runde">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22V2M12 6l8-3v10l-8 3"/></svg>
+    </button>
+    <button class="ch-rail-item" title="Stats">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 20V10M9 20V4M15 20v-8M21 20v-4"/></svg>
+    </button>
+    <button class="ch-rail-item" title="Coach">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+    </button>
+    <button class="ch-rail-item" title="Dagbok">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M9 4v16"/></svg>
+    </button>
+    <div class="ch-rail-spacer"></div>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 108.5 12 3.5 3.5 0 0012 15.5z"/><path d="M19.4 12a7.4 7.4 0 00-.1-1.3l2-1.5-2-3.4-2.3 1a7.3 7.3 0 00-2.3-1.3L14 3h-4l-.5 2.5a7.3 7.3 0 00-2.3 1.3l-2.3-1-2 3.4 2 1.5A7.4 7.4 0 004.6 12c0 .4 0 .9.1 1.3L2.7 14.8l2 3.4 2.3-1a7.3 7.3 0 002.3 1.3L10 21h4l.5-2.5a7.3 7.3 0 002.3-1.3l2.3 1 2-3.4-2-1.5c0-.4.1-.9.1-1.3z"/></svg>
+    </button>
+    <div class="ch-rail-avatar" style="margin-top: 6px;">AK</div>
+  </aside>
+
+  <!-- Main hero -->
+  <main class="ch-main runde-hero">
+    <!-- Course background -->
+    <div class="ch-course-bg">
+      <object type="image/svg+xml" data="../assets/course-aerial.svg" style="width:100%;height:100%;pointer-events:none;"></object>
+    </div>
+
+    <!-- Topbar -->
+    <div class="ch-topbar">
+      <div class="ch-crumbs">
+        <strong>Oslo GK</strong>
+        <span class="dot"></span>
+        <span>Hull 10</span>
+        <span class="dot"></span>
+        <span class="meta">Par 4 · 380 m</span>
+      </div>
+      <div class="ch-actions">
+        <button class="ch-btn ch-btn-glass">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a2 2 0 110-4h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.6 1.6 0 001.8.3h0a1.6 1.6 0 001-1.5V3a2 2 0 114 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 00-.3 1.8v0a1.6 1.6 0 001.5 1H21a2 2 0 110 4h-.1a1.6 1.6 0 00-1.5 1z"/></svg>
+          Settings
+        </button>
+        <button class="ch-btn ch-btn-lime">
+          Save shot
+        </button>
+        <button class="ch-btn ch-btn-glass ch-btn-icon" title="Lukk">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Shot tracking SVG layer -->
+    <svg class="shot-svg" viewBox="0 0 1600 1000" preserveAspectRatio="none">
+      <!-- Tee to shot 1 -->
+      <path class="traj" d="M 728 882 Q 680 780 710 680 Q 740 580 820 530"/>
+      <!-- Shot 1 to shot 2 (landing area cluster) -->
+      <path class="traj" d="M 820 530 Q 920 500 1020 480"/>
+      <!-- Shot 2 to green -->
+      <path class="traj" d="M 1020 480 Q 1080 475 1130 470"/>
+      <!-- Planned next shot (lime) -->
+      <path class="traj-planned" d="M 1020 480 Q 1090 450 1150 460"/>
+    </svg>
+
+    <!-- Shot markers & distance labels -->
+    <div class="ch-shot-layer">
+      <!-- Tee position -->
+      <div class="ch-shot-marker dark" style="left: 45.5%; top: 88.2%;">T</div>
+
+      <!-- Shot 1 (main) -->
+      <div class="ch-shot-marker dark" style="left: 51.25%; top: 53%;">108</div>
+      <div class="ch-distance-pill" style="left: 49%; top: 68%;">225 m</div>
+
+      <!-- Cluster dots around shot 1 -->
+      <div class="ch-shot-cluster" style="left: 51.25%; top: 53%;">
+        <div class="dots">
+          <span style="top: -18px; left: 10px;"></span>
+          <span style="top: -10px; left: 32px;"></span>
+          <span style="top: 14px; left: 40px;"></span>
+          <span style="top: 28px; left: 14px;"></span>
+          <span style="top: 18px; left: -10px;"></span>
+        </div>
+      </div>
+
+      <!-- Shot 2 -->
+      <div class="ch-shot-marker dark" style="left: 63.75%; top: 48%;">34</div>
+      <div class="ch-distance-pill dark" style="left: 59%; top: 44%; background: rgba(255,255,255,0.92); color: #0A1F18;">184 m</div>
+
+      <!-- Landing area cluster near green -->
+      <div class="ch-shot-cluster" style="left: 63.75%; top: 48%;">
+        <div class="dots">
+          <span style="top: -16px; left: 12px;"></span>
+          <span style="top: 0; left: 28px;"></span>
+          <span style="top: 20px; left: 20px;"></span>
+          <span style="top: 14px; left: -4px;"></span>
+        </div>
+      </div>
+
+      <!-- Green flag -->
+      <div class="ch-shot-marker flag lime" style="left: 70.6%; top: 47%;">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3v18M5 4l10 3-10 3"/></svg>
+      </div>
+      <div class="ch-distance-pill" style="left: 70.6%; top: 53%;">150 m</div>
+      <div class="ch-distance-pill dark" style="left: 66%; top: 42%;">60 m</div>
+
+      <!-- Hazards annotation -->
+      <div class="ch-distance-pill" style="left: 25%; top: 75%;">133 m</div>
+    </div>
+
+    <!-- Caddie panel -->
+    <div class="caddie-panel ch-panel">
+      <div class="ch-eyebrow" style="margin-bottom: 6px;"><span class="dot"></span> CADDIE · AI</div>
+      <h4>Callaway Apex · 7i</h4>
+      <div class="sub">Anbefalt for neste slag — 150 m til flag</div>
+
+      <div class="ch-panel-row" style="padding-left: 0; padding-right: 0;">
+        <span class="label">Shot distance</span>
+        <span class="val">150<span class="unit">m</span></span>
+      </div>
+      <div class="ch-panel-row" style="padding-left: 0; padding-right: 0;">
+        <span class="label">To green</span>
+        <span class="val">154<span class="unit">m</span></span>
+      </div>
+
+      <div class="ch-kpi-dotted">
+        <div class="ch-eyebrow" style="margin-bottom: 10px;">Shots to finish</div>
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 12px;">
+          <span style="color: rgba(255,255,255,0.6);">Average</span>
+          <span style="font-weight: 600; font-variant-numeric: tabular-nums;">3.1</span>
+          <span style="color: rgba(255,255,255,0.6);">Fairway</span>
+          <span style="font-weight: 600; font-variant-numeric: tabular-nums;">3.0</span>
+          <span style="color: rgba(255,255,255,0.6);">Rough</span>
+          <span style="font-weight: 600; font-variant-numeric: tabular-nums;">3.3</span>
+        </div>
+      </div>
+
+      <button class="ch-btn ch-btn-lime" style="width: 100%; justify-content: center; margin-top: 16px;">
+        Velg klubbe
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Weather panel -->
+    <div class="weather-panel ch-panel">
+      <div class="ch-wind-dial">
+        <div class="arrow" style="transform: rotate(55deg);"></div>
+        <span class="val">5</span>
+      </div>
+      <div class="w-text">
+        <div class="w-title">Øst 5 m/s · medvind</div>
+        <div class="w-meta">
+          <span>14°C</span>
+          <span>1013 hPa</span>
+          <span>Delvis sky</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compass + zoom -->
+    <div class="compass-cluster">
+      <button class="ch-zoom-btn">+</button>
+      <div class="ch-compass">W</div>
+      <button class="ch-zoom-btn">−</button>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottom-bar">
+      <div class="bottom-left">
+        <div class="hole-nav">
+          <button>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="current">Hull 10 ▾</div>
+          <button>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="ch-hero-label" style="position: static;">
+          <strong>+1</strong>
+          <span class="sep">·</span>
+          <span>Runde: 3 over</span>
+          <span class="sep">·</span>
+          <span>Tid: 2t 14m</span>
+        </div>
+      </div>
+      <div class="ch-actions">
+        <button class="ch-btn ch-btn-glass">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg>
+          Scorecard
+        </button>
+        <button class="ch-btn ch-btn-glass">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20l-7-7 7-7M5 13h14"/></svg>
+          Forrige hull
+        </button>
+        <button class="ch-btn ch-btn-lime">
+          Neste hull
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Tweaks listener (stays consistent with canvas propagation)
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'ak-tweaks') {
+      const s = e.data.state;
+      document.body.classList.toggle('d-compact', s.density === 'compact');
+      document.body.classList.toggle('d-spacious', s.density === 'spacious');
+    }
+  });
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

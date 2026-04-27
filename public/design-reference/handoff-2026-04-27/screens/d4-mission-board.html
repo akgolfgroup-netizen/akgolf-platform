@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D4 — Mission Board · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .mcard { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 16px; padding: 18px; position: relative; box-shadow: 0 1px 2px rgba(10,31,24,0.03), 0 6px 20px rgba(255,255,255,0.04); }
+  .mcard.glow { border-color: rgba(209,248,67,0.30); box-shadow: 0 0 0 3px rgba(209,248,67,0.10), 0 6px 20px rgba(255,255,255,0.06); }
+  .mcard .head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .mcard .student { display: flex; align-items: center; gap: 10px; }
+  .mcard .student .nm { font-size: 13px; font-weight: 600; color: #fff; }
+  .mcard .student .sub { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; margin-top: 1px; }
+  .mcard .deadline { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 5px; background: rgba(255,255,255,0.025); color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
+  .mcard .deadline.near { background: rgba(196,138,50,0.18); color: #E8B967; }
+  .mcard .deadline.passed { background: rgba(184,66,51,0.16); color: #F49283; }
+  .mcard .goal { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.35; margin: 8px 0 4px; letter-spacing: -0.01em; }
+  .mcard .goal-sub { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+  .mring-row { display: flex; align-items: center; gap: 16px; margin: 16px 0 12px; }
+  .mring { width: 76px; height: 76px; flex-shrink: 0; }
+  .mring text { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .mprog { flex: 1; }
+  .mprog .ll { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.5); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .mprog .bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+  .mprog .bar > div { height: 100%; border-radius: 2px; }
+  .mprog .label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+
+  .milestones { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+  .ms { display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.7); padding: 5px 0; border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a); }
+  .ms:last-child { border-bottom: none; }
+  .ms .dot { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.22); flex-shrink: 0; }
+  .ms.done .dot { background: var(--akgolf-accent); border-color: var(--akgolf-accent); display: grid; place-items: center; }
+  .ms.done .dot::after { content:''; width: 4px; height: 2px; border-left: 1.5px solid #0A1F18; border-bottom: 1.5px solid #0A1F18; transform: rotate(-45deg); }
+  .ms.done .lbl { text-decoration: line-through; color: rgba(255,255,255,0.45); }
+  .ms .when { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.5); }
+
+  .mcard .footer { display: flex; gap: 6px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--akgolf-line-dark, #1a4a3a); }
+
+  .mboard-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+  .ms-card { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 14px; padding: 16px;  }
+  .ms-card .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .ms-card .v { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-top: 4px; }
+  .ms-card .v.lime { color: var(--akgolf-accent); }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active" title="Mission"><i data-lucide="flag"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item active"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Mission Board</div>
+      <div class="chq-top-meta tabular">12 aktive oppdrag · 5 på vei mot deadline</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk oppdrag…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Mission Board · Per spiller / team</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Hva jobber vi mot, og hvor langt har vi kommet?</h1>
+        <p>Hver spiller har 1–3 aktive oppdrag. Klikk for å se hele veien — fra første kartlegging til mål.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="filter"></i> Alle oppdrag</button>
+        <button class="chq-btn ghost"><i data-lucide="layout-list"></i> Tabell-visning</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i> Nytt oppdrag</button>
+      </div>
+    </div>
+
+    <div class="mboard-summary">
+      <div class="ms-card"><div class="l">Aktive oppdrag</div><div class="v tabular">12</div></div>
+      <div class="ms-card"><div class="l">Snitt fremdrift</div><div class="v tabular lime">64%</div></div>
+      <div class="ms-card"><div class="l">Innen frist (30d)</div><div class="v tabular">5</div></div>
+      <div class="ms-card"><div class="l">Lukket Q1 2026</div><div class="v tabular">8</div></div>
+    </div>
+
+    <div class="mission-grid">
+
+      <!-- Card 1: Sofie Holm -->
+      <div class="mcard glow">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#D1F843">SH</div>
+            <div><div class="nm">Sofie Holm</div><div class="sub">HCP 4.2 · Performance</div></div>
+          </div>
+          <span class="deadline near">Deadline 12 mai</span>
+        </div>
+        <div class="goal">Kvalifisere til regions-turnering</div>
+        <div class="goal-sub">Senke HCP til 3.5 og oppnå snitt SG +0.6 over 5 runder</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#005840" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="50" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">75%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>HCP</span><span>4.2 → 3.5</span></div>
+            <div class="bar"><div style="width: 78%; background:#D1F843"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>SG</span><span>+0.42 → +0.6</span></div>
+            <div class="bar"><div style="width: 70%; background:#6FCBA1"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">Initial-kartlegging fullført</div><span class="when">22 mar</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Driver-protokoll iverksatt</div><span class="when">05 apr</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">3 PR-runder</div><span class="when">25 apr</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Kvalifiseringsrunde</div><span class="when">10 mai</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="message-circle"></i> Notat</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Erik Lund -->
+      <div class="mcard">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#6FB3FF">EL</div>
+            <div><div class="nm">Erik Lund</div><div class="sub">HCP 18.5 · Pro plan</div></div>
+          </div>
+          <span class="deadline">Deadline 30 jun</span>
+        </div>
+        <div class="goal">Bryte HCP 15 før sommer</div>
+        <div class="goal-sub">Iron consistency + putting under 30 putts/runde</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#6FCBA1" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="100" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">50%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>HCP</span><span>18.5 → 15.0</span></div>
+            <div class="bar"><div style="width: 45%; background:#6FCBA1"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>Putts/runde</span><span>33.4 → 30</span></div>
+            <div class="bar"><div style="width: 58%; background:#6FB3FF"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">12-ukers plan godkjent</div><span class="when">10 feb</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Iron-baseline TrackMan</div><span class="when">18 feb</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">HCP under 17.0 (mid-check)</div><span class="when">15 mai</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Mål-runde 79 eller bedre</div><span class="when">25 jun</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="message-circle"></i> Notat</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+      <!-- Card 3: Junior B -->
+      <div class="mcard">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#C896E8">JB</div>
+            <div><div class="nm">Junior Group B</div><div class="sub">8 spillere · 10–13 år</div></div>
+          </div>
+          <span class="deadline near">Deadline 12 mai</span>
+        </div>
+        <div class="goal">Forberede til regions-turnering juniorer</div>
+        <div class="goal-sub">Alle 8 skal ha 9-hulls-test fullført + putt-grunnferdighet</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#C896E8" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="65" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">68%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>9-hull-test</span><span>6/8 fullført</span></div>
+            <div class="bar"><div style="width: 75%; background:#C896E8"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>Putt-grunnferdighet</span><span>5/8 fullført</span></div>
+            <div class="bar"><div style="width: 62%; background:#6FCBA1"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">Kick-off med foreldre</div><span class="when">15 mar</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Grunnferdigheter (4 stasjoner)</div><span class="when">10 apr</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Påmelding regions-turnering</div><span class="when">05 mai</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Turnering</div><span class="when">12 mai</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="users"></i> 8 spillere</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+      <!-- Card 4: Henrik Vold -->
+      <div class="mcard">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#F49283">HV</div>
+            <div><div class="nm">Henrik Vold</div><div class="sub">HCP 24.0 · Re-engagement</div></div>
+          </div>
+          <span class="deadline passed">14 d inaktiv</span>
+        </div>
+        <div class="goal">Komme tilbake i rytme</div>
+        <div class="goal-sub">Logge 3 runder + 2 økter på 4 uker. Lavt-press oppstart.</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#F49283" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="160" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">20%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>Runder</span><span>0/3</span></div>
+            <div class="bar"><div style="width: 0%; background:#F49283"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>Økter</span><span>1/2</span></div>
+            <div class="bar"><div style="width: 50%; background:#E8B967"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">Re-engagement-melding sendt</div><span class="when">22 apr</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Banecoaching booket man 28</div><span class="when">28 apr</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Første runde logget</div><span class="when">05 mai</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">3-runder-mål</div><span class="when">25 mai</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="message-circle"></i> Følg opp</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+      <!-- Card 5: Mia Dahl -->
+      <div class="mcard">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#6FCBA1">MD</div>
+            <div><div class="nm">Mia Dahl</div><div class="sub">HCP 9.8 · Performance</div></div>
+          </div>
+          <span class="deadline">Deadline 30 sep</span>
+        </div>
+        <div class="goal">Kvalifisere til klubbmesterskap</div>
+        <div class="goal-sub">Holde HCP under 9 og spille 3 turneringsrunder før september</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#6FCBA1" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="120" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">40%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>HCP</span><span>9.8 → 9.0</span></div>
+            <div class="bar"><div style="width: 35%; background:#6FCBA1"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>Turneringsrunder</span><span>1/3</span></div>
+            <div class="bar"><div style="width: 33%; background:#D1F843"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">Plan-mal valgt</div><span class="when">10 mar</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Første turneringsrunde</div><span class="when">12 apr</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">HCP under 9.0</div><span class="when">15 jun</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Påmelding klubbmesterskap</div><span class="when">15 sep</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="message-circle"></i> Notat</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+      <!-- Card 6: Lars Berg -->
+      <div class="mcard">
+        <div class="head">
+          <div class="student">
+            <div class="chq-av" style="background:#E8B967">LB</div>
+            <div><div class="nm">Lars Berg</div><div class="sub">HCP 12.0 · Pro plan</div></div>
+          </div>
+          <span class="deadline">Deadline 15 aug</span>
+        </div>
+        <div class="goal">Iron-distance konsistens</div>
+        <div class="goal-sub">Treffe 7-jern innenfor ±3 yards 70%+ på TrackMan</div>
+
+        <div class="mring-row">
+          <svg class="mring" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+            <circle cx="38" cy="38" r="32" fill="none" stroke="#E8B967" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="80" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">60%</text>
+          </svg>
+          <div class="mprog">
+            <div class="ll"><span>Treffsone 7-jern</span><span>52% → 70%</span></div>
+            <div class="bar"><div style="width: 62%; background:#E8B967"></div></div>
+            <div class="ll" style="margin-top:8px;"><span>TrackMan-økter</span><span>4/6</span></div>
+            <div class="bar"><div style="width: 67%; background:#6FB3FF"></div></div>
+          </div>
+        </div>
+
+        <div class="milestones">
+          <div class="ms done"><div class="dot"></div><div class="lbl">Baseline 7-jern (52%)</div><span class="when">20 mar</span></div>
+          <div class="ms done"><div class="dot"></div><div class="lbl">Tempo-protokoll iverksatt</div><span class="when">02 apr</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Mid-check (60%+)</div><span class="when">10 jun</span></div>
+          <div class="ms"><div class="dot"></div><div class="lbl">Mål 70% treffsone</div><span class="when">15 aug</span></div>
+        </div>
+
+        <div class="footer">
+          <button class="chq-btn sm"><i data-lucide="message-circle"></i> Notat</button>
+          <button class="chq-btn sm ghost">Detalj →</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

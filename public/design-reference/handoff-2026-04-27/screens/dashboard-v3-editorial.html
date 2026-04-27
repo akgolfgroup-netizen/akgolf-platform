@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard V3 · Editorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #FAFAF7; }
+  .main { background: #FAFAF7; padding: 32px 48px 60px; }
+  .serif { font-family: 'Fraunces', serif; font-weight: 400; letter-spacing: -0.02em; }
+
+  .mast {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #0A1F18;
+    margin-bottom: 28px;
+  }
+  .mast-l { }
+  .mast-l .issue { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5A6E66; }
+  .mast-l h1 { margin: 4px 0 0; font-family: 'Fraunces', serif; font-size: 44px; font-weight: 500; letter-spacing: -0.03em; color: #0A1F18; }
+  .mast-r { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5A6E66; }
+  .mast-r div { margin-bottom: 2px; }
+
+  .lead {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
+    padding-bottom: 32px; border-bottom: 1px solid #D5DFDB;
+  }
+  .lead-headline {
+    font-family: 'Fraunces', serif;
+    font-size: 56px; font-weight: 500; line-height: 1.02; letter-spacing: -0.035em;
+    color: #0A1F18;
+    margin: 0;
+  }
+  .lead-headline em { font-style: italic; color: #005840; }
+  .lead-headline .underline { background: linear-gradient(180deg, transparent 60%, #D1F843 60%); padding: 0 2px; }
+  .lead-meta { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5A6E66; }
+
+  .lead-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-top: 10px; }
+  .big-num {
+    padding: 18px 0;
+    border-top: 1px solid #D5DFDB;
+  }
+  .big-num .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #7A8C85; }
+  .big-num .v { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 500; line-height: 1; letter-spacing: -0.035em; color: #0A1F18; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .big-num .v em { font-style: italic; color: #005840; font-size: 28px; font-weight: 400; margin-left: 4px; vertical-align: middle; }
+  .big-num .sub { font-size: 12px; color: #5A6E66; margin-top: 6px; }
+  .big-num .sub b { color: #2A7D5A; }
+
+  .columns {
+    margin-top: 36px;
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 36px;
+    padding-bottom: 32px; border-bottom: 1px solid #D5DFDB;
+  }
+  .col .kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5A6E66; padding-bottom: 6px; border-bottom: 1px solid #0A1F18; }
+  .col h3 { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; margin: 16px 0 12px; color: #0A1F18; }
+  .col p { margin: 0; font-size: 14px; line-height: 1.65; color: #324D45; }
+  .col p + p { margin-top: 10px; }
+  .col .drop::first-letter {
+    font-family: 'Fraunces', serif;
+    font-size: 56px; font-weight: 500; line-height: 0.9;
+    float: left; margin: 4px 8px 0 0; color: #005840;
+  }
+
+  .chart-ed {
+    background: #fff; padding: 20px; border-radius: 4px;
+    border: 1px solid #D5DFDB;
+    margin-top: 16px;
+  }
+
+  .timeline-ed { margin-top: 14px; }
+  .timeline-ed .row { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #ECF0EF; }
+  .timeline-ed .row:last-child { border-bottom: none; }
+  .timeline-ed .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5A6E66; width: 46px; flex-shrink: 0; padding-top: 2px; }
+  .timeline-ed .tt { font-size: 13px; font-weight: 600; color: #0A1F18; }
+  .timeline-ed .ts { font-size: 11px; color: #5A6E66; margin-top: 1px; }
+
+  .sg-ed { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .sg-ed .r { display: grid; grid-template-columns: 100px 1fr 50px; gap: 12px; align-items: center; }
+  .sg-ed .cat { font-size: 12px; font-weight: 600; color: #324D45; }
+  .sg-ed .track { position: relative; height: 8px; background: #ECF0EF; border-radius: 2px; }
+  .sg-ed .zero { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: #0A1F18; }
+  .sg-ed .f { position: absolute; top: 0; bottom: 0; }
+  .sg-ed .f.pos { background: #005840; }
+  .sg-ed .f.neg { background: #B84233; }
+  .sg-ed .v { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; text-align: right; }
+
+  .quote-ed {
+    margin-top: 36px;
+    padding: 32px 0;
+    border-top: 2px solid #0A1F18;
+    border-bottom: 1px solid #D5DFDB;
+    text-align: center;
+  }
+  .quote-ed .q {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 32px; line-height: 1.3; letter-spacing: -0.02em;
+    color: #0A1F18;
+    max-width: 820px; margin: 0 auto;
+  }
+  .quote-ed .q em { color: #005840; font-style: italic; }
+  .quote-ed .attr { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #5A6E66; margin-top: 16px; }
+
+  .footer-ed {
+    margin-top: 28px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+  }
+  .footer-ed .f {
+    padding: 16px 0;
+    border-top: 1px solid #0A1F18;
+  }
+  .footer-ed .f .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #5A6E66; }
+  .footer-ed .f .t { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.02em; color: #0A1F18; margin-top: 6px; }
+  .footer-ed .f .d { font-size: 12px; color: #324D45; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title">AK Golf</div><div class="sub">Editorial</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> <span>Oversikt</span></div>
+      <div class="nav-item">◱ <span>Planlegg</span><span class="count">3</span></div>
+      <div class="nav-item">◎ <span>Tren</span></div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> <span>Spill</span></div>
+      <div class="nav-item">△ <span>Analyser</span></div>
+      <div style="height: 14px;"></div>
+      <div class="eyebrow" style="padding: 6px 10px;">Verktøy</div>
+      <div class="nav-item">◈ <span>AI Coach</span></div>
+      <div class="nav-item">⊙ <span>TrackMan</span></div>
+      <div class="nav-item">◉ <span>Dagbok</span></div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> <span>Bookinger</span></div>
+    </nav>
+    <div class="sidebar-cta">+ Ny økt</div>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div><div class="name">Marius A.</div><div class="tier">Elite</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="mast">
+      <div class="mast-l">
+        <div class="issue">THE WEEKLY · UKE 17 · VOL III</div>
+        <h1>Marius' Almanakk</h1>
+      </div>
+      <div class="mast-r">
+        <div>TIRSDAG 21.04.2026</div>
+        <div>OSL-GK · 11° · V 4 m/s</div>
+        <div>HCP 3.4 · ELITE</div>
+      </div>
+    </div>
+
+    <div class="lead">
+      <div>
+        <h2 class="lead-headline">Fem komma fire slag<br>bedre enn <em>målkurven</em>.<br>Fokus: <span class="underline">approach</span>.</h2>
+        <div class="lead-meta">LEAD · BY AI COACH · OPPDATERT 06:12</div>
+      </div>
+      <div class="lead-stats">
+        <div class="big-num">
+          <div class="lbl">HANDICAP</div>
+          <div class="v tabular">3.4<em>↓0.3</em></div>
+          <div class="sub"><b>▼ 2.1</b> siden januar</div>
+        </div>
+        <div class="big-num">
+          <div class="lbl">SG · 10 RUNDER</div>
+          <div class="v tabular">+1.15<em>Δ</em></div>
+          <div class="sub"><b>+1.15</b> vs peer HCP 3</div>
+        </div>
+        <div class="big-num">
+          <div class="lbl">STREAK</div>
+          <div class="v tabular">28<em>d</em></div>
+          <div class="sub">PR <b>42d</b> · 14 dager igjen</div>
+        </div>
+        <div class="big-num">
+          <div class="lbl">PLAN · UKE 17</div>
+          <div class="v tabular">92<em>%</em></div>
+          <div class="sub">5 av 6 økter fullført</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <!-- ESSAY -->
+      <div class="col">
+        <div class="kicker">LEDERARTIKKEL · AI-ANALYSE</div>
+        <h3>Chip-spillet er ukens flaskehals — og ukens mulighet.</h3>
+        <p class="drop">Tre av de fire siste rundene viser samme mønster: Approach-spillet ditt leverer på elitenivå (+0.82 SG), men chip fra 10–25m koster deg 0.31 slag per runde. Videoanalyse fra 17. april peker på åpen skulderlinje i impact.</p>
+        <p>Anbefaling: Clock drill onsdag — 15 minutter, 4 posisjoner, 3 baller per posisjon. Fredag: video-review med Thomas. Forventet gevinst over 3 uker: <b style="color:#005840;">+0.22 SG</b>, som tilsvarer 0.5 slag per runde.</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#7A8C85;margin-top:18px;">
+          KILDER: RUND/018 · RUND/015 · RUND/011 · TRACKMAN/04-18 · VIDEO/04-17
+        </p>
+      </div>
+
+      <!-- DATA -->
+      <div class="col">
+        <div class="kicker">STROKES GAINED · SISTE 10</div>
+        <h3 style="font-size:20px;">Hvor slagene vinnes.</h3>
+        <div class="sg-ed">
+          <div class="r">
+            <span class="cat">Off-the-tee</span>
+            <div class="track"><div class="zero"></div><div class="f pos" style="left:50%;width:18%;"></div></div>
+            <span class="v" style="color:#005840;">+0.42</span>
+          </div>
+          <div class="r">
+            <span class="cat">Approach</span>
+            <div class="track"><div class="zero"></div><div class="f pos" style="left:50%;width:36%;"></div></div>
+            <span class="v" style="color:#005840;">+0.82</span>
+          </div>
+          <div class="r">
+            <span class="cat">Chip/pitch</span>
+            <div class="track"><div class="zero"></div><div class="f neg" style="right:50%;width:14%;"></div></div>
+            <span class="v" style="color:#B84233;">−0.31</span>
+          </div>
+          <div class="r">
+            <span class="cat">Putting</span>
+            <div class="track"><div class="zero"></div><div class="f pos" style="left:50%;width:10%;"></div></div>
+            <span class="v" style="color:#005840;">+0.22</span>
+          </div>
+        </div>
+
+        <div class="kicker" style="margin-top:24px;">HANDICAP · 12 MND</div>
+        <div class="chart-ed" style="padding:14px;">
+          <svg viewBox="0 0 300 100" style="width:100%;">
+            <g stroke="#ECF0EF" stroke-width="1">
+              <line x1="0" y1="20" x2="300" y2="20"/>
+              <line x1="0" y1="50" x2="300" y2="50"/>
+              <line x1="0" y1="80" x2="300" y2="80"/>
+            </g>
+            <path d="M10,25 L40,30 L70,22 L100,35 L130,42 L160,48 L190,52 L220,60 L250,66 L280,74" fill="none" stroke="#0A1F18" stroke-width="2"/>
+            <circle cx="280" cy="74" r="4" fill="#D1F843" stroke="#0A1F18" stroke-width="1.5"/>
+            <text x="4" y="16" font-size="8" fill="#7A8C85" font-family="JetBrains Mono">6.0</text>
+            <text x="4" y="96" font-size="8" fill="#7A8C85" font-family="JetBrains Mono">3.0</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- TODAY -->
+      <div class="col">
+        <div class="kicker">DAGEN I DAG</div>
+        <h3 style="font-size:20px;">Fire nedtegninger.</h3>
+        <div class="timeline-ed">
+          <div class="row">
+            <div class="t">06:30</div>
+            <div><div class="tt" style="color:#7A8C85;text-decoration:line-through;">Mobility · 20 min</div><div class="ts">Fullført</div></div>
+          </div>
+          <div class="row">
+            <div class="t">14:30</div>
+            <div><div class="tt">Coach Thomas · 1:1</div><div class="ts">TEK · Impact · 60 min</div></div>
+          </div>
+          <div class="row">
+            <div class="t">16:00</div>
+            <div><div class="tt">Range · dispersion</div><div class="ts">SLAG · jern 6–8 · 30 min</div></div>
+          </div>
+          <div class="row">
+            <div class="t">19:30</div>
+            <div><div class="tt">Video-review</div><div class="ts">2 klipp · 15 min</div></div>
+          </div>
+        </div>
+
+        <div class="kicker" style="margin-top:24px;">NESTE RUNDE</div>
+        <div style="margin-top:10px;padding:14px;background:#0A1F18;color:#fff;border-radius:4px;">
+          <div style="font-family:'Fraunces',serif;font-size:22px;letter-spacing:-0.02em;">Oslo GK · lør 26.04</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#D1F843;margin-top:8px;">08:40 · GUL TEE · FOREL. 3 RUNDER</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-ed">
+      <div class="q">«Du er 5.4 slag bedre enn målkurven. <em>Hold gassen.</em>»</div>
+      <div class="attr">— AI COACH · UKENTLIG BRIEFING</div>
+    </div>
+
+    <div class="footer-ed">
+      <div class="f"><div class="k">RUNDER · 30D</div><div class="t serif">9 runder</div><div class="d">+2 mot forrige måned</div></div>
+      <div class="f"><div class="k">ØKTER · MND</div><div class="t serif">24 økter</div><div class="d">+6 mot forrige</div></div>
+      <div class="f"><div class="k">KONSISTENS</div><div class="t serif">94 %</div><div class="d">Planen rullet stabilt</div></div>
+      <div class="f"><div class="k">SG · APPROACH</div><div class="t serif">+0.82 ▲</div><div class="d">Ukens sterkeste vector</div></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

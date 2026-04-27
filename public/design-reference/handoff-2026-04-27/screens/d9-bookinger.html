@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D9 — Bookinger · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .toolbar { display:flex; gap:10px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+  .search-input { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; width: 300px; color: #fff; font-size: 13px; }
+  .search-input [data-lucide] { width: 14px; height: 14px; color: rgba(255,255,255,0.5); }
+  .search-input input { background: transparent; border: none; outline: none; color: #fff; flex: 1; font-size: 13px; }
+  .filter-chip { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); padding: 6px 12px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,0.7); cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+  .filter-chip.active { background: rgba(209,248,67,0.10); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); }
+  .filter-chip [data-lucide] { width: 12px; height: 12px; }
+  .toolbar .right { margin-left:auto; display:flex; gap:6px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 18px; }
+  .stat-c { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 10px; padding: 12px 14px; }
+  .stat-c .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .stat-c .v { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+  .b-table { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 14px; overflow: hidden; }
+  .b-row { display: grid; grid-template-columns: 100px 100px 1.5fr 1fr 1fr 110px 90px 90px; gap: 12px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--akgolf-line-dark); font-size: 13px; }
+  .b-row:last-child { border-bottom: none; }
+  .b-row.head { color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; background: rgba(255,255,255,0.025); }
+  .b-row:not(.head):hover { background: rgba(255,255,255,0.025); }
+  .b-day { color: #fff; font-weight: 600; }
+  .b-day small { display: block; font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); margin-top:1px; font-weight: 400; letter-spacing: 0.04em; }
+  .b-time { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #fff; font-size: 12px; }
+  .b-time small { display: block; color: rgba(255,255,255,0.45); font-weight: 400; margin-top: 1px; }
+  .b-stu { display: flex; align-items: center; gap: 8px; }
+  .b-av { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 700; color: #0A1F18; flex-shrink: 0; }
+  .b-stu .name { color: #fff; font-weight: 500; }
+  .b-stu .sub { font-size: 10px; color: rgba(255,255,255,0.5); font-family:'JetBrains Mono',monospace; letter-spacing: 0.04em; margin-top:1px; }
+  .b-coach { color: rgba(255,255,255,0.85); font-size: 12px; }
+  .b-coach small { display:block; font-size: 10px; color: rgba(255,255,255,0.45); font-family:'JetBrains Mono',monospace; margin-top:1px; }
+  .b-loc { font-size: 12px; color: rgba(255,255,255,0.85); display: inline-flex; align-items:center; gap:5px; }
+  .b-loc [data-lucide] { width: 12px; height: 12px; color: rgba(255,255,255,0.5); }
+  .b-status { font-family:'JetBrains Mono',monospace; font-size: 10px; padding: 3px 8px; border-radius: 5px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; display: inline-block; }
+  .b-status.confirmed { background: rgba(42,125,90,0.20); color: #6FCBA1; }
+  .b-status.pending { background: rgba(196,138,50,0.20); color: #E8B967; }
+  .b-status.cancelled { background: rgba(184,66,51,0.20); color: #F49283; }
+  .b-status.live { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .b-actions { display: flex; gap: 4px; }
+  .b-actions button { width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--akgolf-line-dark); color: rgba(255,255,255,0.7); display: grid; place-items: center; cursor: pointer; }
+  .b-actions button:hover { background: rgba(209,248,67,0.10); color: var(--akgolf-accent); }
+  .b-actions button [data-lucide] { width: 13px; height: 13px; }
+
+  .day-divider { padding: 8px 18px; background: rgba(255,255,255,0.03); font-family:'JetBrains Mono',monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); display: flex; justify-content: space-between; }
+  .day-divider .count { color: var(--akgolf-accent); }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn active" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item active"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Bookinger</div>
+      <div class="chq-top-meta tabular">alle coacher · 18 denne uken</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Plan · Bookinger</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Alle bookinger</h1>
+        <p>Kommende og historiske økter på tvers av coachene. Klikk for detaljer eller rediger direkte.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="download"></i> Eksport</button>
+        <button class="chq-btn"><i data-lucide="filter"></i> Filter</button>
+        <button class="chq-btn primary"><i data-lucide="calendar-plus"></i> Ny booking</button>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-c"><div class="l">I dag</div><div class="v">6</div></div>
+      <div class="stat-c"><div class="l">Denne uken</div><div class="v">18</div></div>
+      <div class="stat-c"><div class="l">Pending</div><div class="v" style="color:#E8B967">3</div></div>
+      <div class="stat-c"><div class="l">Avlyst 30d</div><div class="v" style="color:#F49283">4</div></div>
+      <div class="stat-c"><div class="l">No-show 30d</div><div class="v" style="color:#F49283">1</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-input"><i data-lucide="search"></i><input placeholder="Søk navn, lokasjon, coach…"/></div>
+      <div class="filter-chip active">Alle 18</div>
+      <div class="filter-chip">I dag 6</div>
+      <div class="filter-chip">Pending 3</div>
+      <div class="filter-chip"><i data-lucide="user"></i> Anders K. <span style="opacity:0.6">9</span></div>
+      <div class="filter-chip"><i data-lucide="user"></i> Maria T. <span style="opacity:0.6">5</span></div>
+      <div class="filter-chip"><i data-lucide="user"></i> Erik S. <span style="opacity:0.6">4</span></div>
+      <div class="right">
+        <button class="chq-btn ghost sm"><i data-lucide="calendar"></i> Uke 18</button>
+        <button class="chq-btn ghost sm"><i data-lucide="sliders-horizontal"></i> Filter</button>
+      </div>
+    </div>
+
+    <div class="b-table">
+      <div class="b-row head">
+        <span>Dag</span><span>Tid</span><span>Spiller</span><span>Coach</span><span>Lokasjon</span><span>Status</span><span>Type</span><span style="text-align:right;">Handling</span>
+      </div>
+
+      <div class="day-divider"><span>I DAG · TIRSDAG 30. APRIL</span><span class="count">6 økter</span></div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">09:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FB3FF">PK</div><div><div class="name">Pelle Kvist</div><div class="sub">HCP 9.1</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 1</div>
+        <div><span class="b-status live">● Live</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Iron-økt</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">10:30<small>45 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FCBA1">EL</div><div><div class="name">Erik Lund</div><div class="sub">HCP 18.5</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Range bay 4</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Driver</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Sjekk inn"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">12:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#C896E8">CR</div><div><div class="name">Camilla Ruud</div><div class="sub">HCP 15.3 · Junior</div></div></div>
+        <div class="b-coach">Maria T.<small>JUNIOR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 2</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Sving-analyse</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Sjekk inn"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">14:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#D1F843">SH</div><div><div class="name">Sofie Holm</div><div class="sub">HCP 4.2 · Performance</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Performance studio</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Tempo</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Sjekk inn"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">15:30<small>30 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#E8B967">TS</div><div><div class="name">Tor Solberg</div><div class="sub">HCP 17.1</div></div></div>
+        <div class="b-coach">Erik S.<small>SHORT-GAME</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Putting green</div>
+        <div><span class="b-status pending">Pending</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Putting</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Bekreft"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">I dag<small>30 APR</small></div>
+        <div class="b-time">17:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FB3FF">JH</div><div><div class="name">Jonas Hansen</div><div class="sub">HCP 16.8 · Junior</div></div></div>
+        <div class="b-coach">Maria T.<small>JUNIOR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Range bay 2</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Full sving</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Sjekk inn"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="day-divider"><span>I MORGEN · ONSDAG 1. MAI</span><span class="count">5 økter</span></div>
+
+      <div class="b-row">
+        <div class="b-day">Onsdag<small>01 MAI</small></div>
+        <div class="b-time">08:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#D1F843">AB</div><div><div class="name">Alex Brandt</div><div class="sub">HCP 7.4</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Performance studio</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Iron</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Onsdag<small>01 MAI</small></div>
+        <div class="b-time">10:00<small>45 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FCBA1">KS</div><div><div class="name">Kari Strand</div><div class="sub">HCP 14.2</div></div></div>
+        <div class="b-coach">Maria T.<small>SVING</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 1</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Sving</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Onsdag<small>01 MAI</small></div>
+        <div class="b-time">13:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#F49283">EL</div><div><div class="name">Emma Lien</div><div class="sub">HCP 16.4 · Inaktiv 16d</div></div></div>
+        <div class="b-coach">Anders K.<small>RE-ENG.</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 2</div>
+        <div><span class="b-status pending">Pending</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Re-onboarding</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Bekreft"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Onsdag<small>01 MAI</small></div>
+        <div class="b-time">15:00<small>30 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FB3FF">ME</div><div><div class="name">Markus Eide</div><div class="sub">HCP 18.7</div></div></div>
+        <div class="b-coach">Erik S.<small>SHORT-GAME</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Bunker</div>
+        <div><span class="b-status cancelled">Avlyst</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Bunker</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Reschedule"><i data-lucide="calendar-plus"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Onsdag<small>01 MAI</small></div>
+        <div class="b-time">17:30<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#A5B2AD">PB</div><div><div class="name">Per Bråten</div><div class="sub">HCP 11.5</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Range bay 3</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Driver</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="day-divider"><span>TORSDAG 2. MAI</span><span class="count">4 økter</span></div>
+
+      <div class="b-row">
+        <div class="b-day">Torsdag<small>02 MAI</small></div>
+        <div class="b-time">09:30<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#A5B2AD">MK</div><div><div class="name">Mona Knutsen</div><div class="sub">HCP 19.2</div></div></div>
+        <div class="b-coach">Maria T.<small>SVING</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 1</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Sving</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Torsdag<small>02 MAI</small></div>
+        <div class="b-time">12:00<small>45 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#6FCBA1">AM</div><div><div class="name">Anne Moen</div><div class="sub">HCP 22.8 · Ny</div></div></div>
+        <div class="b-coach">Maria T.<small>ONBOARDING</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Studio 2</div>
+        <div><span class="b-status pending">Pending</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Onboarding</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Bekreft"><i data-lucide="check"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Torsdag<small>02 MAI</small></div>
+        <div class="b-time">15:00<small>60 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#A5B2AD">RJ</div><div><div class="name">Rune Johansen</div><div class="sub">HCP 13.8</div></div></div>
+        <div class="b-coach">Anders K.<small>PRIMÆR</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Performance studio</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Iron</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div class="b-row">
+        <div class="b-day">Torsdag<small>02 MAI</small></div>
+        <div class="b-time">16:30<small>30 min</small></div>
+        <div class="b-stu"><div class="b-av" style="background:#C896E8">CR</div><div><div class="name">Camilla Ruud</div><div class="sub">HCP 15.3 · Junior</div></div></div>
+        <div class="b-coach">Erik S.<small>SHORT-GAME</small></div>
+        <div class="b-loc"><i data-lucide="map-pin"></i> Putting green</div>
+        <div><span class="b-status confirmed">Bekreftet</span></div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.7);">Putting</div>
+        <div class="b-actions" style="justify-content:flex-end;"><button title="Vis"><i data-lucide="eye"></i></button><button title="Mer"><i data-lucide="more-horizontal"></i></button></div>
+      </div>
+
+      <div style="padding: 14px 18px; text-align: center; border-top: 1px solid var(--akgolf-line-dark); background: rgba(255,255,255,0.02);">
+        <button class="chq-btn sm"><i data-lucide="chevron-down"></i> Vis 3 økter til denne uken</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

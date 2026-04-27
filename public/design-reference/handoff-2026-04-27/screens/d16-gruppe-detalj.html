@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D16 — Gruppe-detalj · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .gd-hero { background: var(--akgolf-card-dark); border:1.5px solid rgba(209,248,67,0.30); border-radius:18px; padding:24px 28px; margin-bottom:22px; display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:center; }
+  .gd-hero h2 { margin:0; font-size:26px; font-weight:800; color:#fff; letter-spacing:-0.025em; }
+  .gd-hero .sub { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:6px; font-weight:700; }
+  .gd-hero .lede { margin:10px 0 0; font-size:13.5px; color:rgba(255,255,255,0.7); line-height:1.6; max-width:55ch; }
+  .gd-hero .actions { margin-top:16px; display:flex; gap:8px; flex-wrap:wrap; }
+  .gd-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .gd-stat { background:rgba(0,0,0,0.20); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px 14px; }
+  .gd-stat .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+  .gd-stat .v { font-size:20px; font-weight:800; color:#fff; line-height:1; margin-top:4px; }
+  .gd-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap:18px; }
+  .roster-card, .schedule-card, .progress-card, .notes-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 22px; margin-bottom:18px; }
+  .roster-card h3, .schedule-card h3, .progress-card h3, .notes-card h3 { margin:0 0 14px; font-size:14px; color:#fff; font-weight:700; letter-spacing:-0.005em; display:flex; justify-content:space-between; align-items:center; }
+  .roster-card h3 .more, .schedule-card h3 .more, .progress-card h3 .more, .notes-card h3 .more { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); font-weight:700; }
+  .ros-row { display:grid; grid-template-columns: 32px 1fr 80px 80px auto; gap:10px; align-items:center; padding:10px 0; border-top:1px solid rgba(255,255,255,0.05); font-size:12.5px; }
+  .ros-row:first-of-type { border-top:none; }
+  .ros-row .av { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:11px; color:#0A1F18; }
+  .ros-row .nm { color:#fff; font-weight:600; }
+  .ros-row .nm small { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.5); display:block; letter-spacing:0.06em; margin-top:1px; }
+  .ros-row .hcp { font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:12px; }
+  .ros-row .att { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.7); }
+  .ros-row .badge { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.10em; padding:2px 6px; border-radius:4px; font-weight:700; }
+  .ros-row .badge.ok { background:rgba(42,125,90,0.25); color:#6FCBA1; }
+  .ros-row .badge.flag { background:rgba(196,138,50,0.22); color:#E8B967; }
+  .sch-row { display:grid; grid-template-columns: 70px 1fr 100px; gap:10px; align-items:center; padding:10px 0; border-top:1px solid rgba(255,255,255,0.05); font-size:12.5px; }
+  .sch-row:first-of-type { border-top:none; }
+  .sch-row .d { font-family:'JetBrains Mono',monospace; font-size:13px; color:#fff; font-weight:700; line-height:1; }
+  .sch-row .d small { display:block; font-size:9px; color:rgba(255,255,255,0.5); margin-top:3px; letter-spacing:0.10em; text-transform:uppercase; }
+  .sch-row .body .t { font-size:13px; color:#fff; font-weight:600; }
+  .sch-row .body .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px; letter-spacing:0.04em; }
+  .sch-row .att { font-family:'JetBrains Mono',monospace; font-size:11px; text-align:right; color:rgba(255,255,255,0.65); }
+  .progress-card .legend { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; margin-bottom:14px; text-transform:uppercase; }
+  .pb-row { display:grid; grid-template-columns: 100px 1fr 60px; gap:14px; align-items:center; padding:8px 0; }
+  .pb-row .lab { font-size:12px; color:#fff; font-weight:600; }
+  .pb-row .bar { height:8px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; }
+  .pb-row .bar .fill { height:100%; background:var(--akgolf-accent); border-radius:4px; }
+  .pb-row .pct { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.7); text-align:right; font-weight:700; }
+  .note { padding:12px 14px; background:rgba(0,0,0,0.18); border-radius:10px; margin-bottom:10px; }
+  .note .who { font-size:12px; color:#fff; font-weight:600; margin-bottom:4px; }
+  .note .when { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); letter-spacing:0.06em; }
+  .note .body { font-size:12.5px; color:rgba(255,255,255,0.78); margin-top:6px; line-height:1.55; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="user-plus"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Dag</div>
+    <div class="chq-nav-item"><i data-lucide="layout-dashboard"></i>Dagens fokus</div>
+    <div class="chq-nav-section">Mennesker</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i>Spillere</div>
+    <div class="chq-nav-item active"><i data-lucide="user-plus"></i>Grupper</div>
+    <div class="chq-nav-item"><i data-lucide="briefcase"></i>Team</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Grupper / Junior Elite Oslo</div>
+    <div class="chq-top-meta">14 SPILLERE · KOHORT MAI–JUL 2025 · BOGSTAD</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk i gruppe…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ GRUPPER · DETALJ</div>
+        <h1 class="chq-h1">Junior Elite Oslo</h1>
+        <p>14 spillere · HCP snitt 8.2 · 12-ukers kohort. Belegg 93 %. Neste fellesøkt torsdag 16:00 på Bogstad.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="message-square"></i>Send melding</button>
+        <button class="chq-btn primary"><i data-lucide="calendar-plus"></i>Bok økt</button>
+      </div>
+    </div>
+
+    <section class="gd-hero">
+      <div>
+        <div class="sub">Kohort-status</div>
+        <h2>Uke 6 av 12 · sterk fremgang.</h2>
+        <p class="lede">10 av 14 spillere har redusert HCP siden kohortstart. Markus, Sofie og Anders er topp-3. To spillere flagget for ekstra coaching denne uken (Lars og Erik H — putting under target).</p>
+        <div class="actions">
+          <button class="chq-btn accent"><i data-lucide="users"></i>Roster (14)</button>
+          <button class="chq-btn"><i data-lucide="bar-chart-3"></i>Gruppe-rapport</button>
+          <button class="chq-btn ghost"><i data-lucide="more-horizontal"></i>Mer</button>
+        </div>
+      </div>
+      <div class="gd-stats">
+        <div class="gd-stat"><div class="l">Roster</div><div class="v">14</div></div>
+        <div class="gd-stat"><div class="l">HCP snitt</div><div class="v">8.2</div></div>
+        <div class="gd-stat"><div class="l">Belegg uke 6</div><div class="v">93%</div></div>
+        <div class="gd-stat"><div class="l">Mål nådd</div><div class="v">10/14</div></div>
+      </div>
+    </section>
+
+    <div class="gd-grid">
+      <div>
+        <section class="roster-card">
+          <h3>Roster · 14 spillere<span class="more">SE ALLE</span></h3>
+          <div class="ros-row"><div class="av" style="background:#6BB1FF;">MN</div><div class="nm">Markus Nordby<small>17 år · medlem siden 2022</small></div><div class="hcp">7.4</div><div class="att">5/6 økt</div><span class="badge ok">★ TOPP</span></div>
+          <div class="ros-row"><div class="av" style="background:#C99CF3;">SA</div><div class="nm">Sofie Aas<small>16 år · medlem siden 2023</small></div><div class="hcp">7.7</div><div class="att">6/6 økt</div><span class="badge ok">★ TOPP</span></div>
+          <div class="ros-row"><div class="av" style="background:var(--akgolf-accent);">AK</div><div class="nm">Anders Kristiansen<small>15 år · medlem siden 2023</small></div><div class="hcp">8.4</div><div class="att">5/6 økt</div><span class="badge ok">PÅ MÅL</span></div>
+          <div class="ros-row"><div class="av" style="background:#E8B967;">JT</div><div class="nm">Jonas Tvedt<small>16 år</small></div><div class="hcp">8.0</div><div class="att">6/6 økt</div><span class="badge ok">PÅ MÅL</span></div>
+          <div class="ros-row"><div class="av" style="background:#6FCBA1;">HJ</div><div class="nm">Hannah Johansen<small>17 år</small></div><div class="hcp">8.6</div><div class="att">4/6 økt</div><span class="badge ok">PÅ MÅL</span></div>
+          <div class="ros-row"><div class="av" style="background:#6BB1FF;">EH</div><div class="nm">Erik Hansen<small>14 år</small></div><div class="hcp">9.2</div><div class="att">5/6 økt</div><span class="badge flag">⚠ PUTT</span></div>
+          <div class="ros-row"><div class="av" style="background:#C99CF3;">LK</div><div class="nm">Lars Kvam<small>15 år</small></div><div class="hcp">9.1</div><div class="att">3/6 økt</div><span class="badge flag">⚠ FRAVÆR</span></div>
+          <div class="ros-row"><div class="av" style="background:#E8B967;">TA</div><div class="nm">Tobias Aune<small>16 år</small></div><div class="hcp">8.8</div><div class="att">6/6 økt</div><span class="badge ok">PÅ MÅL</span></div>
+        </section>
+      </div>
+      <aside>
+        <section class="schedule-card">
+          <h3>Plan · neste 4 uker<span class="more">12 ØKTER</span></h3>
+          <div class="sch-row"><div class="d">02 mai<small>TOR</small></div><div class="body"><div class="t">Fellesøkt · driver-fokus</div><div class="meta">BOGSTAD BAY 4–8 · 16:00–18:00</div></div><div class="att">14/14</div></div>
+          <div class="sch-row"><div class="d">06 mai<small>MAN</small></div><div class="body"><div class="t">Treningsrunde · medlemskap</div><div class="meta">BOGSTAD BANEN · 17:00–20:00</div></div><div class="att">12/14</div></div>
+          <div class="sch-row"><div class="d">09 mai<small>TOR</small></div><div class="body"><div class="t">Fellesøkt · putting</div><div class="meta">SKULLERUD STUDIO · 16:00–18:00</div></div><div class="att">14/14</div></div>
+          <div class="sch-row"><div class="d">16 mai<small>TOR</small></div><div class="body"><div class="t">Trackman re-test</div><div class="meta">SKULLERUD · 14:00–18:00</div></div><div class="att">11/14</div></div>
+          <div class="sch-row"><div class="d">23 mai<small>TOR</small></div><div class="body"><div class="t">On-course · short-game</div><div class="meta">BOGSTAD HULL 1–6 · 16:00–18:00</div></div><div class="att">14/14</div></div>
+        </section>
+        <section class="progress-card">
+          <h3>Fremgang · uke 1 → 6</h3>
+          <div class="legend">% AV ROSTER MED MÅLT FORBEDRING</div>
+          <div class="pb-row"><div class="lab">Driver carry</div><div class="bar"><div class="fill" style="width:71%;"></div></div><div class="pct">10/14</div></div>
+          <div class="pb-row"><div class="lab">GIR%</div><div class="bar"><div class="fill" style="width:57%;"></div></div><div class="pct">8/14</div></div>
+          <div class="pb-row"><div class="lab">Putt/runde</div><div class="bar"><div class="fill" style="width:64%;"></div></div><div class="pct">9/14</div></div>
+          <div class="pb-row"><div class="lab">HCP −0.5+</div><div class="bar"><div class="fill" style="width:43%;"></div></div><div class="pct">6/14</div></div>
+        </section>
+        <section class="notes-card">
+          <h3>Erik sine notater<span class="more">12 NOTATER</span></h3>
+          <div class="note">
+            <div class="who">Roster-justering · 28. apr</div>
+            <div class="when">SISTE · ESN</div>
+            <div class="body">«Lars trenger 1:1-økt før 16. mai — fraværsmønster siste 2 uker, sannsynligvis skole. Send foreldre-melding.»</div>
+          </div>
+          <div class="note">
+            <div class="who">Putting-rapport gruppe · 25. apr</div>
+            <div class="when">3 DAGER SIDEN</div>
+            <div class="body">«Hele gruppa er ned 0.12 putt/hull siden mars. Quintic-økten 9. mai vil forsterke. Erik H får ekstra fokus.»</div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

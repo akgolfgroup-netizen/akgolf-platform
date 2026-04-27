@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero — split foto + headline */
+  .a-hero {
+    padding: 140px 0 80px;
+    background: var(--akgolf-surface);
+    position: relative;
+  }
+  .a-hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .a-hero-eyebrow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    color: var(--akgolf-primary); text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .a-hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 0 4px rgba(209,248,67,0.30);
+  }
+  .a-hero h1 {
+    font-size: clamp(48px, 6.5vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.038em;
+    color: var(--akgolf-ink);
+    font-weight: 800;
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+  .a-hero h1 em {
+    font-family:'Fraunces',serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--akgolf-primary);
+  }
+  .a-hero-lede {
+    font-size: 19px; line-height: 1.55; color: var(--akgolf-text);
+    max-width: 52ch; margin: 0 0 32px;
+    text-wrap: pretty;
+  }
+  .a-hero-meta {
+    display: flex; gap: 28px; align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--akgolf-line-light);
+  }
+  .a-hero-meta .it {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .a-hero-meta .it .v {
+    font-family:'Inter',sans-serif;
+    font-size: 28px; font-weight: 800; letter-spacing: -0.025em;
+    color: var(--akgolf-ink);
+  }
+  .a-hero-meta .it .l {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--akgolf-muted); font-weight: 700;
+  }
+  .a-hero-meta .sep { width: 1px; height: 32px; background: var(--akgolf-line-light); }
+
+  /* Packages */
+  .pkg-section { padding: 100px 0; background: #fff; }
+  .pkg-head {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 40px; align-items: end;
+    margin-bottom: 60px;
+  }
+  .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pkg {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 24px;
+    padding: 36px 32px 32px;
+    display: flex; flex-direction: column;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .pkg:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 1px 2px rgba(10,31,24,0.04), 0 24px 60px rgba(10,31,24,0.10);
+    border-color: rgba(0,88,64,0.20);
+  }
+  .pkg.featured {
+    background: var(--akgolf-ink); color: #fff;
+    border-color: var(--akgolf-ink);
+    transform: translateY(-8px);
+  }
+  .pkg.featured:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 32px 80px rgba(10,31,24,0.30);
+  }
+  .pkg-badge {
+    position: absolute; top: -12px; left: 32px;
+    background: var(--akgolf-accent);
+    color: var(--akgolf-ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px;
+    font-weight: 700;
+  }
+  .pkg-ico {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: rgba(0,88,64,0.10);
+    color: var(--akgolf-primary);
+    display: grid; place-items: center;
+    margin-bottom: 24px;
+  }
+  .pkg.featured .pkg-ico {
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+  }
+  .pkg-ico [data-lucide] { width: 26px; height: 26px; stroke-width: 1.8; }
+  .pkg-name {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700;
+    color: var(--akgolf-primary);
+    margin-bottom: 6px;
+  }
+  .pkg.featured .pkg-name { color: var(--akgolf-accent); }
+  .pkg h3 {
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -0.030em;
+    color: var(--akgolf-ink);
+    margin: 0 0 6px;
+  }
+  .pkg.featured h3 { color: #fff; }
+  .pkg-tag {
+    font-size: 14px; color: var(--akgolf-text); margin-bottom: 24px;
+  }
+  .pkg.featured .pkg-tag { color: rgba(255,255,255,0.65); }
+  .pkg-price {
+    display: flex; align-items: baseline; gap: 6px;
+    margin-bottom: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--akgolf-line-light);
+  }
+  .pkg.featured .pkg-price { border-color: rgba(255,255,255,0.10); }
+  .pkg-price .amt {
+    font-family:'Inter',sans-serif;
+    font-size: 44px; font-weight: 800; letter-spacing: -0.035em;
+    color: var(--akgolf-ink);
+  }
+  .pkg.featured .pkg-price .amt { color: #fff; }
+  .pkg-price .unit {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; letter-spacing: 0.10em;
+    color: var(--akgolf-muted); font-weight: 600;
+  }
+  .pkg.featured .pkg-price .unit { color: rgba(255,255,255,0.55); }
+  .pkg-sub {
+    font-size: 13px; color: var(--akgolf-muted); margin-bottom: 28px;
+  }
+  .pkg.featured .pkg-sub { color: rgba(255,255,255,0.55); }
+  .pkg ul {
+    list-style: none; padding: 0; margin: 0 0 32px;
+    display: flex; flex-direction: column; gap: 12px;
+    flex: 1;
+  }
+  .pkg ul li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; line-height: 1.5;
+    color: var(--akgolf-text);
+  }
+  .pkg.featured ul li { color: rgba(255,255,255,0.85); }
+  .pkg ul li [data-lucide] {
+    width: 16px; height: 16px;
+    color: var(--akgolf-primary);
+    margin-top: 3px; flex-shrink: 0;
+  }
+  .pkg.featured ul li [data-lucide] { color: var(--akgolf-accent); }
+  .pkg-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: var(--akgolf-ink);
+    color: #fff;
+    font-family:'Inter',sans-serif;
+    font-size: 14px; font-weight: 700;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .pkg-cta:hover { transform: translateY(-1px); background: #112e22; }
+  .pkg.featured .pkg-cta {
+    background: var(--akgolf-accent); color: var(--akgolf-ink);
+  }
+  .pkg.featured .pkg-cta:hover { box-shadow: 0 12px 28px rgba(209,248,67,0.40); }
+  .pkg-cta [data-lucide] { width: 14px; height: 14px; }
+
+  /* What's included matrix */
+  .matrix-section { background: var(--akgolf-surface); padding: 100px 0; }
+  .matrix-head { text-align: center; margin-bottom: 60px; }
+  .matrix-head h2 { max-width: 22ch; margin: 0 auto 16px; }
+  .matrix {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .matrix-row {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--akgolf-line-light);
+  }
+  .matrix-row:last-child { border-bottom: none; }
+  .matrix-row.header {
+    background: rgba(0,88,64,0.04);
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-primary);
+    font-weight: 700;
+  }
+  .matrix-row > div {
+    padding: 18px 24px;
+  }
+  .matrix-row > div:not(:first-child) {
+    text-align: center;
+    border-left: 1px solid var(--akgolf-line-light);
+  }
+  .matrix-row .feature {
+    font-size: 14px; font-weight: 600; color: var(--akgolf-ink);
+  }
+  .matrix-row .feature small {
+    display: block; font-weight: 400; font-size: 12px; color: var(--akgolf-muted); margin-top: 2px;
+  }
+  .matrix-row .val {
+    font-size: 14px; color: var(--akgolf-text); font-weight: 500;
+  }
+  .matrix-row .val [data-lucide] {
+    width: 18px; height: 18px;
+  }
+  .matrix-row .val.yes [data-lucide] { color: var(--akgolf-primary); }
+  .matrix-row .val.no [data-lucide] { color: rgba(10,31,24,0.20); }
+
+  /* Method (AK pyramide) */
+  .method-section { background: #fff; padding: 100px 0; }
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .pyramide {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .py-row {
+    display: grid; grid-template-columns: 60px 1fr;
+    gap: 18px; align-items: center;
+  }
+  .py-bar {
+    height: 64px;
+    border-radius: 8px;
+    display: flex; align-items: center; padding: 0 22px;
+    background: linear-gradient(90deg, var(--akgolf-primary), #007454);
+    color: #fff;
+    font-weight: 700; font-size: 16px;
+    letter-spacing: -0.005em;
+  }
+  .py-row[data-lvl="5"] .py-bar { width: 30%; background: linear-gradient(90deg, #0A1F18, #1a3a2a); }
+  .py-row[data-lvl="4"] .py-bar { width: 50%; background: linear-gradient(90deg, #005840, #007454); }
+  .py-row[data-lvl="3"] .py-bar { width: 70%; background: linear-gradient(90deg, #007454, #2c8a6d); }
+  .py-row[data-lvl="2"] .py-bar { width: 90%; background: linear-gradient(90deg, #2c8a6d, #5fa88b); }
+  .py-row[data-lvl="1"] .py-bar { width: 100%; background: linear-gradient(90deg, var(--akgolf-accent), #b8d93a); color: var(--akgolf-ink); }
+  .py-num {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 14px; font-weight: 700;
+    color: var(--akgolf-muted);
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  /* Coach profile */
+  .coach-section { background: var(--akgolf-ink); color: #fff; padding: 100px 0; }
+  .coach-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: center; }
+  .coach-portrait {
+    border-radius: 24px;
+    background: linear-gradient(135deg, #112e22 0%, #1a3a2a 100%);
+  }
+  .coach-portrait > .web-photo-label .ico { color: rgba(209,248,67,0.85); border-color: rgba(209,248,67,0.30); background: rgba(209,248,67,0.10); }
+  .coach-side .lab {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .coach-side h2 {
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 800; letter-spacing: -0.030em;
+    color: #fff; line-height: 1.05;
+    margin: 0 0 24px;
+  }
+  .coach-side h2 em {
+    font-family:'Fraunces',serif;
+    font-style: italic; font-weight: 500;
+    color: var(--akgolf-accent);
+  }
+  .coach-side blockquote {
+    margin: 0 0 28px;
+    font-size: 19px; line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    text-wrap: pretty;
+    max-width: 52ch;
+    border-left: 3px solid var(--akgolf-accent);
+    padding-left: 22px;
+  }
+  .coach-credits {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .coach-credits .cr {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .coach-credits .cr .v {
+    font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.02em;
+  }
+  .coach-credits .cr .l {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight: 700;
+  }
+
+  /* FAQ */
+  .faq-section { background: var(--akgolf-surface); padding: 100px 0; }
+  .faq-list { max-width: 800px; margin: 60px auto 0; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 16px;
+    padding: 24px 28px;
+  }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 17px; font-weight: 700; letter-spacing: -0.015em;
+    color: var(--akgolf-ink);
+  }
+  .faq-q [data-lucide] { width: 18px; height: 18px; color: var(--akgolf-muted); }
+  .faq-a {
+    margin-top: 12px;
+    font-size: 15px; color: var(--akgolf-text); line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* Big CTA */
+  .a-cta {
+    padding: 100px 0;
+    background: var(--akgolf-ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .a-cta::before {
+    content:''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 30%, rgba(209,248,67,0.12), transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(0,88,64,0.30), transparent 50%);
+  }
+  .a-cta .content { position: relative; z-index: 2; text-align: center; }
+  .a-cta h2 {
+    font-size: clamp(40px, 5.4vw, 68px);
+    font-weight: 800; letter-spacing: -0.030em;
+    color: #fff; max-width: 22ch; margin: 0 auto 20px;
+    line-height: 1.05;
+  }
+  .a-cta h2 em {
+    font-family:'Fraunces',serif; font-style: italic; font-weight: 500;
+    color: var(--akgolf-accent);
+  }
+  .a-cta p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 50ch; margin: 0 auto 36px; }
+
+  @media (max-width: 900px) {
+    .a-hero-grid, .method-grid, .coach-grid { grid-template-columns: 1fr; gap: 40px; }
+    .pkg-grid { grid-template-columns: 1fr; }
+    .pkg.featured { transform: none; }
+    .matrix-row { grid-template-columns: 1fr; }
+    .matrix-row > div:not(:first-child) { border-left: none; border-top: 1px solid var(--akgolf-line-light); }
+    .pkg-head, .matrix-head { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="#" class="active">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="#">Bane</a>
+    <a href="#">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="#" class="web-nav-cta">Bli medlem <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="a-hero">
+  <div class="web-container">
+    <div class="a-hero-grid">
+      <div>
+        <div class="a-hero-eyebrow"><span class="dot"></span>Academy · Voksne 18+</div>
+        <h1 class="web-rise d1">Strukturert utvikling, <em>målbar fremgang.</em></h1>
+        <p class="a-hero-lede web-rise d2">AK Academy er et 12-måneders coachingprogram der hver økt logges, hver test måles, og hver spillers plan oppdateres månedlig av en personlig coach. Ikke flere sporadiske lessons.</p>
+        <div class="hero-actions web-rise d3" style="display:flex; gap: 14px; flex-wrap:wrap;">
+          <a href="#pakker" class="web-btn dark lg">Se pakker <i data-lucide="arrow-right"></i></a>
+          <a href="#" class="web-btn line lg">Book intro 30 min <i data-lucide="calendar"></i></a>
+        </div>
+        <div class="a-hero-meta web-rise d4">
+          <div class="it"><div class="v">−3.2</div><div class="l">HCP-fall · snitt 12mnd</div></div>
+          <div class="sep"></div>
+          <div class="it"><div class="v">94%</div><div class="l">Fornyer år 2</div></div>
+          <div class="sep"></div>
+          <div class="it"><div class="v">12</div><div class="l">Coacher i team</div></div>
+        </div>
+      </div>
+      <div class="web-rise d2">
+        <div class="web-photo" data-ratio="4-3" style="border-radius: 24px;">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Coaching-foto]</div>
+            <div class="desc">Anders i range-økt med voksen spiller, golfklubb i hånd, varm overcast lighting</div>
+            <div class="ratio">16:9 · landscape</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Packages -->
+<section class="pkg-section" id="pakker">
+  <div class="web-container">
+    <div class="pkg-head">
+      <div>
+        <div class="web-eyebrow">Tre nivåer</div>
+        <h2 class="web-h2">Velg din <em class="web-italic">forpliktelse</em>.</h2>
+      </div>
+      <a href="g4-pricing.html" class="web-btn line">Sammenlign alt <i data-lucide="arrow-right"></i></a>
+    </div>
+
+    <div class="pkg-grid">
+      <!-- Starter -->
+      <div class="pkg">
+        <div class="pkg-ico"><i data-lucide="target"></i></div>
+        <div class="pkg-name">STARTER</div>
+        <h3>Foundation</h3>
+        <div class="pkg-tag">Bygg fundamentet — perfekt for nybegynnere og spillere som vil ha struktur.</div>
+        <div class="pkg-price">
+          <span class="amt">2 490</span>
+          <span class="unit">KR / MND</span>
+        </div>
+        <div class="pkg-sub">12 mnd binding · 6 lessons + app</div>
+        <ul>
+          <li><i data-lucide="check"></i> 6 × 50 min lessons / år</li>
+          <li><i data-lucide="check"></i> Månedlig fokus-økt</li>
+          <li><i data-lucide="check"></i> PlayerHQ-app + AI-plan</li>
+          <li><i data-lucide="check"></i> 1 × HCP-test / år</li>
+          <li><i data-lucide="check"></i> Trackman drop-in 50%</li>
+        </ul>
+        <a href="#" class="pkg-cta">Velg Foundation <i data-lucide="arrow-right"></i></a>
+      </div>
+
+      <!-- Performance · featured -->
+      <div class="pkg featured">
+        <div class="pkg-badge">MEST VALGT</div>
+        <div class="pkg-ico"><i data-lucide="trending-up"></i></div>
+        <div class="pkg-name">PERFORMANCE</div>
+        <h3>Performance</h3>
+        <div class="pkg-tag">Strukturert HCP-utvikling med personlig coach og månedlig SG-måling.</div>
+        <div class="pkg-price">
+          <span class="amt">4 990</span>
+          <span class="unit">KR / MND</span>
+        </div>
+        <div class="pkg-sub">12 mnd binding · 24 lessons + alt</div>
+        <ul>
+          <li><i data-lucide="check"></i> 24 × 50 min lessons / år</li>
+          <li><i data-lucide="check"></i> Personlig coach hele året</li>
+          <li><i data-lucide="check"></i> Månedlig SG-test + plan</li>
+          <li><i data-lucide="check"></i> Trackman + video ubegrenset</li>
+          <li><i data-lucide="check"></i> 4 × banecoaching 9 hull</li>
+          <li><i data-lucide="check"></i> AK-camp 2 dager (vår + høst)</li>
+          <li><i data-lucide="check"></i> Direkte chat med coach</li>
+        </ul>
+        <a href="#" class="pkg-cta">Velg Performance <i data-lucide="arrow-right"></i></a>
+      </div>
+
+      <!-- Elite -->
+      <div class="pkg">
+        <div class="pkg-ico"><i data-lucide="users"></i></div>
+        <div class="pkg-name">ELITE</div>
+        <h3>Tour</h3>
+        <div class="pkg-tag">For ambisiøse spillere på vei mot turnering eller proffspill.</div>
+        <div class="pkg-price">
+          <span class="amt">9 490</span>
+          <span class="unit">KR / MND</span>
+        </div>
+        <div class="pkg-sub">12 mnd · ubegrenset coaching</div>
+        <ul>
+          <li><i data-lucide="check"></i> Ubegrenset 1-til-1 coaching</li>
+          <li><i data-lucide="check"></i> Performance-team (4 coacher)</li>
+          <li><i data-lucide="check"></i> Fysisk trening + mental coach</li>
+          <li><i data-lucide="check"></i> Turnering-strategi & kost</li>
+          <li><i data-lucide="check"></i> 12 × banecoaching 18 hull</li>
+          <li><i data-lucide="check"></i> Reise-camp Spania (4 dgr)</li>
+          <li><i data-lucide="check"></i> Caddie ved 4 turneringer</li>
+        </ul>
+        <a href="#" class="pkg-cta">Søk om plass <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison matrix -->
+<section class="matrix-section">
+  <div class="web-container">
+    <div class="matrix-head">
+      <div class="web-eyebrow" style="text-align: center;">Sammenligning</div>
+      <h2 class="web-h2">Hva inngår — <em class="web-italic">i detalj</em>.</h2>
+    </div>
+
+    <div class="matrix">
+      <div class="matrix-row header">
+        <div>Funksjon</div>
+        <div>Foundation</div>
+        <div>Performance</div>
+        <div>Tour</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">1-til-1 lessons<small>50 min · personlig coach</small></div>
+        <div class="val">6 / år</div>
+        <div class="val">24 / år</div>
+        <div class="val">Ubegrenset</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">Personlig coach<small>Samme coach hele året</small></div>
+        <div class="val no"><i data-lucide="x"></i></div>
+        <div class="val yes"><i data-lucide="check"></i></div>
+        <div class="val">Team (4)</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">Trackman + video<small>Datadrevet teknikkanalyse</small></div>
+        <div class="val">50% drop-in</div>
+        <div class="val">Ubegrenset</div>
+        <div class="val">Ubegrenset</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">SG-test (Strokes Gained)<small>Månedlig måling og rapport</small></div>
+        <div class="val">1 / år</div>
+        <div class="val">12 / år</div>
+        <div class="val">Hver uke</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">Banecoaching<small>9 / 18 hull med coach</small></div>
+        <div class="val no"><i data-lucide="x"></i></div>
+        <div class="val">4 × 9 hull</div>
+        <div class="val">12 × 18 hull</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">PlayerHQ-app<small>Plan, dagbok, AI-coach</small></div>
+        <div class="val yes"><i data-lucide="check"></i></div>
+        <div class="val yes"><i data-lucide="check"></i></div>
+        <div class="val yes"><i data-lucide="check"></i></div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">AK-camp / reise<small>Intensiv samling</small></div>
+        <div class="val no"><i data-lucide="x"></i></div>
+        <div class="val">Vår + høst</div>
+        <div class="val">+ Spania 4 dgr</div>
+      </div>
+      <div class="matrix-row">
+        <div class="feature">Fysisk + mental<small>Tilleggstrenere i team</small></div>
+        <div class="val no"><i data-lucide="x"></i></div>
+        <div class="val no"><i data-lucide="x"></i></div>
+        <div class="val yes"><i data-lucide="check"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method (AK pyramide) -->
+<section class="method-section">
+  <div class="web-container">
+    <div class="method-grid">
+      <div>
+        <div class="web-eyebrow">AK-metoden</div>
+        <h2 class="web-h2">Fem nivåer, <em class="web-italic">én plan</em>.</h2>
+        <p class="web-lede">Hver Performance-spiller får en personlig fordeling per nivå. Vi måler hvor du står hver måned, og justerer planen — ikke gjettverk.</p>
+        <div style="margin-top: 32px;">
+          <a href="#" class="web-btn dark">Les hele metoden <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="pyramide">
+        <div class="py-row" data-lvl="5">
+          <div class="py-num">L5</div>
+          <div class="py-bar">Turnering & strategi</div>
+        </div>
+        <div class="py-row" data-lvl="4">
+          <div class="py-num">L4</div>
+          <div class="py-bar">Spill og banehåndtering</div>
+        </div>
+        <div class="py-row" data-lvl="3">
+          <div class="py-num">L3</div>
+          <div class="py-bar">Slagvalg & kortspill</div>
+        </div>
+        <div class="py-row" data-lvl="2">
+          <div class="py-num">L2</div>
+          <div class="py-bar">Teknikk & sving</div>
+        </div>
+        <div class="py-row" data-lvl="1">
+          <div class="py-num">L1</div>
+          <div class="py-bar">Fysikk & grunnform</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coach profile -->
+<section class="coach-section">
+  <div class="web-container">
+    <div class="coach-grid">
+      <div class="web-photo coach-portrait" data-ratio="3-4">
+        <div class="web-photo-label">
+          <div class="ico"><i data-lucide="user"></i></div>
+          <div class="tag">[Portrett]</div>
+          <div class="desc">Anders Kristiansen i naturlig coaching-positur, range-bakgrunn, mid-shot</div>
+          <div class="ratio">3:4 · portrett</div>
+        </div>
+      </div>
+      <div class="coach-side">
+        <div class="lab">Møt din hovedcoach</div>
+        <h2>Anders Kristiansen — <em>din coach gjennom året.</em></h2>
+        <blockquote>"Hver spiller fortjener en plan som faktisk svarer på hva som holder dem igjen. Ikke generisk teknikk-prat — målbare endringer per uke."</blockquote>
+        <div class="coach-credits">
+          <div class="cr"><div class="v">Hovedcoach</div><div class="l">Voksne Academy</div></div>
+          <div class="cr"><div class="v">Trackman</div><div class="l">+ videoanalyse</div></div>
+          <div class="cr"><div class="v">Sving + kortspill</div><div class="l">Hovedfokus</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="web-container">
+    <div style="text-align: center;">
+      <div class="web-eyebrow">Vanlige spørsmål</div>
+      <h2 class="web-h2">Det dere lurer på.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Hva om jeg ikke har spilt før? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Foundation er bygget for deg. Du starter med en kartleggings-økt, får 6 lessons fordelt over året, og bruker PlayerHQ-appen for hjemmetrening mellom — vi tar deg fra "har aldri svingt en kølle" til "spiller første runde" i løpet av 3–4 måneder.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Kan jeg bytte mellom pakker? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Ja — du kan oppgradere når som helst, og vi krediterer ubrukte lessons. Nedgradering skjer ved 12-mnd-fornyelse.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Hvor foregår øktene? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Hovedbasen er Bærum GK med Trackman-bay, range og bane. Vi har også avtaler med Holtsmark og Pinx for banecoaching og turneringsforberedelse.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Hvor mye fremgang er realistisk? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Snittet for Performance-spillere er −3.2 HCP på 12 måneder. Junior- og nybegynnere ser raskere prosent-fremgang; spillere under HCP 5 jobber mer på SG-marginer enn HCP-tall.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Kan bedrifter eller venner kjøpe sammen? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Ja — vi har bedriftspakker og duo-rabatt (15% for to). Kontakt oss på <a href="#" style="color: var(--akgolf-primary); font-weight: 600;">post@akgolf.no</a>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Big CTA -->
+<section class="a-cta">
+  <div class="web-container content">
+    <h2>Klar for å bli <em>målbart bedre?</em></h2>
+    <p>Book en gratis 30-minutters intro-økt — vi går gjennom dine mål, kartlegger nivå og foreslår riktig pakke. Ingen forpliktelse.</p>
+    <div style="display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+      <a href="#" class="web-btn primary lg">Book intro <i data-lucide="arrow-right"></i></a>
+      <a href="#" class="web-btn ghost lg">Ring oss <i data-lucide="phone"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--akgolf-accent); color: #0A1F18; display: grid; place-items: center; font-weight: 800; font-size: 13px; letter-spacing: -0.04em;">AK</div>
+          <span style="color: #fff; font-weight: 800; font-size: 18px; letter-spacing: -0.02em;">AK Golf</span>
+        </div>
+        <p class="desc">Bane, akademi og personlig coaching i én sammenhengende reise. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div>
+        <h4>Tjenester</h4>
+        <ul>
+          <li><a href="g2-academy.html">Academy</a></li>
+          <li><a href="g3-junior-academy.html">Junior</a></li>
+          <li><a href="g4-pricing.html">Booking</a></li>
+          <li><a href="#">Bedrift</a></li>
+          <li><a href="#">Bane & green-fee</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>AK Golf</h4>
+        <ul>
+          <li><a href="#">Om oss</a></li>
+          <li><a href="#">Coacher</a></li>
+          <li><a href="#">Karriere</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="#">post@akgolf.no</a></li>
+          <li><a href="#">+47 22 00 00 00</a></li>
+          <li><a href="#">Bærum GK</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2025 AK Golf AS · Org.nr 999 999 999</span>
+      <div class="socials">
+        <a href="#"><i data-lucide="instagram"></i></a>
+        <a href="#"><i data-lucide="facebook"></i></a>
+        <a href="#"><i data-lucide="youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  // No nav-scroll-toggle needed — already solid
+</script>
+
+</body>
+</html>

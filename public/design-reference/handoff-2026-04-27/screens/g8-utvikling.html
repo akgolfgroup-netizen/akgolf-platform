@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Utvikling</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  /* Hero */
+  .ut-hero { padding: 180px 0 80px; }
+  .ut-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; }
+  .ut-hero h1 { font-size: clamp(56px, 6.6vw, 96px); line-height: 0.96; letter-spacing: -0.04em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 24px; text-wrap: balance; }
+  .ut-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.025em; display: block; }
+  .ut-hero p.lede { font-size: 19px; line-height: 1.6; color: var(--akgolf-text); max-width: 52ch; margin: 0 0 32px; }
+  .ut-hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .ut-hero-pills span { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); border-radius: 999px; font-weight: 700; }
+
+  /* Phone mockup */
+  .phone-wrap { display: grid; place-items: center; aspect-ratio: 4/5; }
+  .phone {
+    width: 280px; height: 580px;
+    background: var(--akgolf-ink);
+    border-radius: 44px;
+    padding: 12px;
+    box-shadow: 0 30px 80px rgba(10,31,24,0.25), 0 0 0 1px rgba(10,31,24,0.10);
+    position: relative;
+    transform: rotate(-3deg);
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .phone-notch { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 110px; height: 26px; background: var(--akgolf-ink); border-radius: 999px; z-index: 2; }
+  .phone-status { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--akgolf-ink); font-weight: 700; }
+  .phone-status .right { display: flex; gap: 5px; align-items: center; }
+  .phone-status .right [data-lucide] { width: 11px; height: 11px; }
+  .phone-body { flex: 1; padding: 20px 22px 0; overflow: hidden; }
+  .phone-greet { font-size: 11px; color: var(--akgolf-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+  .phone-h1 { font-size: 22px; font-weight: 800; color: var(--akgolf-ink); letter-spacing: -0.025em; line-height: 1.15; margin: 6px 0 16px; }
+  .phone-card { background: var(--akgolf-ink); color: #fff; border-radius: 18px; padding: 14px 16px; margin-bottom: 12px; }
+  .phone-card .lab { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; }
+  .phone-card .v { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 32px; line-height: 1; letter-spacing: -0.02em; margin: 6px 0 4px; }
+  .phone-card .meta { font-size: 11px; color: rgba(255,255,255,0.65); }
+  .phone-row { background: var(--akgolf-surface); border-radius: 14px; padding: 11px 13px; margin-bottom: 8px; display: flex; gap: 11px; align-items: center; }
+  .phone-row .ic { width: 32px; height: 32px; border-radius: 10px; background: rgba(0,88,64,0.10); color: var(--akgolf-primary); display: grid; place-items: center; flex-shrink: 0; }
+  .phone-row .ic [data-lucide] { width: 14px; height: 14px; }
+  .phone-row .t { font-size: 13px; color: var(--akgolf-ink); font-weight: 600; }
+  .phone-row .s { font-size: 10px; color: var(--akgolf-muted); margin-top: 2px; }
+  .phone-tabs { position: absolute; bottom: 18px; left: 18px; right: 18px; background: #fff; border: 1px solid var(--akgolf-line-light); border-radius: 18px; height: 48px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; box-shadow: 0 6px 16px rgba(10,31,24,0.06); }
+  .phone-tabs .tab { display: grid; place-items: center; color: var(--akgolf-muted); }
+  .phone-tabs .tab.active { color: var(--akgolf-primary); }
+  .phone-tabs .tab [data-lucide] { width: 16px; height: 16px; }
+
+  /* Two halves intro */
+  .duo-section { padding: 90px 0; background: #fff; }
+  .duo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+  .duo-card {
+    border: 1.5px solid var(--akgolf-line-light);
+    border-radius: 28px;
+    padding: 40px 42px 36px;
+    display: flex; flex-direction: column;
+    background: var(--akgolf-surface);
+  }
+  .duo-card .web-eyebrow { color: var(--akgolf-primary); margin-bottom: 16px; }
+  .duo-card h3 { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 14px; line-height: 1.1; }
+  .duo-card h3 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .duo-card p { font-size: 15px; color: var(--akgolf-text); line-height: 1.6; margin: 0 0 24px; }
+  .duo-card .feat { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .duo-card .feat li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--akgolf-text); list-style: none; line-height: 1.5; }
+  .duo-card .feat li [data-lucide] { width: 14px; height: 14px; color: var(--akgolf-primary); margin-top: 4px; flex-shrink: 0; stroke-width: 2.5; }
+  .duo-card .users-row { display: flex; gap: 12px; padding: 16px 0 20px; border-top: 1px solid var(--akgolf-line-light); border-bottom: 1px solid var(--akgolf-line-light); margin-bottom: 22px; }
+  .duo-card .users-row .stat { flex: 1; }
+  .duo-card .users-row .v { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 26px; color: var(--akgolf-ink); letter-spacing: -0.02em; line-height: 1; }
+  .duo-card .users-row .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); margin-top: 6px; font-weight: 700; }
+  .duo-card .ctas { display: flex; gap: 10px; margin-top: auto; }
+
+  /* Feature list */
+  .feat-section { padding: 100px 0; }
+  .feat-head { display: flex; justify-content: space-between; align-items: end; gap: 60px; margin-bottom: 56px; }
+  .feat-head h2 { font-size: clamp(40px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0; line-height: 1.05; max-width: 16ch; }
+  .feat-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .feat-head p { max-width: 42ch; font-size: 15px; color: var(--akgolf-text); line-height: 1.6; margin: 0; }
+
+  .feat-list { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1.5px solid var(--akgolf-line-light); }
+  .feat-row {
+    display: grid; grid-template-columns: 50px 1fr 1.2fr 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1.5px solid var(--akgolf-line-light);
+    align-items: start;
+  }
+  .feat-row .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--akgolf-muted); letter-spacing: 0.14em; font-weight: 700; padding-top: 4px; }
+  .feat-row .name { font-size: 22px; font-weight: 800; color: var(--akgolf-ink); letter-spacing: -0.02em; line-height: 1.25; }
+  .feat-row .name span { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-primary); display: block; margin-top: 6px; font-weight: 700; }
+  .feat-row .desc { font-size: 14px; color: var(--akgolf-text); line-height: 1.6; }
+  .feat-row .meta-list { display: flex; flex-direction: column; gap: 6px; }
+  .feat-row .meta-list li { list-style: none; font-size: 12px; color: var(--akgolf-text); display: flex; gap: 6px; align-items: flex-start; }
+  .feat-row .meta-list li [data-lucide] { width: 12px; height: 12px; color: var(--akgolf-primary); margin-top: 3px; flex-shrink: 0; }
+
+  /* Roadmap */
+  .road-section { padding: 100px 0; background: var(--akgolf-ink); color: #fff; }
+  .road-head h2 { font-size: clamp(40px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.03em; margin: 0 0 14px; line-height: 1.05; max-width: 18ch; color: #fff; }
+  .road-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .road-head p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 60ch; line-height: 1.6; margin: 0 0 50px; }
+
+  .road-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .road-col { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 26px 24px 22px; }
+  .road-col-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.10); }
+  .road-col-head .quarter { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--akgolf-accent); font-weight: 700; }
+  .road-col-head .status { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; font-weight: 700; }
+  .road-col-head .status.shipped { background: var(--akgolf-primary); color: #fff; }
+  .road-col-head .status.now { background: var(--akgolf-accent); color: #0A1F18; }
+  .road-col-head .status.next { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.70); border: 1px solid rgba(255,255,255,0.15); }
+  .road-col-head .status.later { background: transparent; color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.15); }
+  .road-col h4 { font-size: 16px; font-weight: 800; letter-spacing: -0.015em; margin: 0 0 16px; color: #fff; }
+  .road-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .road-col ul li { font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+  .road-col ul li [data-lucide] { width: 13px; height: 13px; color: var(--akgolf-accent); margin-top: 3px; flex-shrink: 0; }
+  .road-col ul li.done [data-lucide] { color: var(--akgolf-primary); }
+
+  /* Trust band */
+  .built-with { padding: 80px 0; }
+  .built-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px; }
+  .built-head h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0; }
+  .built-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .built-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .built-card { background: #fff; border: 1px solid var(--akgolf-line-light); border-radius: 16px; padding: 22px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .built-card .ic { width: 36px; height: 36px; border-radius: 10px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); display: grid; place-items: center; }
+  .built-card .ic [data-lucide] { width: 16px; height: 16px; }
+  .built-card .name { font-size: 13px; font-weight: 700; color: var(--akgolf-ink); }
+  .built-card .role { font-size: 11px; color: var(--akgolf-muted); line-height: 1.45; }
+
+  /* CTA */
+  .cta-band { padding: 100px 0; background: #fff; }
+  .cta-band-card {
+    background: var(--akgolf-ink); color: #fff;
+    border-radius: 36px;
+    padding: 70px 80px;
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px;
+    align-items: center;
+  }
+  .cta-band-card h2 { font-size: clamp(36px, 4.2vw, 56px); line-height: 1.0; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 18px; max-width: 16ch; text-wrap: balance; }
+  .cta-band-card h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .cta-band-card p { font-size: 16px; color: rgba(255,255,255,0.72); line-height: 1.6; max-width: 50ch; margin: 0 0 28px; }
+  .cta-band-card .web-btn.primary { background: var(--akgolf-accent); color: #0A1F18; }
+  .cta-side { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; }
+  .cta-side .lab { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-accent); margin-bottom: 12px; font-weight: 700; }
+  .cta-side .v { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 24px; line-height: 1.35; margin-bottom: 16px; }
+
+  @media (max-width: 1100px) {
+    .ut-hero-grid, .duo-grid, .cta-band-card { grid-template-columns: 1fr; gap: 40px; }
+    .feat-row { grid-template-columns: 1fr; gap: 12px; }
+    .road-grid { grid-template-columns: 1fr 1fr; }
+    .built-grid { grid-template-columns: repeat(3, 1fr); }
+    .cta-band-card { padding: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html" class="active">Utvikling</a>
+    <a href="g9-om-oss.html">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="ut-hero">
+  <div class="web-container">
+    <div class="ut-hero-grid">
+      <div>
+        <div class="web-eyebrow">Vår teknologi</div>
+        <h1>Vi bygger <em>vår egen plattform.</em></h1>
+        <p class="lede">PlayerHQ for spillere. CoachHQ for coacher. To produkter, en filosofi: gjør det målbart, gjør det personlig, og fjern alt som stjeler tid fra coaching-øyeblikket.</p>
+        <div class="ut-hero-pills">
+          <span>Nordisk-bygd</span>
+          <span>GDPR-første</span>
+          <span>Trackman-integrert</span>
+          <span>Junior-foreldre</span>
+          <span>Open API</span>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="#products" class="web-btn primary">Se produktene <i data-lucide="arrow-down"></i></a>
+          <a href="#roadmap" class="web-btn ghost">Roadmap 2026</a>
+        </div>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>9:41</span>
+              <div class="right"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></div>
+            </div>
+            <div class="phone-body">
+              <div class="phone-greet">God morgen</div>
+              <div class="phone-h1">Trening i dag</div>
+              <div class="phone-card">
+                <div class="lab">Strokes Gained · April</div>
+                <div class="v">+1.8</div>
+                <div class="meta">↑ 0.4 vs forrige måned</div>
+              </div>
+              <div class="phone-row">
+                <div class="ic"><i data-lucide="target"></i></div>
+                <div><div class="t">Wedge fra 80m</div><div class="s">25 min · 30 baller</div></div>
+              </div>
+              <div class="phone-row">
+                <div class="ic"><i data-lucide="ruler"></i></div>
+                <div><div class="t">Putting · 3-fots</div><div class="s">15 min · 9 par</div></div>
+              </div>
+              <div class="phone-row">
+                <div class="ic"><i data-lucide="play-circle"></i></div>
+                <div><div class="t">Video · setup</div><div class="s">3 min · av Anders</div></div>
+              </div>
+            </div>
+            <div class="phone-tabs">
+              <div class="tab active"><i data-lucide="target"></i></div>
+              <div class="tab"><i data-lucide="bar-chart-3"></i></div>
+              <div class="tab"><i data-lucide="calendar"></i></div>
+              <div class="tab"><i data-lucide="user"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Two products -->
+<section class="duo-section" id="products">
+  <div class="web-container">
+    <div class="duo-grid">
+      <!-- PlayerHQ -->
+      <div class="duo-card">
+        <div class="web-eyebrow">For spillere</div>
+        <h3>PlayerHQ <em>— treningen i lommen</em>.</h3>
+        <p>Mobilapp for våre Academy-spillere og juniorer. Daglig plan, video-bibliotek, SG-rapport og direkte chat med coachen. Bygd for å åpnes — ikke samle støv.</p>
+
+        <ul class="feat">
+          <li><i data-lucide="check"></i>Personlig daglig fokus, generert av AI fra coach-planen din</li>
+          <li><i data-lucide="check"></i>Strokes Gained-rapport oppdatert hver gang du logger en runde</li>
+          <li><i data-lucide="check"></i>Trackman-integrasjon — data flyter inn automatisk</li>
+          <li><i data-lucide="check"></i>Foreldremodus for juniorer · hva trente, hva sa coachen</li>
+          <li><i data-lucide="check"></i>Offline-først · jobber på flyet eller på bane uten signal</li>
+        </ul>
+
+        <div class="users-row">
+          <div class="stat"><div class="v">412</div><div class="l">Aktive spillere</div></div>
+          <div class="stat"><div class="v">82%</div><div class="l">Daglig åpning</div></div>
+          <div class="stat"><div class="v">4.9</div><div class="l">App store-rating</div></div>
+        </div>
+
+        <div class="ctas">
+          <a href="../module-A.html" class="web-btn primary">Se PlayerHQ <i data-lucide="arrow-up-right"></i></a>
+          <a href="g6-academy-pricing.html" class="web-btn ghost">Få tilgang</a>
+        </div>
+      </div>
+
+      <!-- CoachHQ -->
+      <div class="duo-card">
+        <div class="web-eyebrow">For coacher</div>
+        <h3>CoachHQ <em>— operasjonsrommet</em>.</h3>
+        <p>Web-plattform for coachene som driver klubben. Pipeline, tilbakemelding, banecoaching-logger, kalender og inbox — bygd så du bruker mer tid på spillere, mindre på Excel.</p>
+
+        <ul class="feat">
+          <li><i data-lucide="check"></i>Coaching Board · visuell pipeline for alle aktive spillere</li>
+          <li><i data-lucide="check"></i>Mission Board · tildel og kvalitetssikre øvelser</li>
+          <li><i data-lucide="check"></i>Godkjennings-inbox · video, sjekkliste, AI-vurdering</li>
+          <li><i data-lucide="check"></i>Strokes Gained per spiller, per måned, per slagtype</li>
+          <li><i data-lucide="check"></i>Single-sign-on med PlayerHQ — ingen dobbel datapleie</li>
+        </ul>
+
+        <div class="users-row">
+          <div class="stat"><div class="v">14</div><div class="l">Coacher i bruk</div></div>
+          <div class="stat"><div class="v">3.2t</div><div class="l">Spart per uke / coach</div></div>
+          <div class="stat"><div class="v">100%</div><div class="l">Av AK-coachene bruker</div></div>
+        </div>
+
+        <div class="ctas">
+          <a href="../module-D.html" class="web-btn primary">Se CoachHQ <i data-lucide="arrow-up-right"></i></a>
+          <a href="g10-kontakt.html" class="web-btn ghost">For klubber</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature deep list -->
+<section class="feat-section">
+  <div class="web-container">
+    <div class="feat-head">
+      <h2>Funksjoner som <em>fjerner friksjon</em>, ikke legger til den.</h2>
+      <p>Hver funksjon er testet av Anders og 12 Academy-spillere over minst en sesong før den slippes til full produksjon. Vi shipper sjelden — vi shipper riktig.</p>
+    </div>
+
+    <div class="feat-list">
+      <div class="feat-row">
+        <div class="num">F.01</div>
+        <div class="name">Strokes Gained-engine<span>Kjerne-måling</span></div>
+        <div class="desc">Egen SG-implementasjon kalibrert på 4 norske baner. Rapporten din viser ikke bare totalen — den viser nøyaktig hvor du taper og vinner slag mot ditt nivå.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>4 baner kalibrert</li>
+          <li><i data-lucide="check-circle-2"></i>Off-tee · approach · short · putting</li>
+          <li><i data-lucide="check-circle-2"></i>Ukentlig + månedlig + sesong</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.02</div>
+        <div class="name">AI-fokus<span>Daglig plan</span></div>
+        <div class="desc">Hver morgen genereres dagens 3 prioriterte øvelser fra coach-planen, kalender, vær og siste runde. Du logger inn og vet hva du skal gjøre.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Coach kan overstyre når som helst</li>
+          <li><i data-lucide="check-circle-2"></i>Tilpasses værmelding</li>
+          <li><i data-lucide="check-circle-2"></i>Tar høyde for trøtthet og skader</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.03</div>
+        <div class="name">Video-godkjenning<span>Coach-loop</span></div>
+        <div class="desc">Spillere sender korte video-klipp fra range eller bane. Coachen ser dem i en inbox med AI-forhåndsvurdering, og svarer med tegne-på-video og kort talenotat.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Asynkron · ingen møter</li>
+          <li><i data-lucide="check-circle-2"></i>AI flagger pre-shot rutine-brudd</li>
+          <li><i data-lucide="check-circle-2"></i>Snitt svartid 4t · Performance-plan</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.04</div>
+        <div class="name">Trackman-bro<span>Datainntak</span></div>
+        <div class="desc">Vi kobler oss direkte på Trackman-økten din. Hver shot, hvert tall, hvert klubb-ID lagres automatisk i PlayerHQ. Ingen manuell logging.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Trackman 4 + Range-bay</li>
+          <li><i data-lucide="check-circle-2"></i>Auto-tag av øvelse fra plan</li>
+          <li><i data-lucide="check-circle-2"></i>Eksport til CSV / GarminConnect</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.05</div>
+        <div class="name">Foreldre-modus<span>Junior</span></div>
+        <div class="desc">Foreldre får sin egen visning. De ser hvilke timer barnet hadde, hva coachen sa, og hvor det går — uten å måtte spørre etter hver økt.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Read-only · ingen redigering</li>
+          <li><i data-lucide="check-circle-2"></i>Ukentlig coach-melding fast</li>
+          <li><i data-lucide="check-circle-2"></i>Avmeld fra varsler enkelt</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.06</div>
+        <div class="name">Mission Board<span>Coach-pipeline</span></div>
+        <div class="desc">Hver oppgave er en kort-svev. Tildel, sjekk inn, godkjenn — eller send tilbake med kommentar. Spilleren ser bare sine, coachen ser hele klubben.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Drag-til-status</li>
+          <li><i data-lucide="check-circle-2"></i>Bulk-tildel på spillergruppe</li>
+          <li><i data-lucide="check-circle-2"></i>Frist + påminnelse innebygd</li>
+        </ul>
+      </div>
+
+      <div class="feat-row">
+        <div class="num">F.07</div>
+        <div class="name">Banecoaching-logg<span>On-course</span></div>
+        <div class="desc">På banen logger coachen kort hva som skjedde på hvert hull. Spilleren får logg + 3 takeaways i appen før de går av runden.</div>
+        <ul class="meta-list">
+          <li><i data-lucide="check-circle-2"></i>Apple Watch-shortcut</li>
+          <li><i data-lucide="check-circle-2"></i>Auto-koble til runde-score</li>
+          <li><i data-lucide="check-circle-2"></i>Tour-spiller-format</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="road-section" id="roadmap">
+  <div class="web-container">
+    <div class="road-head">
+      <div class="web-eyebrow" style="color: var(--akgolf-accent);">Roadmap 2026</div>
+      <h2>Hva vi <em>jobber med</em> akkurat nå.</h2>
+      <p>Vi er åpne om hva som er sendt, hva som er i bygging, og hva som kommer. Har du ønsker? Send dem til oss — vi leser hver eneste.</p>
+    </div>
+
+    <div class="road-grid">
+      <div class="road-col">
+        <div class="road-col-head"><div class="quarter">Q1 · 2026</div><div class="status shipped">Sendt</div></div>
+        <h4>Lansert i januar</h4>
+        <ul>
+          <li class="done"><i data-lucide="check-circle-2"></i>SG-engine v2 med 4 baner</li>
+          <li class="done"><i data-lucide="check-circle-2"></i>Trackman-bro ferdig</li>
+          <li class="done"><i data-lucide="check-circle-2"></i>Foreldre-modus junior</li>
+          <li class="done"><i data-lucide="check-circle-2"></i>Mission Board for coacher</li>
+          <li class="done"><i data-lucide="check-circle-2"></i>iOS-app v1.4 + Android v1.0</li>
+        </ul>
+      </div>
+
+      <div class="road-col">
+        <div class="road-col-head"><div class="quarter">Q2 · 2026</div><div class="status now">Nå</div></div>
+        <h4>I bygging</h4>
+        <ul>
+          <li><i data-lucide="loader"></i>AI-fokus daglig plan</li>
+          <li><i data-lucide="loader"></i>Video-godkjenning for coacher</li>
+          <li><i data-lucide="loader"></i>Banecoaching-logg på Watch</li>
+          <li><i data-lucide="loader"></i>Single-sign-on PlayerHQ ↔ CoachHQ</li>
+          <li><i data-lucide="loader"></i>Klubb-onboarding-portal</li>
+        </ul>
+      </div>
+
+      <div class="road-col">
+        <div class="road-col-head"><div class="quarter">Q3 · 2026</div><div class="status next">Neste</div></div>
+        <h4>Planlagt</h4>
+        <ul>
+          <li><i data-lucide="circle"></i>Public Open API</li>
+          <li><i data-lucide="circle"></i>Garmin-integrasjon</li>
+          <li><i data-lucide="circle"></i>Camp-modul (gruppeprogram)</li>
+          <li><i data-lucide="circle"></i>Pinx-portal (ekstern bane)</li>
+          <li><i data-lucide="circle"></i>Mental coaching-modul</li>
+        </ul>
+      </div>
+
+      <div class="road-col">
+        <div class="road-col-head"><div class="quarter">Q4 · 2026</div><div class="status later">Senere</div></div>
+        <h4>I tankene</h4>
+        <ul>
+          <li><i data-lucide="lightbulb"></i>3D-swing capture (mobil)</li>
+          <li><i data-lucide="lightbulb"></i>Klubb-til-klubb-overføring</li>
+          <li><i data-lucide="lightbulb"></i>Tournament-coaching live</li>
+          <li><i data-lucide="lightbulb"></i>White-label for andre klubber</li>
+          <li><i data-lucide="lightbulb"></i>VO2/HRV-integrasjon</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Built-with -->
+<section class="built-with">
+  <div class="web-container">
+    <div class="built-head">
+      <h2>Bygd med <em>verktøy vi selv stoler på</em>.</h2>
+      <a href="g10-kontakt.html" class="web-btn ghost">Snakk med oss <i data-lucide="arrow-up-right"></i></a>
+    </div>
+    <div class="built-grid">
+      <div class="built-card"><div class="ic"><i data-lucide="server"></i></div><div class="name">Norsk hosting</div><div class="role">Drift fra Oslo · GDPR</div></div>
+      <div class="built-card"><div class="ic"><i data-lucide="lock"></i></div><div class="name">BankID-login</div><div class="role">For voksne · samtykke for jr.</div></div>
+      <div class="built-card"><div class="ic"><i data-lucide="zap"></i></div><div class="name">Trackman-API</div><div class="role">Direkte datainntak</div></div>
+      <div class="built-card"><div class="ic"><i data-lucide="credit-card"></i></div><div class="name">Stripe + Vipps</div><div class="role">Sikker betaling</div></div>
+      <div class="built-card"><div class="ic"><i data-lucide="message-square"></i></div><div class="name">Egen chat</div><div class="role">E2E-kryptert</div></div>
+      <div class="built-card"><div class="ic"><i data-lucide="share-2"></i></div><div class="name">Open API</div><div class="role">For partnere · 2026 H2</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="web-container">
+    <div class="cta-band-card">
+      <div>
+        <div class="web-eyebrow" style="color: var(--akgolf-accent);">For klubber og partnere</div>
+        <h2>Vil dere bruke <em>plattformen</em> i deres klubb?</h2>
+        <p>Vi pilot-tester med 2 nye klubber per kvartal. Lukket onboarding, 1:1 oppfølging, og dere får påvirke roadmapen.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="g10-kontakt.html" class="web-btn primary">Søk om pilot <i data-lucide="arrow-right"></i></a>
+          <a href="#" class="web-btn ghost" style="color: #fff; border-color: rgba(255,255,255,0.20);">Last ned one-pager</a>
+        </div>
+      </div>
+      <div class="cta-side">
+        <div class="lab">Pilot Q3 2026</div>
+        <div class="v">«Endelig en plattform laget av coacher som faktisk forstår vår hverdag.»</div>
+        <div style="display: flex; gap: 12px; align-items: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10);">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--akgolf-accent); color: #0A1F18; display: grid; place-items: center; font-weight: 700; font-size: 13px;">JL</div>
+          <div>
+            <div style="font-weight: 700; font-size: 13px;">Jonas L.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 3px;">Headcoach · Holtsmark GK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li><li><a href="g8-utvikling.html">Utvikling</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g10-kontakt.html">Kontakt</a></li><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2026 AK Golf Group AS · ORG 925 884 102</span>
+      <div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div>
+    </div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

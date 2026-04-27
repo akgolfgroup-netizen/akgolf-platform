@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Feil</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+  .err-stage {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 80px 40px;
+    position: relative;
+  }
+  .err-grid {
+    width: 100%;
+    max-width: 1180px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .err-brand {
+    position: absolute; top: 36px; left: 40px;
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--akgolf-ink);
+    font-weight: 800; font-size: 17px; letter-spacing: -0.02em;
+  }
+  .err-brand .mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 12px;
+  }
+
+  .err-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase;
+    color: var(--akgolf-primary);
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .err-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--akgolf-primary); }
+  .err-h1 {
+    font-size: clamp(48px, 6.5vw, 84px);
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    color: var(--akgolf-ink);
+    font-weight: 800;
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .err-h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.02em; }
+  .err-lede {
+    font-size: 17px; line-height: 1.6;
+    color: var(--akgolf-text);
+    margin: 0 0 30px;
+    max-width: 50ch;
+    text-wrap: pretty;
+  }
+
+  .err-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 38px; }
+
+  .err-suggest {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 16px;
+    padding: 18px 22px;
+    max-width: 540px;
+  }
+  .err-suggest .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-muted); font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .err-suggest ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+  .err-suggest ul li a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; margin: 0 -10px;
+    border-radius: 8px;
+    font-size: 14px; color: var(--akgolf-ink); font-weight: 500;
+    transition: background 0.15s;
+  }
+  .err-suggest ul li a:hover { background: var(--akgolf-surface); }
+  .err-suggest ul li a [data-lucide] { width: 14px; height: 14px; color: var(--akgolf-primary); }
+  .err-suggest ul li a .arrow { margin-left: auto; color: var(--akgolf-muted); }
+
+  /* === Visual: BIG monogram error code === */
+  .err-visual {
+    aspect-ratio: 4 / 5;
+    background: var(--akgolf-ink);
+    border-radius: 28px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(10,31,24,0.18);
+  }
+  .err-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(0,88,64,0.45), transparent 55%),
+      radial-gradient(circle at 75% 75%, rgba(209,248,67,0.10), transparent 50%);
+  }
+  .err-code {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.06);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(280px, 32vw, 440px);
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+    user-select: none;
+  }
+  .err-overlay {
+    position: absolute; bottom: 32px; left: 32px; right: 32px;
+    z-index: 2;
+    display: flex; align-items: end; justify-content: space-between;
+    gap: 20px;
+  }
+  .err-overlay .stamp {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.10);
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+  .err-overlay .stamp .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .err-overlay .stamp .v { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #fff; font-weight: 600; letter-spacing: 0.04em; }
+
+  .err-tag-corner {
+    position: absolute; top: 28px; right: 28px;
+    z-index: 2;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    border: 1px solid rgba(209,248,67,0.28);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .err-tag-corner [data-lucide] { width: 12px; height: 12px; }
+
+  /* Tab bar at top to switch between 403 / 404 / 500 */
+  .err-tabs {
+    position: absolute; top: 36px; right: 40px;
+    display: inline-flex;
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 4px 18px rgba(10,31,24,0.06);
+    z-index: 5;
+  }
+  .err-tabs button {
+    padding: 8px 18px;
+    border: none; background: transparent;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+    color: var(--akgolf-muted); font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .err-tabs button.active {
+    background: var(--akgolf-ink); color: #fff;
+  }
+
+  @media (max-width: 900px) {
+    .err-grid { grid-template-columns: 1fr; gap: 40px; }
+    .err-visual { aspect-ratio: 4 / 3; }
+    .err-tabs { top: auto; right: 20px; bottom: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="g1-forsiden.html" class="err-brand"><span class="mark">AK</span> AK Golf</a>
+
+<div class="err-tabs" role="tablist" aria-label="Vis feil-variant">
+  <button class="active" data-variant="404">404</button>
+  <button data-variant="403">403</button>
+  <button data-variant="500">500</button>
+</div>
+
+<div class="err-stage">
+  <div class="err-grid">
+    <!-- Left: copy -->
+    <div>
+      <div class="err-eyebrow"><span class="dot"></span><span data-slot="eyebrow">Feil 404 · Siden finnes ikke</span></div>
+      <h1 class="err-h1" data-slot="title"></h1>
+      <p class="err-lede" data-slot="lede"></p>
+
+      <div class="err-actions">
+        <a href="g1-forsiden.html" class="web-btn dark lg"><i data-lucide="home"></i>Gå til forsiden</a>
+        <a href="javascript:history.back()" class="web-btn line lg"><i data-lucide="arrow-left"></i>Tilbake</a>
+      </div>
+
+      <div class="err-suggest" data-slot="suggest">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Right: visual -->
+    <div class="err-visual">
+      <div class="err-tag-corner" data-slot="tag"><i data-lucide="file-search-2"></i><span data-slot="tag-text">Not Found</span></div>
+      <div class="err-code" data-slot="code">404</div>
+      <div class="err-overlay">
+        <div class="stamp">
+          <div class="lab">Status</div>
+          <div class="v" data-slot="status">HTTP 404 · Not Found</div>
+        </div>
+        <div class="stamp">
+          <div class="lab">Trace-ID</div>
+          <div class="v" data-slot="trace">a8f3-2e91-c4d7</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const VARIANTS = {
+  '404': {
+    eyebrow: 'Feil 404 · Siden finnes ikke',
+    title: ['Vi fant ikke ', 'em', 'siden du leter etter.'],
+    lede: 'Lenken er kanskje gammel, eller siden har flyttet. Sjekk URL-en, gå tilbake, eller hopp rett til en av de mest besøkte sidene under.',
+    code: '404',
+    tagText: 'Not Found',
+    tagIcon: 'file-search-2',
+    status: 'HTTP 404 · Not Found',
+    trace: 'a8f3-2e91-c4d7',
+    suggest: [
+      { ico: 'home', txt: 'Forsiden — start her', href: 'g1-forsiden.html' },
+      { ico: 'graduation-cap', txt: 'Academy — coaching for voksne', href: 'g2-academy.html' },
+      { ico: 'baby', txt: 'Junior Academy — 6–17 år', href: 'g3-junior-academy.html' },
+      { ico: 'calendar', txt: 'Book en time', href: 'g5-booking.html' },
+      { ico: 'mail', txt: 'Kontakt oss', href: 'g10-kontakt.html' }
+    ]
+  },
+  '403': {
+    eyebrow: 'Feil 403 · Ingen tilgang',
+    title: ['Du har ikke ', 'em', 'adgang hit.'],
+    lede: 'Denne siden krever innlogging eller en høyere medlemskaps-tilgang enn det du har akkurat nå. Logg inn, eller ta kontakt med din coach for å få riktig tilgang.',
+    code: '403',
+    tagText: 'Forbidden',
+    tagIcon: 'lock',
+    status: 'HTTP 403 · Forbidden',
+    trace: 'b1c4-8e22-f9a3',
+    suggest: [
+      { ico: 'log-in', txt: 'Logg inn på PlayerHQ', href: '#' },
+      { ico: 'mail', txt: 'Kontakt din coach', href: 'g10-kontakt.html' },
+      { ico: 'shield-check', txt: 'Slik fungerer tilganger', href: 'g11-personvern.html' },
+      { ico: 'home', txt: 'Tilbake til forsiden', href: 'g1-forsiden.html' }
+    ]
+  },
+  '500': {
+    eyebrow: 'Feil 500 · Noe gikk galt',
+    title: ['Noe ', 'em', 'gikk galt hos oss.'],
+    lede: 'Dette er på vår side, ikke din. Vi har allerede fått et signal og ser på det. Prøv igjen om et minutt — er problemet fortsatt der, gi oss beskjed med trace-ID-en under.',
+    code: '500',
+    tagText: 'Server Error',
+    tagIcon: 'alert-octagon',
+    status: 'HTTP 500 · Internal Error',
+    trace: 'e7d9-1a44-b6c2',
+    suggest: [
+      { ico: 'rotate-ccw', txt: 'Prøv på nytt', href: 'javascript:location.reload()' },
+      { ico: 'activity', txt: 'Live status — er dette en kjent feil?', href: '#' },
+      { ico: 'mail', txt: 'Send oss trace-ID-en', href: 'g10-kontakt.html' },
+      { ico: 'home', txt: 'Forsiden', href: 'g1-forsiden.html' }
+    ]
+  }
+};
+
+function render(variant){
+  const v = VARIANTS[variant];
+  document.querySelector('[data-slot="eyebrow"]').textContent = v.eyebrow;
+  // Title with em
+  const t = v.title;
+  document.querySelector('[data-slot="title"]').innerHTML =
+    `${t[0]}<em>${t[2]}</em>`;
+  document.querySelector('[data-slot="lede"]').textContent = v.lede;
+  document.querySelector('[data-slot="code"]').textContent = v.code;
+  document.querySelector('[data-slot="tag-text"]').textContent = v.tagText;
+  document.querySelector('[data-slot="tag"] [data-lucide]').setAttribute('data-lucide', v.tagIcon);
+  document.querySelector('[data-slot="status"]').textContent = v.status;
+  document.querySelector('[data-slot="trace"]').textContent = v.trace;
+
+  const sg = document.querySelector('[data-slot="suggest"]');
+  sg.innerHTML = `
+    <div class="lab">Kanskje du leter etter</div>
+    <ul>
+      ${v.suggest.map(s => `<li><a href="${s.href}"><i data-lucide="${s.ico}"></i>${s.txt}<i data-lucide="arrow-right" class="arrow"></i></a></li>`).join('')}
+    </ul>
+  `;
+  lucide.createIcons();
+}
+
+// Init from hash or default
+const initial = (location.hash.replace('#','') || '404');
+render(VARIANTS[initial] ? initial : '404');
+document.querySelectorAll('.err-tabs button').forEach(btn => {
+  btn.classList.toggle('active', btn.dataset.variant === (initial in VARIANTS ? initial : '404'));
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.err-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render(btn.dataset.variant);
+    location.hash = btn.dataset.variant;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile · CoachHQ — AK Golf</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_mobile.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Coach-mobile uses dark mode for parity with desktop CoachHQ */
+  .ios-screen.dark-mode { background: #0A1F18; }
+
+  /* Header */
+  .ch-hd { padding: 12px 4px 14px; display:flex; justify-content:space-between; align-items:center; }
+  .ch-hd .greet { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:700; }
+  .ch-hd .nm { margin:3px 0 0; font-size:24px; font-weight:800; letter-spacing:-0.025em; line-height:1.1; color:#fff; }
+  .ch-hd .nm em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-accent); }
+  .ch-hd .av { width:42px; height:42px; border-radius:50%; background: var(--akgolf-accent); color:#0A1F18; display:grid; place-items:center; font-weight:800; font-size:13px; flex-shrink:0; }
+
+  /* Day stat strip */
+  .ch-strip { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding: 14px; margin-bottom:14px; }
+  .ch-strip .lbl { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--akgolf-accent); letter-spacing:0.14em; font-weight:700; }
+  .ch-strip .summ { margin: 4px 0 12px; font-size:13.5px; color:#fff; line-height:1.4; }
+  .ch-strip .summ strong { font-weight:700; }
+  .ch-strip .summ em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-accent); }
+  .ch-strip-row { display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.05); border-radius:9px; overflow:hidden; }
+  .ch-strip-row .c { background: #0A1F18; padding: 10px 8px; text-align:center; }
+  .ch-strip-row .c .v { font-size: 18px; font-weight:800; color:#fff; letter-spacing:-0.015em; line-height:1; font-variant-numeric:tabular-nums; }
+  .ch-strip-row .c .l { font-family:'JetBrains Mono',monospace; font-size:8px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; margin-top:4px; font-weight:700; }
+
+  /* Schedule list */
+  .ch-sec { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); margin: 10px 4px 8px; font-weight:700; display:flex; justify-content:space-between; text-transform:uppercase; }
+  .ch-sec a { color:var(--akgolf-accent); }
+
+  .ch-day { background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:14px; overflow:hidden; margin-bottom:14px; }
+  .ch-row { display:grid; grid-template-columns: 50px 1fr auto; gap:10px; padding:12px 14px; border-top:1px solid rgba(255,255,255,0.04); align-items:center; }
+  .ch-row:first-child { border-top:none; }
+  .ch-row .t { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:800; color:#fff; }
+  .ch-row .t small { display:block; font-size:8.5px; color:rgba(255,255,255,0.45); letter-spacing:0.10em; margin-top:1px; font-weight:700; }
+  .ch-row .ttl { font-size:13px; font-weight:600; color:#fff; }
+  .ch-row .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px; letter-spacing:0.06em; }
+  .ch-row .ax { display:flex; gap:5px; }
+  .ch-row .ax .ic { width:30px; height:30px; border-radius:7px; background:rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); display:grid; place-items:center; }
+  .ch-row .ax .ic [data-lucide]{ width:14px; height:14px; }
+  .ch-row.now { background: rgba(209,248,67,0.15); }
+  .ch-row.now .meta { color: rgba(255,255,255,0.7); }
+
+  .pill-list { display:flex; gap:5px; margin-top:5px; }
+  .pill-list span { font-family:'JetBrains Mono',monospace; font-size:8.5px; padding:2px 6px; background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); border-radius:4px; letter-spacing:0.06em; font-weight:700; }
+  .pill-list span.ok { background: rgba(42,125,90,0.30); color: #6FCBA1; }
+  .pill-list span.warn { background: rgba(244,146,131,0.18); color:#F49283; }
+
+  /* AI assistant card */
+  .ch-ai { background: linear-gradient(135deg, rgba(175,82,222,0.20), rgba(0,0,0,0.10)); border:1px solid rgba(175,82,222,0.35); border-radius:14px; padding:14px; margin-bottom:14px; display:flex; gap:12px; }
+  .ch-ai .ic { width:34px; height:34px; border-radius:9px; background:#AF52DE; color:#fff; display:grid; place-items:center; flex-shrink:0; }
+  .ch-ai .ic [data-lucide]{ width:16px; height:16px; }
+  .ch-ai .lab { font-family:'JetBrains Mono',monospace; font-size:9px; color:#C99CF3; letter-spacing:0.14em; font-weight:700; }
+  .ch-ai p { margin:3px 0 8px; font-size:13px; line-height:1.5; color:#fff; }
+  .ch-ai .row { display:flex; gap:6px; }
+  .ch-ai .btn { background:var(--akgolf-accent); color:#0A1F18; border-radius:99px; padding:6px 12px; font-size:11px; font-weight:700; }
+  .ch-ai .btn.outline { background:transparent; color:rgba(255,255,255,0.85); border:1px solid rgba(255,255,255,0.20); }
+
+  /* ===== STUDENTS LIST ===== */
+  .stu-hd { padding: 14px 4px 14px; }
+  .stu-hd h2 { margin:0; font-size:24px; font-weight:800; letter-spacing:-0.025em; color:#fff; }
+  .stu-hd h2 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color: var(--akgolf-accent); }
+  .stu-hd .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); letter-spacing:0.10em; margin-top:3px; font-weight:700; }
+
+  .stu-search { background:rgba(255,255,255,0.06); border-radius:11px; padding:9px 14px; display:flex; align-items:center; gap:8px; margin-bottom: 10px; }
+  .stu-search [data-lucide]{ width:14px; height:14px; color:rgba(255,255,255,0.5); }
+  .stu-search input { background:transparent; border:none; outline:none; color:#fff; font-size:13px; flex:1; }
+  .stu-search input::placeholder { color:rgba(255,255,255,0.4); }
+
+  .filt-row { display:flex; gap:6px; margin-bottom:14px; overflow-x:auto; padding-bottom:2px; }
+  .filt-row .f { font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px 11px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:7px; color:rgba(255,255,255,0.7); letter-spacing:0.06em; font-weight:700; flex-shrink:0; }
+  .filt-row .f.on { background: var(--akgolf-accent); color:#0A1F18; border-color: var(--akgolf-accent); }
+
+  .stu-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:13px; padding:12px 14px; margin-bottom:8px; display:grid; grid-template-columns: 38px 1fr auto; gap:11px; align-items:center; }
+  .stu-card .av { width:38px; height:38px; border-radius:50%; background: linear-gradient(135deg, var(--akgolf-primary), #0A1F18); color:var(--akgolf-accent); display:grid; place-items:center; font-weight:700; font-size:12px; }
+  .stu-card .av.purple { background: linear-gradient(135deg, #C99CF3, #6BB1FF); color:#fff; }
+  .stu-card .av.amber { background: linear-gradient(135deg, #E8B967, #C99CF3); color:#fff; }
+  .stu-card .av.green { background: linear-gradient(135deg, #6FCBA1, #2A7D5A); color:#fff; }
+  .stu-card .nm { font-size:13.5px; color:#fff; font-weight:600; line-height:1.2; }
+  .stu-card .meta { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.55); letter-spacing:0.04em; margin-top:2px; }
+  .stu-card .right { text-align:right; }
+  .stu-card .hcp { font-family:'JetBrains Mono',monospace; font-size:13px; color:#fff; font-weight:800; letter-spacing:-0.01em; line-height:1; }
+  .stu-card .delta { font-family:'JetBrains Mono',monospace; font-size:9px; margin-top:2px; letter-spacing:0.06em; font-weight:700; }
+  .stu-card .delta.up { color: #6FCBA1; }
+  .stu-card .delta.down { color: #F49283; }
+  .stu-card .delta.flat { color: rgba(255,255,255,0.40); }
+  .stu-card .badge { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:8.5px; padding: 2px 6px; border-radius:4px; letter-spacing:0.06em; font-weight:700; margin-top:4px; }
+  .stu-card .badge.warn { background:rgba(244,146,131,0.20); color:#F49283; }
+  .stu-card .badge.new { background: var(--akgolf-accent); color:#0A1F18; }
+
+  /* ===== APPROVE QUEUE ===== */
+  .apr-hd { padding: 16px 4px 14px; }
+  .apr-hd h2 { margin:0; font-size:22px; font-weight:800; color:#fff; letter-spacing:-0.025em; }
+  .apr-hd .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); letter-spacing:0.10em; margin-top:3px; font-weight:700; }
+
+  .apr { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius:14px; padding: 14px 16px; margin-bottom:10px; }
+  .apr-tag { font-family:'JetBrains Mono',monospace; font-size:9px; padding:3px 7px; border-radius:5px; letter-spacing:0.10em; font-weight:700; display:inline-block; }
+  .apr-tag.urgent { background: rgba(244,146,131,0.20); color:#F49283; }
+  .apr-tag.normal { background: rgba(107,177,255,0.20); color:#6BB1FF; }
+  .apr-tag.invo { background: rgba(232,185,103,0.20); color:#E8B967; }
+  .apr h4 { margin: 8px 0 4px; font-size:14px; color:#fff; font-weight:700; letter-spacing:-0.015em; }
+  .apr p { margin: 0; font-size:12.5px; color: rgba(255,255,255,0.65); line-height:1.5; }
+  .apr-meta { font-family:'JetBrains Mono',monospace; font-size:9.5px; color: rgba(255,255,255,0.5); letter-spacing:0.06em; margin-top:8px; font-weight:700; }
+  .apr-actions { display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06); }
+  .apr-actions .btn { padding: 8px; border-radius:8px; font-size:12px; font-weight:700; text-align:center; display:flex; gap:5px; justify-content:center; align-items:center; }
+  .apr-actions .btn [data-lucide]{ width:13px; height:13px; }
+  .apr-actions .btn.ok { background: var(--akgolf-accent); color:#0A1F18; }
+  .apr-actions .btn.no { background: rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+
+  .header-mob {
+    text-align:center; max-width: 720px; margin: 0 auto 40px;
+  }
+  .header-mob .tag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; color:var(--akgolf-primary); text-transform:uppercase; font-weight:700; }
+  .header-mob h1 { font-size:48px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin:14px 0 14px; line-height:1.05; }
+  .header-mob h1 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color: var(--akgolf-primary); }
+  .header-mob p { font-size:15px; color:rgba(10,31,24,0.7); line-height:1.6; max-width: 56ch; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="header-mob" style="padding-top:60px;">
+  <div class="tag">COACHHQ · MOBILE · D31</div>
+  <h1>Coachen — på farten. <em>Tre kjerne-oppgaver.</em></h1>
+  <p>Mørkt grensesnitt — Erik bruker mobilen mellom økter og om kvelden. Dagens oversikt, spiller-søk, og en innboks med alt som krever et raskt ja eller nei.</p>
+</div>
+
+<div class="mob-stage" style="padding-top:0;">
+
+  <!-- ============ TODAY ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen dark-mode">
+        <div class="ios-status dark">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="background: #0A1F18; padding: 4px 18px 18px;">
+
+          <div class="ch-hd">
+            <div>
+              <div class="greet">TIRSDAG · 30. APRIL</div>
+              <div class="nm">Hei <em>Erik.</em></div>
+            </div>
+            <div class="av">ES</div>
+          </div>
+
+          <div class="ch-strip">
+            <div class="lbl">◉ DAGEN I DAG · OPPSUMMERING</div>
+            <div class="summ"><strong>6 økter</strong> · 1 ny spiller møter <em>første gang</em>. Sjekk Aksel Berg før 11:00 — far ringte i går.</div>
+            <div class="ch-strip-row">
+              <div class="c"><div class="v">6</div><div class="l">ØKTER</div></div>
+              <div class="c"><div class="v">3</div><div class="l">UNREAD</div></div>
+              <div class="c"><div class="v">94<span style="font-size:11px;">%</span></div><div class="l">BELEGG</div></div>
+              <div class="c"><div class="v">2</div><div class="l">GODKJENN</div></div>
+            </div>
+          </div>
+
+          <div class="ch-ai">
+            <div class="ic"><i data-lucide="sparkles"></i></div>
+            <div>
+              <div class="lab">◈ COPILOT · MORGEN-NUDGE</div>
+              <p>Lina Holm har ikke booket etter onboarding (14d). Skal jeg sende et kort velkomst-utkast?</p>
+              <div class="row">
+                <span class="btn">Skriv utkast</span>
+                <span class="btn outline">Senere</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ch-sec"><span>I DAG · 6 ØKTER</span><a>UKE →</a></div>
+          <div class="ch-day">
+            <div class="ch-row">
+              <div class="t">08:00<small>FERDIG</small></div>
+              <div>
+                <div class="ttl">Sofie Aas · Trackman</div>
+                <div class="meta">SKULLERUD · 60 MIN</div>
+                <div class="pill-list"><span class="ok">SJEKKET INN</span><span>NOTAT LAGT</span></div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="check"></i></div></div>
+            </div>
+            <div class="ch-row now">
+              <div class="t">11:00<small>OM 1T 46M</small></div>
+              <div>
+                <div class="ttl">Aksel Berg (12) · Junior</div>
+                <div class="meta">BAY 2 · FORELDRE-SAK</div>
+                <div class="pill-list"><span class="warn">FOLLOW-UP</span><span>FAR RINGTE</span></div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="phone"></i></div><div class="ic"><i data-lucide="arrow-right"></i></div></div>
+            </div>
+            <div class="ch-row">
+              <div class="t">13:00<small>NY</small></div>
+              <div>
+                <div class="ttl">Lina Holm · Prøvetime</div>
+                <div class="meta">FØRSTE BESØK · INTRO</div>
+                <div class="pill-list"><span style="background:rgba(209,248,67,0.20); color:#D1F843;">NEW</span></div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="user-plus"></i></div></div>
+            </div>
+            <div class="ch-row">
+              <div class="t">15:00<small>WED</small></div>
+              <div>
+                <div class="ttl">Sofie Aas · Chip-drill</div>
+                <div class="meta">BAY 3 · 60 MIN · FORTS.</div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="arrow-right"></i></div></div>
+            </div>
+            <div class="ch-row">
+              <div class="t">16:30<small>WED</small></div>
+              <div>
+                <div class="ttl">Mia Hansen · Putting</div>
+                <div class="meta">QUINTIC · 45 MIN</div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="arrow-right"></i></div></div>
+            </div>
+            <div class="ch-row">
+              <div class="t">18:00<small>KVELD</small></div>
+              <div>
+                <div class="ttl">Junior-gruppe · 4 spillere</div>
+                <div class="meta">RANGE · 90 MIN</div>
+              </div>
+              <div class="ax"><div class="ic"><i data-lucide="users"></i></div></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ios-tab dark">
+          <div class="tab on"><i data-lucide="layout-dashboard"></i>I DAG</div>
+          <div class="tab"><i data-lucide="users"></i>SPILLERE</div>
+          <div class="tab"><i data-lucide="check-square"></i>GODKJENN</div>
+          <div class="tab"><i data-lucide="message-circle"></i>MELDING</div>
+          <div class="tab"><i data-lucide="more-horizontal"></i>MER</div>
+        </div>
+        <div class="ios-home dark"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>1 · I dag</strong>OPPSUMMERING · COPILOT · 6 ØKTER</div>
+  </div>
+
+  <!-- ============ STUDENTS ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen dark-mode">
+        <div class="ios-status dark">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="background: #0A1F18; padding: 4px 18px 18px;">
+
+          <div class="stu-hd">
+            <h2>Mine <em>spillere</em></h2>
+            <div class="meta">42 AKTIVE · 5 KREVER OPPFØLGING</div>
+          </div>
+
+          <div class="stu-search">
+            <i data-lucide="search"></i>
+            <input placeholder="Søk navn, gruppe, status…">
+          </div>
+
+          <div class="filt-row">
+            <span class="f on">ALLE · 42</span>
+            <span class="f">FOLLOW-UP · 5</span>
+            <span class="f">JUNIOR · 14</span>
+            <span class="f">ELITE · 8</span>
+            <span class="f">NYE · 3</span>
+          </div>
+
+          <!-- highlight: needs follow-up -->
+          <div class="ch-sec"><span>★ KREVER OPPFØLGING · 5</span><a></a></div>
+
+          <div class="stu-card">
+            <div class="av purple">PR</div>
+            <div>
+              <div class="nm">Per Rasmussen</div>
+              <div class="meta">VOKSEN · SIST 22D</div>
+              <span class="badge warn">2 NO-SHOW · 30D</span>
+            </div>
+            <div class="right">
+              <div class="hcp">14.2</div>
+              <div class="delta down">↑ +0.3</div>
+            </div>
+          </div>
+
+          <div class="stu-card">
+            <div class="av amber">LH</div>
+            <div>
+              <div class="nm">Lina Holm</div>
+              <div class="meta">NY · IKKE BOOKET</div>
+              <span class="badge new">NEW · 14D</span>
+            </div>
+            <div class="right">
+              <div class="hcp">—</div>
+              <div class="delta flat">PRØVE</div>
+            </div>
+          </div>
+
+          <div class="stu-card">
+            <div class="av">AB</div>
+            <div>
+              <div class="nm">Aksel Berg</div>
+              <div class="meta">JUNIOR · 12 ÅR</div>
+              <span class="badge warn">FAR RINGTE</span>
+            </div>
+            <div class="right">
+              <div class="hcp">22.1</div>
+              <div class="delta flat">−0.1</div>
+            </div>
+          </div>
+
+          <div class="ch-sec"><span>AKTIVE · TOPP-PROSPEKTER</span><a>SE ALLE →</a></div>
+
+          <div class="stu-card">
+            <div class="av green">SA</div>
+            <div>
+              <div class="nm">Sofie Aas</div>
+              <div class="meta">ELITE · 17 ÅR · I DAG</div>
+              <span class="badge new" style="background:rgba(42,125,90,0.25); color:#6FCBA1;">PB · NY</span>
+            </div>
+            <div class="right">
+              <div class="hcp">7.7</div>
+              <div class="delta up">↓ −0.4</div>
+            </div>
+          </div>
+
+          <div class="stu-card">
+            <div class="av purple">MH</div>
+            <div>
+              <div class="nm">Mia Hansen</div>
+              <div class="meta">VOKSEN · I DAG 16:30</div>
+            </div>
+            <div class="right">
+              <div class="hcp">11.4</div>
+              <div class="delta up">↓ −1.2</div>
+            </div>
+          </div>
+
+          <div class="stu-card">
+            <div class="av amber">TR</div>
+            <div>
+              <div class="nm">Tobias Rød</div>
+              <div class="meta">ELITE · 16 ÅR</div>
+              <span class="badge warn">PLATEAU 4M</span>
+            </div>
+            <div class="right">
+              <div class="hcp">4.8</div>
+              <div class="delta flat">±0.0</div>
+            </div>
+          </div>
+
+          <div class="stu-card">
+            <div class="av">MA</div>
+            <div>
+              <div class="nm">Marius Aas</div>
+              <div class="meta">VOKSEN · I MORGEN</div>
+            </div>
+            <div class="right">
+              <div class="hcp">3.1</div>
+              <div class="delta up">↓ −0.3</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ios-tab dark">
+          <div class="tab"><i data-lucide="layout-dashboard"></i>I DAG</div>
+          <div class="tab on"><i data-lucide="users"></i>SPILLERE</div>
+          <div class="tab"><i data-lucide="check-square"></i>GODKJENN</div>
+          <div class="tab"><i data-lucide="message-circle"></i>MELDING</div>
+          <div class="tab"><i data-lucide="more-horizontal"></i>MER</div>
+        </div>
+        <div class="ios-home dark"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>2 · Spillere</strong>SØK · FILTER · FOLLOW-UP · TOPP</div>
+  </div>
+
+  <!-- ============ APPROVALS ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen dark-mode">
+        <div class="ios-status dark">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="background: #0A1F18; padding: 4px 18px 18px;">
+
+          <div class="apr-hd">
+            <h2>Trenger <em style="font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-accent);">deg.</em></h2>
+            <div class="meta">2 GODKJENNINGER · 1 INNBOKS · 1 FAKTURA</div>
+          </div>
+
+          <div class="ch-sec"><span>★ HASTER · I DAG</span><a></a></div>
+
+          <article class="apr">
+            <span class="apr-tag urgent">REFUSJON · TRENGER ☆ DEG</span>
+            <h4>Per Rasmussen — refusjon 850 kr</h4>
+            <p>Avbestilte 4t før økt 28. apr (kort varsel). Spiller spør om unntak — har vært i akademiet i 3 år, første avbestilling.</p>
+            <div class="apr-meta">SENDT 09:02 · I DAG · STRIPE</div>
+            <div class="apr-actions">
+              <div class="btn ok"><i data-lucide="check"></i>Godkjenn</div>
+              <div class="btn no"><i data-lucide="x"></i>Avslå · m/ melding</div>
+            </div>
+          </article>
+
+          <article class="apr">
+            <span class="apr-tag normal">SVAR FORELDRE</span>
+            <h4>Foreldre Berg — Aksel</h4>
+            <p>Far spør om å gjøre om mandag-økten til onsdag (helse-grunner). Kan jeg flytte selv om bay 2 da har en annen?</p>
+            <div class="apr-meta">VURDERT AV AGENT · UTKAST KLART</div>
+            <div class="apr-actions">
+              <div class="btn ok"><i data-lucide="send"></i>Send utkast</div>
+              <div class="btn no"><i data-lucide="edit"></i>Rediger</div>
+            </div>
+          </article>
+
+          <div class="ch-sec" style="margin-top:6px;"><span>FAKTURERING</span><a></a></div>
+
+          <article class="apr">
+            <span class="apr-tag invo">FAKTURA · MAI</span>
+            <h4>Månedsfaktura · Junior-gruppe</h4>
+            <p>Auto-generert: 14 spillere × 850 kr = 11 900 kr. Foreldre Hansen har bedt om split-fakturering (mor/far).</p>
+            <div class="apr-meta">KLAR FOR SEND · 03. MAI 09:00</div>
+            <div class="apr-actions">
+              <div class="btn ok"><i data-lucide="check"></i>Send 14 fakturaer</div>
+              <div class="btn no"><i data-lucide="eye"></i>Forhåndsvis</div>
+            </div>
+          </article>
+
+          <article class="apr">
+            <span class="apr-tag normal">VIDEO-REVIEW</span>
+            <h4>Klipp · Sofie / Bogstad runde</h4>
+            <p>AI har laget et utkast med 8 approach-shots. 2 min 15 sek. Sjekk før send.</p>
+            <div class="apr-meta">UTKAST · COPILOT · I DAG 08:55</div>
+            <div class="apr-actions">
+              <div class="btn ok"><i data-lucide="play"></i>Sjekk &amp; send</div>
+              <div class="btn no"><i data-lucide="rotate-ccw"></i>Lag på nytt</div>
+            </div>
+          </article>
+
+        </div>
+        <div class="ios-tab dark">
+          <div class="tab"><i data-lucide="layout-dashboard"></i>I DAG</div>
+          <div class="tab"><i data-lucide="users"></i>SPILLERE</div>
+          <div class="tab on"><i data-lucide="check-square"></i>GODKJENN</div>
+          <div class="tab"><i data-lucide="message-circle"></i>MELDING</div>
+          <div class="tab"><i data-lucide="more-horizontal"></i>MER</div>
+        </div>
+        <div class="ios-home dark"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>3 · Godkjenn</strong>HASTER · SVAR-UTKAST · FAKTURA · VIDEO</div>
+  </div>
+
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

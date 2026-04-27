@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>E2 · AK Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_reference-remix.css">
+<style>
+  /* E2 specific — nested card grids */
+  .rr2-grid-3col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 260px;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .rr2-card {
+    background: var(--rr-card-light);
+    border: 1px solid var(--rr-line-2);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .rr2-card h5 { margin: 0 0 12px; font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .rr2-card h5 .more { width: 22px; height: 22px; border-radius: 6px; background: var(--rr-paper); display: grid; place-items: center; cursor: pointer; }
+
+  /* Online list */
+  .rr2-member {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rr-line-2);
+    font-size: 12px;
+  }
+  .rr2-member:last-child { border-bottom: none; }
+  .rr2-member .av {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 10px;
+    position: relative;
+  }
+  .rr2-member .av::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 8px; height: 8px;
+    background: var(--rr-green-500);
+    border: 2px solid var(--rr-card-light);
+    border-radius: 50%;
+  }
+  .rr2-member .name { flex: 1; font-weight: 500; }
+  .rr2-member .actions { display: flex; gap: 4px; }
+  .rr2-member .actions button {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--rr-paper);
+    display: grid; place-items: center;
+    color: var(--rr-ink-60);
+    cursor: pointer;
+  }
+
+  /* Weekly plan ring */
+  .rr2-plan {
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .rr2-ring-box { display: flex; align-items: center; gap: 14px; }
+  .rr2-ring {
+    width: 90px; height: 90px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .rr2-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .rr2-ring .pct {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .rr2-plan-list { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .rr2-plan-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px;
+    padding: 3px 0;
+  }
+  .rr2-plan-item .dot {
+    width: 12px; height: 12px; border-radius: 4px;
+    border: 1.5px solid var(--rr-line-2);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .rr2-plan-item.done .dot { background: var(--rr-green-700); border-color: var(--rr-green-700); color: #fff; }
+
+  /* Today's courses (dark green card) */
+  .rr2-today {
+    background: var(--rr-green-900);
+    border-radius: 16px;
+    padding: 18px;
+    color: #fff;
+  }
+  .rr2-today h5 { margin: 0 0 12px; font-size: 13px; font-weight: 700; color: #fff; }
+  .rr2-today .course {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+  }
+  .rr2-today .course:last-child { border-bottom: none; }
+  .rr2-today .course .ic {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .rr2-today .course .n { flex: 1; }
+  .rr2-today .course .check {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+  .rr2-today .course.done .check {
+    background: var(--rr-lime); border-color: var(--rr-lime);
+    display: grid; place-items: center;
+    color: var(--rr-green-900);
+  }
+
+  /* Progress bars chart */
+  .rr2-bars {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    height: 120px;
+    align-items: flex-end;
+    margin: 16px 0 8px;
+  }
+  .rr2-bars .col {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    height: 100%;
+    gap: 4px;
+  }
+  .rr2-bars .col .stack {
+    width: 100%;
+    display: flex; flex-direction: column;
+    gap: 2px;
+    align-items: center;
+  }
+  .rr2-bars .col .b1 { background: var(--rr-green-900); width: 100%; border-radius: 3px 3px 0 0; }
+  .rr2-bars .col .b2 { background: var(--rr-green-500); width: 100%; }
+  .rr2-bars .col .b3 { background: var(--rr-green-soft); width: 100%; border-radius: 0 0 3px 3px; }
+  .rr2-bars .col .dow { font-size: 10px; color: var(--rr-ink-60); font-weight: 600; margin-top: 6px; }
+
+  /* Calendar mini */
+  .rr2-cal { font-size: 11px; }
+  .rr2-cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 11px; }
+  .rr2-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    font-size: 10px;
+  }
+  .rr2-cal-grid .dow { text-align: center; color: var(--rr-ink-60); font-weight: 700; padding: 3px 0; }
+  .rr2-cal-grid .d {
+    aspect-ratio: 1;
+    display: grid; place-items: center;
+    border-radius: 6px;
+    color: var(--rr-ink);
+  }
+  .rr2-cal-grid .d.today { background: var(--rr-green-900); color: #fff; font-weight: 700; }
+  .rr2-cal-grid .d.event { background: var(--rr-green-100); color: var(--rr-green-900); font-weight: 700; }
+  .rr2-cal-event {
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: var(--rr-paper);
+    border-radius: 8px;
+    font-size: 10px;
+  }
+  .rr2-cal-event .t { font-weight: 700; font-size: 11px; }
+  .rr2-cal-event .s { color: var(--rr-ink-60); }
+
+  /* Line charts row */
+  .rr2-chart-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .rr2-chart-card {
+    background: var(--rr-card-light);
+    border: 1px solid var(--rr-line-2);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .rr2-chart-card .big {
+    font-size: 30px; font-weight: 700; letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .rr2-chart-card .sub { font-size: 10px; color: var(--rr-ink-60); margin-bottom: 4px; }
+  .rr2-chart-card svg { width: 100%; height: 60px; }
+
+  /* Table */
+  .rr2-table-card { background: var(--rr-card-light); border: 1px solid var(--rr-line-2); border-radius: 16px; padding: 16px 18px; }
+  .rr2-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .rr2-table thead th {
+    text-align: left;
+    font-size: 10px; font-weight: 600;
+    color: var(--rr-ink-60);
+    padding: 8px 10px 8px 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .rr2-table tbody td {
+    padding: 10px 10px 10px 0;
+    border-top: 1px solid var(--rr-line-2);
+    font-weight: 500;
+  }
+  .rr2-table tbody td.bold { font-weight: 700; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body class="rr rr-e2">
+
+<div class="rr2-root">
+  <!-- Sidebar -->
+  <aside class="rr2-sidebar">
+    <div class="brand">
+      <div class="mark">AK</div>
+      <div class="name">AK Academy</div>
+    </div>
+    <nav class="rr2-nav">
+      <a class="active">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+        Reports
+      </a>
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11v1a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        Coaches
+      </a>
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Players
+      </a>
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M9 17V9M15 17v-5M21 17V5"/></svg>
+        Analytics
+      </a>
+    </nav>
+    <div class="bottom rr2-nav">
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        Help
+      </a>
+      <a>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+        Log out
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="rr2-main">
+    <!-- Topbar -->
+    <div class="rr2-topbar">
+      <div class="rr2-search">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        Search players, coaches...
+      </div>
+      <div class="rr2-top-right">
+        <div class="rr2-top-pill">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1"/></svg>
+          Settings
+        </div>
+        <div class="rr2-top-icon">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+        </div>
+        <div class="rr2-top-icon" style="background: var(--rr-green-900); color: var(--rr-lime); font-weight: 700; font-size: 11px;">AM</div>
+      </div>
+    </div>
+
+    <!-- Welcome -->
+    <div class="rr2-welcome">
+      <div>
+        <h2>Welcome back, Adam!</h2>
+        <p>Plan, prioritize, and accomplish your tasks with ease.</p>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div class="rr2-kpi-row">
+      <div class="rr2-kpi green">
+        <div class="lbl">Total players</div>
+        <div class="big">134</div>
+        <div class="sub">incl. 3 pending invites</div>
+        <div class="arrow">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </div>
+      <div class="rr2-kpi">
+        <div class="lbl">Running programs</div>
+        <div class="big">42</div>
+        <div class="sub">incl. 2 pending approvals</div>
+        <div class="arrow">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </div>
+      <div class="rr2-kpi">
+        <div class="lbl">Finished</div>
+        <div class="big">92</div>
+        <div class="sub">incl. 2 pending reviews</div>
+        <div class="arrow">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </div>
+      <div class="rr2-kpi">
+        <div class="lbl">New this month</div>
+        <div class="big">+21</div>
+        <div class="sub">8% vs. previous period</div>
+        <div class="arrow">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 col row: Online / Session progress / Weekly plan -->
+    <div class="rr2-grid-3col">
+      <!-- Online -->
+      <div class="rr2-card">
+        <h5>
+          Online
+          <span class="more">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </span>
+        </h5>
+        <div class="rr2-member"><div class="av" style="background:#5C8B66">AM</div><div class="name">Coach Alice Marino</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#8A7A5C">CS</div><div class="name">Dr. Christopher Smith</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#6B7D8A">MB</div><div class="name">Mrs. Monica Black</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#BF7A4F">RF</div><div class="name">Mr. Ralph Furs</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#5C8B66">KR</div><div class="name">Ms. Keith Rodman</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#9C6B5E">DK</div><div class="name">Dr. Daniel Kho</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button></div></div>
+        <div class="rr2-member"><div class="av" style="background:#7E6B9C">JM</div><div class="name">Ms. Julie McLaren</div><div class="actions"><button><svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button></div></div>
+      </div>
+
+      <!-- Session progress -->
+      <div class="rr2-card">
+        <h5>
+          Session progress
+          <span class="more">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </span>
+        </h5>
+        <div style="font-size: 10px; color: var(--rr-ink-60); margin-bottom: 4px;">Weekly average 12.3h · ↑ 17%</div>
+        <div class="rr2-bars">
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 14px;"></div><div class="b2" style="height: 20px;"></div><div class="b3" style="height: 8px;"></div></div>
+            <div class="dow">M</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 10px;"></div><div class="b2" style="height: 24px;"></div><div class="b3" style="height: 14px;"></div></div>
+            <div class="dow">T</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 18px;"></div><div class="b2" style="height: 28px;"></div><div class="b3" style="height: 10px;"></div></div>
+            <div class="dow">W</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 22px;"></div><div class="b2" style="height: 32px;"></div><div class="b3" style="height: 18px;"></div></div>
+            <div class="dow">T</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 28px;"></div><div class="b2" style="height: 38px;"></div><div class="b3" style="height: 22px;"></div></div>
+            <div class="dow">F</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 18px;"></div><div class="b2" style="height: 26px;"></div><div class="b3" style="height: 12px;"></div></div>
+            <div class="dow">S</div>
+          </div>
+          <div class="col">
+            <div class="stack"><div class="b1" style="height: 12px;"></div><div class="b2" style="height: 16px;"></div><div class="b3" style="height: 6px;"></div></div>
+            <div class="dow">S</div>
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="rr2-cal" style="margin-top: 14px;">
+          <div class="rr2-cal-head">
+            <span>November 2025</span>
+            <span style="color:var(--rr-ink-60);">Mon - Fri</span>
+          </div>
+          <div class="rr2-cal-grid">
+            <span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="dow">S</span>
+            <span class="d">25</span><span class="d">26</span><span class="d event">27</span><span class="d">28</span><span class="d today">29</span><span class="d">30</span><span class="d">1</span>
+          </div>
+          <div class="rr2-cal-event">
+            <div class="t">Short-game clinic</div>
+            <div class="s">Anders K. · Nov 29 · 14:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly plan -->
+      <div class="rr2-card" style="display: flex; flex-direction: column;">
+        <h5>
+          Weekly plan
+          <span class="more">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </span>
+        </h5>
+        <div class="rr2-ring-box">
+          <div class="rr2-ring">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke="var(--rr-green-100)" stroke-width="10" fill="none"/>
+              <circle cx="50" cy="50" r="40" stroke="var(--rr-green-700)" stroke-width="10" fill="none" stroke-dasharray="251" stroke-dashoffset="100" stroke-linecap="round"/>
+            </svg>
+            <span class="pct">60%</span>
+          </div>
+        </div>
+        <div class="rr2-plan-list" style="margin-top: 12px;">
+          <div class="rr2-plan-item done">
+            <div class="dot">
+              <svg width="7" height="7" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span style="flex:1; text-decoration: line-through; color: var(--rr-ink-60);">Webinar coaching</span>
+          </div>
+          <div class="rr2-plan-item done">
+            <div class="dot">
+              <svg width="7" height="7" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span style="flex:1; text-decoration: line-through; color: var(--rr-ink-60);">Parents day</span>
+          </div>
+          <div class="rr2-plan-item">
+            <div class="dot"></div>
+            <span style="flex:1;">Discuss goals</span>
+          </div>
+          <div class="rr2-plan-item">
+            <div class="dot"></div>
+            <span style="flex:1;">Weekly meeting</span>
+          </div>
+          <div class="rr2-plan-item">
+            <div class="dot"></div>
+            <span style="flex:1;">Tutor / mentor</span>
+          </div>
+        </div>
+
+        <!-- Today's courses -->
+        <div class="rr2-today" style="margin-top: 14px;">
+          <h5>Today's sessions</h5>
+          <div class="course done"><div class="ic"><i data-lucide="bar-chart-3" class="icon-md"></i></div><div class="n">Statistics review</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+          <div class="course"><div class="ic"><i data-lucide="target" class="icon-md"></i></div><div class="n">Short game</div><div class="check"></div></div>
+          <div class="course"><div class="ic"><i data-lucide="trending-up" class="icon-md"></i></div><div class="n">SG analytics</div><div class="check"></div></div>
+          <div class="course"><div class="ic"><i data-lucide="flag-triangle-right" class="icon-md"></i></div><div class="n">Range reps</div><div class="check"></div></div>
+          <div class="course done"><div class="ic"><i data-lucide="pencil-line" class="icon-md"></i></div><div class="n">Notes</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- January report review -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <h3 style="margin: 0; font-size: 14px; font-weight: 700;">November report review</h3>
+      <button class="rr2-top-pill"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg> Last 30d</button>
+    </div>
+    <div class="rr2-chart-row">
+      <div class="rr2-chart-card">
+        <div class="sub" style="display: flex; justify-content: space-between;"><span>Website visits</span><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        <div class="big">198</div>
+        <div style="font-size: 10px; color: var(--rr-green-700); font-weight: 600;">↑ 2.6 more than usual</div>
+        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path d="M0,40 C20,42 30,30 50,32 C70,34 80,20 100,18 C120,16 130,28 150,22 C170,16 180,10 200,12" stroke="var(--rr-green-700)" stroke-width="1.8" fill="none"/>
+          <path d="M0,40 C20,42 30,30 50,32 C70,34 80,20 100,18 C120,16 130,28 150,22 C170,16 180,10 200,12 L200,60 L0,60 Z" fill="var(--rr-green-100)" opacity="0.5"/>
+        </svg>
+        <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--rr-ink-60); margin-top: 6px;">
+          <span>Oct 24</span><span>Nov 25</span>
+        </div>
+      </div>
+      <div class="rr2-chart-card">
+        <div class="sub" style="display: flex; justify-content: space-between;"><span>Returning players</span><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        <div class="big">46</div>
+        <div style="font-size: 10px; color: var(--rr-green-700); font-weight: 600;">↑ 1.4 more than usual</div>
+        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path d="M0,30 C20,26 30,40 50,28 C70,18 80,36 100,24 C120,14 130,22 150,16 C170,10 180,18 200,14" stroke="var(--rr-green-700)" stroke-width="1.8" fill="none"/>
+          <path d="M0,30 C20,26 30,40 50,28 C70,18 80,36 100,24 C120,14 130,22 150,16 C170,10 180,18 200,14 L200,60 L0,60 Z" fill="var(--rr-green-100)" opacity="0.5"/>
+        </svg>
+        <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--rr-ink-60); margin-top: 6px;">
+          <span>Oct 24</span><span>Nov 25</span>
+        </div>
+      </div>
+      <div class="rr2-chart-card">
+        <div class="sub" style="display: flex; justify-content: space-between;"><span>Tournament sign-ups</span><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+        <div class="big">14</div>
+        <div style="font-size: 10px; color: var(--rr-green-700); font-weight: 600;">↑ 1.2 more than usual</div>
+        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+          <path d="M0,38 C20,34 30,26 50,32 C70,36 80,22 100,28 C120,32 130,18 150,14 C170,10 180,16 200,8" stroke="var(--rr-green-700)" stroke-width="1.8" fill="none"/>
+          <path d="M0,38 C20,34 30,26 50,32 C70,36 80,22 100,28 C120,32 130,18 150,14 C170,10 180,16 200,8 L200,60 L0,60 Z" fill="var(--rr-green-100)" opacity="0.5"/>
+        </svg>
+        <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--rr-ink-60); margin-top: 6px;">
+          <span>Oct 24</span><span>Nov 25</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming payments table -->
+    <div class="rr2-table-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 14px; font-weight: 700;">Upcoming payments</h3>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+      <table class="rr2-table">
+        <thead>
+          <tr>
+            <th>Player ID</th>
+            <th>Class</th>
+            <th>Player name</th>
+            <th>Coach</th>
+            <th>Start date</th>
+            <th>Fee</th>
+            <th>Due</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">2014789</td><td>A103</td><td>Susan Smith</td><td>Dr Maxim Accardo</td><td>01.01.2025</td><td class="bold">£1,300</td><td class="bold">£650</td><td><span class="rr2-pill received">Received</span></td></tr>
+          <tr><td class="bold">3434118</td><td>A123</td><td>Alex Smith</td><td>Mr Ralph Furs</td><td>01.02.2025</td><td class="bold">£950</td><td class="bold">£0</td><td><span class="rr2-pill received">Received</span></td></tr>
+          <tr><td class="bold">2101487</td><td>B12</td><td>Steven Black</td><td>Ms Keith Rodman</td><td>01.10.2024</td><td class="bold">£1,600</td><td class="bold">£823</td><td><span class="rr2-pill pending">Pending</span></td></tr>
+          <tr><td class="bold">1034702</td><td>A104</td><td>Anna-Maria Mur</td><td>Dr Marcus MacCalins</td><td>15.08.2025</td><td class="bold">£1,240</td><td class="bold">£390</td><td><span class="rr2-pill received">Received</span></td></tr>
+          <tr><td class="bold">2065985</td><td>H70</td><td>Alice Rodman</td><td>Ms Anna Long</td><td>05.02.2025</td><td class="bold">£1,380</td><td class="bold">£0</td><td><span class="rr2-pill received">Received</span></td></tr>
+          <tr><td class="bold">2001589</td><td>E08</td><td>Tom Pitt</td><td>Ms Anna Dickens</td><td>15.02.2025</td><td class="bold">£950</td><td class="bold">£210</td><td><span class="rr2-pill overdue">Overdue</span></td></tr>
+          <tr><td class="bold">1031788</td><td>G45</td><td>Gus Mueller</td><td>Dr Diana Lorens</td><td>01.01.2025</td><td class="bold">£1,680</td><td class="bold">£0</td><td><span class="rr2-pill received">Received</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

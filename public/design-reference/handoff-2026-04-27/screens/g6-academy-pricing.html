@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Academy medlemskap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  .ax-hero { padding: 180px 0 60px; }
+  .ax-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; }
+  .ax-hero h1 { font-size: clamp(54px, 6.4vw, 88px); line-height: 0.98; letter-spacing: -0.04em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 22px; text-wrap: balance; }
+  .ax-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.025em; }
+  .ax-hero p.lede { font-size: 19px; line-height: 1.6; color: var(--akgolf-text); max-width: 52ch; margin: 0 0 28px; }
+  .ax-hero-stats { display: flex; gap: 36px; padding: 24px 0; border-top: 1.5px solid var(--akgolf-line-light); border-bottom: 1.5px solid var(--akgolf-line-light); }
+  .ax-hero-stats .stat { display: flex; flex-direction: column; }
+  .ax-hero-stats .stat .v { font-size: 36px; font-weight: 800; color: var(--akgolf-ink); letter-spacing: -0.02em; line-height: 1; font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+  .ax-hero-stats .stat .l { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); margin-top: 8px; font-weight: 700; }
+  .ax-hero-photo { aspect-ratio: 4/5; }
+
+  /* Toggle */
+  .billing-toggle { display: inline-flex; background: #fff; border: 1.5px solid var(--akgolf-line-light); padding: 5px; border-radius: 999px; margin: 0 0 40px; }
+  .billing-toggle button { padding: 12px 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; border: none; background: transparent; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .billing-toggle button.active { background: var(--akgolf-ink); color: #fff; }
+  .billing-toggle button .save { background: var(--akgolf-accent); color: #0A1F18; padding: 2px 8px; border-radius: 999px; font-size: 9px; }
+
+  /* Plans */
+  .plans-section { padding: 30px 0 100px; }
+  .plans-head { text-align: center; margin-bottom: 48px; }
+  .plans-head h2 { font-size: clamp(40px, 4.6vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 16px; line-height: 1.05; }
+  .plans-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .plans-head p { font-size: 17px; color: var(--akgolf-text); max-width: 60ch; margin: 0 auto; line-height: 1.6; }
+
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+  .plan {
+    background: #fff;
+    border: 1.5px solid var(--akgolf-line-light);
+    border-radius: 28px;
+    padding: 36px 34px 32px;
+    display: flex; flex-direction: column;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .plan.featured {
+    background: var(--akgolf-ink);
+    color: #fff;
+    border-color: var(--akgolf-ink);
+    transform: scale(1.04);
+    box-shadow: 0 30px 70px rgba(10,31,24,0.18);
+  }
+  .plan.featured .plan-name { color: var(--akgolf-accent); }
+  .plan.featured .plan-tagline,
+  .plan.featured .plan-desc,
+  .plan.featured .plan-feat li { color: rgba(255,255,255,0.85); }
+  .plan.featured .plan-feat li [data-lucide] { color: var(--akgolf-accent); }
+  .plan.featured .plan-price-currency,
+  .plan.featured .plan-price-period,
+  .plan.featured .plan-price-billed { color: rgba(255,255,255,0.55); }
+  .plan.featured .plan-section-title { color: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.15); }
+  .plan.featured .web-btn { background: var(--akgolf-accent); color: #0A1F18; border: none; }
+  .plan.featured .web-btn:hover { background: #fff; }
+
+  .plan .ribbon { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--akgolf-accent); color: #0A1F18; padding: 6px 16px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
+
+  .plan-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 14px; }
+  .plan-tagline { font-size: 24px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin-bottom: 4px; line-height: 1.2; }
+  .plan-desc { font-size: 14px; color: var(--akgolf-text); margin-bottom: 28px; line-height: 1.5; min-height: 42px; }
+
+  .plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+  .plan-price-currency { font-size: 18px; color: var(--akgolf-muted); font-weight: 600; }
+  .plan-price-amount { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 64px; line-height: 1; letter-spacing: -0.03em; color: var(--akgolf-ink); }
+  .plan.featured .plan-price-amount { color: #fff; }
+  .plan-price-period { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); margin-left: 4px; font-weight: 700; }
+  .plan-price-billed { font-size: 12px; color: var(--akgolf-muted); margin-bottom: 28px; }
+  .plan-price-billed s { color: var(--akgolf-muted); opacity: 0.5; margin-right: 6px; }
+
+  .plan-cta { display: block; text-align: center; padding: 14px; border-radius: 999px; font-size: 14px; font-weight: 700; margin-bottom: 32px; text-decoration: none; }
+
+  .plan-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; padding-top: 20px; border-top: 1px solid var(--akgolf-line-light); margin-bottom: 14px; }
+  .plan-feat { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 11px; }
+  .plan-feat li { font-size: 14px; color: var(--akgolf-text); display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .plan-feat li [data-lucide] { width: 14px; height: 14px; color: var(--akgolf-primary); margin-top: 4px; flex-shrink: 0; stroke-width: 2.5; }
+  .plan-feat li.heavy { font-weight: 600; color: var(--akgolf-ink); }
+  .plan.featured .plan-feat li.heavy { color: #fff; }
+
+  /* Compare grid */
+  .compare-section { padding: 90px 0; background: #fff; }
+  .compare-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 36px; }
+  .compare-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0; }
+  .compare-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table thead th {
+    text-align: left; padding: 16px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700;
+    border-bottom: 1.5px solid var(--akgolf-line-light);
+  }
+  .compare-table thead th.plan-col { text-align: center; }
+  .compare-table thead th.plan-col strong { display: block; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--akgolf-ink); letter-spacing: -0.01em; text-transform: none; font-weight: 800; margin-bottom: 2px; }
+  .compare-table thead th.plan-col.featured strong { color: var(--akgolf-primary); }
+  .compare-table tbody tr { border-bottom: 1px solid var(--akgolf-line-light); }
+  .compare-table tbody tr:hover { background: var(--akgolf-surface); }
+  .compare-table td { padding: 18px; font-size: 14px; color: var(--akgolf-text); vertical-align: middle; }
+  .compare-table td:first-child { color: var(--akgolf-ink); font-weight: 600; }
+  .compare-table td.center { text-align: center; }
+  .compare-table .yes { color: var(--akgolf-primary); display: inline-grid; place-items: center; }
+  .compare-table .no { color: var(--akgolf-line); }
+  .compare-table .group-row td { background: var(--akgolf-surface); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; padding: 14px 18px; }
+
+  /* What's included */
+  .incl-section { padding: 100px 0; }
+  .incl-head { max-width: 60ch; margin-bottom: 50px; }
+  .incl-head h2 { font-size: clamp(36px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 16px; line-height: 1.1; }
+  .incl-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .incl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .incl-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 24px; padding: 32px; }
+  .incl-card .ic { width: 52px; height: 52px; border-radius: 14px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); display: grid; place-items: center; margin-bottom: 20px; }
+  .incl-card .ic [data-lucide] { width: 24px; height: 24px; }
+  .incl-card h4 { font-size: 18px; font-weight: 700; color: var(--akgolf-ink); margin: 0 0 10px; letter-spacing: -0.015em; }
+  .incl-card p { font-size: 14px; color: var(--akgolf-text); margin: 0; line-height: 1.6; }
+
+  /* FAQ */
+  .faq-section { padding: 100px 0 120px; background: var(--akgolf-surface); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+  .faq-grid h2 { font-size: clamp(36px, 4vw, 52px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 16px; line-height: 1.05; }
+  .faq-grid h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .faq-grid > div:first-child p { font-size: 16px; color: var(--akgolf-text); line-height: 1.6; }
+  .faq-list { display: flex; flex-direction: column; }
+  .faq-item { padding: 24px 0; border-top: 1px solid var(--akgolf-line-light); }
+  .faq-item:last-child { border-bottom: 1px solid var(--akgolf-line-light); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 24px; }
+  .faq-q span { font-size: 18px; font-weight: 700; color: var(--akgolf-ink); letter-spacing: -0.015em; }
+  .faq-q .ic { width: 32px; height: 32px; border-radius: 50%; background: var(--akgolf-surface); display: grid; place-items: center; color: var(--akgolf-primary); flex-shrink: 0; transition: transform 0.2s; }
+  .faq-item.open .faq-q .ic { transform: rotate(45deg); }
+  .faq-a { font-size: 15px; color: var(--akgolf-text); line-height: 1.65; padding-top: 14px; max-width: 65ch; display: none; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* Final CTA */
+  .cta-band { padding: 100px 0; background: var(--akgolf-ink); color: #fff; }
+  .cta-band-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px; align-items: center; }
+  .cta-band h2 { font-size: clamp(40px, 5vw, 64px); line-height: 1.0; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 18px; }
+  .cta-band h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .cta-band p { font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.6; max-width: 50ch; margin: 0 0 28px; }
+  .cta-band .web-btn.primary { background: var(--akgolf-accent); color: #0A1F18; }
+
+  @media (max-width: 1100px) {
+    .ax-hero-grid, .faq-grid, .cta-band-grid { grid-template-columns: 1fr; gap: 40px; }
+    .plans-grid, .incl-grid { grid-template-columns: 1fr; }
+    .plan.featured { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html" class="active">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html">Utvikling</a>
+    <a href="g9-om-oss.html">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="ax-hero">
+  <div class="web-container">
+    <div class="ax-hero-grid">
+      <div>
+        <div class="web-eyebrow">Academy · Medlemskap</div>
+        <h1>Coaching som <em>varer</em> hele sesongen.</h1>
+        <p class="lede">Tre nivåer av Academy-medlemskap. Velg det som passer ambisjonene dine — du kan oppgradere når som helst, og avbestille med en måneds varsel.</p>
+
+        <div class="billing-toggle" id="billing">
+          <button class="active" data-cycle="month">Månedlig</button>
+          <button data-cycle="year">Årlig <span class="save">−15%</span></button>
+        </div>
+
+        <div class="ax-hero-stats">
+          <div class="stat"><div class="v">18</div><div class="l">Aktive Academy-spillere</div></div>
+          <div class="stat"><div class="v">−4.2</div><div class="l">Snitt HCP-reduksjon · år 1</div></div>
+          <div class="stat"><div class="v">94%</div><div class="l">Fornyer hvert år</div></div>
+        </div>
+      </div>
+      <div class="ax-hero-photo web-photo" data-ratio="4-5">
+        <div class="web-photo-label">
+          <div class="ico"><i data-lucide="camera"></i></div>
+          <div class="tag">[Foto: Anders med spiller på range]</div>
+          <div class="desc">Coaching-øyeblikk under analyse — Trackman-skjerm i bakgrunn</div>
+          <div class="ratio">4:5 · portrait</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Plans -->
+<section class="plans-section">
+  <div class="web-container">
+    <div class="plans-head">
+      <h2>Tre måter å være <em>Academy-spiller</em>.</h2>
+      <p>Alle medlemskap inkluderer PlayerHQ-app, månedlig SG-måling og fri range. Forskjellen ligger i hvor mye 1:1 du får, og om du vil ha banecoaching og camps inkludert.</p>
+    </div>
+
+    <div class="plans-grid">
+      <!-- Essentials -->
+      <div class="plan">
+        <div class="plan-name">Essentials</div>
+        <div class="plan-tagline">Holde kontakten hele året</div>
+        <p class="plan-desc">For deg som vil være med i Academy-rytmen, men har færre 1:1-timer i måneden.</p>
+
+        <div class="plan-price">
+          <span class="plan-price-currency">kr</span>
+          <span class="plan-price-amount" data-month="2 990" data-year="2 540">2 990</span>
+          <span class="plan-price-period">/ mnd</span>
+        </div>
+        <div class="plan-price-billed">Bindingstid: 6 mnd · Avbestilling 1 mnd varsel</div>
+
+        <a href="#" class="web-btn secondary plan-cta" style="background: var(--akgolf-surface);">Velg Essentials</a>
+
+        <div class="plan-section-title">Inkludert</div>
+        <ul class="plan-feat">
+          <li class="heavy"><i data-lucide="check"></i>2 × 1:1 lessons / måned</li>
+          <li><i data-lucide="check"></i>Månedlig SG-rapport + plan</li>
+          <li><i data-lucide="check"></i>Fri tilgang til range-bay</li>
+          <li><i data-lucide="check"></i>PlayerHQ-app</li>
+          <li><i data-lucide="check"></i>Coach-chat (svar innen 24t)</li>
+          <li><i data-lucide="check"></i>Vinter-treningsprogram</li>
+        </ul>
+      </div>
+
+      <!-- Performance (featured) -->
+      <div class="plan featured">
+        <div class="ribbon">Mest valgte</div>
+        <div class="plan-name">Performance</div>
+        <div class="plan-tagline">Helhetlig coaching, ukentlig</div>
+        <p class="plan-desc">For den dedikerte amatøren — ukentlig 1:1, banecoaching og camps inkludert.</p>
+
+        <div class="plan-price">
+          <span class="plan-price-currency">kr</span>
+          <span class="plan-price-amount" data-month="5 490" data-year="4 660">5 490</span>
+          <span class="plan-price-period">/ mnd</span>
+        </div>
+        <div class="plan-price-billed">Bindingstid: 12 mnd · Avbestilling 1 mnd varsel</div>
+
+        <a href="#" class="web-btn primary plan-cta">Velg Performance</a>
+
+        <div class="plan-section-title">Alt i Essentials, pluss</div>
+        <ul class="plan-feat">
+          <li class="heavy"><i data-lucide="check"></i>4 × 1:1 lessons / måned</li>
+          <li class="heavy"><i data-lucide="check"></i>2 × banecoaching / sesong</li>
+          <li><i data-lucide="check"></i>Trackman-økt hver måned</li>
+          <li><i data-lucide="check"></i>Sommer- og høst-camp inkludert</li>
+          <li><i data-lucide="check"></i>Mental coaching · 4 økter / år</li>
+          <li><i data-lucide="check"></i>Coach-chat (svar innen 4t)</li>
+          <li><i data-lucide="check"></i>Tilgang til alle klinikker</li>
+        </ul>
+      </div>
+
+      <!-- Elite -->
+      <div class="plan">
+        <div class="plan-name">Elite 1:1</div>
+        <div class="plan-tagline">Det Anders gjør med tour-spillere</div>
+        <p class="plan-desc">Toppen av programmet — booking-prioritet, ubegrenset chat og personlig årsplan.</p>
+
+        <div class="plan-price">
+          <span class="plan-price-currency">kr</span>
+          <span class="plan-price-amount" data-month="9 990" data-year="8 490">9 990</span>
+          <span class="plan-price-period">/ mnd</span>
+        </div>
+        <div class="plan-price-billed">Bindingstid: 12 mnd · Søknadsbasert</div>
+
+        <a href="#" class="web-btn secondary plan-cta" style="background: var(--akgolf-surface);">Søk om plass</a>
+
+        <div class="plan-section-title">Alt i Performance, pluss</div>
+        <ul class="plan-feat">
+          <li class="heavy"><i data-lucide="check"></i>Ubegrenset 1:1 lessons</li>
+          <li class="heavy"><i data-lucide="check"></i>Personlig 12-måneders plan</li>
+          <li><i data-lucide="check"></i>Booking-prioritet (24t i forveien)</li>
+          <li><i data-lucide="check"></i>Banecoaching ubegrenset</li>
+          <li><i data-lucide="check"></i>WhatsApp-chat direkte med Anders</li>
+          <li><i data-lucide="check"></i>Pinx-opphold inkludert (3 dager)</li>
+          <li><i data-lucide="check"></i>Tour-spiller-camps</li>
+          <li><i data-lucide="check"></i>Helse/fysio-screening x 2 / år</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Compare table -->
+<section class="compare-section">
+  <div class="web-container">
+    <div class="compare-head">
+      <div>
+        <div class="web-eyebrow">Sammenlign nivåer</div>
+        <h2>Alt du får, side om <em>side.</em></h2>
+      </div>
+      <a href="#" class="web-btn secondary">Last ned PDF <i data-lucide="download"></i></a>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Funksjon</th>
+          <th class="plan-col"><strong>Essentials</strong>2 990 kr/mnd</th>
+          <th class="plan-col featured"><strong>Performance</strong>5 490 kr/mnd</th>
+          <th class="plan-col"><strong>Elite 1:1</strong>9 990 kr/mnd</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="group-row"><td colspan="4">Coaching</td></tr>
+        <tr><td>1:1 lessons / måned</td><td class="center">2</td><td class="center">4</td><td class="center">Ubegrenset</td></tr>
+        <tr><td>Banecoaching / sesong</td><td class="center"><span class="no">—</span></td><td class="center">2</td><td class="center">Ubegrenset</td></tr>
+        <tr><td>Trackman-økter / måned</td><td class="center">1</td><td class="center">1</td><td class="center">2</td></tr>
+        <tr><td>Mental coaching / år</td><td class="center"><span class="no">—</span></td><td class="center">4</td><td class="center">8</td></tr>
+        <tr><td>Personlig 12-mnd plan</td><td class="center"><span class="no">—</span></td><td class="center"><span class="no">—</span></td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td></tr>
+
+        <tr class="group-row"><td colspan="4">Tilgang</td></tr>
+        <tr><td>Fri range-bay</td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td></tr>
+        <tr><td>Booking-prioritet</td><td class="center"><span class="no">—</span></td><td class="center">12 t i forveien</td><td class="center">24 t i forveien</td></tr>
+        <tr><td>Klinikker</td><td class="center">Drop-in</td><td class="center">Inkludert</td><td class="center">Inkludert</td></tr>
+        <tr><td>Camps (sommer/høst)</td><td class="center">10% rabatt</td><td class="center">Inkludert</td><td class="center">Inkludert + tour-camp</td></tr>
+        <tr><td>Pinx-opphold</td><td class="center">10% rabatt</td><td class="center">15% rabatt</td><td class="center">3 dager inkludert</td></tr>
+
+        <tr class="group-row"><td colspan="4">PlayerHQ-app</td></tr>
+        <tr><td>SG-rapport</td><td class="center">Månedlig</td><td class="center">Månedlig</td><td class="center">Ukentlig</td></tr>
+        <tr><td>Treningsplaner</td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td><td class="center"><span class="yes"><i data-lucide="check"></i></span></td></tr>
+        <tr><td>Coach-chat svartid</td><td class="center">24 t</td><td class="center">4 t</td><td class="center">WhatsApp · 1 t</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Included -->
+<section class="incl-section">
+  <div class="web-container">
+    <div class="incl-head">
+      <div class="web-eyebrow">Alle medlemskap inkluderer</div>
+      <h2>Et fundament <em>som følger deg</em> hele året.</h2>
+    </div>
+    <div class="incl-grid">
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="bar-chart-3"></i></div>
+        <h4>SG-måling hver måned</h4>
+        <p>Vi måler hvor du taper og vinner slag mot ditt nivå. Du ser fremgangen i tall, ikke magefølelse.</p>
+      </div>
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="smartphone"></i></div>
+        <h4>PlayerHQ i lomma</h4>
+        <p>Treningsplan, video-bibliotek og chat med coach. Bygd så du faktisk åpner den.</p>
+      </div>
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="calendar-heart"></i></div>
+        <h4>Sosiale events</h4>
+        <p>Klubbkvelder, sesongstart og avslutning, og uoffisielle medlems-runder. Du blir kjent med folka.</p>
+      </div>
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="snowflake"></i></div>
+        <h4>Vinter-program</h4>
+        <p>Indoor-Trackman, simulator-runder og fysisk trening — så du kommer ut sterkere i april.</p>
+      </div>
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="rotate-ccw"></i></div>
+        <h4>Fleksibel kansellering</h4>
+        <p>Avbestill med 1 måneds varsel. Pause i 2 mnd inkludert hvis du blir skadet eller lengre reise.</p>
+      </div>
+      <div class="incl-card">
+        <div class="ic"><i data-lucide="shield-check"></i></div>
+        <h4>Resultatgaranti</h4>
+        <p>Etter 6 måneder, hvis du har fulgt planen og ikke gått ned i HCP — gratis ekstra måned.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="web-container">
+    <div class="faq-grid">
+      <div>
+        <div class="web-eyebrow">FAQ</div>
+        <h2>De spørsmålene <em>folk faktisk</em> stiller.</h2>
+        <p>Står ikke svaret her? Send melding på <a href="g10-kontakt.html" style="color: var(--akgolf-primary);">kontakt</a> — vi svarer samme dag.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-q"><span>Kan jeg pause medlemskapet hvis jeg blir skadet?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Ja. Alle medlemmer kan pause inntil 2 måneder i året — ingen kostnad i pause-perioden, og bindingstiden forskyves tilsvarende. Bare gi beskjed i appen eller på chat.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Hva skjer med ubrukte timer?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Inntil 2 ubrukte 1:1-timer rulles over til neste måned automatisk. Mer enn det og du må booke dem inn — vi vil at du faktisk bruker dem.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Kan jeg oppgradere underveis?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Når som helst. Forskjellen i pris faktureres pro rata fra dagen du oppgraderer. Du kan ikke nedgradere før bindingstiden er ute.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Hvem er Elite 1:1 for?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Toursøkende, eks-tour, og dedikerte amatører som spiller turneringer hver måned. Det er søknadsbasert fordi Anders bare har plass til 6–8 Elite-spillere om gangen.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Kan jeg dele medlemskap med ektefelle?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Ikke offisielt — men vi har et Par-medlemskap (Performance × 2) med 20% familierabatt på spiller nr. 2. Gi beskjed på intro-møte.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span>Er det en intro-time?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Ja. Alle nye medlemmer starter med en gratis 30-min intro hvor vi snakker mål, nivå og forventninger — så du vet om Academy passer deg før du forplikter.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="web-container">
+    <div class="cta-band-grid">
+      <div>
+        <div class="web-eyebrow" style="color: var(--akgolf-accent);">Klar til å starte?</div>
+        <h2>Boook en gratis <em>intro</em> — så finner vi rett nivå sammen.</h2>
+        <p>30 minutter, ingen forpliktelser. Vi snakker om hvor du står, hvor du vil, og hvilket medlemskap som faktisk passer.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="g5-booking.html" class="web-btn primary">Book gratis intro <i data-lucide="arrow-right"></i></a>
+          <a href="g10-kontakt.html" class="web-btn ghost" style="color: #fff; border-color: rgba(255,255,255,0.20);">Send spørsmål</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; padding: 28px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px;">
+        <div style="font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 24px; line-height: 1.35; color: #fff;">"Etter 8 måneder på Performance gikk jeg fra HCP 12 til 7. Det største var ikke timene — det var planen mellom timene."</div>
+        <div style="display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.10);">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--akgolf-accent); color: #0A1F18; display: grid; place-items: center; font-weight: 700; font-size: 14px;">KB</div>
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 14px;">Kristian B.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 3px;">Performance · 14 mnd</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li><li><a href="g8-utvikling.html">Utvikling</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g10-kontakt.html">Kontakt</a></li><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2026 AK Golf Group AS · ORG 925 884 102</span>
+      <div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.faq-item').forEach(it => {
+  it.querySelector('.faq-q').addEventListener('click', () => it.classList.toggle('open'));
+});
+document.querySelectorAll('#billing button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#billing button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const cycle = b.dataset.cycle;
+    document.querySelectorAll('.plan-price-amount').forEach(el => {
+      el.textContent = cycle === 'year' ? el.dataset.year : el.dataset.month;
+    });
+    document.querySelectorAll('.plan-price-period').forEach(el => {
+      el.textContent = cycle === 'year' ? '/ mnd · faktureres årlig' : '/ mnd';
+    });
+  });
+});
+</script>
+</body>
+</html>

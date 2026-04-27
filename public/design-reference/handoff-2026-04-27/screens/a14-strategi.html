@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A14 — Match-strategi · Holtsmark</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Course selector hero */
+  .course-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .course-card {
+    background:
+      radial-gradient(circle at 80% 20%, rgba(209,248,67,0.10), transparent 50%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+  }
+  .course-card .top { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+  .course-card .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .course-card h2 {
+    margin: 0; font-size: 30px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em;
+  }
+  .course-card .meta-row {
+    display: flex; gap: 16px; margin-top: 8px;
+    color: rgba(255,255,255,0.55); font-size: 12.5px;
+  }
+  .course-card .meta-row span { display: flex; align-items: center; gap: 6px; }
+  .course-card .meta-row [data-lucide] { width: 13px; height: 13px; color: rgba(255,255,255,0.5); }
+
+  .course-card .change-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: rgba(255,255,255,0.85);
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer;
+  }
+  .course-card .change-btn [data-lucide] { width: 13px; height: 13px; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat { }
+  .stat .l { font-family:'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .stat .v { font-size: 22px; font-weight: 800; color:#fff; letter-spacing: -0.02em; line-height: 1; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 3px; font-weight: 500; }
+
+  .course-card .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* AI summary card */
+  .ai-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .ai-card::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 70%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(175,82,222,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .ai-card .h {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #C99CF3; font-weight: 700;
+  }
+  .ai-card .h [data-lucide] { width: 14px; height: 14px; }
+  .ai-card h3 { margin: 0; font-size: 17px; color:#fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; }
+  .ai-card h3 em { font-style: normal; color: var(--akgolf-accent); }
+  .ai-card .summary { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .ai-card .key-row { display: flex; gap: 14px; padding: 12px 0 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 4px; }
+  .ai-card .key { font-size: 11.5px; color: rgba(255,255,255,0.6); }
+  .ai-card .key strong { color: #fff; display: block; font-size: 14px; font-weight: 700; margin-bottom: 1px; }
+
+  /* Section header */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 28px 0 14px;
+  }
+  .sec-h h3 { margin: 0; font-size: 18px; color:#fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .right { display: flex; align-items: center; gap: 10px; }
+  .sec-h .legend { display: flex; gap: 12px; font-size: 11px; color: rgba(255,255,255,0.55); }
+  .sec-h .legend span { display: flex; align-items: center; gap: 5px; }
+  .sec-h .legend .dot { width: 8px; height: 8px; border-radius: 2px; }
+
+  /* Holes grid: vertical list of cards */
+  .holes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hole-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 18px;
+    position: relative;
+  }
+  .hole-card.ai-suggest { border-color: rgba(175,82,222,0.30); background: linear-gradient(160deg, rgba(175,82,222,0.04), rgba(13,46,35,0.0)), var(--akgolf-card-dark); }
+
+  .hole-num-block {
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding-right: 16px;
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  }
+  .hole-num {
+    font-size: 30px; font-weight: 800; color: #fff;
+    line-height: 1; letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .hole-par {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+  }
+  .hole-yds {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--akgolf-accent);
+    font-weight: 600;
+  }
+  .hole-diff {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    border-radius: 6px;
+    padding: 2px 6px;
+    margin-top: 4px;
+    align-self: center;
+  }
+
+  .hole-body { display: flex; flex-direction: column; gap: 10px; }
+  .hole-top {
+    display: flex; justify-content: space-between; align-items: start; gap: 8px;
+  }
+  .hole-name {
+    font-size: 13px; font-weight: 700; color: #fff; letter-spacing: -0.005em;
+  }
+  .hole-name small { display: block; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; margin-top: 1px; letter-spacing: 0; }
+  .hole-strat-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); font-weight: 700;
+    flex-shrink: 0;
+  }
+  .hole-strat-pill.aggr { background: rgba(232,93,78,0.18); color: #F49283; border-color: rgba(232,93,78,0.30); }
+  .hole-strat-pill.safe { background: rgba(42,125,90,0.20); color: #6FCBA1; border-color: rgba(42,125,90,0.30); }
+  .hole-strat-pill.layup { background: rgba(196,138,50,0.22); color: #E8B967; border-color: rgba(196,138,50,0.30); }
+
+  .hole-shots {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  }
+  .shot-cell {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 7px 9px;
+  }
+  .shot-cell .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .shot-cell .v {
+    font-size: 13px; color: #fff; font-weight: 600;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .shot-cell .v small { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 500; }
+
+  .hole-miss {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.08);
+    font-size: 11.5px;
+  }
+  .hole-miss .l { color: rgba(255,255,255,0.5); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .hole-miss .v { color: #fff; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .hole-miss .v.left::before, .hole-miss .v.right::before { content: ''; width: 14px; height: 14px; }
+  .hole-miss .v [data-lucide] { width: 13px; height: 13px; color: var(--akgolf-accent); }
+
+  .ai-tag {
+    position: absolute; top: 14px; right: 14px;
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(175,82,222,0.22);
+    border: 1px solid rgba(175,82,222,0.40);
+    color: #D4AAF7;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .ai-tag [data-lucide] { width: 10px; height: 10px; }
+
+  /* Front 9 / Back 9 toggle */
+  .nine-toggle {
+    display: inline-flex;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 3px;
+  }
+  .nine-toggle button {
+    padding: 6px 16px;
+    border-radius: 7px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer;
+  }
+  .nine-toggle button.active { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+
+  /* Sub-totals foot */
+  .nine-totals {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 24px;
+  }
+  .nine-totals .group {
+    display: flex; gap: 24px;
+  }
+  .nine-totals .t {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .nine-totals .t b {
+    display: block;
+    margin-top: 2px;
+    font-size: 16px; color: #fff; font-weight: 800;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1100px) {
+    .course-hero { grid-template-columns: 1fr; }
+    .holes-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="map"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item active"><i data-lucide="map"></i> Match-strategi</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Match-strategi<span class="date">HOLTSMARK · LØRDAG 2. MAI · TEE-TID 10:24</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk bane eller hull…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ STRATEGI · HULL-FOR-HULL</div>
+      <h1 class="phq-h1">Plan for Holtsmark <span style="color:var(--akgolf-accent);">·</span> lørdag</h1>
+      <p class="lede">Klubb-anbefaling, miss-side og target-zone pr. hull. AI-forslag basert på din swing-data, banens trekk og værmelding (NV vind 3 m/s · 14°C). Endre hva du vil — vi lagrer som mal til neste runde.</p>
+    </div>
+
+    <!-- Hero -->
+    <div class="course-hero">
+      <section class="course-card">
+        <div class="top">
+          <div>
+            <div class="lab">Aktiv bane</div>
+            <h2>Holtsmark <span style="color:rgba(255,255,255,0.4); font-weight: 600;">· Hvit tee</span></h2>
+            <div class="meta-row">
+              <span><i data-lucide="map-pin"></i>Sande, Vestfold</span>
+              <span><i data-lucide="cloud-sun"></i>14° · NV 3 m/s</span>
+              <span><i data-lucide="users"></i>4-ball · m/ Tor, Sverre, Geir</span>
+            </div>
+          </div>
+          <button class="change-btn"><i data-lucide="repeat"></i>Bytt bane</button>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat"><div class="l">Par</div><div class="v">71</div></div>
+          <div class="stat"><div class="l">Hvit tee</div><div class="v">5 842 <small>m</small></div></div>
+          <div class="stat"><div class="l">Slope / CR</div><div class="v">131 / 71.0</div></div>
+          <div class="stat"><div class="l">Snitt-runde</div><div class="v">+6.4 <small>(77)</small></div></div>
+        </div>
+
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="sparkles"></i>AI · regener strategi</button>
+          <button class="phq-btn"><i data-lucide="copy"></i>Kopier fra forrige</button>
+          <button class="phq-btn"><i data-lucide="bookmark"></i>Lagre som mal</button>
+          <button class="phq-btn ghost"><i data-lucide="printer"></i>Print</button>
+        </div>
+      </section>
+
+      <section class="ai-card">
+        <div class="h"><i data-lucide="sparkles"></i>AI-Coach · banegjennomgang</div>
+        <h3>Hold ballen i spill <em>frem til hull 14</em>. Aggressiv på 15 og 17.</h3>
+        <p class="summary">Holtsmark straffer høyre miss på 7 hull — du går right miss 12 yds i snitt med driver. Anbefaler 3-wood på alle smale par 4. På par 5 (3, 11, 15) går vi for grønnen i 2 kun på 15 — der har du 22 % nærmere greenen vs peer.</p>
+        <div class="key-row">
+          <div class="key"><strong>2 par 5</strong>i 2 (15, 18)</div>
+          <div class="key"><strong>−12 yds</strong>vinden tar fra deg på 4</div>
+          <div class="key"><strong>76 % FW</strong>realistisk hit-rate</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Section header with toggle -->
+    <div class="sec-h">
+      <h3>Hull-for-hull plan</h3>
+      <div class="right">
+        <div class="legend">
+          <span><span class="dot" style="background:#F49283;"></span>Aggressiv</span>
+          <span><span class="dot" style="background:#6FCBA1;"></span>Trygg</span>
+          <span><span class="dot" style="background:#E8B967;"></span>Layup</span>
+        </div>
+        <div class="nine-toggle">
+          <button class="active">Front 9</button>
+          <button>Back 9</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Holes 1-9 -->
+    <div class="holes-grid">
+      <!-- Hole 1 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">1</div>
+          <div class="hole-par">PAR 4</div>
+          <div class="hole-yds">358 m</div>
+          <div class="hole-diff">HCP 11</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Åpning<small>Bred fairway, OB venstre</small></div>
+            <span class="hole-strat-pill safe">Trygg</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">3-wood <small>235 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">8-jern <small>123 m</small></div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Fairway → midt-green</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-right"></i>Høyre semi</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 2 -->
+      <div class="hole-card ai-suggest">
+        <span class="ai-tag"><i data-lucide="sparkles"></i>Auto</span>
+        <div class="hole-num-block">
+          <div class="hole-num">2</div>
+          <div class="hole-par">PAR 3</div>
+          <div class="hole-yds">168 m</div>
+          <div class="hole-diff">HCP 17</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Vannhindring foran<small>Pin midt-bakre · trygt 5 m bak</small></div>
+            <span class="hole-strat-pill safe">Trygg</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Klubb</div><div class="v">5-jern <small>168 m</small></div></div>
+            <div class="shot-cell"><div class="l">Vind</div><div class="v">Hjelp +6 m</div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Midt-green</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-up"></i>Aldri kort</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 3 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">3</div>
+          <div class="hole-par">PAR 5</div>
+          <div class="hole-yds">478 m</div>
+          <div class="hole-diff">HCP 7</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Dogleg høyre<small>Bunker høyre på 240 m</small></div>
+            <span class="hole-strat-pill layup">Layup</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">3-wood <small>235 m</small></div></div>
+            <div class="shot-cell"><div class="l">Layup</div><div class="v">7-jern <small>140 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">PW <small>105 m</small></div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-left"></i>Venstre rough</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 4 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">4</div>
+          <div class="hole-par">PAR 4</div>
+          <div class="hole-yds">372 m</div>
+          <div class="hole-diff">HCP 3</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Smal · OB høyre<small>Det vanskeligste hullet</small></div>
+            <span class="hole-strat-pill safe">Trygg</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">3-wood <small>225 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">7-jern <small>147 m</small></div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Bogey er bra</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-left"></i>Alltid venstre</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 5 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">5</div>
+          <div class="hole-par">PAR 3</div>
+          <div class="hole-yds">142 m</div>
+          <div class="hole-diff">HCP 15</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Kort par 3<small>Pin front · go-zone</small></div>
+            <span class="hole-strat-pill aggr">Aggressiv</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Klubb</div><div class="v">9-jern <small>142 m</small></div></div>
+            <div class="shot-cell"><div class="l">Vind</div><div class="v">Mot −4 m</div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">2 m fra pin</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="check"></i>Hvor som helst på green</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 6 -->
+      <div class="hole-card ai-suggest">
+        <span class="ai-tag"><i data-lucide="sparkles"></i>Auto</span>
+        <div class="hole-num-block">
+          <div class="hole-num">6</div>
+          <div class="hole-par">PAR 4</div>
+          <div class="hole-yds">340 m</div>
+          <div class="hole-diff">HCP 13</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Drivable for noen<small>Du tar 3-wood for sikkerhet</small></div>
+            <span class="hole-strat-pill safe">Trygg</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">3-wood <small>235 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">PW <small>105 m</small></div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Pinhøyde</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-down"></i>Kort av green</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 7 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">7</div>
+          <div class="hole-par">PAR 4</div>
+          <div class="hole-yds">385 m</div>
+          <div class="hole-diff">HCP 5</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Stigning · vind i front<small>Lengste par 4 på front</small></div>
+            <span class="hole-strat-pill aggr">Aggressiv</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">Driver <small>258 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">6-jern <small>165 m</small></div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Bak-green</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-right"></i>Høyre fairway</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 8 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">8</div>
+          <div class="hole-par">PAR 4</div>
+          <div class="hole-yds">365 m</div>
+          <div class="hole-diff">HCP 9</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Klassisk par 4<small>Bunkers begge sider</small></div>
+            <span class="hole-strat-pill safe">Trygg</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">3-wood <small>230 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">8-jern <small>130 m</small></div></div>
+            <div class="shot-cell"><div class="l">Mål</div><div class="v">Midt-green</div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="arrow-left"></i>Venstre rough</span></div>
+        </div>
+      </div>
+
+      <!-- Hole 9 -->
+      <div class="hole-card">
+        <div class="hole-num-block">
+          <div class="hole-num">9</div>
+          <div class="hole-par">PAR 5</div>
+          <div class="hole-yds">498 m</div>
+          <div class="hole-diff">HCP 1</div>
+        </div>
+        <div class="hole-body">
+          <div class="hole-top">
+            <div class="hole-name">Hjem til klubbhus<small>Vann venstre · OB høyre</small></div>
+            <span class="hole-strat-pill layup">Layup</span>
+          </div>
+          <div class="hole-shots">
+            <div class="shot-cell"><div class="l">Tee</div><div class="v">5-wood <small>215 m</small></div></div>
+            <div class="shot-cell"><div class="l">2.</div><div class="v">7-jern <small>150 m</small></div></div>
+            <div class="shot-cell"><div class="l">Inn</div><div class="v">PW <small>110 m</small></div></div>
+          </div>
+          <div class="hole-miss"><span class="l">Miss-side</span><span class="v"><i data-lucide="check"></i>Lavt og kort</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Front 9 totals -->
+    <div class="nine-totals">
+      <div class="group">
+        <div class="t">Front 9 par<b>36</b></div>
+        <div class="t">Total m<b>3 106</b></div>
+        <div class="t">Mål-score<b>+3 (39)</b></div>
+        <div class="t">FW%<b>72 %</b></div>
+        <div class="t">GIR%<b>56 %</b></div>
+      </div>
+      <button class="phq-btn"><i data-lucide="arrow-right"></i>Vis Back 9</button>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

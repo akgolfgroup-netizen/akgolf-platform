@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D17 — Lokasjoner · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .loc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:24px; }
+  .loc-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; overflow:hidden; }
+  .loc-photo {
+    aspect-ratio: 16/8;
+    background:
+      linear-gradient(135deg, rgba(209,248,67,0.10), rgba(13,46,35,0.0)),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 14px, rgba(255,255,255,0.04) 14px 28px),
+      var(--akgolf-card-dark);
+    border-bottom: 1px solid var(--akgolf-line-dark);
+    position: relative;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.35);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+  .loc-photo .badge {
+    position: absolute; top: 14px; left: 14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 8px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .loc-photo .badge.primary { background:rgba(209,248,67,0.20); color:var(--akgolf-accent); border:1px solid rgba(209,248,67,0.30); }
+  .loc-photo .badge.partner { background:rgba(107,177,255,0.18); color:#6BB1FF; border:1px solid rgba(107,177,255,0.25); }
+  .loc-photo .badge.indoor { background:rgba(175,82,222,0.18); color:#C99CF3; border:1px solid rgba(175,82,222,0.25); }
+  .loc-body { padding: 18px 22px; }
+  .loc-body h3 { margin:0; font-size:18px; color:#fff; font-weight:700; letter-spacing:-0.015em; }
+  .loc-body .addr { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(255,255,255,0.55); letter-spacing:0.06em; margin-top:4px; }
+  .loc-body p { margin:10px 0 14px; font-size:13px; color:rgba(255,255,255,0.7); line-height:1.55; }
+  .loc-feat { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .loc-feat span { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:5px; padding:3px 8px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.7); font-weight:600; }
+  .loc-bottom { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
+  .loc-bot-stat { font-family:'JetBrains Mono',monospace; }
+  .loc-bot-stat .l { font-size:9px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .loc-bot-stat .v { font-size:14px; color:#fff; font-weight:700; margin-top:2px; }
+
+  /* Map */
+  .map-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; padding:0; overflow:hidden; margin-bottom:24px; }
+  .map-card .head { padding:16px 22px; border-bottom:1px solid var(--akgolf-line-dark); display:flex; justify-content:space-between; align-items:center; }
+  .map-card .head h3 { margin:0; font-size:14px; color:#fff; font-weight:700; }
+  .map-card .head .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; }
+  .map-frame {
+    position: relative;
+    height: 360px;
+    background:
+      radial-gradient(circle at 30% 60%, rgba(209,248,67,0.06), transparent 40%),
+      radial-gradient(circle at 70% 35%, rgba(107,177,255,0.06), transparent 40%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 80px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 80px),
+      #0A1F18;
+  }
+  .pin {
+    position: absolute;
+    width: 36px; height: 36px;
+    transform: translate(-50%, -100%);
+    cursor: pointer;
+  }
+  .pin .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 0 4px rgba(209,248,67,0.20), 0 0 20px rgba(209,248,67,0.40);
+    margin: 0 auto;
+  }
+  .pin.partner .dot { background: #6BB1FF; box-shadow: 0 0 0 4px rgba(107,177,255,0.20), 0 0 18px rgba(107,177,255,0.40); }
+  .pin.indoor .dot { background: #C99CF3; box-shadow: 0 0 0 4px rgba(175,82,222,0.20); }
+  .pin .lbl {
+    position: absolute;
+    left: 22px; top: -6px;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px; color: #fff;
+    font-weight: 600;
+  }
+  .map-legend { padding:12px 22px; display:flex; gap:18px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.10em; color:rgba(255,255,255,0.55); border-top:1px solid var(--akgolf-line-dark); }
+  .map-legend .lg { display:flex; align-items:center; gap:6px; }
+  .map-legend .lg span:first-child { width:8px; height:8px; border-radius:50%; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="user-plus"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="map-pin"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item active"><i data-lucide="map-pin"></i>Lokasjoner<span class="badge">5</span></div>
+    <div class="chq-nav-item"><i data-lucide="package"></i>Tjenester</div>
+    <div class="chq-nav-item"><i data-lucide="clock"></i>Tilgjengelighet</div>
+    <div class="chq-nav-item"><i data-lucide="building"></i>Fasiliteter</div>
+    <div class="chq-nav-section">Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="credit-card"></i>Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="bar-chart-3"></i>Rapporter</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Lokasjoner</div>
+    <div class="chq-top-meta">5 LOKASJONER · 3 PRIMÆRE · 2 PARTNER · OSLO &amp; AKERSHUS</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk lokasjon…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ DRIFT · LOKASJONER</div>
+        <h1 class="chq-h1">Hvor du coacher.</h1>
+        <p>5 lokasjoner totalt. Hovedsaklig Bogstad og Skullerud. Holtsmark er sesongbasert (mai–oktober). Spillere ser bare aktive lokasjoner i bookingflow.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="map"></i>Vis kart</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Ny lokasjon</button>
+      </div>
+    </div>
+
+    <section class="map-card">
+      <div class="head">
+        <div><h3>Kart · Oslo &amp; Akershus</h3></div>
+        <div class="sub">5 LOKASJONER · KLIKK PIN FOR DETALJ</div>
+      </div>
+      <div class="map-frame">
+        <div class="pin" style="top:65%; left:32%;"><div class="dot"></div><div class="lbl">Bogstad GK · primær</div></div>
+        <div class="pin indoor" style="top:50%; left:48%;"><div class="dot"></div><div class="lbl">Skullerud Indoor · primær</div></div>
+        <div class="pin" style="top:42%; left:62%;"><div class="dot"></div><div class="lbl">Oslo GK · primær</div></div>
+        <div class="pin partner" style="top:80%; left:74%;"><div class="dot"></div><div class="lbl">Holtsmark · partner</div></div>
+        <div class="pin partner" style="top:25%; left:80%;"><div class="dot"></div><div class="lbl">Tjuvholmen · partner</div></div>
+      </div>
+      <div class="map-legend">
+        <div class="lg"><span style="background:var(--akgolf-accent);"></span>Primær (3)</div>
+        <div class="lg"><span style="background:#C99CF3;"></span>Indoor (1)</div>
+        <div class="lg"><span style="background:#6BB1FF;"></span>Partnerklubb (2)</div>
+      </div>
+    </section>
+
+    <div class="loc-grid">
+      <article class="loc-card">
+        <div class="loc-photo"><span class="badge primary">PRIMÆR</span>BOGSTAD GK · DRIVING RANGE</div>
+        <div class="loc-body">
+          <h3>Bogstad Golfklubb</h3>
+          <div class="addr">SØRKEDALSVEIEN 815 · 0758 OSLO</div>
+          <p>Hovedsete for utendørs coaching. Driving range med 18 bays, putting-green, short-game-area, banetilgang for medlemmer og inviterte juniorer.</p>
+          <div class="loc-feat">
+            <span>18 BAYS</span><span>TRACKMAN 2x</span><span>PUTTING-GREEN</span><span>SHORT-GAME</span><span>18 HULL</span>
+          </div>
+          <div class="loc-bottom">
+            <div class="loc-bot-stat"><div class="l">Bays</div><div class="v">18</div></div>
+            <div class="loc-bot-stat"><div class="l">Belegg uke</div><div class="v">81%</div></div>
+            <div class="loc-bot-stat"><div class="l">Sesong</div><div class="v">APR–OKT</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="loc-card">
+        <div class="loc-photo"><span class="badge indoor">INDOOR</span>SKULLERUD INDOOR STUDIO</div>
+        <div class="loc-body">
+          <h3>Skullerud Indoor Studio</h3>
+          <div class="addr">SKULLERUDVEIEN 27 · 0686 OSLO</div>
+          <p>Heldekkende vintersesong-studio. Trackman 4 + Quintic putting-rig. Brukes til video-analyse, instrumented testing, kvelds-økter hele året.</p>
+          <div class="loc-feat">
+            <span>2 STUDIOS</span><span>TRACKMAN 4</span><span>QUINTIC PUTTING</span><span>VIDEO 4K</span><span>TPI-MAT</span>
+          </div>
+          <div class="loc-bottom">
+            <div class="loc-bot-stat"><div class="l">Studios</div><div class="v">2</div></div>
+            <div class="loc-bot-stat"><div class="l">Belegg</div><div class="v">94%</div></div>
+            <div class="loc-bot-stat"><div class="l">Sesong</div><div class="v">HELE ÅRET</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="loc-card">
+        <div class="loc-photo"><span class="badge primary">PRIMÆR</span>OSLO GK · COACHING-OMRÅDE</div>
+        <div class="loc-body">
+          <h3>Oslo Golfklubb</h3>
+          <div class="addr">BOGSTAD · 0379 OSLO</div>
+          <p>Tilgjengelig via samarbeid for medlemmer. Coaching-rom + range-tilgang i sesong. Brukes spesielt for damegruppe og senior-økter.</p>
+          <div class="loc-feat">
+            <span>RANGE-TILGANG</span><span>COACHING-ROM</span><span>BANE</span><span>BAR &amp; KAFE</span>
+          </div>
+          <div class="loc-bottom">
+            <div class="loc-bot-stat"><div class="l">Bays</div><div class="v">10</div></div>
+            <div class="loc-bot-stat"><div class="l">Belegg uke</div><div class="v">62%</div></div>
+            <div class="loc-bot-stat"><div class="l">Avtale</div><div class="v">SAMARBEID</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="loc-card">
+        <div class="loc-photo"><span class="badge partner">PARTNER</span>HOLTSMARK GK · SOMMER</div>
+        <div class="loc-body">
+          <h3>Holtsmark Golfklubb</h3>
+          <div class="addr">HOLTSMARK · 3409 LIER</div>
+          <p>Sesongbasert partnerklubb. Brukes for Tour-camp og NM-forberedelse. Bookbar mai–oktober, 35 min med bil fra Oslo.</p>
+          <div class="loc-feat">
+            <span>RANGE</span><span>18 HULL</span><span>SHORT-GAME</span><span>SESONG MAI–OKT</span>
+          </div>
+          <div class="loc-bottom">
+            <div class="loc-bot-stat"><div class="l">Bays</div><div class="v">12</div></div>
+            <div class="loc-bot-stat"><div class="l">Tilgjengelighet</div><div class="v">SESONG</div></div>
+            <div class="loc-bot-stat"><div class="l">Avstand</div><div class="v">35 MIN</div></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

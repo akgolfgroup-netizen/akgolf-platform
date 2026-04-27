@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D29 — AI-assistent · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .ai-grid { display:grid; grid-template-columns: 260px 1fr 280px; gap:14px; align-items:start; height: calc(100vh - 120px); }
+
+  .conv-side { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:14px; overflow-y:auto; max-height: calc(100vh - 120px); }
+  .conv-side h4 { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.55); text-transform:uppercase; margin:14px 6px 6px; font-weight:700; }
+  .conv-side h4:first-child { margin-top:0; }
+  .conv-it { padding:10px 12px; border-radius:8px; cursor:pointer; margin-bottom:4px; }
+  .conv-it:hover { background:rgba(255,255,255,0.03); }
+  .conv-it.active { background:rgba(209,248,67,0.10); }
+  .conv-it .nm { font-size:12.5px; color:#fff; font-weight:600; line-height:1.3; }
+  .conv-it .meta { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:3px; letter-spacing:0.04em; }
+
+  .conv-it.new { display:flex; align-items:center; gap:8px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); }
+  .conv-it.new [data-lucide]{ width:14px; height:14px; }
+  .conv-it.new .nm { color:var(--akgolf-accent); }
+
+  /* Main panel */
+  .ai-main { background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; display:flex; flex-direction:column; overflow:hidden; }
+  .ai-h { padding:16px 24px; border-bottom:1px solid var(--akgolf-line-dark); display:flex; gap:14px; align-items:center; }
+  .ai-h .av { width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, rgba(209,248,67,0.30), rgba(175,82,222,0.20)); display:grid; place-items:center; }
+  .ai-h .av [data-lucide]{ width:18px; height:18px; color:var(--akgolf-accent); }
+  .ai-h .ttl { font-size:14px; color:#fff; font-weight:700; }
+  .ai-h .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-top:1px; letter-spacing:0.06em; }
+  .ai-h .model { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10px; padding:5px 10px; background:rgba(0,0,0,0.20); color:rgba(255,255,255,0.7); border-radius:6px; letter-spacing:0.06em; border:1px solid rgba(255,255,255,0.06); }
+
+  .ai-body { flex:1; overflow-y:auto; padding:22px 24px; display:flex; flex-direction:column; gap:18px; }
+  .msg { display:flex; gap:14px; }
+  .msg.user { justify-content:flex-end; }
+  .msg .bubble { max-width:80%; padding:14px 18px; border-radius:14px; font-size:13.5px; line-height:1.6; color:#E6EAE8; }
+  .msg.user .bubble { background: linear-gradient(180deg, rgba(209,248,67,0.18), rgba(209,248,67,0.10)); border:1px solid rgba(209,248,67,0.20); color:#fff; border-bottom-right-radius:5px; }
+  .msg.ai .bubble { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-bottom-left-radius:5px; }
+  .msg.ai .bubble strong { color:#fff; font-weight:700; }
+  .msg.ai .bubble .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .msg.ai .bubble .lab [data-lucide]{ width:11px; height:11px; }
+
+  .data-card { margin-top:12px; padding:14px; background:rgba(0,0,0,0.20); border-radius:10px; border:1px solid rgba(255,255,255,0.06); }
+  .data-card .nm { font-size:13px; color:#fff; font-weight:700; margin-bottom:8px; }
+  .data-card table { width:100%; font-size:12px; border-collapse:collapse; }
+  .data-card th { text-align:left; padding:6px 0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.06); font-weight:700; }
+  .data-card td { padding:6px 0; color:rgba(255,255,255,0.85); border-bottom:1px solid rgba(255,255,255,0.04); }
+  .data-card td.num { font-family:'JetBrains Mono',monospace; font-weight:700; text-align:right; color:#fff; }
+  .data-card td.up { color:#6FCBA1; }
+  .data-card td.down { color:#F49283; }
+
+  .actions-bar { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  .actions-bar .a { padding:6px 11px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:6px; font-size:11.5px; color:rgba(255,255,255,0.85); display:flex; align-items:center; gap:5px; cursor:pointer; }
+  .actions-bar .a [data-lucide]{ width:12px; height:12px; }
+  .actions-bar .a.primary { background:rgba(209,248,67,0.15); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.30); }
+
+  /* Composer */
+  .ai-foot { padding:16px 22px; border-top:1px solid var(--akgolf-line-dark); }
+  .composer { background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.10); border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:8px; }
+  .composer input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:13.5px; font-family:inherit; }
+  .composer input::placeholder { color:rgba(255,255,255,0.4); }
+  .composer .send { background:var(--akgolf-accent); color:#0A1F18; width:32px; height:32px; border-radius:8px; display:grid; place-items:center; cursor:pointer; }
+  .composer .send [data-lucide]{ width:14px; height:14px; }
+  .ai-foot .row2 { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; align-items:center; }
+  .ai-foot .row2 .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-right:4px; font-weight:700; }
+  .ai-foot .row2 .chip { font-size:11px; padding:5px 10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:7px; color:rgba(255,255,255,0.7); cursor:pointer; }
+  .ai-foot .row2 .chip:hover { color:#fff; border-color:rgba(209,248,67,0.30); }
+
+  /* Right context panel */
+  .ctx { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 20px; }
+  .ctx h4 { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.55); text-transform:uppercase; margin:0 0 12px; font-weight:700; }
+  .ctx h4:not(:first-child) { margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
+  .ctx-row { padding:7px 0; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.04); font-size:12px; }
+  .ctx-row:first-of-type { border-top:none; }
+  .ctx-row .lab { color:rgba(255,255,255,0.7); }
+  .ctx-row .v { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#fff; font-weight:700; }
+  .ctx-row .v.ok { color:#6FCBA1; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bot"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="sparkles"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Automatisering</div>
+    <div class="chq-nav-item"><i data-lucide="bot"></i>Agenter</div>
+    <div class="chq-nav-item active"><i data-lucide="sparkles"></i>AI-assistent</div>
+    <div class="chq-nav-item"><i data-lucide="git-branch"></i>Workflows</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">AI-assistent</div>
+    <div class="chq-top-meta">SPØR OM SPILLERE, ØKONOMI, BOOKINGER · CITERER KILDER</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk samtaler…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main" style="padding-bottom:24px;">
+    <div class="ai-grid">
+      <aside class="conv-side">
+        <div class="conv-it new"><i data-lucide="plus"></i><span class="nm">Ny samtale</span></div>
+
+        <h4>I dag</h4>
+        <div class="conv-it active">
+          <div class="nm">Hvem trenger oppfølging denne uken?</div>
+          <div class="meta">FOR 12 MIN SIDEN · 6 SVAR</div>
+        </div>
+        <div class="conv-it">
+          <div class="nm">Sammenlign Anders og Markus alignment-data</div>
+          <div class="meta">2 T SIDEN · 4 SVAR</div>
+        </div>
+
+        <h4>I går</h4>
+        <div class="conv-it">
+          <div class="nm">Hvor mye av tida går til driver-coaching?</div>
+          <div class="meta">2 T SIDEN · 4 SVAR</div>
+        </div>
+        <div class="conv-it">
+          <div class="nm">Skriv mai-rapport til klubb-styret</div>
+          <div class="meta">I GÅR · 3 SVAR</div>
+        </div>
+
+        <h4>Tidligere</h4>
+        <div class="conv-it">
+          <div class="nm">Hvilke spillere risikerer å forsvinne?</div>
+          <div class="meta">28. APR</div>
+        </div>
+        <div class="conv-it">
+          <div class="nm">Lag treningsplan for Sofie · taper-uke</div>
+          <div class="meta">25. APR</div>
+        </div>
+        <div class="conv-it">
+          <div class="nm">Hva er typisk drop-off etter onboarding?</div>
+          <div class="meta">22. APR</div>
+        </div>
+      </aside>
+
+      <section class="ai-main">
+        <div class="ai-h">
+          <div class="av"><i data-lucide="sparkles"></i></div>
+          <div>
+            <div class="ttl">Coach Copilot</div>
+            <div class="sub">VET OM ALLE 42 SPILLERE · 28 ØKTER UKE · 14 MND HISTORIKK</div>
+          </div>
+          <div class="model">CLAUDE · COACH-MODE</div>
+        </div>
+
+        <div class="ai-body">
+
+          <div class="msg user">
+            <div class="bubble">Hei. Hvem trenger jeg å følge opp denne uken? Tenker både på spillere som har plateauet og de jeg ikke har snakket med på en stund.</div>
+          </div>
+
+          <div class="msg ai">
+            <div class="bubble">
+              <div class="lab"><i data-lucide="sparkles"></i> Analyse · spillere som krever oppfølging</div>
+              Jeg har sett på siste 30d med data. <strong>Tre spillere skiller seg ut</strong>:
+              <div class="data-card">
+                <div class="nm">Prioritert oppfølging · 5 spillere</div>
+                <table>
+                  <thead>
+                    <tr><th>Spiller</th><th>Grunn</th><th style="text-align:right;">Sist økt</th><th style="text-align:right;">HCP-trend</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>Per Rasmussen</strong></td><td>2 no-show siste 30d</td><td class="num">22d</td><td class="num down">+0.3</td></tr>
+                    <tr><td><strong>Lina Holm</strong></td><td>Ny · ikke booket etter onboarding</td><td class="num">14d</td><td class="num">—</td></tr>
+                    <tr><td><strong>Tobias Rød</strong></td><td>Plateau 4 mnd · spør sjelden om hjelp</td><td class="num">7d</td><td class="num">+0.0</td></tr>
+                    <tr><td><strong>Marie Lindh</strong></td><td>Skadet · skulder. Trenger varsom plan</td><td class="num">10d</td><td class="num down">+0.6</td></tr>
+                    <tr><td><strong>Aksel Berg</strong></td><td>Far ringte ang. motivasjon (foreldre Berg)</td><td class="num">5d</td><td class="num">−0.1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <strong>Forslag</strong>: Send Lina en personlig velkomst og book inn første økt. Ring foreldre Berg for samtale om Aksel. Per er godkjent for refusjon — bruk det som anledning til å høre om alt er ok.
+              <div class="actions-bar">
+                <div class="a primary"><i data-lucide="check-square"></i>Lag tasks for alle 5</div>
+                <div class="a"><i data-lucide="message-circle"></i>Skriv velkomst til Lina</div>
+                <div class="a"><i data-lucide="phone"></i>Ring foreldre Berg</div>
+                <div class="a"><i data-lucide="copy"></i>Kopier</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg user">
+            <div class="bubble">Bra. Lag de 5 tasks. Og send Lina en velkomstmelding — gjør den varm men kort.</div>
+          </div>
+
+          <div class="msg ai">
+            <div class="bubble">
+              <div class="lab"><i data-lucide="check"></i> Utført · 5 tasks opprettet, utkast klart</div>
+              5 tasks lagt i Mission Board (sortert «denne uken»). Velkomst til Lina ligger som utkast — godkjenn før send:
+              <div class="data-card">
+                <div class="nm">Utkast til Lina Holm</div>
+                <p style="font-size:13px; color:rgba(255,255,255,0.85); line-height:1.6; margin:0;">«Hei Lina! 🌱 Velkommen til Akademiet — jeg så at du fullførte onboarding for et par uker siden. Skulle bare høre hvordan det går, og om du har lyst til å booke første økt? Vi kan starte rolig — kanskje en kartleggings-time på Skullerud så vi får et godt utgangspunkt? Bare svar her, så finner vi en tid. Ha en fin uke!  — Erik»</p>
+              </div>
+              <div class="actions-bar">
+                <div class="a primary"><i data-lucide="send"></i>Send som er</div>
+                <div class="a"><i data-lucide="edit"></i>Rediger</div>
+                <div class="a"><i data-lucide="rotate-ccw"></i>Skriv ny variant</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ai-foot">
+          <div class="composer">
+            <i data-lucide="sparkles" style="width:14px; height:14px; color:var(--akgolf-accent);"></i>
+            <input type="text" placeholder="Spør om spillere, økonomi, bookinger eller be om utkast…">
+            <div class="send"><i data-lucide="arrow-up"></i></div>
+          </div>
+          <div class="row2">
+            <span class="lab">Forslag</span>
+            <span class="chip">Hvor stor andel av tida går til putting?</span>
+            <span class="chip">Sammenlign mai mot april</span>
+            <span class="chip">Hvem er nær neste milepæl?</span>
+            <span class="chip">Skriv kvartalsrapport</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="ctx">
+        <h4>Aktiv kontekst</h4>
+        <div class="ctx-row"><span class="lab">Spillere i scope</span><span class="v">42</span></div>
+        <div class="ctx-row"><span class="lab">Periode</span><span class="v">SISTE 30D</span></div>
+        <div class="ctx-row"><span class="lab">Datakilder</span><span class="v">5</span></div>
+
+        <h4>Kilder · siste svar</h4>
+        <div class="ctx-row"><span class="lab"><i data-lucide="users" style="width:13px; height:13px; vertical-align:middle;"></i> Spillerregister</span><span class="v ok">●</span></div>
+        <div class="ctx-row"><span class="lab"><i data-lucide="calendar" style="width:13px; height:13px; vertical-align:middle;"></i> Bookinger 30d</span><span class="v ok">●</span></div>
+        <div class="ctx-row"><span class="lab"><i data-lucide="trending-up" style="width:13px; height:13px; vertical-align:middle;"></i> HCP-historikk</span><span class="v ok">●</span></div>
+        <div class="ctx-row"><span class="lab"><i data-lucide="message-circle" style="width:13px; height:13px; vertical-align:middle;"></i> Meldings-tråder</span><span class="v ok">●</span></div>
+        <div class="ctx-row"><span class="lab"><i data-lucide="file-text" style="width:13px; height:13px; vertical-align:middle;"></i> Coaching-notater</span><span class="v ok">●</span></div>
+
+        <h4>Tilgang &amp; sikkerhet</h4>
+        <div style="font-size:12px; color:rgba(255,255,255,0.65); line-height:1.55;">Bare DU ser denne samtalen. Foreldre og spillere har ikke tilgang. Akademi-data forlater aldri akademiet — kjøres lokalt mot din database.</div>
+        <div style="display:flex; gap:6px; margin-top:10px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; padding:3px 7px; background:rgba(42,125,90,0.25); color:#6FCBA1; border-radius:4px; letter-spacing:0.10em; font-weight:700;">PRIVAT</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; padding:3px 7px; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.7); border-radius:4px; letter-spacing:0.10em; font-weight:700;">GDPR-OK</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D26 — Library · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .lib-grid { display:grid; grid-template-columns: 240px 1fr; gap:18px; align-items:start; }
+  .lib-side { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:14px; position:sticky; top:80px; }
+  .lib-side h4 { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:14px 6px 6px; font-weight:700; }
+  .lib-side h4:first-child { margin-top:0; }
+  .lib-side .item { display:flex; gap:9px; align-items:center; padding:8px 10px; border-radius:7px; font-size:13px; color:rgba(255,255,255,0.78); cursor:pointer; }
+  .lib-side .item [data-lucide]{ width:14px; height:14px; }
+  .lib-side .item:hover { background:rgba(255,255,255,0.04); color:#fff; }
+  .lib-side .item.active { background:rgba(209,248,67,0.14); color:var(--akgolf-accent); }
+  .lib-side .ct { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); }
+
+  /* Filter row */
+  .filt { display:flex; gap:8px; padding:12px 18px; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:12px; margin-bottom:18px; align-items:center; flex-wrap:wrap; }
+  .pill { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:7px; padding:6px 12px; font-size:12px; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:6px; cursor:pointer; }
+  .pill [data-lucide]{ width:13px; height:13px; }
+  .pill.active { background: rgba(209,248,67,0.16); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.30); }
+
+  .card-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+  .li-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .li-thumb { aspect-ratio: 16/10; position:relative; background: linear-gradient(135deg, rgba(13,46,35,0.40), rgba(0,0,0,0.30)), repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 12px, rgba(255,255,255,0.05) 12px 24px); display:flex; align-items:flex-end; padding:12px 14px; }
+  .li-thumb .typ { position:absolute; top:10px; left:10px; font-family:'JetBrains Mono',monospace; font-size:9px; padding:3px 7px; background:rgba(0,0,0,0.50); border-radius:5px; color:#fff; letter-spacing:0.10em; text-transform:uppercase; font-weight:700; }
+  .li-thumb .play { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
+  .li-thumb .play div { width:46px; height:46px; border-radius:50%; background: rgba(0,0,0,0.50); border: 1.5px solid rgba(255,255,255,0.30); display:grid; place-items:center; }
+  .li-thumb .play [data-lucide]{ width:18px; height:18px; color:#fff; }
+  .li-thumb .dur { position:absolute; bottom:10px; right:10px; font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:2px 6px; background:rgba(0,0,0,0.60); border-radius:4px; color:#fff; }
+
+  .li-body { padding:14px 16px; flex:1; display:flex; flex-direction:column; }
+  .li-body .nm { font-size:14px; color:#fff; font-weight:700; letter-spacing:-0.01em; line-height:1.35; }
+  .li-body .desc { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.5; margin-top:5px; flex:1; }
+  .tags { display:flex; gap:5px; margin-top:10px; flex-wrap:wrap; }
+  .tags span { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:4px; padding:2px 6px; font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.65); letter-spacing:0.06em; font-weight:600; }
+
+  .li-foot { padding:10px 16px; border-top:1px solid var(--akgolf-line-dark); display:flex; justify-content:space-between; align-items:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); }
+  .li-foot .stat { display:flex; gap:10px; align-items:center; }
+  .li-foot .stat span [data-lucide]{ width:11px; height:11px; vertical-align:middle; margin-right:3px; }
+
+  .featured { padding:24px 28px; background: linear-gradient(160deg, rgba(209,248,67,0.10), rgba(13,46,35,0.0)), var(--akgolf-card-dark); border:1px solid rgba(209,248,67,0.25); border-radius:18px; margin-bottom:18px; display:grid; grid-template-columns: 1.4fr 1fr; gap:24px; align-items:center; }
+  .featured .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.16em; color:var(--akgolf-accent); text-transform:uppercase; font-weight:700; }
+  .featured h3 { margin:8px 0 0; font-size:22px; color:#fff; font-weight:800; letter-spacing:-0.02em; }
+  .featured p { margin:8px 0 14px; font-size:13.5px; color:rgba(255,255,255,0.7); line-height:1.55; max-width:50ch; }
+  .featured .acts { display:flex; gap:8px; }
+  .featured .ph { aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(13,46,35,0.40), rgba(0,0,0,0.30)), repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 14px, rgba(255,255,255,0.05) 14px 28px); border-radius:12px; position:relative; display:grid; place-items:center; }
+  .featured .ph .play { width:60px; height:60px; border-radius:50%; background: rgba(0,0,0,0.50); border: 1.5px solid rgba(209,248,67,0.40); display:grid; place-items:center; }
+  .featured .ph .play [data-lucide]{ width:22px; height:22px; color:var(--akgolf-accent); }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="library"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Innhold</div>
+    <div class="chq-nav-item active"><i data-lucide="library"></i>Bibliotek<span class="badge">142</span></div>
+    <div class="chq-nav-item"><i data-lucide="upload-cloud"></i>Last opp</div>
+    <div class="chq-nav-item"><i data-lucide="bookmark"></i>Lagrede</div>
+    <div class="chq-nav-section">Eksternt</div>
+    <div class="chq-nav-item"><i data-lucide="globe"></i>PGA-bibliotek</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Library</div>
+    <div class="chq-top-meta">142 RESSURSER · 56 VIDEO · 28 DRILL · 18 PDF · 40 ARTIKLER</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk videoer, drills, artikler…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ INNHOLD · BIBLIOTEK</div>
+        <h1 class="chq-h1">Coaching-ressurser, samlet.</h1>
+        <p>Dine drills, video-leksjoner og PDFer — søk- og filtrerbart, deles direkte med spillere. Featured ressurs denne uken: Erik sin Trackman-tolkningsguide.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="folder-plus"></i>Ny mappe</button>
+        <button class="chq-btn primary"><i data-lucide="upload-cloud"></i>Last opp ressurs</button>
+      </div>
+    </div>
+
+    <div class="lib-grid">
+      <aside class="lib-side">
+        <h4>Type</h4>
+        <div class="item active"><i data-lucide="layers"></i>Alle<span class="ct">142</span></div>
+        <div class="item"><i data-lucide="play-circle"></i>Video<span class="ct">56</span></div>
+        <div class="item"><i data-lucide="target"></i>Drills<span class="ct">28</span></div>
+        <div class="item"><i data-lucide="file-text"></i>PDF<span class="ct">18</span></div>
+        <div class="item"><i data-lucide="book-open"></i>Artikler<span class="ct">40</span></div>
+
+        <h4>Kategori</h4>
+        <div class="item"><i data-lucide="target"></i>Long-game<span class="ct">38</span></div>
+        <div class="item"><i data-lucide="flag"></i>Short-game<span class="ct">26</span></div>
+        <div class="item"><i data-lucide="circle-dot"></i>Putting<span class="ct">31</span></div>
+        <div class="item"><i data-lucide="brain"></i>Mental<span class="ct">14</span></div>
+        <div class="item"><i data-lucide="dumbbell"></i>Fysisk<span class="ct">19</span></div>
+
+        <h4>Nivå</h4>
+        <div class="item"><i data-lucide="bar-chart-2"></i>Begynner</div>
+        <div class="item"><i data-lucide="bar-chart-2"></i>Mellom</div>
+        <div class="item"><i data-lucide="bar-chart-2"></i>Avansert</div>
+
+        <h4>Forfatter</h4>
+        <div class="item"><i data-lucide="user"></i>Erik Solheim</div>
+        <div class="item"><i data-lucide="user"></i>Anne Rud · TPI</div>
+        <div class="item"><i data-lucide="globe"></i>PGA / ekstern</div>
+      </aside>
+
+      <div>
+        <section class="featured">
+          <div>
+            <div class="lab">★ FEATURED · DENNE UKEN</div>
+            <h3>Trackman 4: Slik leser du spin-axis</h3>
+            <p>Erik forklarer hva spin-axis virkelig betyr, hvorfor +12° er problematisk for high-handicap, og hvordan du jobber det ned mot 0 over en sesong. 18 minutter, eksempler fra Anders, Markus, Sofie.</p>
+            <div class="acts">
+              <button class="chq-btn primary"><i data-lucide="play"></i>Spill</button>
+              <button class="chq-btn"><i data-lucide="share-2"></i>Del med spiller</button>
+              <button class="chq-btn ghost"><i data-lucide="bookmark"></i>Lagre</button>
+            </div>
+          </div>
+          <div class="ph"><div class="play"><i data-lucide="play"></i></div></div>
+        </section>
+
+        <div class="filt">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; text-transform:uppercase; font-weight:700; margin-right:4px;">Sortér</span>
+          <button class="pill active"><i data-lucide="sparkles"></i>NYESTE</button>
+          <button class="pill"><i data-lucide="trending-up"></i>MEST BRUKT</button>
+          <button class="pill"><i data-lucide="bookmark"></i>MINE FAVORITTER</button>
+          <button class="pill"><i data-lucide="user"></i>DELT MED ANDERS</button>
+          <button class="pill" style="margin-left:auto;"><i data-lucide="grid"></i></button>
+          <button class="pill"><i data-lucide="list"></i></button>
+        </div>
+
+        <div class="card-grid">
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">DRILL · LONG-GAME</span>
+              <div class="play"><div><i data-lucide="play"></i></div></div>
+              <span class="dur">04:32</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">Alignment-stick gate · driver</div>
+              <div class="desc">Gate-bredden styres etter spillerens nivå. Brukes 2–4 uker for å lukke spin-axis.</div>
+              <div class="tags"><span>DRIVER</span><span>SPIN-AXIS</span><span>ELITE</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>18</span><span><i data-lucide="bookmark"></i>5</span></div>
+              <span>3 DAGER</span>
+            </div>
+          </article>
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">VIDEO · PUTTING</span>
+              <div class="play"><div><i data-lucide="play"></i></div></div>
+              <span class="dur">12:08</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">Quintic putting-test forklart</div>
+              <div class="desc">Hva forteller stroke-konsistens? Erik bryter ned testen vi tar 2x i året.</div>
+              <div class="tags"><span>QUINTIC</span><span>STROKE</span><span>TEST</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>34</span><span><i data-lucide="bookmark"></i>11</span></div>
+              <span>1 UKE</span>
+            </div>
+          </article>
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">PDF · ARTIKKEL</span>
+              <div class="play"><div><i data-lucide="file-text"></i></div></div>
+              <span class="dur">8 SIDER</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">Strokes Gained · på norsk</div>
+              <div class="desc">Akademiets korte intro til SG-rammeverket. Forklaringer + eksempler fra norsk junior-golf.</div>
+              <div class="tags"><span>SG</span><span>BEGYNNER</span><span>FORELDRE-OK</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>22</span><span><i data-lucide="download"></i>9</span></div>
+              <span>2 UKE</span>
+            </div>
+          </article>
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">DRILL · SHORT-GAME</span>
+              <div class="play"><div><i data-lucide="play"></i></div></div>
+              <span class="dur">06:18</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">Wedge ¾-swing klokke</div>
+              <div class="desc">PW/GW/SW på 50/75/100 m med klokke-trigger. Anne (TPI) viser kropps-rotasjon.</div>
+              <div class="tags"><span>WEDGE</span><span>GAPPING</span><span>MELLOM</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>15</span><span><i data-lucide="bookmark"></i>4</span></div>
+              <span>3 UKER</span>
+            </div>
+          </article>
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">VIDEO · MENTAL</span>
+              <div class="play"><div><i data-lucide="play"></i></div></div>
+              <span class="dur">15:47</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">Pre-shot routine · samtale m/ Marte</div>
+              <div class="desc">Marte Sørli (mental) snakker om rutiner som tåler press på siste 4 hull.</div>
+              <div class="tags"><span>MENTAL</span><span>PRESS</span><span>RUTINE</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>12</span><span><i data-lucide="bookmark"></i>7</span></div>
+              <span>4 UKER</span>
+            </div>
+          </article>
+
+          <article class="li-card">
+            <div class="li-thumb">
+              <span class="typ">DRILL · FYSISK</span>
+              <div class="play"><div><i data-lucide="play"></i></div></div>
+              <span class="dur">20 MIN</span>
+            </div>
+            <div class="li-body">
+              <div class="nm">TPI mobilitet · 20-min basis</div>
+              <div class="desc">Daglig mobilitet — hofter, skuldre, T-spine. Anne demonstrerer hver bevegelse.</div>
+              <div class="tags"><span>TPI</span><span>HJEMME</span><span>FORE</span></div>
+            </div>
+            <div class="li-foot">
+              <div class="stat"><span><i data-lucide="users"></i>28</span><span><i data-lucide="bookmark"></i>14</span></div>
+              <span>1 MND</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Statistikk · Course Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_course-hero.css">
+<style>
+  .stats-bg {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    transform: perspective(1400px) rotateX(8deg) rotateZ(-3deg) scale(1.15);
+    transform-origin: 30% 60%;
+  }
+  .stats-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(10,15,12,0.15) 0%, rgba(10,15,12,0.55) 55%, rgba(10,15,12,0.88) 100%);
+  }
+
+  /* Drawer on right */
+  .stats-drawer {
+    position: absolute;
+    top: 24px; right: 24px; bottom: 24px;
+    width: 460px;
+    z-index: 5;
+    padding: 22px;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .stats-drawer::-webkit-scrollbar { width: 6px; }
+  .stats-drawer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  .drawer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+  }
+  .stat-row.highlight {
+    background: #0A1F18;
+    border-color: rgba(255,255,255,0.1);
+  }
+  .stat-row.accent {
+    background: #D1F843;
+    color: #0A1F18;
+    border-color: transparent;
+  }
+  .stat-row .label { font-size: 13px; font-weight: 500; }
+  .stat-row.accent .label { color: #0A1F18; }
+  .stat-row .value {
+    font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-row .sub {
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+  .stat-row.accent .sub { color: rgba(10,31,24,0.6); }
+
+  /* Expanded row */
+  .stat-row.expanded {
+    display: block;
+    padding: 16px 20px;
+  }
+  .stat-row .expand-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .stat-row .expand-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+  }
+  .stat-row .mini {
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    display: flex; justify-content: space-between;
+    padding: 3px 0;
+  }
+  .stat-row .mini .mk { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .stat-row .mini .mv { font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; }
+
+  /* Hole chips inside drawer */
+  .drawer-hole-strip {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .hole-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+  }
+  .hole-pill.active { background: #0A1F18; color: #fff; }
+
+  /* Segmented tab at top */
+  .drawer-tabs {
+    display: flex; gap: 4px;
+    padding: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+  }
+  .drawer-tabs button {
+    flex: 1;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.6);
+  }
+  .drawer-tabs button.active {
+    background: #0A1F18;
+    color: #fff;
+  }
+
+  /* Notes mode (fake overlay) */
+  .left-floating-pill {
+    position: absolute;
+    top: 40px; left: 40px;
+    z-index: 3;
+    padding: 8px 18px;
+    background: var(--ch-glass-dark);
+    border: 1px solid var(--ch-stroke-light);
+    backdrop-filter: var(--ch-blur);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .left-floating-pill strong { font-weight: 600; }
+
+  /* Mini shot trail on hero */
+  .mini-shot-svg {
+    position: absolute; inset: 0;
+    transform: perspective(1400px) rotateX(8deg) rotateZ(-3deg) scale(1.15);
+    transform-origin: 30% 60%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .mini-shot-svg .traj {
+    stroke: rgba(255,255,255,0.85);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 5;
+    fill: none;
+  }
+
+  /* Floating hole markers on the tilted hero */
+  .floating-hole {
+    position: absolute;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.92);
+    color: #0A1F18;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    z-index: 3;
+  }
+  .floating-hole.dark {
+    background: #0A1F18; color: #fff;
+  }
+</style>
+</head>
+<body class="course-hero">
+
+<div class="ch-screen">
+  <aside class="ch-rail">
+    <div class="ch-rail-logo"><img src="../assets/ak-logo.png" alt="AK"></div>
+    <button class="ch-rail-item"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1V9.5z"/></svg></button>
+    <button class="ch-rail-item"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22V2M12 6l8-3v10l-8 3"/></svg></button>
+    <button class="ch-rail-item active"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 20V10M9 20V4M15 20v-8M21 20v-4"/></svg></button>
+    <button class="ch-rail-item"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></button>
+    <button class="ch-rail-item"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M9 4v16"/></svg></button>
+    <div class="ch-rail-spacer"></div>
+    <div class="ch-rail-avatar">MB</div>
+  </aside>
+
+  <main class="ch-main">
+    <div class="stats-bg">
+      <object type="image/svg+xml" data="../assets/course-aerial.svg" style="width:100%;height:100%;pointer-events:none;"></object>
+    </div>
+
+    <svg class="mini-shot-svg" viewBox="0 0 1600 1000" preserveAspectRatio="none">
+      <path class="traj" d="M 728 882 Q 680 780 710 680 Q 740 580 820 530"/>
+      <path class="traj" d="M 820 530 Q 920 500 1020 480 Q 1080 475 1130 470"/>
+    </svg>
+
+    <!-- Floating distance chips on hero -->
+    <div class="floating-hole" style="top: 42%; left: 22%;">242 m</div>
+    <div class="floating-hole" style="top: 58%; left: 14%;">23 m</div>
+    <div class="floating-hole dark" style="top: 38%; left: 8%;">Hole 2</div>
+
+    <!-- Top-left breadcrumb pill -->
+    <div class="left-floating-pill">
+      <span style="color: rgba(255,255,255,0.55);">Runde 14 — Oslo GK</span>
+      <span style="opacity: 0.3;">·</span>
+      <strong>16. apr 2026</strong>
+    </div>
+
+    <!-- Drawer -->
+    <div class="stats-drawer ch-panel">
+      <div class="drawer-head">
+        <div class="drawer-tabs">
+          <button class="active">Statistics</button>
+          <button>Notes</button>
+          <button>Shots</button>
+        </div>
+        <button class="ch-btn ch-btn-glass ch-btn-icon" style="background: rgba(255,255,255,0.06);">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Hero KPI strip -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="stat-row accent">
+          <div>
+            <div class="label" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7;">Score</div>
+            <div class="value" style="font-size: 34px;">72</div>
+            <div class="sub">+1 · Par 71</div>
+          </div>
+        </div>
+        <div class="stat-row highlight">
+          <div>
+            <div class="label" style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55);">Strokes gained</div>
+            <div class="value" style="font-size: 34px; color: #D1F843;">+2.4</div>
+            <div class="sub">vs. scratch baseline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats rows (top-level metrics) -->
+      <div class="stat-row">
+        <div><div class="label">Avg. Score</div></div>
+        <div class="value">4.8</div>
+      </div>
+      <div class="stat-row">
+        <div><div class="label">Hole Rank</div></div>
+        <div class="value">18 <span style="font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500;">/ 18</span></div>
+      </div>
+      <div class="stat-row">
+        <div><div class="label">Avg. Putts Per GIR</div></div>
+        <div class="value">2</div>
+      </div>
+
+      <!-- Short Game expanded -->
+      <div class="stat-row expanded">
+        <div class="expand-head">
+          <div>
+            <div class="label">Short Game</div>
+            <div class="sub" style="margin-top: 2px;">Innenfor 50 meter</div>
+          </div>
+          <div class="value">45</div>
+        </div>
+        <div class="expand-body">
+          <div>
+            <div class="ch-eyebrow" style="margin-bottom: 8px;">UP & DOWN</div>
+            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;">36<span style="font-size: 14px; opacity: 0.55;">%</span></div>
+            <div class="mini" style="margin-top: 10px;">
+              <span class="mk">Fwy</span><span class="mv">42%</span>
+            </div>
+            <div class="mini">
+              <span class="mk">Rgh</span><span class="mv">28%</span>
+            </div>
+            <div class="mini">
+              <span class="mk">Snd</span><span class="mv">33%</span>
+            </div>
+          </div>
+          <div>
+            <div class="ch-eyebrow" style="margin-bottom: 8px;">SCR. AVG</div>
+            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;">3.6</div>
+            <div class="mini" style="margin-top: 10px;">
+              <span class="mk">Pitch</span><span class="mv">3.4</span>
+            </div>
+            <div class="mini">
+              <span class="mk">Chip</span><span class="mv">3.2</span>
+            </div>
+            <div class="mini">
+              <span class="mk">Flop</span><span class="mv">4.1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approaches expanded -->
+      <div class="stat-row expanded">
+        <div class="expand-head">
+          <div>
+            <div class="label">Approaches</div>
+            <div class="sub" style="margin-top: 2px;">Fra 100–200m</div>
+          </div>
+          <div class="value">7</div>
+        </div>
+        <div class="expand-body">
+          <div>
+            <div class="ch-eyebrow" style="margin-bottom: 8px;">GIR</div>
+            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;">46<span style="font-size: 14px; opacity: 0.55;">%</span></div>
+          </div>
+          <div>
+            <div class="ch-eyebrow" style="margin-bottom: 8px;">PROX</div>
+            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;">9.2<span style="font-size: 14px; opacity: 0.55;">m</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tee Shots -->
+      <div class="stat-row">
+        <div>
+          <div class="label">Tee Shots</div>
+          <div class="sub" style="margin-top: 2px;">Fairway 71% · Avg 234m</div>
+        </div>
+        <div class="value">14</div>
+      </div>
+
+      <!-- Hole list -->
+      <div style="margin-top: 8px;">
+        <div class="ch-eyebrow" style="margin-bottom: 10px;"><span class="dot"></span> PER HULL</div>
+        <div class="drawer-hole-strip">
+          <div class="hole-pill">Hole 1</div>
+          <div class="hole-pill active">Hole 2</div>
+          <div class="hole-pill">Hole 3</div>
+          <div class="hole-pill">Hole 4</div>
+          <div class="hole-pill">Hole 5</div>
+          <div class="hole-pill">Hole 6</div>
+          <div class="hole-pill">Hole 7</div>
+          <div class="hole-pill">Hole 8</div>
+          <div class="hole-pill">Hole 9</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'ak-tweaks') {
+      const s = e.data.state;
+      document.body.classList.toggle('d-compact', s.density === 'compact');
+      document.body.classList.toggle('d-spacious', s.density === 'spacious');
+    }
+  });
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

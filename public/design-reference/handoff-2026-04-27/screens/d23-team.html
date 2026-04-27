@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D23 — Team · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .team-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:24px; }
+  .person-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; padding:22px; display:flex; flex-direction:column; gap:14px; }
+  .person-card.lead { border-color: rgba(209,248,67,0.30); background: linear-gradient(160deg, rgba(209,248,67,0.06), rgba(13,46,35,0.0)), var(--akgolf-card-dark); }
+  .person-top { display:flex; gap:14px; align-items:center; }
+  .person-top .av { width:56px; height:56px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:18px; color:#0A1F18; flex-shrink:0; }
+  .person-top .nm { font-size:16px; color:#fff; font-weight:700; letter-spacing:-0.015em; }
+  .person-top .role { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-top:3px; font-weight:700; }
+  .person-card.lead .person-top .role { color:var(--akgolf-accent); }
+  .person-card .bio { font-size:12.5px; color:rgba(255,255,255,0.7); line-height:1.55; margin:0; }
+  .credentials { display:flex; flex-wrap:wrap; gap:5px; }
+  .credentials span { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:5px; padding:3px 7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.7); font-weight:600; }
+  .person-stats { display:grid; grid-template-columns: repeat(3,1fr); gap:8px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06); }
+  .person-stats .s { font-family:'JetBrains Mono',monospace; }
+  .person-stats .s .l { font-size:9px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .person-stats .s .v { font-size:13px; color:#fff; font-weight:700; margin-top:2px; }
+  .person-actions { display:flex; gap:6px; margin-top:auto; }
+  .person-actions .a { flex:1; padding:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:7px; font-size:11px; color:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; gap:5px; cursor:pointer; }
+  .person-actions .a [data-lucide]{ width:13px; height:13px; }
+
+  .pending { background: rgba(232,185,103,0.10); border:1px dashed rgba(232,185,103,0.40); border-radius:10px; padding:12px 16px; margin-bottom:12px; display:flex; gap:12px; align-items:center; }
+  .pending [data-lucide] { color:#E8B967; }
+  .pending .lab { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.10em; color:#E8B967; text-transform:uppercase; font-weight:700; }
+  .pending .body { flex:1; font-size:13px; color:#fff; }
+
+  /* Roles & permissions */
+  .perm-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:22px 26px; }
+  .perm-card h3 { margin:0 0 16px; font-size:15px; color:#fff; font-weight:700; }
+  .perm-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .perm-table th { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; text-transform:uppercase; color:rgba(255,255,255,0.5); font-weight:700; text-align:center; padding:10px; border-bottom:1px solid var(--akgolf-line-dark); }
+  .perm-table th:first-child { text-align:left; padding-left:0; }
+  .perm-table td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:center; }
+  .perm-table td:first-child { text-align:left; padding-left:0; color:#fff; font-weight:600; }
+  .perm-table td:first-child small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:1px; letter-spacing:0.04em; font-weight:500; }
+  .ck-yes { width:18px; height:18px; border-radius:50%; background:rgba(42,125,90,0.30); color:#6FCBA1; display:inline-grid; place-items:center; }
+  .ck-yes [data-lucide] { width:11px; height:11px; stroke-width:3; }
+  .ck-no { width:18px; height:18px; color:rgba(255,255,255,0.25); display:inline-block; line-height:18px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="user-plus"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="briefcase"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Mennesker</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i>Spillere</div>
+    <div class="chq-nav-item"><i data-lucide="user-plus"></i>Grupper</div>
+    <div class="chq-nav-item active"><i data-lucide="briefcase"></i>Team<span class="badge">5</span></div>
+    <div class="chq-nav-item"><i data-lucide="user-cog"></i>Roller &amp; rettigheter</div>
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Team</div>
+    <div class="chq-top-meta">5 AKTIVE · 1 PENDING-INVITE · ROLLER STYRER TILGANG</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk team-medlem…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ MENNESKER · TEAM</div>
+        <h1 class="chq-h1">Erik &amp; medspillere på Akademiet.</h1>
+        <p>5 aktive team-medlemmer. Erik er hoved-coach (lead). Resten har avgrensede roller — fysio kan logge tester, junior-coach booker bare kohortene sine, admin tar fakturering.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="user-cog"></i>Roller</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Inviter team-medlem</button>
+      </div>
+    </div>
+
+    <div class="pending">
+      <i data-lucide="mail"></i>
+      <div class="body">
+        <div class="lab">PENDING INVITE · sendt 24. APRIL</div>
+        Maja Berg · invitert som <strong>Junior-coach</strong> for Junior Mid-kohort. Venter på aksept (3 dager igjen).
+      </div>
+      <button class="chq-btn sm"><i data-lucide="repeat"></i>Send påminnelse</button>
+    </div>
+
+    <div class="team-grid">
+      <article class="person-card lead">
+        <div class="person-top">
+          <div class="av" style="background:var(--akgolf-accent);">ES</div>
+          <div>
+            <div class="nm">Erik Solheim</div>
+            <div class="role">★ HOVED-COACH (LEAD)</div>
+          </div>
+        </div>
+        <p class="bio">PGA Pro siden 2014. Coacher tour-spillere og junior-elite. Fokus: full-swing, mental, on-course strategi.</p>
+        <div class="credentials">
+          <span>PGA</span><span>TPI L2</span><span>TRACKMAN</span><span>QUINTIC</span>
+        </div>
+        <div class="person-stats">
+          <div class="s"><div class="l">Spillere</div><div class="v">42</div></div>
+          <div class="s"><div class="l">Økter / uke</div><div class="v">28</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">94%</div></div>
+        </div>
+        <div class="person-actions">
+          <div class="a"><i data-lucide="user"></i>Profil</div>
+          <div class="a"><i data-lucide="calendar"></i>Kalender</div>
+          <div class="a"><i data-lucide="settings"></i>Tilgang</div>
+        </div>
+      </article>
+
+      <article class="person-card">
+        <div class="person-top">
+          <div class="av" style="background:#6BB1FF;">AR</div>
+          <div>
+            <div class="nm">Anne Rud</div>
+            <div class="role">FYSIO · TPI</div>
+          </div>
+        </div>
+        <p class="bio">Fysioterapeut med TPI Level 2-sertifisering. Kommer inn på testdager og skader. Lagger måltider med Erik.</p>
+        <div class="credentials">
+          <span>FYSIO MNFF</span><span>TPI L2</span><span>STYRKE</span>
+        </div>
+        <div class="person-stats">
+          <div class="s"><div class="l">Spillere</div><div class="v">12</div></div>
+          <div class="s"><div class="l">Test / mnd</div><div class="v">8</div></div>
+          <div class="s"><div class="l">Stilling</div><div class="v">20%</div></div>
+        </div>
+        <div class="person-actions">
+          <div class="a"><i data-lucide="user"></i>Profil</div>
+          <div class="a"><i data-lucide="calendar"></i>Kalender</div>
+          <div class="a"><i data-lucide="settings"></i>Tilgang</div>
+        </div>
+      </article>
+
+      <article class="person-card">
+        <div class="person-top">
+          <div class="av" style="background:#C99CF3;">KH</div>
+          <div>
+            <div class="nm">Kristian Holm</div>
+            <div class="role">JUNIOR-COACH</div>
+          </div>
+        </div>
+        <p class="bio">PGA-aspirant. Holder Junior Mid og Kids Academy. Arbeider med Erik på utviklingsprogrammer og foreldre-kommunikasjon.</p>
+        <div class="credentials">
+          <span>PGA-AS</span><span>TPI L1</span><span>JUNIOR-CERT</span>
+        </div>
+        <div class="person-stats">
+          <div class="s"><div class="l">Spillere</div><div class="v">28</div></div>
+          <div class="s"><div class="l">Økter / uke</div><div class="v">14</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">88%</div></div>
+        </div>
+        <div class="person-actions">
+          <div class="a"><i data-lucide="user"></i>Profil</div>
+          <div class="a"><i data-lucide="calendar"></i>Kalender</div>
+          <div class="a"><i data-lucide="settings"></i>Tilgang</div>
+        </div>
+      </article>
+
+      <article class="person-card">
+        <div class="person-top">
+          <div class="av" style="background:#E8B967;">MS</div>
+          <div>
+            <div class="nm">Marte Sørli</div>
+            <div class="role">MENTAL TRENER</div>
+          </div>
+        </div>
+        <p class="bio">Idrettspsykolog. Gir mental-økter til elite-spillere. På akademiet 1 dag per uke (onsdager) i Skullerud-studio.</p>
+        <div class="credentials">
+          <span>PSYK</span><span>OLYMPIATOPPEN</span><span>NIH</span>
+        </div>
+        <div class="person-stats">
+          <div class="s"><div class="l">Spillere</div><div class="v">8</div></div>
+          <div class="s"><div class="l">Dager</div><div class="v">ONS</div></div>
+          <div class="s"><div class="l">Stilling</div><div class="v">10%</div></div>
+        </div>
+        <div class="person-actions">
+          <div class="a"><i data-lucide="user"></i>Profil</div>
+          <div class="a"><i data-lucide="calendar"></i>Kalender</div>
+          <div class="a"><i data-lucide="settings"></i>Tilgang</div>
+        </div>
+      </article>
+
+      <article class="person-card">
+        <div class="person-top">
+          <div class="av" style="background:#6FCBA1;">LH</div>
+          <div>
+            <div class="nm">Linn Haug</div>
+            <div class="role">ADMIN &amp; ØKONOMI</div>
+          </div>
+        </div>
+        <p class="bio">Akademiets administrator. Tar booking-forespørsler, fakturering, kommunikasjon med klubb og foreldre. Jobber 60 % stilling.</p>
+        <div class="credentials">
+          <span>ØK-ANSV</span><span>STRIPE</span><span>FAKTURA</span>
+        </div>
+        <div class="person-stats">
+          <div class="s"><div class="l">Bookinger</div><div class="v">87/m</div></div>
+          <div class="s"><div class="l">Faktura</div><div class="v">42/m</div></div>
+          <div class="s"><div class="l">Stilling</div><div class="v">60%</div></div>
+        </div>
+        <div class="person-actions">
+          <div class="a"><i data-lucide="user"></i>Profil</div>
+          <div class="a"><i data-lucide="calendar"></i>Kalender</div>
+          <div class="a"><i data-lucide="settings"></i>Tilgang</div>
+        </div>
+      </article>
+
+      <article class="person-card" style="opacity:0.55; border-style:dashed;">
+        <div class="person-top">
+          <div class="av" style="background:rgba(255,255,255,0.10); color:rgba(255,255,255,0.6);">+</div>
+          <div>
+            <div class="nm" style="color:rgba(255,255,255,0.7);">Inviter ny</div>
+            <div class="role" style="color:rgba(255,255,255,0.4);">VELG ROLLE</div>
+          </div>
+        </div>
+        <p class="bio">Trenger du flere coacher, en kasse-ansvarlig, eller en partner? Send invite med rolle og lokasjons-tilgang.</p>
+        <div class="credentials">
+          <span style="border-style:dashed;">COACH</span><span style="border-style:dashed;">FYSIO</span><span style="border-style:dashed;">ADMIN</span><span style="border-style:dashed;">PARTNER</span>
+        </div>
+        <div class="person-actions">
+          <div class="a" style="background:rgba(209,248,67,0.10); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.20);"><i data-lucide="plus"></i>Send invite</div>
+        </div>
+      </article>
+    </div>
+
+    <section class="perm-card">
+      <h3>Roller &amp; rettigheter</h3>
+      <table class="perm-table">
+        <thead>
+          <tr>
+            <th>Funksjon</th>
+            <th>Lead-coach</th>
+            <th>Junior-coach</th>
+            <th>Fysio / Mental</th>
+            <th>Admin</th>
+            <th>Partner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Se alle spillere<small>HELE ROSTER</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Booking-administrasjon<small>OPPRETT, FLYTT, AVLYS</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Faktura &amp; refusjon<small>STRIPE-INTEGRERT</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Endre tjenester &amp; pris<small>SERVICE-CATALOG</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Test-resultater (TPI, Quintic)<small>LOGGE OG SE</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Spiller-meldinger<small>SAMTALER</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+          </tr>
+          <tr><td>Lokasjons-bookinger<small>F.EKS HOLTSMARK</small></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-no">—</span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+            <td><span class="ck-yes"><i data-lucide="check"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

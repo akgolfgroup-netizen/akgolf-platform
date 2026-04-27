@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A18 — Trening · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero strip with weekly volume */
+  .train-hero {
+    background:
+      radial-gradient(circle at 75% 30%, rgba(209,248,67,0.10), transparent 60%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .train-hero .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700; margin-bottom: 10px;
+  }
+  .train-hero h2 {
+    margin: 0; font-size: 28px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em; line-height: 1.2;
+  }
+  .train-hero h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .train-hero .lede {
+    margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7);
+    line-height: 1.6; max-width: 50ch;
+  }
+  .train-hero .actions { margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Volume bars */
+  .vol-card {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .vol-card .h {
+    display: flex; justify-content: space-between; align-items: end; margin-bottom: 16px;
+  }
+  .vol-card .h-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); font-weight: 700;
+  }
+  .vol-card .h-v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--akgolf-accent); font-weight: 700;
+  }
+  .vol-bars {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+    height: 100px; align-items: end;
+  }
+  .vol-day {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    height: 100%; justify-content: end;
+  }
+  .vol-day .bar {
+    width: 100%; background: var(--akgolf-accent); border-radius: 4px;
+    min-height: 4px;
+  }
+  .vol-day .bar.empty { background: rgba(255,255,255,0.06); }
+  .vol-day .bar.today {
+    background: linear-gradient(to top, var(--akgolf-accent), #6FCBA1);
+    box-shadow: 0 0 8px rgba(209,248,67,0.40);
+  }
+  .vol-day .d {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.10em; color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+  .vol-day.today .d { color: var(--akgolf-accent); font-weight: 700; }
+  .vol-foot {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .vol-foot .it { font-size: 11px; color: rgba(255,255,255,0.55); }
+  .vol-foot .it strong { display: block; color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 1px; letter-spacing: -0.02em; }
+  .vol-foot .it strong small { font-size: 11px; color: rgba(255,255,255,0.5); margin-left: 2px; }
+
+  /* Section header with category tabs */
+  .cat-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 28px 0 16px;
+  }
+  .cat-tabs {
+    display: inline-flex;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 4px;
+    gap: 2px;
+  }
+  .cat-tabs button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 12.5px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cat-tabs button [data-lucide] { width: 13px; height: 13px; }
+  .cat-tabs button.active {
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+  }
+  .cat-tabs .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.7);
+    padding: 1px 5px; border-radius: 4px;
+    margin-left: 2px;
+  }
+  .cat-tabs button.active .count { background: rgba(0,0,0,0.20); color: var(--akgolf-accent); }
+
+  /* Category section */
+  .cat-section { margin-bottom: 32px; }
+  .cat-section h3 {
+    margin: 0 0 14px; font-size: 18px; color: #fff; font-weight: 700; letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cat-section h3 .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.04);
+    padding: 3px 8px; border-radius: 6px;
+    font-weight: 700;
+  }
+  .cat-section h3 .sub {
+    font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500;
+    margin-left: auto;
+    letter-spacing: 0;
+  }
+
+  .drills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  .drill-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative;
+  }
+  .drill-card.locked { opacity: 0.55; }
+
+  .dc-top { display: flex; justify-content: space-between; align-items: start; gap: 10px; }
+  .dc-step {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    padding: 3px 7px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .dc-step.s1 { background: rgba(107,177,255,0.18); color: #91C4FF; }
+  .dc-step.s2 { background: rgba(107,177,255,0.22); color: #6BB1FF; }
+  .dc-step.s3 { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .dc-step.s4 { background: rgba(232,185,103,0.20); color: #E8B967; }
+  .dc-step.s5 { background: rgba(232,93,78,0.22); color: #F49283; }
+
+  .dc-ring {
+    width: 52px; height: 52px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .dc-ring svg { transform: rotate(-90deg); }
+  .dc-ring .v {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700; color: #fff;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .dc-name {
+    font-size: 14px; color: #fff; font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1.3;
+  }
+  .dc-desc {
+    font-size: 12px; color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  .dc-meta {
+    display: flex; gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  .dc-meta span { display: flex; align-items: center; gap: 5px; }
+  .dc-meta [data-lucide] { width: 12px; height: 12px; color: rgba(255,255,255,0.4); }
+
+  .dc-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .dc-progress { font-size: 11px; color: rgba(255,255,255,0.55); flex: 1; }
+  .dc-progress strong {
+    color: #fff; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .dc-actions { display: flex; gap: 6px; }
+  .dc-btn {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.85);
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .dc-btn [data-lucide] { width: 14px; height: 14px; }
+  .dc-btn.primary { background: var(--akgolf-accent); color: #0A1F18; border-color: var(--akgolf-accent); }
+  .dc-btn.primary [data-lucide] { stroke-width: 2.4; }
+
+  .lock-overlay {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    pointer-events: none;
+  }
+  .lock-overlay .lock-pill {
+    background: rgba(0,0,0,0.65);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.75);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 6px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .lock-overlay [data-lucide] { width: 12px; height: 12px; }
+
+  /* Sticky log session bar */
+  .log-bar {
+    position: sticky; bottom: 18px;
+    background: rgba(13, 46, 35, 0.92);
+    backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.40), 0 0 24px rgba(209,248,67,0.10);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 24px;
+  }
+  .log-bar .ic {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+  }
+  .log-bar .ic [data-lucide] { width: 20px; height: 20px; }
+  .log-bar .text { flex: 1; }
+  .log-bar .text strong { display: block; color: #fff; font-size: 14px; font-weight: 700; letter-spacing: -0.005em; }
+  .log-bar .text span { font-size: 12px; color: rgba(255,255,255,0.65); }
+  .log-bar .actions { display: flex; gap: 8px; }
+
+  @media (max-width: 1100px) {
+    .train-hero { grid-template-columns: 1fr; }
+    .drills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="dumbbell"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="activity"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Trening</div>
+    <div class="phq-nav-item active"><i data-lucide="dumbbell"></i> Aktive øvelser</div>
+    <div class="phq-nav-item"><i data-lucide="library"></i> Bibliotek</div>
+    <div class="phq-nav-item"><i data-lucide="history"></i> Historikk</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Aktive øvelser<span class="date">12 DRILLS · 4 KATEGORIER · UKE 18</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk drill, klubb, scenarie…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ TRENING · AKTIVE ØVELSER</div>
+      <h1 class="phq-h1">12 drills i programmet ditt nå.</h1>
+      <p class="lede">Fordelt på Driver, Approach, Around-Green og Putting. Steg 1–5 markerer vanskelighet — du er på Steg 3 i snitt. Erik har låst Steg 4–5 i puttegrupperingen til Quintic-re-test 3. mai.</p>
+    </div>
+
+    <!-- Hero -->
+    <section class="train-hero">
+      <div>
+        <div class="lab">Programstatus · uke 4 av 12</div>
+        <h2>Du har gjort <em>78 %</em><br>av denne ukens drills.</h2>
+        <p class="lede">9 av 12 økter logget. To Steg 3-drills står igjen før helgen — fokus i dag bør være alignment + 6m putting. Erik flagget at du droppet 23. apr — be om revurdert volum hvis det er mye.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="check-circle-2"></i>Logg dagens økt</button>
+          <button class="phq-btn"><i data-lucide="calendar"></i>Se ukesplan</button>
+          <button class="phq-btn ghost"><i data-lucide="message-circle"></i>Spør Erik</button>
+        </div>
+      </div>
+
+      <div class="vol-card">
+        <div class="h">
+          <span class="h-l">Treningsvolum · denne uken</span>
+          <span class="h-v">7 t 24 min · MÅL 10 t</span>
+        </div>
+        <div class="vol-bars">
+          <div class="vol-day"><div class="bar" style="height: 70%;"></div><div class="d">Man</div></div>
+          <div class="vol-day"><div class="bar empty" style="height: 4%;"></div><div class="d">Tir</div></div>
+          <div class="vol-day"><div class="bar" style="height: 88%;"></div><div class="d">Ons</div></div>
+          <div class="vol-day"><div class="bar" style="height: 56%;"></div><div class="d">Tor</div></div>
+          <div class="vol-day"><div class="bar" style="height: 78%;"></div><div class="d">Fre</div></div>
+          <div class="vol-day"><div class="bar" style="height: 95%;"></div><div class="d">Lør</div></div>
+          <div class="vol-day today"><div class="bar today" style="height: 44%;"></div><div class="d">Søn</div></div>
+        </div>
+        <div class="vol-foot">
+          <div class="it"><strong>5<small>/ uke</small></strong>Aktive dager</div>
+          <div class="it"><strong>9</strong>Logg-økter</div>
+          <div class="it"><strong>+12 %<small>vs forrige</small></strong>Trend</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category filter -->
+    <div class="cat-bar">
+      <div class="cat-tabs">
+        <button class="active"><i data-lucide="layers"></i>Alle <span class="count">12</span></button>
+        <button><i data-lucide="rocket"></i>Driver <span class="count">3</span></button>
+        <button><i data-lucide="target"></i>Approach <span class="count">3</span></button>
+        <button><i data-lucide="hand"></i>Around-Green <span class="count">3</span></button>
+        <button><i data-lucide="circle-dot"></i>Putting <span class="count">3</span></button>
+      </div>
+      <button class="phq-btn"><i data-lucide="plus"></i>Legg til drill</button>
+    </div>
+
+    <!-- DR section -->
+    <section class="cat-section">
+      <h3>
+        <i data-lucide="rocket" style="width:18px;height:18px;color:var(--akgolf-accent);"></i>
+        Driver
+        <span class="badge">DR · 3 drills</span>
+        <span class="sub">Største effekt på HCP — fokuser her</span>
+      </h3>
+      <div class="drills-grid">
+        <!-- Drill 1 -->
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s3">Steg 3</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="55.3"/>
+              </svg>
+              <div class="v">60%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Alignment-stick gate</div>
+            <div class="dc-desc">2 sticks 8 cm fra hverandre · 10 driver-sving · klubb må gå mellom uten å treffe.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>20 min</span>
+            <span><i data-lucide="map-pin"></i>Range</span>
+            <span><i data-lucide="repeat"></i>3× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>6 / 10</strong> · siste 2 dager siden</div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drill 2 -->
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s2">Steg 2</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="13.8"/>
+              </svg>
+              <div class="v">90%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Tee-spread test</div>
+            <div class="dc-desc">10 driver mot punkt 220m · måle SD i landingspunkt · mål under 12m.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>15 min</span>
+            <span><i data-lucide="map-pin"></i>Trackman</span>
+            <span><i data-lucide="repeat"></i>2× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>9 / 10</strong> · siste i går</div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drill 3 -->
+        <div class="drill-card locked">
+          <div class="dc-top">
+            <span class="dc-step s4">Steg 4</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+              </svg>
+              <div class="v" style="color:rgba(255,255,255,0.50);">—</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Stinger m/ 3-wood</div>
+            <div class="dc-desc">Lavt utfall · ball bak senter · 220m + roll-out. Krever Steg 3 = 80%+.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>20 min</span>
+            <span><i data-lucide="map-pin"></i>Range</span>
+            <span><i data-lucide="lock"></i>Låst</span>
+          </div>
+          <div class="lock-overlay">
+            <div class="lock-pill"><i data-lucide="lock"></i>Låses opp på Steg 3 = 80%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP section -->
+    <section class="cat-section">
+      <h3>
+        <i data-lucide="target" style="width:18px;height:18px;color:#6BB1FF;"></i>
+        Approach
+        <span class="badge">APP · 3 drills</span>
+        <span class="sub">Du er på 76. percentil — vedlikehold</span>
+      </h3>
+      <div class="drills-grid">
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s3">Steg 3</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="48.4"/>
+              </svg>
+              <div class="v">65%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">9-jern sirkel-drill</div>
+            <div class="dc-desc">130m flag · 15 baller · poeng for innenfor 5m / 3m / 1.5m sirkler.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>25 min</span>
+            <span><i data-lucide="map-pin"></i>Studio</span>
+            <span><i data-lucide="repeat"></i>2× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>7 / 12</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s4">Steg 4</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="69.1"/>
+              </svg>
+              <div class="v">50%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Wedge-distansekontroll</div>
+            <div class="dc-desc">PW · GW · SW · 3 lengder per klubb (50/75/100m). Avvik &lt;5%.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>30 min</span>
+            <span><i data-lucide="map-pin"></i>Trackman</span>
+            <span><i data-lucide="repeat"></i>2× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>4 / 8</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s2">Steg 2</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="0"/>
+              </svg>
+              <div class="v">100%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Smash-factor 7-jern</div>
+            <div class="dc-desc">Kontaktrenhet · 1.38+ smash factor over 10 swings.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>15 min</span>
+            <span><i data-lucide="map-pin"></i>Trackman</span>
+            <span><i data-lucide="check-circle-2"></i>Bestått</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress" style="color:#6FCBA1;">Mestret · klar for Steg 3</div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="arrow-up"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARG section -->
+    <section class="cat-section">
+      <h3>
+        <i data-lucide="hand" style="width:18px;height:18px;color:#C99CF3;"></i>
+        Around-Green
+        <span class="badge">ARG · 3 drills</span>
+        <span class="sub">Scrambling 42 % · forbedringspotensial</span>
+      </h3>
+      <div class="drills-grid">
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s2">Steg 2</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="34.6"/>
+              </svg>
+              <div class="v">75%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Up-and-down · 10 baller</div>
+            <div class="dc-desc">5 chip-spots · 2 baller hver · score = par eller bedre. Mål 6/10.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>20 min</span>
+            <span><i data-lucide="map-pin"></i>Short-game</span>
+            <span><i data-lucide="repeat"></i>3× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>9 / 12</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s3">Steg 3</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="89.8"/>
+              </svg>
+              <div class="v">35%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Bunker-kontakt</div>
+            <div class="dc-desc">Linje i sand · klubb skal treffe 5cm bak · 8/10 må komme på green.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>20 min</span>
+            <span><i data-lucide="map-pin"></i>Bunker</span>
+            <span><i data-lucide="repeat"></i>2× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>3 / 8</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s3">Steg 3</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="62.2"/>
+              </svg>
+              <div class="v">55%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Flop-shot stigning</div>
+            <div class="dc-desc">Åpen klubbflate · høyt utfall · stoppe innen 3m fra landing.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>15 min</span>
+            <span><i data-lucide="map-pin"></i>Short-game</span>
+            <span><i data-lucide="repeat"></i>2× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>5 / 8</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PT section -->
+    <section class="cat-section">
+      <h3>
+        <i data-lucide="circle-dot" style="width:18px;height:18px;color:#E8B967;"></i>
+        Putting
+        <span class="badge">PT · 3 drills</span>
+        <span class="sub">Steg 4–5 låst til Quintic-test 3. mai</span>
+      </h3>
+      <div class="drills-grid">
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s2">Steg 2</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="27.6"/>
+              </svg>
+              <div class="v">80%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">3-fots klokke-drill</div>
+            <div class="dc-desc">8 baller rundt hull · 3 ft hver · skal lage 8 av 8 før du bryter.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>10 min</span>
+            <span><i data-lucide="map-pin"></i>Putting green</span>
+            <span><i data-lucide="repeat"></i>5× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>16 / 20</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card">
+          <div class="dc-top">
+            <span class="dc-step s3">Steg 3</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                <circle cx="26" cy="26" r="22" fill="none" stroke="var(--akgolf-accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="83.0"/>
+              </svg>
+              <div class="v">40%</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Lag-putt 6m+</div>
+            <div class="dc-desc">10 putter fra 6m / 8m / 10m · stoppe innen 1m sirkel.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>15 min</span>
+            <span><i data-lucide="map-pin"></i>Putting green</span>
+            <span><i data-lucide="repeat"></i>3× / uke</span>
+          </div>
+          <div class="dc-foot">
+            <div class="dc-progress">Logget <strong>4 / 12</strong></div>
+            <div class="dc-actions">
+              <button class="dc-btn"><i data-lucide="play"></i></button>
+              <button class="dc-btn primary"><i data-lucide="check"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drill-card locked">
+          <div class="dc-top">
+            <span class="dc-step s5">Steg 5</span>
+            <div class="dc-ring">
+              <svg viewBox="0 0 52 52" width="52" height="52">
+                <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+              </svg>
+              <div class="v" style="color:rgba(255,255,255,0.50);">—</div>
+            </div>
+          </div>
+          <div>
+            <div class="dc-name">Press-putting · 9 hulls</div>
+            <div class="dc-desc">Score-runde · 9 hull · ekte avstander · 1 putt = par, 2 putt = bogey.</div>
+          </div>
+          <div class="dc-meta">
+            <span><i data-lucide="clock"></i>40 min</span>
+            <span><i data-lucide="map-pin"></i>Putting green</span>
+            <span><i data-lucide="lock"></i>Låst</span>
+          </div>
+          <div class="lock-overlay">
+            <div class="lock-pill"><i data-lucide="lock"></i>Låst til Quintic 3. mai</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky Logg-økt -->
+    <div class="log-bar">
+      <div class="ic"><i data-lucide="check-circle-2"></i></div>
+      <div class="text">
+        <strong>Klar til å logge dagens økt?</strong>
+        <span>Velg drills, sett varighet og legg til notat — Erik får sammendrag automatisk.</span>
+      </div>
+      <div class="actions">
+        <button class="phq-btn ghost">Senere</button>
+        <button class="phq-btn primary"><i data-lucide="check-circle-2"></i>Logg økt</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

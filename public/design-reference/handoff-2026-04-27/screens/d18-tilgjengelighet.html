@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D18 — Tilgjengelighet · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .av-grid { display:grid; grid-template-columns: 1.6fr 1fr; gap:18px; align-items:start; }
+  .week-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; overflow:hidden; }
+  .week-head { padding:16px 22px; border-bottom:1px solid var(--akgolf-line-dark); display:flex; justify-content:space-between; align-items:center; }
+  .week-head h3 { margin:0; font-size:14px; color:#fff; font-weight:700; }
+  .week-head .nav-btns { display:flex; gap:6px; }
+  .week-grid {
+    display:grid;
+    grid-template-columns: 60px repeat(7, 1fr);
+    border-top: 1px solid var(--akgolf-line-dark);
+  }
+  .week-grid .corner, .week-grid .day-h {
+    border-right: 1px solid var(--akgolf-line-dark);
+    border-bottom: 1px solid var(--akgolf-line-dark);
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .week-grid .day-h {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:0.10em; text-transform:uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight:700;
+  }
+  .week-grid .day-h.today { color: var(--akgolf-accent); }
+  .week-grid .day-h .d { font-size:13px; color:#fff; margin-top:2px; font-weight:700; }
+  .week-grid .day-h.today .d { color: var(--akgolf-accent); }
+
+  .week-grid .time {
+    border-right: 1px solid var(--akgolf-line-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 8px 4px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px;
+    color: rgba(255,255,255,0.5);
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+  .week-grid .cell {
+    border-right: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    height: 38px;
+    position: relative;
+    cursor: pointer;
+  }
+  .week-grid .cell:hover { background: rgba(255,255,255,0.02); }
+  .week-grid .cell.avail { background: rgba(209,248,67,0.10); }
+  .week-grid .cell.avail:hover { background: rgba(209,248,67,0.16); }
+  .week-grid .cell.booked { background: rgba(0,122,255,0.18); }
+  .week-grid .cell.blocked { background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 6px, rgba(255,255,255,0.06) 6px 12px); }
+  .week-grid .cell.holiday { background: rgba(184,66,51,0.12); }
+  .legend { padding:12px 22px; display:flex; gap:14px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(255,255,255,0.55); border-top:1px solid var(--akgolf-line-dark); }
+  .legend .lg { display:flex; align-items:center; gap:6px; }
+  .legend .sw { width:14px; height:14px; border-radius:3px; }
+
+  /* Right rules */
+  .right-stack { display:flex; flex-direction:column; gap:14px; }
+  .panel { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 22px; }
+  .panel h3 { margin:0 0 12px; font-size:13px; color:#fff; font-weight:700; }
+  .panel h3 .more { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); float:right; font-weight:700; }
+  .rule { display:grid; grid-template-columns: 36px 1fr auto; gap:12px; padding:10px 0; border-top:1px solid rgba(255,255,255,0.04); align-items:center; }
+  .rule:first-of-type { border-top:none; }
+  .rule .ic { width:36px; height:36px; border-radius:8px; background:rgba(209,248,67,0.10); color:var(--akgolf-accent); display:grid; place-items:center; }
+  .rule .ic [data-lucide] { width:16px; height:16px; }
+  .rule .nm { font-size:12.5px; color:#fff; font-weight:600; }
+  .rule .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px; letter-spacing:0.04em; }
+  .rule .toggle { width:36px; height:20px; border-radius:99px; background:rgba(209,248,67,0.30); position:relative; }
+  .rule .toggle::after { content:''; position:absolute; right:2px; top:2px; width:16px; height:16px; border-radius:50%; background:var(--akgolf-accent); }
+  .rule .toggle.off { background:rgba(255,255,255,0.10); }
+  .rule .toggle.off::after { background:rgba(255,255,255,0.6); right:auto; left:2px; }
+
+  .ovr { background:rgba(184,66,51,0.10); border-radius:8px; padding:10px 12px; margin-bottom:8px; display:flex; gap:10px; align-items:center; }
+  .ovr .d { font-family:'JetBrains Mono',monospace; font-size:11px; color:#F49283; font-weight:700; min-width:62px; }
+  .ovr .nm { font-size:12px; color:#fff; flex:1; }
+  .ovr .lab { font-family:'JetBrains Mono',monospace; font-size:9px; color:#F49283; letter-spacing:0.10em; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="map-pin"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="clock"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="calendar"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+    <div class="chq-nav-item active"><i data-lucide="clock"></i>Tilgjengelighet</div>
+    <div class="chq-nav-item"><i data-lucide="package"></i>Tjenester</div>
+    <div class="chq-nav-item"><i data-lucide="building"></i>Fasiliteter</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Tilgjengelighet</div>
+    <div class="chq-top-meta">UKE 18 · 28. APR – 4. MAI · 36 ÅPNE TIMER</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ DRIFT · TILGJENGELIGHET</div>
+        <h1 class="chq-h1">Når du er bookbar.</h1>
+        <p>Sett standard arbeidsuke, spesifikke unntak (ferie, kurs, helligdager). Spillere ser bare timer som er lyse-grønne. Booking-buffer er 60 min mellom økter.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="copy"></i>Kopier til neste uke</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Legg til unntak</button>
+      </div>
+    </div>
+
+    <div class="av-grid">
+      <section class="week-card">
+        <div class="week-head">
+          <h3>Uke 18 · 28. apr – 4. mai 2025</h3>
+          <div class="nav-btns">
+            <button class="chq-btn sm"><i data-lucide="chevron-left"></i></button>
+            <button class="chq-btn sm">I dag</button>
+            <button class="chq-btn sm"><i data-lucide="chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="week-grid">
+          <div class="corner"></div>
+          <div class="day-h">MAN<div class="d">28</div></div>
+          <div class="day-h">TIR<div class="d">29</div></div>
+          <div class="day-h">ONS<div class="d">30</div></div>
+          <div class="day-h">TOR<div class="d">01</div></div>
+          <div class="day-h">FRE<div class="d">02</div></div>
+          <div class="day-h today">LØR<div class="d">03</div></div>
+          <div class="day-h">SØN<div class="d">04</div></div>
+
+          <div class="time">07:00</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="time">08:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell"></div>
+          <div class="time">09:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell"></div>
+          <div class="time">10:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell holiday"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div>
+          <div class="time">11:00</div>
+          <div class="cell booked"></div><div class="cell booked"></div><div class="cell holiday"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div>
+          <div class="time">12:00</div>
+          <div class="cell blocked"></div><div class="cell blocked"></div><div class="cell holiday"></div><div class="cell blocked"></div><div class="cell blocked"></div><div class="cell blocked"></div><div class="cell"></div>
+          <div class="time">13:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell holiday"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell"></div>
+          <div class="time">14:00</div>
+          <div class="cell avail"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell"></div>
+          <div class="time">15:00</div>
+          <div class="cell booked"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell booked"></div><div class="cell booked"></div><div class="cell"></div><div class="cell"></div>
+          <div class="time">16:00</div>
+          <div class="cell booked"></div><div class="cell avail"></div><div class="cell booked"></div><div class="cell booked"></div><div class="cell avail"></div><div class="cell"></div><div class="cell"></div>
+          <div class="time">17:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="time">18:00</div>
+          <div class="cell avail"></div><div class="cell avail"></div><div class="cell avail"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="time">19:00</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        </div>
+        <div class="legend">
+          <div class="lg"><span class="sw" style="background:rgba(209,248,67,0.18);"></span>Tilgjengelig (36t)</div>
+          <div class="lg"><span class="sw" style="background:rgba(0,122,255,0.30);"></span>Booket (12t)</div>
+          <div class="lg"><span class="sw" style="background:repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 4px, rgba(255,255,255,0.10) 4px 8px);"></span>Lunsj/buffer</div>
+          <div class="lg"><span class="sw" style="background:rgba(184,66,51,0.20);"></span>Helligdag (1. mai)</div>
+        </div>
+      </section>
+
+      <aside class="right-stack">
+        <section class="panel">
+          <h3>Standard arbeidsuke<span class="more">REDIGER</span></h3>
+          <div class="rule"><div class="ic"><i data-lucide="sun"></i></div><div><div class="nm">Hverdager</div><div class="meta">MAN–FRE · 08:00–18:00</div></div><div class="toggle"></div></div>
+          <div class="rule"><div class="ic"><i data-lucide="calendar"></i></div><div><div class="nm">Lørdag</div><div class="meta">10:00–14:00 · KIDS-CAMP</div></div><div class="toggle"></div></div>
+          <div class="rule"><div class="ic" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6);"><i data-lucide="moon"></i></div><div><div class="nm">Søndag</div><div class="meta">FRI</div></div><div class="toggle off"></div></div>
+          <div class="rule"><div class="ic"><i data-lucide="coffee"></i></div><div><div class="nm">Lunsj</div><div class="meta">12:00–13:00 DAGLIG</div></div><div class="toggle"></div></div>
+          <div class="rule"><div class="ic"><i data-lucide="timer"></i></div><div><div class="nm">Buffer mellom økter</div><div class="meta">15 MIN MIN</div></div><div class="toggle"></div></div>
+        </section>
+
+        <section class="panel">
+          <h3>Kommende unntak<span class="more">3 ENTRIES</span></h3>
+          <div class="ovr">
+            <div class="d">01 MAI</div>
+            <div class="nm">Helligdag · Arbeiderens dag</div>
+            <div class="lab">FRI</div>
+          </div>
+          <div class="ovr">
+            <div class="d">17 MAI</div>
+            <div class="nm">Grunnlovsdagen</div>
+            <div class="lab">FRI</div>
+          </div>
+          <div class="ovr" style="background:rgba(232,185,103,0.10);">
+            <div class="d" style="color:#E8B967;">12–14 JUN</div>
+            <div class="nm">Tour Camp Holtsmark</div>
+            <div class="lab" style="color:#E8B967;">REDUSERT</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Booking-policy<span class="more">REDIGER</span></h3>
+          <div class="rule"><div class="ic"><i data-lucide="clock-4"></i></div><div><div class="nm">Min varsel før booking</div><div class="meta">12 TIMER</div></div><div class="toggle"></div></div>
+          <div class="rule"><div class="ic"><i data-lucide="x-circle"></i></div><div><div class="nm">Avbestilling</div><div class="meta">24 T FRI · &lt; 24 T 50%</div></div><div class="toggle"></div></div>
+          <div class="rule"><div class="ic"><i data-lucide="repeat"></i></div><div><div class="nm">Re-book ved vær-avlyst</div><div class="meta">AUTO</div></div><div class="toggle"></div></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

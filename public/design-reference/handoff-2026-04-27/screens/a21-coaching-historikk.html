@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A21 — Coaching-historikk · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero stats strip */
+  .hist-hero {
+    background:
+      radial-gradient(circle at 80% 30%, rgba(209,248,67,0.08), transparent 60%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .hist-hero .lab { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; margin-bottom: 8px; }
+  .hist-hero h2 { margin: 0; font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.025em; }
+  .hist-hero h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .hist-hero .lede { margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 50ch; }
+  .hist-hero .actions { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .sb {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .sb .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .sb .v { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .sb .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 3px; font-weight: 500; }
+  .sb .delta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6FCBA1; margin-top: 4px; font-weight: 700; }
+
+  /* Filter row */
+  .filt-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 18px;
+    align-items: center;
+  }
+  .filt-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 7px 12px;
+    color: rgba(255,255,255,0.7);
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .filt-pill [data-lucide] { width: 13px; height: 13px; }
+  .filt-pill.active { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    margin-left: 32px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255,255,255,0.10);
+  }
+  .month-h {
+    margin: 24px 0 14px -56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    font-weight: 700;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .month-h::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 10px rgba(209,248,67,0.50);
+  }
+  .month-h:first-child { margin-top: 0; }
+
+  .session {
+    position: relative;
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 18px;
+    align-items: center;
+  }
+  .session::before {
+    content: '';
+    position: absolute;
+    left: -29px; top: 24px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.20);
+    border: 2px solid var(--akgolf-bg-dark);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.10);
+  }
+  .session.highlight { border-color: rgba(209,248,67,0.30); }
+  .session.highlight::before { background: var(--akgolf-accent); box-shadow: 0 0 10px rgba(209,248,67,0.50); }
+
+  .s-date {
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding-right: 16px;
+  }
+  .s-date .d {
+    font-size: 22px; font-weight: 800; color: #fff;
+    letter-spacing: -0.03em; line-height: 1;
+  }
+  .s-date .m {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+  }
+  .s-date .t {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.65);
+    margin-top: 8px;
+  }
+
+  .s-body { }
+  .s-top { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .s-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .s-type.individual { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .s-type.test { background: rgba(107,177,255,0.18); color: #6BB1FF; }
+  .s-type.video { background: rgba(175,82,222,0.18); color: #C99CF3; }
+  .s-type.tournament { background: rgba(232,185,103,0.20); color: #E8B967; }
+  .s-coach {
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .s-coach [data-lucide] { width: 12px; height: 12px; }
+
+  .s-name { font-size: 15px; color: #fff; font-weight: 700; letter-spacing: -0.005em; }
+  .s-summary {
+    margin-top: 4px; font-size: 12.5px; color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+  .s-tags {
+    margin-top: 8px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .s-tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; letter-spacing: 0.10em;
+    color: rgba(255,255,255,0.65);
+    font-weight: 600;
+  }
+
+  .s-actions { display: flex; flex-direction: column; gap: 6px; align-items: end; }
+  .s-actions .open {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .s-actions .attached {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .s-actions .attached [data-lucide] { width: 11px; height: 11px; }
+
+  .breakthrough {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(209,248,67,0.06);
+    border-left: 3px solid var(--akgolf-accent);
+    border-radius: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+  }
+  .breakthrough strong { color: var(--akgolf-accent); font-weight: 700; }
+
+  @media (max-width: 1100px) {
+    .hist-hero { grid-template-columns: 1fr; }
+    .session { grid-template-columns: 70px 1fr; }
+    .s-actions { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="history"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Coaching</div>
+    <div class="phq-nav-item active"><i data-lucide="history"></i> Historikk</div>
+    <div class="phq-nav-item"><i data-lucide="message-circle"></i> Meldinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Coaching-historikk<span class="date">SIDEN MARS 2023 · 47 ØKTER · 28 NOTATER</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i historikk…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ COACHING · HISTORIKK</div>
+      <h1 class="phq-h1">Hele reisen din med Erik.</h1>
+      <p class="lede">47 økter siden mars 2023. Filtrer på type, klikk en økt for full notat, video og målinger. Erik har skrevet 28 detaljerte oppfølginger — søkbart innhold.</p>
+    </div>
+
+    <!-- Hero -->
+    <section class="hist-hero">
+      <div>
+        <div class="lab">Reise med coach</div>
+        <h2>HCP <em>11.4 → 8.4</em> over 14 måneder.</h2>
+        <p class="lede">Erik Solheim har vært coach siden mars 2023. Største gjennombrudd: alignment-fix i mai 2024 (driver-spredning halvert), putting-stroke ombygd januar 2025 (nå 87 % på 1.5 m).</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="calendar-plus"></i>Book ny økt</button>
+          <button class="phq-btn"><i data-lucide="download"></i>Eksporter PDF</button>
+          <button class="phq-btn ghost"><i data-lucide="message-circle"></i>Send Erik melding</button>
+        </div>
+      </div>
+      <div class="stats-bar">
+        <div class="sb"><div class="l">Antall økter</div><div class="v">47</div><div class="delta">12 siste 90d</div></div>
+        <div class="sb"><div class="l">Coaching-timer</div><div class="v">62 <small>t</small></div><div class="delta">~ 1 t / uke snitt</div></div>
+        <div class="sb"><div class="l">HCP-utvikling</div><div class="v">−3.0</div><div class="delta">11.4 → 8.4</div></div>
+        <div class="sb"><div class="l">Notat fra Erik</div><div class="v">28</div><div class="delta">Tilgjengelig</div></div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filt-row">
+      <span style="font-family:'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; margin-right: 4px;">Filter</span>
+      <button class="filt-pill active"><i data-lucide="layers"></i>Alle (47)</button>
+      <button class="filt-pill"><i data-lucide="user"></i>Individual (32)</button>
+      <button class="filt-pill"><i data-lucide="video"></i>Video-analyse (8)</button>
+      <button class="filt-pill"><i data-lucide="activity"></i>Test (5)</button>
+      <button class="filt-pill"><i data-lucide="trophy"></i>Turnering (2)</button>
+      <button class="filt-pill" style="margin-left:auto;"><i data-lucide="calendar"></i>2025</button>
+      <button class="filt-pill"><i data-lucide="filter"></i>Mer</button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+
+      <div class="month-h">April 2025 · 4 økter</div>
+
+      <div class="session highlight">
+        <div class="s-date"><div class="d">26</div><div class="m">Apr</div><div class="t">14:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type test">Test · Trackman</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 90 min</span>
+          </div>
+          <div class="s-name">Trackman re-test · driver + 7-jern + PW</div>
+          <div class="s-summary">Driver: 108 mph club speed (+2 mph fra forrige). Spin axis ned til +8.4° fra +12° — alignment-arbeidet virker. PW konsistens god.</div>
+          <div class="s-tags"><span class="s-tag">DRIVER</span><span class="s-tag">SPIN-AXIS</span><span class="s-tag">+2 MPH</span><span class="s-tag">RE-TEST 4 UKE JUN</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>3 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">19</div><div class="m">Apr</div><div class="t">10:30</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Range</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 60 min</span>
+          </div>
+          <div class="s-name">Alignment-stick gate progression</div>
+          <div class="s-summary">Smalere gate (8 cm). 6/10 første sett, 9/10 etter justering av setup. Beholder oppgaven 2 uker til.</div>
+          <div class="s-tags"><span class="s-tag">DRIVER</span><span class="s-tag">ALIGNMENT</span><span class="s-tag">DRILL S3</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>1 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">12</div><div class="m">Apr</div><div class="t">15:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type video">Video-analyse</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 45 min</span>
+          </div>
+          <div class="s-name">Slow-mo · driver-takeaway</div>
+          <div class="s-summary">Tendens til indre takeaway. Markert med streker i video. Hjemmeoppgave: speilarbeid 5 min/dag.</div>
+          <div class="s-tags"><span class="s-tag">DRIVER</span><span class="s-tag">TAKEAWAY</span><span class="s-tag">VIDEO 1080p</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="video"></i>2 videoer</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">05</div><div class="m">Apr</div><div class="t">09:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Studio</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 60 min</span>
+          </div>
+          <div class="s-name">Wedge-distansekontroll · 50/75/100m</div>
+          <div class="s-summary">PW/GW/SW · ¾-swing klokke. SD nede til 4 m på 75m. GW litt overlapping med PW — vurder loft-justering.</div>
+          <div class="s-tags"><span class="s-tag">APPROACH</span><span class="s-tag">WEDGES</span><span class="s-tag">GAPPING</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>2 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="month-h">Mars 2025 · 3 økter</div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">22</div><div class="m">Mar</div><div class="t">13:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type tournament">Turnering · Tjuvholmen</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik på siden · 4 t</span>
+          </div>
+          <div class="s-name">On-course coaching · Tjuvholmen Open</div>
+          <div class="s-summary">Erik fulgte runden. Notater: starter aggressivt på lette par 4, mister fokus rundt hull 12–14. Mental arbeidsmark.</div>
+          <div class="s-tags"><span class="s-tag">ON-COURSE</span><span class="s-tag">MENTAL</span><span class="s-tag">SCORE 79</span></div>
+          <div class="breakthrough">
+            <strong>Breakthrough:</strong> Først runde under 80 i konkurranse siden november. Bekreftet at strategi-holdning fra mars økt fungerer under press.
+          </div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="file-text"></i>Full rapport</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">15</div><div class="m">Mar</div><div class="t">10:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Putting</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 45 min</span>
+          </div>
+          <div class="s-name">Quintic putting-test · pre-sesong</div>
+          <div class="s-summary">Stroke konsistens god. 1.5m: 87 %. 3m: 42 %. 6m: 11 % (trenger fokus). Lag-putt drill prioritert i program.</div>
+          <div class="s-tags"><span class="s-tag">PUTTING</span><span class="s-tag">QUINTIC</span><span class="s-tag">6M FOKUS</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>4 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">08</div><div class="m">Mar</div><div class="t">14:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Range</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 60 min</span>
+          </div>
+          <div class="s-name">Sesongstart-økt · oppvarming &amp; rytme</div>
+          <div class="s-summary">Lett tilbakekomst etter vinteren. Tempo godt, kontaktsikkerhet bra. Plan for april satt: fokus driver-alignment + wedger.</div>
+          <div class="s-tags"><span class="s-tag">SESONG-START</span><span class="s-tag">PLAN</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>1 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="month-h">Februar 2025 · 2 økter</div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">22</div><div class="m">Feb</div><div class="t">11:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type video">Video-analyse</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 60 min</span>
+          </div>
+          <div class="s-name">Vinter-swing review · sammenlignet med oktober 2024</div>
+          <div class="s-summary">Posisjon i topp er roligere. Klubb-bane mer nøytral. Anbefalt å beholde nye triggers gjennom hele sesongen.</div>
+          <div class="s-tags"><span class="s-tag">FULL-SWING</span><span class="s-tag">BEFORE/AFTER</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="video"></i>3 videoer</span>
+        </div>
+      </div>
+
+      <div class="session highlight">
+        <div class="s-date"><div class="d">08</div><div class="m">Feb</div><div class="t">10:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type test">Test · TPI Level 1</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik + fysio Anne · 90 min</span>
+          </div>
+          <div class="s-name">TPI re-test · vinter-mobilitet</div>
+          <div class="s-summary">8 av 12 pass (forrige: 6). Hofterotasjon fortsatt fail. Henvist videre til styrke-program på Skullerud.</div>
+          <div class="s-tags"><span class="s-tag">TPI</span><span class="s-tag">FYSIO</span><span class="s-tag">+2 PASS</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="file-text"></i>Full rapport</span>
+        </div>
+      </div>
+
+      <div class="month-h">Januar 2025 · gjennombrudd-måned</div>
+
+      <div class="session highlight">
+        <div class="s-date"><div class="d">25</div><div class="m">Jan</div><div class="t">15:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Putting</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 75 min</span>
+          </div>
+          <div class="s-name">Putting-stroke ombygd · ny grip + setup</div>
+          <div class="s-summary">Pencil-grip introdusert. Skulder-rotasjon erstatter håndledd-action. Test etter 1 mnd: 1.5m make % opp fra 78 % til 87 %.</div>
+          <div class="s-tags"><span class="s-tag">PUTTING</span><span class="s-tag">REBUILD</span><span class="s-tag">PENCIL-GRIP</span></div>
+          <div class="breakthrough">
+            <strong>Breakthrough:</strong> Den største enkeltendringen siden mars 2024-alignment-arbeidet. 1.5m make-% nå topp-percentil i peer-gruppe.
+          </div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="paperclip"></i>5 vedlegg</span>
+        </div>
+      </div>
+
+      <div class="session">
+        <div class="s-date"><div class="d">11</div><div class="m">Jan</div><div class="t">14:00</div></div>
+        <div class="s-body">
+          <div class="s-top">
+            <span class="s-type individual">Individual · Indoor</span>
+            <span class="s-coach"><i data-lucide="user"></i>Erik Solheim · 60 min</span>
+          </div>
+          <div class="s-name">Vinter-program oppstart · sesong-mål 2025</div>
+          <div class="s-summary">Mål-setting workshop. HCP-mål 7.0 ved sesongslutt. NM Amatør-kvalifisering som hovedmål. Treningsplan stukket ut for vinter.</div>
+          <div class="s-tags"><span class="s-tag">PLAN</span><span class="s-tag">MÅL</span><span class="s-tag">2025</span></div>
+        </div>
+        <div class="s-actions">
+          <button class="open"><i data-lucide="arrow-right"></i></button>
+          <span class="attached"><i data-lucide="file-text"></i>Sesongplan</span>
+        </div>
+      </div>
+
+      <div class="month-h">Eldre · vis 35 økter (2024 + 2023)</div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
