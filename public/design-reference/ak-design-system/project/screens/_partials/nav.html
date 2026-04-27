@@ -1,0 +1,55 @@
+<!--
+  AK Golf Group — shared website nav.
+  Source of truth for the marketing-site top nav.
+  When inlined into a screen, prefix with: <!-- DUPLISERT FRA screens/_partials/nav.html — keep in sync -->
+  Logo path is relative to a screen at screens/<file>.html (one level deep).
+-->
+<header class="ak-website-nav" data-partial="nav">
+  <div class="ak-container">
+    <div class="ak-website-nav__inner">
+      <a href="01-forsiden.html" class="ak-website-nav__logo-link" aria-label="AK Golf Group — forsiden">
+        <img src="../assets/logos/ak-golf-logo-primary-on-light.svg" alt="AK Golf Group" class="ak-website-nav__logo">
+      </a>
+      <nav class="ak-website-nav__links" aria-label="Hovednavigasjon">
+        <a href="02-academy.html">Academy</a>
+        <a href="05-junior-academy.html">Junior</a>
+        <a href="06-booking.html">Booking</a>
+        <a href="07-utvikling.html">Utvikling</a>
+        <a href="08-pricing.html" data-current-pricing>Priser</a>
+      </nav>
+      <div class="ak-website-nav__cta">
+        <a href="../portal-login.html" class="ak-btn ak-btn--ghost ak-btn--sm">Logg inn</a>
+        <a href="04-academy-booking.html" class="ak-btn ak-btn--primary ak-btn--sm">Bli medlem</a>
+        <button class="ak-website-nav__burger" aria-label="Åpne meny" data-menu-toggle>
+          <span data-icon="menu" data-size="22"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="ak-mobile-menu" data-mobile-menu aria-hidden="true">
+  <a href="02-academy.html">Academy</a>
+  <a href="05-junior-academy.html">Junior Academy</a>
+  <a href="06-booking.html">Booking</a>
+  <a href="07-utvikling.html">Utvikling</a>
+  <a href="08-pricing.html" data-current-pricing>Priser</a>
+  <a href="09-om-oss.html">Om oss</a>
+  <a href="10-kontakt.html">Kontakt</a>
+  <div style="margin-top: 24px; display: grid; gap: 8px;">
+    <a href="../portal-login.html" class="ak-btn ak-btn--ghost-dark">Logg inn</a>
+    <a href="04-academy-booking.html" class="ak-btn ak-btn--accent">Bli medlem</a>
+  </div>
+</div>
+<script>
+  (function () {
+    var btn = document.querySelector('[data-menu-toggle]');
+    var menu = document.querySelector('[data-mobile-menu]');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+      var open = menu.getAttribute('data-open') === 'true';
+      menu.setAttribute('data-open', String(!open));
+      menu.setAttribute('aria-hidden', String(open));
+      btn.setAttribute('aria-label', open ? 'Åpne meny' : 'Lukk meny');
+    });
+  })();
+</script>

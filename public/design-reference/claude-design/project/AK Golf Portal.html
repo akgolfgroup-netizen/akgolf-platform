@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens.css">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
   body { background: #0b0d0c; }
   .canvas-root {
@@ -501,9 +502,9 @@
 </div>
 
 <!-- TWEAKS PANEL -->
-<button class="tweaks-fab" id="tweaksFab" aria-label="Tweaks">⚙</button>
+<button class="tweaks-fab" id="tweaksFab" aria-label="Tweaks"><i data-lucide="settings" class="icon-md"></i></button>
 <div class="tweaks-panel" id="tweaksPanel">
-  <h3>🎛 Tweaks</h3>
+  <h3><i data-lucide="sliders-horizontal" class="icon-md"></i> Tweaks</h3>
   <div class="tweak-row">
     <label>Tetthet</label>
     <div class="tweak-opts" data-tweak="density">
@@ -598,5 +599,6 @@
   document.head.appendChild(style);
 </script>
 
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

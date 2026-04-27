@@ -79,7 +79,7 @@ Every surface, internal and external, is written in bokmål. English is explicit
 - **Second-person, informal.** *"Du har…"*, *"Din runde"*. Direct, on a first-name basis.
 - **Golf fluency is assumed.** Terms like *HCP, GIR, spredning, opp-ned, iron-spill* appear un-glossed.
 - **Numerically grounded.** Copy leans on concrete figures (*78 slag · 245 m · 1.72 putts/hull · 15.9 HCP*) rather than adjectives.
-- **Quietly motivational.** `⚡ Bra` (8.5 søvnscore), `👍 Bra` (runde-vurdering) — short, nearly-coach-like. Never "amazing", "crush it", etc.
+- **Quietly motivational.** Single-word verdicts: `Bra` (8,5 søvnscore), `Bra` (runde-vurdering), `Stabil`, `Svak`, `Topp`. Short, nearly-coach-like. Never "amazing", "crush it", etc.
 
 ### Casing
 - **Sentence case** for headings, section labels, buttons (*"Ny oppgave"*, not *"NY OPPGAVE"*).
@@ -92,13 +92,14 @@ Every surface, internal and external, is written in bokmål. English is explicit
 - Space before units: `270 slag`, `245 m`, `3t 45m` (*`t` = timer, `m` = minutter*).
 - Dates: `Onsdag, 9. april` — weekday first, day.month lowercase.
 
-### Emoji
-Used sparingly as **pre-text glyphs in condensed UI** (stats rows, nav tabs, task badges). Never decorative, never mid-sentence. Examples from the mockup:
-- `🏌 68 slag` · `⏱ 3t 45m` · `📍 Gamle Fredrikstad GK` · `❤ 32 putts` · `👍 Bra` · `⭐ 12-dagers streak`
+### Glyphs in condensed UI
+Stats rows, nav tabs and task badges use **Lucide SVGs** as pre-text glyphs (16px, 2px stroke, round line-cap, brand-colored). Never decorative, never mid-sentence. Canonical pairings — always icon + number/short label, in this order:
+- `<flag-triangle-right>` 68 slag · `<timer>` 3t 45m · `<map-pin>` Gamle Fredrikstad GK · `<heart-pulse>` 32 putts · `<thumbs-up>` Bra · `<star>` 12-dagers streak
 
-Unicode symbols are also used as affordances: `▾` (dropdown), `↗` (open/trend), `⋯` (more menu), `✕` (dismiss), `→` (link).
+Unicode symbols remain valid for **affordances only** — not as icons:
+- `▾` (dropdown) · `↗` (open/trend) · `⋯` (more menu) · `✕` (dismiss) · `→` (link) · `●` `•` (status dot)
 
-> If the UI kit can supply a proper Lucide icon, prefer that over emoji. Emoji are a pragmatic fallback in data-dense cards, not a style decision.
+> **Emoji are forbidden** in product UI, marketing copy, dashboards, slide decks and admin tools. The earlier "pragmatic fallback" guidance is withdrawn — if a glyph is needed, it must be a Lucide SVG.
 
 ### Forbidden copy moves
 - English in product UI or marketing copy.
@@ -139,7 +140,7 @@ Unicode symbols are also used as affordances: `▾` (dropdown), `↗` (open/tren
 - **"Glow" treatment** marks the single active/focal card on a screen: `border: 1.5px solid rgba(209,248,67,0.25)` + `box-shadow: 0 0 24px rgba(209,248,67,0.10)`. Used once per view maximum.
 
 ### Backgrounds
-- Big flat fills, not gradients. The dark-bg `#0A1F18` and surface `#ECF0EF` do the heavy lifting.
+- Big flat fills, not gradients. The 8079#102B1E and surface `#ECF0EF` do the heavy lifting.
 - **One gradient exception:** the hero/media panel uses a radial-to-linear blend `#D1F84330 → #005840 → #0A1F18` behind a subject photo. Treated as a single, intentional device — not a decorative motif.
 - **Glassmorphism** appears only inside that hero panel: `background: rgba(255,255,255,0.12)` + `backdrop-filter: blur(12px)`. Do not spread it elsewhere.
 - No repeating patterns, no textures, no hand-drawn illustrations.
@@ -186,9 +187,45 @@ See the ICONOGRAPHY section below.
 ## ICONOGRAPHY
 
 ### System
-**Lucide** is the official and only icon library — *"Ikoner: Lucide-biblioteket (2px stroke, round line-cap)"*. All UI icons must be Lucide SVGs, used at their default 2px stroke with round caps and round joins. We pull Lucide live from the CDN (`https://unpkg.com/lucide@latest`) for full icon coverage.
+**Lucide** is the official and only icon library — *"Ikoner: Lucide-biblioteket (2px stroke, round line-cap)"*. All UI icons must be Lucide SVGs, used at their default 2px stroke with round caps and round joins.
 
-> **No emoji.** Emoji are not allowed in product UI, marketing, dashboards, or any customer-facing surface. If an icon is needed, it must be a Lucide SVG. The earlier version of this system suggested emoji as a "data-dense fallback" — that guidance is withdrawn.
+**How to load it.** This project ships an inline helper, `assets/lucide.js`, that defines a curated subset of Lucide paths and exposes:
+- `<span data-icon="target" data-size="16"></span>` for static HTML / preview cards
+- `<LucideIcon name="target" size={16} color={C.accent} />` inside React UI kits (auto-registered when React is in scope)
+- `window.AK.svgFor(name, size, color)` if you need the raw SVG string
+
+For full Lucide coverage in production, pull from the CDN: `<script src="https://unpkg.com/lucide@latest"></script>`. The inline helper covers the icons used across this design system; extend `PATHS` in `assets/lucide.js` when you need more.
+
+**Standard sizes.** `14px` (inline with caption text), `16px` (default in cards and pills), `18–20px` (nav, headers), `24px+` (hero/feature only). Never below 14px.
+
+**Color rules.** Icons take `currentColor` by default. Brand-colored icons:
+- `--ak-primary` (#005840) — default UI affordance on light surfaces
+- `--ak-accent` (#D1F843) — single focal/active icon per view
+- `--ak-muted` (#A5B2AD) — inactive nav items, secondary affordances
+- `--ak-danger` (#B84233) — destructive or warning glyphs only
+
+> **No emoji.** Emoji are not allowed in product UI, marketing, dashboards, slide decks, or any customer-facing surface. If a glyph is needed, it must be a Lucide SVG. The earlier version of this system suggested emoji as a "data-dense fallback" — that guidance is withdrawn.
+
+### Canonical icon mapping
+The Spillerportal mockup standardises on these Lucide names. Reuse them anywhere the same concept appears so the visual language stays consistent.
+
+| Concept | Lucide |
+|---|---|
+| Slag / runde / golf | `flag-triangle-right` |
+| Tid / varighet | `timer` (running) · `clock` (static time) |
+| Sted / bane | `map-pin` |
+| Putts / helse / hjerterytme | `heart-pulse` |
+| Vurdering positiv | `thumbs-up` |
+| Streak / utmerkelse | `star` |
+| Søvn | `moon` |
+| Energi / søvnkvalitet | `zap` |
+| Treningsmengde | `droplets` |
+| Score / analyse / KPI-graf | `chart-column` · `chart-bar` |
+| Mål / TrackMan | `target` |
+| Aktivitet | `activity` |
+| Hjem · Helsestatus · Treningsplan | `home` · `heart-pulse` · `clipboard-list` |
+| Søk · Kalender · ChatBot AI | `search` · `calendar` · `bot` |
+| Tema (lys/mørk) · Varsler · Innstillinger | `sun` / `moon` · `bell` · `settings` |
 
 ### Unicode symbols
 Used sparingly as affordance glyphs only, not as icons:

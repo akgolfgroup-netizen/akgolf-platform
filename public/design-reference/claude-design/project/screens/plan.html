@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Treningsplanlegger</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #FAFAF7; }
@@ -123,16 +123,16 @@
       <div><div class="title">AK Golf</div><div class="sub">Elite</div></div>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-item">⌂ Oversikt</div>
+      <div class="nav-item"><i data-lucide="home" class="icon-md"></i> Oversikt</div>
       <div class="nav-item active">◱ Planlegg <span class="count">3</span></div>
       <div class="nav-item">◎ Tren</div>
-      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
       <div class="nav-item">△ Analyse</div>
       <div style="height:14px;"></div>
       <div class="nav-item">◈ AI Coach</div>
       <div class="nav-item">⊙ TrackMan</div>
       <div class="nav-item">◉ Dagbok</div>
-      <div class="nav-item">☰ Bookinger</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
     </nav>
     <div class="sidebar-user">
       <div class="avatar">MA</div>
@@ -272,5 +272,8 @@
     </div>
   </main>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

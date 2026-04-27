@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Statistikk</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #FAFAF7; }
@@ -103,16 +103,16 @@
       <div><div class="title">AK Golf</div><div class="sub">Elite</div></div>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-item">⌂ Oversikt</div>
+      <div class="nav-item"><i data-lucide="home" class="icon-md"></i> Oversikt</div>
       <div class="nav-item">◱ Planlegg</div>
       <div class="nav-item">◎ Tren</div>
-      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
       <div class="nav-item active">△ Analyse</div>
       <div style="height:14px;"></div>
       <div class="nav-item">◈ AI Coach</div>
       <div class="nav-item">⊙ TrackMan</div>
       <div class="nav-item">◉ Dagbok</div>
-      <div class="nav-item">☰ Bookinger</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
     </nav>
     <div class="sidebar-user">
       <div class="avatar">MA</div>
@@ -325,5 +325,8 @@
   const maxTot = Math.max(...data.map(total));
   data.forEach((d,i)=>{ const col=document.createElement('div'); col.style.flex='1'; const bar=document.createElement('div'); bar.className='vol-col'; bar.style.height = (total(d)/maxTot*100)+'%'; d.forEach((v,j)=>{ if(v){ const s=document.createElement('div'); s.className='vol-seg'; s.style.flex=v; s.style.background=colors[j]; bar.appendChild(s); } }); col.appendChild(bar); const l=document.createElement('div'); l.className='vol-lbl'; l.textContent='U'+(10+i); col.appendChild(l); vb.appendChild(col); });
 </script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spillerportalen · Dashboard — Editorial Cockpit</title>
+<link rel="icon" href="../assets/favicon/favicon-32.png">
+<link rel="stylesheet" href="app.css">
+<style>
+  /* ═══ DASHBOARD V2 · EDITORIAL COCKPIT ═══ */
+
+  /* Magazine masthead */
+  .mast {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--p-line-strong);
+    margin-bottom: 8px;
+  }
+  .mast__edition {
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--p-fg-3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .mast__edition strong { color: var(--p-fg); font-weight: 500; }
+  .mast__title {
+    font-size: 76px;
+    font-weight: 700;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    color: var(--p-fg);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .mast__title em { font-style: italic; font-weight: 400; color: var(--p-lime); }
+  .mast__lede {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--p-fg-2);
+    max-width: 520px;
+    margin: 16px 0 0;
+  }
+  .mast__meta {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 12px 32px;
+    align-items: end;
+    text-align: right;
+  }
+  .mast__meta-num {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--p-fg);
+  }
+  .mast__meta-num--lime { color: var(--p-lime); }
+  .mast__meta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--p-fg-3);
+  }
+
+  /* Hero KPI strip — section title row */
+  .strip-head {
+    grid-column: 1 / -1;
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  .strip-head__title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--p-fg-2);
+  }
+  .strip-head__title em { color: var(--p-fg-3); font-style: normal; }
+  .strip-head__action {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--p-fg-3);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  /* Editorial KPI tile — bigger numerals, no chrome */
+  .ekpi {
+    background: var(--p-card);
+    border: 1px solid var(--p-line);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex; flex-direction: column;
+    gap: 14px;
+    min-height: 200px;
+  }
+  .ekpi__head { display: flex; align-items: center; justify-content: space-between; }
+  .ekpi__num {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    color: var(--p-fg);
+    margin: 0;
+  }
+  .ekpi__num .unit { font-size: 0.32em; color: var(--p-fg-3); letter-spacing: 0.04em; margin-left: 6px; font-weight: 500; }
+  .ekpi__num em { font-style: italic; font-weight: 400; color: var(--p-lime); }
+  .ekpi__sub {
+    font-size: 13px;
+    color: var(--p-fg-2);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .ekpi__delta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .ekpi__delta--pos { color: var(--p-lime); background: var(--p-lime-soft); border: 1px solid var(--p-line-glow); }
+  .ekpi__delta--neg { color: var(--p-rust); background: var(--p-rust-soft); border: 1px solid rgba(242,122,62,0.30); }
+  .ekpi__delta--flat { color: var(--p-fg-3); background: rgba(255,255,255,0.04); border: 1px solid var(--p-line); }
+
+  /* Inline sparkline footer */
+  .ekpi__spark { height: 28px; margin-top: auto; }
+  .ekpi__spark svg { width: 100%; height: 100%; }
+
+  /* Plot card — chart with grid lines */
+  .plot {
+    background: var(--p-card);
+    border: 1px solid var(--p-line);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .plot__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+  .plot__caption {
+    font-size: 13px;
+    color: var(--p-fg-2);
+    margin: 14px 0 0;
+    line-height: 1.5;
+  }
+  .plot__caption em { color: var(--p-lime); font-style: italic; }
+
+  /* Article card · long-form coach insight */
+  .article {
+    background: var(--p-card-cream);
+    color: var(--p-ink);
+    border-radius: 16px;
+    padding: 32px;
+    height: 100%;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .article__byline {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(10,31,24,0.55);
+    margin-bottom: 20px;
+  }
+  .article__byline-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--p-ink);
+    color: var(--p-lime);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .article__hed {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--p-ink);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .article__hed em { font-style: italic; font-weight: 400; color: var(--p-forest); }
+  .article__dek {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(10,31,24,0.78);
+    margin: 0 0 20px;
+  }
+  .article__rule {
+    height: 1px;
+    background: rgba(10,31,24,0.15);
+    border: none;
+    margin: 12px 0 16px;
+  }
+  .article__pull {
+    border-left: 3px solid var(--p-forest);
+    padding-left: 16px;
+    margin: 0 0 20px;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--p-forest);
+  }
+  .article__sources {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: auto;
+  }
+  .article__source {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(10,31,24,0.55);
+    padding: 3px 8px;
+    background: rgba(10,31,24,0.06);
+    border-radius: 4px;
+  }
+
+  /* Schedule strip — horizontal day */
+  .schedule {
+    background: var(--p-card);
+    border: 1px solid var(--p-line);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .schedule__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+  .schedule__strip {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0;
+  }
+  .schedule__hours {
+    display: flex; flex-direction: column; gap: 0;
+    border-right: 1px solid var(--p-line);
+  }
+  .schedule__hour {
+    height: 56px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--p-fg-3);
+    letter-spacing: 0.06em;
+    padding-top: 0;
+    padding-right: 12px;
+    text-align: right;
+  }
+  .schedule__lane {
+    position: relative;
+    padding: 0 0 0 16px;
+  }
+  .schedule__block {
+    position: absolute;
+    left: 16px; right: 0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .schedule__block--done {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--p-line);
+    color: var(--p-fg-3);
+  }
+  .schedule__block--done .schedule__block-name { text-decoration: line-through; color: var(--p-fg-3); }
+  .schedule__block--now {
+    background: var(--p-lime);
+    color: var(--p-ink);
+    border: none;
+    box-shadow: 0 0 0 1px var(--p-line-glow), 0 6px 24px rgba(209,248,67,0.18);
+  }
+  .schedule__block--planned {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--p-line-strong);
+    color: var(--p-fg);
+  }
+  .schedule__block-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+  .schedule__block-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .schedule__block--now .schedule__block-meta { color: rgba(10,31,24,0.7); }
+
+  /* Banefoto thumbnail (smaller in this version) */
+  .photo-tile {
+    background: linear-gradient(135deg, #1f5a47 0%, #07100C 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 240px;
+    border: 1px solid var(--p-line);
+  }
+  .photo-tile__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 30%, rgba(209,248,67,0.18), transparent 60%),
+      radial-gradient(ellipse 50% 80% at 80% 90%, rgba(0,88,64,0.7), transparent 70%),
+      linear-gradient(135deg, #1f5a47 0%, #0a2b1f 50%, #07100C 100%);
+  }
+  .photo-tile__bg::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,0.022) 22px 23px),
+      linear-gradient(180deg, rgba(7,16,12,0) 50%, rgba(7,16,12,0.6) 100%);
+  }
+  .photo-tile__tag {
+    position: absolute; top: 12px; right: 12px;
+    padding: 5px 10px;
+    background: rgba(7, 16, 12, 0.7);
+    border: 1px solid var(--p-line-strong);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    color: var(--p-fg-3);
+    z-index: 2;
+  }
+  .photo-tile__overlay {
+    position: absolute; bottom: 16px; left: 16px; right: 16px;
+    z-index: 2;
+  }
+  .photo-tile__overlay-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+  }
+  .photo-tile__overlay-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  /* SG horizontal bar list */
+  .sg-list {
+    display: grid;
+    gap: 14px;
+  }
+  .sg-row {
+    display: grid;
+    grid-template-columns: 88px 1fr 64px;
+    gap: 16px;
+    align-items: center;
+  }
+  .sg-row__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--p-fg-2);
+  }
+  .sg-row__track {
+    height: 14px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-row__track::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .sg-row__fill {
+    position: absolute;
+    top: 0; bottom: 0;
+    border-radius: 2px;
+  }
+  .sg-row__fill--pos { background: var(--p-lime); }
+  .sg-row__fill--neg { background: var(--p-rust); }
+  .sg-row__value {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .sg-row__value--pos { color: var(--p-lime); }
+  .sg-row__value--neg { color: var(--p-rust); }
+
+  /* Index legend */
+  .legend {
+    display: flex; gap: 18px; align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--p-line);
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--p-fg-3);
+  }
+  .legend__dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+  /* Round table — last 5 */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .table th {
+    text-align: left;
+    padding: 10px 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--p-fg-3);
+    font-weight: 500;
+    border-bottom: 1px solid var(--p-line-strong);
+  }
+  .table td {
+    padding: 14px 8px;
+    border-bottom: 1px solid var(--p-line);
+    font-size: 13.5px;
+    color: var(--p-fg);
+  }
+  .table tr:last-child td { border-bottom: none; }
+  .table td.num { text-align: right; font-family: var(--font-mono); font-size: 13px; }
+  .table td.delta-pos { color: var(--p-lime); }
+  .table td.delta-neg { color: var(--p-rust); }
+  .table td .course { font-weight: 500; }
+  .table td .date {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--p-fg-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body class="portal" data-screen-label="Portal · Dashboard V2 (Editorial Cockpit)">
+
+<div class="p-shell">
+
+  <!-- ── SIDEBAR (same as v1, kept consistent) ── -->
+  <aside class="p-sidebar">
+    <div class="p-sidebar__brand">
+      <div class="p-sidebar__brand-mark">AK</div>
+      <div class="p-sidebar__brand-text">
+        <span class="p-sidebar__brand-name">Spillerportalen</span>
+        <span class="p-sidebar__brand-sub">v3.1</span>
+      </div>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Spille</div>
+      <a href="#" class="p-nav-item" aria-current="page">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V7l8-5 8 5v14"/><path d="M9 21V12h6v9"/></svg>
+        Runde
+        <span class="p-nav-item__count">3 nye</span>
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg>
+        Statistikk
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        TrackMan
+      </a>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Trene</div>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Plan
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20l9-7-9-7-9 7 9 7z"/><path d="M12 13l9-7"/></svg>
+        Dagbok
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg>
+        AI Coach
+        <span class="p-chip p-chip--lime" style="padding: 2px 6px; font-size: 9px; letter-spacing: 0.06em;">NY</span>
+      </a>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Klubb</div>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Booking
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Meldinger
+        <span class="p-nav-item__count">2</span>
+      </a>
+    </div>
+
+    <div class="p-sidebar__user">
+      <div class="p-sidebar__avatar">EK</div>
+      <div>
+        <div class="p-sidebar__user-name">Erik Karlsen</div>
+        <div class="p-sidebar__user-meta">HCP 3.4 · Elite</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div>
+    <header class="p-topbar">
+      <div class="p-topbar__crumbs">
+        <span>Spille</span>
+        <span class="p-topbar__sep">/</span>
+        <strong>Dashboard</strong>
+      </div>
+      <div class="p-topbar__search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Søk i runder, øvelser, notater…</span>
+        <span class="p-topbar__kbd">⌘K</span>
+      </div>
+      <button class="p-btn p-btn--ghost p-btn--sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Ny økt
+      </button>
+    </header>
+
+    <main class="p-main p-main--padded-lg">
+      <div class="p-bento p-bento--12" style="gap: 16px;">
+
+        <!-- MASTHEAD -->
+        <header class="mast">
+          <div>
+            <div class="mast__edition">
+              <span class="p-kicker"><span class="p-kicker__dot"></span> Onsdag</span>
+              <span><strong>27. april 2026</strong></span>
+              <span>·</span>
+              <span>Uke 17 · Sesongstart</span>
+              <span>·</span>
+              <span>Edition 142</span>
+            </div>
+            <h1 class="mast__title">
+              Approach er din <em>kontantstrøm</em>.<br>
+              Slipp den ikke nå.
+            </h1>
+            <p class="mast__lede">
+              Tre runder, ett mønster: når du treffer fairway taper du
+              0,42 slag mindre på second-shot enn for tre uker siden.
+              Det er reell fremgang, ikke støy.
+            </p>
+          </div>
+          <div class="mast__meta">
+            <div>
+              <div class="mast__meta-num">3.4</div>
+              <div class="mast__meta-label">HCP · ▼ 0.6</div>
+            </div>
+            <div>
+              <div class="mast__meta-num mast__meta-num--lime">+1,82</div>
+              <div class="mast__meta-label">SG · 30d</div>
+            </div>
+            <div>
+              <div class="mast__meta-num">73</div>
+              <div class="mast__meta-label">Aktive dager · 90d</div>
+            </div>
+            <div>
+              <div class="mast__meta-num">8</div>
+              <div class="mast__meta-label">Runder · APR</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- KPI STRIP HEAD -->
+        <div class="strip-head">
+          <span class="strip-head__title">§01 · <em>Form-indeks</em></span>
+          <a href="#" class="strip-head__action">Sammenlign 60d →</a>
+        </div>
+
+        <!-- 4 KPI tiles -->
+        <section class="ekpi p-col-3">
+          <div class="ekpi__head">
+            <span class="p-mono">SG · Total</span>
+            <span class="ekpi__delta ekpi__delta--pos">+0,41</span>
+          </div>
+          <p class="ekpi__num">+1,<em>82</em></p>
+          <p class="ekpi__sub">P75 mot Norge-baseline. Driver av sesongens beste tre uker.</p>
+          <div class="ekpi__spark">
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none">
+              <path d="M0,18 L20,16 L40,20 L60,14 L80,17 L100,12 L120,15 L140,9 L160,11 L180,6 L200,4" stroke="#D1F843" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </section>
+
+        <section class="ekpi p-col-3">
+          <div class="ekpi__head">
+            <span class="p-mono">Approach · Greens</span>
+            <span class="ekpi__delta ekpi__delta--pos">+12%</span>
+          </div>
+          <p class="ekpi__num">68<span class="unit">% GIR</span></p>
+          <p class="ekpi__sub">Fra 56% i mars. 7-jern-dispersion krympet med 4,2 m.</p>
+          <div class="ekpi__spark">
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none">
+              <path d="M0,20 L20,22 L40,18 L60,20 L80,16 L100,17 L120,12 L140,14 L160,10 L180,8 L200,6" stroke="#D1F843" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </section>
+
+        <section class="ekpi p-col-3">
+          <div class="ekpi__head">
+            <span class="p-mono">Around · Scrambling</span>
+            <span class="ekpi__delta ekpi__delta--neg">−8%</span>
+          </div>
+          <p class="ekpi__num">42<span class="unit">% S</span></p>
+          <p class="ekpi__sub">Bunkere fra 30 m+ er svakhet. Markus har planlagt fokus-økt.</p>
+          <div class="ekpi__spark">
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none">
+              <path d="M0,8 L20,10 L40,7 L60,12 L80,11 L100,16 L120,13 L140,18 L160,17 L180,21 L200,22" stroke="#F27A3E" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </section>
+
+        <section class="ekpi p-col-3">
+          <div class="ekpi__head">
+            <span class="p-mono">Putting · 1.5 m</span>
+            <span class="ekpi__delta ekpi__delta--pos">+5%</span>
+          </div>
+          <p class="ekpi__num">94<span class="unit">% mk</span></p>
+          <p class="ekpi__sub">Tour-snitt 88%. Ny rutine fra 12. april holder i kamp.</p>
+          <div class="ekpi__spark">
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none">
+              <path d="M0,16 L20,15 L40,17 L60,14 L80,12 L100,13 L120,10 L140,8 L160,9 L180,6 L200,5" stroke="#D1F843" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </section>
+
+        <!-- BIG ROW · Trend chart + AI article -->
+        <div class="strip-head">
+          <span class="strip-head__title">§02 · <em>Skala</em></span>
+          <a href="#" class="strip-head__action">Eksporter CSV →</a>
+        </div>
+
+        <section class="plot p-col-7">
+          <div class="plot__head">
+            <h3 class="p-h2">SG-trend · 12 uker</h3>
+            <div style="display: flex; gap: 12px;">
+              <span class="p-chip p-chip--lime">SG-Approach</span>
+              <span class="p-chip">SG-Off-tee</span>
+              <span class="p-chip">SG-Putt</span>
+            </div>
+          </div>
+
+          <!-- Custom SVG line chart -->
+          <svg viewBox="0 0 700 240" style="width: 100%; height: 240px; display: block;">
+            <!-- horizontal grid -->
+            <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+              <line x1="0" y1="40"  x2="700" y2="40"/>
+              <line x1="0" y1="90"  x2="700" y2="90"/>
+              <line x1="0" y1="140" x2="700" y2="140"/>
+              <line x1="0" y1="190" x2="700" y2="190"/>
+            </g>
+            <!-- zero line -->
+            <line x1="0" y1="140" x2="700" y2="140" stroke="rgba(255,255,255,0.20)" stroke-width="1" stroke-dasharray="3 4"/>
+
+            <!-- Y labels -->
+            <g font-family="JetBrains Mono, monospace" font-size="10" fill="rgba(160,170,165,0.65)">
+              <text x="4" y="44">+1.5</text>
+              <text x="4" y="94">+0.8</text>
+              <text x="4" y="144">0</text>
+              <text x="4" y="194">−0.8</text>
+            </g>
+
+            <!-- X labels (12 weeks) -->
+            <g font-family="JetBrains Mono, monospace" font-size="10" fill="rgba(160,170,165,0.65)" text-anchor="middle">
+              <text x="50"  y="232">U6</text>
+              <text x="115" y="232">U7</text>
+              <text x="180" y="232">U8</text>
+              <text x="245" y="232">U9</text>
+              <text x="310" y="232">U10</text>
+              <text x="375" y="232">U11</text>
+              <text x="440" y="232">U12</text>
+              <text x="505" y="232">U13</text>
+              <text x="570" y="232">U14</text>
+              <text x="615" y="232">U15</text>
+              <text x="660" y="232">U16</text>
+            </g>
+
+            <!-- Approach (lime) line + area -->
+            <defs>
+              <linearGradient id="appGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#D1F843" stop-opacity="0.30"/>
+                <stop offset="100%" stop-color="#D1F843" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M50,160 L115,150 L180,135 L245,128 L310,120 L375,108 L440,95 L505,82 L570,70 L615,68 L660,60 L660,210 L50,210 Z" fill="url(#appGrad)"/>
+            <path d="M50,160 L115,150 L180,135 L245,128 L310,120 L375,108 L440,95 L505,82 L570,70 L615,68 L660,60" stroke="#D1F843" stroke-width="2" fill="none"/>
+            <!-- dots -->
+            <g fill="#D1F843">
+              <circle cx="50" cy="160" r="3"/>
+              <circle cx="180" cy="135" r="3"/>
+              <circle cx="310" cy="120" r="3"/>
+              <circle cx="440" cy="95" r="3"/>
+              <circle cx="570" cy="70" r="3"/>
+              <circle cx="660" cy="60" r="4" stroke="#0A1F18" stroke-width="2"/>
+            </g>
+
+            <!-- Off-tee (forest) line, dashed -->
+            <path d="M50,140 L115,138 L180,142 L245,136 L310,140 L375,135 L440,138 L505,132 L570,130 L615,128 L660,124"
+                  stroke="rgba(184,212,204,0.7)" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+
+            <!-- Putt (rust) line -->
+            <path d="M50,170 L115,165 L180,160 L245,155 L310,158 L375,148 L440,145 L505,138 L570,135 L615,128 L660,122"
+                  stroke="#F27A3E" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+            <!-- Annotation -->
+            <line x1="660" y1="60" x2="660" y2="40" stroke="rgba(209,248,67,0.4)" stroke-width="1"/>
+            <text x="660" y="34" font-family="JetBrains Mono, monospace" font-size="10" fill="#D1F843" text-anchor="end" letter-spacing="1">DENNE UKEN +1.82</text>
+          </svg>
+
+          <p class="plot__caption">
+            Approach-kurven vipper <em>oppover</em> i 8. uke på rad. Off-tee er flat — det er greit. Putt-trenden er ny og verdt å beskytte.
+          </p>
+        </section>
+
+        <section class="article p-col-5">
+          <div class="article__byline">
+            <span class="article__byline-avatar">AI</span>
+            <span>AI Coach · 06:21 · Confidence 84%</span>
+          </div>
+          <h2 class="article__hed">
+            Tre runder på rad: <em>second-shot fra rough</em> koster deg mest.
+          </h2>
+          <p class="article__dek">
+            Du har spilt 8 av 10 hull med rough på lay-up. Når du går
+            fra rough til green med 5–7-jern, taper du 0,42 slag pr.
+            forsøk mot referansen.
+          </p>
+          <hr class="article__rule">
+          <p class="article__pull">
+            Ta én ekstra kølle og sikt mot midtre del av greenen — du
+            sparer ca. 1,8 slag pr. runde.
+          </p>
+          <p class="article__dek" style="margin-bottom: 0;">
+            Anders har lagt forslaget i dagens 14:00-økt. TrackMan-data
+            fra 22. april bekrefter at dispersion er smalere når kølla er
+            ett steg lengre. <strong>Trenden er reell.</strong>
+          </p>
+          <div class="article__sources">
+            <span class="article__source">Runde #87 Holtsmark</span>
+            <span class="article__source">Runde #88 Borre</span>
+            <span class="article__source">Runde #89 Gamle FK</span>
+            <span class="article__source">TrackMan 2026-04-22</span>
+            <span class="article__source">SG-baseline NO</span>
+          </div>
+        </section>
+
+        <!-- §03 · Plan + SG breakdown + photo -->
+        <div class="strip-head">
+          <span class="strip-head__title">§03 · <em>Dagen</em></span>
+          <a href="#" class="strip-head__action">Hele uken →</a>
+        </div>
+
+        <section class="schedule p-col-5">
+          <div class="schedule__head">
+            <h3 class="p-h2">Plan · 27. APR</h3>
+            <span class="p-mono">04 økter · 3t 35min</span>
+          </div>
+          <div class="schedule__strip">
+            <div class="schedule__hours">
+              <div class="schedule__hour">06</div>
+              <div class="schedule__hour">08</div>
+              <div class="schedule__hour">10</div>
+              <div class="schedule__hour">12</div>
+              <div class="schedule__hour">14</div>
+              <div class="schedule__hour">16</div>
+              <div class="schedule__hour">18</div>
+              <div class="schedule__hour">20</div>
+            </div>
+            <div class="schedule__lane" style="position: relative; height: 448px;">
+              <!-- 06:30 mobility (done), 06-08 area, top -->
+              <div class="schedule__block schedule__block--done" style="top: 14px; height: 32px;">
+                <span class="schedule__block-name">Mobility · 20 min</span>
+                <span class="schedule__block-meta">06:30 · Foam roller</span>
+              </div>
+              <!-- 14:00 teknisk (now), 14-16 = 224-280 area -->
+              <div class="schedule__block schedule__block--now" style="top: 224px; height: 80px;">
+                <span class="schedule__block-name">Teknisk · 7-jern dispersion</span>
+                <span class="schedule__block-meta">14:00 — 15:30 · Anders · Studio</span>
+              </div>
+              <!-- 17:30 putting · 28 min -->
+              <div class="schedule__block schedule__block--planned" style="top: 322px; height: 36px;">
+                <span class="schedule__block-name">Putting · ladder 50/100/150</span>
+                <span class="schedule__block-meta">17:30 · Egen · 30 min</span>
+              </div>
+              <!-- 20:00 mental -->
+              <div class="schedule__block schedule__block--planned" style="top: 392px; height: 36px;">
+                <span class="schedule__block-name">Mental · visualisering</span>
+                <span class="schedule__block-meta">20:00 · Markus · Loom</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="plot p-col-4">
+          <div class="plot__head">
+            <h3 class="p-h2">SG-fordeling</h3>
+            <span class="p-mono">Siste 8 runder</span>
+          </div>
+          <div class="sg-list">
+            <div class="sg-row">
+              <span class="sg-row__label">Off-tee</span>
+              <div class="sg-row__track"><div class="sg-row__fill sg-row__fill--pos" style="left: 50%; width: 9%;"></div></div>
+              <span class="sg-row__value sg-row__value--pos">+0,24</span>
+            </div>
+            <div class="sg-row">
+              <span class="sg-row__label">Approach</span>
+              <div class="sg-row__track"><div class="sg-row__fill sg-row__fill--pos" style="left: 50%; width: 32%;"></div></div>
+              <span class="sg-row__value sg-row__value--pos">+0,76</span>
+            </div>
+            <div class="sg-row">
+              <span class="sg-row__label">Around</span>
+              <div class="sg-row__track"><div class="sg-row__fill sg-row__fill--neg" style="right: 50%; width: 15%;"></div></div>
+              <span class="sg-row__value sg-row__value--neg">−0,36</span>
+            </div>
+            <div class="sg-row">
+              <span class="sg-row__label">Putting</span>
+              <div class="sg-row__track"><div class="sg-row__fill sg-row__fill--pos" style="left: 50%; width: 25%;"></div></div>
+              <span class="sg-row__value sg-row__value--pos">+0,60</span>
+            </div>
+            <div class="sg-row" style="border-top: 1px solid var(--p-line-strong); padding-top: 14px; margin-top: 4px;">
+              <span class="sg-row__label" style="color: var(--p-fg);">Total</span>
+              <div class="sg-row__track"><div class="sg-row__fill sg-row__fill--pos" style="left: 50%; width: 38%; background: linear-gradient(90deg, #00684C, #D1F843);"></div></div>
+              <span class="sg-row__value sg-row__value--pos">+1,24</span>
+            </div>
+          </div>
+          <div class="legend">
+            <span><span class="legend__dot" style="background: #D1F843;"></span>Over baseline</span>
+            <span><span class="legend__dot" style="background: #F27A3E;"></span>Under</span>
+            <span style="margin-left: auto;">vs P50 Norge</span>
+          </div>
+        </section>
+
+        <section class="photo-tile p-col-3">
+          <div class="photo-tile__bg"></div>
+          <span class="photo-tile__tag">[Banefoto: Gamle FK · h7 · høst]</span>
+          <div class="photo-tile__overlay">
+            <h3 class="photo-tile__overlay-title">Gamle Fredrikstad</h3>
+            <span class="photo-tile__overlay-meta">Lørdag 30. APR · 09:14 · Spillegruppe Nord</span>
+          </div>
+        </section>
+
+        <!-- §04 · Last rounds table -->
+        <div class="strip-head">
+          <span class="strip-head__title">§04 · <em>Logg</em></span>
+          <a href="#" class="strip-head__action">Alle 87 runder →</a>
+        </div>
+
+        <section class="plot p-col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Runde</th>
+                <th>Bane</th>
+                <th>Dato</th>
+                <th>Tee</th>
+                <th class="num">Score</th>
+                <th class="num">Til par</th>
+                <th class="num">SG-T</th>
+                <th class="num">SG-App</th>
+                <th class="num">FIR%</th>
+                <th class="num">GIR%</th>
+                <th class="num">Putt</th>
+                <th>Notat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num"><span class="date">#89</span></td>
+                <td><span class="course">Gamle Fredrikstad</span></td>
+                <td><span class="date">25. APR</span></td>
+                <td>Hvit · 6280m</td>
+                <td class="num">74</td>
+                <td class="num delta-neg">+2</td>
+                <td class="num delta-pos">+1,8</td>
+                <td class="num delta-pos">+1,2</td>
+                <td class="num">71%</td>
+                <td class="num">67%</td>
+                <td class="num">29</td>
+                <td><span class="date">Vind 7m/s · approach godt</span></td>
+              </tr>
+              <tr>
+                <td class="num"><span class="date">#88</span></td>
+                <td><span class="course">Borre Golfklubb</span></td>
+                <td><span class="date">21. APR</span></td>
+                <td>Hvit · 6190m</td>
+                <td class="num">71</td>
+                <td class="num delta-pos">−1</td>
+                <td class="num delta-pos">+2,4</td>
+                <td class="num delta-pos">+1,6</td>
+                <td class="num">79%</td>
+                <td class="num">72%</td>
+                <td class="num">28</td>
+                <td><span class="date">Beste putt-runde i 2026</span></td>
+              </tr>
+              <tr>
+                <td class="num"><span class="date">#87</span></td>
+                <td><span class="course">Holtsmark</span></td>
+                <td><span class="date">17. APR</span></td>
+                <td>Hvit · 6320m</td>
+                <td class="num">76</td>
+                <td class="num delta-neg">+4</td>
+                <td class="num delta-neg">−0,3</td>
+                <td class="num delta-neg">−0,8</td>
+                <td class="num">64%</td>
+                <td class="num">56%</td>
+                <td class="num">31</td>
+                <td><span class="date">Rough kostet · 3 hull</span></td>
+              </tr>
+              <tr>
+                <td class="num"><span class="date">#86</span></td>
+                <td><span class="course">Gamle Fredrikstad</span></td>
+                <td><span class="date">12. APR</span></td>
+                <td>Hvit · 6280m</td>
+                <td class="num">73</td>
+                <td class="num delta-pos">±0</td>
+                <td class="num delta-pos">+1,4</td>
+                <td class="num delta-pos">+0,9</td>
+                <td class="num">75%</td>
+                <td class="num">61%</td>
+                <td class="num">29</td>
+                <td><span class="date">Anders observatør</span></td>
+              </tr>
+              <tr>
+                <td class="num"><span class="date">#85</span></td>
+                <td><span class="course">Asker</span></td>
+                <td><span class="date">08. APR</span></td>
+                <td>Hvit · 6210m</td>
+                <td class="num">75</td>
+                <td class="num delta-neg">+3</td>
+                <td class="num delta-pos">+0,7</td>
+                <td class="num delta-pos">+0,4</td>
+                <td class="num">68%</td>
+                <td class="num">58%</td>
+                <td class="num">30</td>
+                <td><span class="date">Sesong-åpning · kald</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+</body>
+</html>

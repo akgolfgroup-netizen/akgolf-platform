@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Bookinger</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #FAFAF7; }
@@ -73,16 +73,16 @@
       <div><div class="title">AK Golf</div><div class="sub">Elite</div></div>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-item">⌂ Oversikt</div>
+      <div class="nav-item"><i data-lucide="home" class="icon-md"></i> Oversikt</div>
       <div class="nav-item">◱ Planlegg</div>
       <div class="nav-item">◎ Tren</div>
-      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
       <div class="nav-item">△ Analyse</div>
       <div style="height:14px;"></div>
       <div class="nav-item">◈ AI Coach</div>
       <div class="nav-item">⊙ TrackMan</div>
       <div class="nav-item">◉ Dagbok</div>
-      <div class="nav-item active">☰ Bookinger</div>
+      <div class="nav-item active"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
     </nav>
     <div class="sidebar-user">
       <div class="avatar">MA</div>
@@ -171,7 +171,7 @@
       </div>
       <!-- LØR -->
       <div class="day-col">
-        <div class="evt round" style="top:50px;height:260px; box-shadow: 0 6px 16px rgba(10,31,24,0.25);"><div class="t">⚑ KLUBBMATCH</div><div class="m" style="color:rgba(209,248,67,0.7);">08:00–13:30 · Oslo GK</div><div style="margin-top:10px;font-size:11px;color:#fff;font-family:Inter;line-height:1.4;">Gul tee · start hull 1 · 4-ball med Henrik, Jonas, Trond</div></div>
+        <div class="evt round" style="top:50px;height:260px; box-shadow: 0 6px 16px rgba(10,31,24,0.25);"><div class="t"><i data-lucide="flag-triangle-right" class="icon-md"></i> KLUBBMATCH</div><div class="m" style="color:rgba(209,248,67,0.7);">08:00–13:30 · Oslo GK</div><div style="margin-top:10px;font-size:11px;color:#fff;font-family:Inter;line-height:1.4;">Gul tee · start hull 1 · 4-ball med Henrik, Jonas, Trond</div></div>
       </div>
       <!-- SØN -->
       <div class="day-col">
@@ -260,5 +260,8 @@
     </div>
   </main>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

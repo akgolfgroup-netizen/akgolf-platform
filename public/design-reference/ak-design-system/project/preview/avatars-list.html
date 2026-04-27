@@ -3,35 +3,33 @@
 <link rel="stylesheet" href="../colors_and_type.css">
 <style>
   html,body{margin:0;background:#fff;color:#324D45;font-family:Inter,sans-serif;padding:20px}
-  .row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:4px;transition:background .15s}
-  .row + .row{border-top:1px solid #F0F3F2}
-  .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;background:#ECF0EF;color:#005840}
-  .av.active{background:#005840;color:#fff}
-  .av.inactive{background:#FCEAE8;color:#B84233}
-  .name{font-weight:600;font-size:13px;color:#324D45}
-  .meta{font-size:11px;color:#A5B2AD;margin-top:1px}
-  .badge{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:600;background:#ECF0EF;color:#005840;vertical-align:1px}
-  .badge.streak{background:#D1F843;color:#0A1F18}
-  .hcp{margin-left:auto;text-align:right}
-  .hcp .v{font-weight:700;font-size:14px;color:#324D45;letter-spacing:-.01em}
-  .hcp .l{font-size:9px;color:#A5B2AD;text-transform:uppercase;letter-spacing:.06em;font-family:ui-monospace,monospace}
-  .trend{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:600;margin-top:2px}
-  .trend.pos{color:#2A7D5A}
-  .trend.neg{color:#B84233}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #e0e8e5}
+  .row:last-child{border:none}
+  .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#0A1F18;background:#ECF0EF;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .av.active{background:linear-gradient(135deg,#005840,#D1F843);box-shadow:0 0 0 2px #D1F843, 0 0 0 3px #fff}
+  .av.inactive{box-shadow:0 0 0 2px #B84233, 0 0 0 3px #fff;color:#A5B2AD}
+  .name{font-weight:600;font-size:13px;color:#0A1F18;display:inline-flex;align-items:center;gap:6px}
+  .meta{font-size:11px;color:#A5B2AD}
+  .streak{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#005840;font-weight:600;background:#E8F5EF;padding:2px 8px;border-radius:10px}
+  .hcp{margin-left:auto;text-align:right;font-variant-numeric:tabular-nums}
+  .hcp .l{font-family:'JetBrains Mono',monospace;font-size:9px;color:#A5B2AD;text-transform:uppercase;letter-spacing:.14em}
+  .hcp .v{font-weight:700;font-size:14px;color:#0A1F18}
+  .trend.pos{color:#2A7D5A;font-size:11px;font-weight:600}
+  .trend.neg{color:#B84233;font-size:11px;font-weight:600}
 </style></head><body>
 <div class="row">
   <div class="av active">MK</div>
-  <div><div class="name">Magnus K. <span class="badge streak">⭐ 12d</span></div><div class="meta">23 økter</div></div>
+  <div><div class="name">Magnus K. <span class="streak"><i data-icon="star" data-size="11"></i>12d</span></div><div class="meta">23 økter denne måneden</div></div>
   <div class="hcp"><div class="l">HCP</div><div class="v">15,9</div><div class="trend pos">↓ 2,3</div></div>
 </div>
 <div class="row">
   <div class="av">ES</div>
-  <div><div class="name">Emilie S. <span class="badge">5d</span></div><div class="meta">18 økter</div></div>
+  <div><div class="name">Emilie S.</div><div class="meta">18 økter · 5d streak</div></div>
   <div class="hcp"><div class="l">HCP</div><div class="v">22,4</div><div class="trend pos">↓ 0,8</div></div>
 </div>
 <div class="row">
   <div class="av">OR</div>
-  <div><div class="name">Oliver R. <span class="badge">9d</span></div><div class="meta">31 økter</div></div>
+  <div><div class="name">Oliver R.</div><div class="meta">31 økter · 9d streak</div></div>
   <div class="hcp"><div class="l">HCP</div><div class="v">8,1</div><div class="trend pos">↓ 0,3</div></div>
 </div>
 <div class="row">
@@ -39,4 +37,5 @@
   <div><div class="name">Jakob T.</div><div class="meta">7 økter · inaktiv 14d</div></div>
   <div class="hcp"><div class="l">HCP</div><div class="v">12,5</div><div class="trend neg">↑ 0,4</div></div>
 </div>
+<script src="../assets/lucide.js"></script>
 </body></html>

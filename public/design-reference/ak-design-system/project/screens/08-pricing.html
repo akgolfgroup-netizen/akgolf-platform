@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AK Golf Group — Priser</title>
+<meta name="description" content="Anders-pakker, Markus-pakker, Flex-tjenester. Sammenligningstabell og åpne priser uten skjulte kostnader.">
+<link rel="icon" href="../assets/favicon/favicon-32.png">
+<link rel="stylesheet" href="app.css">
+<style>
+  /* Page header */
+  .pheader {
+    background: var(--ak-surface);
+    padding-block: 96px 56px;
+    border-bottom: 1px solid #e0e8e5;
+  }
+  .pheader__eyebrow { color: var(--ak-primary); margin-bottom: 24px; }
+  .pheader__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--ak-ink);
+    margin: 0 0 24px;
+    max-width: 880px;
+    text-wrap: balance;
+  }
+  .pheader__title em { font-style: italic; font-weight: 500; color: var(--ak-primary); }
+  .pheader__lede {
+    max-width: 640px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ak-text);
+    margin: 0 0 32px;
+  }
+  .pheader__chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .pheader__chip {
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid #d6e2dd;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--ak-text);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .pheader__chip span[data-icon] { color: var(--ak-primary); }
+
+  /* Coach selector tabs */
+  .coach-tabs {
+    background: var(--ak-surface);
+    padding-block: 0 24px;
+    position: sticky; top: 68px; z-index: 30;
+  }
+  .coach-tabs__inner {
+    display: inline-flex;
+    background: #fff;
+    border: 1px solid #e0e8e5;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+  }
+  .coach-tabs__btn {
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ak-muted);
+    background: transparent;
+    transition: background 150ms ease, color 150ms ease;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .coach-tabs__btn[aria-pressed="true"] {
+    background: var(--ak-primary);
+    color: #fff;
+  }
+  .coach-tabs__btn[aria-pressed="true"][data-coach="flex"] {
+    background: var(--ak-accent);
+    color: var(--ak-ink);
+  }
+
+  /* Pricing cards */
+  .pricing { padding-block: 56px 96px; background: var(--ak-surface); }
+  .pricing__group { display: none; }
+  .pricing__group[data-active="true"] { display: block; }
+
+  .pricing__head {
+    display: grid; gap: 12px;
+    margin-bottom: 32px;
+    align-items: end;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) { .pricing__head { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
+  .pricing__intro h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ak-ink);
+    margin: 0 0 12px;
+  }
+  .pricing__intro h2 em { font-style: italic; font-weight: 500; color: var(--ak-primary); }
+  .pricing__intro p { color: var(--ak-text); font-size: 15px; line-height: 1.6; margin: 0; max-width: 580px; }
+  .pricing__coach {
+    display: flex; gap: 16px; align-items: center;
+    background: #fff; border: 1px solid #e0e8e5; border-radius: 16px; padding: 16px;
+  }
+  .pricing__coach-photo {
+    width: 64px; height: 64px; border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--ak-primary), var(--ak-accent));
+    color: var(--ak-ink);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px;
+    position: relative;
+  }
+  .pricing__coach-photo small {
+    position: absolute; bottom: -4px; right: -4px;
+    font-size: 9px; padding: 2px 6px;
+    background: #fff; border: 1px solid #d6e2dd;
+    border-radius: 6px;
+    font-family: var(--font-mono); letter-spacing: 0.06em;
+    color: var(--ak-muted);
+  }
+  .pricing__coach-name { font-weight: 700; font-size: 15px; color: var(--ak-ink); margin: 0 0 2px; }
+  .pricing__coach-role { font-size: 12px; color: var(--ak-muted); margin: 0; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.14em; }
+
+  .price-card {
+    background: #fff;
+    border: 1px solid #e0e8e5;
+    border-radius: 16px;
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative;
+    transition: box-shadow 250ms ease, transform 250ms ease;
+  }
+  .price-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+  .price-card--featured {
+    border: 1.5px solid rgba(209, 248, 67, 0.55);
+    box-shadow: 0 0 24px rgba(209, 248, 67, 0.15);
+  }
+  .price-card--dark {
+    background: var(--ak-card-dark);
+    border-color: #1a4a3a;
+    color: #fff;
+  }
+  .price-card__badge {
+    position: absolute; top: -12px; left: 24px;
+    padding: 4px 12px;
+    background: var(--ak-accent);
+    color: var(--ak-ink);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .price-card__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.025em;
+    margin: 0;
+    color: var(--ak-ink);
+  }
+  .price-card--dark .price-card__name { color: #fff; }
+  .price-card__pitch {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ak-text);
+    margin: 0;
+    min-height: 44px;
+  }
+  .price-card--dark .price-card__pitch { color: rgba(255,255,255,0.78); }
+  .price-card__price {
+    display: flex; align-items: baseline; gap: 6px;
+    border-top: 1px solid #ECF0EF;
+    border-bottom: 1px solid #ECF0EF;
+    padding: 16px 0;
+  }
+  .price-card--dark .price-card__price { border-color: rgba(255,255,255,0.08); }
+  .price-card__amount {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ak-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .price-card--dark .price-card__amount { color: #fff; }
+  .price-card__currency { font-size: 16px; font-weight: 500; color: var(--ak-muted); }
+  .price-card__period { font-size: 14px; color: var(--ak-muted); }
+  .price-card__note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ak-muted);
+    margin-left: auto;
+  }
+  .price-card__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; flex: 1; }
+  .price-card__list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px; line-height: 1.5; color: var(--ak-text);
+  }
+  .price-card--dark .price-card__list li { color: rgba(255,255,255,0.85); }
+  .price-card__list span[data-icon] { color: var(--ak-primary); flex-shrink: 0; margin-top: 2px; }
+  .price-card--dark .price-card__list span[data-icon] { color: var(--ak-accent); }
+  .price-card__list .muted { color: var(--ak-muted); }
+  .price-card__list .muted span[data-icon] { color: var(--ak-muted); }
+  .price-card__cta {
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .price-card__cta .ak-btn { width: 100%; }
+
+  /* Flex tjenester (single-buy items) */
+  .flex-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 700px)  { .flex-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .flex-grid { grid-template-columns: repeat(3, 1fr); } }
+  .flex-card {
+    background: #fff;
+    border: 1px solid #e0e8e5;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .flex-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .flex-card__title { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--ak-ink); margin: 0; }
+  .flex-card__price { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--ak-primary); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .flex-card__price small { font-weight: 500; font-size: 12px; color: var(--ak-muted); display: block; }
+  .flex-card__copy { font-size: 14px; line-height: 1.55; color: var(--ak-text); margin: 0; flex: 1; }
+  .flex-card__meta { display: flex; gap: 12px; font-size: 12px; color: var(--ak-muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.14em; padding-top: 12px; border-top: 1px solid #ECF0EF; }
+
+  /* Comparison */
+  .compare { background: #fff; padding-block: 96px; border-top: 1px solid #e0e8e5; }
+  .compare__head {
+    display: grid; gap: 16px; margin-bottom: 40px; align-items: end;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) { .compare__head { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
+  .compare__title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1; letter-spacing: -0.03em; color: var(--ak-ink); margin: 0;
+    max-width: 720px; text-wrap: balance;
+  }
+  .compare__title em { font-style: italic; font-weight: 500; color: var(--ak-primary); }
+  .compare__sub { color: var(--ak-text); font-size: 16px; line-height: 1.6; margin: 0; }
+
+  /* FAQ + bottom */
+  .faq { background: var(--ak-surface); padding-block: 96px; }
+  .faq__list { display: grid; gap: 12px; max-width: 800px; margin: 0 auto; }
+  .faq__item {
+    background: #fff; border: 1px solid #e0e8e5; border-radius: 16px;
+    padding: 20px 24px;
+  }
+  .faq__item summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 600; font-size: 16px; color: var(--ak-ink);
+    letter-spacing: -0.01em;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary span[data-icon] { color: var(--ak-primary); transition: transform 200ms ease; }
+  .faq__item[open] summary span[data-icon] { transform: rotate(180deg); }
+  .faq__body { color: var(--ak-text); font-size: 15px; line-height: 1.6; margin: 12px 0 0; }
+
+  /* Final CTA */
+  .pcta { background: var(--ak-dark-bg); color: #fff; padding-block: 80px; text-align: center; position: relative; overflow: hidden; }
+  .pcta::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(209,248,67,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .pcta__title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15; letter-spacing: -0.03em;
+    margin: 0 0 16px; color: #fff; text-wrap: balance;
+  }
+  .pcta__title em { font-style: italic; font-weight: 400; color: var(--ak-accent); }
+  .pcta__copy { color: rgba(255,255,255,0.72); font-size: 16px; line-height: 1.6; max-width: 540px; margin: 0 auto 32px; }
+  .pcta__buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; position: relative; z-index: 2; }
+</style>
+</head>
+<body>
+
+<!-- DUPLISERT FRA screens/_partials/nav.html — keep in sync -->
+<header class="ak-website-nav" data-partial="nav">
+  <div class="ak-container">
+    <div class="ak-website-nav__inner">
+      <a href="01-forsiden.html" class="ak-website-nav__logo-link" aria-label="AK Golf Group — forsiden">
+        <img src="../assets/logos/ak-golf-logo-primary-on-light.svg" alt="AK Golf Group" class="ak-website-nav__logo">
+      </a>
+      <nav class="ak-website-nav__links" aria-label="Hovednavigasjon">
+        <a href="02-academy.html">Academy</a>
+        <a href="05-junior-academy.html">Junior</a>
+        <a href="06-booking.html">Booking</a>
+        <a href="07-utvikling.html">Utvikling</a>
+        <a href="08-pricing.html" aria-current="page">Priser</a>
+      </nav>
+      <div class="ak-website-nav__cta">
+        <a href="../portal-login.html" class="ak-btn ak-btn--ghost ak-btn--sm">Logg inn</a>
+        <a href="04-academy-booking.html" class="ak-btn ak-btn--primary ak-btn--sm">Bli medlem</a>
+        <button class="ak-website-nav__burger" aria-label="Åpne meny" data-menu-toggle>
+          <span data-icon="menu" data-size="22"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="ak-mobile-menu" data-mobile-menu aria-hidden="true">
+  <a href="02-academy.html">Academy</a>
+  <a href="05-junior-academy.html">Junior Academy</a>
+  <a href="06-booking.html">Booking</a>
+  <a href="07-utvikling.html">Utvikling</a>
+  <a href="08-pricing.html" aria-current="page">Priser</a>
+  <a href="09-om-oss.html">Om oss</a>
+  <a href="10-kontakt.html">Kontakt</a>
+  <div style="margin-top: 24px; display: grid; gap: 8px;">
+    <a href="../portal-login.html" class="ak-btn ak-btn--ghost-dark">Logg inn</a>
+    <a href="04-academy-booking.html" class="ak-btn ak-btn--accent">Bli medlem</a>
+  </div>
+</div>
+
+<main>
+  <section class="pheader">
+    <div class="ak-container">
+      <div class="ak-eyebrow pheader__eyebrow">Priser · Oppdatert 2026</div>
+      <h1 class="pheader__title">
+        Åpne priser, ingen <em>skjulte kostnader</em>.
+      </h1>
+      <p class="pheader__lede">
+        Velg trener, velg pakke. Du kan bytte eller pause månedlig — og hvis du
+        booker kartleggingstime først, trekkes den fra første abonnement.
+      </p>
+      <div class="pheader__chips">
+        <span class="pheader__chip"><span data-icon="check" data-size="14"></span>Inkl. mva</span>
+        <span class="pheader__chip"><span data-icon="check" data-size="14"></span>Månedlig oppsigelse</span>
+        <span class="pheader__chip"><span data-icon="check" data-size="14"></span>Spillerportalen inkludert</span>
+        <span class="pheader__chip"><span data-icon="check" data-size="14"></span>Stripe · Vipps</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="coach-tabs" aria-label="Velg trener">
+    <div class="ak-container">
+      <div class="coach-tabs__inner" role="tablist">
+        <button class="coach-tabs__btn" data-coach="anders" aria-pressed="true">
+          <span data-icon="user" data-size="14"></span>Anders
+        </button>
+        <button class="coach-tabs__btn" data-coach="markus" aria-pressed="false">
+          <span data-icon="user" data-size="14"></span>Markus
+        </button>
+        <button class="coach-tabs__btn" data-coach="flex" aria-pressed="false">
+          <span data-icon="sparkles" data-size="14"></span>Flex-tjenester
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="ak-container">
+
+      <!-- ANDERS -->
+      <div class="pricing__group" data-coach="anders" data-active="true">
+        <header class="pricing__head">
+          <div class="pricing__intro">
+            <h2>Anders — <em>Performance & teknikk</em>.</h2>
+            <p>
+              Hovedtrener og medgrunnlegger. PGA-sertifisert, TrackMan-spesialist.
+              Best for spillere som vil bygge en strukturert teknisk plattform.
+            </p>
+          </div>
+          <div class="pricing__coach">
+            <div class="pricing__coach-photo">A<small>1:1</small></div>
+            <div>
+              <p class="pricing__coach-name">Anders Karlsen</p>
+              <p class="pricing__coach-role">PGA · Hovedtrener</p>
+            </div>
+          </div>
+        </header>
+
+        <div class="ak-price-grid">
+          <article class="price-card">
+            <h3 class="price-card__name">Performance</h3>
+            <p class="price-card__pitch">Strukturert teknisk coaching for ambisiøse hobbygolfere.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">1 600</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">2 t/mnd</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>2 individuelle timer per måned</li>
+              <li><span data-icon="check" data-size="16"></span>TrackMan-måling hver økt</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen inkludert</li>
+              <li><span data-icon="check" data-size="16"></span>Skriftlig sammendrag etter hver økt</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Banecoaching — som tilvalg</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Mental forberedelse — som tilvalg</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--primary">Velg Performance</a>
+            </div>
+          </article>
+
+          <article class="price-card price-card--featured">
+            <span class="price-card__badge">Vanligst</span>
+            <h3 class="price-card__name">Performance Pro</h3>
+            <p class="price-card__pitch">Komplett pakke for spillere som faktisk vil ned i HCP.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">2 000</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">4 t/mnd</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>4 individuelle timer per måned</li>
+              <li><span data-icon="check" data-size="16"></span>TrackMan + dispersion-analyse</li>
+              <li><span data-icon="check" data-size="16"></span>1 banecoaching-økt per måned</li>
+              <li><span data-icon="check" data-size="16"></span>Mental forberedelse-protokoll</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen + AI Coach</li>
+              <li><span data-icon="check" data-size="16"></span>Sesongplan og milepæler</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--accent">Velg Performance Pro</a>
+            </div>
+          </article>
+
+          <article class="price-card price-card--dark">
+            <h3 class="price-card__name">Gruppe</h3>
+            <p class="price-card__pitch">Inntil 4 spillere. Felles fokus, individuelle målinger.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">900</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">2 t/mnd</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>2 gruppetimer per måned</li>
+              <li><span data-icon="check" data-size="16"></span>Maks 4 spillere per gruppe</li>
+              <li><span data-icon="check" data-size="16"></span>TrackMan-måling per spiller</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen inkludert</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Individuell tilbakemelding</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Egen sesongplan</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--ghost-dark">Velg Gruppe</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- MARKUS -->
+      <div class="pricing__group" data-coach="markus">
+        <header class="pricing__head">
+          <div class="pricing__intro">
+            <h2>Markus — <em>Mental & banespill</em>.</h2>
+            <p>
+              Spesialist på banecoaching, kortspill og mental forberedelse.
+              Best for spillere som har teknikken, men taper slag på hullet.
+            </p>
+          </div>
+          <div class="pricing__coach">
+            <div class="pricing__coach-photo" style="background: linear-gradient(135deg, #00684c, #d1f843);">M<small>1:1</small></div>
+            <div>
+              <p class="pricing__coach-name">Markus Eriksen</p>
+              <p class="pricing__coach-role">Banecoach · Mental</p>
+            </div>
+          </div>
+        </header>
+
+        <div class="ak-price-grid">
+          <article class="price-card">
+            <h3 class="price-card__name">Banecoaching</h3>
+            <p class="price-card__pitch">Reelle hull, reelle valg. Vi går 9 sammen, måler og snakker.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">1 800</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">2 runder</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>2 banecoaching-runder per måned</li>
+              <li><span data-icon="check" data-size="16"></span>Strategi pre-shot, decade-protokoll</li>
+              <li><span data-icon="check" data-size="16"></span>SG-analyse per runde</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen inkludert</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Teknikk i studio</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>TrackMan-måling</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--primary">Velg Banecoaching</a>
+            </div>
+          </article>
+
+          <article class="price-card price-card--featured">
+            <span class="price-card__badge">Vanligst</span>
+            <h3 class="price-card__name">Mental Pro</h3>
+            <p class="price-card__pitch">For spillere som taper slag i hodet. Strukturert mental plan.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">2 200</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">4 økter</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>4 mentale økter per måned (1 t)</li>
+              <li><span data-icon="check" data-size="16"></span>1 banecoaching per måned</li>
+              <li><span data-icon="check" data-size="16"></span>Pre-runde og post-runde-protokoll</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen + AI Coach</li>
+              <li><span data-icon="check" data-size="16"></span>Mental dagbok og sporing</li>
+              <li><span data-icon="check" data-size="16"></span>Tilgang til Anders ved behov</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--accent">Velg Mental Pro</a>
+            </div>
+          </article>
+
+          <article class="price-card price-card--dark">
+            <h3 class="price-card__name">Kortspill</h3>
+            <p class="price-card__pitch">Putts, chip, pitch, bunker. Området fra 100 m og inn.</p>
+            <div class="price-card__price">
+              <span class="price-card__amount">1 400</span>
+              <span class="price-card__currency">,–</span>
+              <span class="price-card__period">/mnd</span>
+              <span class="price-card__note">2 t/mnd</span>
+            </div>
+            <ul class="price-card__list">
+              <li><span data-icon="check" data-size="16"></span>2 individuelle timer per måned</li>
+              <li><span data-icon="check" data-size="16"></span>Kortspill-spesifikk progresjon</li>
+              <li><span data-icon="check" data-size="16"></span>Putting-tester (3-putt, 50-100-150)</li>
+              <li><span data-icon="check" data-size="16"></span>Spillerportalen inkludert</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Banecoaching</li>
+              <li class="muted"><span data-icon="minus" data-size="16"></span>Mental protokoll</li>
+            </ul>
+            <div class="price-card__cta">
+              <a href="04-academy-booking.html" class="ak-btn ak-btn--ghost-dark">Velg Kortspill</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- FLEX -->
+      <div class="pricing__group" data-coach="flex">
+        <header class="pricing__head">
+          <div class="pricing__intro">
+            <h2>Flex-tjenester — <em>uten abonnement</em>.</h2>
+            <p>
+              Enkelttimer og pakker du kjøper en gang. Passer hvis du ikke vil
+              binde deg, eller vil supplere et eksisterende abonnement.
+            </p>
+          </div>
+        </header>
+
+        <div class="flex-grid">
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">50 minutter</h3>
+              <div class="flex-card__price">650,–<small>/time</small></div>
+            </div>
+            <p class="flex-card__copy">Kort, fokusert økt. Velg Anders eller Markus. TrackMan inkludert.</p>
+            <div class="flex-card__meta"><span>50 min</span><span>·</span><span>1:1</span></div>
+          </article>
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">90 minutter</h3>
+              <div class="flex-card__price">1 100,–<small>/time</small></div>
+            </div>
+            <p class="flex-card__copy">Kartleggingstime eller dypdykk. Inkluderer skriftlig sammendrag.</p>
+            <div class="flex-card__meta"><span>90 min</span><span>·</span><span>1:1</span></div>
+          </article>
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">3-pakke</h3>
+              <div class="flex-card__price">1 800,–<small>/3 timer</small></div>
+            </div>
+            <p class="flex-card__copy">Tre 50-min-økter. Bruk innen 90 dager. 8% rabatt mot enkelttime.</p>
+            <div class="flex-card__meta"><span>3 × 50 min</span><span>·</span><span>1:1</span></div>
+          </article>
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">Duo-time</h3>
+              <div class="flex-card__price">900,–<small>/par</small></div>
+            </div>
+            <p class="flex-card__copy">To spillere, én time. Du og en venn, eller to fra samme klubb.</p>
+            <div class="flex-card__meta"><span>50 min</span><span>·</span><span>2 spillere</span></div>
+          </article>
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">Banecoaching 9 hull</h3>
+              <div class="flex-card__price">1 600,–<small>/runde</small></div>
+            </div>
+            <p class="flex-card__copy">Markus følger deg ni hull. Vi snakker strategi, valg og tempo.</p>
+            <div class="flex-card__meta"><span>9 hull</span><span>·</span><span>~ 2 t</span></div>
+          </article>
+          <article class="flex-card">
+            <div class="flex-card__top">
+              <h3 class="flex-card__title">Kartlegging</h3>
+              <div class="flex-card__price">1 200,–<small>· trekkes fra</small></div>
+            </div>
+            <p class="flex-card__copy">90 min. Trekkes fra første abonnement hvis du blir medlem.</p>
+            <div class="flex-card__meta"><span>90 min</span><span>·</span><span>Anbefalt start</span></div>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="compare" aria-labelledby="compare-title">
+    <div class="ak-container">
+      <header class="compare__head">
+        <h2 class="compare__title" id="compare-title">
+          Sammenlign på <em>én side</em>.
+        </h2>
+        <p class="compare__sub">Hva som er inkludert, hva som er tilvalg, og hvor pakkene faktisk skiller seg.</p>
+      </header>
+      <table class="ak-compare" aria-label="Sammenligning av abonnementer">
+        <thead>
+          <tr>
+            <th scope="col">Funksjon</th>
+            <th scope="col">Performance<br><small style="font-weight:400;font-size:12px;color:rgba(255,255,255,0.6)">1 600,–</small></th>
+            <th scope="col">Performance Pro<br><small style="font-weight:400;font-size:12px;color:rgba(255,255,255,0.6)">2 000,–</small></th>
+            <th scope="col">Mental Pro<br><small style="font-weight:400;font-size:12px;color:rgba(10,31,24,0.7)">2 200,–</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Individuelle timer / mnd</th>
+            <td>2</td><td>4</td><td>4 + 1 banecoaching</td>
+          </tr>
+          <tr>
+            <th scope="row">TrackMan-måling</th>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-dash" data-icon="minus" data-size="18"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Banecoaching / mnd</th>
+            <td><span class="ak-dash" data-icon="minus" data-size="18"></span></td>
+            <td>1</td><td>1</td>
+          </tr>
+          <tr>
+            <th scope="row">Mental protokoll</th>
+            <td><span class="ak-dash" data-icon="minus" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Sesongplan + milepæler</th>
+            <td><span class="ak-dash" data-icon="minus" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">AI Coach (chat-tilgang)</th>
+            <td><span class="ak-dash" data-icon="minus" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Spillerportalen</th>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+            <td><span class="ak-check" data-icon="check" data-size="18"></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Skriftlig sammendrag</th>
+            <td>Etter hver økt</td>
+            <td>Etter hver økt</td>
+            <td>Etter hver økt</td>
+          </tr>
+          <tr>
+            <th scope="row">Hovedtrener</th>
+            <td>Anders</td><td>Anders</td><td>Markus + Anders</td>
+          </tr>
+          <tr>
+            <th scope="row">Oppsigelse</th>
+            <td>Månedlig</td><td>Månedlig</td><td>Månedlig</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="ak-container">
+      <header class="services__head" style="margin-bottom: 40px;">
+        <h2 class="services__title" id="faq-title" style="font-size: clamp(28px, 3.5vw, 40px);">
+          Vanlige <em>spørsmål</em>
+        </h2>
+      </header>
+      <div class="faq__list">
+        <details class="faq__item">
+          <summary>Kan jeg bytte mellom pakkene?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Ja. Du kan oppgradere eller nedgradere fra og med neste måned. Send oss en melding i Spillerportalen, eller ta det opp på neste time.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Hva er forskjellen på Anders og Markus?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Anders er teknikk og TrackMan. Markus er strategi, mental og kortspill. De fleste Performance Pro-elever bruker også Markus til sesongstart og før viktige turneringer — det er inkludert i Mental Pro.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Hvor lang oppsigelsestid har jeg?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Månedlig. Si opp før den 25. og du betaler ikke for neste måned. Ingen lange bindinger, ingen oppsigelsesavgift.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Trekkes kartleggingstimen virkelig fra?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Ja. 1 200,– trekkes i sin helhet fra første månedsfaktura hvis du tegner abonnement innen 30 dager. Hvis du ikke blir medlem, betaler du bare for selve timen — ingenting mer.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Hva med betaling og fakturering?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Stripe og Vipps. Faktura månedlig, eller 3-mnd-, 6-mnd- og 12-mnd-forhåndsbetaling med rabatt (henholdsvis 4%, 7%, 10%). Ta kontakt for bedriftsavtaler.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Kan jeg pause abonnementet?<span data-icon="chevron-down" data-size="18"></span></summary>
+          <p class="faq__body">Ja, opp til 2 måneder per kalenderår — typisk vinterpause. Spillerportalen forblir tilgjengelig hele perioden.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pcta" aria-labelledby="pcta-title">
+    <div class="ak-container">
+      <h2 class="pcta__title" id="pcta-title">
+        Begynn med en <em>kartleggingstime</em>.
+      </h2>
+      <p class="pcta__copy">
+        90 minutter, 1 200,–. Du får en plan og en helt ærlig vurdering — uavhengig av om du blir medlem.
+      </p>
+      <div class="pcta__buttons">
+        <a href="04-academy-booking.html" class="ak-btn ak-btn--accent ak-btn--lg">
+          Book kartlegging
+          <span data-icon="arrow-right" data-size="18"></span>
+        </a>
+        <a href="10-kontakt.html" class="ak-btn ak-btn--ghost-dark ak-btn--lg">
+          Snakk med oss
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- DUPLISERT FRA screens/_partials/footer.html — keep in sync -->
+<footer class="ak-footer" data-partial="footer">
+  <div class="ak-container">
+    <div class="ak-footer__grid">
+      <div class="ak-footer__brand">
+        <img src="../assets/logos/ak-golf-logo-primary-on-dark.svg" alt="AK Golf Group" class="ak-footer__logo">
+        <p class="ak-footer__tagline">
+          Vi gjør golf tilgjengelig, utviklende og relevant — for alle nivåer, hele livet.
+          Coaching, software og klubbutvikling fra Fredrikstad.
+        </p>
+        <div class="ak-footer__social" aria-label="Sosiale medier">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram" data-size="18"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook" data-size="18"></span></a>
+          <a href="#" aria-label="LinkedIn"><span data-icon="linkedin" data-size="18"></span></a>
+          <a href="#" aria-label="YouTube"><span data-icon="youtube" data-size="18"></span></a>
+        </div>
+      </div>
+      <div>
+        <h4>Coaching</h4>
+        <ul>
+          <li><a href="02-academy.html">Academy</a></li>
+          <li><a href="05-junior-academy.html">Junior Academy</a></li>
+          <li><a href="06-booking.html">Book trener</a></li>
+          <li><a href="08-pricing.html">Priser</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Selskap</h4>
+        <ul>
+          <li><a href="09-om-oss.html">Om oss</a></li>
+          <li><a href="07-utvikling.html">Utvikling</a></li>
+          <li><a href="10-kontakt.html">Kontakt</a></li>
+          <li><a href="11-personvern.html">Personvern</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li>Fredrikstad, Norge</li>
+          <li><a href="mailto:hei@akgolfgroup.no">hei@akgolfgroup.no</a></li>
+          <li><a href="tel:+4790000000">+47 900 00 000</a></li>
+          <li>Hverdager 09–17</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ak-footer__bottom">
+      <span>© 2026 AK Golf Group AS · Org.nr. 000 000 000</span>
+      <span>Bygget i Fredrikstad</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/lucide.js"></script>
+<script>
+  (function () {
+    var btn = document.querySelector('[data-menu-toggle]');
+    var menu = document.querySelector('[data-mobile-menu]');
+    if (btn && menu) {
+      btn.addEventListener('click', function () {
+        var open = menu.getAttribute('data-open') === 'true';
+        menu.setAttribute('data-open', String(!open));
+        menu.setAttribute('aria-hidden', String(open));
+        btn.setAttribute('aria-label', open ? 'Åpne meny' : 'Lukk meny');
+      });
+    }
+    // Coach tabs
+    document.querySelectorAll('.coach-tabs__btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-coach');
+        document.querySelectorAll('.coach-tabs__btn').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        document.querySelectorAll('.pricing__group').forEach(function (g) {
+          g.setAttribute('data-active', String(g.getAttribute('data-coach') === key));
+        });
+        window.scrollTo({ top: document.querySelector('.coach-tabs').offsetTop - 60, behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

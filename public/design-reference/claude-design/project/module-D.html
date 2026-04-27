@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Modul D — CoachHQ Operasjonelt</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<style>body { background:#0A1F18; }</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { DesignCanvas, DCSection, DCArtboard } = window;
+  const Frame = ({ src }) => <iframe src={src} style={{ width: "100%", height: "100%", border: "none", display: "block" }} />;
+
+  const App = () => (
+    <DesignCanvas title="Modul D — CoachHQ Operasjonelt" subtitle="14 skjermer · V2 Cockpit dark · Anders + Markus daily">
+      <DCSection id="ops" title="Operasjon — der dagen blir gjort">
+        <DCArtboard id="d1" label="D1 — Dagens fokus" width={1440} height={1100}><Frame src="screens/d1-dagens-fokus.html"/></DCArtboard>
+        <DCArtboard id="d13" label="D13 — Focus (dagens 3)" width={1440} height={1100}><Frame src="screens/d13-focus.html"/></DCArtboard>
+        <DCArtboard id="d2" label="D2 — Denne uken" width={1440} height={1100}><Frame src="screens/d2-denne-uken.html"/></DCArtboard>
+        <DCArtboard id="d3" label="D3 — Coaching Board (kanban)" width={1440} height={1100}><Frame src="screens/d3-coaching-board.html"/></DCArtboard>
+        <DCArtboard id="d4" label="D4 — Mission Board" width={1440} height={1100}><Frame src="screens/d4-mission-board.html"/></DCArtboard>
+        <DCArtboard id="d14" label="D14 — Godkjenninger inbox" width={1440} height={1200}><Frame src="screens/d14-godkjenninger.html"/></DCArtboard>
+      </DCSection>
+      <DCSection id="people" title="Personer — eleven i fokus">
+        <DCArtboard id="d5" label="D5 — Spillere liste" width={1440} height={1100}><Frame src="screens/d5-spillere.html"/></DCArtboard>
+        <DCArtboard id="d6" label="D6 — Spillere grid" width={1440} height={1100}><Frame src="screens/d6-spillere-grid.html"/></DCArtboard>
+        <DCArtboard id="d7" label="D7 — Spillerprofil (tabs)" width={1440} height={1100}><Frame src="screens/d7-spillerprofil-tabs.html"/></DCArtboard>
+        <DCArtboard id="d8" label="D8 — Spillerprofil (long-page)" width={1440} height={1600}><Frame src="screens/d8-spillerprofil-longpage.html"/></DCArtboard>
+      </DCSection>
+      <DCSection id="plan" title="Plan — kalender, økter og bookinger">
+        <DCArtboard id="d11" label="D11 — Kalender (uke)" width={1440} height={1100}><Frame src="screens/d11-kalender.html"/></DCArtboard>
+        <DCArtboard id="d9" label="D9 — Bookinger admin" width={1440} height={1100}><Frame src="screens/d9-bookinger.html"/></DCArtboard>
+        <DCArtboard id="d10" label="D10 — Ny booking" width={1440} height={1100}><Frame src="screens/d10-ny-booking.html"/></DCArtboard>
+        <DCArtboard id="d12" label="D12 — Økter" width={1440} height={1300}><Frame src="screens/d12-okter.html"/></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+  ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>

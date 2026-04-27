@@ -10,6 +10,7 @@ module.exports = {
           accent: '#D1F843',
           surface: '#ECF0EF',
           text: '#324D45',
+          ink: '#0A1F18',
           muted: '#A5B2AD',
           dark: '#0A1F18',
           'card-dark': '#0D2E23',

@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spillerportalen · Dashboard — Course Hero</title>
+<link rel="icon" href="../assets/favicon/favicon-32.png">
+<link rel="stylesheet" href="app.css">
+<style>
+  /* ═══ DASHBOARD V1 · COURSE HERO ═══ */
+
+  /* Hero panel — full-bleed banefoto with floating glass data */
+  .hero-panel {
+    grid-column: 1 / -1;
+    height: 480px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a4a3a 0%, #102B1E 70%);
+  }
+  .hero-panel__photo {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 25%, rgba(209,248,67,0.20), transparent 60%),
+      radial-gradient(ellipse 50% 80% at 80% 90%, rgba(0,88,64,0.85), transparent 70%),
+      linear-gradient(135deg, #1f5a47 0%, #0a2b1f 50%, #07100C 100%);
+  }
+  .hero-panel__photo::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 24px, rgba(255,255,255,0.022) 24px 25px),
+      linear-gradient(180deg, rgba(7,16,12,0) 35%, rgba(7,16,12,0.62) 100%);
+  }
+  .hero-panel__photo-tag {
+    position: absolute; top: 20px; right: 20px;
+    padding: 6px 12px;
+    background: rgba(7, 16, 12, 0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55);
+    z-index: 5;
+  }
+
+  /* Hero copy block (top-left, sits on photo) */
+  .hero-copy {
+    position: absolute;
+    top: 32px; left: 32px;
+    z-index: 4;
+    max-width: 540px;
+  }
+  .hero-copy__greeting {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    margin: 16px 0 8px;
+    font-weight: 400;
+  }
+  .hero-copy__title {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: #fff;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .hero-copy__title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--p-lime);
+  }
+  .hero-copy__sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 440px;
+  }
+
+  /* Glass HCP panel (bottom-left of hero) */
+  .hero-hcp {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    z-index: 4;
+    width: 280px;
+  }
+  .hero-hcp__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .hero-hcp__big {
+    display: flex; align-items: baseline; gap: 6px;
+    margin-bottom: 14px;
+  }
+  .hero-hcp__num {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+  .hero-hcp__delta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--p-lime);
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    background: var(--p-lime-soft);
+    border-radius: 6px;
+    border: 1px solid var(--p-line-glow);
+  }
+  .hero-hcp__spark {
+    height: 36px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Glass next-session panel (bottom-right of hero) */
+  .hero-next {
+    position: absolute;
+    bottom: 24px; right: 24px;
+    z-index: 4;
+    width: 320px;
+  }
+  .hero-next__head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .hero-next__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+  }
+  .hero-next__when { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.10em; text-transform: uppercase; }
+  .hero-next__coach { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
+  .hero-next__coach-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--p-forest), var(--p-lime));
+    color: var(--p-ink);
+    font-weight: 700; font-size: 11px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .hero-next__coach-name { font-size: 13px; font-weight: 500; color: #fff; }
+  .hero-next__coach-role { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.10em; text-transform: uppercase; }
+
+  /* SG ring panel */
+  .sg-ring-wrap {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .sg-ring {
+    width: 160px; height: 160px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .sg-ring__center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .sg-ring__num {
+    font-size: 32px; font-weight: 600; line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--p-fg);
+  }
+  .sg-ring__label {
+    font-family: var(--font-mono);
+    font-size: 9.5px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--p-fg-3);
+    margin-top: 4px;
+  }
+  .sg-bars { display: grid; gap: 12px; }
+  .sg-bar { display: grid; grid-template-columns: 60px 1fr 56px; gap: 12px; align-items: center; }
+  .sg-bar__label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--p-fg-2);
+  }
+  .sg-bar__track {
+    height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; position: relative;
+  }
+  .sg-bar__fill {
+    position: absolute; top: 0; bottom: 0;
+    border-radius: 2px;
+  }
+  .sg-bar__fill--pos { background: var(--p-lime); }
+  .sg-bar__fill--neg { background: var(--p-rust); }
+  .sg-bar__value { font-family: var(--font-mono); font-size: 12px; color: var(--p-fg); text-align: right; font-variant-numeric: tabular-nums; }
+  .sg-bar__value--pos { color: var(--p-lime); }
+  .sg-bar__value--neg { color: var(--p-rust); }
+
+  /* Plan timeline */
+  .plan-list { display: grid; gap: 0; }
+  .plan-item {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--p-line);
+    align-items: center;
+  }
+  .plan-item:last-child { border-bottom: none; }
+  .plan-item__time {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--p-fg-2);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .plan-item__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--p-fg);
+    margin-bottom: 2px;
+  }
+  .plan-item__meta {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--p-fg-3);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+  .plan-item--done .plan-item__name { color: var(--p-fg-3); text-decoration: line-through; }
+  .plan-item--done .plan-item__time { color: var(--p-fg-3); opacity: 0.6; }
+
+  /* Activity heat — 90 day grid (mini) */
+  .heat {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 3px;
+    margin: 16px 0 8px;
+  }
+  .heat__cell {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+  }
+  .heat__cell--l1 { background: rgba(209,248,67,0.18); }
+  .heat__cell--l2 { background: rgba(209,248,67,0.40); }
+  .heat__cell--l3 { background: rgba(209,248,67,0.65); }
+  .heat__cell--l4 { background: var(--p-lime); }
+  .heat__legend { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--p-fg-3); margin-top: 12px; }
+  .heat__legend-cells { display: flex; gap: 3px; }
+  .heat__legend-cells span { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  /* AI insight card */
+  .insight {
+    background: var(--p-card-cream);
+    border-radius: 20px;
+    padding: 24px;
+    color: var(--p-ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .insight::before {
+    content: "";
+    position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--p-lime) 0%, transparent 70%);
+    opacity: 0.4;
+  }
+  .insight__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; position: relative; }
+  .insight__chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: var(--p-ink);
+    color: var(--p-lime);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .insight__chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--p-lime); box-shadow: 0 0 8px var(--p-lime); }
+  .insight__title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--p-ink);
+    margin: 0 0 12px;
+    position: relative;
+    text-wrap: balance;
+  }
+  .insight__title em { font-style: italic; font-weight: 400; color: var(--p-forest); }
+  .insight__body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(10, 31, 24, 0.75);
+    margin: 0 0 16px;
+    position: relative;
+  }
+  .insight__sources {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(10,31,24,0.10);
+    position: relative;
+  }
+  .insight__source {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(10, 31, 24, 0.55);
+    padding: 3px 8px;
+    background: rgba(10,31,24,0.06);
+    border-radius: 4px;
+  }
+
+  /* Big metric card */
+  .big-metric {
+    display: flex; flex-direction: column;
+    gap: 16px;
+    height: 100%;
+  }
+  .big-metric__num {
+    font-size: 88px;
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: var(--p-fg);
+    margin: 0;
+  }
+  .big-metric__num .unit { font-size: 0.32em; color: var(--p-fg-3); letter-spacing: 0.04em; margin-left: 8px; }
+  .big-metric__delta-row { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--p-fg-3); }
+  .big-metric__delta { color: var(--p-lime); padding: 3px 8px; background: var(--p-lime-soft); border: 1px solid var(--p-line-glow); border-radius: 5px; }
+  .big-metric__caption { color: var(--p-fg-2); font-size: 13px; line-height: 1.5; }
+
+  /* Coach note card */
+  .coach-note {
+    background: var(--p-lime);
+    color: var(--p-ink);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+  .coach-note__quote {
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--p-ink);
+  }
+  .coach-note__quote em { font-style: italic; font-weight: 400; }
+  .coach-note__sig {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(10,31,24,0.20);
+  }
+  .coach-note__sig-name { font-size: 13px; font-weight: 600; color: var(--p-ink); }
+  .coach-note__sig-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(10,31,24,0.6); }
+
+  /* Quick action grid */
+  .quick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+  .quick__btn {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--p-line);
+    border-radius: 10px;
+    text-align: left;
+    transition: all 150ms var(--p-ease);
+  }
+  .quick__btn:hover { background: rgba(255,255,255,0.07); border-color: var(--p-line-glow); }
+  .quick__btn-label { font-size: 12px; font-weight: 500; color: var(--p-fg); }
+  .quick__btn-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--p-fg-3); }
+</style>
+</head>
+<body class="portal" data-screen-label="Portal · Dashboard V1 (Course Hero)">
+
+<div class="p-shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="p-sidebar">
+    <div class="p-sidebar__brand">
+      <div class="p-sidebar__brand-mark">AK</div>
+      <div class="p-sidebar__brand-text">
+        <span class="p-sidebar__brand-name">Spillerportalen</span>
+        <span class="p-sidebar__brand-sub">v3.1</span>
+      </div>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Spille</div>
+      <a href="#" class="p-nav-item" aria-current="page">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V7l8-5 8 5v14"/><path d="M9 21V12h6v9"/></svg>
+        Runde
+        <span class="p-nav-item__count">3 nye</span>
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg>
+        Statistikk
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        TrackMan
+      </a>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Trene</div>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Plan
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20l9-7-9-7-9 7 9 7z"/><path d="M12 13l9-7"/></svg>
+        Dagbok
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg>
+        AI Coach
+        <span class="p-chip p-chip--lime" style="padding: 2px 6px; font-size: 9px; letter-spacing: 0.06em;">NY</span>
+      </a>
+    </div>
+
+    <div class="p-sidebar__group">
+      <div class="p-sidebar__group-label">Klubb</div>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Booking
+      </a>
+      <a href="#" class="p-nav-item">
+        <svg class="p-nav-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Meldinger
+        <span class="p-nav-item__count">2</span>
+      </a>
+    </div>
+
+    <div class="p-sidebar__user">
+      <div class="p-sidebar__avatar">EK</div>
+      <div>
+        <div class="p-sidebar__user-name">Erik Karlsen</div>
+        <div class="p-sidebar__user-meta">HCP 3.4 · Elite</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div>
+    <!-- Topbar -->
+    <header class="p-topbar">
+      <div class="p-topbar__crumbs">
+        <span>Spille</span>
+        <span class="p-topbar__sep">/</span>
+        <strong>Dashboard</strong>
+      </div>
+      <div class="p-topbar__search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Søk i runder, øvelser, notater…</span>
+        <span class="p-topbar__kbd">⌘K</span>
+      </div>
+      <button class="p-btn p-btn--ghost p-btn--sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Ny økt
+      </button>
+    </header>
+
+    <!-- Content -->
+    <main class="p-main p-main--padded-lg">
+      <div class="p-bento p-bento--12" style="gap: 16px;">
+
+        <!-- HERO PANEL -->
+        <section class="hero-panel">
+          <div class="hero-panel__photo"></div>
+          <span class="hero-panel__photo-tag">[Banefoto: Gamle Fredrikstad GK · hull 7 · høst]</span>
+
+          <div class="hero-copy">
+            <span class="p-kicker">
+              <span class="p-kicker__dot"></span>
+              Live · Sesongstart · Uke 17
+            </span>
+            <p class="hero-copy__greeting">God morgen, Erik —</p>
+            <h1 class="hero-copy__title">Klar for dagens <em>kalibrering</em>.</h1>
+            <p class="hero-copy__sub">
+              Du sov 7t 42m. Hvilepuls 48. Anders har lagt opp en 90-min
+              teknisk økt med fokus på 7-jern-dispersion.
+            </p>
+          </div>
+
+          <div class="p-glass hero-hcp">
+            <div class="hero-hcp__head">
+              <span class="p-mono">HCP · 30 dager</span>
+              <span class="p-mono p-mono--lime">▼ 0.6</span>
+            </div>
+            <div class="hero-hcp__big">
+              <span class="hero-hcp__num">3.4</span>
+              <span class="hero-hcp__delta">−0.6</span>
+            </div>
+            <div class="hero-hcp__spark">
+              <svg width="100%" height="100%" viewBox="0 0 240 36" preserveAspectRatio="none" style="display:block;">
+                <defs>
+                  <linearGradient id="sparkGrad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#D1F843" stop-opacity="0.4"/>
+                    <stop offset="100%" stop-color="#D1F843" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,12 L20,14 L40,10 L60,16 L80,11 L100,18 L120,14 L140,20 L160,16 L180,22 L200,19 L220,26 L240,28 L240,36 L0,36 Z" fill="url(#sparkGrad)"/>
+                <path d="M0,12 L20,14 L40,10 L60,16 L80,11 L100,18 L120,14 L140,20 L160,16 L180,22 L200,19 L220,26 L240,28" stroke="#D1F843" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="p-glass hero-next">
+            <div class="hero-next__head">
+              <div>
+                <h3 class="hero-next__title">Teknisk økt · 7-jern</h3>
+                <span class="hero-next__when">I dag · 14:00 — 15:30</span>
+              </div>
+              <span class="p-chip p-chip--solid">90 min</span>
+            </div>
+            <p style="font-size: 13px; line-height: 1.55; color: rgba(255,255,255,0.78); margin: 0;">
+              Performance Studio. TrackMan klar. Anders har lagt ved video fra forrige økt — 12 slag som bygger på.
+            </p>
+            <div class="hero-next__coach">
+              <div class="hero-next__coach-avatar">A</div>
+              <div>
+                <div class="hero-next__coach-name">Anders Karlsen</div>
+                <div class="hero-next__coach-role">PGA · Hovedtrener</div>
+              </div>
+              <button class="p-btn p-btn--lime p-btn--sm" style="margin-left: auto;">Detaljer</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- BIG NUM · Strokes Gained -->
+        <section class="p-card p-col-3">
+          <div class="p-card__head">
+            <span class="p-mono">Strokes Gained · 30d</span>
+            <span class="p-mono p-mono--lime">▲</span>
+          </div>
+          <div class="big-metric">
+            <p class="big-metric__num">+1,82<span class="unit">SG</span></p>
+            <div class="big-metric__delta-row">
+              <span class="big-metric__delta">+0,41 vs 60d</span>
+              <span>P75 · Norge</span>
+            </div>
+            <p class="big-metric__caption">
+              Approach er kategorien som flytter mest. Off-tee holder seg flat.
+            </p>
+          </div>
+        </section>
+
+        <!-- SG breakdown ring -->
+        <section class="p-card p-col-6">
+          <div class="p-card__head">
+            <span class="p-mono">SG-fordeling · Siste 8 runder</span>
+            <a href="#" class="p-card__action">Detaljer →</a>
+          </div>
+          <div class="sg-ring-wrap">
+            <div class="sg-ring">
+              <svg width="160" height="160" viewBox="0 0 160 160" style="transform: rotate(-90deg);">
+                <circle cx="80" cy="80" r="72" stroke="rgba(255,255,255,0.06)" stroke-width="6" fill="none"/>
+                <circle cx="80" cy="80" r="72" stroke="#D1F843" stroke-width="6" fill="none"
+                        stroke-dasharray="452" stroke-dashoffset="180" stroke-linecap="round"/>
+                <circle cx="80" cy="80" r="60" stroke="rgba(255,255,255,0.06)" stroke-width="6" fill="none"/>
+                <circle cx="80" cy="80" r="60" stroke="#00684C" stroke-width="6" fill="none"
+                        stroke-dasharray="377" stroke-dashoffset="120" stroke-linecap="round"/>
+                <circle cx="80" cy="80" r="48" stroke="rgba(255,255,255,0.06)" stroke-width="6" fill="none"/>
+                <circle cx="80" cy="80" r="48" stroke="#F27A3E" stroke-width="6" fill="none"
+                        stroke-dasharray="302" stroke-dashoffset="220" stroke-linecap="round"/>
+                <circle cx="80" cy="80" r="36" stroke="rgba(255,255,255,0.06)" stroke-width="6" fill="none"/>
+                <circle cx="80" cy="80" r="36" stroke="#B8D4CC" stroke-width="6" fill="none"
+                        stroke-dasharray="226" stroke-dashoffset="100" stroke-linecap="round"/>
+              </svg>
+              <div class="sg-ring__center">
+                <div class="sg-ring__num">+1,82</div>
+                <div class="sg-ring__label">Total SG</div>
+              </div>
+            </div>
+            <div class="sg-bars">
+              <div class="sg-bar">
+                <span class="sg-bar__label">Off-tee</span>
+                <div class="sg-bar__track"><div class="sg-bar__fill sg-bar__fill--pos" style="left: 50%; width: 12%;"></div></div>
+                <span class="sg-bar__value sg-bar__value--pos">+0,24</span>
+              </div>
+              <div class="sg-bar">
+                <span class="sg-bar__label">Approach</span>
+                <div class="sg-bar__track"><div class="sg-bar__fill sg-bar__fill--pos" style="left: 50%; width: 38%;"></div></div>
+                <span class="sg-bar__value sg-bar__value--pos">+0,76</span>
+              </div>
+              <div class="sg-bar">
+                <span class="sg-bar__label">Around</span>
+                <div class="sg-bar__track"><div class="sg-bar__fill sg-bar__fill--neg" style="right: 50%; width: 18%;"></div></div>
+                <span class="sg-bar__value sg-bar__value--neg">−0,36</span>
+              </div>
+              <div class="sg-bar">
+                <span class="sg-bar__label">Putting</span>
+                <div class="sg-bar__track"><div class="sg-bar__fill sg-bar__fill--pos" style="left: 50%; width: 30%;"></div></div>
+                <span class="sg-bar__value sg-bar__value--pos">+0,60</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Coach note (lime card) -->
+        <section class="coach-note p-col-3">
+          <span class="p-mono" style="color: rgba(10,31,24,0.65);">
+            ◆ Coach-notat · 09:14
+          </span>
+          <p class="coach-note__quote">
+            "Hold tempoet vi fant på torsdag. <em>Ikke jag avstanden</em> — la kølla gjøre jobben."
+          </p>
+          <div class="coach-note__sig">
+            <div class="hero-next__coach-avatar" style="background: var(--p-ink); color: var(--p-lime);">A</div>
+            <div>
+              <div class="coach-note__sig-name">Anders</div>
+              <div class="coach-note__sig-meta">Etter økt #142</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI insight -->
+        <section class="insight p-col-7">
+          <div class="insight__head">
+            <span class="insight__chip">
+              <span class="insight__chip-dot"></span>
+              AI Coach · 06:21
+            </span>
+            <span class="p-mono" style="color: rgba(10,31,24,0.5);">Confidence 84%</span>
+          </div>
+          <h3 class="insight__title">
+            Tre runder på rad: <em>second-shot fra rough</em> koster deg mest.
+          </h3>
+          <p class="insight__body">
+            Du har spilt 8 av 10 hull med rough på lay-up. Når du går fra
+            rough til green med 5–7-jern, taper du 0,42 slag pr. forsøk
+            mot referansen. Forslaget mitt: ta én ekstra kølle og sikt
+            mot midtre del av greenen — du sparer 1,8 slag i snitt pr. runde.
+          </p>
+          <div class="insight__sources">
+            <span class="insight__source">Runde #87 · Holtsmark</span>
+            <span class="insight__source">Runde #88 · Borre</span>
+            <span class="insight__source">Runde #89 · Gamle</span>
+            <span class="insight__source">TrackMan · 2026-04-22</span>
+            <span class="insight__source">SG-baseline · Norge</span>
+          </div>
+        </section>
+
+        <!-- Plan i dag -->
+        <section class="p-card p-col-5">
+          <div class="p-card__head">
+            <span class="p-mono">Plan · onsdag 27. april</span>
+            <a href="#" class="p-card__action">Hele uken →</a>
+          </div>
+          <div class="plan-list">
+            <div class="plan-item plan-item--done">
+              <span class="plan-item__time">06:30</span>
+              <div>
+                <div class="plan-item__name">Mobility · 20 min</div>
+                <div class="plan-item__meta">Foam roller · pust</div>
+              </div>
+              <span class="p-chip">Ferdig</span>
+            </div>
+            <div class="plan-item">
+              <span class="plan-item__time">14:00</span>
+              <div>
+                <div class="plan-item__name">Teknisk · 7-jern dispersion</div>
+                <div class="plan-item__meta">Anders · Performance Studio · 90 min</div>
+              </div>
+              <span class="p-chip p-chip--lime">Neste</span>
+            </div>
+            <div class="plan-item">
+              <span class="plan-item__time">17:30</span>
+              <div>
+                <div class="plan-item__name">Putting · 50/100/150 cm</div>
+                <div class="plan-item__meta">Egentrening · 30 min</div>
+              </div>
+              <span class="p-chip">Planlagt</span>
+            </div>
+            <div class="plan-item">
+              <span class="plan-item__time">20:00</span>
+              <div>
+                <div class="plan-item__name">Mental · runde-visualisering</div>
+                <div class="plan-item__meta">Markus · Loom · 15 min</div>
+              </div>
+              <span class="p-chip">Planlagt</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Konsistens / heatmap -->
+        <section class="p-card p-col-4">
+          <div class="p-card__head">
+            <span class="p-mono">Konsistens · 90 dager</span>
+            <span class="p-mono p-mono--lime">82%</span>
+          </div>
+          <div class="heat">
+            <!-- 13 weeks * 7 days = 91 cells -->
+            <span class="heat__cell heat__cell--l1"></span><span class="heat__cell"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell"></span>
+            <span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell"></span><span class="heat__cell heat__cell--l1"></span>
+            <span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span>
+            <span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell"></span>
+            <span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span>
+            <span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell"></span><span class="heat__cell heat__cell--l1"></span>
+            <span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l1"></span>
+            <span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span>
+            <span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span>
+            <span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l1"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell"></span>
+            <span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span>
+            <span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span>
+            <span class="heat__cell heat__cell--l2"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span><span class="heat__cell heat__cell--l3"></span><span class="heat__cell heat__cell--l4"></span>
+          </div>
+          <div class="heat__legend">
+            <span>Mindre</span>
+            <span class="heat__legend-cells">
+              <span style="background: rgba(255,255,255,0.04);"></span>
+              <span style="background: rgba(209,248,67,0.18);"></span>
+              <span style="background: rgba(209,248,67,0.40);"></span>
+              <span style="background: rgba(209,248,67,0.65);"></span>
+              <span style="background: #D1F843;"></span>
+            </span>
+            <span>Mer</span>
+            <span style="margin-left: auto;">73 / 90 dager</span>
+          </div>
+        </section>
+
+        <!-- Quick actions / Last sessions -->
+        <section class="p-card p-col-3">
+          <div class="p-card__head">
+            <span class="p-mono">Hurtig</span>
+          </div>
+          <div class="quick">
+            <button class="quick__btn">
+              <span class="quick__btn-meta">Logg</span>
+              <span class="quick__btn-label">Ny runde</span>
+            </button>
+            <button class="quick__btn">
+              <span class="quick__btn-meta">Book</span>
+              <span class="quick__btn-label">Trener</span>
+            </button>
+            <button class="quick__btn">
+              <span class="quick__btn-meta">AI</span>
+              <span class="quick__btn-label">Spør coach</span>
+            </button>
+            <button class="quick__btn">
+              <span class="quick__btn-meta">Last</span>
+              <span class="quick__btn-label">TrackMan-fil</span>
+            </button>
+          </div>
+          <hr class="p-divider" style="margin: 16px 0;">
+          <div class="p-mono" style="margin-bottom: 10px;">Siste runder</div>
+          <div class="p-stat-row" style="padding: 8px 0;">
+            <span style="font-size: 13px; color: var(--p-fg);">Gamle FK</span>
+            <span class="p-num" style="font-family: var(--font-mono); font-size: 12px; color: var(--p-fg);">74 <span class="p-delta-pos">+2</span></span>
+          </div>
+          <div class="p-stat-row" style="padding: 8px 0;">
+            <span style="font-size: 13px; color: var(--p-fg);">Borre</span>
+            <span class="p-num" style="font-family: var(--font-mono); font-size: 12px; color: var(--p-fg);">71 <span class="p-delta-pos">−1</span></span>
+          </div>
+          <div class="p-stat-row" style="padding: 8px 0; border-bottom: none;">
+            <span style="font-size: 13px; color: var(--p-fg);">Holtsmark</span>
+            <span class="p-num" style="font-family: var(--font-mono); font-size: 12px; color: var(--p-fg);">76 <span class="p-delta-neg">+4</span></span>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+</body>
+</html>

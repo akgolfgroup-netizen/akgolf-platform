@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>E2 · AK Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_reference-remix.css">
 <style>
   /* E2 specific — nested card grids */
@@ -445,11 +445,11 @@
         <!-- Today's courses -->
         <div class="rr2-today" style="margin-top: 14px;">
           <h5>Today's sessions</h5>
-          <div class="course done"><div class="ic">📊</div><div class="n">Statistics review</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-          <div class="course"><div class="ic">🎯</div><div class="n">Short game</div><div class="check"></div></div>
-          <div class="course"><div class="ic">📈</div><div class="n">SG analytics</div><div class="check"></div></div>
-          <div class="course"><div class="ic">🏌</div><div class="n">Range reps</div><div class="check"></div></div>
-          <div class="course done"><div class="ic">📝</div><div class="n">Notes</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+          <div class="course done"><div class="ic"><i data-lucide="bar-chart-3" class="icon-md"></i></div><div class="n">Statistics review</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+          <div class="course"><div class="ic"><i data-lucide="target" class="icon-md"></i></div><div class="n">Short game</div><div class="check"></div></div>
+          <div class="course"><div class="ic"><i data-lucide="trending-up" class="icon-md"></i></div><div class="n">SG analytics</div><div class="check"></div></div>
+          <div class="course"><div class="ic"><i data-lucide="flag-triangle-right" class="icon-md"></i></div><div class="n">Range reps</div><div class="check"></div></div>
+          <div class="course done"><div class="ic"><i data-lucide="pencil-line" class="icon-md"></i></div><div class="n">Notes</div><div class="check"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div></div>
         </div>
       </div>
     </div>
@@ -531,5 +531,8 @@
   </main>
 </div>
 
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

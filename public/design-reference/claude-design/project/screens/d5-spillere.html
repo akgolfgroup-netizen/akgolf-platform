@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D5 — Spillere · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .search-input { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; width: 320px; color: #fff; font-size: 13px; }
+  .search-input [data-lucide] { width: 14px; height: 14px; color: rgba(255,255,255,0.5); }
+  .search-input input { background: transparent; border: none; outline: none; color: #fff; flex: 1; font-size: 13px; }
+  .filter-chip { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); padding: 6px 12px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,0.7); cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+  .filter-chip:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.18); }
+  .filter-chip.active { background: rgba(209,248,67,0.10); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); }
+  .filter-chip [data-lucide] { width: 12px; height: 12px; }
+  .toolbar .right { margin-left: auto; display: flex; gap: 8px; }
+
+  .stu-table-wrap { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(10,31,24,0.03), 0 6px 20px rgba(255,255,255,0.04); }
+  .stu-row { display: grid; grid-template-columns: 32px 2fr 90px 1.2fr 0.8fr 0.8fr 100px 80px 24px; gap: 14px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a); font-size: 13px; }
+  .stu-row:last-child { border-bottom: none; }
+  .stu-row.head { color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; background: rgba(255,255,255,0.025); }
+  .stu-row.head .sortable { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .stu-row.head .sortable [data-lucide] { width: 10px; height: 10px; }
+  .stu-row:not(.head):hover { background: rgba(255,255,255,0.025); cursor: pointer; }
+
+  .stu-name { font-weight: 600; color: #fff; }
+  .stu-name small { display: block; font-size: 10px; color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; margin-top: 2px; font-weight: 400; }
+  .hcp-pill { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 5px; color: #fff; background: rgba(255,255,255,0.04); display: inline-block; }
+  .hcp-pill.elite { background: var(--akgolf-accent); color: #fff; }
+  .hcp-pill.adv { background: rgba(42,125,90,0.18); color: #6FCBA1; }
+  .hcp-pill.mid { background: rgba(0,122,255,0.12); color: #6FB3FF; }
+  .hcp-pill.beg { background: rgba(196,138,50,0.18); color: #E8B967; }
+
+  .spark { width: 100%; height: 22px; }
+  .sg-cell { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+  .sg-cell.up { color: #6FCBA1; }
+  .sg-cell.down { color: #F49283; }
+
+  .last-run { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
+  .last-run.warn { color: #E8B967; }
+  .last-run.alert { color: #F49283; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 18px; }
+  .stat-c { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 10px; padding: 12px 14px;  }
+  .stat-c .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .stat-c .v { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-top: 4px; }
+
+  .pagination { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: rgba(255,255,255,0.025); border-top: 1px solid var(--akgolf-line-dark, #1a4a3a); font-size: 12px; color: rgba(255,255,255,0.55); }
+  .pagination .nav { display: flex; gap: 6px; }
+  .pagination .nav button { padding: 5px 10px; border-radius: 6px; background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item active"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Spillere</div>
+      <div class="chq-top-meta tabular">42 aktive · 3 nye denne uken</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Personer</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Alle spillere</h1>
+        <p>Sortér på HCP, SG-trend, eller siste runde. Klikk en rad for full profil.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="download"></i> Eksport CSV</button>
+        <button class="chq-btn"><i data-lucide="users"></i> Inviter mange</button>
+        <button class="chq-btn primary"><i data-lucide="user-plus"></i> Ny spiller</button>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-c"><div class="l">Aktive</div><div class="v tabular">42</div></div>
+      <div class="stat-c"><div class="l">Nye 30 d</div><div class="v tabular">+5</div></div>
+      <div class="stat-c"><div class="l">Inaktive 14 d+</div><div class="v tabular" style="color:var(--akgolf-danger)">3</div></div>
+      <div class="stat-c"><div class="l">Snitt HCP</div><div class="v tabular">12.4</div></div>
+      <div class="stat-c"><div class="l">Snitt SG-trend</div><div class="v tabular" style="color:var(--akgolf-success)">+0.18</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-input"><i data-lucide="search"></i><input placeholder="Søk navn, e-post, klubb…" /></div>
+      <div class="filter-chip active">Alle 42</div>
+      <div class="filter-chip">Performance <span style="opacity:0.6">14</span></div>
+      <div class="filter-chip">Pro plan <span style="opacity:0.6">22</span></div>
+      <div class="filter-chip">Junior <span style="opacity:0.6">6</span></div>
+      <div class="filter-chip"><i data-lucide="alert-circle"></i> Inaktive</div>
+      <div class="filter-chip"><i data-lucide="trending-up"></i> Stiger</div>
+      <div class="right">
+        <button class="chq-btn ghost"><i data-lucide="sliders-horizontal"></i> Filter</button>
+        <button class="chq-btn ghost"><i data-lucide="layout-grid"></i> Kort</button>
+      </div>
+    </div>
+
+    <div class="stu-table-wrap">
+
+      <div class="stu-row head">
+        <div></div>
+        <div class="sortable">Navn <i data-lucide="chevron-down"></i></div>
+        <div class="sortable">HCP <i data-lucide="chevron-down"></i></div>
+        <div>Plan / Coach</div>
+        <div class="sortable">SG (siste 5)</div>
+        <div>Trend</div>
+        <div>Siste runde</div>
+        <div>Status</div>
+        <div></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#D1F843">SH</div>
+        <div class="stu-name">Sofie Holm <small>sofie.holm · medlem siden 2024</small></div>
+        <div><span class="hcp-pill elite">4.2</span></div>
+        <div>Performance · Anders</div>
+        <div class="sg-cell up">+0.62</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,18 12,16 24,14 36,12 48,8 60,6 72,4 80,2" stroke="#D1F843" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">I dag · 07:00</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#6FCBA1">EL</div>
+        <div class="stu-name">Erik Lund <small>erik.lund · medlem siden 2023</small></div>
+        <div><span class="hcp-pill mid">18.5</span></div>
+        <div>Pro · Anders</div>
+        <div class="sg-cell up">+0.18</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,16 12,14 24,15 36,12 48,11 60,9 72,8 80,7" stroke="#6FCBA1" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">I går</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#6FCBA1">MD</div>
+        <div class="stu-name">Mia Dahl <small>mia.dahl · medlem siden 2024</small></div>
+        <div><span class="hcp-pill adv">9.8</span></div>
+        <div>Performance · Anders</div>
+        <div class="sg-cell up">+0.34</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,14 12,12 24,11 36,9 48,11 60,7 72,8 80,5" stroke="#6FCBA1" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">2 dager siden</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#E8B967">LB</div>
+        <div class="stu-name">Lars Berg <small>lars.berg · medlem siden 2025</small></div>
+        <div><span class="hcp-pill mid">12.0</span></div>
+        <div>Pro · Markus</div>
+        <div class="sg-cell up">+0.08</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,14 12,12 24,13 36,11 48,12 60,10 72,11 80,9" stroke="#E8B967" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">3 dager siden</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#C896E8">CR</div>
+        <div class="stu-name">Camilla Ruud <small>camilla.r · medlem siden 2023</small></div>
+        <div><span class="hcp-pill mid">15.3</span></div>
+        <div>Pro · Markus</div>
+        <div class="sg-cell down">−0.12</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,8 12,10 24,9 36,12 48,11 60,14 72,13 80,16" stroke="#F49283" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">5 dager siden</div>
+        <div><span class="chq-pill warn">Trender ned</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#F49283">EL</div>
+        <div class="stu-name">Emma Lien <small>emma.lien · medlem siden 2025</small></div>
+        <div><span class="hcp-pill mid">16.4</span></div>
+        <div>Pro · Anders</div>
+        <div class="sg-cell down">−0.24</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,6 12,8 24,9 36,11 48,13 60,14 72,16 80,18" stroke="#F49283" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run alert">14 dager siden</div>
+        <div><span class="chq-pill danger">Inaktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#F49283">HV</div>
+        <div class="stu-name">Henrik Vold <small>henrik.vold · medlem siden 2022</small></div>
+        <div><span class="hcp-pill beg">24.0</span></div>
+        <div>Gruppe · Markus</div>
+        <div class="sg-cell down">−0.42</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,4 12,7 24,9 36,11 48,13 60,15 72,17 80,19" stroke="#F49283" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run alert">17 dager siden</div>
+        <div><span class="chq-pill danger">Inaktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#6FCBA1">PK</div>
+        <div class="stu-name">Pelle Karlsen <small>pelle.k · medlem siden 2024</small></div>
+        <div><span class="hcp-pill mid">14.2</span></div>
+        <div>Pro · Markus</div>
+        <div class="sg-cell up">+0.11</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,14 12,13 24,11 36,12 48,10 60,11 72,9 80,8" stroke="#6FCBA1" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">4 dager siden</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#6FB3FF">KN</div>
+        <div class="stu-name">Kari Nord <small>kari.nord · medlem siden 2024</small></div>
+        <div><span class="hcp-pill mid">11.5</span></div>
+        <div>Performance · Anders</div>
+        <div class="sg-cell up">+0.42</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,18 12,16 24,15 36,12 48,10 60,8 72,6 80,4" stroke="#D1F843" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">6 dager siden</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#E8B967">TS</div>
+        <div class="stu-name">Tor Solberg <small>tor.solberg · medlem siden 2023</small></div>
+        <div><span class="hcp-pill mid">17.1</span></div>
+        <div>Gruppe · Anders</div>
+        <div class="sg-cell up">+0.06</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,12 12,13 24,11 36,12 48,11 60,10 72,11 80,10" stroke="#A5B2AD" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">8 dager siden</div>
+        <div><span class="chq-pill">Stabil</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="stu-row">
+        <div class="chq-av sm" style="background:#C896E8">AM</div>
+        <div class="stu-name">Anne Moen <small>anne.moen · medlem siden 2025</small></div>
+        <div><span class="hcp-pill beg">22.8</span></div>
+        <div>Gruppe · Markus</div>
+        <div class="sg-cell up">+0.22</div>
+        <div><svg class="spark" viewBox="0 0 80 22" preserveAspectRatio="none"><polyline points="0,18 12,16 24,15 36,13 48,12 60,11 72,9 80,8" stroke="#6FCBA1" fill="none" stroke-width="1.5"/></svg></div>
+        <div class="last-run">7 dager siden</div>
+        <div><span class="chq-pill success">Aktiv</span></div>
+        <div><i data-lucide="chevron-right" style="width:14px;height:14px;color:rgba(255,255,255,0.4)"></i></div>
+      </div>
+
+      <div class="pagination">
+        <div>Viser 1–11 av <strong style="color:#fff">42</strong></div>
+        <div class="nav">
+          <button>‹ Forrige</button>
+          <button style="background: var(--akgolf-accent); color: #fff;">1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>Neste ›</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

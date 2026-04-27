@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D2 — Denne uken · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Week grid (LIGHT) */
+  .week-grid { display: grid; grid-template-columns: 64px repeat(7, 1fr); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 14px; overflow: hidden; background: var(--akgolf-card-dark, #0D2E23); box-shadow: 0 1px 2px rgba(10,31,24,0.03), 0 6px 20px rgba(255,255,255,0.04); }
+  .wg-head { background: rgba(255,255,255,0.025); padding: 10px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-align: center; border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a); }
+  .wg-head .day { font-size: 10px; color: rgba(255,255,255,0.45); }
+  .wg-head .num { font-size: 18px; color: #fff; font-family: Inter; font-weight: 600; letter-spacing: -0.02em; }
+  .wg-head.today { background: rgba(209,248,67,0.06); }
+  .wg-head.today .num { color: var(--akgolf-accent); }
+  .wg-tcol { display: flex; flex-direction: column; }
+  .wg-tslot { height: 60px; border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); padding: 4px 8px; text-align: right; }
+  .wg-col { border-left: 1px solid var(--akgolf-line-dark, #1a4a3a); position: relative; }
+  .wg-col .slot { height: 60px; border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a); }
+  .wg-evt { position: absolute; left: 4px; right: 4px; padding: 6px 8px; border-radius: 6px; font-size: 11px; line-height: 1.3; overflow: hidden; cursor: pointer; }
+  .wg-evt.green { background: rgba(42,125,90,0.22); color: #6FCBA1; border-left: 2px solid #2A7D5A; }
+  .wg-evt.lime { background: rgba(209,248,67,0.16); color: var(--akgolf-accent); border-left: 2px solid var(--akgolf-accent); }
+  .wg-evt.coral { background: rgba(184,66,51,0.18); color: #F49283; border-left: 2px solid #B84233; }
+  .wg-evt.violet { background: rgba(175,82,222,0.18); color: #6B2A91; border-left: 2px solid #AF52DE; }
+  .wg-evt.muted { background: rgba(255,255,255,0.025); color: rgba(255,255,255,0.55); border-left: 2px dashed rgba(50,77,69,0.25); }
+  .wg-evt strong { display: block; font-weight: 600; }
+  .wg-evt small { display: block; opacity: 0.85; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; margin-top: 2px; }
+
+  .legend { display: flex; gap: 14px; align-items: center; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 6px; }
+  .legend .it { font-size: 11px; color: rgba(255,255,255,0.6); display: inline-flex; align-items: center; }
+
+  .week-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+  .wsum { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 14px; padding: 16px;  }
+  .wsum .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .wsum .v { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-top: 6px; }
+  .wsum .v small { font-size: 11px; color: #6FCBA1; margin-left: 6px; font-weight: 500; }
+  .wsum .bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+  .wsum .bar > div { height: 100%; background: var(--akgolf-accent); border-radius: 2px; }
+
+  .grid-side { display: grid; grid-template-columns: 1fr 320px; gap: 16px; align-items: flex-start; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn" title="Hjelp"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item active"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Denne uken</div>
+      <div class="chq-top-meta tabular">Uke 18 · 28 apr — 04 mai</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Uke 18 · 28 april — 04 mai</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">28 økter · 6 åpne tider · 92% kapasitet</h1>
+        <p>Tirsdag har 5 økter — tyngste dag. Onsdag morgen har 2 åpne slots.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="chevron-left"></i> Forrige</button>
+        <button class="chq-btn ghost">Neste <i data-lucide="chevron-right"></i></button>
+        <button class="chq-btn"><i data-lucide="filter"></i> Anders + Markus</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i> Ny økt</button>
+      </div>
+    </div>
+
+    <div class="week-summary">
+      <div class="wsum"><div class="l">Planlagte økter</div><div class="v tabular">28 <small>+4</small></div><div class="bar"><div style="width: 88%"></div></div></div>
+      <div class="wsum"><div class="l">Kapasitet brukt</div><div class="v tabular">92% <small>+8%</small></div><div class="bar"><div style="width: 92%"></div></div></div>
+      <div class="wsum"><div class="l">Forventet inntekt</div><div class="v tabular">22.4k <small>+12%</small></div><div class="bar"><div style="width: 78%"></div></div></div>
+      <div class="wsum"><div class="l">Aktive spillere</div><div class="v tabular">19 <small>av 42</small></div><div class="bar"><div style="width: 45%"></div></div></div>
+    </div>
+
+    <div class="grid-side">
+
+      <div class="chq-card" style="padding: 14px;">
+        <div class="chq-card-header" style="margin-bottom: 12px;">
+          <h3>Uke 18</h3>
+          <div class="legend">
+            <span class="it"><span class="dot" style="background:var(--akgolf-success)"></span> 1-til-1</span>
+            <span class="it"><span class="dot" style="background:var(--akgolf-accent)"></span> Pågår</span>
+            <span class="it"><span class="dot" style="background:#AF52DE"></span> Gruppe</span>
+            <span class="it"><span class="dot" style="background:var(--akgolf-danger)"></span> Banecoach</span>
+          </div>
+        </div>
+
+        <div class="week-grid">
+          <div class="wg-head"></div>
+          <div class="wg-head"><div class="day">Man</div><div class="num">28</div></div>
+          <div class="wg-head today"><div class="day">Tir</div><div class="num">29</div></div>
+          <div class="wg-head"><div class="day">Ons</div><div class="num">30</div></div>
+          <div class="wg-head"><div class="day">Tor</div><div class="num">01</div></div>
+          <div class="wg-head"><div class="day">Fre</div><div class="num">02</div></div>
+          <div class="wg-head"><div class="day">Lør</div><div class="num">03</div></div>
+          <div class="wg-head"><div class="day">Søn</div><div class="num">04</div></div>
+
+          <div class="wg-tcol">
+            <div class="wg-tslot">07:00</div>
+            <div class="wg-tslot">09:00</div>
+            <div class="wg-tslot">11:00</div>
+            <div class="wg-tslot">13:00</div>
+            <div class="wg-tslot">15:00</div>
+            <div class="wg-tslot">17:00</div>
+            <div class="wg-tslot">19:00</div>
+          </div>
+
+          <!-- Mon -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt green" style="top: 8px; height: 44px;"><strong>Sofie H.</strong><small>Range · 45m</small></div>
+            <div class="wg-evt green" style="top: 160px; height: 56px;"><strong>Erik L.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt lime" style="top: 425px; height: 56px;"><strong>Markus E.</strong><small>Putting · 60m</small></div>
+            <div class="wg-evt coral" style="top: 510px; height: 50px;"><strong>Henrik V.</strong><small>Bane 9h · 45m</small></div>
+            <div class="wg-evt violet" style="top: 685px; height: 90px;"><strong>Junior A</strong><small>Range · 90m · 8 stk</small></div>
+          </div>
+
+          <!-- Tue (today) -->
+          <div class="wg-col" style="background: rgba(209,248,67,0.025);">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt green" style="top: 8px; height: 50px;"><strong>Lars B.</strong><small>Studio · 50m</small></div>
+            <div class="wg-evt green" style="top: 90px; height: 56px;"><strong>Mia D.</strong><small>Range · 60m</small></div>
+            <div class="wg-evt green" style="top: 245px; height: 60px;"><strong>Kari N.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt coral" style="top: 340px; height: 60px;"><strong>Tor S.</strong><small>Bane · 60m</small></div>
+            <div class="wg-evt violet" style="top: 595px; height: 90px;"><strong>Junior B</strong><small>Range · 90m</small></div>
+          </div>
+
+          <!-- Wed -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt muted" style="top: 8px; height: 50px;"><strong>— Åpen —</strong><small>Studio 1</small></div>
+            <div class="wg-evt muted" style="top: 90px; height: 50px;"><strong>— Åpen —</strong><small>Range</small></div>
+            <div class="wg-evt green" style="top: 245px; height: 56px;"><strong>Camilla R.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt green" style="top: 425px; height: 50px;"><strong>Pelle K.</strong><small>Range · 45m</small></div>
+            <div class="wg-evt green" style="top: 510px; height: 60px;"><strong>Anne M.</strong><small>Studio · 60m</small></div>
+          </div>
+
+          <!-- Thu -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt green" style="top: 8px; height: 50px;"><strong>Lars B.</strong><small>Range · 45m</small></div>
+            <div class="wg-evt green" style="top: 160px; height: 60px;"><strong>Sofie H.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt green" style="top: 340px; height: 60px;"><strong>Erik L.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt coral" style="top: 510px; height: 90px;"><strong>Henrik + Tor</strong><small>Bane 9h · 90m</small></div>
+          </div>
+
+          <!-- Fri -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt green" style="top: 8px; height: 50px;"><strong>Mia D.</strong><small>Range · 45m</small></div>
+            <div class="wg-evt green" style="top: 160px; height: 56px;"><strong>Kari N.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt green" style="top: 245px; height: 56px;"><strong>Camilla R.</strong><small>Range · 60m</small></div>
+            <div class="wg-evt muted" style="top: 425px; height: 56px;"><strong>— Åpen —</strong><small>Putting</small></div>
+            <div class="wg-evt violet" style="top: 595px; height: 90px;"><strong>Junior C</strong><small>Range · 90m</small></div>
+          </div>
+
+          <!-- Sat -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt coral" style="top: 8px; height: 130px;"><strong>Voksengruppe</strong><small>Bane · 130m · 6 stk</small></div>
+            <div class="wg-evt green" style="top: 245px; height: 60px;"><strong>Pelle K.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt green" style="top: 340px; height: 60px;"><strong>Anne M.</strong><small>Studio · 60m</small></div>
+          </div>
+
+          <!-- Sun -->
+          <div class="wg-col">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="wg-evt muted" style="top: 90px; height: 60px;"><strong>— Åpen —</strong><small>Studio</small></div>
+            <div class="wg-evt green" style="top: 245px; height: 60px;"><strong>Tor S.</strong><small>Studio · 60m</small></div>
+            <div class="wg-evt muted" style="top: 510px; height: 60px;"><strong>— Åpen —</strong><small>Range</small></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Side panel -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        <div class="chq-card">
+          <div class="chq-card-header">
+            <h3>Ukens fokus</h3>
+            <span class="sub">3 prioriteter</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 10px 12px; background: rgba(209,248,67,0.06); border-left: 2px solid var(--akgolf-accent); border-radius: 0 8px 8px 0;">
+              <div style="font-size: 12px; font-weight: 600; color: #fff;">Short-game block</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">3 spillere på SG-putting under -0.4 — 4 økter dedikert</div>
+            </div>
+            <div style="padding: 10px 12px; background: rgba(255,255,255,0.025); border-left: 2px solid rgba(50,77,69,0.2); border-radius: 0 8px 8px 0;">
+              <div style="font-size: 12px; font-weight: 600; color: #fff;">Junior turneringsuke</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">Junior A+B+C får forberedelse til regions-turnering 12 mai</div>
+            </div>
+            <div style="padding: 10px 12px; background: rgba(255,255,255,0.025); border-left: 2px solid rgba(50,77,69,0.2); border-radius: 0 8px 8px 0;">
+              <div style="font-size: 12px; font-weight: 600; color: #fff;">Re-engagement</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">Emma + Henrik booket inn etter inaktivitet</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chq-card">
+          <div class="chq-card-header">
+            <h3>Åpne slots</h3>
+            <span class="sub">6 ledige</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.025); border-radius: 6px;">
+              <div style="font-size: 12px;">Ons 30 · 07:00</div>
+              <span class="chq-pill">Studio 1</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.025); border-radius: 6px;">
+              <div style="font-size: 12px;">Ons 30 · 09:30</div>
+              <span class="chq-pill">Range</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.025); border-radius: 6px;">
+              <div style="font-size: 12px;">Fre 02 · 15:00</div>
+              <span class="chq-pill">Putting</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,0.025); border-radius: 6px;">
+              <div style="font-size: 12px;">Søn 04 · 09:30</div>
+              <span class="chq-pill">Studio 2</span>
+            </div>
+          </div>
+          <button class="chq-btn ghost" style="width: 100%; justify-content: center; margin-top: 12px;">Send til venteliste</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

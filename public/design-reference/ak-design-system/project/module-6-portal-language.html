@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul 6 · Spillerportalen — Language Pack</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  body { background: #102B1E; color: #F2F4F1; font-family: var(--font-sans); margin: 0; }
+  .canvas-head {
+    padding: 32px 60px 8px;
+    max-width: 1400px;
+  }
+  .canvas-head h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin: 0 0 12px;
+    color: #fff;
+  }
+  .canvas-head h1 em { font-style: italic; font-weight: 400; color: #D1F843; }
+  .canvas-head p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    margin: 0 0 8px;
+  }
+  .canvas-head .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="canvas-head">
+  <div class="meta">Modul 6 · Spillerportalen · <em style="color:#D1F843; font-style:normal;">Decision canvas</em></div>
+  <h1>To dashboard-retninger.<br>Velg <em>språket</em>, så propagerer vi.</h1>
+  <p>Begge bruker samme tokens (mørk #07100C / lime accent / italic-fragment / mono-labels) og samme sidebar/topbar-skjelett. Forskjellen ligger i <strong style="color:#fff;">hvor mye banefoto-atmosfære</strong> vs. <strong style="color:#fff;">hvor mye redaksjonell datatetthet</strong>. Velg én og bygg Runde + Stats i samme språk neste runde.</p>
+</div>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+  const { DesignCanvas, DCSection, DCArtboard } = window;
+
+  function Frame({ src, w, h }) {
+    return (
+      <iframe src={src} width={w} height={h} style={{
+        border: 'none', display: 'block',
+        background: '#07100C',
+        width: w, height: h,
+      }} />
+    );
+  }
+
+  function App() {
+    return (
+      <DesignCanvas>
+        <DCSection id="dash" title="Dashboard · Two languages" subtitle="Same tokens, same shell — different editorial weight">
+          <DCArtboard id="v1" label="V1 · Course Hero" width={1440} height={1100}>
+            <Frame src="portal/dashboard-v1-hero.html" w={1440} h={1100} />
+          </DCArtboard>
+          <DCArtboard id="v2" label="V2 · Editorial Cockpit" width={1440} height={1600}>
+            <Frame src="portal/dashboard-v2-cockpit.html" w={1440} h={1600} />
+          </DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>

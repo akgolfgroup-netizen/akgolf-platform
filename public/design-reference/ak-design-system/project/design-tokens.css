@@ -9,10 +9,11 @@
   --akgolf-accent: #D1F843;
   --akgolf-surface: #ECF0EF;
   --akgolf-text: #324D45;
+  --akgolf-ink: #0A1F18;
   --akgolf-muted: #A5B2AD;
 
   /* ── Dark mode ── */
-  --akgolf-dark-bg: #0A1F18;
+  --akgolf-dark-bg: #102B1E;
   --akgolf-card-dark: #0D2E23;
   --akgolf-card-light: #FFFFFF;
   --akgolf-primary-light: #B8D4CC;

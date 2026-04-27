@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>E3 · Course View</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_reference-remix.css">
 <style>
   /* E3 specific additions */
@@ -210,21 +210,21 @@
         </div>
         <div class="rr3-feature-split">
           <div class="item">
-            <div class="ic" style="background: #F2E4C6;">🏌</div>
+            <div class="ic" style="background: #F2E4C6;"><i data-lucide="flag-triangle-right" class="icon-md"></i></div>
             <div class="stack">
               <span class="n">Driver</span>
               <span class="s">235 yd avg</span>
             </div>
           </div>
           <div class="item">
-            <div class="ic" style="background: #E6D4BA;">🎯</div>
+            <div class="ic" style="background: #E6D4BA;"><i data-lucide="target" class="icon-md"></i></div>
             <div class="stack">
               <span class="n">7 iron</span>
               <span class="s">150 yd avg</span>
             </div>
           </div>
           <div class="item">
-            <div class="ic" style="background: #E6C6A4;">⛳</div>
+            <div class="ic" style="background: #E6C6A4;"><i data-lucide="flag-triangle-right" class="icon-md"></i></div>
             <div class="stack">
               <span class="n">Wedge</span>
               <span class="s">95 yd avg</span>
@@ -327,5 +327,8 @@
   </div>
 </div>
 
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

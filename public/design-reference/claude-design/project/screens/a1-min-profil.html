@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A1 — Min profil · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Photo hero */
+  .profile-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    min-height: 360px;
+    background-image: url('../assets/hero-golf-divot.jpg');
+    background-size: cover;
+    background-position: center 35%;
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+  }
+  .profile-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,31,24,0.40) 0%, rgba(10,31,24,0.55) 45%, rgba(10,31,24,0.92) 100%),
+      linear-gradient(90deg, rgba(10,31,24,0.65) 0%, rgba(10,31,24,0.20) 50%, rgba(10,31,24,0.40) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .profile-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 90% 15%, rgba(209,248,67,0.18), transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 28px;
+    align-items: end;
+    padding: 32px 36px;
+    height: 100%;
+    min-height: 360px;
+  }
+  .hero-photo {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  .hero-name h1 {
+    text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+  }
+  .hero-photo {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D1F843, #6FCBA1);
+    display: grid; place-items: center;
+    color: #0A1F18;
+    font-family: 'Inter', sans-serif;
+    font-size: 52px; font-weight: 800;
+    letter-spacing: -0.04em;
+    border: 4px solid rgba(255,255,255,0.10);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .hero-name h1 {
+    margin: 0; font-family: 'Inter', sans-serif;
+    font-size: 56px; font-weight: 800;
+    letter-spacing: -0.035em;
+    color: #fff;
+    line-height: 1;
+  }
+  .hero-tagline {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+  .hero-tagline .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+  .hero-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 14px 28px;
+    align-items: center;
+    align-self: flex-end;
+  }
+  .hero-meta-cell .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .hero-meta-cell .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: #fff; letter-spacing: -0.02em;
+    margin-top: 2px;
+  }
+  .hero-edit {
+    position: absolute;
+    top: 20px; right: 20px;
+    z-index: 3;
+  }
+
+  /* Section heading */
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 32px 0 14px;
+  }
+  .sec-h h2 {
+    margin: 0; font-family: 'Inter', sans-serif;
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.025em; color: #fff;
+  }
+  .sec-h .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* HCP graf */
+  .hcp-card { padding: 24px 26px; }
+  .hcp-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px; margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a);
+  }
+  .hcp-stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .hcp-stat .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 28px; font-weight: 800;
+    letter-spacing: -0.03em; color: #fff;
+    margin-top: 4px; font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .hcp-stat .v small { font-size: 12px; color: #6FCBA1; margin-left: 6px; font-weight: 600; }
+
+  /* Achievements */
+  .achievement-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .ach-pill {
+    background: rgba(209,248,67,0.06);
+    border: 1px solid rgba(209,248,67,0.18);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ach-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(209,248,67,0.15);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .ach-icon [data-lucide] { width: 18px; height: 18px; }
+  .ach-body .v {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: #fff; letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .ach-body .l {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+  .ach-pill.locked { opacity: 0.4; background: rgba(255,255,255,0.025); border-color: var(--akgolf-line-dark); }
+  .ach-pill.locked .ach-icon { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); }
+
+  /* Coaches */
+  .coach-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .coach-card {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .coach-card .av {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 14px;
+    color: #0A1F18;
+    flex-shrink: 0;
+  }
+  .coach-card .name { color: #fff; font-weight: 600; font-size: 14px; }
+  .coach-card .role { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; margin-top: 2px; text-transform: uppercase; }
+  .coach-card .actions { margin-left: auto; display: flex; gap: 4px; }
+
+  .settings-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    margin-top: 24px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .settings-link:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+  .settings-link .l { color: #fff; font-weight: 500; }
+  .settings-link .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn" title="Hjem"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn" title="Min plan"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn" title="Treningsplanlegger"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn" title="Treningsplan"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn" title="Bookinger"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn active" title="Profil"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn" title="AI Coach"><i data-lucide="sparkles"></i></button>
+    <button class="phq-rail-btn" title="Statistikk"><i data-lucide="bar-chart-3"></i></button>
+    <button class="phq-rail-btn" title="Runde"><i data-lucide="flag-triangle-right"></i></button>
+    <button class="phq-rail-btn" title="Bag"><i data-lucide="briefcase"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn" title="Logg ut"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger <span class="badge">2</span></div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item active"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+    <div class="phq-nav-item"><i data-lucide="bar-chart-3"></i> Statistikk</div>
+    <div class="phq-nav-section">På banen</div>
+    <div class="phq-nav-item"><i data-lucide="flag-triangle-right"></i> Runde</div>
+    <div class="phq-nav-item"><i data-lucide="briefcase"></i> Bag</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Hei, Erik<span class="date">Man 28. apr</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i><span class="pulse">3</span></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">Min side · Profil</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="profile-hero">
+      <button class="phq-btn ghost sm hero-edit"><i data-lucide="edit-3"></i> Rediger</button>
+      <div class="hero-content">
+        <div class="hero-photo">EK</div>
+        <div class="hero-name">
+          <h1>Erik Kvist</h1>
+          <div class="hero-tagline">
+            <span><i data-lucide="map-pin" style="width:13px;height:13px;vertical-align:-2px;color:rgba(255,255,255,0.5);"></i> Bærum GK</span>
+            <span class="dot"></span>
+            <span>34 år</span>
+            <span class="dot"></span>
+            <span>Medlem siden 2019</span>
+            <span class="dot"></span>
+            <span class="phq-pill lime">Performance-spiller</span>
+          </div>
+        </div>
+        <div class="hero-meta-grid">
+          <div class="hero-meta-cell">
+            <div class="l">HCP nå</div>
+            <div class="v" style="color:var(--akgolf-accent);">7.4 <small style="color:#6FCBA1; font-size:11px;">↓ 2.6</small></div>
+          </div>
+          <div class="hero-meta-cell">
+            <div class="l">SG / runde</div>
+            <div class="v">+0.42</div>
+          </div>
+          <div class="hero-meta-cell">
+            <div class="l">Runder mai</div>
+            <div class="v">8</div>
+          </div>
+          <div class="hero-meta-cell">
+            <div class="l">Plan</div>
+            <div class="v" style="font-size:14px;">Performance 12 mnd</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="phq-kpi-row">
+      <div class="phq-kpi lime">
+        <div class="l">HCP nå</div>
+        <div class="v">7.4 <small>↓ 2.6 / år</small></div>
+      </div>
+      <div class="phq-kpi">
+        <div class="l">Strokes Gained</div>
+        <div class="v">+0.42 <small>+0.08</small></div>
+      </div>
+      <div class="phq-kpi">
+        <div class="l">Runder denne mnd</div>
+        <div class="v">8 <small>+3</small></div>
+      </div>
+    </div>
+
+    <!-- HCP-utvikling -->
+    <div class="sec-h">
+      <h2>HCP-utvikling</h2>
+      <div class="sub">SISTE 12 MND · GOLFBOX-DATA</div>
+    </div>
+    <div class="phq-card hcp-card">
+      <div class="hcp-stats">
+        <div class="hcp-stat"><div class="l">Start</div><div class="v">10.0</div></div>
+        <div class="hcp-stat"><div class="l">Lavest</div><div class="v">7.2</div></div>
+        <div class="hcp-stat"><div class="l">Nå</div><div class="v" style="color:var(--akgolf-accent);">7.4</div></div>
+        <div class="hcp-stat"><div class="l">Mål 2025</div><div class="v">5.0</div></div>
+      </div>
+      <svg viewBox="0 0 720 180" style="width:100%; height:180px;">
+        <defs>
+          <linearGradient id="hcpFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D1F843" stop-opacity="0.30"/>
+            <stop offset="100%" stop-color="#D1F843" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- grid -->
+        <line x1="0" y1="40" x2="720" y2="40" stroke="rgba(255,255,255,0.04)"/>
+        <line x1="0" y1="90" x2="720" y2="90" stroke="rgba(255,255,255,0.04)"/>
+        <line x1="0" y1="140" x2="720" y2="140" stroke="rgba(255,255,255,0.04)"/>
+        <!-- target line -->
+        <line x1="0" y1="155" x2="720" y2="155" stroke="rgba(209,248,67,0.4)" stroke-dasharray="4 4"/>
+        <text x="715" y="151" fill="rgba(209,248,67,0.6)" font-size="10" font-family="JetBrains Mono" text-anchor="end">MÅL 5.0</text>
+        <!-- area -->
+        <path d="M 0 40 L 60 50 L 120 60 L 180 70 L 240 80 L 300 75 L 360 90 L 420 100 L 480 110 L 540 115 L 600 120 L 660 118 L 720 120 L 720 180 L 0 180 Z" fill="url(#hcpFill)"/>
+        <!-- line -->
+        <polyline points="0,40 60,50 120,60 180,70 240,80 300,75 360,90 420,100 480,110 540,115 600,120 660,118 720,120" fill="none" stroke="#D1F843" stroke-width="2.5"/>
+        <!-- dots -->
+        <circle cx="720" cy="120" r="5" fill="#D1F843"/>
+        <circle cx="720" cy="120" r="10" fill="#D1F843" fill-opacity="0.2"/>
+        <!-- month labels -->
+        <text x="0" y="174" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">MAI 24</text>
+        <text x="180" y="174" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">AUG</text>
+        <text x="360" y="174" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">NOV</text>
+        <text x="540" y="174" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">FEB 25</text>
+        <text x="715" y="174" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono" text-anchor="end">APR 25</text>
+      </svg>
+    </div>
+
+    <!-- Prestasjoner -->
+    <div class="sec-h">
+      <h2>Prestasjoner</h2>
+      <div class="sub">12 OPPLÅST · 8 IGJEN</div>
+    </div>
+    <div class="achievement-row">
+      <div class="ach-pill">
+        <div class="ach-icon"><i data-lucide="trophy"></i></div>
+        <div class="ach-body"><div class="v">3</div><div class="l">Klubbmesterskap</div></div>
+      </div>
+      <div class="ach-pill">
+        <div class="ach-icon"><i data-lucide="trending-down"></i></div>
+        <div class="ach-body"><div class="v">−2.6</div><div class="l">HCP-fall siste år</div></div>
+      </div>
+      <div class="ach-pill">
+        <div class="ach-icon"><i data-lucide="zap"></i></div>
+        <div class="ach-body"><div class="v">168</div><div class="l">Ball speed PR (mph)</div></div>
+      </div>
+      <div class="ach-pill">
+        <div class="ach-icon"><i data-lucide="circle-dot"></i></div>
+        <div class="ach-body"><div class="v">84%</div><div class="l">Putting 3-fot</div></div>
+      </div>
+      <div class="ach-pill">
+        <div class="ach-icon"><i data-lucide="flame"></i></div>
+        <div class="ach-body"><div class="v">12</div><div class="l">Dager streak</div></div>
+      </div>
+      <div class="ach-pill locked">
+        <div class="ach-icon"><i data-lucide="lock"></i></div>
+        <div class="ach-body"><div class="v">5.0</div><div class="l">Single-HCP (låst)</div></div>
+      </div>
+    </div>
+
+    <!-- Coaches -->
+    <div class="sec-h">
+      <h2>Mine coacher</h2>
+      <div class="sub">2 AKTIVE</div>
+    </div>
+    <div class="coach-row">
+      <div class="coach-card">
+        <div class="av" style="background:#D1F843">AK</div>
+        <div>
+          <div class="name">Anders K.</div>
+          <div class="role">Hovedcoach · Performance</div>
+        </div>
+        <div class="actions">
+          <button class="phq-btn ghost sm"><i data-lucide="message-circle"></i></button>
+          <button class="phq-btn ghost sm"><i data-lucide="calendar-plus"></i></button>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="av" style="background:#C896E8">MT</div>
+        <div>
+          <div class="name">Maria T.</div>
+          <div class="role">Sving-spesialist</div>
+        </div>
+        <div class="actions">
+          <button class="phq-btn ghost sm"><i data-lucide="message-circle"></i></button>
+          <button class="phq-btn ghost sm"><i data-lucide="calendar-plus"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <a href="a2-profil-innstillinger.html" class="settings-link" style="text-decoration:none;">
+      <div>
+        <div class="l">Innstillinger</div>
+        <div class="meta">PERSONLIG · NOTIFIKASJONER · PERSONVERN</div>
+      </div>
+      <i data-lucide="arrow-right" style="color:rgba(255,255,255,0.5);"></i>
+    </a>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="calendar"></i>Plan</button>
+    <button class="tab"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab active"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

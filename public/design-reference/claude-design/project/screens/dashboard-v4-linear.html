@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard V4 · Linear Dense</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #FBFBFA; font-size: 13px; }
@@ -123,17 +123,17 @@
     </div>
     <nav class="sidebar-nav">
       <div class="eyebrow" style="padding: 2px 10px 4px;">Workspace</div>
-      <div class="nav-item active">⌂ Oversikt <span class="count">12</span></div>
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> Oversikt <span class="count">12</span></div>
       <div class="nav-item">◱ Plan <span class="count">3</span></div>
       <div class="nav-item">◎ Tren <span class="count">24</span></div>
-      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
       <div class="nav-item">△ Analyse</div>
       <div style="height: 12px;"></div>
       <div class="eyebrow" style="padding: 2px 10px 4px;">Verktøy</div>
       <div class="nav-item">◈ AI Coach</div>
       <div class="nav-item">⊙ TrackMan</div>
       <div class="nav-item">◉ Dagbok</div>
-      <div class="nav-item">☰ Bookinger</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
       <div style="height: 12px;"></div>
       <div class="eyebrow" style="padding: 2px 10px 4px;">Views</div>
       <div class="nav-item" style="font-size:12px;"># siste uke</div>
@@ -160,9 +160,9 @@
     </div>
 
     <div class="cmd-row">
-      <span style="color:#7A8C85;font-size:13px;">⌕</span>
+      <span style="color:#7A8C85;font-size:13px;"><i data-lucide="search" class="icon-md"></i></span>
       <input placeholder="Spør eller gå til noe... (prøv 'chip drill', 'bok Thomas', 'siste runde')" />
-      <span class="kbd">⌘K</span>
+      <span class="kbd">Cmd K</span>
     </div>
 
     <!-- KPI ROW -->
@@ -328,7 +328,7 @@
           </div>
         </div>
         <div class="lin-card">
-          <div class="ttl"><h4>Snarveier</h4><span class="more">⌘K</span></div>
+          <div class="ttl"><h4>Snarveier</h4><span class="more">Cmd K</span></div>
           <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px;font-size:12px;">
             <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #F5F8F7;"><span>Logg ny runde</span><span class="kbd">G R</span></div>
             <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #F5F8F7;"><span>Spør AI Coach</span><span class="kbd">G A</span></div>
@@ -356,5 +356,8 @@
     g.appendChild(col);
   }
 </script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

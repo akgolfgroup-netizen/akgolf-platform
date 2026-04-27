@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Mobil · Dashboard</title>
 <meta name="viewport" content="width=390, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens.css">
 <style>
   * { box-sizing: border-box; }
@@ -166,8 +166,8 @@
     <div class="today">
       <div class="today-row">
         <div class="t">07:30<small>FERDIG</small></div>
-        <div><div class="ttl">TrackMan · 7J-9J</div><div class="meta">✓ 162 SLAG · CARRY +2.1m</div></div>
-        <div style="color:#2A7D5A;font-size:18px;">✓</div>
+        <div><div class="ttl">TrackMan · 7J-9J</div><div class="meta">162 SLAG · CARRY +2.1m</div></div>
+        <div style="color:#2A7D5A;"><i data-lucide="check" class="icon-md"></i></div>
       </div>
       <div class="today-row active">
         <div class="t" style="color:#0A1F18;">15:00<small style="color:#0A1F18;">OM 5t 46m</small></div>
@@ -206,12 +206,15 @@
   </div>
 
   <div class="tab-bar">
-    <div class="tb on"><span class="i">⌂</span>Hjem</div>
-    <div class="tb"><span class="i">⚑</span>Runde</div>
+    <div class="tb on"><span class="i"><i data-lucide="home" class="icon-md"></i></span>Hjem</div>
+    <div class="tb"><span class="i"><i data-lucide="flag-triangle-right" class="icon-md"></i></span>Runde</div>
     <div class="tb"><span class="i">◱</span>Plan</div>
     <div class="tb"><span class="i">△</span>Stats</div>
     <div class="tb"><span class="i">◈</span>Coach</div>
   </div>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

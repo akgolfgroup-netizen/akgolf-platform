@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Mission Control</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #0b0d0c; color:#E6EAE8; }
@@ -95,14 +95,14 @@
     <nav class="sidebar-nav">
       <div class="nav-item active">⎈ Oversikt</div>
       <div class="nav-item">◎ Elever <span class="count">24</span></div>
-      <div class="nav-item">☰ Planer</div>
-      <div class="nav-item">⚑ Runder</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Planer</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Runder</div>
       <div class="nav-item">△ Rapporter</div>
       <div style="height:14px;"></div>
       <div class="nav-item">✉ Innboks <span class="count">7</span></div>
       <div class="nav-item">◉ Kalender</div>
       <div class="nav-item">⊙ Fakturering</div>
-      <div class="nav-item">⚙ Innstillinger</div>
+      <div class="nav-item"><i data-lucide="settings" class="icon-md"></i> Innstillinger</div>
     </nav>
     <div class="sidebar-user">
       <div class="avatar" style="background:#D1F843;color:#0A1F18;">TB</div>
@@ -171,7 +171,7 @@
         </div>
         <div class="st-row" style="background:rgba(232,93,78,0.05);">
           <div class="st-av" style="background:#FBA88E;">AJ</div>
-          <div class="st-name">Astrid J.<small>JUNIOR · ⚠ OVERBELASTET</small></div>
+          <div class="st-name">Astrid J.<small>JUNIOR · <i data-lucide="alert-triangle" class="icon-md"></i> OVERBELASTET</small></div>
           <div><span class="hcp-pill">8.7</span></div>
           <div class="load-bar"><div style="width:96%;background:#E85D4E;"></div></div>
           <svg class="spark-mini" viewBox="0 0 100 20"><path d="M0,8 L15,10 L30,12 L45,9 L60,14 L75,12 L90,16 L100,18" fill="none" stroke="#E85D4E" stroke-width="1.5"/></svg>
@@ -198,7 +198,7 @@
         </div>
         <div class="st-row" style="background:rgba(232,93,78,0.04);">
           <div class="st-av" style="background:#F4E4B8;">TL</div>
-          <div class="st-name">Trond L.<small>VOKSEN · ⚠ 12d INAKTIV</small></div>
+          <div class="st-name">Trond L.<small>VOKSEN · <i data-lucide="alert-triangle" class="icon-md"></i> 12d INAKTIV</small></div>
           <div><span class="hcp-pill">11.3</span></div>
           <div class="load-bar"><div style="width:10%;background:#E85D4E;"></div></div>
           <svg class="spark-mini" viewBox="0 0 100 20"><path d="M0,10 L20,11 L40,12 L60,14 L80,15 L100,17" fill="none" stroke="#E85D4E" stroke-width="1.5"/></svg>
@@ -244,7 +244,7 @@
           <div class="msg-item">
             <div class="msg-av" style="background:#FBA88E;">AJ</div>
             <div>
-              <div class="from">Astrid J. <span class="badge coral" style="background:rgba(232,93,78,0.15);color:#FBA88E;">⚠ Sykmelding</span></div>
+              <div class="from">Astrid J. <span class="badge coral" style="background:rgba(232,93,78,0.15);color:#FBA88E;"><i data-lucide="alert-triangle" class="icon-md"></i> Sykmelding</span></div>
               <div class="body">«Forkjølet, må avlyse torsdag.»</div>
             </div>
             <div class="ts">22 MIN</div>
@@ -324,5 +324,8 @@
     </div>
   </main>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

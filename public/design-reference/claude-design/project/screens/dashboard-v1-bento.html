@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard V1 · Bento Clean</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: var(--ak-bg); }
@@ -161,17 +161,17 @@
       </div>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-item active">⌂ <span>Oversikt</span></div>
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> <span>Oversikt</span></div>
       <div class="nav-item">◱ <span>Planlegg</span><span class="count">3</span></div>
       <div class="nav-item">◎ <span>Tren</span></div>
-      <div class="nav-item">⚑ <span>Spill</span></div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> <span>Spill</span></div>
       <div class="nav-item">△ <span>Analyser</span></div>
       <div style="height: 14px;"></div>
       <div class="eyebrow" style="padding: 6px 10px;">Verktøy</div>
       <div class="nav-item">◈ <span>AI Coach</span><span class="count" style="background:#FAF5FF;color:#AF52DE;">nytt</span></div>
       <div class="nav-item">⊙ <span>TrackMan</span></div>
       <div class="nav-item">◉ <span>Dagbok</span></div>
-      <div class="nav-item">☰ <span>Bookinger</span></div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> <span>Bookinger</span></div>
     </nav>
     <div class="sidebar-cta">+ Ny økt</div>
     <div class="sidebar-user">
@@ -425,12 +425,12 @@
 
       <!-- SHORTCUTS -->
       <div class="shortcuts">
-        <div class="shortcut"><div class="shortcut-icon">⚑</div>Logg runde</div>
+        <div class="shortcut"><div class="shortcut-icon"><i data-lucide="flag-triangle-right" class="icon-md"></i></div>Logg runde</div>
         <div class="shortcut"><div class="shortcut-icon">◱</div>Ukesplan</div>
         <div class="shortcut"><div class="shortcut-icon">⊙</div>TrackMan</div>
         <div class="shortcut"><div class="shortcut-icon">◈</div>AI Coach</div>
         <div class="shortcut"><div class="shortcut-icon">△</div>Statistikk</div>
-        <div class="shortcut"><div class="shortcut-icon">☰</div>Bookinger</div>
+        <div class="shortcut"><div class="shortcut-icon"><i data-lucide="menu" class="icon-md"></i></div>Bookinger</div>
       </div>
 
     </div>
@@ -449,5 +449,8 @@
     root.style.fontSize = s.font === 'sm' ? '13px' : s.font === 'lg' ? '15px' : '14px';
   });
 </script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

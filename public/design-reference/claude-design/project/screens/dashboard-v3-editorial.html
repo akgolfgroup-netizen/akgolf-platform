@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard V3 · Editorial</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #FAFAF7; }
@@ -122,17 +122,17 @@
       <div><div class="title">AK Golf</div><div class="sub">Editorial</div></div>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-item active">⌂ <span>Oversikt</span></div>
+      <div class="nav-item active"><i data-lucide="home" class="icon-md"></i> <span>Oversikt</span></div>
       <div class="nav-item">◱ <span>Planlegg</span><span class="count">3</span></div>
       <div class="nav-item">◎ <span>Tren</span></div>
-      <div class="nav-item">⚑ <span>Spill</span></div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> <span>Spill</span></div>
       <div class="nav-item">△ <span>Analyser</span></div>
       <div style="height: 14px;"></div>
       <div class="eyebrow" style="padding: 6px 10px;">Verktøy</div>
       <div class="nav-item">◈ <span>AI Coach</span></div>
       <div class="nav-item">⊙ <span>TrackMan</span></div>
       <div class="nav-item">◉ <span>Dagbok</span></div>
-      <div class="nav-item">☰ <span>Bookinger</span></div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> <span>Bookinger</span></div>
     </nav>
     <div class="sidebar-cta">+ Ny økt</div>
     <div class="sidebar-user">
@@ -282,5 +282,8 @@
     </div>
   </main>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>

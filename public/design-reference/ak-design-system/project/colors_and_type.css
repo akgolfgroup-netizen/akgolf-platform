@@ -22,6 +22,14 @@
   src: url('assets/fonts/InterVariable-Italic.woff2') format('woff2-variations'),
        url('assets/fonts/InterVariable-Italic.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('assets/fonts/JetBrainsMono.woff2') format('woff2-variations'),
+       url('assets/fonts/JetBrainsMono.woff2') format('woff2');
+}
 
 :root {
   /* ── Brand core colors ── */
@@ -29,10 +37,11 @@
   --ak-accent:         #D1F843;   /* Pantone 389 C  — lime */
   --ak-surface:        #ECF0EF;
   --ak-text:           #324D45;
+  --ak-ink:            #0A1F18;   /* headlines + KPI numerals only */
   --ak-muted:          #A5B2AD;
 
   /* ── Dark mode surfaces ── */
-  --ak-dark-bg:        #0A1F18;
+  --ak-dark-bg:        #102B1E;
   --ak-card-dark:      #0D2E23;
   --ak-card-light:     #FFFFFF;
   --ak-primary-light:  #B8D4CC;
@@ -61,7 +70,7 @@
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;     /* headings */
   --font-body: 'Inter', system-ui, sans-serif;         /* body */
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Weights used across the system */
   --fw-light: 300;
@@ -137,27 +146,45 @@ body {
   font-size: var(--fs-h1);
   font-weight: var(--fw-extrabold);
   line-height: var(--lh-tight);
-  letter-spacing: -0.02em;
-  color: var(--fg-1);
+  letter-spacing: -0.03em;
+  color: var(--ak-ink);
 }
 .ak-h2, h2.ak {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: var(--fw-bold);
   line-height: var(--lh-snug);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
+  color: var(--ak-ink);
 }
 .ak-h3, h3.ak {
   font-family: var(--font-display);
   font-size: var(--fs-h3);
   font-weight: var(--fw-bold);
   line-height: var(--lh-heading);
+  letter-spacing: -0.03em;
+  color: var(--ak-ink);
+}
+.ak-kpi   {
+  font-size: 40px;
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ak-ink);
+}
+.ak-mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ak-muted);
 }
 .ak-body  { font-size: var(--fs-body);    font-weight: var(--fw-regular); line-height: var(--lh-body); }
 .ak-small { font-size: var(--fs-small);   font-weight: var(--fw-regular); line-height: var(--lh-small); }
 .ak-caption { font-size: var(--fs-caption); font-weight: var(--fw-regular); line-height: var(--lh-caption); color: var(--fg-2); }
 .ak-label { font-size: var(--fs-small); font-weight: var(--fw-medium); letter-spacing: 0.01em; }
-.ak-kpi   { font-size: 40px; font-weight: var(--fw-extrabold); line-height: 1; letter-spacing: -0.02em; }
 
 /* Utility colors */
 .ak-fg-primary { color: var(--ak-primary); }

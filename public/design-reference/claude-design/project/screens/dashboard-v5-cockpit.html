@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard V5 · Cockpit</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_shared.css">
 <style>
   body { background: #0c1512; font-family: 'Inter', sans-serif; color: #E6EAE8; }
@@ -87,9 +87,9 @@
       <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">◱ PLAN · 002</div>
       <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">△ ANALYSE · 003</div>
       <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">⊙ TRACKMAN · 004</div>
-      <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">⚑ RUNDER · 005</div>
+      <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;"><i data-lucide="flag-triangle-right" class="icon-md"></i> RUNDER · 005</div>
       <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">◈ AI COACH · 006</div>
-      <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;">☰ BOOKING · 007</div>
+      <div class="nav-item mono" style="font-size:11px;letter-spacing:0.06em;"><i data-lucide="menu" class="icon-md"></i> BOOKING · 007</div>
     </nav>
     <div class="sidebar-user">
       <div class="avatar">MA</div>
@@ -273,7 +273,7 @@
           </div>
         </div>
         <div class="mod">
-          <div class="mod-h"><span class="k">09 <b>AI QUERIES</b></span><span class="s">⌘K</span></div>
+          <div class="mod-h"><span class="k">09 <b>AI QUERIES</b></span><span class="s">Cmd K</span></div>
           <div style="display:flex;flex-direction:column;gap:4px;font-family:'JetBrains Mono',monospace;font-size:10px;">
             <div style="padding:7px 10px;background:rgba(255,255,255,0.03);border-radius:4px;color:#A5B2AD;border:1px dashed rgba(255,255,255,0.06);">> Hvorfor er chip-SG ned?</div>
             <div style="padding:7px 10px;background:rgba(255,255,255,0.03);border-radius:4px;color:#A5B2AD;border:1px dashed rgba(255,255,255,0.06);">> Lag ukesplan for uke 18</div>
@@ -285,5 +285,8 @@
     </div>
   </main>
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>
