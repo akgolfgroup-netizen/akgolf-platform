@@ -79,16 +79,18 @@ export function SlotPicker({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Konverter ISO-strings til { iso, time } eller bruk placeholder
+  // Konverter ISO-strings til { iso, time }.
+  // Hvis slots === undefined → vi har ikke ekte data ennå (booking-kontekst mangler) → vis placeholder.
+  // Hvis slots === [] → ekte data, men ingen tilgjengelige → vis tom-state (ikke placeholder).
   const normalized: { iso: string; time: string }[] =
-    slots && slots.length > 0
-      ? slots.map((iso) => {
+    slots === undefined
+      ? PLACEHOLDER_SLOTS
+      : slots.map((iso) => {
           const d = new Date(iso);
           const hh = String(d.getUTCHours()).padStart(2, "0");
           const mm = String(d.getUTCMinutes()).padStart(2, "0");
           return { iso, time: `${hh}:${mm}` };
-        })
-      : PLACEHOLDER_SLOTS;
+        });
 
   const { morning, afternoon, evening } = groupByPeriod(normalized);
   const total = normalized.length;

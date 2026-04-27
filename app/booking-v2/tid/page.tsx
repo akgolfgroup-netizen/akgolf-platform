@@ -172,7 +172,7 @@ export default async function TidPage({ searchParams }: PageProps) {
             maxAdvanceDays={maxAdvanceDays}
           />
           <SlotPicker
-            slots={realSlots.length > 0 ? realSlots : undefined}
+            slots={params.serviceTypeId ? realSlots : undefined}
             selectedTime={timeParam}
             dayLabel={formatDayLabel(dateParam)}
           />
