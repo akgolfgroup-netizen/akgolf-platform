@@ -15,7 +15,7 @@ import Link from "next/link";
 import { format, addDays, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
-  adminCreateBooking,
+  adminCreateBookingWithPayment,
   searchStudentsForBooking,
   getInstructorDefaultFacility,
 } from "../create-actions";
@@ -24,6 +24,7 @@ import type {
   InstructorOption,
   StudentOption,
   FacilityOption,
+  ManualBookingPaymentMode,
 } from "../create-actions";
 
 // ── Props ──
@@ -68,8 +69,14 @@ export function NyBookingClient({ serviceTypes, instructors, facilities }: Props
   // Fasilitet
   const [selectedFacilityId, setSelectedFacilityId] = useState<string>("");
 
-  // Submit-feil
+  // Betalingsmodus (Fase E)
+  const [paymentMode, setPaymentMode] =
+    useState<ManualBookingPaymentMode>("payment-link");
+  const [studentPhone, setStudentPhone] = useState("");
+
+  // Submit-feil + suksess-melding
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Hent default-fasilitet når coach/tjeneste velges
   useEffect(() => {
@@ -136,19 +143,40 @@ export function NyBookingClient({ serviceTypes, instructors, facilities }: Props
     )
       return;
     setError(null);
+    setSuccessMessage(null);
 
     startTransition(async () => {
       try {
         const dateStr = format(selectedSlot.date, "yyyy-MM-dd");
-        await adminCreateBooking({
+        const result = await adminCreateBookingWithPayment({
           studentEmail: selectedStudent.email,
           studentName: selectedStudent.name ?? selectedStudent.email,
+          studentPhone: studentPhone || undefined,
           serviceTypeId: selectedService.id,
           instructorId: selectedInstructor.id,
           startTime: `${dateStr}T${selectedSlot.time}:00`,
           facilityId: selectedFacilityId || null,
+          paymentMode,
         });
-        router.push("/admin/bookinger");
+
+        if (result.paymentMode === "off-session" && result.chargeStatus === "succeeded") {
+          setSuccessMessage("Booking opprettet og betaling trukket fra lagret kort.");
+        } else if (result.paymentMode === "payment-link") {
+          const channels = [
+            result.smsSent ? "SMS" : null,
+            result.emailSent ? "e-post" : null,
+          ]
+            .filter(Boolean)
+            .join(" + ");
+          setSuccessMessage(
+            `Booking opprettet. Betalingslenke sendt via ${channels || "ingen kanaler — bruker mangler telefon/e-post"}.`,
+          );
+        } else {
+          setSuccessMessage("Booking opprettet uten betaling.");
+        }
+
+        // Gå til detalj-siden etter kort delay slik at bruker ser meldingen
+        setTimeout(() => router.push(`/admin/bookinger`), 1500);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Noe gikk galt");
       }
@@ -573,6 +601,90 @@ export function NyBookingClient({ serviceTypes, instructors, facilities }: Props
                   ))}
                 </select>
               </div>
+
+              <div className="mb-4 pt-4 border-t border-outline-variant/30">
+                <label className="text-xs text-on-surface-variant block mb-2">
+                  Betaling
+                </label>
+                <div className="flex flex-col gap-2">
+                  <label className="flex items-start gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMode"
+                      checked={paymentMode === "off-session"}
+                      onChange={() => setPaymentMode("off-session")}
+                      className="mt-1"
+                    />
+                    <span className="text-sm text-on-surface">
+                      <strong>Trekk fra lagret kort</strong>
+                      <span className="block text-xs text-on-surface-variant">
+                        Krever at eleven har lagret kort. Faller automatisk
+                        tilbake til betalingslenke om kort mangler.
+                      </span>
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMode"
+                      checked={paymentMode === "payment-link"}
+                      onChange={() => setPaymentMode("payment-link")}
+                      className="mt-1"
+                    />
+                    <span className="text-sm text-on-surface">
+                      <strong>Send betalingslenke</strong>
+                      <span className="block text-xs text-on-surface-variant">
+                        Stripe Payment Link via SMS + e-post. Bookingen
+                        bekreftes automatisk når eleven betaler.
+                      </span>
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="paymentMode"
+                      checked={paymentMode === "none"}
+                      onChange={() => setPaymentMode("none")}
+                      className="mt-1"
+                    />
+                    <span className="text-sm text-on-surface">
+                      <strong>Uten betaling</strong>
+                      <span className="block text-xs text-on-surface-variant">
+                        For abo-dekt eller intern booking.
+                      </span>
+                    </span>
+                  </label>
+                </div>
+
+                {paymentMode === "payment-link" ? (
+                  <div className="mt-3">
+                    <label
+                      htmlFor="student-phone"
+                      className="text-xs text-on-surface-variant block mb-1"
+                    >
+                      Elevens telefon (for SMS-varsel)
+                    </label>
+                    <AdminInput
+                      id="student-phone"
+                      type="tel"
+                      value={studentPhone}
+                      onChange={(e) => setStudentPhone(e.target.value)}
+                      placeholder="+47 412 33 901"
+                    />
+                  </div>
+                ) : null}
+              </div>
+
+              {error ? (
+                <div role="alert" className="form-error mb-3" style={{ fontSize: 13 }}>
+                  {error}
+                </div>
+              ) : null}
+              {successMessage ? (
+                <div className="alert" style={{ fontSize: 13, marginBottom: 12, padding: 8, background: "#E0EFE7", borderRadius: 6, color: "#2A7D5A" }}>
+                  {successMessage}
+                </div>
+              ) : null}
 
               <div className="flex items-center justify-between pt-4 border-t border-outline-variant/30">
                 <div>

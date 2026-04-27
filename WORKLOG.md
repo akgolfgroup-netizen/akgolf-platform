@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B+C+D ferdig (4/8):**
+**Coach-funksjoner — Fase A+B+C+D+E ferdig (5/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -115,7 +115,17 @@
   - **BookingDraft** utvidet med `locationId?: string`. Validering oppdatert. `submitDetails` leser hidden input `locationId` og lagrer i draft. `DetailsForm` har nytt hidden field for `locationId`. dine-detaljer/page.tsx leser/videreforer locationId.
   - **/booking-v2** (landing) oppdatert: cta peker til /lokasjon, slug-baserte snarveier (Performance/Flex 50 etc.) erstattet med "Slik fungerer det" 5-stegs forklaring. Quick-rows fjernet siden de hopper over lokasjon-valg.
   - Verifisert ende-til-ende i preview: /lokasjon viser GFGK → /velg-trener?locationId=gfgk-main viser Anders + Markus → /velg-tjeneste?locationId&instructorId viser 12 Anders-tjenester → /tid carry-over inkluderer locationId, back-href til velg-tjeneste, next-href til dine-detaljer med alle params.
-- **Resterende:** Fase E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~28–52t igjen.
+- **Fase E ✅ — Manuell booking på spiller:**
+  - **Stripe Payment Link-helper** i `lib/portal/stripe/payment-link.ts`: `createBookingPaymentLink({ bookingId, serviceName, amountKr, stripePriceId?, successUrl })`. Bruker eksisterende `stripePriceId` fra ServiceType (etter Fase C backfill); fallback ad-hoc Price hvis mangler.
+  - **SMS-helper** `sendPaymentLinkSms` i `lib/portal/sms/send-booking-sms.ts` — ny e-post-melding "Hei N! Vi har reservert X. Bekreft betaling her: [link]" via Twilio.
+  - **Server action** `adminCreateBookingWithPayment` i `create-actions.ts` med tre `paymentMode`:
+    - `off-session` — forsøker `chargeOffSession` (lagret kort). Faller automatisk tilbake til payment-link hvis kunden mangler `stripeCustomerId` eller default payment method.
+    - `payment-link` — lager Stripe Payment Link + sender via SMS + e-post (HTML-mal med "Bekreft og betal"-CTA).
+    - `none` — ingen betaling (typisk for abo-dekt eller intern booking).
+  - **UI-utvidelse** i `ny-booking-client.tsx`: tre radio-knapper for betalingsmodus i steg 4 (oppsummering), telefon-input ved payment-link, suksess-melding etter submit (forteller om SMS+e-post ble sendt). Bytter fra `adminCreateBooking` til `adminCreateBookingWithPayment`.
+  - Verifisert: lint + typecheck rene, /admin/bookinger/ny rendrer (UI-test krever innlogget admin for full flyt — del av samlet røykprøve etter Fase H).
+  - **ENV-krav før prod:** Ekte Stripe + Twilio + Resend keys + kjør `backfill-stripe-services.ts` (Fase C) for at `stripePriceId` skal være satt på alle ServiceType.
+- **Resterende:** Fase F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~22–42t igjen.
 
 ---
 

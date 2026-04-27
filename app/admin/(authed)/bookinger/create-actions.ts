@@ -10,6 +10,9 @@ import { nanoid } from "nanoid";
 import { sendReminderSms } from "@/lib/portal/sms/send-reminder-sms";
 import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { logger } from "@/lib/logger";
+import { chargeOffSession } from "@/lib/portal/stripe/off-session";
+import { createBookingPaymentLink } from "@/lib/portal/stripe/payment-link";
+import { sendPaymentLinkSms } from "@/lib/portal/sms/send-booking-sms";
 
 // ── Types ──────────────────────────────────────────────────
 
@@ -126,6 +129,170 @@ export async function adminCreateBooking(data: {
 
   revalidatePath("/admin/bookinger");
   return booking!.id;
+}
+
+// ── Manuell booking med betaling (Fase E) ─────────────────
+
+export type ManualBookingPaymentMode = "off-session" | "payment-link" | "none";
+
+export interface ManualBookingPaymentResult {
+  bookingId: string;
+  paymentMode: ManualBookingPaymentMode;
+  /** off-session: status fra Stripe ('succeeded' / 'requires_action' / 'failed') */
+  chargeStatus?: "succeeded" | "requires_action" | "failed";
+  /** payment-link: URL kunden mottok via SMS/e-post */
+  paymentUrl?: string;
+  /** payment-link: ble SMS sendt? */
+  smsSent?: boolean;
+  /** payment-link: ble e-post sendt? */
+  emailSent?: boolean;
+  /** Hvorfor off-session ikke fungerte (ingen kort lagret etc.) */
+  fallbackReason?: string;
+}
+
+/**
+ * adminCreateBookingWithPayment — manuell booking med Stripe-trekk eller Payment Link.
+ *
+ * Tre moduser:
+ *   - off-session: Forsøk å trekke lagret kort. Faller tilbake til payment-link
+ *     hvis kunden mangler stripeCustomerId eller default payment method.
+ *   - payment-link: Lager Stripe Payment Link og sender via SMS + e-post.
+ *   - none: Lager booking uten betaling (typisk for abo-dekt eller intern).
+ */
+export async function adminCreateBookingWithPayment(input: {
+  studentEmail: string;
+  studentName: string;
+  studentPhone?: string;
+  serviceTypeId: string;
+  instructorId: string;
+  startTime: string;
+  facilityId?: string | null;
+  paymentMode: ManualBookingPaymentMode;
+}): Promise<ManualBookingPaymentResult> {
+  // 1. Opprett bookingen via eksisterende helper
+  const bookingId = await adminCreateBooking({
+    studentEmail: input.studentEmail,
+    studentName: input.studentName,
+    serviceTypeId: input.serviceTypeId,
+    instructorId: input.instructorId,
+    startTime: input.startTime,
+    facilityId: input.facilityId,
+  });
+
+  if (input.paymentMode === "none") {
+    return { bookingId, paymentMode: "none" };
+  }
+
+  // 2. Hent oppdatert booking + service for Payment Link/off-session
+  const supabase = await createServerSupabase();
+  const { data: booking } = await supabase
+    .from("Booking")
+    .select(
+      "id, amount, startTime, ServiceType (id, name, stripePriceId), User (id, email, name, phone, stripeCustomerId)",
+    )
+    .eq("id", bookingId)
+    .single();
+  if (!booking) {
+    throw new Error("Kunne ikke hente nyopprettet booking");
+  }
+
+  const service = first<{
+    id: string;
+    name: string;
+    stripePriceId: string | null;
+  }>(booking.ServiceType);
+  const user = first<{
+    id: string;
+    email: string;
+    name: string | null;
+    phone: string | null;
+    stripeCustomerId: string | null;
+  }>(booking.User);
+
+  // 3. Off-session: forsøk å trekke lagret kort. Fall tilbake til payment-link ved feil.
+  if (input.paymentMode === "off-session") {
+    if (user?.stripeCustomerId) {
+      try {
+        const result = await chargeOffSession(bookingId);
+        if (result?.status === "succeeded") {
+          return {
+            bookingId,
+            paymentMode: "off-session",
+            chargeStatus: "succeeded",
+          };
+        }
+        // Hvis chargeOffSession returnerer null eller annen status → fallback til payment-link
+        logger.info(
+          `[adminCreateBookingWithPayment] off-session skipped/failed (${result?.status ?? "null"}), falling back to payment-link`,
+        );
+      } catch (err) {
+        logger.warn(
+          "[adminCreateBookingWithPayment] off-session error",
+          err instanceof Error ? { message: err.message } : { err: String(err) },
+        );
+      }
+    } else {
+      logger.info(
+        `[adminCreateBookingWithPayment] no stripeCustomerId for ${user?.email}, falling back to payment-link`,
+      );
+    }
+    // Fall through til payment-link
+  }
+
+  // 4. Payment Link: lag Stripe Payment Link + send SMS/e-post
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://akgolf.no";
+  const paymentLink = await createBookingPaymentLink({
+    bookingId,
+    serviceName: service?.name ?? "Coaching",
+    amountKr: booking.amount as number,
+    stripePriceId: service?.stripePriceId ?? null,
+    successUrl: `${baseUrl}/booking/${bookingId}/confirmation`,
+  });
+
+  // Send via SMS + e-post (best effort, ikke-blokkerende for resultat)
+  let smsSent = false;
+  let emailSent = false;
+
+  if (input.studentPhone) {
+    try {
+      const result = await sendPaymentLinkSms({
+        customerPhone: input.studentPhone,
+        customerName: input.studentName,
+        serviceName: service?.name ?? "Coaching",
+        startTime: new Date(booking.startTime as string),
+        paymentUrl: paymentLink.url,
+      });
+      smsSent = result.sent;
+    } catch (err) {
+      logger.error("[adminCreateBookingWithPayment] SMS failed", err);
+    }
+  }
+
+  const resend = getResend();
+  if (resend && input.studentEmail) {
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: input.studentEmail,
+        subject: `Bekreft betaling for ${service?.name ?? "coaching"}`,
+        html: `<div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;padding:32px"><h2 style="color:#0A1F18;font-size:24px;font-weight:700;margin:0 0 24px">Hei ${input.studentName}!</h2><p style="color:#333;font-size:16px;margin:0 0 16px">Vi har reservert <strong>${service?.name ?? "coaching"}</strong> for deg ${format(new Date(booking.startTime as string), "EEEE d. MMMM 'kl.' HH:mm", { locale: nb })}.</p><p style="color:#333;font-size:16px;margin:0 0 24px">For å bekrefte plassen din, fullfør betalingen via lenken under:</p><a href="${paymentLink.url}" style="display:inline-block;padding:14px 28px;background:#005840;color:white;text-decoration:none;border-radius:8px;font-weight:600">Bekreft og betal →</a><p style="color:#999;font-size:12px;margin:32px 0 0">AK Golf Academy</p></div>`,
+      });
+      emailSent = true;
+    } catch (err) {
+      logger.error("[adminCreateBookingWithPayment] e-post failed", err);
+    }
+  }
+
+  return {
+    bookingId,
+    paymentMode: "payment-link",
+    paymentUrl: paymentLink.url,
+    smsSent,
+    emailSent,
+    ...(input.paymentMode === "off-session"
+      ? { fallbackReason: "no-saved-card" }
+      : {}),
+  };
 }
 
 // ── Bulk Send Reminder ─────────────────────────────────────
