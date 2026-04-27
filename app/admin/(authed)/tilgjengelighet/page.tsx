@@ -26,6 +26,7 @@ import {
   syncGoogleCalendar,
   getInstructors,
 } from "./actions";
+import { ClosedPeriodDialog } from "@/components/admin/tilgjengelighet/closed-period-dialog";
 
 interface Instructor {
   id: string;
@@ -93,6 +94,7 @@ export default function TilgjengelighetPage() {
     Record<number, Array<{ start: string; end: string }>>
   >({});
   const [showAddException, setShowAddException] = useState(false);
+  const [showClosedPeriod, setShowClosedPeriod] = useState(false);
   const [exceptionForm, setExceptionForm] = useState({
     date: "",
     startTime: "09:00",
@@ -403,6 +405,14 @@ export default function TilgjengelighetPage() {
               ))}
             </div>
             <div className="ml-auto flex gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => setShowClosedPeriod(true)}
+                disabled={!selectedInstructor}
+              >
+                <Icon name="event_busy" className="w-4 h-4" />
+                Steng periode
+              </Button>
               <Button
                 variant="accent"
                 onClick={() => setShowAddException(true)}
@@ -733,6 +743,13 @@ export default function TilgjengelighetPage() {
           />
         </div>
       </AdminDialog>
+
+      <ClosedPeriodDialog
+        instructorId={selectedInstructor || null}
+        open={showClosedPeriod}
+        onOpenChange={setShowClosedPeriod}
+        onCreated={loadData}
+      />
     </>
   );
 }

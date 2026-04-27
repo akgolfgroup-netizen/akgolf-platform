@@ -81,6 +81,19 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
+**Coach-funksjoner — Fase A ferdig (1/8):**
+- Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
+- **Fase A ✅ — Coach-tilgjengelighet:**
+  - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
+  - **Next.js 16-fix:** `revalidateTag(tag, {})` (ugyldig signatur) → `updateTag(tag)` for slot/availability-cache-invalidation.
+  - **RBAC:** `getInstructors` filtrerer på `Instructor.userId === user.id` for INSTRUCTOR-rolle. ADMIN ser alle. Sikrer at coach kun ser+endrer egen tilgjengelighet.
+  - **Ny feature: Steng periode** — `createClosedPeriod({ instructorId, startDate, endDate, reason })` lager én `BlockedTime`-record per dag i intervallet. Ny `ClosedPeriodDialog` i `components/admin/tilgjengelighet/closed-period-dialog.tsx` med presets (Ferie/Kurs/Sykdom/Privat) eller egen tekst. Knapp "Steng periode" lagt til i `tilgjengelighet/page.tsx` ved siden av eksisterende "Legg til unntak".
+  - **Utsatt til polish-runde:** A2-A5 (full UI-refaktor, drag-grid, månedsvisning) — eksisterende UI er funksjonell og leverer verdi nå. Risiko/nytte tilsa at vi prioriterte bug-fix + ferie-feature.
+  - Verifisert: lint + typecheck rene; siden rendrer 200 OK; begge knapper synlige. Dialog-funksjonalitet krever innlogget admin (manuell test i samlet røykprøve etter Fase H).
+- **Resterende:** Fase B (multi-location), C (Stripe-katalog), D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~50–80t igjen.
+
+---
+
 **Booking-v2 — FERDIG (alle 10 steg levert, klar for cutover):**
 - Plan: 10 steg, ~16t fokusert arbeid (se under)
 - Steg 1 ✅ — `lib/booking-v2/services.ts` med `getBookingV2Services()`, `getBookingV2Service(id)`, `getBookingV2Instructors()`, `getBookingV2InstructorsForService(id)`. Henter ekte data fra Prisma. Bruker DB-cuid direkte i URL-params — ingen slug-mapping nødvendig.

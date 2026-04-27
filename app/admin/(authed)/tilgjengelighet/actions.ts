@@ -3,9 +3,10 @@
 import { createClient } from "@supabase/supabase-js";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
+import { syncGoogleCalendar as syncGoogleCalendarEngine } from "@/lib/portal/google-calendar/sync";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -16,16 +17,22 @@ export interface Instructor {
   email: string;
 }
 
+/**
+ * Henter instruktør-listen for tilgjengelighet-siden.
+ *
+ * RBAC: ADMIN ser alle. INSTRUCTOR ser kun seg selv.
+ */
 export async function getInstructors(): Promise<Instructor[]> {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return [];
 
   const supabase = createClient(supabaseUrl, supabaseKey);
-  
+
   const { data: instructors, error } = await supabase
     .from("Instructor")
     .select(`
       id,
+      userId,
       User(name, email)
     `)
     .order("name", { foreignTable: "User", ascending: true });
@@ -35,11 +42,37 @@ export async function getInstructors(): Promise<Instructor[]> {
     return [];
   }
 
-  return instructors?.map((i) => ({
-    id: i.id,
-    name: i.User?.[0]?.name || "Ukjent",
-    email: i.User?.[0]?.email || "",
-  })) || [];
+  type InstructorRow = {
+    id: string;
+    userId: string;
+    User: Array<{ name?: string; email?: string }> | { name?: string; email?: string } | null;
+  };
+
+  const all = (instructors || []).map((i) => {
+    const row = i as InstructorRow;
+    const userObj = Array.isArray(row.User) ? row.User[0] : row.User;
+    return {
+      id: row.id,
+      userId: row.userId,
+      name: userObj?.name || "Ukjent",
+      email: userObj?.email || "",
+    };
+  });
+
+  // INSTRUCTOR-rolle ser kun seg selv — filtrer på Instructor.userId === currentUser.id
+  if (user.role === "INSTRUCTOR") {
+    return all
+      .filter((i) => i.userId === user.id)
+      .map(({ userId: _userId, ...rest }) => {
+        void _userId;
+        return rest;
+      });
+  }
+
+  return all.map(({ userId: _userId, ...rest }) => {
+    void _userId;
+    return rest;
+  });
 }
 
 export async function getAvailability(instructorId: string) {
@@ -47,12 +80,11 @@ export async function getAvailability(instructorId: string) {
   if (!user?.id || !isStaff(user.role)) return [];
 
   const supabase = createClient(supabaseUrl, supabaseKey);
-  
+
   const { data, error } = await supabase
-    .from("AvailabilityWindow")
+    .from("InstructorAvailability")
     .select("*")
     .eq("instructorId", instructorId)
-    .eq("isActive", true)
     .order("dayOfWeek", { ascending: true });
 
   if (error) {
@@ -74,9 +106,8 @@ export async function upsertAvailability(
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Slett eksisterende tilgjengelighet
   const { error: deleteError } = await supabase
-    .from("AvailabilityWindow")
+    .from("InstructorAvailability")
     .delete()
     .eq("instructorId", instructorId);
 
@@ -85,10 +116,9 @@ export async function upsertAvailability(
     throw new Error("Kunne ikke slette eksisterende tilgjengelighet");
   }
 
-  // Sett inn nye slots
   if (slots.length > 0) {
     const { error: insertError } = await supabase
-      .from("AvailabilityWindow")
+      .from("InstructorAvailability")
       .insert(
         slots.map((slot) => ({
           id: nanoid(),
@@ -96,7 +126,6 @@ export async function upsertAvailability(
           dayOfWeek: slot.dayOfWeek,
           startTime: slot.startTime,
           endTime: slot.endTime,
-          isActive: true,
         }))
       );
 
@@ -106,10 +135,9 @@ export async function upsertAvailability(
     }
   }
 
-  // Revalidate cache
   revalidatePath("/admin/tilgjengelighet");
-  revalidateTag("slots", {});
-  revalidateTag(`availability:${instructorId}`, {});
+  updateTag("slots");
+  updateTag(`availability:${instructorId}`);
 }
 
 export async function getBlockedTimes(instructorId?: string) {
@@ -117,13 +145,13 @@ export async function getBlockedTimes(instructorId?: string) {
   if (!user?.id || !isStaff(user.role)) return [];
 
   const supabase = createClient(supabaseUrl, supabaseKey);
-  
+
   let query = supabase
     .from("BlockedTime")
     .select("*")
     .gte("endTime", new Date().toISOString())
     .order("startTime", { ascending: true })
-    .limit(50);
+    .limit(100);
 
   if (instructorId) {
     query = query.eq("instructorId", instructorId);
@@ -170,7 +198,80 @@ export async function createBlockedTime(params: {
   }
 
   revalidatePath("/admin/tilgjengelighet");
-  revalidateTag("slots", {});
+  updateTag("slots");
+}
+
+/**
+ * Stenger en sammenhengende periode (ferier, kurs, lengre fravær).
+ * Lager én BlockedTime-record per dag i intervallet — gjør at vanlig avbestilling
+ * og slot-generering fungerer per-dag uten ekstra logikk.
+ *
+ * `startDate` og `endDate` er YYYY-MM-DD i Europe/Oslo. Begge inklusive.
+ */
+export async function createClosedPeriod(params: {
+  instructorId: string;
+  startDate: string;
+  endDate: string;
+  reason: string;
+}): Promise<{ daysCreated: number }> {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    throw new Error("Ikke autorisert");
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(params.startDate)) {
+    throw new Error("Ugyldig startdato");
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(params.endDate)) {
+    throw new Error("Ugyldig sluttdato");
+  }
+
+  const start = new Date(`${params.startDate}T00:00:00`);
+  const end = new Date(`${params.endDate}T23:59:59`);
+  if (end < start) {
+    throw new Error("Sluttdato må være etter startdato");
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Lag én record per dag (00:00–23:59 lokal tid → ISO UTC)
+  const records: Array<{
+    id: string;
+    instructorId: string;
+    startTime: string;
+    endTime: string;
+    reason: string;
+    source: string;
+  }> = [];
+
+  const cursor = new Date(start);
+  while (cursor <= end) {
+    const dayStart = new Date(cursor);
+    dayStart.setHours(0, 0, 0, 0);
+    const dayEnd = new Date(cursor);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    records.push({
+      id: nanoid(),
+      instructorId: params.instructorId,
+      startTime: dayStart.toISOString(),
+      endTime: dayEnd.toISOString(),
+      reason: params.reason,
+      source: "MANUAL",
+    });
+
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  const { error } = await supabase.from("BlockedTime").insert(records);
+  if (error) {
+    logger.error("[createClosedPeriod] Insert error:", error);
+    throw new Error("Kunne ikke opprette stengt periode");
+  }
+
+  revalidatePath("/admin/tilgjengelighet");
+  updateTag("slots");
+  return { daysCreated: records.length };
 }
 
 export async function deleteBlockedTime(id: string) {
@@ -192,10 +293,8 @@ export async function deleteBlockedTime(id: string) {
   }
 
   revalidatePath("/admin/tilgjengelighet");
-  revalidateTag("slots", {});
+  updateTag("slots");
 }
-
-import { syncGoogleCalendar as syncGoogleCalendarEngine } from "@/lib/portal/google-calendar/sync";
 
 export async function syncGoogleCalendar(instructorId: string) {
   const user = await requirePortalUser();
