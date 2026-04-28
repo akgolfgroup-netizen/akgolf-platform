@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   CoachHQDarkShell,
   PageHead,
@@ -90,6 +91,7 @@ export function CoachingBoardDarkClient({
   user,
   weekSessionCount,
 }: CoachingBoardDarkClientProps) {
+  const router = useRouter();
   const columns: KanbanColumn[] = [
     {
       tone: "preparation",
@@ -133,13 +135,25 @@ export function CoachingBoardDarkClient({
         description="Hver økt går gjennom 4 faser. Dra kort mellom kolonner for å oppdatere status."
         actions={
           <>
-            <Button variant="ghost" icon={<Filter className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<Filter className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/team")}
+            >
               Anders + Markus
             </Button>
-            <Button variant="ghost" icon={<Layers className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<Layers className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/denne-uken")}
+            >
               Denne uken
             </Button>
-            <Button variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+            <Button
+              variant="primary"
+              icon={<Plus className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/bookinger/ny")}
+            >
               Ny økt
             </Button>
           </>
@@ -148,14 +162,27 @@ export function CoachingBoardDarkClient({
 
       <div className="grid grid-cols-4 gap-3.5 items-start">
         {columns.map((col) => (
-          <KanbanColumnView key={col.tone} column={col} />
+          <KanbanColumnView
+            key={col.tone}
+            column={col}
+            onAdd={() => router.push("/admin/bookinger/ny")}
+            onCardClick={(id) => router.push(`/admin/okter?id=${id}`)}
+          />
         ))}
       </div>
     </CoachHQDarkShell>
   );
 }
 
-function KanbanColumnView({ column }: { column: KanbanColumn }) {
+function KanbanColumnView({
+  column,
+  onAdd,
+  onCardClick,
+}: {
+  column: KanbanColumn;
+  onAdd: () => void;
+  onCardClick: (id: string) => void;
+}) {
   const Icon = column.icon;
   const pill = COLUMN_PILL[column.tone];
 
@@ -189,6 +216,8 @@ function KanbanColumnView({ column }: { column: KanbanColumn }) {
           </span>
         </div>
         <button
+          type="button"
+          onClick={onAdd}
           aria-label="Legg til"
           style={{ color: "rgba(255,255,255,0.5)" }}
           className="hover:text-white transition-colors"
@@ -199,21 +228,33 @@ function KanbanColumnView({ column }: { column: KanbanColumn }) {
 
       <div className="flex flex-col gap-2.5">
         {column.cards.map((card) => (
-          <KanbanCardView key={card.id} card={card} />
+          <KanbanCardView
+            key={card.id}
+            card={card}
+            onClick={() => onCardClick(card.id)}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function KanbanCardView({ card }: { card: KanbanCard }) {
+function KanbanCardView({
+  card,
+  onClick,
+}: {
+  card: KanbanCard;
+  onClick: () => void;
+}) {
   const isLive = card.variant === "live";
   const isUrgent = card.variant === "urgent";
   const isFaded = card.variant === "faded";
 
   return (
-    <div
-      className="p-3 cursor-grab transition-all"
+    <button
+      type="button"
+      onClick={onClick}
+      className="p-3 cursor-pointer transition-all text-left w-full"
       style={{
         background: "#0D2E23",
         border: isLive
@@ -295,7 +336,7 @@ function KanbanCardView({ card }: { card: KanbanCard }) {
           })}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 
