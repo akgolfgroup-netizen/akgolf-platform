@@ -5,7 +5,6 @@ import { JuniorAgeGroupsSection } from "./junior-academy/age-groups-section";
 import { JuniorParentBenefitsSection } from "./junior-academy/parent-benefits-section";
 import { JuniorSeasonSection } from "./junior-academy/season-section";
 import { JuniorCoachSection } from "./junior-academy/coach-section";
-import { JuniorPricebandSection } from "./junior-academy/priceband-section";
 import { JuniorFaqSection } from "./junior-academy/faq-section";
 import { JuniorCtaSection } from "./junior-academy/cta-section";
 
@@ -27,7 +26,6 @@ export function JuniorAcademyPageClient() {
         <JuniorParentBenefitsSection />
         <JuniorSeasonSection />
         <JuniorCoachSection />
-        <JuniorPricebandSection />
         <JuniorFaqSection />
         <JuniorCtaSection />
       </main>

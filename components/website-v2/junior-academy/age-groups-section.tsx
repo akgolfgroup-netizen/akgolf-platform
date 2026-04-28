@@ -102,7 +102,6 @@ export function JuniorAgeGroupsSection() {
                   }}
                 >
                   <Stat v={g.groupSize} l={g.groupSizeLabel} />
-                  <Stat v={g.price} l={g.priceLabel} />
                 </div>
                 <Link
                   href={g.ctaHref}

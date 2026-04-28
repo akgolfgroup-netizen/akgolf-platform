@@ -2405,21 +2405,18 @@ export const JUNIOR_AGE_GROUPS_V3 = {
   groups: [
     {
       ageRange: "6–9 år",
-      name: "Sprout",
-      tagline: "Lekbasert intro · 60 min × uke",
+      name: "Mini",
+      tagline: "Lekbasert intro",
       description:
         "Motorikk, koordinasjon og gledesfylt første møte med golf. Plast-køller, fargerike mål, og masse løping.",
       features: [
         "Mini-baner og lek-stasjoner",
         "Foreldre kan delta gratis",
-        "Sommer-uke i juli",
         "Kort tilpasset (avskåret)",
       ],
       groupSize: "8 stk",
       groupSizeLabel: "Pr. gruppe",
-      price: "1 290",
-      priceLabel: "Kr / mnd",
-      ctaLabel: "Mer om Sprout",
+      ctaLabel: "Mer om Mini",
       ctaHref: "#apply",
       photoVariant: "default" as const,
       photoDescription: "Smilende 7-åring med plast-kølle, fargerik mini-bane",
@@ -2427,21 +2424,19 @@ export const JUNIOR_AGE_GROUPS_V3 = {
     },
     {
       ageRange: "10–13 år",
-      name: "Grow",
-      tagline: "Teknikk + bane · 90 min × uke",
+      name: "Basis",
+      tagline: "Teknikk + bane",
       description:
-        "Strukturert teknikk-bygging med Trackman-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.",
+        "Strukturert teknikk-bygging med TrackMan-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.",
       features: [
-        "Trackman-tilpasset i smågruppe",
-        "4× banevandring 9 hull / sesong",
-        "Egen klubbturnering · vår + høst",
-        "PlayerHQ Junior i appen",
+        "TrackMan-tilpasset i smågruppe",
+        "Banevandring 9 hull",
+        "Egen klubbturnering",
+        "Tilgang til PlayerHQ Junior",
       ],
       groupSize: "6 stk",
       groupSizeLabel: "Pr. gruppe",
-      price: "1 890",
-      priceLabel: "Kr / mnd",
-      ctaLabel: "Mer om Grow",
+      ctaLabel: "Mer om Basis",
       ctaHref: "#apply",
       photoVariant: "lime" as const,
       photoDescription:
@@ -2450,21 +2445,19 @@ export const JUNIOR_AGE_GROUPS_V3 = {
     },
     {
       ageRange: "14–17 år",
-      name: "Compete",
-      tagline: "Talent / turnering · 2× uke",
+      name: "Elite",
+      tagline: "Talent / turnering",
       description:
         "For ambisiøse tenåringer. Personlig coach, fysisk testing, mental forberedelse og oppfølging på regionale turneringer.",
       features: [
         "Personlig coach + treningsplan",
-        "Fysisk testing 4× / år",
-        "Turnering-coaching helger",
+        "Fysisk testing",
+        "Turnering-coaching",
         "Talentstige mot regionalt nivå",
       ],
       groupSize: "4 stk",
       groupSizeLabel: "Pr. gruppe",
-      price: "2 890",
-      priceLabel: "Kr / mnd",
-      ctaLabel: "Mer om Compete",
+      ctaLabel: "Mer om Elite",
       ctaHref: "#apply",
       photoVariant: "warm" as const,
       photoDescription:
@@ -2534,7 +2527,6 @@ export const JUNIOR_SEASON_V3 = {
         "5-dagers leir for 6–13 år: golf, lek, baneturer, lunsj, pizza-fredag og turnering med pokaler. Tilgjengelig for ikke-medlemmer.",
       stats: [
         { v: "5 dager", l: "09–15 hver dag" },
-        { v: "3 490 kr", l: "Pris pr. uke" },
       ],
       ctaLabel: "Se uker og påmelding",
       ctaHref: "#apply",
@@ -2547,7 +2539,7 @@ export const JUNIOR_SEASON_V3 = {
       label: "TALENTSTIGE · 14–17 ÅR",
       title: "Compete-spor mot regionalt nivå",
       description:
-        "For Compete-juniorer som sikter mot regionale og nasjonale turneringer. Vi følger på 4–6 turneringer i året, hjelper med skole-balansen, og følger talentutviklingen tett gjennom sesongen.",
+        "For Elite-juniorer som sikter mot regionale og nasjonale turneringer. Vi følger på turneringer gjennom året, hjelper med skole-balansen, og følger talentutviklingen tett gjennom sesongen.",
       stats: [
         { v: "6 turneringer", l: "Coach følger" },
         { v: "Regionalt", l: "Talentspor" },
