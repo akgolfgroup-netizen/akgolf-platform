@@ -6,7 +6,6 @@ import { useMemo, useState, useTransition } from "react";
 
 import Link from "next/link";
 import { UserRole, type Capability } from "@prisma/client";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
 import { Button, Badge } from "@/components/ui";
 import {
   inviteTeamMember,
@@ -145,24 +144,36 @@ export function TeamClient({
 
   return (
     <div className="space-y-6">
-      <AdminPageHeader
-        title="Team og tilgang"
-        subtitle="Oversikt over admin-brukere, roller og kapabiliteter. Huke av hvilke funksjoner hver enkelt har tilgang til."
-        actions={
-          permissions.canAssignCapabilities && (
-            <div className="flex items-center gap-2">
-              <Link href="/admin/team/audit" className="text-sm text-[var(--color-primary)] hover:underline inline-flex items-center gap-1.5">
-                <Icon name="assignment" className="h-4 w-4" />
-                Audit-logg
-              </Link>
-              <Button onClick={() => setInviteOpen(true)}>
-                <Icon name="person_add" className="h-4 w-4" />
-                Inviter bruker
-              </Button>
-            </div>
-          )
-        }
-      />
+      {/* Brand V2 page header — d23 mockup */}
+      <div className="flex items-end justify-between border-b border-line pb-5">
+        <div>
+          <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+            / MENNESKER · TEAM
+          </div>
+          <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+            Team og tilgang.
+          </h1>
+          <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+            Oversikt over admin-brukere, roller og kapabiliteter. Huke av
+            hvilke funksjoner hver enkelt har tilgang til.
+          </p>
+        </div>
+        {permissions.canAssignCapabilities && (
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/team/audit"
+              className="inline-flex items-center gap-1.5 text-[13px] text-primary hover:underline"
+            >
+              <Icon name="assignment" className="h-4 w-4" />
+              Audit-logg
+            </Link>
+            <Button onClick={() => setInviteOpen(true)}>
+              <Icon name="person_add" className="h-4 w-4" />
+              Inviter bruker
+            </Button>
+          </div>
+        )}
+      </div>
 
       <div className="flex items-center gap-1.5 rounded-[10px] bg-[var(--color-surface-container)] p-[3px] w-fit">
         {(
