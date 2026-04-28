@@ -28,7 +28,7 @@ export function OkterClient({ initialSessions, stats }: Props) {
   const [tab, setTab] = useState<TabId>("all");
   const [search, setSearch] = useState("");
 
-  const now = new Date();
+  const now = useMemo(() => new Date(), []);
   const heat = useMemo(() => buildHeatmap(initialSessions, now), [initialSessions, now]);
 
   const filtered = useMemo<SessionDayGroup[]>(() => {
