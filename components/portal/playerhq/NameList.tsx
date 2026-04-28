@@ -17,6 +17,8 @@ interface NameListProps {
     image?: string | null;
   };
   onSignOut?: () => void;
+  /** Optional: kalles ved klikk på et nav-item. Brukes for å lukke mobil-drawer. */
+  onItemClick?: () => void;
 }
 
 /**
@@ -24,7 +26,7 @@ interface NameListProps {
  *
  * Brand Guide V2.0. Filtrerer items basert på feature-flag-set.
  */
-export function NameList({ user, onSignOut }: NameListProps) {
+export function NameList({ user, onSignOut, onItemClick }: NameListProps) {
   const pathname = usePathname();
   const initials = (user.name ?? user.email ?? "U")
     .split(/[\s@]/)[0]
@@ -91,6 +93,7 @@ export function NameList({ user, onSignOut }: NameListProps) {
                   key={item.href}
                   item={item}
                   pathname={pathname}
+                  onClick={onItemClick}
                 />
               ))}
             </div>
@@ -151,9 +154,11 @@ export function NameList({ user, onSignOut }: NameListProps) {
 function NameListLink({
   item,
   pathname,
+  onClick,
 }: {
   item: PlayerHQNavItem;
   pathname: string;
+  onClick?: () => void;
 }) {
   const isActive =
     pathname === item.href ||
@@ -163,6 +168,7 @@ function NameListLink({
   return (
     <Link
       href={item.href}
+      onClick={onClick}
       className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors"
       style={{
         background: isActive ? "var(--color-sidebar-hover)" : "transparent",
