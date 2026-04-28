@@ -98,8 +98,7 @@ export function ContactPageClient() {
             .
           </h1>
           <p className="mx-auto max-w-[56ch] text-[19px] leading-[1.55] text-[var(--akgolf-text,#324D45)]">
-            Send oss en melding eller ring direkte. Vi svarer normalt innen
-            24 timer på hverdager.
+            Send oss en melding eller ring direkte. Vi tar kontakt så snart vi kan.
           </p>
         </div>
       </section>
@@ -226,15 +225,11 @@ export function ContactPageClient() {
                 className="mt-1 text-[18px] font-bold text-[var(--akgolf-ink,#0A1F18)]"
                 style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
               >
-                AK Golf Studio
+                Gamle Fredrikstad Golfklubb
               </div>
               <div className="mt-3 flex items-start gap-2 text-[14px] text-[var(--akgolf-text,#324D45)]">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                <div>
-                  Gamle Fredrikstad Golfklubb
-                  <br />
-                  Bossum
-                </div>
+                <div>Bossum, Fredrikstad</div>
               </div>
             </div>
           </aside>
