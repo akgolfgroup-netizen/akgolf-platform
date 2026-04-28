@@ -4,12 +4,13 @@
  * Handling: Marker bookinger som NO_SHOW hvis ikke checked-in 15 min etter start.
  *           Trigger payment-collect (faktura/trekk skal fortsatt skje).
  */
-import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "no-show";
+const MODEL = "rule-based";
 const NO_SHOW_BUFFER_MINUTES = 15;
 
 export async function runNoShow(): Promise<AgentResult> {
@@ -36,23 +37,24 @@ export async function runNoShow(): Promise<AgentResult> {
       marked += 1;
     }
 
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "success",
-        duration: Date.now() - started,
-        output: `marked ${marked} no-shows`,
-      },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "success",
+      duration: Date.now() - started,
+      output: `marked ${marked} no-shows`,
+    });
 
     return { ran: true };
   } catch (err) {
     logger.error(`[${AGENT_NAME}] failed`, err);
-    await prisma.agentLog.create({
-      data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "error", duration: Date.now() - started, error: err instanceof Error ? err.message : String(err) },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "error",
+      duration: Date.now() - started,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error" };
   }
 }

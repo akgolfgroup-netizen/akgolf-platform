@@ -109,6 +109,26 @@
     {
       "path": "/api/portal/cron/training-reminders?mode=evening",
       "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-no-show",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-dunning",
+      "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-birthday",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-sponsor-report",
+      "schedule": "0 9 1 * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-winback",
+      "schedule": "30 9 * * *"
     }
   ],
   "headers": [

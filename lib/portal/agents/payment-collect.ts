@@ -3,23 +3,24 @@
  *
  * Trigger: Booking.status = COMPLETED (Flex-tjeneste, ikke abonnement).
  * Handling:
- *   - Privatperson + lagret kort → off-session trekk (Stripe PaymentIntent)
- *   - Bedrift (User.organizationNumber satt) → opprett Stripe Invoice (14d forfall)
- *   - Hvis abonnement dekker → ingen handling
+ *   - Privatperson + lagret kort -> off-session trekk (Stripe PaymentIntent)
+ *   - Bedrift (User.organizationNumber satt) -> opprett Stripe Invoice (14d forfall)
+ *   - Hvis abonnement dekker -> ingen handling
  *
- * Standardvalg #4 (Anders' fullmakt):
+ * Standardvalg #4 (Anders fullmakt):
  *   Privat = kort-trekk auto. Bedrift = faktura, 14d forfall.
  *
- * Logger til AgentLog.
+ * Logger til AgentLog via logAgentRun (sikrer riktig agentId-FK).
  */
 
-import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { chargeOffSession } from "@/lib/portal/stripe/off-session";
 import { createInvoiceForBooking } from "@/lib/portal/stripe/invoice";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "payment-collect";
+const MODEL = "stripe-api";
 
 export async function runPaymentCollect(bookingId: string): Promise<{
   ran: boolean;
@@ -50,14 +51,14 @@ export async function runPaymentCollect(bookingId: string): Promise<{
       return { ran: false, reason: "already-paid" };
     }
 
-    // Sjekk customer-type for å avgjøre kanal
+    // Sjekk customer-type for a avgjore kanal
     const pref = await prisma.customerPaymentPreference.findUnique({
       where: { userId: booking.User.id },
       select: { customerType: true, orgNumber: true },
     });
     const isCompany = pref?.customerType === "BUSINESS" || !!pref?.orgNumber;
 
-    // Bedrift med org.nr → faktura
+    // Bedrift med org.nr -> faktura
     if (isCompany) {
       const result = await createInvoiceForBooking(bookingId);
       await logSuccess(bookingId, "invoice", result?.amountKr ?? 0, started);
@@ -68,7 +69,7 @@ export async function runPaymentCollect(bookingId: string): Promise<{
       };
     }
 
-    // Privat → forsøk off-session trekk
+    // Privat -> forsok off-session trekk
     const charge = await chargeOffSession(bookingId);
     if (!charge) {
       await logSkip(bookingId, "subscription-covered-or-no-pm");
@@ -89,48 +90,33 @@ export async function runPaymentCollect(bookingId: string): Promise<{
 }
 
 async function logSuccess(bookingId: string, channel: string, amountKr: number, started: number) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "success",
-        duration: Date.now() - started,
-        input: bookingId,
-        output: `${channel} kr ${amountKr}`,
-      },
-    })
-    .catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "success",
+    duration: Date.now() - started,
+    input: bookingId,
+    output: `${channel} kr ${amountKr}`,
+  });
 }
 
 async function logSkip(bookingId: string, reason: string) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "skipped",
-        input: bookingId,
-        output: reason,
-      },
-    })
-    .catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "skipped",
+    input: bookingId,
+    output: reason,
+  });
 }
 
 async function logError(bookingId: string, err: unknown, started: number) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "error",
-        duration: Date.now() - started,
-        input: bookingId,
-        error: err instanceof Error ? err.message : String(err),
-      },
-    })
-    .catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "error",
+    duration: Date.now() - started,
+    input: bookingId,
+    error: err instanceof Error ? err.message : String(err),
+  });
 }

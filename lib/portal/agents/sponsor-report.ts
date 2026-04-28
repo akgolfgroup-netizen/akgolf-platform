@@ -6,12 +6,12 @@
  * NB: Sponsor-modell kommer i Sprint 5.2. Foreløpig logger agenten kun
  * en stub-output. Wires opp når Sponsor-modellen er på plass.
  */
-import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "sponsor-report";
+const MODEL = "rule-based";
 
 export async function runSponsorReport(): Promise<AgentResult> {
   const started = Date.now();
@@ -19,20 +19,24 @@ export async function runSponsorReport(): Promise<AgentResult> {
     // TODO Sprint 5.2: Hent ekte sponsorer fra Sponsor-modellen
     const sponsorCount = 0;
 
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "skipped",
-        duration: Date.now() - started,
-        output: `pending Sponsor-modell (Sprint 5.2). Ville sendt ${sponsorCount} rapporter.`,
-      },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "skipped",
+      duration: Date.now() - started,
+      output: `pending Sponsor-modell (Sprint 5.2). Ville sendt ${sponsorCount} rapporter.`,
+    });
 
     return { ran: false, reason: "sponsor-model-pending" };
   } catch (err) {
     logger.error(`[${AGENT_NAME}] failed`, err);
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "error",
+      duration: Date.now() - started,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error" };
   }
 }

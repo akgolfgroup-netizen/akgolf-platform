@@ -11,6 +11,7 @@ import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "birthday";
 
@@ -40,20 +41,24 @@ export async function runBirthday(): Promise<AgentResult> {
       sent += 1;
     }
 
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "success",
-        duration: Date.now() - started,
-        output: `sent ${sent} birthday msgs (date ${todayMonth}/${todayDay})`,
-      },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: "rule-based",
+      status: "success",
+      duration: Date.now() - started,
+      output: `sent ${sent} birthday msgs (date ${todayMonth}/${todayDay})`,
+    });
 
     return { ran: true };
   } catch (err) {
     logger.error(`[${AGENT_NAME}] failed`, err);
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: "rule-based",
+      status: "error",
+      duration: Date.now() - started,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error" };
   }
 }

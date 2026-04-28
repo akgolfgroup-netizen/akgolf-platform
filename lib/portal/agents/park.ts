@@ -8,10 +8,9 @@
  *   await runAgent("payment-collect", { bookingId });
  */
 
-import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
 import type { AgentName, AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 // Importer alle agenter
 import { onBookingCompleted, onCoachingSessionPublished, onUSISnapshotChanged, onTestResultLogged, onMetricSnapshotComputed } from "./runner";
@@ -136,19 +135,14 @@ export async function runAgent(
     return { ...result, duration: Date.now() - started };
   } catch (err) {
     logger.error(`[agent-park] ${name} failed`, err);
-    await prisma.agentLog
-      .create({
-        data: {
-          id: nanoid(),
-          agentType: name,
-          model: "park-orchestrator",
-          status: "error",
-          duration: Date.now() - started,
-          input: JSON.stringify(payload),
-          error: err instanceof Error ? err.message : String(err),
-        },
-      })
-      .catch(() => {});
+    await logAgentRun({
+      name,
+      model: "park-orchestrator",
+      status: "error",
+      duration: Date.now() - started,
+      input: JSON.stringify(payload),
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error", duration: Date.now() - started };
   }
 }

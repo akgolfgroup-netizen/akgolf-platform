@@ -14,8 +14,10 @@ import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { calculatePayoutForMonth } from "@/lib/portal/payout/calculator";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "coach-payout";
+const MODEL = "rule-based";
 
 export async function runCoachPayout(monthDate?: Date): Promise<{
   ran: boolean;
@@ -28,24 +30,21 @@ export async function runCoachPayout(monthDate?: Date): Promise<{
     const result = await calculatePayoutForMonth(monthDate);
 
     // Lagre payout-snapshot
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "success",
-        duration: Date.now() - started,
-        input: result.monthStart.toISOString().slice(0, 7),
-        output: JSON.stringify({
-          totalKr: result.totalKr,
-          lines: result.lines.map((l) => ({
-            name: l.instructorName,
-            model: l.model,
-            payout: l.totalPayoutKr,
-            sessions: l.sessionCount,
-          })),
-        }),
-      },
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "success",
+      duration: Date.now() - started,
+      input: result.monthStart.toISOString().slice(0, 7),
+      output: JSON.stringify({
+        totalKr: result.totalKr,
+        lines: result.lines.map((l) => ({
+          name: l.instructorName,
+          model: l.model,
+          payout: l.totalPayoutKr,
+          sessions: l.sessionCount,
+        })),
+      }),
     });
 
     // Notify Anders (admin)
@@ -72,16 +71,13 @@ export async function runCoachPayout(monthDate?: Date): Promise<{
       lineCount: result.lines.length,
     };
   } catch (err) {
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "error",
-        duration: Date.now() - started,
-        error: err instanceof Error ? err.message : String(err),
-      },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "error",
+      duration: Date.now() - started,
+      error: err instanceof Error ? err.message : String(err),
+    });
     logger.error(`[${AGENT_NAME}] failed`, err);
     return { ran: false, reason: "error" };
   }

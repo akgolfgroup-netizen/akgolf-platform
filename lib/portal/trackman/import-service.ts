@@ -366,7 +366,7 @@ async function updatePlayerMetrics(userId: string) {
   });
 
   // Create snapshot
-  await prisma.metricSnapshot.create({
+  const snapshot = await prisma.metricSnapshot.create({
     data: {
       playerMetricsId: metrics.id,
       snapshotDate: new Date(),
@@ -376,6 +376,16 @@ async function updatePlayerMetrics(userId: string) {
       consistencyScore,
     },
   });
+
+  // Fire-and-forget: detect prestasjons-tilbakegang og varsle coach.
+  // degradation-flag oppretter DegradationTracking hvis tilbakegang;
+  // degradation-flagger varsler coach hvis nylig tracking finnes.
+  void import("@/lib/portal/agents/degradation-flag")
+    .then(({ runDegradationFlag }) => runDegradationFlag(userId))
+    .catch(() => {});
+  void import("@/lib/portal/agents/runner")
+    .then(({ onMetricSnapshotComputed }) => onMetricSnapshotComputed(snapshot.id))
+    .catch(() => {});
 }
 
 async function updateClubDispersion(

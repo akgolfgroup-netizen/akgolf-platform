@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
     select: {
       id: true,
       UnifiedSkillIndex: {
-        select: { estimatedCategory: true },
+        select: { estimatedCategory: true, totalUsi: true },
       },
     },
   });
@@ -141,6 +141,18 @@ export async function GET(req: NextRequest) {
       ) {
         categoryChanges++;
       }
+
+      // Fire-and-forget: trigger usi-focus-updater hvis USI har endret seg signifikant.
+      // Agenten varsler coach ved delta > 0.5 (Standardvalg #USI).
+      void import("@/lib/portal/agents/runner")
+        .then(({ onUSISnapshotChanged }) =>
+          onUSISnapshotChanged(
+            user.id,
+            user.UnifiedSkillIndex?.totalUsi ?? null,
+            usi.totalUsi,
+          ),
+        )
+        .catch(() => {});
 
       processed++;
     } catch (err) {

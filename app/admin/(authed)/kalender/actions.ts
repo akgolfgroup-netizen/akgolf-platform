@@ -177,6 +177,12 @@ export async function markBookingCompleted(bookingId: string) {
     console.error("[markBookingCompleted] runner failed", err);
   });
 
+  // Fire-and-forget: trigger payment-collect for Flex/engangsbetaling.
+  // Bedrift -> faktura. Privat -> off-session kort-trekk. Abo -> no-op.
+  void import("@/lib/portal/agents/payment-collect")
+    .then(({ runPaymentCollect }) => runPaymentCollect(bookingId))
+    .catch((err) => console.error("[markBookingCompleted] payment-collect failed", err));
+
   return { ok: true };
 }
 

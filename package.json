@@ -10,6 +10,7 @@
     "lint": "eslint",
     "seed": "tsx prisma/seed-simple.ts",
     "seed:prod": "tsx prisma/seed-prod.ts",
+    "seed:agents": "tsx prisma/seed-agents.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

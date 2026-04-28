@@ -7,8 +7,10 @@ import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "booking-confirm";
+const MODEL = "rule-based";
 
 export async function runBookingConfirm(bookingId: string): Promise<AgentResult> {
   const started = Date.now();
@@ -50,20 +52,37 @@ export async function runBookingConfirm(bookingId: string): Promise<AgentResult>
 }
 
 async function logSuccess(started: number, input: string, output: string): Promise<AgentResult> {
-  await prisma.agentLog.create({
-    data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "success", duration: Date.now() - started, input, output },
-  }).catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "success",
+    duration: Date.now() - started,
+    input,
+    output,
+  });
   return { ran: true };
 }
+
 async function logSkip(started: number, input: string, reason: string): Promise<AgentResult> {
-  await prisma.agentLog.create({
-    data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "skipped", duration: Date.now() - started, input, output: reason },
-  }).catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "skipped",
+    duration: Date.now() - started,
+    input,
+    output: reason,
+  });
   return { ran: false, reason };
 }
+
 async function logError(started: number, input: string, err: unknown): Promise<AgentResult> {
-  await prisma.agentLog.create({
-    data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "error", duration: Date.now() - started, input, error: err instanceof Error ? err.message : String(err) },
-  }).catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "error",
+    duration: Date.now() - started,
+    input,
+    error: err instanceof Error ? err.message : String(err),
+  });
   return { ran: false, reason: "error" };
 }

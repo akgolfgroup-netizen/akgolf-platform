@@ -7,8 +7,10 @@ import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "winback";
+const MODEL = "rule-based";
 const INACTIVITY_DAYS = 21;
 
 export async function runWinback(): Promise<AgentResult> {
@@ -56,20 +58,24 @@ export async function runWinback(): Promise<AgentResult> {
       notified += 1;
     }
 
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "rule-based",
-        status: "success",
-        duration: Date.now() - started,
-        output: `notified ${notified} inactives`,
-      },
-    }).catch(() => {});
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "success",
+      duration: Date.now() - started,
+      output: `notified ${notified} inactives`,
+    });
 
     return { ran: true };
   } catch (err) {
     logger.error(`[${AGENT_NAME}] failed`, err);
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "error",
+      duration: Date.now() - started,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error" };
   }
 }

@@ -188,6 +188,12 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
+    // Fire-and-forget: trigger booking-confirm-agent.
+    // Sender SMS + e-post + notifikasjon til spilleren.
+    void import("@/lib/portal/agents/booking-confirm")
+      .then(({ runBookingConfirm }) => runBookingConfirm(booking.id))
+      .catch((err) => console.error("[create-group] booking-confirm failed", err));
+
     // Send notifikasjoner
     const supabase = await createServerSupabase();
     const { data: fullBooking, error: fullBookingError } = await supabase
