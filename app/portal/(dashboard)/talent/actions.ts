@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/portal/prisma";
 import { TalentAgeGroup, NorwegianRegion } from "@prisma/client";
+import { requirePortalUser } from "@/lib/portal/auth";
 
 export type LeaderboardFilters = {
   ageGroup?: TalentAgeGroup | "ALL";
@@ -252,5 +253,192 @@ export async function fetchPlayerProfile(playerId: string): Promise<PlayerProfil
       dataConfidenceScore: s.dataConfidenceScore,
     })),
     recentResults: p.results,
+  };
+}
+
+// =====================================================================
+// MyTalentDashboardData — for innlogget spillers personlige Talent-side
+// =====================================================================
+
+export type MyTalentTournamentRow = {
+  id: string;
+  tournamentName: string;
+  tournamentDate: Date;
+  ageGroup: TalentAgeGroup;
+  holes: number;
+  position: number | null;
+  totalScore: number | null;
+  toPar: number | null;
+};
+
+export type MyTalentData = {
+  player: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    club: string | null;
+    region: NorwegianRegion | null;
+    birthYear: number | null;
+    wagrRank: number | null;
+    collegeRank: number | null;
+  };
+  currentHcp: number | null;
+  hcpTrend90d: number | null;
+  currentYearStats: {
+    year: number;
+    totalRounds: number;
+    avgRound: number | null;
+    bestRound: number | null;
+    top3Count: number;
+    top10Count: number;
+    improvementPerYear: number | null;
+    dataConfidenceScore: number;
+  } | null;
+  ageGroupPercentile: number | null;
+  ageGroupSize: number | null;
+  recentResults: MyTalentTournamentRow[];
+};
+
+/**
+ * Henter personlige talent-data for den innloggede spilleren.
+ * Returnerer null hvis brukeren ikke har en linket TalentPlayer.
+ */
+export async function fetchMyTalentDashboardData(): Promise<MyTalentData | null> {
+  const user = await requirePortalUser();
+
+  const player = await prisma.talentPlayer.findFirst({
+    where: { linkedUserId: user.id },
+    include: {
+      stats: {
+        orderBy: [{ year: "desc" }, { holesSegment: "desc" }],
+        take: 4,
+      },
+      results: {
+        where: { excludeFromUi: false },
+        orderBy: { tournamentDate: "desc" },
+        take: 12,
+        select: {
+          id: true,
+          tournamentName: true,
+          tournamentDate: true,
+          ageGroup: true,
+          holes: true,
+          position: true,
+          totalScore: true,
+          toPar: true,
+        },
+      },
+    },
+  });
+
+  if (!player) return null;
+
+  const [latestHcp, hcp90dAgo] = await Promise.all([
+    prisma.handicapEntry.findFirst({
+      where: { userId: user.id },
+      orderBy: { date: "desc" },
+      select: { handicapIndex: true, date: true },
+    }),
+    prisma.handicapEntry.findFirst({
+      where: {
+        userId: user.id,
+        date: { lte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) },
+      },
+      orderBy: { date: "desc" },
+      select: { handicapIndex: true },
+    }),
+  ]);
+
+  const currentHcp = latestHcp?.handicapIndex ?? null;
+  const hcpTrend90d =
+    currentHcp !== null && hcp90dAgo?.handicapIndex !== undefined
+      ? Number((currentHcp - hcp90dAgo.handicapIndex).toFixed(1))
+      : null;
+
+  const currentYear = new Date().getFullYear();
+  const candidate =
+    player.stats.find((s) => s.year === currentYear && s.holesSegment === 18) ??
+    player.stats.find((s) => s.year === currentYear - 1 && s.holesSegment === 18) ??
+    player.stats.find((s) => s.holesSegment === 18) ??
+    player.stats[0] ??
+    null;
+
+  const currentYearStats = candidate
+    ? {
+        year: candidate.year,
+        totalRounds: candidate.totalRounds,
+        avgRound: candidate.avgRound,
+        bestRound: candidate.bestRound,
+        top3Count: candidate.top3Count,
+        top10Count: candidate.top10Count,
+        improvementPerYear: candidate.improvementPerYear,
+        dataConfidenceScore: candidate.dataConfidenceScore,
+      }
+    : null;
+
+  let ageGroupPercentile: number | null = null;
+  let ageGroupSize: number | null = null;
+
+  const dominantGroup = player.results[0]?.ageGroup;
+  if (
+    candidate &&
+    candidate.avgRound !== null &&
+    dominantGroup &&
+    dominantGroup !== TalentAgeGroup.UKJENT
+  ) {
+    try {
+      const peerStatsRaw = await prisma.$queryRawUnsafe<
+        { betterCount: number; totalCount: number }[]
+      >(
+        `
+        WITH peer AS (
+          SELECT DISTINCT ON (r."playerId") r."playerId", r."ageGroup"
+          FROM "TalentTournamentResult" r
+          WHERE r."ageGroup"::text = $1
+            AND r."excludeFromUi" = false
+            AND EXTRACT(YEAR FROM r."tournamentDate") = $2
+          ORDER BY r."playerId", r."ageGroup"
+        )
+        SELECT
+          COUNT(*) FILTER (WHERE s."avgRound" IS NOT NULL AND s."avgRound" < $3)::int AS "betterCount",
+          COUNT(*) FILTER (WHERE s."avgRound" IS NOT NULL)::int AS "totalCount"
+        FROM "TalentPlayerStats" s
+        JOIN peer p ON p."playerId" = s."playerId"
+        WHERE s.year = $2 AND s."holesSegment" = 18 AND s."totalRounds" >= 3
+        `,
+        dominantGroup,
+        candidate.year,
+        candidate.avgRound
+      );
+      const row = peerStatsRaw[0];
+      if (row && row.totalCount > 0) {
+        ageGroupPercentile = Math.round(
+          ((row.totalCount - row.betterCount) / row.totalCount) * 100
+        );
+        ageGroupSize = row.totalCount;
+      }
+    } catch {
+      ageGroupPercentile = null;
+      ageGroupSize = null;
+    }
+  }
+
+  return {
+    player: {
+      id: player.id,
+      firstName: player.firstName,
+      lastName: player.lastName,
+      club: player.club,
+      region: player.region,
+      birthYear: player.birthYear,
+      wagrRank: player.wagrRank,
+      collegeRank: player.collegeRank,
+    },
+    currentHcp,
+    hcpTrend90d,
+    currentYearStats,
+    ageGroupPercentile,
+    ageGroupSize,
+    recentResults: player.results,
   };
 }
