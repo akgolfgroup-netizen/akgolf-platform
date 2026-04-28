@@ -2,19 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { OnboardingWizard, type OnboardingData } from "@/components/portal/onboarding/onboarding-wizard";
-import { GlassPanel } from "@/components/portal/patterns";
+import { OnboardingWizardV2 } from "@/components/portal/onboarding/v2/onboarding-wizard-v2";
+import type { OnboardingV2Data } from "@/components/portal/onboarding/v2/types";
 import { saveOnboardingData, skipOnboarding } from "./actions";
 
 export function OnboardingPageClient() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const handleComplete = (data: OnboardingData) => {
+  const handleComplete = (data: OnboardingV2Data) => {
     startTransition(async () => {
       await saveOnboardingData({
         goals: data.goals,
         trainingFrequency: data.trainingFrequency,
+        defaultView: data.defaultView,
       });
       router.push("/portal/dagbok");
     });
@@ -29,20 +30,31 @@ export function OnboardingPageClient() {
 
   if (isPending) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface">
-        <GlassPanel variant="light" padding="lg" className="flex flex-col items-center gap-3 min-w-[200px]">
-          <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
-          <p className="text-on-surface-variant">Lagrer...</p>
-        </GlassPanel>
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center"
+        style={{ background: "#0A1F18" }}
+      >
+        <div className="flex flex-col items-center gap-3">
+          <div
+            className="w-9 h-9 border-2 rounded-full animate-spin"
+            style={{
+              borderColor: "rgba(209,248,67,0.25)",
+              borderTopColor: "#D1F843",
+            }}
+          />
+          <p
+            className="font-mono text-[11px] uppercase tracking-[0.14em]"
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontFamily: "var(--font-jetbrains-mono)",
+            }}
+          >
+            Lagrer …
+          </p>
+        </div>
       </div>
     );
   }
 
-  return (
-    <section className="space-y-6">
-      <GlassPanel variant="light" padding="lg" className="max-w-2xl mx-auto">
-        <OnboardingWizard onComplete={handleComplete} onSkip={handleSkip} />
-      </GlassPanel>
-    </section>
-  );
+  return <OnboardingWizardV2 onComplete={handleComplete} onSkip={handleSkip} />;
 }

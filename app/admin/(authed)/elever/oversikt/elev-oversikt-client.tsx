@@ -186,6 +186,7 @@ export function ElevOversiktClient({ rows }: ElevOversiktClientProps) {
                 <AdminTableCell>
                   <div className="flex items-center gap-3">
                     {row.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={row.image}
                         alt={row.name ?? ""}

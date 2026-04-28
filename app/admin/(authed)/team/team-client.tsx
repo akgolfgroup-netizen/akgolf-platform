@@ -39,8 +39,9 @@ interface TeamClientProps {
 const ROLE_LABEL: Record<UserRole, string> = {
   [UserRole.ADMIN]: "Admin",
   [UserRole.INSTRUCTOR]: "Trener",
-  [UserRole.STUDENT]: "Elev",
+  [UserRole.STUDENT]: "Spiller",
   [UserRole.INVITED]: "Invitert",
+  [UserRole.PARENT]: "Forelder",
 };
 
 const ROLE_VARIANT: Record<UserRole, "success" | "muted" | "warning"> = {
@@ -48,6 +49,7 @@ const ROLE_VARIANT: Record<UserRole, "success" | "muted" | "warning"> = {
   [UserRole.INSTRUCTOR]: "success",
   [UserRole.STUDENT]: "muted",
   [UserRole.INVITED]: "warning",
+  [UserRole.PARENT]: "muted",
 };
 
 function formatDate(value: string | null): string {

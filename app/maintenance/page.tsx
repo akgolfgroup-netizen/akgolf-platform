@@ -1,203 +1,110 @@
 "use client";
 
+import Link from "next/link";
+import { Wrench, Mail } from "lucide-react";
 
-import { Icon } from "@/components/ui/icon";
-import { motion } from "framer-motion";
-import { AKLogo } from "@/components/website/AKLogo";
-
-
-// Heritage Tech Design Tokens
-const heritage = {
-  colors: {
-    deep: "#154212",
-    darker: "#0f2f0c",
-    base: "#2D5A27",
-    light: "#3D7A37",
-    lime: "#DFFF00",
-    limeDark: "#B8D400",
-    limeMuted: "rgba(223, 255, 0, 0.15)",
-    graphite: "#1A1D1A",
-    charcoal: "#2A2D2A",
-    ink: "#0D0F0D",
-    pure: "#050705",
-    cream: "#F5F1E8",
-    surface: "#0D120C",
-    surfaceRaised: "#141914",
-  },
-};
+export const dynamic = "force-dynamic";
 
 export default function MaintenancePage() {
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden"
-      style={{ backgroundColor: heritage.colors.ink }}
+    <div
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden p-6 text-white"
+      style={{
+        background: "var(--akgolf-ink, #0A1F18)",
+        fontFamily: "var(--font-inter), Inter, sans-serif",
+      }}
     >
-      {/* Background Effects */}
-      <div 
-        className="absolute inset-0 opacity-30"
+      <div
+        className="pointer-events-none absolute inset-0"
         style={{
-          background: `
-            radial-gradient(ellipse 80% 50% at 50% -20%, ${heritage.colors.base}40, transparent),
-            radial-gradient(ellipse 60% 40% at 80% 80%, ${heritage.colors.deep}30, transparent)
-          `,
+          background:
+            "radial-gradient(circle at 80% 30%, rgba(209,248,67,0.12), transparent 50%), radial-gradient(circle at 20% 80%, rgba(0,88,64,0.30), transparent 50%)",
         }}
       />
-      
-      {/* Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `
-            linear-gradient(${heritage.colors.lime} 1px, transparent 1px),
-            linear-gradient(90deg, ${heritage.colors.lime} 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
         }}
       />
 
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-        className="relative z-10 max-w-lg w-full"
-      >
-        {/* Card */}
-        <div 
-          className="rounded-2xl p-8 md:p-12 border backdrop-blur-sm"
-          style={{ 
-            backgroundColor: `${heritage.colors.graphite}80`,
-            borderColor: `${heritage.colors.lime}20`,
+      <div className="relative z-[2] mx-auto max-w-[640px] text-center">
+        <Link
+          href="/"
+          className="mx-auto mb-12 inline-flex items-center gap-2.5 text-[18px] font-extrabold tracking-[-0.02em] text-white"
+        >
+          <span
+            className="grid h-9 w-9 place-items-center rounded-lg text-[14px] font-extrabold tracking-[-0.04em]"
+            style={{
+              background: "var(--akgolf-accent, #D1F843)",
+              color: "#0A1F18",
+            }}
+          >
+            AK
+          </span>
+          AK Golf
+        </Link>
+
+        <div
+          className="mx-auto mb-7 grid h-16 w-16 place-items-center rounded-2xl backdrop-blur-md"
+          style={{
+            background: "rgba(209,248,67,0.18)",
+            color: "var(--akgolf-accent, #D1F843)",
           }}
         >
-          {/* Logo */}
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex justify-center mb-8"
-          >
-            <div 
-              className="w-20 h-20 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: heritage.colors.deep }}
-            >
-              <AKLogo variant="academy" size={48} />
-            </div>
-          </motion.div>
-
-          {/* Icon */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
-            className="flex justify-center mb-6"
-          >
-            <div 
-              className="w-16 h-16 rounded-full flex items-center justify-center relative"
-              style={{ backgroundColor: heritage.colors.limeMuted }}
-            >
-              <Icon name="build" 
-                className="w-8 h-8 animate-pulse" 
-                style={{ color: heritage.colors.lime }} />
-              {/* Pulse ring */}
-              <div 
-                className="absolute inset-0 rounded-full animate-ping opacity-20"
-                style={{ backgroundColor: heritage.colors.lime }}
-              />
-            </div>
-          </motion.div>
-
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-3xl md:text-4xl font-bold text-center mb-4"
-            style={{ color: heritage.colors.cream }}
-          >
-            Vi oppgraderer
-          </motion.h1>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-center mb-8 leading-relaxed"
-            style={{ color: `${heritage.colors.cream}99` }}
-          >
-            AK Golf Academy er midlertidig nede for vedlikehold. 
-            Vi jobber med å forbedre opplevelsen din og er snart tilbake.
-          </motion.p>
-
-          {/* Status Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="space-y-3 mb-8"
-          >
-            <div 
-              className="flex items-center gap-3 px-4 py-3 rounded-xl"
-              style={{ backgroundColor: heritage.colors.surfaceRaised }}
-            >
-              <Icon name="schedule" className="w-5 h-5 flex-shrink-0" style={{ color: heritage.colors.lime }} />
-              <span style={{ color: `${heritage.colors.cream}CC` }}>
-                Forventet ferdig: <span className="font-semibold" style={{ color: heritage.colors.cream }}>Snart</span>
-              </span>
-            </div>
-            
-            <div 
-              className="flex items-center gap-3 px-4 py-3 rounded-xl"
-              style={{ backgroundColor: heritage.colors.surfaceRaised }}
-            >
-              <div 
-                className="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
-                style={{ backgroundColor: heritage.colors.lime }}
-              />
-              <span style={{ color: `${heritage.colors.cream}CC` }}>
-                Status: <span className="font-semibold" style={{ color: heritage.colors.lime }}>Pågår</span>
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="text-center pt-6 border-t"
-            style={{ borderColor: `${heritage.colors.lime}15` }}
-          >
-            <p className="text-sm mb-3" style={{ color: `${heritage.colors.cream}80` }}>
-              Spørsmål? Kontakt oss
-            </p>
-            <a 
-              href="mailto:post@akgolf.no"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
-              style={{ 
-                backgroundColor: heritage.colors.lime,
-                color: heritage.colors.ink,
-              }}
-            >
-              <Icon name="mail" className="w-4 h-4" />
-              post@akgolf.no
-              <Icon name="arrow_forward" className="w-4 h-4" />
-            </a>
-          </motion.div>
+          <Wrench className="h-7 w-7" />
         </div>
 
-        {/* Footer */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center text-xs mt-6"
-          style={{ color: `${heritage.colors.cream}40` }}
+        <div
+          className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em]"
+          style={{
+            fontFamily: "var(--font-jetbrains-mono), monospace",
+            color: "var(--akgolf-accent, #D1F843)",
+          }}
         >
-          © {new Date().getFullYear()} AK Golf Academy. Alle rettigheter reservert.
-        </motion.p>
-      </motion.div>
+          VEDLIKEHOLD PÅGÅR
+        </div>
+
+        <h1
+          className="mb-5 text-[clamp(40px,5.5vw,68px)] font-extrabold leading-[1.05] tracking-[-0.035em] text-white text-balance"
+          style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+        >
+          Vi er straks{" "}
+          <em
+            className="font-medium not-italic"
+            style={{
+              fontFamily: "var(--font-fraunces), Georgia, serif",
+              fontStyle: "italic",
+              color: "var(--akgolf-accent, #D1F843)",
+            }}
+          >
+            tilbake
+          </em>
+          .
+        </h1>
+
+        <p className="mx-auto mb-9 max-w-[50ch] text-[17px] leading-[1.55] text-white/70">
+          AK Golf gjennomfører vedlikehold for å gi deg en bedre opplevelse.
+          Vi er tilbake om kort tid.
+        </p>
+
+        <a
+          href="mailto:post@akgolf.no"
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-all hover:bg-white/20"
+        >
+          <Mail className="h-4 w-4" strokeWidth={2.4} />
+          Kontakt support
+        </a>
+      </div>
+
+      <div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.20em] text-white/40"
+        style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+      >
+        © 2026 AK GOLF GROUP
+      </div>
     </div>
   );
 }

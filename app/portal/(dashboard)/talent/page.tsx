@@ -1,13 +1,12 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { redirect } from "next/navigation";
 import { canViewTalentDashboard } from "./access";
-import { fetchLeaderboard } from "./actions";
-import { TalentLeaderboard } from "./talent-leaderboard";
+import { TalentStatusClient } from "@/components/portal/talent/v2/talent-status-client";
 import { SubscriptionTier } from "@prisma/client";
 
 export const metadata = {
-  title: "Talent | AK Golf",
-  description: "Scouting og talentanalyse av norske golfutøvere",
+  title: "Talent-status | AK Golf",
+  description: "Personlig USI-bånd, HCP-prognose og anbefalte tiltak",
 };
 
 export const dynamic = "force-dynamic";
@@ -22,7 +21,5 @@ export default async function TalentPage() {
     redirect("/portal/abonnement?reason=talent");
   }
 
-  const initialData = await fetchLeaderboard({ year: 2025, holesSegment: 18 });
-
-  return <TalentLeaderboard initialData={initialData} />;
+  return <TalentStatusClient />;
 }

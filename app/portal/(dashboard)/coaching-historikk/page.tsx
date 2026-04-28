@@ -1,131 +1,37 @@
-import { Icon } from "@/components/ui/icon";
 import { getCoachingSessions } from "./actions";
-import { SessionCard } from "@/components/portal/coaching-historikk/session-card";
-import { isStaff } from "@/lib/portal/rbac";
-import { requirePortalUser } from "@/lib/portal/auth";
-
-import Link from "next/link";
-import { format } from "date-fns";
-import { nb } from "date-fns/locale";
-import { MonoLabel, BentoCard } from "@/components/portal/patterns";
-
-type RawSession = Awaited<ReturnType<typeof getCoachingSessions>>[number];
-
-type MappedSession = RawSession & {
-  student: { name: string | null; image: string | null };
-  instructor: {
-    user: { name: string | null };
-    title: string | null;
-  };
-};
-
-function groupByMonth(sessions: MappedSession[]) {
-  const groups = new Map<string, { label: string; sessions: MappedSession[] }>();
-  for (const s of sessions) {
-    const d = new Date(s.sessionDate);
-    const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, "0")}`;
-    const label = format(d, "MMMM yyyy", { locale: nb });
-    const g = groups.get(key) ?? { label, sessions: [] };
-    g.sessions.push(s);
-    groups.set(key, g);
-  }
-  return Array.from(groups.entries()).sort((a, b) => (a[0] > b[0] ? -1 : 1));
-}
+import { HistorikkClientV2 } from "@/components/portal/coaching-historikk/v2/historikk-client-v2";
+import type { TimelineSession } from "@/components/portal/coaching-historikk/v2/timeline-types";
 
 export default async function CoachingHistorikkPage() {
-  const [user, rawSessions] = await Promise.all([
-    requirePortalUser(),
-    getCoachingSessions(),
-  ]);
+  const rawSessions = await getCoachingSessions();
 
-  const sessions: MappedSession[] = rawSessions.map((s) => ({
-    ...s,
-    student: { name: s.User?.name ?? null, image: s.User?.image ?? null },
-    instructor: {
-      user: { name: s.Instructor?.User?.name ?? null },
-      title: s.Instructor?.title ?? null,
-    },
+  const sessions: TimelineSession[] = rawSessions.map((s) => ({
+    id: s.id,
+    sessionDate:
+      s.sessionDate instanceof Date
+        ? s.sessionDate.toISOString()
+        : String(s.sessionDate),
+    primaryFocus: s.primaryFocus ?? null,
+    secondaryFocus: s.secondaryFocus ?? null,
+    techniquesCovered: s.techniquesCovered ?? [],
+    drillsAssigned: s.drillsAssigned ?? [],
+    studentNotes: s.studentNotes ?? null,
+    instructorNotes: s.instructorNotes ?? null,
+    aiKeyPoints: s.aiKeyPoints ?? [],
+    aiFocusAreas: s.aiFocusAreas ?? [],
+    aiActionItems: s.aiActionItems ?? [],
+    aiGeneratedAt: s.aiGeneratedAt
+      ? s.aiGeneratedAt instanceof Date
+        ? s.aiGeneratedAt.toISOString()
+        : String(s.aiGeneratedAt)
+      : null,
+    videoUrls: s.videoUrls ?? [],
+    studentName: s.User?.name ?? null,
+    studentImage: s.User?.image ?? null,
+    instructorName: s.Instructor?.User?.name ?? null,
+    instructorTitle: s.Instructor?.title ?? null,
+    durationMinutes: null,
   }));
 
-  const canGenerateAI = isStaff(user?.role);
-  const groups = groupByMonth(sessions);
-
-  return (
-    <section className="space-y-6">
-      {/* Header */}
-      <header>
-        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
-          Coaching
-        </MonoLabel>
-        <h1 className="text-2xl font-bold text-on-surface">
-          Coaching-historikk
-        </h1>
-        <p className="text-on-surface-variant mt-1">
-          Dine coachingsesjoner og oppfølging — komplett oversikt med AI-genererte oppsummeringer.
-        </p>
-        <div className="mt-4">
-          <Link
-            href="/portal/bookinger/ny"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-secondary-fixed px-6 text-[12px] font-bold text-on-surface shadow-sm transition-opacity hover:opacity-90"
-          >
-            Book coaching
-          </Link>
-        </div>
-      </header>
-
-      <div className="max-w-3xl">
-        <div className="mb-4 flex items-center gap-2">
-          <span className="h-px w-6 bg-surface-container-high" />
-          <MonoLabel size="xs" uppercase className="text-on-surface-variant">
-            Alle sesjoner · {sessions.length}
-          </MonoLabel>
-        </div>
-
-        {sessions.length === 0 ? (
-          <BentoCard variant="light" padding="lg">
-            <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-container text-on-primary">
-                <Icon name="menu_book" className="h-6 w-6" />
-              </div>
-              <p className="text-sm text-on-surface-variant">
-                Ingen coachingsesjoner ennå.
-              </p>
-              <Link
-                href="/portal/bookinger/ny"
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-[12px] font-semibold text-on-primary transition-colors hover:bg-primary-container"
-              >
-                <Icon name="add" className="h-3.5 w-3.5" />
-                Book din første sesjon
-              </Link>
-            </div>
-          </BentoCard>
-        ) : (
-          <div className="space-y-8">
-            {groups.map(([key, group]) => (
-              <section key={key} className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <MonoLabel size="sm" uppercase className="text-on-surface-variant/80">
-                    {group.label}
-                  </MonoLabel>
-                  <span className="h-px flex-1 bg-surface-container" />
-                  <MonoLabel size="xs" className="text-on-surface-variant">
-                    {group.sessions.length}
-                  </MonoLabel>
-                </div>
-                <div className="space-y-3">
-                  {group.sessions.map((s) => (
-                    <SessionCard
-                      key={s.id}
-                      session={s}
-                      canGenerateAI={canGenerateAI}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-  );
+  return <HistorikkClientV2 sessions={sessions} />;
 }

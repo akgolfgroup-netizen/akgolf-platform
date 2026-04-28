@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import {
+  DM_Sans,
+  Fraunces,
+  Inter,
+  Inter_Tight,
+  JetBrains_Mono,
+} from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
@@ -26,6 +32,15 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+// Fraunces — italic accent på markedsside (g1-g15 fra handoff 2026-04-27)
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  weight: ["400", "500", "600"],
+  style: ["italic"],
   display: "swap",
 });
 
@@ -117,7 +132,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
       </head>
-      <body className={`${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} ${dmSans.variable} font-sans h-full`}>
+      <body className={`${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} ${fraunces.variable} ${dmSans.variable} font-sans h-full`}>
         {/* Skip-to-content link for tilgjengelighet */}
         <a
           href="#main-content"

@@ -1,5 +1,5 @@
-import { WebsiteNav } from "@/components/website/WebsiteNav";
-import { WebsiteFooter } from "@/components/website/WebsiteFooter";
+import { WebNav } from "@/components/website-v2/web-nav";
+import { WebFooter } from "@/components/website-v2/web-footer";
 import { BackToTop } from "@/components/website/BackToTop";
 import { AcademyHeroV2 } from "@/components/website/academy-hero-v2";
 import { ConceptSection } from "@/components/website/academy/ConceptSection";
@@ -20,7 +20,7 @@ export default function AcademyPage() {
       >
         Hopp til hovedinnhold
       </a>
-      <WebsiteNav />
+      <WebNav active="academy" />
 
       <main id="main-content">
         <script
@@ -73,7 +73,7 @@ export default function AcademyPage() {
       </main>
 
       <BackToTop />
-      <WebsiteFooter />
+      <WebFooter />
     </>
   );
 }

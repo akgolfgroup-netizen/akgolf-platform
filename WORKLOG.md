@@ -8,6 +8,85 @@
 
 ---
 
+## 2026-04-28 (natt) — Komplett rebrand av portal + CoachHQ + standalone (PR #18)
+
+**Jobbet med:** Implementert ~85 av 96 mockups fra handoff-bunten på branchen
+`feature/website-rebrand-v2`. Anders ba om "alle nye skjermer for lansering". 11
+commits, ~16 000 linjer ny kode, organisert i 4 bølger med inntil 8 subagenter
+parallelt per bølge.
+
+**Markedsside (alle g-skjermer):**
+- /booking → g5 (coach-grid Anders/Markus, service-tiles, Acuity-iframe bevart)
+- /junior-academy → g3 (8 nye seksjoner: hero, age-groups, parent-benefits, season, coach, priceband, faq, cta)
+- /utvikling → g14 (rettet mot spillere, ikke klubber — 7 nye seksjoner)
+- /academy/abonnement → g6 (ekte side med Stripe-priser 1000/1200/2200, ikke mockupens fiktive)
+
+**PlayerHQ (alle a-skjermer):**
+- a1+a2 Min profil + Innstillinger
+- a3 min-plan, a4 mine-bookinger, a5+a6 treningsplan (lese-modus + uke-detalj),
+  a7+a8+a9 onboarding/kartlegging/kalender, a11 abonnement, a12 meldinger,
+  a13 sammenligning, a14 strategi, a15 tester, a16 mental, a17 talent,
+  a18 trening, a19 turneringer, a20 bag, a21 coaching-historikk, a22 sosialt
+- All eksisterende editor-flyt bevart (treningsplan-planner bak ?modus=editor)
+
+**CoachHQ admin (alle d-skjermer på /portal/admin/*):**
+- Scaffold: layout + sidebar (3-kolonne 56px ikon-rail + 220px nav + 1fr main),
+  auth-guard via canAccessMissionControl(), 30 stub-ruter
+- Kjerne: d1 Dagens fokus, d2 Denne uken, d3 Coaching Board, d4 Mission Board,
+  d27 Hub-oversikt
+- Spillere: d5 liste, d6 grid, d7 spillerprofil-tabs, d8 longpage
+- Drift: d9 bookinger, d10 ny-booking, d11 kalender, d12 økter, d13 focus,
+  d14 godkjenninger, d15 grupper, d16 gruppe-detalj, d17 lokasjoner,
+  d18 tilgjengelighet, d19 tjenester, d24 treningsplan-bygger, d25 fasiliteter v2
+- Innsikt: d20 økonomi, d21 rapporter, d30 analytics
+- Team & AI: d22 meldinger, d23 team, d26 library, d28 agenter, d29 AI-assistent
+
+**Standalone (med ?v=2-gating for trygg sammenligning):**
+- /ai-coach?v=2, /dagbok?v=2, /runde/[id]/hero?v=2, /statistikk?v=2, /trackman
+
+**Nye ruter:**
+- /portal/trening (eksisterte ikke før)
+- /portal/treningsplan/uke/[offset] (nytt for a6 detalj)
+
+**Konsistent på tvers:**
+- Brand V2: #005840 primary, #D1F843 accent, #0A1F18 ink, surface #F4F6F4
+- CoachHQ mørk variant: #102B1E bg, #0D2E23 cards, #1a4a3a borders
+- Inter Tight (headlines), Inter (body), JetBrains Mono (tall) via next/font/google
+- Lucide-react ikoner overalt (ingen Material Symbols, ingen emojier)
+- Norsk bokmål, "spiller" ikke "elev" (per sprak.md)
+- Stripe-priser sannhetskilde (ikke mockupens fiktive)
+- Maks 300 linjer per fil
+- Alle server actions bevart (Stripe, Anthropic, Supabase, Acuity, DataGolf)
+
+**Bevart for trygghet:**
+- Eksisterende editor-flyt for treningsplan (?modus=editor)
+- Eksisterende clients for runde/stats/dagbok/aicoach (default — v2 bak ?v=2)
+- Eldre admin-flate på /admin/* lever parallelt med ny CoachHQ på /portal/admin/*
+
+**Verifikasjon:**
+- npx tsc --noEmit = 0 feil (fikset 1 pre-eksisterende i sammenligning/page.tsx
+  + 2 i admin/team-client.tsx for PARENT-rolle)
+- npm run build = ✓ Compiled successfully in 9.0s
+- Alle ~85 ruter genereres i build-output
+- Pushet til origin/feature/website-rebrand-v2 → PR #18
+
+**Ikke implementert (skipped med begrunnelse):**
+- missioncontrol.html (legacy — erstattet av d-skjermene)
+- mobile-* (responsive — ikke separate ruter)
+- runde.html / stats.html (gamle versjoner — runde-v2/stats-v2 bygd i stedet)
+- plan.html (matcher ikke playerhq-rutens datamodell)
+
+**Filer endret:** ca 350 totalt (157 i bølge 4 alene)
+
+**Neste steg etter Anders' visuelle review av preview:**
+1. Klikk gjennom preview-URL og noter visuelle avvik
+2. Hvis OK: merge PR #18 → main → prod-deploy
+3. Sprint 2: konsolider gammel /admin/* og ny /portal/admin/* (velg én)
+4. Sprint 2: koble mock-data til ekte Prisma-modeller i CoachHQ
+5. Sprint 2: drag&drop + DB-skrive i d24 treningsplan-bygger
+
+---
+
 ## 2026-04-27 (kveld) — Handoff-bunt + Dashboard Bento (v1) bak feature-flag
 
 **Jobbet med:** Mottok komplett design-handoff fra Claude Design (96 HTML-skjermer

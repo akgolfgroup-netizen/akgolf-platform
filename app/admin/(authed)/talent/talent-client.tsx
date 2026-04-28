@@ -40,7 +40,7 @@ export function TalentClient({ initialData }: { initialData: TalentListData }) {
       });
     }, 200);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [filters]);
 
   async function openEditor(player: TalentPlayerRow) {

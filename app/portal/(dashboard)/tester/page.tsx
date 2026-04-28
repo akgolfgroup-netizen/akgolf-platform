@@ -1,10 +1,12 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTestsOverview, getTesterStats } from "./actions";
 import { TesterClient } from "./tester-client";
+import { TesterShell } from "@/components/portal/tester/v2/tester-shell";
+import { TesterPageHeader } from "@/components/portal/tester/v2/tester-page-header";
+import { CompositeHero } from "@/components/portal/tester/v2/composite-hero";
 
-import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 export const metadata = {
-  title: "DECADE Tester | PlayersHQ",
+  title: "Tester | PlayersHQ",
 };
 
 export default async function TesterPage() {
@@ -15,51 +17,55 @@ export default async function TesterPage() {
     getTesterStats(),
   ]);
 
+  // Composite score 0-100: % of tests completed * (passing ratio bonus)
+  const completionPct = stats.totalTests
+    ? (stats.completedTests / stats.totalTests) * 100
+    : 0;
+  const passedCount = tests.filter((t) => t.userBest?.passed).length;
+  const passingBonus = stats.completedTests
+    ? (passedCount / stats.completedTests) * 30
+    : 0;
+  const compositeScore = Math.min(100, Math.round(completionPct * 0.7 + passingBonus));
+
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
-          DECADE System
-        </MonoLabel>
-        <h1 className="text-2xl font-bold text-on-surface">
-          Tester
-        </h1>
-        <p className="text-on-surface-variant mt-1">
-          Standardiserte tester for å måle fremgang
-        </p>
+    <TesterShell>
+      <TesterPageHeader
+        completedTests={stats.completedTests}
+        totalTests={stats.totalTests}
+      />
+
+      <CompositeHero
+        score={compositeScore}
+        bestTestName={stats.bestTestName}
+        totalScore={stats.totalScore}
+      />
+
+      <div className="mb-4 flex justify-between items-end" style={{ marginTop: 28 }}>
+        <h3
+          style={{
+            margin: 0,
+            fontSize: 18,
+            color: "#fff",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Resultater
+        </h3>
+        <div
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 9,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.45)",
+          }}
+        >
+          {tests.length} tester · {stats.completedTests} gjennomført
+        </div>
       </div>
 
-      {/* Stats */}
-      <BentoGrid cols={4} gap="md">
-        <BentoCard variant="light" padding="md">
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Fullførte tester</MonoLabel>
-          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
-            {stats.completedTests}/{stats.totalTests}
-          </p>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Total score</MonoLabel>
-          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
-            {stats.totalScore}
-          </p>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Tilgjengelige tester</MonoLabel>
-          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
-            {stats.totalTests}
-          </p>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Beste test</MonoLabel>
-          <p className="text-lg font-bold text-on-surface mt-1">
-            {stats.bestTestName ?? "–"}
-          </p>
-        </BentoCard>
-      </BentoGrid>
-
-      {/* Test-liste og leaderboard */}
       <TesterClient tests={tests} />
-    </div>
+    </TesterShell>
   );
 }

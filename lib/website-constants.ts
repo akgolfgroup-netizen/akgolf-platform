@@ -60,8 +60,8 @@ export const TEAM = [
     image: "/images/team/anders-kristiansen.jpg",
     bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
-      { name: "Performance", price: "1 400", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "2 500", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 200", unit: "kr/mnd", detail: "2x20 min" },
+      { name: "Performance Pro", price: "2 200", unit: "kr/mnd", detail: "4x20 min" },
       { name: "Enkeltsesjon 50 min", price: "1 500", unit: "kr" },
       { name: "Banecoaching 9 hull", price: "3 000", unit: "kr/spiller" },
     ],
@@ -74,8 +74,7 @@ export const TEAM = [
     image: null,
     bio: "College-golf fra USA. Ansvarlig for VTG-kurs, gruppetreninger og juniorer. Sikrer at du lærer riktige grunnprinsipper fra starten.",
     prices: [
-      { name: "Performance", price: "800", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "1 400", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 000", unit: "kr/mnd", detail: "2x20 min" },
       { name: "Enkeltsesjon 50 min", price: "800", unit: "kr" },
       { name: "Drop-in 20 min", price: "300", unit: "kr" },
       { name: "Korthullsbane-økt", price: "TBD", unit: "", detail: "4 spillere" },
@@ -134,7 +133,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Anders",
-    price: "1 400",
+    price: "1 200",
     period: "kr/mnd",
     tagline: "For deg som ønsker struktur og jevnlig oppfølging.",
     description: "2 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -158,7 +157,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance Pro",
     coach: "Anders",
-    price: "2 500",
+    price: "2 200",
     period: "kr/mnd",
     tagline: "For den ambisiøse som vil ha raskere fremgang.",
     description: "4 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -182,9 +181,9 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Markus",
-    price: "800",
+    price: "1 000",
     period: "kr/mnd",
-    tagline: "For deg som ønsker struktur med Markus.",
+    tagline: "Klubbcoaching med Markus.",
     description: "2 x 20 min 1-til-1 coaching per måned med Markus. Full portaltilgang og treningsplan.",
     whoIsItFor: "For deg som ønsker struktur med Markus.",
     features: [
@@ -1951,58 +1950,200 @@ export const JUNIOR_CTA_V2 = {
   ctaSecondaryHref: "https://gfrg.no/junior",
 } as const;
 
-// ─── Utvikling Page v2 (dark hero, bento grid) ───
+// ─── Utvikling Page v2 (Brand Guide V2.0 — handoff g14) ───
 export const UTVIKLING_HERO_V2 = {
-  label: "UTVIKLING",
-  heading: "Vi bygger bedre\ngolfklubber.",
-  description: "Sportslige planer, driftssystemer og QR-skilt. Skreddersydd for norske golfklubber.",
-  ctaLabel: "Ta kontakt",
+  label: "UTVIKLINGSMODELLEN · V3 · 2026",
+  headingStart: "Slik bygger vi",
+  headingEm: "varig framgang.",
+  description:
+    "Vår utviklingsmodell — bygd på 14 års coaching, 280+ spillere og 4 pillarer som faktisk flytter golfere fremover. Du får en plan som tilpasser seg deg, ikke omvendt.",
+  bannerQuote: "«En god plan er en spillers største lojalitet.»",
+  bannerLab: "FOTO · ERIK PÅ DRIVING RANGE · MORGENLYS · JUNI 2025",
 } as const;
 
-export const UTVIKLING_SERVICES_V2 = {
-  label: "TJENESTER",
-  heading: "Alt klubben trenger.",
+export const UTVIKLING_PILLARS_V2 = {
+  label: "DE FIRE PILLARENE",
+  headingStart: "Fire områder.",
+  headingEm: "Alltid sammen.",
+  intro:
+    "De fleste akademier jobber bare med teknikk. Vi har lært at det ikke holder. Mental, fysisk og strategi avgjør om teknikken faktisk overlever 18 hull i konkurranse.",
   items: [
     {
-      id: "sportsplan",
-      label: "SPORTSLIG PLAN",
-      title: "Komplett sportslig plan",
-      description: "Vi utarbeider en helhetlig sportslig plan tilpasset klubbens storrelse, ambisjoner og ressurser. Fra juniorutvikling til elitesatsing, med konkrete mal og handlingsplaner.",
-      expandedDescription: "Planen dekker alle niva i klubben: nybegynnerprogram, bredde, junior elite og voksenutvikling. Vi definerer treningsfilosofi, periodisering og konkrete mileparler for hver gruppe. Inkluderer ogsa trenerveiledning og evalueringsverktoy.",
-      span: "large" as const,
-      theme: "light" as const,
+      num: "01 / TEKNIKK",
+      titleStart: "Repeterbar",
+      titleEm: "bevegelse.",
+      description:
+        "Trackman 4 + Quintic putting + V1 video. Vi måler hver økt og bygger på data — ikke magefølelse.",
+      bullets: [
+        "Spin-axis, attack-angle, club-path",
+        "3D-måling 2× årlig",
+        "Skreddersydde drills per spiller",
+      ],
     },
     {
-      id: "programvare",
-      label: "PROGRAMVARE",
-      title: "PlayersHQ",
-      description: "Booking, coaching-notater, treningsplaner og progresjonslogging i en plattform. Brukes av alle vare spillere i dag.",
-      expandedDescription: "Portalen gir spillere tilgang til treningshistorikk, Strokes Gained-analyse, AI-drevne anbefalinger og direkte kommunikasjon med coach. Trenere far oversikt over alle elever, kan lage periodiserte planer og folge opp progresjon.",
-      span: "small" as const,
-      theme: "light" as const,
+      num: "02 / FYSISK",
+      titleStart: "Kropp som",
+      titleEm: "tåler.",
+      description:
+        "TPI-screening med Anne Rud. Mobilitet og styrke som beskytter mot skader og åpner for mer hastighet.",
+      bullets: ["TPI-test 2× årlig", "Personlig hjemme-program", "Skadefri-protokoll"],
     },
     {
-      id: "skilting",
-      label: "SKILTING",
-      title: "QR-skilt konsept",
-      description: "Digitale treningsskilt med QR-koder pa rangen. Spillerne scanner og far tilgang til ovelser og videoer direkte pa telefonen.",
-      expandedDescription: "Hvert skilt er knyttet til spesifikke ovelser med video og instruksjoner. Klubben kan tilpasse innholdet til egne treningsprogrammer. Installasjon og innholdsproduksjon er inkludert.",
-      span: "small" as const,
-      theme: "dark" as const,
+      num: "03 / MENTAL",
+      titleStart: "Hodet under",
+      titleEm: "press.",
+      description:
+        "Marte Sørli, klinisk psykolog og tidl. landslag. Pre-shot, recovery, identitet utenfor scorekortet.",
+      bullets: [
+        "Rutiner som tåler 18 hull",
+        "Mental kartlegging hvert kvartal",
+        "Tilgang ved behov, ikke fast pakke",
+      ],
+    },
+    {
+      num: "04 / STRATEGI",
+      titleStart: "Smartere",
+      titleEm: "beslutninger.",
+      description:
+        "SG-data + course-management. Hvor sparer du slag uten å treffe ballen bedre? Mye, viser det seg.",
+      bullets: [
+        "Strokes-Gained per økt",
+        "On-course coaching kvartalsvis",
+        "Mål-køyper for hver spiller",
+      ],
     },
   ],
 } as const;
 
-export const UTVIKLING_REFERENCES_V2 = {
-  label: "SAMARBEID",
-  heading: "Klubber vi jobber med.",
-  clubs: ["Gamle Fredrikstad Golfklubb", "Miklagard Golfklubb"],
+export const UTVIKLING_STATS_V2 = [
+  {
+    label: "Snitt HCP-fall · 12 mnd",
+    value: "−2.6",
+    valueEm: "",
+    sub: "Av 142 aktive spillere · 76% reduksjon",
+  },
+  {
+    label: "Spillere > 24 mnd",
+    value: "88",
+    valueEm: "%",
+    sub: "Snitt-retensjon — bransjen ligger på 41%",
+  },
+  {
+    label: "Fra HCP >20 til <15",
+    value: "11",
+    valueEm: "mnd",
+    sub: "Median tid · 38 spillere siste 3 år",
+  },
+  {
+    label: "PB siste 30 dager",
+    value: "14",
+    valueEm: "",
+    sub: "Spillere som satte ny personlig rekord",
+  },
+] as const;
+
+export const UTVIKLING_READING_V2 = {
+  label: "PERSPEKTIV · ERIK SOLHEIM",
+  headingStart: "Hvorfor de fleste golfere ikke",
+  headingEm: "egentlig",
+  headingEnd: "blir bedre.",
+  paragraphs: [
+    "I 2018 satt jeg meg ned med 80 av spillerne mine og spurte: «Hva har du faktisk forbedret de siste 12 månedene?» Mer enn halvparten kunne ikke svare. Det var ikke fordi de ikke trente — det var fordi vi som coacher ikke målte det riktige.",
+    "Det er hele grunnen til at AK Golf ble bygd opp slik det er i dag. **En spiller utvikler seg når tre ting er på plass: en plan, jevnlig måling, og noen som vet hva tallene betyr.** Mangler én av de tre, sirkler du.",
+  ],
+  pullquote:
+    "En spiller utvikler seg når tre ting er på plass: en plan, jevnlig måling, og noen som vet hva tallene betyr.",
+  v3Heading: "Hva er nytt i V3 (2026)",
+  v3Intro:
+    "Modellen vår har eksistert siden 2019. Hver vinter setter vi oss ned, ser på dataene fra forrige sesong, og spør hva som kan gjøres bedre. For 2026 er det fire endringer:",
+  v3Bullets: [
+    "**Mental-pillaren er flyttet fra «på etterspørsel» til en del av hovedplanen.** Vi har sett at spillere som jobber med Marte fra start, taper dramatisk færre slag i siste 4 hull.",
+    "**Strokes-Gained er innebygd, ikke et tillegg.** Hver runde du logger via PlayerHQ blir automatisk analysert. Du ser hvor du tjener og taper slag i sanntid.",
+    "**Vi har innført et «kvartal-spor».** Tre-måneders sykluser med kartlegging → fokus → re-test, slik at du alltid vet om noe rører på seg.",
+    "**Foreldre-portalen er rebygd fra grunnen.** Foreldre kan se nøyaktig hva barnet jobber med, uten at vi blottlegger barnet.",
+  ],
+  forYouHeading: "Hva betyr dette for deg som spiller?",
+  forYouParagraphs: [
+    "Helt konkret: Du får en treningsplan som oppdaterer seg basert på dine tall. Du møter en coach som vet hva du jobbet med sist. Du får færre «huller» mellom økter — og du føler at du beveger deg fremover, fordi du faktisk gjør det.",
+    "Tallene over er ikke der for å imponere. De er der fordi vi mener vi skylder deg åpenhet. Vi skal ikke være de største — vi skal være det __akademiet du anbefaler videre__ til vennen din om to år.",
+  ],
 } as const;
 
+export const UTVIKLING_COMPARE_V2 = {
+  label: "VS. TYPISK PRO-TIME",
+  headingStart: "Hva skiller oss fra",
+  headingEm: "en vanlig time?",
+  rows: [
+    {
+      row: "Plan",
+      them: "Ad-hoc · per økt",
+      us: "12-mnd plan med kvartalsmål",
+      emphasized: false,
+    },
+    {
+      row: "Måling",
+      them: "Magefølelse + iPhone-video",
+      us: "Trackman + Quintic + V1 video · standardisert",
+      emphasized: true,
+    },
+    {
+      row: "Mellom økter",
+      them: "Ingenting",
+      us: "PlayerHQ-app · drills · video-klipp",
+      emphasized: false,
+    },
+    { row: "Mental", them: "Sjelden", us: "Tilgang til klinisk psykolog", emphasized: false },
+    { row: "Fysisk", them: "Sjelden", us: "TPI-screening 2× årlig", emphasized: false },
+    {
+      row: "Foreldre-innsikt",
+      them: "Faktura per mail",
+      us: "Egen portal med fremgang og bilder",
+      emphasized: true,
+    },
+    {
+      row: "Strokes Gained",
+      them: "Sjelden",
+      us: "Innebygd · etter hver runde",
+      emphasized: false,
+    },
+    {
+      row: "Coach-tilgang",
+      them: "Time-til-time",
+      us: "Direkte chat · 24t-respons",
+      emphasized: false,
+    },
+  ],
+} as const;
+
+export const UTVIKLING_TESTIMONIALS_V2 = [
+  {
+    quoteStart: "Jeg har vært hos tre andre coacher før Erik. Forskjellen var ",
+    quoteEm: "strukturen",
+    quoteEnd: ". Plutselig visste jeg hvor jeg sto — og hvor jeg skulle.",
+    name: "Sofie Aas",
+    meta: "HCP 12 → 7.7 PÅ 14 MND · ELITE-SPOR",
+    avatar: "purple" as const,
+  },
+  {
+    quoteStart: "Anders kommer hjem og ",
+    quoteEm: "snakker om",
+    quoteEnd:
+      " golf — og det har han aldri gjort før. Han forstår at det er en plan, og han er ivrig på neste økt.",
+    name: "Marte Kristiansen",
+    meta: "MOR · ANDERS · 14 ÅR · JUNIOR-SPOR",
+    avatar: "green" as const,
+  },
+] as const;
+
 export const UTVIKLING_CTA_V2 = {
-  heading: "Trenger klubben din en sportslig plan?",
-  description: "Ta kontakt for en uforpliktende samtale om hvordan vi kan hjelpe klubben din.",
-  ctaPrimary: "Ta kontakt",
+  headingStart: "Klar for å bygge din egen",
+  headingEm: "plan?",
+  description:
+    "30 minutter med Erik — gratis, uforpliktende. Vi diskuterer hvor du står, hvor du vil, og om akademiet er rett match. Ingen salg på første time.",
+  ctaPrimary: "Book intro · gratis",
+  ctaPrimaryHref: "/kontakt",
+  ctaSecondary: "Se priser",
+  ctaSecondaryHref: "/pricing",
 } as const;
 
 // ─── Spillerreisen (Structure) ───
@@ -2032,4 +2173,461 @@ export const PLAYER_JOURNEY_SECTION = {
   heading: "Spillerreisen: Veien til bedre golf.",
   description: "Vi har utviklet en systematisk sti fra dine aller første slag til avansert coaching. Finn ut hvor du er i dag, og se hva som kreves for å nå neste nivå.",
   ctaLabel: "Start reisen"
+} as const;
+
+// ─── Academy Abonnement (g6) — Brand Guide V2.0 ─────────────────────────────
+// Layout/copy fra mockup g6-academy-pricing.html, men priser fra Stripe (sannhetskilde).
+// Kilder: gotchas.md ("Anders-pakker"), pricing-page-client.tsx
+export const ACADEMY_PRICING_V2 = {
+  hero: {
+    eyebrow: "Academy · Medlemskap",
+    headingPrefix: "Coaching som",
+    headingItalic: "varer",
+    headingSuffix: "hele sesongen.",
+    lede:
+      "Tre veier inn i Academy. Start med Markus eller hopp rett på Anders — du kan oppgradere når som helst, ingen bindingstid.",
+    stats: [
+      { value: "32+", label: "Aktive Academy-spillere" },
+      { value: "−4,2", label: "Snitt HCP-reduksjon · år 1" },
+      { value: "94%", label: "Fornyer hvert år" },
+    ],
+  },
+  plansHead: {
+    headingPrefix: "Tre måter å være",
+    headingItalic: "Academy-spiller",
+    headingSuffix: ".",
+    description:
+      "Alle abonnement inkluderer PlayerHQ-app, treningsplan i app, TrackMan og videoanalyse. Forskjellen ligger i hvilken coach du møter og hvor mange økter per måned.",
+  },
+  plans: [
+    {
+      id: "performance-markus",
+      name: "Performance · Markus",
+      tagline: "Komme i gang med struktur",
+      description:
+        "Klubbcoaching med Markus to ganger i måneden. For deg som vil bygge fundament uten å forplikte deg til toppnivå.",
+      priceMonthly: "1 000",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Avbestill når som helst",
+      cta: "Velg Markus",
+      href: "/booking-v2?serviceTypeId=performance-markus",
+      features: [
+        { text: "2 × 20 min coaching / måned", heavy: true },
+        { text: "Klubbcoaching med Markus" },
+        { text: "Selvbooking 7 dager frem" },
+        { text: "PlayerHQ-app inkludert" },
+        { text: "Treningsplan i app" },
+        { text: "TrackMan + videoanalyse" },
+      ],
+      sectionTitle: "Inkludert",
+    },
+    {
+      id: "performance-anders",
+      name: "Performance · Anders",
+      tagline: "Strukturert utvikling med Anders",
+      description:
+        "Individuell coaching med Anders to ganger i måneden. For deg som vil ha hovedcoachen vår, men holder volumet moderat.",
+      priceMonthly: "1 200",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Avbestill når som helst",
+      cta: "Velg Anders",
+      href: "/booking-v2?serviceTypeId=performance-anders",
+      featured: true,
+      ribbon: "Mest valgte",
+      features: [
+        { text: "2 × 20 min coaching / måned", heavy: true },
+        { text: "1-til-1 med Anders", heavy: true },
+        { text: "TrackMan + videoanalyse" },
+        { text: "Selvbooking 7 dager frem" },
+        { text: "PlayerHQ-app inkludert" },
+        { text: "Treningsplan i app" },
+        { text: "Coach-notater etter hver økt" },
+      ],
+      sectionTitle: "Alt i Markus, pluss",
+    },
+    {
+      id: "performance-pro-anders",
+      name: "Performance Pro",
+      tagline: "Det Anders gjør med tour-spillere",
+      description:
+        "Fire økter i måneden med Anders. Prioritert booking, AI-assistent og høyeste utviklingstempo for ambisiøse amatører.",
+      priceMonthly: "2 200",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Prioritert booking",
+      cta: "Velg Performance Pro",
+      href: "/booking-v2?serviceTypeId=performance-pro-anders",
+      features: [
+        { text: "4 × 20 min coaching / måned", heavy: true },
+        { text: "1-til-1 med Anders", heavy: true },
+        { text: "Prioritert booking 14 dager frem" },
+        { text: "TrackMan + videoanalyse" },
+        { text: "PlayerHQ + AI-assistent" },
+        { text: "Personlig treningsplan i app" },
+        { text: "Coach-notater + ukentlig oppfølging" },
+      ],
+      sectionTitle: "Alt i Anders, pluss",
+    },
+  ],
+  compare: {
+    eyebrow: "Sammenlign nivåer",
+    headingPrefix: "Alt du får, side om",
+    headingItalic: "side.",
+    rows: [
+      { group: "Coaching" },
+      { feature: "Coaching-økter / måned", values: ["2", "2", "4"] },
+      { feature: "Coach", values: ["Markus", "Anders", "Anders"] },
+      { feature: "Sesjonslengde", values: ["20 min", "20 min", "20 min"] },
+      { feature: "TrackMan + videoanalyse", values: [true, true, true] },
+      { feature: "Coach-notater i app", values: [true, true, true] },
+      { group: "Booking & tilgang" },
+      { feature: "Selvbooking", values: ["7 dager frem", "7 dager frem", "14 dager frem"] },
+      { feature: "Prioritert booking", values: [false, false, true] },
+      { feature: "Avbestilling", values: ["Når som helst", "Når som helst", "Når som helst"] },
+      { group: "PlayerHQ-app" },
+      { feature: "Treningsplan i app", values: [true, true, true] },
+      { feature: "Øvelsesbank + statistikk", values: [true, true, true] },
+      { feature: "AI-assistent", values: [false, false, true] },
+    ],
+  },
+  included: {
+    eyebrow: "Alle abonnement inkluderer",
+    headingPrefix: "Et fundament",
+    headingItalic: "som følger deg",
+    headingSuffix: "hele året.",
+    cards: [
+      {
+        icon: "BarChart3",
+        title: "Strokes Gained-måling",
+        description:
+          "Vi måler hvor du taper og vinner slag mot ditt nivå. Du ser fremgangen i tall, ikke magefølelse.",
+      },
+      {
+        icon: "Smartphone",
+        title: "PlayerHQ i lomma",
+        description:
+          "Treningsplan, øvelsesbank og coach-notater. Bygd så du faktisk åpner den.",
+      },
+      {
+        icon: "Video",
+        title: "Videoanalyse",
+        description:
+          "Hver økt filmes. Du får tilbake klipp med markeringer og kommentarer fra coachen din.",
+      },
+      {
+        icon: "Snowflake",
+        title: "Året rundt",
+        description:
+          "Indoor TrackMan i vintermånedene, range og bane i sesong. Du mister ikke momentum.",
+      },
+      {
+        icon: "RotateCcw",
+        title: "Ingen bindingstid",
+        description:
+          "Avbestill når som helst. Vi vil at du blir fordi det funker — ikke fordi du er låst.",
+      },
+      {
+        icon: "ShieldCheck",
+        title: "Klar struktur",
+        description:
+          "Du vet alltid hva du skal trene på mellom sesjonene. Treningsplanen oppdateres etter hver økt.",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "FAQ",
+    headingPrefix: "De spørsmålene",
+    headingItalic: "folk faktisk",
+    headingSuffix: "stiller.",
+    description:
+      "Står ikke svaret her? Send melding på kontakt — vi svarer samme dag.",
+    items: [
+      {
+        q: "Hva er forskjellen på Markus og Anders?",
+        a: "Markus er klubbcoach og fokuserer på golfere som bygger fundament. Anders er hovedcoach og jobber med ambisiøse amatører og tour-spillere. Begge bruker samme metode og samme PlayerHQ — forskjellen er pris og volum.",
+      },
+      {
+        q: "Kan jeg pause abonnementet hvis jeg blir skadet?",
+        a: "Ja. Vi pauser uten kostnad hvis du blir skadet eller skal lengre reise. Bare gi beskjed i appen.",
+      },
+      {
+        q: "Hva skjer med ubrukte økter?",
+        a: "Inntil to ubrukte økter rulles automatisk over til neste måned. Mer enn det og du må booke dem inn — vi vil at du faktisk bruker dem.",
+      },
+      {
+        q: "Kan jeg oppgradere underveis?",
+        a: "Når som helst. Forskjellen i pris faktureres pro rata fra dagen du oppgraderer. Du kan også nedgradere — det er ingen bindingstid.",
+      },
+      {
+        q: "Er det en intro-time?",
+        a: "Nye spillere starter med en Flex 20-økt eller en kort prat med coachen. Vi vil at du skal vite hva du går til før du forplikter deg.",
+      },
+      {
+        q: "Hva med banecoaching?",
+        a: "Banecoaching (On-Course 9 og On-Course Par 3) bookes som engangsøkter ved siden av abonnementet. Det er ikke inkludert — fordi vi vil at du skal velge når du tar det med ut på banen.",
+      },
+    ],
+  },
+  cta: {
+    eyebrow: "Klar til å starte?",
+    headingPrefix: "Book en gratis",
+    headingItalic: "intro",
+    headingSuffix: "— så finner vi rett nivå sammen.",
+    description:
+      "20 minutter, ingen forpliktelser. Vi snakker om hvor du står, hvor du vil, og hvilket abonnement som faktisk passer.",
+    primaryCta: "Book gratis intro",
+    primaryHref: "/booking-v2?v=2",
+    secondaryCta: "Send spørsmål",
+    secondaryHref: "/kontakt?v=2",
+    quote:
+      "Etter åtte måneder på Performance Pro gikk jeg fra HCP 12 til 7. Det største var ikke timene — det var planen mellom timene.",
+    quoteAuthor: "Kristian B.",
+    quoteContext: "Performance Pro · 14 mnd",
+  },
+} as const;
+
+// ─── Junior Academy Page v3 (Brand Guide V2.0 — handoff 2026-04-27) ─────────
+// Mockup: public/design-reference/handoff-2026-04-27/screens/g3-junior-academy.html
+export const JUNIOR_HERO_V3 = {
+  eyebrow: "Junior Academy · 6–17 år",
+  headingLead: "Lekent,",
+  headingItalic: "strukturert",
+  headingTrail: ", og stolt foreldreapp.",
+  description:
+    "Tre aldersgrupper, egne juniortrenere og en foreldreapp som viser hva ungene faktisk trener på — uke for uke. Sommerleir, klubbturnering og talentstige inkludert.",
+  ctaPrimary: "Se aldersgrupper",
+  ctaPrimaryHref: "#aldersgrupper",
+  ctaSecondary: "Book prøvetime",
+  ctaSecondaryHref: "/booking-v2?v=2",
+  stats: [
+    { v: "128", l: "Aktive juniorer" },
+    { v: "3", l: "Aldersnivåer" },
+    { v: "96%", l: "Foreldre fornyer" },
+  ],
+  photoDescription:
+    "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
+} as const;
+
+export const JUNIOR_AGE_GROUPS_V3 = {
+  eyebrow: "Tre aldersgrupper",
+  headingLead: "Lek, læring,",
+  headingItalic: "og turnering",
+  headingTrail: ".",
+  groups: [
+    {
+      ageRange: "6–9 år",
+      name: "Sprout",
+      tagline: "Lekbasert intro · 60 min × uke",
+      description:
+        "Motorikk, koordinasjon og gledesfylt første møte med golf. Plast-køller, fargerike mål, og masse løping.",
+      features: [
+        "Mini-baner og lek-stasjoner",
+        "Foreldre kan delta gratis",
+        "Sommer-uke i juli",
+        "Kort tilpasset (avskåret)",
+      ],
+      groupSize: "8 stk",
+      groupSizeLabel: "Pr. gruppe",
+      price: "1 290",
+      priceLabel: "Kr / mnd",
+      ctaLabel: "Mer om Sprout",
+      ctaHref: "#apply",
+      photoVariant: "default" as const,
+      photoDescription: "Smilende 7-åring med plast-kølle, fargerik mini-bane",
+    },
+    {
+      ageRange: "10–13 år",
+      name: "Grow",
+      tagline: "Teknikk + bane · 90 min × uke",
+      description:
+        "Strukturert teknikk-bygging med Trackman-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.",
+      features: [
+        "Trackman-tilpasset i smågruppe",
+        "4× banevandring 9 hull / sesong",
+        "Egen klubbturnering · vår + høst",
+        "PlayerHQ Junior i appen",
+      ],
+      groupSize: "6 stk",
+      groupSizeLabel: "Pr. gruppe",
+      price: "1 890",
+      priceLabel: "Kr / mnd",
+      ctaLabel: "Mer om Grow",
+      ctaHref: "#apply",
+      photoVariant: "lime" as const,
+      photoDescription:
+        "Junior 11 år i full sving, range, fokusert ansiktsuttrykk",
+    },
+    {
+      ageRange: "14–17 år",
+      name: "Compete",
+      tagline: "Talent / turnering · 2× uke",
+      description:
+        "For ambisiøse tenåringer. Personlig coach, fysisk testing, mental forberedelse og oppfølging på regionale turneringer.",
+      features: [
+        "Personlig coach + treningsplan",
+        "Fysisk testing 4× / år",
+        "Turnering-coaching helger",
+        "Talentstige mot regionalt nivå",
+      ],
+      groupSize: "4 stk",
+      groupSizeLabel: "Pr. gruppe",
+      price: "2 890",
+      priceLabel: "Kr / mnd",
+      ctaLabel: "Mer om Compete",
+      ctaHref: "#apply",
+      photoVariant: "warm" as const,
+      photoDescription:
+        "Tenåring i ferdig follow-through på fairway, golden hour, fokus",
+    },
+  ],
+} as const;
+
+export const JUNIOR_PARENT_V3 = {
+  eyebrow: "For foreldre",
+  headingLead: "Vi viser dere",
+  headingItalic: "det dere lurer på",
+  headingTrail: ".",
+  ctaLabel: "Last ned foreldreapp",
+  ctaHref: "/portal/login",
+  benefits: [
+    {
+      icon: "bell" as const,
+      title: "Push fra trener",
+      description:
+        "Du får varsel når neste økt er, når den flyttes, og når trener legger ut bilder eller video fra timen — slik at du alltid vet hva som skjer.",
+    },
+    {
+      icon: "lineChart" as const,
+      title: "Fremgang du forstår",
+      description:
+        "En enkel månedsrapport per junior: hva treningen handlet om, hva som ble bedre, og hva neste mål er. Ingen tekniske diagrammer du må tolke.",
+    },
+    {
+      icon: "users" as const,
+      title: "Forelder-fellesskap",
+      description:
+        "Privat foreldregruppe per aldersnivå for samkjøring, turneringspåmelding og kafé-prat. Trener er moderator.",
+    },
+    {
+      icon: "shield" as const,
+      title: "Trygghet og sikkerhet",
+      description:
+        "Alle trenere er politiattestert og fullt forsikret. Vi har voksenansvarlig på alle samlinger og førstehjelpsutstyr på plass.",
+    },
+    {
+      icon: "calendar" as const,
+      title: "Ferier og leir",
+      description:
+        "4 sommerleir-uker (juni–august) og 2 vinterleir-helger inkludert i Compete. Vi tar oss av lunsj, transport og bilder.",
+    },
+    {
+      icon: "message" as const,
+      title: "Direkte med trener",
+      description:
+        "Chat trener via appen — svar i løpet av samme dag. Ingen telefontag, ingen e-post som forsvinner i innboksen.",
+    },
+  ],
+} as const;
+
+export const JUNIOR_SEASON_V3 = {
+  eyebrow: "Sesongprogrammer",
+  headingLead: "Sommerleir og",
+  headingItalic: "talentstige",
+  headingTrail: ".",
+  programs: [
+    {
+      label: "SOMMERLEIR · UKE 26–30",
+      title: "AK Sommerleir",
+      description:
+        "5-dagers leir for 6–13 år: golf, lek, baneturer, lunsj, pizza-fredag og turnering med pokaler. Tilgjengelig for ikke-medlemmer.",
+      stats: [
+        { v: "5 dager", l: "09–15 hver dag" },
+        { v: "3 490 kr", l: "Pris pr. uke" },
+      ],
+      ctaLabel: "Se uker og påmelding",
+      ctaHref: "#apply",
+      photoVariant: "lime" as const,
+      photoDescription:
+        "Sommerleir-gruppe juniorer på range, sol, ryggsekker, pizza-pause i bakgrunnen",
+    },
+    {
+      label: "TALENTSTIGE · 14–17 ÅR",
+      title: "Compete-spor mot regionalt nivå",
+      description:
+        "For Compete-juniorer som sikter mot regionale og nasjonale turneringer. Vi følger på 4–6 turneringer i året, hjelper med skole-balansen, og følger talentutviklingen tett gjennom sesongen.",
+      stats: [
+        { v: "6 turneringer", l: "Coach følger" },
+        { v: "Regionalt", l: "Talentspor" },
+      ],
+      ctaLabel: "Søk om plass",
+      ctaHref: "#apply",
+      photoVariant: "warm" as const,
+      photoDescription:
+        "Tenåring med pokal og foreldre etter klubbturnering, scoreboard i bakgrunnen",
+    },
+  ],
+} as const;
+
+export const JUNIOR_COACH_V3 = {
+  eyebrow: "Hovedansvarlig junior",
+  headingLead: "Markus Lien — ",
+  headingItalic: "juniortrener med hjerte for laget.",
+  quote:
+    "Det viktigste er at de har det gøy. Når en 9-åring vil tilbake neste uke, har vi gjort jobben — teknikk og handicap kommer av seg selv når gleden er der.",
+  credits: [
+    { v: "Hovedcoach", l: "Junior Academy" },
+    { v: "6–17 år", l: "Aldersspenn" },
+    { v: "Sommerleir", l: "Hovedansvar" },
+  ],
+  portraitDescription:
+    "Markus Lien (juniortrener) i naturlig coaching-positur med smilende junior-spiller, mid-shot",
+} as const;
+
+export const JUNIOR_PRICEBAND_V3 = {
+  title: "Søsken-rabatt 25%",
+  description:
+    "Andre junior fra samme familie får automatisk 25% rabatt — alle nivåer.",
+  prices: [
+    { v: "1 290 kr", l: "SPROUT · MND" },
+    { v: "1 890 kr", l: "GROW · MND" },
+    { v: "2 890 kr", l: "COMPETE · MND" },
+  ],
+} as const;
+
+export const JUNIOR_FAQ_V3 = {
+  eyebrow: "For foreldre",
+  heading: "Det vi får spørsmål om.",
+  items: [
+    {
+      q: "Hva trenger ungen å ha med?",
+      a: "Sportstøy og innesko de første ukene — vi har køller i alle størrelser tilgjengelig på range. Etter 4–6 uker hjelper trener til å velge riktig junior-sett som familien kan kjøpe brukt eller via klubbens utlånspool.",
+    },
+    {
+      q: "Kan vi prøve én gang før vi melder oss på?",
+      a: "Ja — vi har gratis prøvetimer hver lørdag i sesongen (april–oktober). Book direkte i kalenderen, eller stikk innom Bærum GK kl. 11–13. Ingen påmelding nødvendig.",
+    },
+    {
+      q: "Hva skjer ved sykdom eller bortreise?",
+      a: "Du melder fra i appen. Hvis junior misser mer enn 2 uker sammenhengende, krediterer vi tiden eller flytter den til sommerleir-tilbud. Vi forventer ikke perfekt oppmøte.",
+    },
+    {
+      q: "Hvordan er det med voksenansvar og sikkerhet?",
+      a: "Alle trenere er politiattestert og fullt forsikret. Vi har minimum to voksne på samlinger over 4 timer, og legger ut førstehjelpsplan før hver leir.",
+    },
+    {
+      q: "Trenger ungen klubbmedlemskap i tillegg?",
+      a: "Bærum GK gir alle Junior Academy-deltakere gratis junior-medlemskap første år. Etter det er det 590 kr / år for tilgang til bane og turneringer.",
+    },
+  ],
+} as const;
+
+export const JUNIOR_CTA_V3 = {
+  headingLead: "Bli med på",
+  headingItalic: "gratis prøvetime",
+  headingTrail: ".",
+  description:
+    "Hver lørdag april–oktober på Bærum GK. Ungen prøver, dere får møte trenerne, og dere kan melde dere på samme dag — eller bare prøve, helt forpliktelsesfritt.",
+  ctaPrimary: "Book prøvetime",
+  ctaPrimaryHref: "/booking-v2?v=2",
+  ctaSecondary: "Spør oss noe",
+  ctaSecondaryHref: "/kontakt?v=2",
 } as const;

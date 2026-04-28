@@ -1,15 +1,36 @@
 "use client";
 
-
-import { Icon } from "@/components/ui/icon";
+import {
+  ArrowRight,
+  CalendarClock,
+  Flag,
+  MessageCircle,
+  Package,
+  Target,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { useState, useEffect, useRef } from "react";
+import { WebNav } from "@/components/website-v2/web-nav";
+import { WebFooter } from "@/components/website-v2/web-footer";
+import { BookingHero } from "@/components/website-v2/booking/booking-hero";
+import { CoachCard } from "@/components/website-v2/booking/coach-card";
+import {
+  ServiceTile,
+  type ServiceTileData,
+} from "@/components/website-v2/booking/service-tile";
+import { TrustStrip } from "@/components/website-v2/booking/trust-strip";
 
-// ─── Data ───
+interface InstructorAPI {
+  id: string;
+  title?: string | null;
+  bio?: string | null;
+  User: { name: string; image?: string | null };
+}
 
-interface ServiceType {
+interface ServiceTypeAPI {
   id: string;
   name: string;
   description?: string | null;
@@ -18,397 +39,399 @@ interface ServiceType {
   category?: string | null;
 }
 
-interface Instructor {
-  id: string;
-  title?: string | null;
-  bio?: string | null;
-  specialization?: string | null;
-  User: { name: string; image?: string | null };
-}
-
 interface Trainer {
   id: string;
   name: string;
   role: string;
+  description: string;
   image: string | null;
   acuityEmbedUrl: string;
-  services: string[];
-  instructorId: string;
+  tags: string[];
+  nextAvailable?: string;
+  photoVariant: "default" | "lime";
 }
 
-interface Location {
-  name: string;
-  shortName: string;
-  trainers: Trainer[];
-}
-
-// Hardcoded location mapping + Acuity URLs until backend has full facility data
-const LOCATION_CONFIG: Record<string, { name: string; shortName: string; acuityEmbedUrl: string }> = {
+const TRAINER_DEFAULTS: Record<string, Omit<Trainer, "id" | "name" | "role">> = {
   instr_anders: {
-    name: "Gamle Fredrikstad Golfklubb",
-    shortName: "GFGK",
-    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp",
+    description:
+      "For voksne 18+ — sving, kortspill, mental coaching og månedlig SG-måling. Jobber 1:1 med 18 spillere.",
+    image: "/images/team/anders-kristiansen.jpg",
+    acuityEmbedUrl:
+      "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp",
+    tags: ["Voksne", "1:1 lessons", "Trackman", "Banecoaching"],
+    nextAvailable: "i morgen 14:00",
+    photoVariant: "default",
   },
   instr_markus: {
-    name: "Gamle Fredrikstad Golfklubb",
-    shortName: "GFGK",
-    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=13938964&ref=embedded_csp",
+    description:
+      "For juniorer 6–17 år — Sprout, Grow og Compete-spor. Foreldredialog, sommerleir og talentutvikling.",
+    image: null,
+    acuityEmbedUrl:
+      "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=13938964&ref=embedded_csp",
+    tags: ["Junior 6–17", "Foreldreapp", "Sommerleir", "Talentspor"],
+    nextAvailable: "onsdag 16:30",
+    photoVariant: "lime",
   },
 };
 
-// Matcher på fornavn for å håndtere varianter i databasen
-function getTrainerImage(name: string): string | null {
-  const lower = name.toLowerCase();
-  if (lower.includes("anders")) return "/images/team/anders-kristiansen.jpg";
-  return null; // Markus bruker initialer
-}
-
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 3);
-}
-
-// Overstyr visningsnavn
 function getDisplayName(name: string): string {
   if (name.toLowerCase().includes("markus")) return "Markus R. Pedersen";
   return name;
 }
 
-// ─── Page ───
+const FILTERS = ["Alle", "Lessons", "Banecoaching", "Pakker"] as const;
+type Filter = (typeof FILTERS)[number];
+
+// Service-tile-presentasjon. Server-data slås opp ved klikk for ID.
+const SERVICE_PRESETS: Record<string, Omit<ServiceTileData, "id">> = {
+  standard: {
+    title: "Standard lesson",
+    description:
+      "1:1 coaching på range eller Trackman-bay. Inkluderer videoanalyse og digitalt notat etter timen.",
+    duration: "50 min · 1:1",
+    price: "890 kr",
+    priceUnit: "Per time",
+    bullets: [
+      "Trackman-data + video",
+      "Digital coach-notat etter",
+      "Gratis flytting inntil 12 timer før",
+    ],
+    Icon: Target,
+    ribbon: "Mest populær",
+    featured: true,
+  },
+  deep: {
+    title: "Dyp-økt + analyse",
+    description:
+      "Lengre 1:1 med dybdetilbakemelding. Trackman-økt, video, og en handlingsplan for de neste 4 ukene.",
+    duration: "90 min",
+    price: "1 490 kr",
+    priceUnit: "Per økt",
+    bullets: [
+      "90 min med 2 fokus-områder",
+      "4-ukers oppfølgings-plan",
+      "Skriftlig analyse i appen",
+    ],
+    Icon: CalendarClock,
+  },
+  oncourse: {
+    title: "On-course coaching",
+    description:
+      "9 hull med coach. Course management, club selection og strategi i ekte spillsituasjoner.",
+    duration: "3 t · 9 hull",
+    price: "2 490 kr",
+    priceUnit: "Per runde",
+    bullets: [
+      "9 hull · ekte spillsituasjoner",
+      "Pre-shot rutine + valg",
+      "Greenfee inkludert",
+    ],
+    Icon: Flag,
+  },
+  duo: {
+    title: "Par-økt",
+    description:
+      "Bring en venn eller partner — to spillere, samme bay, en coach. Ideell for nybegynner-par.",
+    duration: "75 min · 2-pack",
+    price: "590 kr",
+    priceUnit: "Per spiller",
+    bullets: [
+      "2 spillere · samme bay",
+      "Individuell tilbakemelding",
+      "Pris pr. spiller",
+    ],
+    Icon: Users,
+  },
+  pack: {
+    title: "5-timers pakke",
+    description:
+      "Fem timer å bruke fritt over 6 måneder. 10 % rabatt vs enkelttimer, og kan deles med ektefelle.",
+    duration: "5-pakke",
+    price: "3 990 kr",
+    priceUnit: "Pakke · 5 timer",
+    bullets: [
+      "5 timer · 6 mnd gyldighet",
+      "Kan deles med en annen",
+      "Spar 450 kr",
+    ],
+    Icon: Package,
+    ctaLabel: "Kjøp pakke",
+  },
+  intro: {
+    title: "Intro-møte",
+    description:
+      "Aldri trent med oss før? Et gratis 30-min-møte for å snakke om mål, nivå og om Academy passer deg.",
+    duration: "30 min · gratis",
+    price: "Gratis",
+    priceUnit: "30 min · uforpliktende",
+    bullets: ["30 min · gratis", "Ingen forpliktelser", "Avklar mål og forventninger"],
+    Icon: MessageCircle,
+    ctaLabel: "Book intro",
+    freePrice: true,
+  },
+};
+
+const SERVICE_LIST: { key: keyof typeof SERVICE_PRESETS; filter: Filter }[] = [
+  { key: "standard", filter: "Lessons" },
+  { key: "deep", filter: "Lessons" },
+  { key: "oncourse", filter: "Banecoaching" },
+  { key: "duo", filter: "Lessons" },
+  { key: "pack", filter: "Pakker" },
+  { key: "intro", filter: "Lessons" },
+];
 
 export default function BookingPage() {
-  const [selectedTrainer, setSelectedTrainer] = useState<{
-    trainer: Trainer;
-    locationName: string;
-  } | null>(null);
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [loading, setLoading] = useState(true);
-  const embedRef = useRef<HTMLDivElement>(null);
+  const [trainers, setTrainers] = useState<Trainer[]>([]);
+  const [selectedTrainerId, setSelectedTrainerId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<Filter>("Alle");
+  const [showIframe, setShowIframe] = useState(false);
+  const iframeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function load() {
       try {
-        const [instructorsRes, servicesRes] = await Promise.all([
-          fetch("/api/portal/public/instructors"),
-          fetch("/api/portal/public/service-types"),
-        ]);
-
-        const instructors: Instructor[] = instructorsRes.ok ? await instructorsRes.json() : [];
-        const serviceTypes: ServiceType[] = servicesRes.ok ? await servicesRes.json() : [];
-
-        // Build trainer objects from backend data
-        const trainerMap = new Map<string, Trainer>();
-
+        const res = await fetch("/api/portal/public/instructors");
+        const instructors: InstructorAPI[] = res.ok ? await res.json() : [];
+        const built: Trainer[] = [];
         for (const inst of instructors) {
-          const name = inst.User?.name ?? "Coach";
-          const config = LOCATION_CONFIG[inst.id];
-          if (!config) continue; // Skip instructors without location config
-
-          trainerMap.set(inst.id, {
+          const defaults = TRAINER_DEFAULTS[inst.id];
+          if (!defaults) continue;
+          built.push({
             id: inst.id,
-            name: getDisplayName(name),
+            name: getDisplayName(inst.User?.name ?? "Coach"),
             role: inst.title ?? "Coach",
-            image: getTrainerImage(name),
-            acuityEmbedUrl: config.acuityEmbedUrl,
-            services: [],
-            instructorId: inst.id,
+            ...defaults,
           });
         }
-
-        // Map services to trainers based on service-types API (which includes instructors)
-        for (const st of serviceTypes) {
-          const instructorLinks = (st as unknown as { Instructor?: { id: string }[] }).Instructor ?? [];
-          for (const link of instructorLinks) {
-            const trainer = trainerMap.get(link.id);
-            if (trainer) {
-              trainer.services.push(st.name);
-            }
-          }
-        }
-
-        // Group by location
-        const locationMap = new Map<string, Location>();
-        for (const trainer of trainerMap.values()) {
-          const config = LOCATION_CONFIG[trainer.instructorId];
-          if (!locationMap.has(config.shortName)) {
-            locationMap.set(config.shortName, {
-              name: config.name,
-              shortName: config.shortName,
-              trainers: [],
-            });
-          }
-          locationMap.get(config.shortName)!.trainers.push(trainer);
-        }
-
-        setLocations(Array.from(locationMap.values()));
-      } finally {
-        setLoading(false);
+        setTrainers(built);
+        if (built.length > 0) setSelectedTrainerId(built[0].id);
+      } catch {
+        // Behold tom liste — fallback-UI viser kontaktinfo
       }
     }
     load();
   }, []);
 
-  useEffect(() => {
-    if (selectedTrainer && embedRef.current) {
-      embedRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [selectedTrainer]);
+  // Fallback hvis API er nede: vis statiske coach-kort så siden ikke er tom.
+  const displayTrainers = useMemo<Trainer[]>(() => {
+    if (trainers.length > 0) return trainers;
+    return Object.entries(TRAINER_DEFAULTS).map(([id, defaults]) => ({
+      id,
+      name: id.includes("anders") ? "Anders Kristiansen" : "Markus R. Pedersen",
+      role: id.includes("anders") ? "Hovedcoach Academy" : "Hovedcoach Junior",
+      ...defaults,
+    }));
+  }, [trainers]);
+
+  const selectedTrainer =
+    displayTrainers.find((t) => t.id === selectedTrainerId) ??
+    displayTrainers[0] ??
+    null;
+
+  const visibleServices = SERVICE_LIST.filter(
+    (s) => filter === "Alle" || s.filter === filter,
+  );
+
+  const handleServiceSelect = () => {
+    setShowIframe(true);
+    requestAnimationFrame(() => {
+      iframeRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-surface-container-lowest">
-      {/* Hero — matcher forsiden */}
-      <section className="relative flex items-center pt-[48px] min-h-[50svh] overflow-hidden bg-on-surface">
-        <Image
-          src="/images/hero/academy.jpg"
-          alt="Coaching på banen"
-          fill
-          priority
-          quality={90}
-          className="object-cover object-[center_30%] opacity-25"
-          sizes="100vw"
-        />
-        <div className="w-container relative py-16 md:py-24">
-          <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
-            AK Golf Academy
-          </p>
-          <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-[1.1] tracking-tight text-surface mt-6 mb-4">
-            Book coaching
-          </h1>
-          <p className="text-base text-surface/60 max-w-md leading-relaxed">
-            Velg trener for å booke din neste coaching-time.
-          </p>
+    <div className="min-h-screen bg-[var(--akgolf-surface,#F4F6F4)]">
+      <WebNav />
+
+      <BookingHero step={selectedTrainer ? (showIframe ? 3 : 2) : 1} />
+
+      {/* Coach-valg */}
+      <section className="pb-[60px] pt-6">
+        <div className="mx-auto max-w-[1200px] px-10">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {displayTrainers.map((t) => (
+              <CoachCard
+                key={t.id}
+                name={t.name}
+                role={t.role}
+                image={t.image}
+                description={t.description}
+                tags={t.tags}
+                nextAvailable={t.nextAvailable}
+                selected={t.id === selectedTrainer?.id}
+                onSelect={() => {
+                  setSelectedTrainerId(t.id);
+                  setShowIframe(false);
+                }}
+                photoVariant={t.photoVariant}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
-      <main className="w-container py-16 md:py-24">
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <span className="ml-3 text-sm text-on-surface">Laster trenere...</span>
-          </div>
-        ) : locations.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-on-surface">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
-            <p className="text-sm text-on-surface mt-2">
-              Ta kontakt på{" "}
-              <a href="mailto:anders@akgolf.no" className="text-primary font-medium">
-                anders@akgolf.no
-              </a>
-            </p>
-          </div>
-        ) : selectedTrainer ? (
-          <div ref={embedRef}>
-            {/* Tilbake-knapp */}
-            <button
-              onClick={() => setSelectedTrainer(null)}
-              className="flex items-center gap-2 mb-8 text-sm font-medium text-on-surface hover:text-on-surface transition-colors"
-            >
-              <Icon name="arrow_back" className="w-4 h-4" />
-              Tilbake til treneroversikt
-            </button>
+      {/* Tjenester */}
+      {selectedTrainer ? (
+        <section className="pb-[100px] pt-[10px]">
+          <div className="mx-auto max-w-[1200px] px-10">
+            <div className="mb-9 flex items-end justify-between gap-10">
+              <div>
+                <div
+                  className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--akgolf-primary,#005840)]"
+                  style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+                >
+                  Tjenester · {selectedTrainer.name.split(" ")[0]}
+                </div>
+                <h2
+                  className="m-0 text-[36px] font-extrabold tracking-[-0.025em] text-[var(--akgolf-ink,#0A1F18)]"
+                  style={{
+                    fontFamily: "var(--font-inter-tight), Inter, sans-serif",
+                  }}
+                >
+                  Velg{" "}
+                  <em
+                    className="font-medium not-italic text-[var(--akgolf-primary,#005840)]"
+                    style={{
+                      fontFamily: "Fraunces, serif",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    hva du vil booke.
+                  </em>
+                </h2>
+              </div>
+              <div className="hidden rounded-full border border-[var(--akgolf-line-light,#E0E8E5)] bg-white p-1 sm:inline-flex">
+                {FILTERS.map((f) => {
+                  const active = f === filter;
+                  return (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setFilter(f)}
+                      className={`rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.10em] transition-colors ${
+                        active
+                          ? "bg-[var(--akgolf-ink,#0A1F18)] text-white"
+                          : "text-[var(--akgolf-muted,#A5B2AD)] hover:text-[var(--akgolf-ink,#0A1F18)]"
+                      }`}
+                      style={{
+                        fontFamily: "var(--font-jetbrains-mono), monospace",
+                      }}
+                    >
+                      {f}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-            {/* Valgt trener */}
-            <div className="flex items-center gap-4 mb-8">
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-surface-container shrink-0">
-                {selectedTrainer.trainer.image ? (
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {visibleServices.map(({ key }) => (
+                <ServiceTile
+                  key={key}
+                  data={{ id: key, ...SERVICE_PRESETS[key] }}
+                  onSelect={handleServiceSelect}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Acuity iframe (vises etter service-klikk) */}
+      {showIframe && selectedTrainer ? (
+        <section ref={iframeRef} className="pb-[100px]">
+          <div className="mx-auto max-w-[1200px] px-10">
+            <div className="mb-6 flex items-center gap-4">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-[var(--akgolf-surface,#F4F6F4)]">
+                {selectedTrainer.image ? (
                   <Image
-                    src={selectedTrainer.trainer.image}
-                    alt={selectedTrainer.trainer.name}
+                    src={selectedTrainer.image}
+                    alt={selectedTrainer.name}
                     fill
                     className="object-cover"
+                    sizes="56px"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-primary">
-                    <span className="text-lg font-bold text-surface">
-                      {getInitials(selectedTrainer.trainer.name)}
-                    </span>
+                  <div className="flex h-full w-full items-center justify-center bg-[var(--akgolf-primary,#005840)] text-lg font-bold text-white">
+                    {selectedTrainer.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase()}
                   </div>
                 )}
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-on-surface">
-                  {selectedTrainer.trainer.name}
-                </h2>
-                <p className="text-sm text-on-surface">
-                  {selectedTrainer.trainer.role} — {selectedTrainer.locationName}
-                </p>
-              </div>
-            </div>
-
-            {/* Acuity Embed */}
-            {selectedTrainer.trainer.acuityEmbedUrl ? (
-              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden">
-                <iframe
-                  src={selectedTrainer.trainer.acuityEmbedUrl}
-                  title={`Book time med ${selectedTrainer.trainer.name}`}
-                  width="100%"
-                  height="800"
-                  frameBorder="0"
-                  allow="payment"
-                  className="w-full min-h-[800px]"
-                />
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-12 text-center">
-                <Icon name="schedule" className="w-10 h-10 text-on-surface mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-on-surface mb-2">
-                  Kommer snart
+                <h3
+                  className="m-0 text-xl font-extrabold tracking-[-0.02em] text-[var(--akgolf-ink,#0A1F18)]"
+                  style={{
+                    fontFamily: "var(--font-inter-tight), Inter, sans-serif",
+                  }}
+                >
+                  {selectedTrainer.name}
                 </h3>
-                <p className="text-sm text-on-surface max-w-sm mx-auto">
-                  Online booking for {selectedTrainer.trainer.name} på{" "}
-                  {selectedTrainer.locationName} er under oppsett.
-                  Ta kontakt på{" "}
-                  <a
-                    href="mailto:anders@akgolf.no"
-                    className="text-primary font-medium"
-                  >
-                    anders@akgolf.no
-                  </a>{" "}
-                  for å booke.
+                <p className="m-0 text-sm text-[var(--akgolf-text,#324D45)]">
+                  {selectedTrainer.role} — Gamle Fredrikstad Golfklubb
                 </p>
               </div>
-            )}
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--akgolf-line-light,#E0E8E5)] bg-white">
+              <iframe
+                src={selectedTrainer.acuityEmbedUrl}
+                title={`Book time med ${selectedTrainer.name}`}
+                width="100%"
+                height="800"
+                allow="payment"
+                className="w-full min-h-[800px]"
+              />
+            </div>
           </div>
-        ) : (
-          <>
-            {/* Lokasjonskort */}
-            <div className="space-y-16">
-              {locations.map((location) => (
-                <section key={location.shortName}>
-                  {/* Lokasjon-header */}
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Icon name="location_on" className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold text-on-surface">
-                        {location.name}
-                      </h2>
-                      <p className="text-sm text-on-surface">
-                        {location.trainers.length === 1
-                          ? "1 trener tilgjengelig"
-                          : `${location.trainers.length} trenere tilgjengelige`}
-                      </p>
-                    </div>
-                  </div>
+        </section>
+      ) : null}
 
-                  {/* Trenerkort */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {location.trainers.map((trainer) => (
-                      <button
-                        key={trainer.id}
-                        onClick={() =>
-                          setSelectedTrainer({
-                            trainer,
-                            locationName: location.name,
-                          })
-                        }
-                        className="group rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(45,90,39,0.08)] text-left"
-                      >
-                        {/* Trenerbilde */}
-                        <div className="relative aspect-square overflow-hidden bg-surface-container">
-                          {trainer.image ? (
-                            <Image
-                              src={trainer.image}
-                              alt={trainer.name}
-                              fill
-                              className="object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-[1.03]"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-primary">
-                              <span className="text-3xl font-bold text-surface">
-                                {getInitials(trainer.name)}
-                              </span>
-                            </div>
-                          )}
-                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-container-lowest/90 text-on-surface backdrop-blur-sm">
-                            {trainer.role}
-                          </div>
-                        </div>
+      <TrustStrip />
 
-                        {/* Trenerinfo */}
-                        <div className="p-6">
-                          <h3 className="text-lg font-semibold text-on-surface mb-1">
-                            {trainer.name}
-                          </h3>
-                          <p className="text-sm text-on-surface mb-4">
-                            {location.name}
-                          </p>
-
-                          {/* Tjenester */}
-                          <div className="flex flex-wrap gap-2 mb-6">
-                            {trainer.services.map((service) => (
-                              <span
-                                key={service}
-                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-container text-on-surface"
-                              >
-                                {service}
-                              </span>
-                            ))}
-                          </div>
-
-                          {/* CTA */}
-                          <div className="flex items-center justify-between pt-4 border-t border-outline-variant/20">
-                            <span className="text-sm font-semibold text-on-surface group-hover:text-on-surface/70 transition-colors">
-                              Velg tid
-                            </span>
-                            <div className="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-                              <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-secondary-fixed-text"
-                              >
-                                <path d="M5 12h14" />
-                                <path d="m12 5 7 7-7 7" />
-                              </svg>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </section>
-              ))}
+      {/* Sticky CTA */}
+      {selectedTrainer && !showIframe ? (
+        <div className="fixed bottom-4 left-1/2 z-[60] flex max-w-[calc(100%-32px)] -translate-x-1/2 items-center gap-[18px] rounded-full bg-[var(--akgolf-ink,#0A1F18)] px-[22px] py-[14px] text-white shadow-[0_18px_40px_rgba(10,31,24,0.30)]">
+          <div className="text-[13px]">
+            <div>
+              <strong className="mr-1 text-[var(--akgolf-accent,#D1F843)]">
+                {selectedTrainer.name}
+              </strong>
+              · velg en tjeneste over
             </div>
-
-            {/* Info */}
-            <div className="mt-16 rounded-2xl bg-surface border border-outline-variant/30 p-8 md:p-10">
-              <div className="flex items-start gap-4">
-                <Icon name="schedule" className="w-6 h-6 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-on-surface mb-2">
-                    Slik booker du
-                  </h3>
-                  <p className="text-sm text-on-surface leading-relaxed">
-                    Velg trener og lokasjon over. Du får opp tilgjengelige tider
-                    og kan booke direkte. Bekreftelse sendes på e-post.
-                  </p>
-                </div>
-              </div>
+            <div
+              className="text-[10px] tracking-[0.10em] text-white/55"
+              style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            >
+              {selectedTrainer.nextAvailable
+                ? `Neste ledige: ${selectedTrainer.nextAvailable}`
+                : "Velg time når du har valgt tjeneste"}
             </div>
-          </>
-        )}
-
-        {/* Tilbake */}
-        <div className="mt-10 text-center">
-          <Link
-            href="/academy"
-            className="text-sm text-on-surface hover:text-on-surface transition-colors"
+          </div>
+          <button
+            type="button"
+            onClick={handleServiceSelect}
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--akgolf-accent,#D1F843)] px-[18px] py-[10px] text-[13px] font-bold text-[var(--akgolf-ink,#0A1F18)] transition-all hover:-translate-y-px"
           >
-            &larr; Tilbake til Academy
-          </Link>
+            Velg tid
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.4} />
+          </button>
         </div>
-      </main>
+      ) : null}
+
+      <div className="bg-white pb-10 text-center">
+        <Link
+          href="/academy?v=2"
+          className="text-sm text-[var(--akgolf-text,#324D45)] hover:text-[var(--akgolf-ink,#0A1F18)]"
+        >
+          ← Tilbake til Academy
+        </Link>
+      </div>
+
+      <WebFooter />
     </div>
   );
 }

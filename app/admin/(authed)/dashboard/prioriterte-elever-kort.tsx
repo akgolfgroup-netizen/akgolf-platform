@@ -101,6 +101,7 @@ export function PrioriterteEleverKort({ elever }: { elever: PrioritertElev[] }) 
             className="flex items-center gap-3 p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition-colors"
           >
             {elev.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={elev.image}
                 alt={elev.name ?? ""}

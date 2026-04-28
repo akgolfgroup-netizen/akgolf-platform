@@ -4,7 +4,7 @@ import {
   getFriendsLeaderboard,
   getPendingRequests,
 } from "./actions";
-import SosialtClient from "./sosialt-client";
+import { SosialtClientV2 } from "@/components/portal/social/v2/sosialt-client-v2";
 
 export default async function SosialtPage() {
   await requirePortalUser();
@@ -16,7 +16,7 @@ export default async function SosialtPage() {
   ]);
 
   return (
-    <SosialtClient
+    <SosialtClientV2
       friends={friends}
       leaderboard={leaderboard}
       pendingRequests={pendingRequests}

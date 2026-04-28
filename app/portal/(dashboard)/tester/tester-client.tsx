@@ -1,227 +1,81 @@
 "use client";
 
-import { Icon } from "@/components/ui/icon";
-import { useState, useTransition } from "react";
-
+import { useMemo, useState } from "react";
 import type { TestOverviewData } from "./actions";
-
-import { MonoLabel } from "@/components/portal/patterns";
-
-type TestData = TestOverviewData;
-
-interface LeaderboardEntry {
-  userId: string;
-  name: string;
-  image: string | null;
-  bestValue: number;
-  passed: boolean;
-  rank: number;
-  isCurrentUser: boolean;
-}
+import { TestRow } from "@/components/portal/tester/v2/test-row";
+import { TestLeaderboard } from "@/components/portal/tester/v2/test-leaderboard";
 
 interface Props {
-  tests: TestData[];
+  tests: TestOverviewData[];
 }
 
 export function TesterClient({ tests }: Props) {
-  const [isPending, startTransition] = useTransition();
-  const [selectedTest, setSelectedTest] = useState<number | null>(null);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const [userRank, setUserRank] = useState<number | null>(null);
-  const [period, setPeriod] = useState<"all" | "month" | "week">("all");
+  const [selectedTestNumber, setSelectedTestNumber] = useState<number | null>(null);
 
-  function loadLeaderboard(testNumber: number, p: string = period) {
-    setSelectedTest(testNumber);
-    startTransition(async () => {
-      const res = await fetch(
-        `/api/portal/tests/leaderboard?testNumber=${testNumber}&period=${p}`
-      );
-      const data = await res.json();
-      if (res.ok) {
-        setLeaderboard(data.leaderboard ?? []);
-        setUserRank(data.userRank);
-      }
-    });
-  }
-
-  function handlePeriodChange(p: "all" | "month" | "week") {
-    setPeriod(p);
-    if (selectedTest !== null) {
-      loadLeaderboard(selectedTest, p);
+  const grouped = useMemo(() => {
+    const map = new Map<string, TestOverviewData[]>();
+    for (const t of tests) {
+      const key = t.description || "Annet";
+      const arr = map.get(key) ?? [];
+      arr.push(t);
+      map.set(key, arr);
     }
+    return Array.from(map.entries());
+  }, [tests]);
+
+  const selectedTest =
+    selectedTestNumber !== null
+      ? tests.find((t) => t.testNumber === selectedTestNumber) ?? null
+      : null;
+
+  if (selectedTest) {
+    return (
+      <TestLeaderboard
+        test={selectedTest}
+        onBack={() => setSelectedTestNumber(null)}
+      />
+    );
   }
 
-  const selectedTestData = tests.find((t) => t.testNumber === selectedTest);
+  if (tests.length === 0) {
+    return (
+      <p
+        className="text-center py-8"
+        style={{ fontSize: 13, color: "rgba(255,255,255,0.6)" }}
+      >
+        Ingen tester tilgjengelig
+      </p>
+    );
+  }
 
   return (
-    <div className="space-y-4">
-      {/* Test-oversikt */}
-      {selectedTest === null ? (
-        <div className="space-y-3">
-          {tests.map((test) => (
-            <button
-              key={test.testNumber}
-              onClick={() => loadLeaderboard(test.testNumber)}
-              className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant p-4 hover:border-on-surface/20 transition-all"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <MonoLabel size="xs" className="text-on-surface-variant tabular-nums">
-                      #{test.testNumber}
-                    </MonoLabel>
-                    <span className="font-semibold text-on-surface">
-                      {test.name}
-                    </span>
-                  </div>
-                  <p className="text-xs text-on-surface-variant mt-1">
-                    {test.description}
-                  </p>
-                </div>
-                <div className="text-right">
-                  {test.userBest ? (
-                    <div>
-                      <div className="text-lg font-bold text-on-surface tabular-nums">
-                        {test.userBest.value}
-                        <span className="text-xs text-on-surface-variant ml-1">
-                          {test.unit}
-                        </span>
-                      </div>
-                      <div className={`text-xs ${test.userBest.passed ? "text-success" : "text-on-surface-variant"}`}>
-                        {test.userBest.passed ? "Bestått" : "Ikke bestått"}
-                      </div>
-                    </div>
-                  ) : (
-                    <span className="text-sm text-on-surface-variant">
-                      Ingen resultat
-                    </span>
-                  )}
-                </div>
-              </div>
-            </button>
-          ))}
-
-          {tests.length === 0 && (
-            <p className="text-center text-sm text-on-surface-variant py-8">
-              Ingen tester tilgjengelig
-            </p>
-          )}
-        </div>
-      ) : (
-        /* Leaderboard for valgt test */
-        <div className="space-y-4">
-          <button
-            onClick={() => setSelectedTest(null)}
-            className="text-sm text-primary hover:underline"
+    <div className="space-y-6">
+      {grouped.map(([category, list]) => (
+        <div key={category}>
+          <div
+            className="mb-3"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 9,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.45)",
+              fontWeight: 700,
+            }}
           >
-            Tilbake til alle tester
-          </button>
-
-          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h2 className="text-lg font-bold text-on-surface">
-                  {selectedTestData?.name}
-                </h2>
-                <p className="text-xs text-on-surface-variant">
-                  {selectedTestData?.description}
-                </p>
-              </div>
-              {userRank && (
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary tabular-nums">
-                    #{userRank}
-                  </div>
-                  <MonoLabel size="xs" className="text-on-surface-variant">Din plass</MonoLabel>
-                </div>
-              )}
-            </div>
-
-            {/* Periode-filter */}
-            <div className="flex gap-1.5 rounded-[10px] bg-surface-container p-[3px] mb-4">
-              {[
-                { id: "all" as const, label: "Alle" },
-                { id: "month" as const, label: "Denne måned" },
-                { id: "week" as const, label: "Denne uke" },
-              ].map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => handlePeriodChange(p.id)}
-                  className={`flex-1 py-[7px] rounded-[7px] text-[13px] font-medium transition-all ${
-                    period === p.id
-                      ? "bg-primary text-surface shadow-sm"
-                      : "text-on-surface-variant hover:text-on-surface"
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Leaderboard */}
-            {isPending ? (
-              <div className="flex justify-center py-8">
-                <div className="h-6 w-6 border-2 border-outline-variant border-t-primary rounded-full animate-spin" />
-              </div>
-            ) : (
-              <div className="space-y-1">
-                {leaderboard.map((entry) => (
-                  <div
-                    key={entry.userId}
-                    className={`flex items-center justify-between py-3 px-3 rounded-lg ${
-                      entry.isCurrentUser ? "bg-primary/5" : ""
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`w-8 text-center font-bold tabular-nums ${
-                          entry.rank === 1
-                            ? "text-warning"
-                            : entry.rank === 2
-                              ? "text-on-surface-variant"
-                              : entry.rank === 3
-                                ? "text-warning"
-                                : "text-on-surface-variant"
-                        }`}
-                      >
-                        {entry.rank <= 3 ? (
-                          <Icon name="military_tech" className="h-5 w-5 inline" />
-                        ) : (
-                          entry.rank
-                        )}
-                      </span>
-                      <span
-                        className={`text-sm ${
-                          entry.isCurrentUser
-                            ? "font-bold text-on-surface"
-                            : "text-on-surface"
-                        }`}
-                      >
-                        {entry.name}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-on-surface tabular-nums">
-                        {entry.bestValue} {selectedTestData?.unit}
-                      </span>
-                      {entry.passed && (
-                        <span className="text-xs text-success">
-                          Bestått
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                {leaderboard.length === 0 && (
-                  <p className="text-center text-sm text-on-surface-variant py-8">
-                    Ingen resultater for denne perioden
-                  </p>
-                )}
-              </div>
-            )}
+            {category}
+          </div>
+          <div className="flex flex-col gap-2">
+            {list.map((t) => (
+              <TestRow
+                key={t.testNumber}
+                test={t}
+                onClick={() => setSelectedTestNumber(t.testNumber)}
+              />
+            ))}
           </div>
         </div>
-      )}
+      ))}
     </div>
   );
 }
