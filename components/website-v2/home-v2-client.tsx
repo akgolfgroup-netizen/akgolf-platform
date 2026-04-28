@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   ArrowRight,
   Bot,
@@ -103,16 +104,27 @@ export function HomeV2Client() {
     >
       <WebNav active="home" />
 
-      {/* HERO */}
-      <section
-        className="relative flex min-h-screen items-end overflow-hidden pb-20"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%), url('/images/hero/forside.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center 30%",
-        }}
-      >
+      {/* MAIN content — anchor for skip-link i app/layout.tsx */}
+      <main id="main-content">
+
+      {/* HERO — next/image for optimalisert LCP (var CSS background-image, 407 KB) */}
+      <section className="relative flex min-h-screen items-end overflow-hidden pb-20">
+        <Image
+          src="/images/hero/forside.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={78}
+          className="object-cover object-[center_30%] -z-10"
+        />
+        <div
+          className="absolute inset-0 -z-[5] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%)",
+          }}
+        />
         <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-10">
           <div className="grid items-end gap-15 md:grid-cols-[1.4fr_1fr]">
             <div>
@@ -427,6 +439,8 @@ export function HomeV2Client() {
           </div>
         </div>
       </section>
+
+      </main>
 
       <WebFooter />
     </div>

@@ -277,29 +277,53 @@ function InputField({
   icon?: LucideIcon;
   hint?: string;
 }) {
+  // Stabil id basert pa label — kobler <label htmlFor> <input id> for skjermlesere.
+  const inputId = `booking-input-${label
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
+  const hintId = hint ? `${inputId}-hint` : undefined;
   return (
     <div>
-      <label className="block text-[13px] font-semibold text-ink mb-1.5">
-        {label} {required && <span className="text-danger">*</span>}
+      <label htmlFor={inputId} className="block text-[13px] font-semibold text-ink mb-1.5">
+        {label}
+        {required && (
+          <span className="text-danger" aria-hidden="true">
+            {" "}
+            *
+          </span>
+        )}
+        {required && <span className="sr-only"> (pakrevd)</span>}
       </label>
       <div className="relative">
         {IconComp && (
           <IconComp
             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle"
             strokeWidth={2}
+            aria-hidden="true"
           />
         )}
         <input
+          id={inputId}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
+          required={required}
+          aria-required={required ? "true" : undefined}
+          aria-describedby={hintId}
           className={`w-full py-3 rounded-lg border border-line bg-card text-[14px] text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-soft transition-colors ${
             IconComp ? "pl-10 pr-4" : "px-4"
           }`}
         />
       </div>
-      {hint && <p className="text-[12px] text-ink-subtle mt-1">{hint}</p>}
+      {hint && (
+        <p id={hintId} className="text-[12px] text-ink-subtle mt-1">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }

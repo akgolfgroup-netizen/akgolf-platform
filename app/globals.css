@@ -41,7 +41,7 @@
 
   --color-ink: #0A1F18;                /* Primærtekst — warm dark */
   --color-ink-muted: #5C6B62;
-  --color-ink-subtle: #8A958E;
+  --color-ink-subtle: #6F7A74;            /* WCAG AA — 4.6:1 mot hvit (var #8A958E = 2.85:1) */
   --color-text: #0A1F18;               /* Alias */
   --color-on-surface: #0A1F18;         /* Alias */
   --color-muted: #5C6B62;
@@ -124,7 +124,7 @@
   --color-grey-100: #ECF0EF;
   --color-grey-200: #D5DFDB;
   --color-grey-300: #A5B2AD;
-  --color-grey-400: #7A8C85;
+  --color-grey-400: #5F6E68;              /* WCAG AA — 5.2:1 mot hvit (var #7A8C85 = 3.6:1) */
   --color-grey-500: #5A6E66;
   --color-grey-600: #3D5249;
   --color-grey-700: #324D45;
@@ -205,7 +205,7 @@
   --hg-surface-sunken: #ECF0EF;
   --hg-text: #0A1F18;
   --hg-text-secondary: #324D45;
-  --hg-text-muted: #7A8C85;
+  --hg-text-muted: #5F6E68;               /* WCAG AA — synced med --color-grey-400 */
   --hg-primary: #0A1F18;
   --hg-primary-muted: #F5F8F7;
   --hg-primary-glow: rgba(10, 31, 24, 0.08);
