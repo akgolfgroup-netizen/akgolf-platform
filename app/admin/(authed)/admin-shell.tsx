@@ -30,12 +30,19 @@ interface AdminShellProps {
  */
 const DARK_SHELL_ROUTES = [
   "/admin",
+  "/admin/hub",
   "/admin/denne-uken",
   "/admin/coaching-board",
   "/admin/mission-board",
   "/admin/focus",
   "/admin/godkjenninger",
   "/admin/elever",
+  "/admin/bookinger",
+  "/admin/kalender",
+  "/admin/okter",
+  "/admin/grupper",
+  "/admin/lokasjoner",
+  "/admin/tjenester",
 ];
 
 function isDarkShellRoute(pathname: string): boolean {
