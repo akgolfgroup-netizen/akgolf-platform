@@ -6,12 +6,12 @@
  * Kilde: design-ref/stitch/heritage/admin_player_management/code.html (linjer 1-40 av <aside>)
  *
  * Spec:
- * - Container: h-screen w-64 fixed bg-emerald-950 flex-col py-8 px-4
+ * - Container: h-screen w-64 fixed bg-[#0A1F18] flex-col py-8 px-4
  * - Header: mb-10 px-4, h1 text-xl font-bold tracking-widest text-surface,
  *   p text-xs font-medium uppercase text-emerald-100/50
  * - Nav: flex-1 space-y-2
- * - Active: bg-lime-400 text-emerald-950 font-bold rounded-lg px-4 py-3 text-sm uppercase tracking-tight
- * - Inactive: text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50
+ * - Active: bg-[#D1F843] text-[#0A1F18] font-bold rounded-lg px-4 py-3 text-sm uppercase tracking-tight
+ * - Inactive: text-white/75 hover:text-surface hover:bg-white/[0.08]
  * - Bottom: mt-auto pt-6 border-t border-emerald-900/50 px-4
  * - Bruker beholder grupper (8 i MC_NAV_CONFIG) — Heritage har flat nav men vi må tilpasse
  * - Gruppe-label: text-[10px] text-emerald-100/40 uppercase tracking-[0.12em]
@@ -82,8 +82,8 @@ function NavLink({
       className={cn(
         "flex items-center gap-3 px-4 py-3 rounded-lg tracking-tight text-sm uppercase transition-colors",
         isActive
-          ? "bg-lime-400 text-emerald-950 font-bold"
-          : "text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50 font-medium",
+          ? "bg-[#D1F843] text-[#0A1F18] font-bold"
+          : "text-white/75 hover:text-surface hover:bg-white/[0.08] font-medium",
       )}
       aria-current={isActive ? "page" : undefined}
     >
@@ -164,7 +164,7 @@ function SidebarBottom({
     <div className="mt-auto pt-6 border-t border-emerald-900/50 px-4">
       {/* User-info + logout */}
       <div className="flex items-center gap-3 mb-4 px-4">
-        <div className="w-9 h-9 rounded-full bg-emerald-900 text-lime-400 flex items-center justify-center text-sm font-bold shrink-0">
+        <div className="w-9 h-9 rounded-full bg-[#005840] text-[#D1F843] flex items-center justify-center text-sm font-bold shrink-0">
           {initial}
         </div>
         <div className="flex-1 min-w-0">
@@ -180,14 +180,14 @@ function SidebarBottom({
       <div className="space-y-1">
         <Link
           href="/portal"
-          className="flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-surface transition-colors"
+          className="flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-white/75 hover:text-surface transition-colors"
         >
           <Icon name="home" size={18} />
           <span>Til portal</span>
         </Link>
         <button
           onClick={onSignOut}
-          className="w-full flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-surface transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-white/75 hover:text-surface transition-colors"
         >
           <Icon name="logout" size={18} />
           <span>Logg ut</span>
@@ -245,7 +245,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
       {/* Desktop */}
       <aside
         className="h-screen w-64 fixed left-0 top-0 flex-col py-8 px-0 z-20 hidden lg:flex"
-        style={{ background: "#022c22" }}
+        style={{ background: "#0A1F18" }}
       >
         <SidebarBody user={user} pathname={pathname} onSignOut={handleSignOut} />
       </aside>
@@ -267,11 +267,11 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="fixed left-0 top-0 h-full w-64 flex flex-col py-8 z-50 lg:hidden"
-              style={{ background: "#022c22" }}
+              style={{ background: "#0A1F18" }}
             >
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 p-2 rounded-lg text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50 transition-colors"
+                className="absolute right-4 top-4 p-2 rounded-lg text-white/75 hover:text-surface hover:bg-white/[0.08] transition-colors"
                 aria-label="Lukk meny"
               >
                 <Icon name="close" size={20} />
