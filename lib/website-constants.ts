@@ -2405,6 +2405,7 @@ export const JUNIOR_HERO_V3 = {
   ],
   photoDescription:
     "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
+  photoSrc: "/images/branding/ak-golf-academy-22.jpg",
 } as const;
 
 export const JUNIOR_AGE_GROUPS_V3 = {
@@ -2433,6 +2434,7 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       ctaHref: "#apply",
       photoVariant: "default" as const,
       photoDescription: "Smilende 7-åring med plast-kølle, fargerik mini-bane",
+      photoSrc: "/images/branding/ak-golf-academy-08.jpg",
     },
     {
       ageRange: "10–13 år",
@@ -2455,6 +2457,7 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       photoVariant: "lime" as const,
       photoDescription:
         "Junior 11 år i full sving, range, fokusert ansiktsuttrykk",
+      photoSrc: "/images/branding/ak-golf-academy-09.jpg",
     },
     {
       ageRange: "14–17 år",
@@ -2477,6 +2480,7 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       photoVariant: "warm" as const,
       photoDescription:
         "Tenåring i ferdig follow-through på fairway, golden hour, fokus",
+      photoSrc: "/images/branding/ak-golf-academy-18.jpg",
     },
   ],
 } as const;
@@ -2548,6 +2552,7 @@ export const JUNIOR_SEASON_V3 = {
       photoVariant: "lime" as const,
       photoDescription:
         "Sommerleir-gruppe juniorer på range, sol, ryggsekker, pizza-pause i bakgrunnen",
+      photoSrc: "/images/branding/ak-golf-academy-23.jpg",
     },
     {
       label: "TALENTSTIGE · 14–17 ÅR",
@@ -2563,6 +2568,7 @@ export const JUNIOR_SEASON_V3 = {
       photoVariant: "warm" as const,
       photoDescription:
         "Tenåring med pokal og foreldre etter klubbturnering, scoreboard i bakgrunnen",
+      photoSrc: "/images/branding/ak-golf-academy-24.jpg",
     },
   ],
 } as const;
@@ -2580,6 +2586,7 @@ export const JUNIOR_COACH_V3 = {
   ],
   portraitDescription:
     "Markus Lien (juniortrener) i naturlig coaching-positur med smilende junior-spiller, mid-shot",
+  portraitSrc: "/images/branding/ak-golf-academy-30.jpg",
 } as const;
 
 export const JUNIOR_PRICEBAND_V3 = {

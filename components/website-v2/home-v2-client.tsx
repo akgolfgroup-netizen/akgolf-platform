@@ -37,6 +37,7 @@ const SERVICES = [
     cta: "Se Academy-pakker",
     photoVariant: "default" as const,
     photoDesc: "Voksen spiller i swing-posisjon på range, varm overcast lighting",
+    photoSrc: "/images/sections/trackman.jpg",
   },
   {
     pill: "6–17 ÅR",
@@ -53,6 +54,7 @@ const SERVICES = [
     cta: "Se Junior-program",
     photoVariant: "lime" as const,
     photoDesc: "Gruppe juniorer 10–13 år smiler på range, foreldrevennlig stemning",
+    photoSrc: "/images/sections/instruksjon.jpg",
   },
   {
     pill: "FLEKSIBELT",
@@ -69,6 +71,7 @@ const SERVICES = [
     cta: "Se priser",
     photoVariant: "warm" as const,
     photoDesc: "Banecoaching på fairway, coach og spiller i samtale, golden hour",
+    photoSrc: "/images/sections/banecoaching.jpg",
   },
 ];
 
@@ -318,6 +321,7 @@ export function HomeV2Client() {
                 <WebPhoto
                   variant={s.photoVariant}
                   ratio="3-2"
+                  src={s.photoSrc}
                   description={s.photoDesc}
                   rounded={false}
                   tag={`[Foto · ${s.pill}]`}
@@ -371,6 +375,7 @@ export function HomeV2Client() {
           <div className="grid items-center gap-20 md:grid-cols-2">
             <WebPhoto
               ratio="4-3"
+              src="/images/branding/ak-golf-academy-anders.jpg"
               description="Nærbilde av Anders som studerer Trackman-skjerm sammen med spiller, range bakgrunn"
               tag="[Foto]"
             >

@@ -12,6 +12,7 @@ export function JuniorCoachSection() {
         <WebPhoto
           ratio="3-4"
           variant="default"
+          src={s.portraitSrc}
           description={s.portraitDescription}
         />
         <div>

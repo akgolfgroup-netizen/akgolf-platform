@@ -104,6 +104,7 @@ export function JuniorHeroSection() {
           <WebPhoto
             ratio="16-9"
             variant="lime"
+            src={h.photoSrc}
             description={h.photoDescription}
           />
         </div>

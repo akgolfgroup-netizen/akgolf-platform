@@ -52,6 +52,7 @@ export function JuniorAgeGroupsSection() {
                 <WebPhoto
                   ratio="3-2"
                   variant={g.photoVariant}
+                  src={g.photoSrc}
                   description={g.photoDescription}
                   rounded={false}
                 />

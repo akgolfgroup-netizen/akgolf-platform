@@ -50,6 +50,7 @@ export function JuniorSeasonSection() {
               <WebPhoto
                 ratio="16-9"
                 variant={p.photoVariant}
+                src={p.photoSrc}
                 description={p.photoDescription}
                 rounded={false}
               />

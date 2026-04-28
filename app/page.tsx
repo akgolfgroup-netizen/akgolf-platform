@@ -11,11 +11,11 @@ export default async function HomePage({
 }) {
   const sp = (await searchParams) ?? {};
   const cookieStore = await cookies();
-  const wantsV2 =
-    sp.v === "2" || cookieStore.get("website")?.value === "v2";
+  const wantsLegacy =
+    sp.v === "1" || cookieStore.get("website")?.value === "v1";
 
-  if (wantsV2) {
-    return <HomeV2Client />;
+  if (wantsLegacy) {
+    return <HomeClient />;
   }
-  return <HomeClient />;
+  return <HomeV2Client />;
 }
