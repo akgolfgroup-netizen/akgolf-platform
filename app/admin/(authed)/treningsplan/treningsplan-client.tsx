@@ -154,27 +154,27 @@ function PlanOverview({
  />
 
  <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
- {/* Heritage Grid Header */}
- <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
- <h1 className="text-2xl font-bold tracking-tight text-on-surface">Treningsplaner<span className="text-outline">.</span></h1>
- <p className="text-on-surface-variant">Oversikt over alle aktive og tidligere treningsplaner</p>
+ {/* Brand V2 page header — d24 mockup */}
+ <div className="flex items-end justify-between border-b border-line pb-5">
+ <div>
+ <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+ / TRENING · PLAN-BYGGER
  </div>
-
- <AdminPageHeader
- title="Treningsplaner"
- subtitle="Oversikt over alle aktive og tidligere treningsplaner"
- actions={
+ <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+ Treningsplaner.
+ </h1>
+ <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+ Bygg og administrer planer for spillere og grupper. AI-utkast eller
+ manuelle.
+ </p>
+ </div>
  <Link href="/admin/treningsplan/ny">
- <Button
- variant="accent"
- >
+ <Button variant="accent">
  <Icon name="add" className="w-4 h-4 mr-2" />
  Ny plan
  </Button>
  </Link>
- }
- />
+ </div>
 
  {/* Stats */}
  <BentoGrid cols={3} gap="md">
