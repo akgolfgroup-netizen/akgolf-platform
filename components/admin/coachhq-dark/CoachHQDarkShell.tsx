@@ -1,6 +1,5 @@
 "use client";
 
-import { CoachHQDarkRail } from "./CoachHQDarkRail";
 import { CoachHQDarkNav } from "./CoachHQDarkNav";
 import { CoachHQDarkTopbar } from "./CoachHQDarkTopbar";
 
@@ -18,13 +17,8 @@ interface CoachHQDarkShellProps {
 }
 
 /**
- * Dark cockpit shell for CoachHQ — pixel-nær mockup
- * (public/design-reference/handoff-2026-04-27/screens/_coachhq.css).
- *
- * 3-kolonne grid:
- *   - 48px ikon-rail (#0A1F18)
- *   - 200px nav-liste (#0A1F18)
- *   - 1fr main + 58px topbar (#102B1E)
+ * Dark cockpit shell for CoachHQ — én navnliste (220px) med ikoner inni.
+ * Tidligere hadde to sidemenyer (48px rail + 200px nav) — kollapset til én.
  */
 export function CoachHQDarkShell({
   user,
@@ -36,18 +30,15 @@ export function CoachHQDarkShell({
     <div
       className="min-h-screen grid"
       style={{
-        gridTemplateColumns: "48px 200px 1fr",
+        gridTemplateColumns: "220px 1fr",
         gridTemplateRows: "58px 1fr",
-        gridTemplateAreas: `"rail nav top" "rail nav main"`,
+        gridTemplateAreas: `"nav top" "nav main"`,
         background: "#102B1E",
         color: "#E6EAE8",
       }}
     >
-      <div style={{ gridArea: "rail" }}>
-        <CoachHQDarkRail user={user} />
-      </div>
       <div style={{ gridArea: "nav" }}>
-        <CoachHQDarkNav />
+        <CoachHQDarkNav user={user} />
       </div>
       <div style={{ gridArea: "top" }}>
         <CoachHQDarkTopbar title={title} meta={meta} user={user} />
