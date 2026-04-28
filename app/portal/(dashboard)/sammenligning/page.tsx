@@ -16,6 +16,7 @@ import {
   PyramidCard,
   type PyramidLevel,
 } from "@/components/portal/sammenligning/v2/pyramid-card";
+import { ComparisonFilterBar } from "@/components/portal/sammenligning/v2/comparison-filter-bar";
 
 function fmtSG(value: number): string {
   const sign = value >= 0 ? "+" : "−";
@@ -110,6 +111,12 @@ function SammenligningContent({ data }: { data: ContentData }) {
 
   return (
     <>
+      <ComparisonFilterBar
+        period="90d"
+        peerLabel={`Peer (${data.skillLevel.labelNO})`}
+        dataTypeLabel="Alle stats"
+      />
+
       <PercentileHero
         percentile={percentile}
         strongest={data.skillLevel.labelNO.toLowerCase()}

@@ -29,7 +29,7 @@ export function CourseHero({
 
   return (
     <section
-      className="rounded-2xl mb-6"
+      className="rounded-2xl"
       style={{
         background:
           "radial-gradient(circle at 80% 20%, rgba(209,248,67,0.10), transparent 50%), #0F2E23",

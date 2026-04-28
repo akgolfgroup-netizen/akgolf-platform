@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { StrategiShell } from "@/components/portal/strategi/v2/strategi-shell";
 import { StrategiPageHeader } from "@/components/portal/strategi/v2/strategi-page-header";
 import { CourseHero, type Course } from "@/components/portal/strategi/v2/course-hero";
+import { StrategiAiSummary } from "@/components/portal/strategi/v2/strategi-ai-summary";
 import { HoleCard } from "@/components/portal/strategi/v2/hole-card";
 import { NineToggle } from "@/components/portal/strategi/v2/nine-toggle";
 import {
@@ -86,12 +87,32 @@ export default function StrategiPage() {
         <EmptyCourses />
       ) : (
         <>
-          <CourseHero
-            courses={courses}
-            selectedCourseId={selectedCourseId}
-            onChange={setSelectedCourseId}
-            loading={loadingCourses}
-          />
+          <div
+            className="grid gap-4.5 mb-6"
+            style={{ gridTemplateColumns: "1.2fr 1fr" }}
+          >
+            <CourseHero
+              courses={courses}
+              selectedCourseId={selectedCourseId}
+              onChange={setSelectedCourseId}
+              loading={loadingCourses}
+            />
+            <StrategiAiSummary
+              courseName={course?.name}
+              keys={[
+                { value: `${holes.length} hull`, label: "lastet" },
+                {
+                  value: course?.par ? String(course.par) : "—",
+                  label: "Par",
+                },
+                {
+                  value:
+                    course?.totalLength != null ? `${course.totalLength} m` : "—",
+                  label: "Total lengde",
+                },
+              ]}
+            />
+          </div>
 
           <StrategiSectionHeading
             title="Hull-for-hull plan"
