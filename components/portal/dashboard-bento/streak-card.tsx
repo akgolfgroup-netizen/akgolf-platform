@@ -20,7 +20,7 @@ export function StreakCard({
 
   return (
     <div
-      className="col-span-12 lg:col-span-4 relative flex flex-col overflow-hidden rounded-[22px] p-5 text-white"
+      className="col-span-12 sm:col-span-6 lg:col-span-4 relative flex flex-col overflow-hidden rounded-[22px] p-5 text-white"
       style={{
         background: "linear-gradient(160deg, #0A1F18, #0F2E22)",
       }}

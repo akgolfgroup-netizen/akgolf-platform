@@ -47,7 +47,7 @@ export function TrendCard({
 
   return (
     <div
-      className="col-span-12 lg:col-span-6 rounded-[22px] bg-white p-5"
+      className="col-span-12 md:col-span-6 rounded-[22px] bg-white p-5"
       style={{
         boxShadow:
           "0 0 0 1px rgba(10, 31, 24, 0.05), 0 1px 2px rgba(10, 31, 24, 0.03), 0 6px 20px rgba(10, 31, 24, 0.05)",
