@@ -129,6 +129,10 @@
     {
       "path": "/api/portal/cron/agents-winback",
       "schedule": "30 9 * * *"
+    },
+    {
+      "path": "/api/portal/cron/datagolf-sync",
+      "schedule": "0 4 * * *"
     }
   ],
   "redirects": [
