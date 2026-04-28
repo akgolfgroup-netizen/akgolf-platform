@@ -5,6 +5,7 @@ import { JUNIOR_SEASON_V3 } from "@/lib/website-constants";
 
 export function JuniorSeasonSection() {
   const s = JUNIOR_SEASON_V3;
+  if (s.programs.length === 0) return null;
   return (
     <section className="px-10 py-[100px]" style={{ background: "#fff" }}>
       <div className="mx-auto max-w-[1280px]">

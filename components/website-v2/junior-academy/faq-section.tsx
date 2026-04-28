@@ -3,6 +3,7 @@ import { JUNIOR_FAQ_V3 } from "@/lib/website-constants";
 
 export function JuniorFaqSection() {
   const s = JUNIOR_FAQ_V3;
+  if (s.items.length === 0) return null;
   return (
     <section
       className="px-10 py-[100px]"

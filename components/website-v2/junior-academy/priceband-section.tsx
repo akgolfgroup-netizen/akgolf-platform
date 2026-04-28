@@ -2,6 +2,7 @@ import { JUNIOR_PRICEBAND_V3 } from "@/lib/website-constants";
 
 export function JuniorPricebandSection() {
   const s = JUNIOR_PRICEBAND_V3;
+  if (s.prices.length === 0 && !s.title) return null;
   return (
     <section
       className="px-10 py-[60px]"

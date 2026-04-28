@@ -2331,13 +2331,13 @@ export const JUNIOR_HERO_V3 = {
   eyebrow: "Junior Academy · 6–17 år",
   headingLead: "Lekent,",
   headingItalic: "strukturert",
-  headingTrail: ", og stolt foreldreapp.",
+  headingTrail: ", og bygd for utvikling.",
   description:
-    "Tre aldersgrupper, egne juniortrenere og en foreldreapp som viser hva ungene faktisk trener på — uke for uke. Sommerleir, klubbturnering og talentstige inkludert.",
+    "Tre aldersgrupper med egne juniortrenere. Vi tar imot alle nivåer — fra første gang med kølle til ambisiøse tenåringer som vil konkurrere.",
   ctaPrimary: "Se aldersgrupper",
   ctaPrimaryHref: "#aldersgrupper",
-  ctaSecondary: "Book prøvetime",
-  ctaSecondaryHref: "/booking-v2?v=2",
+  ctaSecondary: "Ta kontakt",
+  ctaSecondaryHref: "/kontakt",
   photoDescription:
     "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
   photoSrc: "/images/branding/ak-golf-academy-22.jpg",
@@ -2373,12 +2373,11 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       name: "Basis/Utvikling",
       tagline: "Teknikk + bane",
       description:
-        "Strukturert teknikk-bygging med TrackMan-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.",
+        "Strukturert teknikk-bygging og første møter med banespill i smågruppe.",
       features: [
-        "TrackMan-tilpasset i smågruppe",
-        "Banevandring 9 hull",
-        "Egen klubbturnering",
-        "Tilgang til PlayerHQ Junior",
+        "Smågruppe-coaching",
+        "Banespill",
+        "Teknikk-fokus",
       ],
       groupSize: "6 stk",
       groupSizeLabel: "Pr. gruppe",
@@ -2394,12 +2393,11 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       name: "Elite",
       tagline: "Talent / turnering",
       description:
-        "For ambisiøse tenåringer. Personlig coach, fysisk testing, mental forberedelse og oppfølging på regionale turneringer.",
+        "For ambisiøse tenåringer som vil utvikle seg mot turneringsspill. Personlig coach og treningsplan tilpasset spilleren.",
       features: [
-        "Personlig coach + treningsplan",
-        "Fysisk testing",
+        "Personlig coach",
+        "Treningsplan",
         "Turnering-coaching",
-        "Talentstige mot regionalt nivå",
       ],
       groupSize: "4 stk",
       groupSizeLabel: "Pr. gruppe",
@@ -2414,156 +2412,72 @@ export const JUNIOR_AGE_GROUPS_V3 = {
 } as const;
 
 export const JUNIOR_PARENT_V3 = {
-  eyebrow: "For foreldre",
-  headingLead: "Vi viser dere",
-  headingItalic: "det dere lurer på",
-  headingTrail: ".",
-  ctaLabel: "Last ned foreldreapp",
-  ctaHref: "/portal/login",
-  benefits: [
-    {
-      icon: "bell" as const,
-      title: "Push fra trener",
-      description:
-        "Du får varsel når neste økt er, når den flyttes, og når trener legger ut bilder eller video fra timen — slik at du alltid vet hva som skjer.",
-    },
-    {
-      icon: "lineChart" as const,
-      title: "Fremgang du forstår",
-      description:
-        "En enkel månedsrapport per junior: hva treningen handlet om, hva som ble bedre, og hva neste mål er. Ingen tekniske diagrammer du må tolke.",
-    },
-    {
-      icon: "users" as const,
-      title: "Forelder-fellesskap",
-      description:
-        "Privat foreldregruppe per aldersnivå for samkjøring, turneringspåmelding og kafé-prat. Trener er moderator.",
-    },
-    {
-      icon: "shield" as const,
-      title: "Trygghet og sikkerhet",
-      description:
-        "Alle trenere er politiattestert og fullt forsikret. Vi har voksenansvarlig på alle samlinger og førstehjelpsutstyr på plass.",
-    },
-    {
-      icon: "calendar" as const,
-      title: "Ferier og leir",
-      description:
-        "4 sommerleir-uker (juni–august) og 2 vinterleir-helger inkludert i Compete. Vi tar oss av lunsj, transport og bilder.",
-    },
-    {
-      icon: "message" as const,
-      title: "Direkte med trener",
-      description:
-        "Chat trener via appen — svar i løpet av samme dag. Ingen telefontag, ingen e-post som forsvinner i innboksen.",
-    },
-  ],
-} as const;
+  eyebrow: "",
+  headingLead: "",
+  headingItalic: "",
+  headingTrail: "",
+  ctaLabel: "",
+  ctaHref: "",
+  benefits: [] as Array<{
+    icon: "bell" | "lineChart" | "users" | "shield" | "calendar" | "message";
+    title: string;
+    description: string;
+  }>,
+};
 
 export const JUNIOR_SEASON_V3 = {
-  eyebrow: "Sesongprogrammer",
-  headingLead: "Sommerleir og",
-  headingItalic: "talentstige",
-  headingTrail: ".",
-  programs: [
-    {
-      label: "SOMMERLEIR · UKE 26–30",
-      title: "AK Sommerleir",
-      description:
-        "5-dagers leir for 6–13 år: golf, lek, baneturer, lunsj, pizza-fredag og turnering med pokaler. Tilgjengelig for ikke-medlemmer.",
-      stats: [
-        { v: "5 dager", l: "09–15 hver dag" },
-      ],
-      ctaLabel: "Se uker og påmelding",
-      ctaHref: "#apply",
-      photoVariant: "lime" as const,
-      photoDescription:
-        "Sommerleir-gruppe juniorer på range, sol, ryggsekker, pizza-pause i bakgrunnen",
-      photoSrc: "/images/branding/ak-golf-academy-23.jpg",
-    },
-    {
-      label: "TALENTSTIGE · 14–17 ÅR",
-      title: "Compete-spor mot regionalt nivå",
-      description:
-        "For Elite-juniorer som sikter mot regionale og nasjonale turneringer. Vi følger på turneringer gjennom året, hjelper med skole-balansen, og følger talentutviklingen tett gjennom sesongen.",
-      stats: [
-        { v: "6 turneringer", l: "Coach følger" },
-        { v: "Regionalt", l: "Talentspor" },
-      ],
-      ctaLabel: "Søk om plass",
-      ctaHref: "#apply",
-      photoVariant: "warm" as const,
-      photoDescription:
-        "Tenåring med pokal og foreldre etter klubbturnering, scoreboard i bakgrunnen",
-      photoSrc: "/images/branding/ak-golf-academy-24.jpg",
-    },
-  ],
-} as const;
+  eyebrow: "",
+  headingLead: "",
+  headingItalic: "",
+  headingTrail: "",
+  programs: [] as Array<{
+    label: string;
+    title: string;
+    description: string;
+    stats: Array<{ v: string; l: string }>;
+    ctaLabel: string;
+    ctaHref: string;
+    photoVariant: "lime" | "warm" | "default";
+    photoDescription: string;
+    photoSrc: string;
+  }>,
+};
 
 export const JUNIOR_COACH_V3 = {
   eyebrow: "Hovedansvarlig junior",
   headingLead: "Markus Røinås Pedersen — ",
-  headingItalic: "juniortrener med hjerte for laget.",
-  quote:
-    "Det viktigste er at de har det gøy. Når en 9-åring vil tilbake neste uke, har vi gjort jobben — teknikk og handicap kommer av seg selv når gleden er der.",
+  headingItalic: "juniortrener.",
+  quote: "",
   credits: [
     { v: "Hovedcoach", l: "Junior Academy" },
-    { v: "6–17 år", l: "Aldersspenn" },
-    { v: "Sommerleir", l: "Hovedansvar" },
   ],
   portraitDescription:
     "Markus Røinås Pedersen (juniortrener) — portrettfoto kommer",
   portraitSrc: undefined as string | undefined,
-} as const;
+};
 
 export const JUNIOR_PRICEBAND_V3 = {
-  title: "Søsken-rabatt 25%",
-  description:
-    "Andre junior fra samme familie får automatisk 25% rabatt — alle nivåer.",
-  prices: [
-    { v: "1 290 kr", l: "SPROUT · MND" },
-    { v: "1 890 kr", l: "GROW · MND" },
-    { v: "2 890 kr", l: "COMPETE · MND" },
-  ],
-} as const;
+  title: "",
+  description: "",
+  prices: [] as Array<{ v: string; l: string }>,
+};
 
 export const JUNIOR_FAQ_V3 = {
-  eyebrow: "For foreldre",
-  heading: "Det vi får spørsmål om.",
-  items: [
-    {
-      q: "Hva trenger ungen å ha med?",
-      a: "Sportstøy og innesko de første ukene — vi har køller i alle størrelser tilgjengelig på range. Etter 4–6 uker hjelper trener til å velge riktig junior-sett som familien kan kjøpe brukt eller via klubbens utlånspool.",
-    },
-    {
-      q: "Kan vi prøve én gang før vi melder oss på?",
-      a: "Ja — vi har gratis prøvetimer hver lørdag i sesongen (april–oktober). Book direkte i kalenderen, eller stikk innom Bærum GK kl. 11–13. Ingen påmelding nødvendig.",
-    },
-    {
-      q: "Hva skjer ved sykdom eller bortreise?",
-      a: "Du melder fra i appen. Hvis junior misser mer enn 2 uker sammenhengende, krediterer vi tiden eller flytter den til sommerleir-tilbud. Vi forventer ikke perfekt oppmøte.",
-    },
-    {
-      q: "Hvordan er det med voksenansvar og sikkerhet?",
-      a: "Alle trenere er politiattestert og fullt forsikret. Vi har minimum to voksne på samlinger over 4 timer, og legger ut førstehjelpsplan før hver leir.",
-    },
-    {
-      q: "Trenger ungen klubbmedlemskap i tillegg?",
-      a: "Bærum GK gir alle Junior Academy-deltakere gratis junior-medlemskap første år. Etter det er det 590 kr / år for tilgang til bane og turneringer.",
-    },
-  ],
-} as const;
+  eyebrow: "",
+  heading: "",
+  items: [] as Array<{ q: string; a: string }>,
+};
 
 export const JUNIOR_CTA_V3 = {
-  headingLead: "Bli med på",
-  headingItalic: "gratis prøvetime",
-  headingTrail: ".",
+  headingLead: "Vil dere",
+  headingItalic: "vite mer",
+  headingTrail: "?",
   description:
-    "Hver lørdag april–oktober på Bærum GK. Ungen prøver, dere får møte trenerne, og dere kan melde dere på samme dag — eller bare prøve, helt forpliktelsesfritt.",
-  ctaPrimary: "Book prøvetime",
-  ctaPrimaryHref: "/booking-v2?v=2",
-  ctaSecondary: "Spør oss noe",
-  ctaSecondaryHref: "/kontakt?v=2",
+    "Ta kontakt for en uforpliktende prat. Vi forteller om aldersgruppene, hvordan en typisk uke ser ut, og hjelper dere finne riktig nivå for ungen.",
+  ctaPrimary: "Ta kontakt",
+  ctaPrimaryHref: "/kontakt",
+  ctaSecondary: "",
+  ctaSecondaryHref: "",
 } as const;
 
 // ─── Academy Page v3 (Brand Guide V2.0 — handoff 2026-04-27) ────────────────

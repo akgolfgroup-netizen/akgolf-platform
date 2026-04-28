@@ -42,16 +42,18 @@ export function JuniorCoachSection() {
               {s.headingItalic}
             </em>
           </h2>
-          <blockquote
-            className="mb-7 max-w-[52ch] border-l-[3px] pl-5 text-[18px] leading-[1.55] text-white/85 text-pretty"
-            style={{
-              borderColor: "var(--akgolf-accent, #D1F843)",
-            }}
-          >
-            &ldquo;{s.quote}&rdquo;
-          </blockquote>
+          {s.quote ? (
+            <blockquote
+              className="mb-7 max-w-[52ch] border-l-[3px] pl-5 text-[18px] leading-[1.55] text-white/85 text-pretty"
+              style={{
+                borderColor: "var(--akgolf-accent, #D1F843)",
+              }}
+            >
+              &ldquo;{s.quote}&rdquo;
+            </blockquote>
+          ) : null}
           <div
-            className="grid grid-cols-3 gap-6 border-t pt-8"
+            className="flex flex-wrap gap-x-10 gap-y-6 border-t pt-8"
             style={{ borderColor: "rgba(255,255,255,0.12)" }}
           >
             {s.credits.map((c) => (

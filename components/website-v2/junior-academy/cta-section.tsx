@@ -42,10 +42,12 @@ export function JuniorCtaSection() {
             {s.ctaPrimary}
             <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
           </WebButton>
-          <WebButton href={s.ctaSecondaryHref} variant="ghost" size="lg">
-            {s.ctaSecondary}
-            <MessageCircle className="h-4 w-4" strokeWidth={2} />
-          </WebButton>
+          {s.ctaSecondary ? (
+            <WebButton href={s.ctaSecondaryHref} variant="ghost" size="lg">
+              {s.ctaSecondary}
+              <MessageCircle className="h-4 w-4" strokeWidth={2} />
+            </WebButton>
+          ) : null}
         </div>
       </div>
     </section>

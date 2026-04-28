@@ -25,6 +25,7 @@ const ICON_MAP: Record<
 
 export function JuniorParentBenefitsSection() {
   const s = JUNIOR_PARENT_V3;
+  if (s.benefits.length === 0) return null;
   return (
     <section
       className="px-10 py-[100px]"
