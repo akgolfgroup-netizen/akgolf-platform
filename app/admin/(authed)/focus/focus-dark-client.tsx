@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   CoachHQDarkShell,
   PageHead,
@@ -85,6 +86,7 @@ const FOCUS_ITEMS: FocusItem[] = [
 ];
 
 export function FocusDarkClient({ user, initialTasks }: FocusDarkClientProps) {
+  const router = useRouter();
   const [now, setNow] = useState<string>("");
   const [dateLabel, setDateLabel] = useState<string>("");
 
@@ -225,7 +227,12 @@ export function FocusDarkClient({ user, initialTasks }: FocusDarkClientProps) {
       {/* Three-up */}
       <div className="grid grid-cols-3 gap-3.5 mb-5">
         {FOCUS_ITEMS.map((item) => (
-          <FocusCard key={item.num} item={item} />
+          <FocusCard
+            key={item.num}
+            item={item}
+            onPrimary={() => router.push("/admin/meldinger")}
+            onSecondary={() => router.push("/admin/elever")}
+          />
         ))}
       </div>
 
@@ -313,7 +320,11 @@ export function FocusDarkClient({ user, initialTasks }: FocusDarkClientProps) {
               torsdag 1. mai · stille dag
             </div>
           </div>
-          <Button size="sm" variant="ghost">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => router.push("/admin/denne-uken")}
+          >
             Se hele <ArrowRight className="w-3 h-3" />
           </Button>
         </div>
@@ -350,7 +361,15 @@ export function FocusDarkClient({ user, initialTasks }: FocusDarkClientProps) {
   );
 }
 
-function FocusCard({ item }: { item: FocusItem }) {
+function FocusCard({
+  item,
+  onPrimary,
+  onSecondary,
+}: {
+  item: FocusItem;
+  onPrimary: () => void;
+  onSecondary: () => void;
+}) {
   const PrimaryIcon = item.primary.icon;
   return (
     <div
@@ -429,11 +448,17 @@ function FocusCard({ item }: { item: FocusItem }) {
           size="sm"
           icon={<PrimaryIcon className="w-3 h-3" />}
           style={{ flex: 1 }}
+          onClick={onPrimary}
         >
           {item.primary.label}
         </Button>
         {item.secondaryIcons.map((Icon, idx) => (
-          <Button key={idx} variant="ghost" size="sm">
+          <Button
+            key={idx}
+            variant="ghost"
+            size="sm"
+            onClick={onSecondary}
+          >
             <Icon className="w-3 h-3" strokeWidth={1.8} />
           </Button>
         ))}
