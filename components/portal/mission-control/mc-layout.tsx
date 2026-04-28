@@ -49,13 +49,16 @@ export function MCLayout({ children, user }: MCLayoutProps) {
     <MCSidebarContext.Provider value={contextValue}>
       <div
         className="min-h-screen flex"
-        style={{ background: "var(--color-surface)" }}
+        style={{ background: "#0A1F18" }}
       >
         {/* CoachHQ-sidebar — desktop kun (1280px+) per Sprint 1-spec */}
         <div className="hidden lg:flex">
           <CoachHQSidebar user={user} />
         </div>
-        <main className="flex-1 min-h-screen flex flex-col p-6 lg:p-8 overflow-x-hidden">
+        <main
+          className="flex-1 min-h-screen flex flex-col overflow-x-hidden"
+          style={{ background: "#102B1E" }}
+        >
           {children}
         </main>
       </div>

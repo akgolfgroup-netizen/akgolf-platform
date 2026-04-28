@@ -141,7 +141,7 @@ export function GrupperClient({
   }
 
   return (
-    <div className="-m-6 lg:-m-8 min-h-full bg-[#102B1E] px-7 pb-12 pt-6 text-white">
+    <div className="min-h-full bg-[#102B1E] px-7 pb-12 pt-6 text-white">
       {/* Header */}
       <div className="mb-6 flex items-end justify-between border-b border-[#1a4a3a] pb-5">
         <div>
