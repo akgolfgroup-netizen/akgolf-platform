@@ -2,7 +2,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { getPendingItems } from "./actions";
-import { GodkjenningerClient } from "./godkjenninger-client";
+import { GodkjenningerDarkClient } from "./godkjenninger-dark-client";
 
 export default async function GodkjenningerPage() {
   const user = await requirePortalUser();
@@ -38,5 +38,5 @@ export default async function GodkjenningerPage() {
     })),
   ];
 
-  return <GodkjenningerClient pendingItems={pendingItems} />;
+  return <GodkjenningerDarkClient user={user} pendingItems={pendingItems} />;
 }
