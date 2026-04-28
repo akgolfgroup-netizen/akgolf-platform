@@ -42,6 +42,10 @@ import {
   type ExerciseConfigDraft,
   type ExerciseConfigResult,
 } from "@/components/portal/treningsplan/exercise-config-popover";
+import {
+  SessionContextMenu,
+  type SessionContextMenuItem,
+} from "@/components/portal/treningsplan/session-context-menu";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
@@ -266,6 +270,44 @@ export function TreningsplanPlanner({
     sessionId: string;
     draft: ExerciseConfigDraft;
   } | null>(null);
+
+  // Høyreklikk-meny på en eksisterende økt
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    event: V2Event;
+  } | null>(null);
+
+  const handleEventContextMenu = (
+    e: React.MouseEvent,
+    event: V2Event,
+  ) => {
+    if (event.isGroupSession) {
+      // Gruppeøkter kan ikke dupliseres — la nettleserens egen meny åpne
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    setContextMenu({ x: e.clientX, y: e.clientY, event });
+  };
+
+  const buildContextMenuItems = (event: V2Event): SessionContextMenuItem[] => {
+    const items: SessionContextMenuItem[] = [];
+    if (onDuplicateSession) {
+      items.push({
+        id: "duplicate",
+        label: "Dupliser",
+        iconName: "content_copy",
+        onSelect: async () => {
+          const result = await onDuplicateSession(event.id);
+          if (result.success) {
+            router.refresh();
+          }
+        },
+      });
+    }
+    return items;
+  };
 
   const handleConfirmExerciseConfig = async (config: ExerciseConfigResult) => {
     if (!exerciseConfig) return;
@@ -527,6 +569,7 @@ export function TreningsplanPlanner({
                 setEditEvent(ev);
                 setEditModalOpen(true);
               }}
+              onEventContextMenu={handleEventContextMenu}
               onAddExerciseToSession={onAddExerciseToSession}
               onRequestExerciseConfig={(sessionId, draft) =>
                 setExerciseConfig({ sessionId, draft })
@@ -550,6 +593,7 @@ export function TreningsplanPlanner({
                 setEditEvent(ev);
                 setEditModalOpen(true);
               }}
+              onEventContextMenu={handleEventContextMenu}
             />
           </div>
         </div>
@@ -610,6 +654,16 @@ export function TreningsplanPlanner({
         onCancel={() => setExerciseConfig(null)}
       />
 
+      {/* Høyreklikk-meny på en eksisterende økt */}
+      {contextMenu && (
+        <SessionContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          items={buildContextMenuItems(contextMenu.event)}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
+
       {/* Stats-stripe */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
         <div className="flex gap-8">
@@ -647,6 +701,7 @@ function WeekGrid({
   weekOffset,
   onCellClick,
   onEventClick,
+  onEventContextMenu,
   onAddExerciseToSession,
   onRequestExerciseConfig,
   onMoveEvent,
@@ -658,6 +713,8 @@ function WeekGrid({
   weekOffset: number;
   onCellClick: (dayIndex: number, hour: number) => void;
   onEventClick: (event: V2Event) => void;
+  /** Høyreklikk på en økt — åpner kontekstmeny ved cursor. */
+  onEventContextMenu?: (e: React.MouseEvent, event: V2Event) => void;
   onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
   /** Åpner popover for å konfigurere reps/tid før øvelsen lagres på økten. */
   onRequestExerciseConfig?: (sessionId: string, draft: ExerciseConfigDraft) => void;
@@ -784,6 +841,9 @@ function WeekGrid({
                         onClick={(e) => {
                           e.stopPropagation();
                           onEventClick(ev);
+                        }}
+                        onContextMenu={(e) => {
+                          if (onEventContextMenu) onEventContextMenu(e, ev);
                         }}
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={async (e) => {
@@ -2483,11 +2543,13 @@ function MobileWeekView({
   events,
   onAddSession,
   onEventClick,
+  onEventContextMenu,
 }: {
   weekDates: Date[];
   events: V2Event[];
   onAddSession: (dayIndex: number) => void;
   onEventClick: (ev: V2Event) => void;
+  onEventContextMenu?: (e: React.MouseEvent, ev: V2Event) => void;
 }) {
   const today = new Date();
   const todayISO = format(today, "yyyy-MM-dd");
@@ -2543,6 +2605,9 @@ function MobileWeekView({
                   <button
                     key={ev.id}
                     onClick={() => onEventClick(ev)}
+                    onContextMenu={(e) => {
+                      if (onEventContextMenu) onEventContextMenu(e, ev);
+                    }}
                     className={`w-full rounded-xl px-3 py-2.5 text-left transition-colors ${
                       ev.done
                         ? "bg-primary/15 text-primary line-through"
