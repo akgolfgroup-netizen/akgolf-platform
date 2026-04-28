@@ -15,12 +15,6 @@ export const HERO = {
   trustItems: [
     { label: "TrackMan-analyse hver sesjon" },
     { label: "Personlig treningsplan" },
-    { label: "Maks 65 plasser" },
-  ],
-  stats: [
-    { value: "65", label: "Plasser totalt" },
-    { value: "20 min", label: "Fokuserte økter" },
-    { value: "Resultater", label: "Dokumentert" },
   ],
 } as const;
 

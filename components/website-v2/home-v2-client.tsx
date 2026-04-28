@@ -19,8 +19,6 @@ import { WebPhoto } from "./web-photo";
 import { WebButton } from "./web-button";
 import { HERO } from "@/lib/website-constants";
 
-const HERO_STAT_ICONS = [Users, Clock, Sparkles] as const;
-
 const SERVICES = [
   {
     pill: "VOKSEN",
@@ -179,43 +177,6 @@ export function HomeV2Client() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 self-end">
-              {HERO.stats.map((s, i) => {
-                const Icon = HERO_STAT_ICONS[i] ?? Sparkles;
-                return (
-                  <div
-                    key={s.label}
-                    className="grid grid-cols-[1fr_auto] items-center gap-4 rounded-[20px] border border-white/20 bg-white/10 p-[22px_26px] backdrop-blur-xl"
-                  >
-                    <div>
-                      <div
-                        className="text-[10px] uppercase tracking-[0.14em] text-white/65"
-                        style={{
-                          fontFamily: "var(--font-jetbrains-mono), monospace",
-                        }}
-                      >
-                        {s.label}
-                      </div>
-                      <div
-                        className="mt-1.5 text-[36px] font-extrabold leading-none tracking-[-0.03em] text-white"
-                        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                      >
-                        {s.value}
-                      </div>
-                    </div>
-                    <div
-                      className="grid h-11 w-11 place-items-center rounded-xl"
-                      style={{
-                        background: "rgba(209,248,67,0.18)",
-                        color: "var(--akgolf-accent, #D1F843)",
-                      }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </div>
 
