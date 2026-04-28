@@ -2,6 +2,7 @@
 
 import { MapPin, Pencil } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProfileHeroProps {
   name: string;
@@ -41,13 +42,13 @@ export function ProfileHero({
         }}
       />
 
-      <button
-        type="button"
+      <Link
+        href="/portal/profil/innstillinger"
         className="absolute right-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10"
       >
         <Pencil className="h-3.5 w-3.5" />
         Rediger
-      </button>
+      </Link>
 
       <div className="relative z-10 grid items-end gap-5 p-7 sm:grid-cols-[120px_1fr] sm:gap-7 sm:p-9 lg:grid-cols-[140px_1fr_auto]">
         <div className="relative h-[120px] w-[120px] overflow-hidden rounded-full border-4 border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] sm:h-[140px] sm:w-[140px]">
