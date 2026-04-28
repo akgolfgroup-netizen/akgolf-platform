@@ -6,7 +6,6 @@ const SECTIONS = [
     title: "Tjenester",
     links: [
       { label: "Academy", href: "/academy?v=2" },
-      { label: "Junior Academy", href: "/junior-academy?v=2" },
       { label: "Booking & priser", href: "/pricing?v=2" },
       { label: "Klubber & baner", href: "/?v=2" },
     ],

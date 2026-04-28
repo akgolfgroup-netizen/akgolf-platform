@@ -11,7 +11,6 @@ interface WebNavProps {
 const NAV_ITEMS: { key: NonNullable<WebNavProps["active"]>; label: string; href: string }[] = [
   { key: "home", label: "Hjem", href: "/?v=2" },
   { key: "academy", label: "Academy", href: "/academy?v=2" },
-  { key: "junior", label: "Junior", href: "/junior-academy?v=2" },
   { key: "pricing", label: "Priser", href: "/pricing?v=2" },
   { key: "course", label: "Bane", href: "/?v=2" },
   { key: "about", label: "Om oss", href: "/?v=2" },
