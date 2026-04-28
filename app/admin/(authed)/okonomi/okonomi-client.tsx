@@ -213,17 +213,20 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  />
 
  <div className="p-6 space-y-6">
- {/* Heritage Grid Header */}
- <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">
- CoachHQ
- </MonoLabel>
- <h1 className="text-2xl font-bold tracking-tight text-on-surface">
- Økonomi<span className="text-outline">.</span>
+ {/* Brand V2 page header — d20 mockup */}
+ <div className="flex items-end justify-between border-b border-line pb-5">
+ <div>
+ <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+ / ØKONOMI · OVERSIKT
+ </div>
+ <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+ Cash flow.
  </h1>
- <p className="text-on-surface-variant">
- Oversikt over inntekter, fakturaer og refusjoner
+ <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+ Brutto inntekt, utbetalinger og kategori-fordeling for valgt periode.
+ Stripe-data oppdatert kontinuerlig.
  </p>
+ </div>
  </div>
 
  {/* Tidsperiode og handlinger */}

@@ -2,7 +2,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { getThisWeekBookings, getWeekStats } from "./actions";
-import { ThisWeekClient } from "./this-week-client";
+import { ThisWeekDarkClient } from "./this-week-dark-client";
 
 export const metadata = {
   title: "Denne uken | AK Golf CoachHQ",
@@ -20,5 +20,5 @@ export default async function DenneUkenPage() {
     getWeekStats(),
   ]);
 
-  return <ThisWeekClient bookings={bookings} stats={stats} />;
+  return <ThisWeekDarkClient bookings={bookings} stats={stats} user={user} />;
 }
