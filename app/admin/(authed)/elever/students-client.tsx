@@ -200,14 +200,18 @@ export function StudentsClient({ initialData }: Props) {
               <Download className="w-3.5 h-3.5" />
               Eksport CSV
             </DarkButton>
-            <DarkButton>
-              <Users className="w-3.5 h-3.5" />
-              Inviter mange
-            </DarkButton>
-            <DarkButton variant="primary">
-              <UserPlus className="w-3.5 h-3.5" />
-              Ny spiller
-            </DarkButton>
+            <Link href="/admin/elever/oversikt">
+              <DarkButton>
+                <Users className="w-3.5 h-3.5" />
+                Inviter mange
+              </DarkButton>
+            </Link>
+            <Link href="/admin/elever?ny=1">
+              <DarkButton variant="primary">
+                <UserPlus className="w-3.5 h-3.5" />
+                Ny spiller
+              </DarkButton>
+            </Link>
           </>
         }
       />
@@ -294,9 +298,17 @@ export function StudentsClient({ initialData }: Props) {
         </FilterChip>
 
         <div className="ml-auto flex gap-2">
-          <DarkButton variant="ghost">
+          <DarkButton
+            variant="ghost"
+            onClick={() => {
+              setTierFilter("all");
+              setStatusFilter("all");
+              setSearch("");
+              setPage(1);
+            }}
+          >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            Filter
+            Nullstill filter
           </DarkButton>
           <Link href="/admin/elever/oversikt">
             <DarkButton variant="ghost">
