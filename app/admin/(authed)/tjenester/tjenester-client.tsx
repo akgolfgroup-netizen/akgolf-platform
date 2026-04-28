@@ -76,9 +76,10 @@ export function TjenesterClient({ initialServices }: TjenesterClientProps) {
         <div className="flex items-center gap-2.5">
           <button
             type="button"
+            onClick={() => setFilter("all")}
             className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2 text-[13px] font-medium text-white/90 hover:bg-white/10"
           >
-            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Filter
+            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Nullstill filter
           </button>
           <button
             type="button"
