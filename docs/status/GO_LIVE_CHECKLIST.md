@@ -1,6 +1,6 @@
 # Go-Live Sjekkliste — AK Golf Platform
 
-Sist oppdatert: 2026-04-18
+Sist oppdatert: 2026-04-28
 Eier: Anders Kristiansen
 Vercel-prosjekt: `prj_1m2Bfcs0S0omd0OfPLMoBRSmf3J9` (akgolf-website)
 Domene: `akgolf.no` (region `fra1`)
@@ -9,12 +9,12 @@ Domene: `akgolf.no` (region `fra1`)
 
 ## 0. Kjente blockers (må løses før deploy)
 
-| # | Problem | Fil / omgivelse | Løsning |
-|---|---------|-----------------|---------|
-| B1 | `npm run build` feiler under static export | `/landing/contact` og `/admin/treningsplan/ny` med "Cannot read properties of null (reading 'useContext')" | Gjør klientsidene server-komponent-wrappet, eller legg til `export const dynamic = "force-dynamic"` i parent layout |
-| B2 | 10 lint-errors pre-eksisterende | `components/portal/dagbok/weekly-stats.tsx` (3x), `components/portal/trackman/trackman-analytics-card.tsx`, `components/admin/analytics/revenue-chart.tsx`, `app/portal/(dashboard)/dagbok/page.tsx`, plus `any`-typer | Ikke blokkerende, men bør ryddes |
+| # | Problem | Fil / omgivelse | Status |
+|---|---------|-----------------|--------|
+| B1 | `npm run build` feiler under static export | `/landing/contact` og `/admin/treningsplan/ny` med "Cannot read properties of null (reading 'useContext')" | ✅ Løst i PR #19 (Brand Guide V2.0-rebrand) — build grønn |
+| B2 | 10 lint-errors pre-eksisterende | Diverse filer med `any`-typer og ubrukte imports | ✅ Løst — `npm run lint` returnerer 0 errors, 50 warnings (ikke-blokkerende) |
 | B3 | `.env.production` mangler lokalt | Prosjektrot | Ikke nødvendig for Vercel-deploy — alle env-vars settes i Vercel UI |
-| B4 | `app/setup-admin/page.tsx` eksponerer admin-setup med hardkodet passord | `app/setup-admin/page.tsx` | Slett siden helt før prod-deploy, eller legg middleware-guard |
+| B4 | `app/setup-admin/page.tsx` eksponerer admin-setup med hardkodet passord | `app/setup-admin/page.tsx` | ✅ Løst — filen er slettet |
 
 ---
 
