@@ -112,10 +112,10 @@ export default function KalenderClient({
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
-          <GhostBtn>
-            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Filter
+          <GhostBtn onClick={() => setHiddenCoaches(new Set())}>
+            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Vis alle coacher
           </GhostBtn>
-          <GhostBtn>
+          <GhostBtn onClick={() => window.print()}>
             <Printer className="h-3.5 w-3.5" strokeWidth={1.8} /> Print
           </GhostBtn>
           <Link
@@ -254,10 +254,17 @@ export default function KalenderClient({
   );
 }
 
-function GhostBtn({ children }: { children: React.ReactNode }) {
+function GhostBtn({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className="inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:bg-white/[0.06]"
       style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
     >
