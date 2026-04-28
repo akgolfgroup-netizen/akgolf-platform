@@ -14,6 +14,17 @@ import {
   ClipboardList,
   Dumbbell,
   Zap,
+  Package,
+  MapPin,
+  Building2,
+  Clock,
+  Wallet,
+  BarChart3,
+  MessageCircle,
+  UserCog,
+  BookOpen,
+  Bot,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 
@@ -38,34 +49,36 @@ interface NavSection {
 
 const NAV: NavSection[] = [
   {
-    label: "Operasjon",
+    label: "Hub",
     items: [
+      { href: "/admin/hub", label: "Hub-oversikt", icon: LayoutGrid },
       { href: "/admin", label: "Dagens fokus", icon: Target },
       { href: "/admin/denne-uken", label: "Denne uken", icon: CalendarDays },
+    ],
+  },
+  {
+    label: "Operasjon",
+    items: [
       {
         href: "/admin/coaching-board",
         label: "Coaching Board",
         icon: Kanban,
       },
       { href: "/admin/mission-board", label: "Mission Board", icon: Flag },
+      { href: "/admin/focus", label: "Focus", icon: Zap },
+      {
+        href: "/admin/godkjenninger",
+        label: "Godkjenninger",
+        icon: CheckSquare,
+      },
     ],
   },
   {
     label: "Personer",
     items: [
-      {
-        href: "/admin/elever",
-        label: "Spillere",
-        icon: Users,
-        badge: { value: "42", tone: "muted" },
-      },
-      { href: "/admin/hub", label: "Oversikt", icon: LayoutGrid },
-      {
-        href: "/admin/godkjenninger",
-        label: "Godkjenninger",
-        icon: CheckSquare,
-        badge: { value: "3", tone: "accent" },
-      },
+      { href: "/admin/elever", label: "Spillere", icon: Users },
+      { href: "/admin/grupper", label: "Grupper", icon: Users },
+      { href: "/admin/team", label: "Team", icon: UserCog },
     ],
   },
   {
@@ -74,7 +87,33 @@ const NAV: NavSection[] = [
       { href: "/admin/kalender", label: "Kalender", icon: Calendar },
       { href: "/admin/bookinger", label: "Bookinger", icon: ClipboardList },
       { href: "/admin/okter", label: "Økter", icon: Dumbbell },
-      { href: "/admin/focus", label: "Focus", icon: Zap },
+      { href: "/admin/treningsplan", label: "Treningsplan", icon: ClipboardList },
+      { href: "/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
+    ],
+  },
+  {
+    label: "Drift",
+    items: [
+      { href: "/admin/tjenester", label: "Tjenester", icon: Package },
+      { href: "/admin/lokasjoner", label: "Lokasjoner", icon: MapPin },
+      { href: "/admin/fasiliteter", label: "Fasiliteter", icon: Building2 },
+    ],
+  },
+  {
+    label: "Innsikt",
+    items: [
+      { href: "/admin/okonomi", label: "Økonomi", icon: Wallet },
+      { href: "/admin/rapporter", label: "Rapporter", icon: BarChart3 },
+      { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+    ],
+  },
+  {
+    label: "Verktøy",
+    items: [
+      { href: "/admin/meldinger", label: "Meldinger", icon: MessageCircle },
+      { href: "/admin/library", label: "Library", icon: BookOpen },
+      { href: "/admin/agenter", label: "Agenter", icon: Bot },
+      { href: "/admin/ai-assistent", label: "AI Coach", icon: Sparkles },
     ],
   },
 ];
