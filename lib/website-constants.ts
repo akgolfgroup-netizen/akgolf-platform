@@ -52,7 +52,7 @@ export const TEAM = [
     role: "Hovedcoach",
     division: "AK Golf Academy",
     image: "/images/team/anders-kristiansen.jpg",
-    bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
+    bio: "Hovedcoach i AK Golf Academy og utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
       { name: "Performance", price: "1 200", unit: "kr/mnd", detail: "2x20 min" },
       { name: "Performance Pro", price: "2 200", unit: "kr/mnd", detail: "4x20 min" },
@@ -695,24 +695,22 @@ export const FOUNDER = {
   name: "Anders Kristiansen",
   title: "Grunnlegger og hovedcoach",
   bio: [
-    "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour.",
-    "Utvikler av The Foundation Method – et system bygget for å gi spillere på alle nivåer et bunnsolid fundament og varig progresjon.",
+    "Anders er grunnlegger og hovedcoach i AK Golf Group. Han jobber med spillere fra nybegynnere til ambisiøse voksne, og bygger personlige planer som henger sammen mellom hver coaching-økt.",
+    "AK Golf-metoden er bygget for å gi spillere på alle nivåer et bunnsolid fundament og målbar fremgang over tid.",
   ],
 } as const;
 
 // ─── Testimonials ───
-// TODO: Innhent tillatelse for fullt navn og bilder fra kundene
-export const TESTIMONIALS = [
-  {
-    quote: "Anders har fullstendig transformert spillet mitt. Fra 18 til 11 i handicap på ett år — med en metode som føles naturlig og bærekraftig.",
-    name: "Thomas R.",
-    fullName: "Thomas Rasmussen", // Avventer samtykke
-    role: "Academy-elev",
-    club: "Gardermoen Golfklubb",
-    program: "academy-utvikling",
-    featured: true,
-  },
-] as const;
+// Ingen aktive testimonials for tiden — legges tilbake når vi har skriftlig samtykke fra kunder.
+export const TESTIMONIALS = [] as ReadonlyArray<{
+  quote: string;
+  name: string;
+  fullName: string;
+  role: string;
+  club: string;
+  program: string;
+  featured: boolean;
+}>;
 
 // ─── Target Profiles (Forside) ───
 export const TARGET_PROFILES = {
@@ -2009,32 +2007,12 @@ export const UTVIKLING_PILLARS_V2 = {
   ],
 } as const;
 
-export const UTVIKLING_STATS_V2 = [
-  {
-    label: "Snitt HCP-fall · 12 mnd",
-    value: "−2.6",
-    valueEm: "",
-    sub: "Av 142 aktive spillere · 76% reduksjon",
-  },
-  {
-    label: "Spillere > 24 mnd",
-    value: "88",
-    valueEm: "%",
-    sub: "Snitt-retensjon — bransjen ligger på 41%",
-  },
-  {
-    label: "Fra HCP >20 til <15",
-    value: "11",
-    valueEm: "mnd",
-    sub: "Median tid · 38 spillere siste 3 år",
-  },
-  {
-    label: "PB siste 30 dager",
-    value: "14",
-    valueEm: "",
-    sub: "Spillere som satte ny personlig rekord",
-  },
-] as const;
+export const UTVIKLING_STATS_V2: Array<{
+  label: string;
+  value: string;
+  valueEm: string;
+  sub: string;
+}> = [];
 
 export const UTVIKLING_READING_V2 = {
   label: "PERSPEKTIV · ERIK SOLHEIM",
@@ -2071,28 +2049,20 @@ export const UTVIKLING_COMPARE_V2 = {
     {
       row: "Plan",
       them: "Ad-hoc · per økt",
-      us: "12-mnd plan med kvartalsmål",
+      us: "Plan med tydelige mål",
       emphasized: false,
     },
     {
       row: "Måling",
       them: "Magefølelse + iPhone-video",
-      us: "Trackman + Quintic + V1 video · standardisert",
+      us: "TrackMan + videoanalyse",
       emphasized: true,
     },
     {
       row: "Mellom økter",
       them: "Ingenting",
-      us: "PlayerHQ-app · drills · video-klipp",
+      us: "Drills og oppfølging i app",
       emphasized: false,
-    },
-    { row: "Mental", them: "Sjelden", us: "Tilgang til klinisk psykolog", emphasized: false },
-    { row: "Fysisk", them: "Sjelden", us: "TPI-screening 2× årlig", emphasized: false },
-    {
-      row: "Foreldre-innsikt",
-      them: "Faktura per mail",
-      us: "Egen portal med fremgang og bilder",
-      emphasized: true,
     },
     {
       row: "Strokes Gained",
@@ -2103,7 +2073,7 @@ export const UTVIKLING_COMPARE_V2 = {
     {
       row: "Coach-tilgang",
       them: "Time-til-time",
-      us: "Direkte chat · 24t-respons",
+      us: "Direkte chat ved behov",
       emphasized: false,
     },
   ],
