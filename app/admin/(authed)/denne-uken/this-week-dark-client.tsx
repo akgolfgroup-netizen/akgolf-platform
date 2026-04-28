@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   CoachHQDarkShell,
   PageHead,
@@ -83,7 +85,9 @@ export function ThisWeekDarkClient({
   stats,
   user,
 }: ThisWeekDarkClientProps) {
-  const now = new Date();
+  const router = useRouter();
+  const [weekOffset, setWeekOffset] = useState(0);
+  const now = addDays(new Date(), weekOffset * 7);
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekNum = getISOWeek(weekStart);
@@ -133,16 +137,27 @@ export function ThisWeekDarkClient({
             <Button
               variant="ghost"
               icon={<ChevronLeft className="w-3.5 h-3.5" />}
+              onClick={() => setWeekOffset((o) => o - 1)}
             >
               Forrige
             </Button>
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onClick={() => setWeekOffset((o) => o + 1)}
+            >
               Neste <ChevronRight className="w-3.5 h-3.5" />
             </Button>
-            <Button icon={<Filter className="w-3.5 h-3.5" />}>
+            <Button
+              icon={<Filter className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/team")}
+            >
               Anders + Markus
             </Button>
-            <Button variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+            <Button
+              variant="primary"
+              icon={<Plus className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/bookinger/ny")}
+            >
               Ny økt
             </Button>
           </>
@@ -293,9 +308,11 @@ export function ThisWeekDarkClient({
                       const tone = pickTone(b);
                       const styles = TONE_STYLES[tone];
                       return (
-                        <div
+                        <button
                           key={b.id}
-                          className="absolute px-2 py-1.5 overflow-hidden cursor-pointer"
+                          type="button"
+                          onClick={() => router.push(`/admin/bookinger?id=${b.id}`)}
+                          className="absolute px-2 py-1.5 overflow-hidden cursor-pointer text-left"
                           style={{
                             left: 4,
                             right: 4,
@@ -324,7 +341,7 @@ export function ThisWeekDarkClient({
                           >
                             {b.service.name.split(" ")[0]} · {b.service.duration}m
                           </small>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -375,6 +392,7 @@ export function ThisWeekDarkClient({
               variant="ghost"
               className="w-full justify-center mt-3"
               style={{ width: "100%", justifyContent: "center" }}
+              onClick={() => router.push("/admin/bookinger")}
             >
               Send til venteliste
             </Button>
