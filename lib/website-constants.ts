@@ -2638,3 +2638,257 @@ export const JUNIOR_CTA_V3 = {
   ctaSecondary: "Spør oss noe",
   ctaSecondaryHref: "/kontakt?v=2",
 } as const;
+
+// ─── Academy Page v3 (Brand Guide V2.0 — handoff 2026-04-27) ────────────────
+// Mockup: public/design-reference/handoff-2026-04-27/screens/g2-academy.html
+export const ACADEMY_HERO_V3 = {
+  eyebrow: "Academy · Voksne 18+",
+  headingLead: "Strukturert utvikling,",
+  headingItalic: "målbar fremgang.",
+  headingTrail: "",
+  description:
+    "AK Academy er et 12-måneders coachingprogram der hver økt logges, hver test måles, og hver spillers plan oppdateres månedlig av en personlig coach. Ikke flere sporadiske lessons.",
+  ctaPrimary: "Se pakker",
+  ctaPrimaryHref: "#pakker",
+  ctaSecondary: "Book intro 30 min",
+  ctaSecondaryHref: "/booking-v2?v=2",
+  stats: [
+    { v: "−3.2", l: "HCP-fall · snitt 12mnd" },
+    { v: "94%", l: "Fornyer år 2" },
+    { v: "12", l: "Coacher i team" },
+  ],
+  photoDescription:
+    "Anders i range-økt med voksen spiller, golfklubb i hånd, varm overcast lighting",
+  photoSrc: undefined as string | undefined,
+} as const;
+
+export const ACADEMY_PACKAGES_V3 = {
+  eyebrow: "Tre nivåer",
+  headingLead: "Velg din",
+  headingItalic: "forpliktelse",
+  headingTrail: ".",
+  compareLabel: "Sammenlign alt",
+  compareHref: "#sammenlign",
+  packages: [
+    {
+      icon: "target" as const,
+      tier: "STARTER",
+      name: "Foundation",
+      tagline:
+        "Bygg fundamentet — perfekt for nybegynnere og spillere som vil ha struktur.",
+      price: "2 490",
+      priceUnit: "KR / MND",
+      sub: "12 mnd binding · 6 lessons + app",
+      featured: false,
+      features: [
+        "6 × 50 min lessons / år",
+        "Månedlig fokus-økt",
+        "PlayerHQ-app + AI-plan",
+        "1 × HCP-test / år",
+        "Trackman drop-in 50%",
+      ],
+      ctaLabel: "Velg Foundation",
+      ctaHref: "/booking-v2?v=2&pkg=foundation",
+    },
+    {
+      icon: "trendingUp" as const,
+      tier: "PERFORMANCE",
+      name: "Performance",
+      tagline:
+        "Strukturert HCP-utvikling med personlig coach og månedlig SG-måling.",
+      price: "4 990",
+      priceUnit: "KR / MND",
+      sub: "12 mnd binding · 24 lessons + alt",
+      featured: true,
+      badge: "MEST VALGT",
+      features: [
+        "24 × 50 min lessons / år",
+        "Personlig coach hele året",
+        "Månedlig SG-test + plan",
+        "Trackman + video ubegrenset",
+        "4 × banecoaching 9 hull",
+        "AK-camp 2 dager (vår + høst)",
+        "Direkte chat med coach",
+      ],
+      ctaLabel: "Velg Performance",
+      ctaHref: "/booking-v2?v=2&pkg=performance",
+    },
+    {
+      icon: "users" as const,
+      tier: "ELITE",
+      name: "Tour",
+      tagline:
+        "For ambisiøse spillere på vei mot turnering eller proffspill.",
+      price: "9 490",
+      priceUnit: "KR / MND",
+      sub: "12 mnd · ubegrenset coaching",
+      featured: false,
+      features: [
+        "Ubegrenset 1-til-1 coaching",
+        "Performance-team (4 coacher)",
+        "Fysisk trening + mental coach",
+        "Turnering-strategi & kost",
+        "12 × banecoaching 18 hull",
+        "Reise-camp Spania (4 dgr)",
+        "Caddie ved 4 turneringer",
+      ],
+      ctaLabel: "Søk om plass",
+      ctaHref: "/kontakt?v=2&tema=tour",
+    },
+  ],
+} as const;
+
+export const ACADEMY_MATRIX_V3 = {
+  eyebrow: "Sammenligning",
+  headingLead: "Hva inngår —",
+  headingItalic: "i detalj",
+  headingTrail: ".",
+  columns: ["Foundation", "Performance", "Tour"],
+  rows: [
+    {
+      feature: "1-til-1 lessons",
+      sub: "50 min · personlig coach",
+      values: [
+        { kind: "text" as const, text: "6 / år" },
+        { kind: "text" as const, text: "24 / år" },
+        { kind: "text" as const, text: "Ubegrenset" },
+      ],
+    },
+    {
+      feature: "Personlig coach",
+      sub: "Samme coach hele året",
+      values: [
+        { kind: "no" as const },
+        { kind: "yes" as const },
+        { kind: "text" as const, text: "Team (4)" },
+      ],
+    },
+    {
+      feature: "Trackman + video",
+      sub: "Datadrevet teknikkanalyse",
+      values: [
+        { kind: "text" as const, text: "50% drop-in" },
+        { kind: "text" as const, text: "Ubegrenset" },
+        { kind: "text" as const, text: "Ubegrenset" },
+      ],
+    },
+    {
+      feature: "SG-test (Strokes Gained)",
+      sub: "Månedlig måling og rapport",
+      values: [
+        { kind: "text" as const, text: "1 / år" },
+        { kind: "text" as const, text: "12 / år" },
+        { kind: "text" as const, text: "Hver uke" },
+      ],
+    },
+    {
+      feature: "Banecoaching",
+      sub: "9 / 18 hull med coach",
+      values: [
+        { kind: "no" as const },
+        { kind: "text" as const, text: "4 × 9 hull" },
+        { kind: "text" as const, text: "12 × 18 hull" },
+      ],
+    },
+    {
+      feature: "PlayerHQ-app",
+      sub: "Plan, dagbok, AI-coach",
+      values: [
+        { kind: "yes" as const },
+        { kind: "yes" as const },
+        { kind: "yes" as const },
+      ],
+    },
+    {
+      feature: "AK-camp / reise",
+      sub: "Intensiv samling",
+      values: [
+        { kind: "no" as const },
+        { kind: "text" as const, text: "Vår + høst" },
+        { kind: "text" as const, text: "+ Spania 4 dgr" },
+      ],
+    },
+    {
+      feature: "Fysisk + mental",
+      sub: "Tilleggstrenere i team",
+      values: [
+        { kind: "no" as const },
+        { kind: "no" as const },
+        { kind: "yes" as const },
+      ],
+    },
+  ],
+} as const;
+
+export const ACADEMY_METHOD_V3 = {
+  eyebrow: "AK-metoden",
+  headingLead: "Fem nivåer,",
+  headingItalic: "én plan",
+  headingTrail: ".",
+  description:
+    "Hver Performance-spiller får en personlig fordeling per nivå. Vi måler hvor du står hver måned, og justerer planen — ikke gjettverk.",
+  ctaLabel: "Les hele metoden",
+  ctaHref: "/utvikling?v=2",
+  levels: [
+    { num: "L5", label: "Turnering & strategi" },
+    { num: "L4", label: "Spill og banehåndtering" },
+    { num: "L3", label: "Slagvalg & kortspill" },
+    { num: "L2", label: "Teknikk & sving" },
+    { num: "L1", label: "Fysikk & grunnform" },
+  ],
+} as const;
+
+export const ACADEMY_COACH_V3 = {
+  eyebrow: "Møt din hovedcoach",
+  headingLead: "Anders Kristiansen — ",
+  headingItalic: "din coach gjennom året.",
+  quote:
+    "Hver spiller fortjener en plan som faktisk svarer på hva som holder dem igjen. Ikke generisk teknikk-prat — målbare endringer per uke.",
+  credits: [
+    { v: "Hovedcoach", l: "Voksne Academy" },
+    { v: "Trackman", l: "+ videoanalyse" },
+    { v: "Sving + kortspill", l: "Hovedfokus" },
+  ],
+  portraitDescription:
+    "Anders Kristiansen i naturlig coaching-positur, range-bakgrunn, mid-shot",
+  portraitSrc: undefined as string | undefined,
+} as const;
+
+export const ACADEMY_FAQ_V3 = {
+  eyebrow: "Vanlige spørsmål",
+  heading: "Det dere lurer på.",
+  items: [
+    {
+      q: "Hva om jeg ikke har spilt før?",
+      a: "Foundation er bygget for deg. Du starter med en kartleggings-økt, får 6 lessons fordelt over året, og bruker PlayerHQ-appen for hjemmetrening mellom — vi tar deg fra «har aldri svingt en kølle» til «spiller første runde» i løpet av 3–4 måneder.",
+    },
+    {
+      q: "Kan jeg bytte mellom pakker?",
+      a: "Ja — du kan oppgradere når som helst, og vi krediterer ubrukte lessons. Nedgradering skjer ved 12-mnd-fornyelse.",
+    },
+    {
+      q: "Hvor foregår øktene?",
+      a: "Hovedbasen er Bærum GK med Trackman-bay, range og bane. Vi har også avtaler med Holtsmark og Pinx for banecoaching og turneringsforberedelse.",
+    },
+    {
+      q: "Hvor mye fremgang er realistisk?",
+      a: "Snittet for Performance-spillere er −3.2 HCP på 12 måneder. Junior- og nybegynnere ser raskere prosent-fremgang; spillere under HCP 5 jobber mer på SG-marginer enn HCP-tall.",
+    },
+    {
+      q: "Kan bedrifter eller venner kjøpe sammen?",
+      a: "Ja — vi har bedriftspakker og duo-rabatt (15% for to). Kontakt oss på post@akgolf.no.",
+    },
+  ],
+} as const;
+
+export const ACADEMY_CTA_V3 = {
+  headingLead: "Klar for å bli",
+  headingItalic: "målbart bedre?",
+  headingTrail: "",
+  description:
+    "Book en gratis 30-minutters intro-økt — vi går gjennom dine mål, kartlegger nivå og foreslår riktig pakke. Ingen forpliktelse.",
+  ctaPrimary: "Book intro",
+  ctaPrimaryHref: "/booking-v2?v=2",
+  ctaSecondary: "Ring oss",
+  ctaSecondaryHref: "tel:+4722000000",
+} as const;
