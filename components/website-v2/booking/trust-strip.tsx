@@ -1,4 +1,4 @@
-import { Bell, MapPin, RotateCcw, ShieldCheck } from "lucide-react";
+import { MapPin, RotateCcw, ShieldCheck } from "lucide-react";
 
 const ITEMS = [
   {
@@ -9,12 +9,7 @@ const ITEMS = [
   {
     Icon: ShieldCheck,
     title: "Trygg betaling",
-    body: "Stripe · BankID-alternativ · faktura for medlemmer.",
-  },
-  {
-    Icon: Bell,
-    title: "Påminnelser",
-    body: "SMS dagen før og kvelden før. Aldri glem en time igjen.",
+    body: "Betaling via Stripe.",
   },
   {
     Icon: MapPin,

@@ -1,11 +1,10 @@
 interface BookingHeroProps {
-  step: 1 | 2 | 3;
+  step: 1 | 2;
 }
 
 const STEPS = [
   { n: 1, label: "Velg coach" },
-  { n: 2, label: "Velg tjeneste" },
-  { n: 3, label: "Tid + betaling" },
+  { n: 2, label: "Tid + betaling" },
 ] as const;
 
 export function BookingHero({ step }: BookingHeroProps) {
@@ -35,7 +34,7 @@ export function BookingHero({ step }: BookingHeroProps) {
           </em>
         </h1>
         <p className="mt-[18px] max-w-[56ch] text-[17px] leading-[1.5] text-[var(--akgolf-text,#324D45)]">
-          Tre steg: hvem du vil trene med, hva du vil booke, og når. Du kan flytte timen gratis inntil 12 timer før.
+          Velg coach, og book deretter tid direkte i kalenderen. Du kan flytte timen gratis inntil 12 timer før.
         </p>
 
         {/* Stepper */}

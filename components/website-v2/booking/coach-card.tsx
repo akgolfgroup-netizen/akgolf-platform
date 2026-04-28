@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CalendarCheck, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface CoachCardProps {
   name: string;
@@ -9,7 +9,6 @@ interface CoachCardProps {
   image: string | null;
   description: string;
   tags: string[];
-  nextAvailable?: string;
   selected: boolean;
   onSelect: () => void;
   photoVariant?: "default" | "lime";
@@ -21,7 +20,6 @@ export function CoachCard({
   image,
   description,
   tags,
-  nextAvailable,
   selected,
   onSelect,
   photoVariant = "default",
@@ -101,20 +99,6 @@ export function CoachCard({
             </span>
           ))}
         </div>
-        {nextAvailable ? (
-          <div
-            className="mt-3 flex items-center gap-2 border-t border-[var(--akgolf-line-light,#E0E8E5)] pt-[14px] text-[11px] text-[var(--akgolf-text,#324D45)]"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
-          >
-            <CalendarCheck className="h-3 w-3 text-[var(--akgolf-primary,#005840)]" />
-            <span>
-              Neste ledige time:{" "}
-              <strong className="text-[var(--akgolf-ink,#0A1F18)]">
-                {nextAvailable}
-              </strong>
-            </span>
-          </div>
-        ) : null}
       </div>
     </button>
   );
