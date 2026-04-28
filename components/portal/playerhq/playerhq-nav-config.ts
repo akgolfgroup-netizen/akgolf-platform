@@ -31,9 +31,17 @@ export interface PlayerHQNavSection {
  */
 export const PLAYERHQ_NAV: PlayerHQNavSection[] = [
   {
-    label: "Spill",
+    label: "Min side",
     items: [
       { href: "/portal", label: "Hjem", icon: Home },
+      { href: "/portal/profil", label: "Profil", icon: User },
+      { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
+      { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
+    ],
+  },
+  {
+    label: "Spill",
+    items: [
       { href: "/portal/min-plan", label: "Min plan", icon: Target },
     ],
   },
@@ -51,14 +59,6 @@ export const PLAYERHQ_NAV: PlayerHQNavSection[] = [
         icon: ClipboardList,
       },
       { href: "/portal/bookinger", label: "Bookinger", icon: CalendarCheck },
-    ],
-  },
-  {
-    label: "Min side",
-    items: [
-      { href: "/portal/profil", label: "Profil", icon: User },
-      { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
-      { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
     ],
   },
   {
