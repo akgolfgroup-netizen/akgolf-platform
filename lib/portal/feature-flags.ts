@@ -18,6 +18,8 @@ export const VISIBLE_PLAYERHQ_ROUTES = new Set<string>([
   "/portal/statistikk",
   "/portal/runde",
   "/portal/bag",
+  "/portal/trackman",
+  "/portal/turneringsplan",
 ]);
 
 export function isPlayerHQRouteVisible(href: string): boolean {

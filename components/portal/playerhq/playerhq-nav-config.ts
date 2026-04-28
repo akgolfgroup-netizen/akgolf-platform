@@ -9,6 +9,8 @@ import {
   BarChart3,
   FlagTriangleRight,
   Briefcase,
+  Radar,
+  Trophy,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,6 +39,7 @@ export const PLAYERHQ_NAV: PlayerHQNavSection[] = [
       { href: "/portal/profil", label: "Profil", icon: User },
       { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
       { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
+      { href: "/portal/trackman", label: "TrackMan", icon: Radar },
     ],
   },
   {
@@ -59,6 +62,11 @@ export const PLAYERHQ_NAV: PlayerHQNavSection[] = [
         icon: ClipboardList,
       },
       { href: "/portal/bookinger", label: "Bookinger", icon: CalendarCheck },
+      {
+        href: "/portal/turneringsplan",
+        label: "Turneringsplanlegger",
+        icon: Trophy,
+      },
     ],
   },
   {
