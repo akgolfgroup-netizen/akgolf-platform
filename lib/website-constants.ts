@@ -2424,7 +2424,7 @@ export const JUNIOR_AGE_GROUPS_V3 = {
     },
     {
       ageRange: "10–13 år",
-      name: "Basis",
+      name: "Basis/Utvikling",
       tagline: "Teknikk + bane",
       description:
         "Strukturert teknikk-bygging med TrackMan-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.",
@@ -2436,7 +2436,7 @@ export const JUNIOR_AGE_GROUPS_V3 = {
       ],
       groupSize: "6 stk",
       groupSizeLabel: "Pr. gruppe",
-      ctaLabel: "Mer om Basis",
+      ctaLabel: "Mer om Basis/Utvikling",
       ctaHref: "#apply",
       photoVariant: "lime" as const,
       photoDescription:
