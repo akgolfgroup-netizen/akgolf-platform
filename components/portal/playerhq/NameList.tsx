@@ -130,18 +130,9 @@ export function NameList({ user, onSignOut, onItemClick }: NameListProps) {
           <button
             type="button"
             onClick={onSignOut}
-            className="w-7 h-7 rounded-md flex items-center justify-center cursor-pointer transition-colors"
-            style={{ color: "rgba(255, 255, 255, 0.55)" }}
+            className="w-7 h-7 rounded-md flex items-center justify-center cursor-pointer transition-colors text-white/55 hover:text-white hover:bg-[var(--color-sidebar-hover)]"
             title="Logg ut"
             aria-label="Logg ut"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--color-sidebar-hover)";
-              e.currentTarget.style.color = "#FFFFFF";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "rgba(255, 255, 255, 0.55)";
-            }}
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -169,23 +160,12 @@ function NameListLink({
     <Link
       href={item.href}
       onClick={onClick}
-      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors"
-      style={{
-        background: isActive ? "var(--color-sidebar-hover)" : "transparent",
-        color: isActive ? "var(--color-accent)" : "rgba(255, 255, 255, 0.88)",
-      }}
-      onMouseEnter={(e) => {
-        if (!isActive) {
-          e.currentTarget.style.background = "var(--color-sidebar-hover)";
-          e.currentTarget.style.color = "#FFFFFF";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isActive) {
-          e.currentTarget.style.background = "transparent";
-          e.currentTarget.style.color = "rgba(255, 255, 255, 0.88)";
-        }
-      }}
+      aria-current={isActive ? "page" : undefined}
+      className={`flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors ${
+        isActive
+          ? "bg-[var(--color-sidebar-hover)] text-[var(--color-accent)]"
+          : "text-white/88 hover:bg-[var(--color-sidebar-hover)] hover:text-white"
+      }`}
     >
       <Icon
         className="w-4 h-4 shrink-0"
