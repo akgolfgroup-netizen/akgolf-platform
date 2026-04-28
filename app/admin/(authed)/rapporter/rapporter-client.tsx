@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminStatCard,
-  AdminPageHeader,
   AdminEmptyState,
 } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui/button";
@@ -86,27 +85,35 @@ export function RapporterClient({ data }: RapporterClientProps) {
       />
 
       <div className="p-6 space-y-6">
-        <AdminPageHeader
-          title="Rapporter"
-          subtitle="KPIer og analyse av akademiets ytelse"
-          actions={
-            <Button
-              variant="secondary"
-              onClick={async () => {
-                const thirtyDaysAgo = new Date();
-                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-                const result = await exportBookingsCSV(
-                  thirtyDaysAgo.toISOString(),
-                  new Date().toISOString()
-                );
-                downloadCsv(result.csv, result.filename);
-              }}
-            >
-              <Icon name="download" className="w-4 h-4 mr-2" />
-              Eksporter rapport
-            </Button>
-          }
-        />
+        {/* Brand V2 page header — d21 mockup */}
+        <div className="flex items-end justify-between border-b border-line pb-5">
+          <div>
+            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+              / INNSIKT · RAPPORTER
+            </div>
+            <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+              KPIer og trend.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+              HCP-utvikling, topp-spillere og service-mix for valgt periode.
+            </p>
+          </div>
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              const thirtyDaysAgo = new Date();
+              thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+              const result = await exportBookingsCSV(
+                thirtyDaysAgo.toISOString(),
+                new Date().toISOString(),
+              );
+              downloadCsv(result.csv, result.filename);
+            }}
+          >
+            <Icon name="download" className="w-4 h-4 mr-2" />
+            Eksporter rapport
+          </Button>
+        </div>
 
         {/* Time Range tabs */}
         <div className="flex flex-wrap gap-2">
