@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   MapPin,
   User,
@@ -173,7 +174,7 @@ function HeroStatMini({
 // TOC sidebar
 // ---------------------------------------------------------------------------
 
-function TocSidebar({ active }: { active: SectionId }) {
+function TocSidebar({ active, profileId }: { active: SectionId; profileId: string }) {
   return (
     <aside
       className="sticky rounded-xl p-2"
@@ -222,18 +223,27 @@ function TocSidebar({ active }: { active: SectionId }) {
         className="mt-4 pt-3 flex flex-col gap-1.5"
         style={{ borderTop: `1px solid ${DARK_TOKENS.line}` }}
       >
-        <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5">
-          <MessageCircle className="w-3 h-3" />
-          Melding
-        </DarkButton>
-        <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5">
-          <CalendarPlus className="w-3 h-3" />
-          Bok økt
-        </DarkButton>
-        <DarkButton variant="accent" className="!justify-start !text-[11px] !px-2.5 !py-1.5">
-          <Target className="w-3 h-3" />
-          Sett mål
-        </DarkButton>
+        <Link href={`/admin/meldinger?to=${profileId}`}>
+          <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
+            <MessageCircle className="w-3 h-3" />
+            Melding
+          </DarkButton>
+        </Link>
+        <Link href={`/admin/bookinger/ny?student=${profileId}`}>
+          <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
+            <CalendarPlus className="w-3 h-3" />
+            Bok økt
+          </DarkButton>
+        </Link>
+        <Link href={`/admin/treningsplan?student=${profileId}`}>
+          <DarkButton
+            variant="accent"
+            className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full"
+          >
+            <Target className="w-3 h-3" />
+            Sett mål
+          </DarkButton>
+        </Link>
       </div>
     </aside>
   );
@@ -575,7 +585,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
   return (
     <div className="grid gap-6 items-start" style={{ gridTemplateColumns: "200px 1fr" }}>
       <CompactHero profile={profile} />
-      <TocSidebar active={activeSection} />
+      <TocSidebar active={activeSection} profileId={profile.id} />
 
       <div className="flex flex-col gap-3.5 min-w-0">
         {/* SAMMENDRAG */}
@@ -861,11 +871,18 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
             when="26 APR"
             actions={
               <>
-                <DarkButton variant="accent">
-                  <Target className="w-3 h-3" />
-                  Sett turneringsmål
+                <Link href={`/admin/turneringer?student=${profile.id}`}>
+                  <DarkButton variant="accent">
+                    <Target className="w-3 h-3" />
+                    Sett turneringsmål
+                  </DarkButton>
+                </Link>
+                <DarkButton
+                  variant="ghost"
+                  onClick={() => alert("Signal avvist")}
+                >
+                  Avvis
                 </DarkButton>
-                <DarkButton variant="ghost">Avvis</DarkButton>
               </>
             }
           />
@@ -877,11 +894,18 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
             when="25 APR"
             actions={
               <>
-                <DarkButton variant="accent">
-                  <Zap className="w-3 h-3" />
-                  Lag short-game-plan
+                <Link href={`/admin/treningsplan?student=${profile.id}&fokus=short-game`}>
+                  <DarkButton variant="accent">
+                    <Zap className="w-3 h-3" />
+                    Lag short-game-plan
+                  </DarkButton>
+                </Link>
+                <DarkButton
+                  variant="ghost"
+                  onClick={() => alert("Snoozed 7 dager")}
+                >
+                  Snooze 7d
                 </DarkButton>
-                <DarkButton variant="ghost">Snooze 7d</DarkButton>
               </>
             }
           />
