@@ -161,12 +161,18 @@ export function LokasjonerClient({
         <div className="flex items-center gap-2.5">
           <button
             type="button"
+            onClick={() => alert("Filter kommer snart")}
             className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2 text-[13px] font-medium text-white/90 hover:bg-white/10"
           >
             <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Filter
           </button>
           <button
             type="button"
+            onClick={() =>
+              alert(
+                "Lokasjoner administreres direkte i Supabase i denne fasen. Be Anders/utvikler om hjelp.",
+              )
+            }
             className="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-primary px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-[#00422F]"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={1.8} /> Ny lokasjon
