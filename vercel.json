@@ -131,6 +131,14 @@
       "schedule": "30 9 * * *"
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "portal.akgolf.no" }],
+      "destination": "https://akgolf.no/portal/:path*",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/api/portal/public/(.*)",
