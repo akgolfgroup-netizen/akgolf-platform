@@ -346,7 +346,7 @@
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
+  /* --color-sidebar is defined above as Brand Guide V2.0 (#0F1F18) — do not override */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -356,16 +356,16 @@
   --color-input: var(--input);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
+  /* --color-accent is defined above as Brand Guide V2.0 (#D1F843) — do not override */
   --color-muted-foreground: var(--muted-foreground);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
+  /* --color-secondary is defined above as Brand Guide V2.0 (#D1F843) — do not override */
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  /* --color-primary is defined above as Brand Guide V2.0 (#005840) — do not override */
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  /* --color-card is defined above as Brand Guide V2.0 (#FFFFFF) — do not override */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -427,13 +427,13 @@
   --mc-spacing-2xl: 24px;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* HERITAGE GRID — Material 3 Expressive (2026-04-19)                         */
-  /* Kilde: design-ref/stitch/heritage/dashboard_mission_control/code.html      */
-  /* Denne blokken overstyrer alle tidligere tokens. Dette er gullstandarden.   */
+  /* HERITAGE GRID — Material 3 Expressive (LEGACY — 2026-04-19)                */
+  /* Brand Guide V2.0 (2026-04-25) er na sannhetskilden. Heritage-tokens her    */
+  /* er beholdt for M3-spesifikke containers/fixed-varianter, men --color-      */
+  /* primary og --color-secondary er fjernet for ikke a overstyre BG V2.0.      */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* Primary — skogsgrønn */
-  --color-primary: #154212;
+  /* Primary M3-varianter — Brand Guide V2.0 sin --color-primary (#005840) gjelder */
   --color-primary-container: #2d5a27;
   --color-on-primary: #ffffff;
   --color-on-primary-container: #9dd090;
@@ -443,8 +443,7 @@
   --color-on-primary-fixed-variant: #23501e;
   --color-inverse-primary: #a1d494;
 
-  /* Secondary — olivengul/accent-lime */
-  --color-secondary: #576500;
+  /* Secondary M3-varianter — Brand Guide V2.0 sin --color-secondary (#D1F843) gjelder */
   --color-secondary-fixed: #d2f000;
   --color-secondary-fixed-dim: #b8d300;
   --color-secondary-container: #d0ed00;
