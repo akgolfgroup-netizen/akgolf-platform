@@ -66,17 +66,20 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
       />
 
       <div className="p-6 space-y-6">
-        {/* Heritage Grid Header */}
-        <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">
-            CoachHQ
-          </MonoLabel>
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
-            AI-agenter<span className="text-outline">.</span>
-          </h1>
-          <p className="text-on-surface-variant">
-            Administrer autonome AI-agenter
-          </p>
+        {/* Brand V2 page header — d28 mockup */}
+        <div className="flex items-end justify-between border-b border-line pb-5">
+          <div>
+            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+              / AI · AGENTER
+            </div>
+            <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+              AI-agenter.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+              Autonome agenter for oppfølging, varsling og rapportering. Slå
+              på/av per type.
+            </p>
+          </div>
         </div>
 
         <BentoGrid cols={4} gap="md">
