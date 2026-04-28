@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { MCLayout } from "@/components/portal/mission-control";
 import {
@@ -24,8 +24,32 @@ interface AdminShellProps {
   children: React.ReactNode;
 }
 
+/**
+ * Ruter som bruker den nye CoachHQDarkShell og skal IKKE wrappes i MCLayout.
+ * Disse sidene rendrer hele rail/nav/topbar selv — pixel-nær mockup.
+ */
+const DARK_SHELL_ROUTES = [
+  "/admin",
+  "/admin/denne-uken",
+  "/admin/coaching-board",
+  "/admin/mission-board",
+  "/admin/focus",
+  "/admin/godkjenninger",
+  "/admin/elever",
+];
+
+function isDarkShellRoute(pathname: string): boolean {
+  return DARK_SHELL_ROUTES.some(
+    (route) =>
+      route === "/admin"
+        ? pathname === "/admin"
+        : pathname === route || pathname.startsWith(`${route}/`),
+  );
+}
+
 export function AdminShell({ user, children }: AdminShellProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const commandItems = useMemo<AdminCommandItem[]>(() => {
     const items: AdminCommandItem[] = [];
@@ -45,6 +69,16 @@ export function AdminShell({ user, children }: AdminShellProps) {
     }
     return items;
   }, [router]);
+
+  // Nye dark-shell-ruter rendrer egen shell — bypass MCLayout
+  if (isDarkShellRoute(pathname)) {
+    return (
+      <AdminToastProvider>
+        {children}
+        <AdminCommandPalette items={commandItems} shortcut="k" />
+      </AdminToastProvider>
+    );
+  }
 
   return (
     <AdminToastProvider>

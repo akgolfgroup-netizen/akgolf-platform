@@ -2299,3 +2299,10 @@
     @apply hover:bg-surface-container transition-colors;
   }
 }
+
+/* ─── CoachHQ Dark Shell — pulse for live-indikator ─── */
+@keyframes akg-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 88, 64, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 88, 64, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 88, 64, 0); }
+}

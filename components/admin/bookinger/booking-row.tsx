@@ -1,5 +1,5 @@
 import { Check, Eye, MapPin, MoreHorizontal, CalendarPlus } from "lucide-react";
-import type { BookingRow as BookingRowType, BookingStatus } from "./mock-data";
+import type { BookingRow as BookingRowType, BookingStatus } from "./booking-types";
 
 const STATUS_STYLES: Record<BookingStatus, { bg: string; color: string; label: string }> = {
   confirmed: { bg: "rgba(42,125,90,0.20)", color: "#6FCBA1", label: "Bekreftet" },
