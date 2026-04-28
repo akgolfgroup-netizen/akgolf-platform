@@ -1346,9 +1346,18 @@ model MentalProfile {
   pr4Performance Float?
   pr5Performance Float?
 
+  preferredLearningStyle LearningStyle?
+
   updatedAt DateTime @updatedAt
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum LearningStyle {
+  VISUAL
+  AUDITORY
+  KINESTHETIC
+  READING
 }
 
 /// Course notes and prep-round data
@@ -1458,9 +1467,56 @@ model UnifiedSkillIndex {
   vsTourAvgPct Float
   dataGolfDgId Int?
 
+  // HCP forecast (24/36 mnd) med 95% konfidensintervall
+  hcp24mExpected Float?
+  hcp24mCi95Lo   Float?
+  hcp24mCi95Hi   Float?
+  hcp36mExpected Float?
+  hcp36mCi95Lo   Float?
+  hcp36mCi95Hi   Float?
+
   updatedAt DateTime               @updatedAt
   User      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   snapshots UnifiedSkillSnapshot[]
+}
+
+model Sponsor {
+  id              String                  @id @default(cuid())
+  name            String
+  contactName     String?
+  contactEmail    String?
+  contactPhone    String?
+  logoUrl         String?
+  websiteUrl      String?
+  tier            String                  @default("STANDARD")
+  annualValueNok  Int?
+  contractStart   DateTime?
+  contractEnd     DateTime?
+  notes           String?
+  isActive        Boolean                 @default(true)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  players         SponsorPlayerRelation[]
+
+  @@index([isActive])
+}
+
+model SponsorPlayerRelation {
+  id              String   @id @default(cuid())
+  sponsorId       String
+  userId          String
+  startedAt       DateTime @default(now())
+  endedAt         DateTime?
+  monthlyValueNok Int?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  Sponsor         Sponsor  @relation(fields: [sponsorId], references: [id], onDelete: Cascade)
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sponsorId, userId])
+  @@index([userId])
+  @@index([sponsorId])
 }
 
 /// Historical USI snapshots for trend analysis
@@ -2096,6 +2152,7 @@ model User {
   lastCheckoutSessionId                       String?
   latestAiInsight                             Json?
   unitPreference                              UnitSystem                 @default(METRIC)
+  birthDate                                   DateTime?
   AILearning                                  AILearning[]
   ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
   Account                                     Account[]
@@ -2136,6 +2193,7 @@ model User {
   TestResult                                  TestResult[]
   Tournament                                  Tournament[]
   TournamentPrep                              TournamentPrep[]
+  SponsorPlayerRelation                       SponsorPlayerRelation[]
   TrackmanSession                             TrackmanSession[]
   TrackManImport                              TrackManImport[]
   TrackManShotData                            TrackManShotData[]
