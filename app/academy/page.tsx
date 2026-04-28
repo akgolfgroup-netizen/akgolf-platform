@@ -1,8 +1,6 @@
 import { WebNav } from "@/components/website-v2/web-nav";
 import { WebFooter } from "@/components/website-v2/web-footer";
 import { AcademyHeroSection } from "@/components/website-v2/academy/hero-section";
-import { AcademyPackagesSection } from "@/components/website-v2/academy/packages-section";
-import { AcademyMatrixSection } from "@/components/website-v2/academy/matrix-section";
 import { AcademyMethodSection } from "@/components/website-v2/academy/method-section";
 import { AcademyCoachSection } from "@/components/website-v2/academy/coach-section";
 import { AcademyFaqSection } from "@/components/website-v2/academy/main-faq-section";
@@ -54,8 +52,6 @@ export default function AcademyPage() {
           />
 
           <AcademyHeroSection />
-          <AcademyPackagesSection />
-          <AcademyMatrixSection />
           <AcademyMethodSection />
           <AcademyCoachSection />
           <AcademyFaqSection />

@@ -1,4 +1,4 @@
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { WebButton } from "../web-button";
 import { ACADEMY_CTA_V3 } from "@/lib/website-constants";
 
@@ -44,7 +44,7 @@ export function AcademyCtaSection() {
           </WebButton>
           <WebButton href={s.ctaSecondaryHref} variant="ghost" size="lg">
             {s.ctaSecondary}
-            <Phone className="h-4 w-4" strokeWidth={2} />
+            <Mail className="h-4 w-4" strokeWidth={2} />
           </WebButton>
         </div>
       </div>

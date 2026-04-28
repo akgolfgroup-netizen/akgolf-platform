@@ -42,38 +42,37 @@ export function AcademyCoachSection() {
               {s.headingItalic}
             </em>
           </h2>
-          <blockquote
-            className="mb-7 max-w-[52ch] border-l-[3px] pl-5 text-[19px] leading-[1.55] text-white/85 text-pretty"
-            style={{ borderColor: "var(--akgolf-accent, #D1F843)" }}
-          >
-            &ldquo;{s.quote}&rdquo;
-          </blockquote>
-          <div
-            className="grid grid-cols-3 gap-6 border-t pt-8"
-            style={{ borderColor: "rgba(255,255,255,0.12)" }}
-          >
-            {s.credits.map((c) => (
-              <div key={c.l} className="flex flex-col gap-1">
-                <div
-                  className="text-[24px] font-extrabold tracking-[-0.02em] text-white"
-                  style={{
-                    fontFamily: "var(--font-inter), Inter, sans-serif",
-                  }}
-                >
-                  {c.v}
+          <p className="mb-7 max-w-[52ch] text-[19px] leading-[1.55] text-white/85 text-pretty">
+            {s.description}
+          </p>
+          {s.credits.length > 0 ? (
+            <div
+              className="grid grid-cols-3 gap-6 border-t pt-8"
+              style={{ borderColor: "rgba(255,255,255,0.12)" }}
+            >
+              {s.credits.map((c) => (
+                <div key={c.l} className="flex flex-col gap-1">
+                  <div
+                    className="text-[24px] font-extrabold tracking-[-0.02em] text-white"
+                    style={{
+                      fontFamily: "var(--font-inter), Inter, sans-serif",
+                    }}
+                  >
+                    {c.v}
+                  </div>
+                  <div
+                    className="text-[10px] font-bold uppercase tracking-[0.12em]"
+                    style={{
+                      fontFamily: "var(--font-jetbrains-mono), monospace",
+                      color: "rgba(255,255,255,0.55)",
+                    }}
+                  >
+                    {c.l}
+                  </div>
                 </div>
-                <div
-                  className="text-[10px] font-bold uppercase tracking-[0.12em]"
-                  style={{
-                    fontFamily: "var(--font-jetbrains-mono), monospace",
-                    color: "rgba(255,255,255,0.55)",
-                  }}
-                >
-                  {c.l}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
