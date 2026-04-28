@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const description =
-  "Utviklingsmodellen V3: 4 pillarer (teknikk, fysisk, mental, strategi), Trackman + TPI + klinisk psykolog, Strokes-Gained innebygd. Bygd på 14 års coaching og 280+ spillere.";
+  "Utviklingsmodellen til AK Golf — fire pillarer (teknikk, fysisk, mental, strategi) og Strokes Gained-innsikt for varig framgang.";
 
 export const metadata: Metadata = {
   title: "Utviklingsmodellen | AK Golf Akademi",

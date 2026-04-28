@@ -6,18 +6,18 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Junior Academy",
   description:
-    "Lekent, strukturert juniorgolf for 6–17 år. Tre aldersgrupper, sommerleir og talentstige — med foreldreapp som viser fremgang uke for uke.",
+    "Lekent, strukturert juniorgolf for 6–17 år. Tre aldersgrupper med egne juniortrenere.",
   openGraph: {
-    title: "Junior Academy — Lekent, strukturert, og stolt foreldreapp",
+    title: "Junior Academy — Lekent og strukturert juniorgolf",
     description:
-      "Tre aldersgrupper (6–17 år), egne juniortrenere, sommerleir og talentstige. Foreldreapp inkludert.",
+      "Tre aldersgrupper for 6–17 år med egne juniortrenere.",
     url: "https://akgolf.no/junior-academy",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Junior Academy — Lekent, strukturert, og stolt foreldreapp",
+    title: "Junior Academy — Lekent og strukturert juniorgolf",
     description:
-      "Tre aldersgrupper for 6–17 år, sommerleir, talentstige og foreldreapp.",
+      "Tre aldersgrupper for 6–17 år med egne juniortrenere.",
   },
 };
 
@@ -39,12 +39,16 @@ export default function JuniorLayout({
     })),
   };
 
+  const hasFaq = JUNIOR_FAQ_V3.items.length > 0;
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      {hasFaq ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      ) : null}
       {children}
     </>
   );
