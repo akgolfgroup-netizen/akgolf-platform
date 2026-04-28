@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   CoachHQDarkShell,
   PageHead,
@@ -107,12 +108,27 @@ export function GodkjenningerDarkClient({
   user,
   pendingItems,
 }: GodkjenningerDarkClientProps) {
+  const router = useRouter();
   const [items, setItems] = useState<PendingItem[]>(pendingItems);
   const [activeTab, setActiveTab] = useState<Tab>("pending");
   const [activeId, setActiveId] = useState<string | null>(
     pendingItems[0]?.id ?? null,
   );
   const [busy, setBusy] = useState<string | null>(null);
+  const [bulkPending, startBulk] = useTransition();
+
+  function handleBulkApprove() {
+    if (!confirm(`Godkjenn alle ${items.length} ventende?`)) return;
+    startBulk(async () => {
+      for (const item of items) {
+        if (item.type === "booking") await approveBooking(item.id);
+        else if (item.type === "activity") await approveActivity(item.id);
+      }
+      setItems([]);
+      setActiveId(null);
+      router.refresh();
+    });
+  }
 
   const activeItem = items.find((i) => i.id === activeId);
 
@@ -152,11 +168,20 @@ export function GodkjenningerDarkClient({
         description="Video-feedback fra coacher, refusjoner, kontrakter, rabatter — alt som skal igjennom deg før det går ut. Hovedregel: avgjør innen 24 t."
         actions={
           <>
-            <Button variant="ghost" icon={<Settings2 className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<Settings2 className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/agenter")}
+            >
               Regler
             </Button>
-            <Button variant="ghost" icon={<CheckCheck className="w-3.5 h-3.5" />}>
-              Bulk-godkjenn
+            <Button
+              variant="ghost"
+              icon={<CheckCheck className="w-3.5 h-3.5" />}
+              onClick={handleBulkApprove}
+              disabled={bulkPending || items.length === 0}
+            >
+              {bulkPending ? "Godkjenner …" : "Bulk-godkjenn"}
             </Button>
           </>
         }
@@ -265,6 +290,7 @@ export function GodkjenningerDarkClient({
               busy={busy === activeItem.id}
               onApprove={() => handleApprove(activeItem)}
               onReject={() => handleReject(activeItem)}
+              onRequestChange={() => router.push("/admin/meldinger")}
             />
           ) : (
             <div
@@ -306,7 +332,11 @@ export function GodkjenningerDarkClient({
             denne uken.
           </p>
         </div>
-        <Button variant="ghost" icon={<Settings2 className="w-3.5 h-3.5" />}>
+        <Button
+          variant="ghost"
+          icon={<Settings2 className="w-3.5 h-3.5" />}
+          onClick={() => router.push("/admin/agenter")}
+        >
           Endre regler
         </Button>
       </div>
@@ -413,11 +443,13 @@ function DetailPane({
   busy,
   onApprove,
   onReject,
+  onRequestChange,
 }: {
   item: PendingItem;
   busy: boolean;
   onApprove: () => void;
   onReject: () => void;
+  onRequestChange: () => void;
 }) {
   const minutesAgo = Math.floor((Date.now() - item.createdAt.getTime()) / 60000);
 
@@ -640,7 +672,11 @@ function DetailPane({
           <Check className="w-3.5 h-3.5" strokeWidth={2.4} />
           Godkjenn
         </button>
-        <Button variant="ghost" icon={<MessageSquare className="w-3.5 h-3.5" />}>
+        <Button
+          variant="ghost"
+          icon={<MessageSquare className="w-3.5 h-3.5" />}
+          onClick={onRequestChange}
+        >
           Be om endring
         </Button>
         <button
