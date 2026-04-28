@@ -8,7 +8,10 @@ import { NextResponse, type NextRequest } from "next/server";
 // Bruk ?bypass=SECRET_KEY for å omgå vedlikeholdsmodus
 // ============================================================
 
-const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
+// Sjekk begge env-vars (NEXT_PUBLIC_* fungerer best via Vercel CLI; .trim() handterer trailing \n)
+const MAINTENANCE_MODE =
+  process.env.MAINTENANCE_MODE?.trim() === "true" ||
+  process.env.NEXT_PUBLIC_MAINTENANCE_MODE?.trim() === "true";
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
 // ============================================================
