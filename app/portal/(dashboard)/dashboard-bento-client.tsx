@@ -107,7 +107,7 @@ export function DashboardBentoClient(props: DashboardV3Props) {
       label: "Handicap",
       value: handicapValue,
       unit: handicapTrendText
-        ? `${handicapTrend! < 0 ? "▼" : "▲"} ${handicapTrendText}`
+        ? `${handicapTrend! < 0 ? "↓" : "↑"} ${handicapTrendText}`
         : undefined,
     },
     {

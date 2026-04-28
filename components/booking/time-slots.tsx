@@ -45,7 +45,12 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
   }
 
   return (
-    <div className="bg-card border border-line rounded-2xl p-4">
+    <div
+      className="bg-card border border-line rounded-2xl p-4"
+      role="region"
+      aria-live="polite"
+      aria-label={`${slots.length} ledige tider for ${format(date, "EEEE d. MMMM", { locale: nb })}`}
+    >
       <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-primary mb-3">
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>

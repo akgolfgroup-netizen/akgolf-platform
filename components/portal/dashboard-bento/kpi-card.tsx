@@ -47,6 +47,15 @@ export function KpiCard({
           ? "—"
           : null;
 
+  const arrowLabel =
+    changeDirection === "up"
+      ? "opp"
+      : changeDirection === "down"
+        ? "ned"
+        : changeDirection === "flat"
+          ? "uendret"
+          : null;
+
   const changeColor = changeIsGood
     ? "var(--ak-success, #2A7D5A)"
     : changeIsGood === false
@@ -108,7 +117,9 @@ export function KpiCard({
                 : { color: changeColor }
             }
           >
-            {arrow ? `${arrow} ` : ""}
+            {arrow ? (
+              <span aria-label={arrowLabel ?? undefined}>{arrow} </span>
+            ) : null}
             {changeText}
           </span>
           {contextLabel ? (

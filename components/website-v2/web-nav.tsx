@@ -60,6 +60,7 @@ export function WebNav({ active = "home" }: WebNavProps) {
             <Link
               key={item.key}
               href={item.href}
+              aria-current={isActive ? "page" : undefined}
               className={`text-sm transition-colors ${
                 isActive
                   ? solid

@@ -31,10 +31,10 @@ const SECTIONS = [
 ];
 
 const SOCIALS = [
-  { Icon: Instagram, href: "#", label: "Instagram" },
-  { Icon: Facebook, href: "#", label: "Facebook" },
-  { Icon: Youtube, href: "#", label: "YouTube" },
-  { Icon: Linkedin, href: "#", label: "LinkedIn" },
+  { Icon: Instagram, href: "https://www.instagram.com/akgolfacademy/", label: "Instagram" },
+  { Icon: Facebook, href: "https://www.facebook.com/akgolfacademy", label: "Facebook" },
+  { Icon: Youtube, href: "https://www.youtube.com/@akgolfacademy", label: "YouTube" },
+  { Icon: Linkedin, href: "https://www.linkedin.com/company/ak-golf-group/", label: "LinkedIn" },
 ];
 
 export function WebFooter() {

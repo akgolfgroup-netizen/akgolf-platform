@@ -108,14 +108,29 @@ export function BookingDatePicker({
           const isSelected = selected && isSameDay(date, selected);
           const todayDate = isToday(date);
 
+          const dow = date.getDay();
+          const isWeekend = dow === 0 || dow === 6;
+          const disabledReason = !inMonth
+            ? undefined
+            : disabled
+              ? isWeekend
+                ? "Stengt i helger"
+                : "Ikke tilgjengelig"
+              : undefined;
           return (
             <button
               type="button"
               key={date.toISOString()}
               onClick={() => !disabled && inMonth && onSelect(date)}
               disabled={disabled || !inMonth}
+              aria-disabled={disabled || !inMonth ? "true" : undefined}
+              aria-current={todayDate ? "date" : undefined}
               className="relative aspect-square flex items-center justify-center text-[13px] transition-colors duration-150"
-              aria-label={format(date, "d. MMMM yyyy", { locale: nb })}
+              aria-label={
+                disabledReason
+                  ? `${format(date, "d. MMMM yyyy", { locale: nb })} — ${disabledReason}`
+                  : format(date, "d. MMMM yyyy", { locale: nb })
+              }
             >
               {isSelected ? (
                 <motion.div

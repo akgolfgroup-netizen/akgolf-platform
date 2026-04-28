@@ -70,7 +70,11 @@ export function StreakCard({
             <>Logg en økt eller en runde for å starte streaken.</>
           )}
         </div>
-        <div className="mt-4 flex gap-1">
+        <div
+          className="mt-4 flex gap-1"
+          role="img"
+          aria-label={`Aktivitet siste 14 dager: ${dots.filter(Boolean).length} av 14 dager logget`}
+        >
           {dots.map((on, i) => (
             <div
               key={i}

@@ -43,6 +43,8 @@ export function TrendCard({
     : { line: "", area: "", lastX: 0, lastY: 0 };
 
   const trendArrow = trend !== null ? (trend < 0 ? "▼" : "▲") : "—";
+  const trendArrowLabel =
+    trend !== null ? (trend < 0 ? "ned" : "opp") : "uendret";
   const trendIsGood = trend !== null && trend < 0;
 
   return (
@@ -77,7 +79,8 @@ export function TrendCard({
                 : "var(--ak-warning, #C48A32)",
             }}
           >
-            {trendArrow} {Math.abs(trend).toFixed(1)} i år
+            <span aria-label={trendArrowLabel}>{trendArrow}</span>{" "}
+            {Math.abs(trend).toFixed(1)} i år
           </span>
         ) : null}
       </div>

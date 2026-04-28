@@ -116,17 +116,18 @@ export function BookingSummary({
         type="button"
         onClick={onBook}
         disabled={booking}
-        className="w-full py-3.5 rounded-full bg-accent text-ink font-semibold text-[14px] flex items-center justify-center gap-2 hover:bg-accent-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-busy={booking ? "true" : undefined}
+        className="w-full py-3.5 rounded-full bg-accent text-ink font-semibold text-[14px] flex items-center justify-center gap-2 hover:bg-accent-deep focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         whileTap={{ scale: 0.99 }}
       >
         {booking ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
+          <span role="status" aria-live="polite" className="inline-flex items-center gap-2">
+            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
             Behandler...
-          </>
+          </span>
         ) : (
           <>
-            <CreditCard className="w-4 h-4" strokeWidth={2.2} />
+            <CreditCard className="w-4 h-4" strokeWidth={2.2} aria-hidden="true" />
             Betal med kort
           </>
         )}
@@ -314,7 +315,7 @@ function InputField({
           required={required}
           aria-required={required ? "true" : undefined}
           aria-describedby={hintId}
-          className={`w-full py-3 rounded-lg border border-line bg-card text-[14px] text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-soft transition-colors ${
+          className={`w-full py-3 rounded-lg border border-line bg-card text-[14px] text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
             IconComp ? "pl-10 pr-4" : "px-4"
           }`}
         />
