@@ -48,16 +48,18 @@ export default function FasiliteterClient({ bookings, initialLive }: Props) {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-wrap items-center justify-between gap-4">
+      {/* Brand V2 page header — d25 mockup */}
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/80">
-            CoachHQ · GFGK
-          </p>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-on-surface">
-            Fasilitets-booking
+          <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+            / DRIFT · FASILITETER
+          </div>
+          <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+            Fasilitets-booking.
           </h1>
-          <p className="mt-1 text-sm text-on-surface-variant">
-            Visuell oversikt over Driving Range, putting, short game, klubbhus og korthullsbane.
+          <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+            Visuell oversikt over Driving Range, putting, short game, klubbhus
+            og korthullsbane.
           </p>
         </div>
 
@@ -66,9 +68,9 @@ export default function FasiliteterClient({ bookings, initialLive }: Props) {
           <button
             type="button"
             onClick={() => openAdd()}
-            className="flex items-center gap-2 rounded-full bg-secondary-fixed px-4 py-2 text-sm font-semibold text-secondary-fixed-text hover:brightness-95"
+            className="inline-flex items-center gap-2 rounded-lg border border-primary bg-primary px-3.5 py-2 text-[13px] font-semibold text-white hover:bg-[#00422F]"
           >
-            <Icon name="add" size={18} />
+            <Icon name="add" size={16} />
             Legg til aktivitet
           </button>
         </div>
