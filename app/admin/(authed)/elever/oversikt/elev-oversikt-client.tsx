@@ -276,6 +276,7 @@ interface Props {
 export function ElevOversiktClient({ rows }: Props) {
   const [search, setSearch] = useState("");
   const [groupFilter, setGroupFilter] = useState<"all" | Grupp>("all");
+  const [stabileLimit, setStabileLimit] = useState(3);
   // Frys nåtid ved første render — Date.now() er ureint i render-trees
   const [nowMs] = useState(() => Date.now());
 
@@ -319,7 +320,7 @@ export function ElevOversiktClient({ rows }: Props) {
     return { stiger, stabile, synker, inaktive };
   }, [rows, nowMs]);
 
-  const visibleStabile = grouped.stabile.slice(0, 3);
+  const visibleStabile = grouped.stabile.slice(0, stabileLimit);
 
   function filteredByGroup(g: Grupp): ElevOversiktRow[] {
     if (groupFilter !== "all" && groupFilter !== g) return [];
@@ -365,10 +366,12 @@ export function ElevOversiktClient({ rows }: Props) {
                 KORT
               </button>
             </div>
-            <DarkButton variant="primary">
-              <UserPlus className="w-3.5 h-3.5" />
-              Ny spiller
-            </DarkButton>
+            <Link href="/admin/elever?ny=1">
+              <DarkButton variant="primary">
+                <UserPlus className="w-3.5 h-3.5" />
+                Ny spiller
+              </DarkButton>
+            </Link>
           </>
         }
       />
@@ -437,9 +440,15 @@ export function ElevOversiktClient({ rows }: Props) {
             Sortér: Risiko først{" "}
             <ChevronDown className="w-3 h-3" style={{ color: "rgba(255,255,255,0.5)" }} />
           </span>
-          <DarkButton variant="ghost">
+          <DarkButton
+            variant="ghost"
+            onClick={() => {
+              setSearch("");
+              setGroupFilter("all");
+            }}
+          >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            Filter
+            Nullstill filter
           </DarkButton>
         </div>
       </div>
@@ -480,7 +489,7 @@ export function ElevOversiktClient({ rows }: Props) {
           />
           {grouped.stabile.length > visibleStabile.length && (
             <div className="text-center mt-7">
-              <DarkButton>
+              <DarkButton onClick={() => setStabileLimit((n) => n + 12)}>
                 <ChevronDown className="w-3.5 h-3.5" />
                 Vis {grouped.stabile.length - visibleStabile.length} stabile spillere til
               </DarkButton>
