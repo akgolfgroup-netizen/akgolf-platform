@@ -34,6 +34,32 @@ export function BookingerClient({
 }: Props) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "today" | "pending">("all");
+  const [visibleDays, setVisibleDays] = useState(14);
+
+  function handleExport() {
+    const rows = groups.flatMap((g) =>
+      g.rows.map(
+        (r) =>
+          `"${g.label}","${r.dayLabel}","${r.player.name}","${r.coach.name}","${r.location}","${r.type}","${r.status}"`,
+      ),
+    );
+    const csv = [
+      "Dag,Dagslabel,Spiller,Coach,Sted,Type,Status",
+      ...rows,
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `bookinger-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleFilterToggle() {
+    setSearch("");
+    setFilter("all");
+  }
 
   const filteredGroups = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -77,11 +103,11 @@ export function BookingerClient({
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
-          <GhostBtn>
+          <GhostBtn onClick={handleExport}>
             <Download className="h-3.5 w-3.5" strokeWidth={1.8} /> Eksport
           </GhostBtn>
-          <GhostBtn>
-            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Filter
+          <GhostBtn onClick={handleFilterToggle}>
+            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Nullstill filter
           </GhostBtn>
           <Link
             href="/admin/bookinger/ny"
@@ -132,7 +158,7 @@ export function BookingerClient({
             Ingen bookinger matcher filtrene.
           </div>
         ) : (
-          filteredGroups.map((day) => (
+          filteredGroups.slice(0, visibleDays).map((day) => (
             <div key={day.label}>
               <div className="flex items-center justify-between bg-white/[0.03] px-[18px] py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-white/50">
                 <span>{day.label}</span>
@@ -145,10 +171,11 @@ export function BookingerClient({
           ))
         )}
 
-        {filteredGroups.length > 0 && (
+        {filteredGroups.length > visibleDays && (
           <div className="border-t border-white/5 bg-white/[0.02] px-[18px] py-3.5 text-center">
             <button
               type="button"
+              onClick={() => setVisibleDays((n) => n + 14)}
               className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-[11px] text-white/80 transition hover:bg-white/[0.06]"
             >
               <ChevronDown className="h-3.5 w-3.5" strokeWidth={1.8} /> Last flere
@@ -160,10 +187,17 @@ export function BookingerClient({
   );
 }
 
-function GhostBtn({ children }: { children: React.ReactNode }) {
+function GhostBtn({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className="inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:border-white/16 hover:bg-white/[0.06]"
       style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
     >
