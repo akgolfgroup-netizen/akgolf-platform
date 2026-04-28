@@ -3,10 +3,10 @@ import { UserRole, Capability } from "@prisma/client";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { hasCapability } from "@/lib/portal/capabilities/check";
 import { fetchCoachingBoardData } from "./actions";
-import { CoachingBoardClient } from "./coaching-board-client";
+import { CoachingBoardDarkClient } from "./coaching-board-dark-client";
 
 export const metadata = {
-  title: "Aktive økter | AK Golf CoachHQ",
+  title: "Coaching Board | AK Golf CoachHQ",
 };
 export const dynamic = "force-dynamic";
 
@@ -22,26 +22,12 @@ export default async function CoachingBoardPage() {
     redirect("/admin");
   }
 
-  const canPromote =
-    user.role === UserRole.ADMIN ||
-    (await hasCapability(user.id, Capability.MB_APPROVE_CATEGORY_PROMOTION));
-  const canEditPlan =
-    user.role === UserRole.ADMIN ||
-    (await hasCapability(user.id, Capability.MB_EDIT_TRAINING_PLAN));
-  const canRegisterTest =
-    user.role === UserRole.ADMIN ||
-    (await hasCapability(user.id, Capability.MB_REGISTER_TEST_RESULT));
-
   const data = await fetchCoachingBoardData();
 
   return (
-    <CoachingBoardClient
-      initialData={data}
-      permissions={{
-        canPromote,
-        canEditPlan,
-        canRegisterTest,
-      }}
+    <CoachingBoardDarkClient
+      user={user}
+      weekSessionCount={data.players.length}
     />
   );
 }
