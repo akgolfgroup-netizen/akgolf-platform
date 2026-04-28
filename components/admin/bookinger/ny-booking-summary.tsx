@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import {
   Calendar,
   Check,
@@ -120,20 +123,20 @@ export function NyBookingSummary() {
             </div>
           </div>
           <div className="flex gap-2">
-            <button
-              type="button"
+            <Link
+              href="/admin/bookinger"
               className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:bg-white/[0.06]"
               style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
             >
               <Save className="h-3.5 w-3.5" strokeWidth={1.8} /> Lagre utkast
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/admin/bookinger"
               className="flex flex-[2] items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-[12.5px] font-bold transition hover:opacity-90"
               style={{ background: "#D1F843", color: "#0A1F18" }}
             >
               <Check className="h-3.5 w-3.5" strokeWidth={2} /> Bekreft &amp; bok
-            </button>
+            </Link>
           </div>
         </div>
       </div>

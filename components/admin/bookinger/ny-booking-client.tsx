@@ -24,7 +24,7 @@ export function NyBookingClient() {
         </div>
         <div className="flex flex-wrap gap-2.5">
           <Link
-            href="/portal/admin/bookinger"
+            href="/admin/bookinger"
             className="inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:bg-white/[0.06]"
             style={{
               background: "rgba(255,255,255,0.04)",
