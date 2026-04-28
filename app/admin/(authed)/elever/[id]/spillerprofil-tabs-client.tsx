@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   MapPin,
   User,
@@ -143,18 +144,24 @@ function ProfileHero({ profile }: { profile: Profile }) {
             </div>
           </div>
           <div className="flex gap-2 pb-1.5">
-            <DarkButton>
-              <MessageCircle className="w-3.5 h-3.5" />
-              Melding
-            </DarkButton>
-            <DarkButton>
-              <CalendarPlus className="w-3.5 h-3.5" />
-              Bok økt
-            </DarkButton>
-            <DarkButton variant="accent">
-              <Target className="w-3.5 h-3.5" />
-              Sett mål
-            </DarkButton>
+            <Link href={`/admin/meldinger?to=${profile.id}`}>
+              <DarkButton>
+                <MessageCircle className="w-3.5 h-3.5" />
+                Melding
+              </DarkButton>
+            </Link>
+            <Link href={`/admin/bookinger/ny?student=${profile.id}`}>
+              <DarkButton>
+                <CalendarPlus className="w-3.5 h-3.5" />
+                Bok økt
+              </DarkButton>
+            </Link>
+            <Link href={`/admin/treningsplan?student=${profile.id}`}>
+              <DarkButton variant="accent">
+                <Target className="w-3.5 h-3.5" />
+                Sett mål
+              </DarkButton>
+            </Link>
           </div>
         </div>
       </div>
