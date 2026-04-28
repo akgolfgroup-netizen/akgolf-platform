@@ -14,6 +14,7 @@ export function JuniorCoachSection() {
           variant="default"
           src={s.portraitSrc}
           description={s.portraitDescription}
+          tag="[Foto kommer]"
         />
         <div>
           <div

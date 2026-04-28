@@ -2575,7 +2575,7 @@ export const JUNIOR_SEASON_V3 = {
 
 export const JUNIOR_COACH_V3 = {
   eyebrow: "Hovedansvarlig junior",
-  headingLead: "Markus Lien — ",
+  headingLead: "Markus Røinås Pedersen — ",
   headingItalic: "juniortrener med hjerte for laget.",
   quote:
     "Det viktigste er at de har det gøy. Når en 9-åring vil tilbake neste uke, har vi gjort jobben — teknikk og handicap kommer av seg selv når gleden er der.",
@@ -2585,8 +2585,8 @@ export const JUNIOR_COACH_V3 = {
     { v: "Sommerleir", l: "Hovedansvar" },
   ],
   portraitDescription:
-    "Markus Lien (juniortrener) i naturlig coaching-positur med smilende junior-spiller, mid-shot",
-  portraitSrc: "/images/branding/ak-golf-academy-30.jpg",
+    "Markus Røinås Pedersen (juniortrener) — portrettfoto kommer",
+  portraitSrc: undefined as string | undefined,
 } as const;
 
 export const JUNIOR_PRICEBAND_V3 = {
