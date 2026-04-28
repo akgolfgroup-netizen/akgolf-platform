@@ -4,7 +4,6 @@ import { useState, useTransition, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   Search,
-  Image as ImageIcon,
   Loader2,
   ChevronLeft,
   ChevronRight,

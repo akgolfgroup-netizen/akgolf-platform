@@ -4,7 +4,7 @@ import { format, parseISO, isBefore } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Calendar, MapPin, Globe } from "lucide-react";
 import type { TourScheduleEvent } from "@/lib/portal/datagolf/client";
-import { cardStyle, monoFont, accent, accentSoft } from "./styles";
+import { cardStyle, accent, accentSoft } from "./styles";
 
 interface Props {
   pgaSchedule: TourScheduleEvent[];

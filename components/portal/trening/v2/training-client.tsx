@@ -8,7 +8,6 @@ import {
   type CategorySectionData,
   type SectionCategory,
 } from "./category-section";
-import type { Drill } from "./drill-card";
 import { LogSessionBar } from "./log-session-bar";
 
 const HERO: TrainingHeroData = {

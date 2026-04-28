@@ -1,6 +1,6 @@
 "use client";
 
-import { Map as MapIcon, Check, Info, CheckCircle2, X } from "lucide-react";
+import { Check, Info, CheckCircle2, X } from "lucide-react";
 import { format, isBefore } from "date-fns";
 import { nb } from "date-fns/locale";
 import type { TournamentWithPlan } from "@/modules/tournament-planner";

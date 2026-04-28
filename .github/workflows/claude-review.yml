@@ -47,5 +47,5 @@ jobs:
 
             Give up to 5 specific, actionable comments.
           claude_args: |
-            --max-turns 15
+            --max-turns 60
           use_sticky_comment: true

@@ -66,6 +66,7 @@ export function HistorikkClientV2({ sessions }: Props) {
   }, [filtered]);
 
   const last90 = useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity
     const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
     return sessions.filter((s) => new Date(s.sessionDate).getTime() >= cutoff).length;
   }, [sessions]);

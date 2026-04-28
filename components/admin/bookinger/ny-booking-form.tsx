@@ -8,7 +8,6 @@ import {
   Dumbbell,
   Flag,
   MapPin,
-  Repeat,
   Sliders,
   Sparkles,
   Target,

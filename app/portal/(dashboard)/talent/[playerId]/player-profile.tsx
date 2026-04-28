@@ -1,16 +1,12 @@
 import Link from "next/link";
 import {
   ArrowLeft,
-  Image as ImageIcon,
   TrendingDown,
   TrendingUp,
   MapPin,
   GraduationCap,
   Award,
   Trophy,
-  Target,
-  Calendar,
-  ExternalLink,
 } from "lucide-react";
 import type { PlayerProfileData } from "../actions";
 

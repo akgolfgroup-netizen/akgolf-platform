@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { WebNav } from "./web-nav";
 import { WebFooter } from "./web-footer";
 import { TEAM, FORMSPREE_ENDPOINT } from "@/lib/website-constants";
