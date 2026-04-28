@@ -126,7 +126,10 @@ export default function RootLayout({
   return (
     <html lang="nb" className="h-full">
       <head>
-        {/* Material Symbols Outlined — ikoner */}
+        {/* Preconnect — sparer 100-300ms TTFB pa font-stylesheet */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* Material Symbols Outlined — ikoner (legacy, fjernes i Sprint 2.2) */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
