@@ -1,11 +1,21 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { NameList } from "./NameList";
 import { useSidebar } from "@/components/portal/layout/sidebar-context";
+
+// Hoisted modul-niva — opprettes en gang per browser-session, ikke per render.
+const supabaseClient =
+  typeof window !== "undefined"
+    ? createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      )
+    : null;
 
 interface PlayerHQSidebarProps {
   user: {
@@ -30,15 +40,13 @@ export function PlayerHQSidebar({ user }: PlayerHQSidebarProps) {
   const router = useRouter();
   const { isOpen, close } = useSidebar();
 
-  async function handleSignOut() {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    );
-    await supabase.auth.signOut();
+  // useCallback stabiliserer referansen — NameList re-rendrer ikke unodig.
+  const handleSignOut = useCallback(async () => {
+    if (!supabaseClient) return;
+    await supabaseClient.auth.signOut();
     router.push("/portal/login");
     router.refresh();
-  }
+  }, [router]);
 
   return (
     <>

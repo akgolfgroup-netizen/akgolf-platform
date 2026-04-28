@@ -8,6 +8,64 @@
 
 ---
 
+## 2026-04-28 (kveld) — Post-launch hardening + agent-system
+
+**Lanseringen er live.** Etter dagens lansering kjørte vi en autonom hardening-sesjon basert på 5 parallelle audits (mobile, a11y, e2e, react-best-practices, performance) og en komplett TODO-audit. Alle endringer pushet og deployet til prod.
+
+**Nye commits (kronologisk):**
+- `11d450a` feat(coachhq): aktiver agent-systemet — seed + logging-FK + 11 nye triggere
+- `33f44a1` fix(vercel): redirect portal.akgolf.no → akgolf.no/portal
+- `d2f136b` fix(vercel): rett opp portal.akgolf.no redirect-mapping
+- `10d9546` fix(design): fjern token-kollisjoner som overstyrte Brand Guide V2.0
+- `73203ba` fix(portal): redirect /treningsplan/uke til /uke/0 (denne uken)
+- `3c3b870` fix(booking): bruk service-role-klient for ServiceType-fetch (RLS-fix)
+- `7473e4d` feat(booking): rebuild wizard pixel-nær Brand Guide V2.0 (g5-mockup)
+- `edc732b` feat(playerhq): aktiver mobil-nav via overlay-drawer
+- `6dae73f` fix(a11y+perf): pre-launch hardening (Trinn 1+2+3 — kontrast + skip-link + hero next/image)
+- `824ae85` feat: maintenance-side med Acuity-CTAs + Bento mobile-layout
+- `0f88d97` fix(a11y): Sprint 1.2 — fjern resterende WCAG 2.1 AA-feil
+- `f94c8b1` perf(charts): dynamic import av alle 22 recharts-komponenter
+- `0caaec9` perf: Sprint 2.3 — preconnect + root loading-fallback
+- `82feb4b` perf(playerhq): erstatt imperativ hover-DOM med Tailwind hover-utility
+
+**Hovedforbedringer i prod:**
+- ✅ Agent-system aktivert: 16 agenter seedet i Agent-tabell, AgentLog FK-koblet, 11 nye triggere (cron + event), 5 nye `/api/portal/cron/agents-*`-routes
+- ✅ portal.akgolf.no redirecter nå til www.akgolf.no (gammel separat Vercel-prosjekt deprecated)
+- ✅ Brand Guide V2.0 (#005840 / #D1F843) er nå faktisk live — Heritage-token-kollisjon fjernet fra `app/globals.css`
+- ✅ Booking-wizard pixel-rebuilt (5 filer fra g5-mockup)
+- ✅ Mobil-nav via overlay-drawer på PlayerHQ
+- ✅ Maintenance-side med Acuity-CTAs (`/maintenance` — aktiveres via `MAINTENANCE_MODE=true` i Vercel-env)
+- ✅ A11y: 19 av 19 WCAG 2.1 AA-fixes implementert (kontrast `--color-ink-subtle` 4.6:1, skip-link, label-binding, aria-current, aria-disabled, aria-live, role=status, sr-only, focus-ring)
+- ✅ Performance: Recharts dynamic import (22 chart-filer), `<Image>` på hero, preconnect, root loading.tsx
+- ✅ React-perf: NameList Tailwind hover-utility, ServiceSelector ikon-cache, Supabase-klient hoistet til modul-nivå
+
+**Kritiske filer endret:**
+- `lib/portal/agents/log.ts` (ny) + 14 lifecycle/orchestrator-filer
+- `prisma/seed-agents.ts` (ny) + `seed:agents`-script
+- 5 nye `app/api/portal/cron/agents-*`-routes + 5 nye cron-entries i `vercel.json`
+- `app/globals.css` (token-fixes)
+- `components/booking/*` (5 filer rebuilt)
+- 22 chart-filer splittet til wrapper + `-impl.tsx`-pattern
+- `app/maintenance/page.tsx` (Acuity-CTAs)
+- `app/loading.tsx` (ny root-fallback)
+- `app/layout.tsx` (preconnect)
+- `app/portal/(dashboard)/bookinger/ny/page.tsx` (service-role-klient)
+- `app/portal/(dashboard)/treningsplan/uke/page.tsx` (ny redirect-side)
+- `components/portal/playerhq/{PlayerHQSidebar,NameList}.tsx` (mobil-drawer + hover-fix)
+- `components/portal/dashboard-bento/{next-session,streak,sg,trend,kpi}-card.tsx` (mobile + a11y)
+
+**Plan for videre arbeid:**
+- Plan-fil: `~/.claude/plans/lag-en-plan-for-glistening-piglet.md` (godkjent av Anders)
+- Sprint 2.2 (Material Symbols → Lucide, 274 treff) — utsatt, krever koordinert mass-migrering
+- Sprint 2.4 (Heritage --legacy-* tokens cleanup) — utsatt
+- Sprint 3 (Visuell rebuild av 8 sider mot mockups) — Statistikk, Treningsplan, CoachHQ Hub, Pricing, Contact, Junior Academy, TrackMan
+- Sprint 4 (Mock→reell data) — 9 widgets i `components/portal/widgets/` har TODO-kommentarer men brukes IKKE noe sted ennå (ikke lansering-blokker)
+- Sprint 5 (Prisma-utvidelser) — `User.birthDate`, `Sponsor`-modell, `MentalProfile.preferredLearningStyle`. Krever migrasjoner mot prod-DB.
+- Sprint 6.1.1 (Dashboard Bento → Server Component) + 6.1.3 (booking-wizard callback-stabilisering)
+- Sprint 7 (Tester + DataGolf-CRON + Calendar webhook-renewal)
+
+---
+
 ## 2026-04-28 (dag) — Lanserings-prep: PlayerHQ-shell, CoachHQ-rebuild, tekstrevisjon
 
 **Jobbet med:** Anders skal demo'e systemet med trener + daglig leder kl 11. Forberedt prod for visning, fikset blockere, re-bygd alle CoachHQ + PlayerHQ-skjermer fra mockup. Drevet 8 sub-agenter parallelt i bølger.

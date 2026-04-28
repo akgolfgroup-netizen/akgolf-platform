@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   Target,
@@ -20,17 +21,23 @@ interface ServiceSelectorProps {
   onSelect: (service: BookingServiceType) => void;
 }
 
+// Modul-niva cache — kjor regex bare en gang per unike service-navn pa tvers av render.
+const iconCache = new Map<string, LucideIcon>();
+
 // Map service-name keywords to lucide icons (Brand Guide V2.0 — Lucide only)
 function pickServiceIcon(name: string): LucideIcon {
+  const cached = iconCache.get(name);
+  if (cached) return cached;
   const n = name.toLowerCase();
-  if (n.includes("on-course") || n.includes("bane")) return Flag;
-  if (n.includes("par") || n.includes("duo") || n.includes("gruppe")) return Users;
-  if (n.includes("flex 90") || n.includes("dyp") || n.includes("90 min")) return CalendarClock;
-  if (n.includes("intro") || n.includes("fri")) return MessageCircle;
-  if (n.includes("pakke") || n.includes("performance pro") || n.includes("performance"))
-    return Package;
-  if (n.includes("test") || n.includes("kartlegg")) return Sparkles;
-  return Target;
+  let icon: LucideIcon = Target;
+  if (n.includes("on-course") || n.includes("bane")) icon = Flag;
+  else if (n.includes("par") || n.includes("duo") || n.includes("gruppe")) icon = Users;
+  else if (n.includes("flex 90") || n.includes("dyp") || n.includes("90 min")) icon = CalendarClock;
+  else if (n.includes("intro") || n.includes("fri")) icon = MessageCircle;
+  else if (n.includes("pakke") || n.includes("performance pro") || n.includes("performance")) icon = Package;
+  else if (n.includes("test") || n.includes("kartlegg")) icon = Sparkles;
+  iconCache.set(name, icon);
+  return icon;
 }
 
 function isFeatured(service: BookingServiceType): boolean {
@@ -39,6 +46,16 @@ function isFeatured(service: BookingServiceType): boolean {
 }
 
 export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
+  // Pre-beregn ikon + featured-flag per service slik at render-loopen ikke kaller funksjonene per render.
+  const enriched = useMemo(
+    () =>
+      services.map((svc) => ({
+        ...svc,
+        Icon: pickServiceIcon(svc.name),
+        featured: isFeatured(svc),
+      })),
+    [services],
+  );
   return (
     <div>
       {/* Header — Brand Guide V2.0 (Inter Tight + JetBrains Mono eyebrow) */}
@@ -55,10 +72,8 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
       </div>
 
       <div className="space-y-3">
-        {services.map((svc, index) => {
-          const Icon = pickServiceIcon(svc.name);
-          const featured = isFeatured(svc);
-
+        {enriched.map((svc, index) => {
+          const { Icon, featured } = svc;
           return (
             <motion.button
               key={svc.id}
