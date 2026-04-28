@@ -1,9 +1,13 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { startOfMonth, endOfMonth } from "date-fns";
+import { startOfWeek, endOfWeek } from "date-fns";
 import { getBookingsForPeriod, getInstructors } from "./actions";
 import KalenderClient from "./kalender-client";
+
+export const metadata = {
+  title: "Kalender | AK Golf CoachHQ",
+};
 
 export default async function CalendarPage() {
   const user = await requirePortalUser();
@@ -13,8 +17,8 @@ export default async function CalendarPage() {
   }
 
   const now = new Date();
-  const start = startOfMonth(now);
-  const end = endOfMonth(now);
+  const start = startOfWeek(now, { weekStartsOn: 1 });
+  const end = endOfWeek(now, { weekStartsOn: 1 });
 
   const [initialBookings, instructors] = await Promise.all([
     getBookingsForPeriod(start.toISOString(), end.toISOString()),
@@ -25,6 +29,7 @@ export default async function CalendarPage() {
     <KalenderClient
       initialBookings={initialBookings}
       instructors={instructors}
+      initialWeekStart={start.toISOString()}
     />
   );
 }
