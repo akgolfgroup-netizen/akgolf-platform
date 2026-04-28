@@ -37,12 +37,6 @@ const DARK_SHELL_ROUTES = [
   "/admin/focus",
   "/admin/godkjenninger",
   "/admin/elever",
-  "/admin/bookinger",
-  "/admin/kalender",
-  "/admin/okter",
-  "/admin/grupper",
-  "/admin/lokasjoner",
-  "/admin/tjenester",
 ];
 
 function isDarkShellRoute(pathname: string): boolean {
