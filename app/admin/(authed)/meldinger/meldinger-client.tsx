@@ -108,10 +108,25 @@ export function MeldingerClient({
  subtitle={`${messages.length} meldinger`}
  onMenuClick={toggle}
  />
- <div className="p-6">
- <div 
+ <div className="p-6 space-y-6">
+ {/* Brand V2 page header — d22 mockup */}
+ <div className="flex items-end justify-between border-b border-line pb-5">
+ <div>
+ <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+ / TEAM · MELDINGER
+ </div>
+ <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+ Meldingskø.
+ </h1>
+ <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+ {messages.length} meldinger ventende. AI-utkast godkjennes eller
+ forkastes per kanal.
+ </p>
+ </div>
+ </div>
+ <div
  className="flex flex-col bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden"
- style={{ height: "calc(100vh - 180px)"}}
+ style={{ height: "calc(100vh - 240px)"}}
  >
  {/* Error banner */}
  {error && (
