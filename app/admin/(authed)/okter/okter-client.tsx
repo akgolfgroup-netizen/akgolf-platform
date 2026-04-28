@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Download, Plus, Search, SlidersHorizontal } from "lucide-react";
 import type { SessionItem, SessionStats } from "./actions";
@@ -27,6 +28,21 @@ type TabId = (typeof TABS)[number]["id"];
 export function OkterClient({ initialSessions, stats }: Props) {
   const [tab, setTab] = useState<TabId>("all");
   const [search, setSearch] = useState("");
+
+  function handleExport() {
+    const rows = initialSessions.map(
+      (s) =>
+        `"${s.student?.name ?? ""}","${s.instructor?.name ?? ""}","${s.service?.name ?? ""}","${s.status}","${new Date(s.startTime).toISOString()}"`,
+    );
+    const csv = ["Spiller,Coach,Type,Status,Start", ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `okter-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   const now = useMemo(() => new Date(), []);
   const heat = useMemo(() => buildHeatmap(initialSessions, now), [initialSessions, now]);
@@ -84,16 +100,16 @@ export function OkterClient({ initialSessions, stats }: Props) {
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
-          <GhostBtn>
+          <GhostBtn onClick={handleExport}>
             <Download className="h-3.5 w-3.5" strokeWidth={1.8} /> Eksport
           </GhostBtn>
-          <button
-            type="button"
+          <Link
+            href="/admin/bookinger/ny"
             className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-[12.5px] font-bold transition hover:opacity-90"
             style={{ background: "#D1F843", color: "#0A1F18" }}
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={2} /> Logg økt
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -150,10 +166,14 @@ export function OkterClient({ initialSessions, stats }: Props) {
         </div>
         <button
           type="button"
+          onClick={() => {
+            setSearch("");
+            setTab("all");
+          }}
           className="ml-auto inline-flex items-center gap-1.5 rounded-full border bg-white/[0.04] px-3 py-1.5 text-[12px] text-white/70 hover:bg-white/[0.06]"
           style={{ borderColor: "rgba(255,255,255,0.10)" }}
         >
-          <SlidersHorizontal className="h-3 w-3" strokeWidth={1.8} /> Filter
+          <SlidersHorizontal className="h-3 w-3" strokeWidth={1.8} /> Nullstill filter
         </button>
       </div>
 
@@ -186,10 +206,17 @@ export function OkterClient({ initialSessions, stats }: Props) {
   );
 }
 
-function GhostBtn({ children }: { children: React.ReactNode }) {
+function GhostBtn({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className="inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:bg-white/[0.06]"
       style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
     >
