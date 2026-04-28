@@ -69,13 +69,18 @@ export function LibraryClient({
 
   return (
     <div className="space-y-6 p-6">
-      <header className="flex flex-wrap items-center justify-between gap-4">
+      {/* Brand V2 page header — d26 mockup */}
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
         <div>
-          <h1 className="font-[family-name:var(--font-inter-tight)] text-3xl font-bold text-[var(--color-ink)]">
-            Innholdsbibliotek
+          <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+            / TRENING · LIBRARY
+          </div>
+          <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+            Innholdsbibliotek.
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
-            Generer, gjennomgå og godkjenn øvelser, drills, tester og aktiviteter.
+          <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+            Generer, gjennomgå og godkjenn øvelser, drills, tester og
+            aktiviteter.
           </p>
         </div>
         {canGenerate ? (
