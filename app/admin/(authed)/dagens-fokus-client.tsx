@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { CoachHQDarkShell, PageHead, Card, CardHeader, Button, Pill } from "@/components/admin/coachhq-dark";
 import { SignalCard } from "@/components/admin/coachhq-dark/d1/SignalCard";
 import { Timeline, type TimelineRow } from "@/components/admin/coachhq-dark/d1/Timeline";
@@ -80,16 +81,17 @@ function formatDateMeta(): { eyebrow: string; topbarMeta: string } {
   };
 }
 
-const QUICK_ACTIONS: { label: string; sub: string; icon: LucideIcon }[] = [
-  { label: "Ny spiller", sub: "Onboard", icon: UserPlus },
-  { label: "Ny økt", sub: "Book inn", icon: CalendarPlus },
-  { label: "Ny plan", sub: "Mal-bibliotek", icon: Layers },
-  { label: "Ny faktura", sub: "Stripe", icon: Receipt },
-  { label: "Send melding", sub: "Til spiller", icon: MessageSquarePlus },
-  { label: "AI-sammendrag", sub: "Dagens runder", icon: Sparkles },
+const QUICK_ACTIONS: { label: string; sub: string; icon: LucideIcon; href: string }[] = [
+  { label: "Ny spiller", sub: "Onboard", icon: UserPlus, href: "/admin/elever?ny=1" },
+  { label: "Ny økt", sub: "Book inn", icon: CalendarPlus, href: "/admin/bookinger/ny" },
+  { label: "Ny plan", sub: "Mal-bibliotek", icon: Layers, href: "/admin/treningsplan" },
+  { label: "Ny faktura", sub: "Stripe", icon: Receipt, href: "/admin/okonomi" },
+  { label: "Send melding", sub: "Til spiller", icon: MessageSquarePlus, href: "/admin/meldinger" },
+  { label: "AI-sammendrag", sub: "Dagens runder", icon: Sparkles, href: "/admin/ai-assistent" },
 ];
 
 export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
+  const router = useRouter();
   const { eyebrow, topbarMeta } = formatDateMeta();
   const coachName = user.name?.split(" ")[0] ?? "Coach";
 
@@ -131,13 +133,24 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
         description={`Du har ${data.kpis.sessionsToday} økter i dag · Markus jobber med 8`}
         actions={
           <>
-            <Button variant="ghost" icon={<Filter className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<Filter className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/bookinger")}
+            >
               Filter
             </Button>
-            <Button icon={<Download className="w-3.5 h-3.5" />}>
+            <Button
+              icon={<Download className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/rapporter")}
+            >
               Dagsrapport
             </Button>
-            <Button variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+            <Button
+              variant="primary"
+              icon={<Plus className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/bookinger/ny")}
+            >
               Ny økt
             </Button>
           </>
@@ -161,10 +174,18 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
           }
           actions={
             <>
-              <Button size="sm" icon={<MessageCircle className="w-3 h-3" />}>
+              <Button
+                size="sm"
+                icon={<MessageCircle className="w-3 h-3" />}
+                onClick={() => router.push("/admin/meldinger")}
+              >
                 Send melding
               </Button>
-              <Button size="sm" variant="ghost">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => router.push("/admin/elever")}
+              >
                 Se profiler →
               </Button>
             </>
@@ -180,10 +201,18 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
           description="SG Putting har falt >0.4 siste 4 uker. Anbefaler short-game-fokus i neste plan."
           actions={
             <>
-              <Button size="sm" icon={<Layers className="w-3 h-3" />}>
+              <Button
+                size="sm"
+                icon={<Layers className="w-3 h-3" />}
+                onClick={() => router.push("/admin/treningsplan")}
+              >
                 Bygg plan
               </Button>
-              <Button size="sm" variant="ghost">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => router.push("/admin/analytics")}
+              >
                 Se data →
               </Button>
             </>
@@ -204,10 +233,19 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
           }
           actions={
             <>
-              <Button size="sm" variant="primary" icon={<Trophy className="w-3 h-3" />}>
+              <Button
+                size="sm"
+                variant="primary"
+                icon={<Trophy className="w-3 h-3" />}
+                onClick={() => router.push("/admin/turneringer")}
+              >
                 Sett mål
               </Button>
-              <Button size="sm" variant="ghost">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => router.push("/admin/elever")}
+              >
                 Profil →
               </Button>
             </>
@@ -252,7 +290,9 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
                 return (
                   <button
                     key={q.label}
-                    className="flex items-center gap-2.5 px-3.5 py-3.5 rounded-[10px] border text-left transition-all"
+                    type="button"
+                    onClick={() => router.push(q.href)}
+                    className="flex items-center gap-2.5 px-3.5 py-3.5 rounded-[10px] border text-left transition-all hover:bg-white/[0.05]"
                     style={{
                       background: "rgba(255,255,255,0.025)",
                       borderColor: "#1a4a3a",
