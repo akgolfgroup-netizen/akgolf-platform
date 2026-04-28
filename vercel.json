@@ -133,9 +133,15 @@
   ],
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [{ "type": "host", "value": "portal.akgolf.no" }],
-      "destination": "https://akgolf.no/portal/:path*",
+      "destination": "https://akgolf.no/portal",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!_next|favicon).*)",
+      "has": [{ "type": "host", "value": "portal.akgolf.no" }],
+      "destination": "https://akgolf.no/:path",
       "permanent": false
     }
   ],
