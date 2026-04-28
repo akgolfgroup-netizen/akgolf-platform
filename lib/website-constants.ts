@@ -2392,11 +2392,6 @@ export const JUNIOR_HERO_V3 = {
   ctaPrimaryHref: "#aldersgrupper",
   ctaSecondary: "Book prøvetime",
   ctaSecondaryHref: "/booking-v2?v=2",
-  stats: [
-    { v: "128", l: "Aktive juniorer" },
-    { v: "3", l: "Aldersnivåer" },
-    { v: "96%", l: "Foreldre fornyer" },
-  ],
   photoDescription:
     "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
   photoSrc: "/images/branding/ak-golf-academy-22.jpg",

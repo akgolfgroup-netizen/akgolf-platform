@@ -59,45 +59,6 @@ export function JuniorHeroSection() {
             </WebButton>
           </div>
 
-          <div
-            className="mt-10 flex flex-wrap items-center gap-7 border-t pt-7"
-            style={{
-              borderColor: "var(--akgolf-line-light, #e0e8e5)",
-            }}
-          >
-            {h.stats.map((s, i) => (
-              <div key={s.l} className="flex items-center gap-7">
-                <div className="flex flex-col gap-0.5">
-                  <div
-                    className="text-[28px] font-extrabold tracking-[-0.025em] text-[var(--akgolf-ink,#0A1F18)] tabular-nums"
-                    style={{
-                      fontFamily: "var(--font-inter), Inter, sans-serif",
-                      fontVariantNumeric: "tabular-nums",
-                    }}
-                  >
-                    {s.v}
-                  </div>
-                  <div
-                    className="text-[10px] font-bold uppercase tracking-[0.12em]"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--akgolf-muted, #A5B2AD)",
-                    }}
-                  >
-                    {s.l}
-                  </div>
-                </div>
-                {i < h.stats.length - 1 ? (
-                  <span
-                    className="h-8 w-px"
-                    style={{
-                      background: "var(--akgolf-line-light, #e0e8e5)",
-                    }}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </div>
         </div>
 
         <div>
