@@ -70,7 +70,10 @@ export function MinPlanV2Client({ forecast, userName }: MinPlanV2ClientProps) {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-[1200px] space-y-5 pb-12">
+      <div
+        className="-m-4 lg:-m-8 -mt-18 lg:-mt-8 min-h-[calc(100vh-1rem)] bg-[#0A1F18] text-white"
+      >
+        <div className="mx-auto w-full max-w-[1200px] space-y-5 px-5 py-8 pb-12 pt-22 lg:px-10 lg:py-10 lg:pt-10">
         <div>
           <div
             className="font-mono text-[11px] font-semibold uppercase"
@@ -234,6 +237,7 @@ export function MinPlanV2Client({ forecast, userName }: MinPlanV2ClientProps) {
             <History className="h-4 w-4" />
             Tidligere planer
           </button>
+        </div>
         </div>
       </div>
 
