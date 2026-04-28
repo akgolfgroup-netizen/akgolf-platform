@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
-import { IconRail } from "./IconRail";
 import { NameList } from "./NameList";
 
 interface PlayerHQSidebarProps {
@@ -15,11 +14,9 @@ interface PlayerHQSidebarProps {
 }
 
 /**
- * PlayerHQ Sidebar — tre-panel-layout (56px ikonrad + 200px navnliste).
+ * PlayerHQ Sidebar — én navnliste (220px) med ikon + tekst per item.
  *
- * Designfasit: public/design-reference/handoff-2026-04-27/screens/a1-min-profil.html
  * Brand Guide V2.0.
- *
  * Erstatter: components/portal/layout/sidebar.tsx (Heritage-rest).
  */
 export function PlayerHQSidebar({ user }: PlayerHQSidebarProps) {
@@ -37,8 +34,7 @@ export function PlayerHQSidebar({ user }: PlayerHQSidebarProps) {
 
   return (
     <div className="hidden lg:flex h-screen sticky top-0 z-30 shrink-0">
-      <IconRail user={user} onSignOut={handleSignOut} />
-      <NameList />
+      <NameList user={user} onSignOut={handleSignOut} />
     </div>
   );
 }

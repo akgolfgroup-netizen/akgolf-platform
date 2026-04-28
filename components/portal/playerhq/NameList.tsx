@@ -2,19 +2,34 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import {
   PLAYERHQ_NAV,
   type PlayerHQNavItem,
 } from "./playerhq-nav-config";
 import { isPlayerHQRouteVisible } from "@/lib/portal/feature-flags";
 
+interface NameListProps {
+  user: {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+  onSignOut?: () => void;
+}
+
 /**
- * 200px navnliste — matcher public/design-reference/handoff-2026-04-27/screens/a1-min-profil.html.
+ * 220px sidebar — én panel med ikon + tekst per item.
  *
  * Brand Guide V2.0. Filtrerer items basert på feature-flag-set.
  */
-export function NameList() {
+export function NameList({ user, onSignOut }: NameListProps) {
   const pathname = usePathname();
+  const initials = (user.name ?? user.email ?? "U")
+    .split(/[\s@]/)[0]
+    .slice(0, 2)
+    .toUpperCase();
 
   const sectionsWithVisibleItems = PLAYERHQ_NAV.map((section) => ({
     ...section,
@@ -23,32 +38,39 @@ export function NameList() {
 
   return (
     <aside
-      className="w-[200px] shrink-0 flex flex-col py-5 border-r"
+      className="w-[220px] shrink-0 flex flex-col py-5 border-r"
       style={{
         background: "var(--color-sidebar)",
         color: "#FFFFFF",
         borderColor: "var(--color-sidebar-divider)",
       }}
     >
-      {/* Header */}
-      <div className="px-4 mb-4">
-        <div
-          className="text-[10px] font-mono uppercase tracking-[0.18em] mb-0.5"
-          style={{ color: "var(--color-sidebar-muted)" }}
+      {/* Header med logo */}
+      <div className="px-4 mb-5 flex items-center gap-2.5">
+        <Link
+          href="/portal"
+          className="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-[12px] tracking-tight cursor-pointer select-none shrink-0"
+          style={{
+            background: "var(--color-accent)",
+            color: "var(--color-sidebar)",
+          }}
+          title="AK Golf — PlayerHQ"
         >
-          AK Golf
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="text-sm font-display font-semibold">PlayerHQ</div>
-          <span
-            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono uppercase tracking-widest"
-            style={{
-              background: "rgba(209, 248, 67, 0.15)",
-              color: "var(--color-accent)",
-            }}
+          AK
+        </Link>
+        <div className="min-w-0">
+          <div
+            className="text-[10px] font-mono uppercase tracking-[0.18em] leading-none mb-0.5"
+            style={{ color: "rgba(255, 255, 255, 0.55)" }}
           >
-            spill
-          </span>
+            AK Golf
+          </div>
+          <div
+            className="text-[13px] font-display font-semibold leading-tight"
+            style={{ color: "#FFFFFF" }}
+          >
+            PlayerHQ
+          </div>
         </div>
       </div>
 
@@ -58,7 +80,7 @@ export function NameList() {
             <div className="px-2.5 pb-1">
               <span
                 className="text-[10px] font-mono uppercase tracking-[0.16em]"
-                style={{ color: "var(--color-sidebar-muted)" }}
+                style={{ color: "rgba(255, 255, 255, 0.55)" }}
               >
                 {section.label}
               </span>
@@ -75,6 +97,53 @@ export function NameList() {
           </div>
         ))}
       </nav>
+
+      {/* Bunn: avatar + logg ut */}
+      <div
+        className="px-3 pt-4 mt-2 border-t flex items-center gap-2.5"
+        style={{ borderColor: "var(--color-sidebar-divider)" }}
+      >
+        <Link
+          href="/portal/profil"
+          className="w-8 h-8 rounded-full flex items-center justify-center font-display font-bold text-[10px] shrink-0"
+          style={{
+            background: "var(--color-primary)",
+            color: "var(--color-accent)",
+          }}
+          title={user.name ?? user.email ?? "Profil"}
+          aria-label="Profil"
+        >
+          {initials}
+        </Link>
+        <div className="min-w-0 flex-1">
+          <div
+            className="text-[12px] font-medium truncate"
+            style={{ color: "#FFFFFF" }}
+          >
+            {user.name ?? "Spiller"}
+          </div>
+        </div>
+        {onSignOut && (
+          <button
+            type="button"
+            onClick={onSignOut}
+            className="w-7 h-7 rounded-md flex items-center justify-center cursor-pointer transition-colors"
+            style={{ color: "rgba(255, 255, 255, 0.55)" }}
+            title="Logg ut"
+            aria-label="Logg ut"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--color-sidebar-hover)";
+              e.currentTarget.style.color = "#FFFFFF";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "rgba(255, 255, 255, 0.55)";
+            }}
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        )}
+      </div>
     </aside>
   );
 }
@@ -94,10 +163,10 @@ function NameListLink({
   return (
     <Link
       href={item.href}
-      className="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[13px] font-medium transition-colors"
+      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors"
       style={{
         background: isActive ? "var(--color-sidebar-hover)" : "transparent",
-        color: isActive ? "var(--color-accent)" : "rgba(255, 255, 255, 0.65)",
+        color: isActive ? "var(--color-accent)" : "rgba(255, 255, 255, 0.88)",
       }}
       onMouseEnter={(e) => {
         if (!isActive) {
@@ -108,11 +177,14 @@ function NameListLink({
       onMouseLeave={(e) => {
         if (!isActive) {
           e.currentTarget.style.background = "transparent";
-          e.currentTarget.style.color = "rgba(255, 255, 255, 0.65)";
+          e.currentTarget.style.color = "rgba(255, 255, 255, 0.88)";
         }
       }}
     >
-      <Icon className="w-3.5 h-3.5 shrink-0" />
+      <Icon
+        className="w-4 h-4 shrink-0"
+        strokeWidth={isActive ? 2.4 : 2}
+      />
       <span className="truncate">{item.label}</span>
     </Link>
   );
