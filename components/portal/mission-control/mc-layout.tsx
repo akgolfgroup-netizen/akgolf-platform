@@ -56,7 +56,7 @@ export function MCLayout({ children, user }: MCLayoutProps) {
           <CoachHQSidebar user={user} />
         </div>
         <main
-          className="flex-1 min-h-screen flex flex-col overflow-x-hidden"
+          className="coachhq-dark-content flex-1 min-h-screen flex flex-col overflow-x-hidden"
           style={{ background: "#102B1E" }}
         >
           {children}

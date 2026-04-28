@@ -559,6 +559,64 @@
   --hg-border-subtle: var(--color-outline-variant);
 }
 
+/*
+ * CoachHQ dark content scope (Brand Guide V2.0)
+ *
+ * Brukes på MCLayout-main slik at alle lyse Material/Heritage-tokens fra
+ * eksisterende admin-sider remappes til mørke ekvivalenter. Dette gir
+ * konsistent dark Brand Guide V2.0-look på sider som ennå ikke er manuelt
+ * migrert til pixel-perfekt mørk-design (#102B1E + #0D2E23 + #D1F843).
+ *
+ * Plan: Sprint 2 — manuell rebuild av hver side til pixel-perfekt mockup,
+ * deretter fjerne disse overrides.
+ */
+.coachhq-dark-content {
+  /* Surface-stack remapping: lys -> mørk */
+  --color-surface: #102B1E;
+  --color-surface-bright: #143A2D;
+  --color-surface-dim: #0A1F18;
+  --color-surface-container-lowest: #0D2E23;
+  --color-surface-container-low: #102B1E;
+  --color-surface-container: #143A2D;
+  --color-surface-container-high: #1a4a3a;
+  --color-surface-container-highest: #1F5A47;
+  --color-surface-variant: #143A2D;
+  --color-card: #0D2E23;
+  --color-surface-soft: #102B1E;
+
+  /* Tekst: mørk -> lys */
+  --color-on-surface: #FFFFFF;
+  --color-on-surface-variant: rgba(255, 255, 255, 0.65);
+  --color-ink: #FFFFFF;
+  --color-ink-muted: rgba(255, 255, 255, 0.65);
+  --color-ink-subtle: rgba(255, 255, 255, 0.45);
+  --color-text: #FFFFFF;
+  --color-muted: rgba(255, 255, 255, 0.55);
+
+  /* Borders */
+  --color-outline: rgba(255, 255, 255, 0.18);
+  --color-outline-variant: #1a4a3a;
+  --color-line: #1a4a3a;
+  --color-line-soft: #143A2D;
+
+  /* Inverse (knapper med "dark on light") må snu */
+  --color-inverse-surface: #FFFFFF;
+  --color-inverse-on-surface: #0A1F18;
+
+  /* Tailwind utility-overrides for klasser som hardkoder hvit */
+  color: #FFFFFF;
+}
+
+.coachhq-dark-content .bg-white {
+  background-color: #0D2E23 !important;
+}
+.coachhq-dark-content .bg-card {
+  background-color: #0D2E23 !important;
+}
+.coachhq-dark-content .text-black {
+  color: #FFFFFF !important;
+}
+
 /* ─── Base ─── */
 @layer base {
   html {
