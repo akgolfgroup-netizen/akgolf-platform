@@ -8,6 +8,87 @@
 
 ---
 
+## 2026-04-28 (dag) — Lanserings-prep: PlayerHQ-shell, CoachHQ-rebuild, tekstrevisjon
+
+**Jobbet med:** Anders skal demo'e systemet med trener + daglig leder kl 11. Forberedt prod for visning, fikset blockere, re-bygd alle CoachHQ + PlayerHQ-skjermer fra mockup. Drevet 8 sub-agenter parallelt i bølger.
+
+**Kritiske blockere fikset:**
+- ✅ Stripe live API key fornyet i Vercel (var EKTE blocker — utløpt)
+- ✅ DB-migrasjoner verifisert synkronisert (alle 9 var allerede kjørt mot prod)
+- ✅ Statistikk 500-feil fikset (defensive try/catch på USI-kall)
+- ✅ Min profil edit-knapp fikset
+- ✅ Trackman defensive catch
+- ✅ /portal/runde 404 fikset (redirect til /ny)
+
+**Markedsside — bygd / fikset:**
+- ✅ Forside default byttet fra HomeClient → HomeV2Client (ny redesign)
+- ✅ Koblet 11 ekte bilder til 7 placeholder-WebPhoto (forsiden + junior-academy)
+- ✅ /academy bygd fra g2-mockup pixel-perfekt (7 nye komponenter)
+- ✅ /personvern bygd fra g11-mockup (juridisk innhold bevart)
+- ✅ Forside: fjernet fiktive testimonials (Erik Kvist, Silje Holm) + HERO-stats (65 plasser, 20 min)
+- ✅ Junior Academy: bytt pakke-navn til Mini/Basis-Utvikling/Elite + fjernet alle priser
+- ✅ Markus' navn rettet (var "Markus Lien", nå "Markus Røinås Pedersen") + portrett som "[Foto kommer]" placeholder
+- ✅ /junior-academy + /utvikling skjult fra nav (avventer tekstrevisjon)
+
+**PlayerHQ — ny shell + rebuild:**
+- ✅ Ny PlayerHQSidebar (220px, Brand Guide V2.0) — erstatter Heritage-sidebar
+- ✅ Feature-flag system i `lib/portal/feature-flags.ts` (VISIBLE_PLAYERHQ_ROUTES)
+- ✅ Dashboard default byttet til DashboardBentoClient (ny Bento)
+- ✅ 22 a-skjermer verifisert pixel-perfect via 4 sub-agent bølger:
+  - Bølge 1 (a1, a2, a3, a4, a10): a10 PlayerHQ-360 lagt til (8 nye komponenter)
+  - Bølge 2 (a5–a9): allerede pixel-perfect fra PR #18
+  - Bølge 3 (a11–a16): la til 2 manglende mockup-elementer (comparison-filter-bar, strategi-ai-summary)
+  - Bølge 4 (a17–a22): allerede pixel-perfect fra PR #18
+
+**CoachHQ — pixel-perfect rebuild fra mockup (29 av 30 skjermer):**
+- ✅ Bølge 1 (Kjerne): d1, d2, d3, d4, d13, d14 + ny CoachHQDarkShell
+- ✅ Bølge 2 (Personer): d5, d6, d7, d8 + delt dark-cockpit primitiver
+- ✅ Bølge 3 (Plan): d9, d10, d11, d12 (full rebuild med ekte data)
+- ✅ Bølge 4 (Resten): d15-d26, d28-d30 (15 skjermer — noen full rebuild, andre header-swap)
+- ✅ /admin/hub bygd fra d27-mockup (Hub-launcher med 8 modul-kort + hurtighandlinger)
+- ✅ CoachHQ-sidebar utvidet til 7 grupper med 22 ruter
+- ✅ Sidebar kollapset fra 2 (rail+nav) til 1 (220px med ikoner inni)
+- ✅ MC-sidebar farge byttet fra Heritage emerald til Brand V2 (#0A1F18 + #D1F843)
+
+**Kjente issues — fortsatt på todo:**
+- 🔄 Sub-agent jobber med dark-theme på alle resterende admin-content (mange er fortsatt hvite)
+- ⚠️ Knapper/lenker statiske på CoachHQ-skjermer (visuell match prioritert, interaktivitet kommer)
+- ⚠️ Talent-side (PlayerHQ) ikke koblet til Golf Talent Dashboard
+- ⚠️ Tekstrevisjon: junior-FAQ, utvikling, academy, booking, om-oss, kontakt
+- ⚠️ Treningsplanlegger: filter-pills + høyreklikk-dupliser
+- ⚠️ /booking bytt til booking-v2 (egen cutover)
+- ⚠️ Bilde til fasilitet-booking: Anders fjerner tekst/upscaler først
+- ⚠️ Cleanup: rydd MAINTENANCE_MODE-verdi (har trailing newline)
+
+**Filer endret (utvalg):** ~50+ filer i app/, components/, lib/.
+Mange commits. Hovedendringene:
+- `app/admin/(authed)/admin-shell.tsx` — DARK_SHELL_ROUTES
+- `components/admin/coachhq-dark/` — ny shell + nav
+- `components/portal/playerhq/` — ny PlayerHQSidebar
+- `app/portal/(dashboard)/layout.tsx` — bytte til ny sidebar
+- `app/page.tsx` — bytte default til V2
+- `lib/website-constants.ts` — fjern fiktiv tekst, bytt junior-navn
+- `app/admin/(authed)/hub/` — ny d27 Hub-side
+- `app/personvern/page.tsx` + `components/website-v2/personvern-page-client.tsx`
+- `app/academy/page.tsx` + `components/website-v2/academy/*`
+
+**Demo-flow for trener-møte (kl 11):**
+1. Forside (https://www.akgolf.no/) — ny redesign med ekte bilder
+2. /academy (ny side med pakker)
+3. /portal — PlayerHQ Bento-dashboard
+4. /admin/hub — CoachHQ Hub-launcher
+5. /admin/coaching-board — kanban
+6. /admin/elever — spillerliste
+
+**Neste sesjon — fortsett her:**
+1. Vent på dark-theme sub-agent ferdig (jobber i bakgrunn)
+2. Aktiver knapper/lenker på alle CoachHQ-skjermer
+3. Tekstrevisjon junior FAQ + utvikling + øvrige sider
+4. Talent-side data-tilkobling
+5. Fasilitet-bilde + booking-v2 cutover
+
+---
+
 ## 2026-04-28 (natt) — Komplett rebrand av portal + CoachHQ + standalone (PR #18)
 
 **Jobbet med:** Implementert ~85 av 96 mockups fra handoff-bunten på branchen
