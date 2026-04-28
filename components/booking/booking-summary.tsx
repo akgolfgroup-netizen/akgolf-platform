@@ -1,12 +1,18 @@
 "use client";
 
-
-import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Clock, User, Calendar, Mail, Phone } from "lucide-react";
+import {
+  Clock,
+  User,
+  Calendar,
+  Mail,
+  Phone,
+  CreditCard,
+  Loader2,
+  type LucideIcon,
+} from "lucide-react";
 import { motion } from "framer-motion";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { BookingServiceType, BookingInstructor, BookingMode } from "./booking-types";
 import { formatBookingPrice } from "./booking-types";
 
@@ -44,38 +50,47 @@ export function BookingSummary({
   const slotDate = new Date(slot);
 
   if (showDetails && mode === "public") {
-    return <CustomerDetailsForm
-      customerName={customerName}
-      customerEmail={customerEmail}
-      customerPhone={customerPhone}
-      onSetField={onSetField}
-      isValid={isDetailsValid}
-      onProceed={onProceedToConfirm!}
-      service={service}
-      instructor={instructor}
-      slot={slot}
-    />;
+    return (
+      <CustomerDetailsForm
+        customerName={customerName}
+        customerEmail={customerEmail}
+        customerPhone={customerPhone}
+        onSetField={onSetField}
+        isValid={isDetailsValid}
+        onProceed={onProceedToConfirm!}
+        service={service}
+        instructor={instructor}
+        slot={slot}
+      />
+    );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-[black] mb-6 tracking-tight">
-        Bekreft din booking
-      </h2>
+      <div className="mb-6">
+        <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary mb-3">
+          / Steg 3 — Bekreft
+        </div>
+        <h2 className="font-inter-tight text-[24px] font-bold leading-tight tracking-tight text-ink">
+          Bekreft din booking.
+        </h2>
+      </div>
 
-      <PremiumCard className="mb-6" padding="sm" hover="none">
-        <div className="p-5 border-b border-[grey-200]">
-          <div className="flex items-center gap-2.5">
+      <div className="bg-surface-soft border border-line rounded-2xl overflow-hidden mb-6">
+        <div className="p-5 border-b border-line">
+          <div className="flex items-center gap-3">
             <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: service.color ?? undefined }}
+              className="w-3 h-3 rounded-full shrink-0"
+              style={{ backgroundColor: service.color ?? "var(--color-primary)" }}
             />
-            <h3 className="text-lg font-semibold text-[black]">{service.name}</h3>
+            <h3 className="font-inter-tight text-[18px] font-bold tracking-tight text-ink">
+              {service.name}
+            </h3>
           </div>
         </div>
 
-        <div className="p-5 space-y-4">
-          <SummaryRow icon={User} label="Instruktør" value={instructor.user.name ?? ""} />
+        <div className="p-5 space-y-4 bg-card">
+          <SummaryRow icon={User} label="Instruktor" value={instructor.user.name ?? ""} />
           <SummaryRow
             icon={Calendar}
             label="Dato og tid"
@@ -87,35 +102,38 @@ export function BookingSummary({
           )}
         </div>
 
-        <div className="px-5 py-4 bg-[grey-50] flex items-center justify-between rounded-b-xl">
-          <span className="text-sm text-[grey-400]">Totalpris</span>
-          <span className="text-2xl font-semibold text-[black] tabular-nums">
+        <div className="px-5 py-4 bg-surface-soft flex items-center justify-between">
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+            Totalpris
+          </span>
+          <span className="font-inter-tight text-[24px] font-bold tracking-tight text-ink tabular-nums">
             {formatBookingPrice(service.price)}
           </span>
         </div>
-      </PremiumCard>
+      </div>
 
       <motion.button
+        type="button"
         onClick={onBook}
         disabled={booking}
-        className="w-full py-4 rounded-full bg-[accent-cta] text-[black] font-semibold flex items-center justify-center gap-2.5 hover:brightness-95 transition-colors disabled:opacity-50"
+        className="w-full py-3.5 rounded-full bg-accent text-ink font-semibold text-[14px] flex items-center justify-center gap-2 hover:bg-accent-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         whileTap={{ scale: 0.99 }}
       >
         {booking ? (
           <>
-            <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" />
             Behandler...
           </>
         ) : (
           <>
-            <Icon name="credit_card" className="w-4 h-4" />
+            <CreditCard className="w-4 h-4" strokeWidth={2.2} />
             Betal med kort
           </>
         )}
       </motion.button>
 
-      <p className="text-xs text-[grey-400] text-center mt-4">
-        Sikker betaling via Stripe. Du mottar bekreftelse på e-post.
+      <p className="text-[12px] text-ink-subtle text-center mt-4">
+        Sikker betaling via Stripe. Du mottar bekreftelse pa e-post.
       </p>
     </div>
   );
@@ -150,16 +168,21 @@ function CustomerDetailsForm({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-[black] mb-2 tracking-tight">
-        Dine opplysninger
-      </h2>
-      <p className="text-sm text-[grey-400] mb-6">
-        Fyll inn kontaktinformasjon for bookingen
-      </p>
+      <div className="mb-6">
+        <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary mb-3">
+          / Steg 3 — Dine opplysninger
+        </div>
+        <h2 className="font-inter-tight text-[24px] font-bold leading-tight tracking-tight text-ink mb-1">
+          Dine opplysninger.
+        </h2>
+        <p className="text-[13px] text-ink-muted">
+          Fyll inn kontaktinformasjon for bookingen.
+        </p>
+      </div>
 
-      <div className="bg-[grey-50] rounded-xl p-4 mb-6 text-sm space-y-1.5">
-        <p className="font-medium text-[black]">{service.name}</p>
-        <p className="text-[grey-400]">
+      <div className="bg-surface-soft border border-line rounded-xl p-4 mb-6 text-[13px] space-y-1">
+        <p className="font-semibold text-ink">{service.name}</p>
+        <p className="text-ink-muted">
           {instructor.user.name} — {format(slotDate, "EEE d. MMM 'kl.' HH:mm", { locale: nb })}
         </p>
       </div>
@@ -181,7 +204,7 @@ function CustomerDetailsForm({
           onChange={(v) => onSetField("customerEmail", v)}
           placeholder="din@epost.no"
           icon={Mail}
-          hint="Har du booket før med denne e-posten, kobles timen til din profil."
+          hint="Har du booket for med denne e-posten, kobles timen til din profil."
         />
         <InputField
           label="Telefonnummer"
@@ -194,9 +217,10 @@ function CustomerDetailsForm({
       </div>
 
       <motion.button
+        type="button"
         onClick={onProceed}
         disabled={!isValid}
-        className="w-full mt-6 py-4 rounded-full bg-[black] text-surface font-semibold hover:bg-[grey-800] transition-colors disabled:opacity-50"
+        className="w-full mt-6 py-3.5 rounded-full bg-ink text-card font-semibold text-[14px] hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         whileTap={{ scale: 0.99 }}
       >
         Fortsett til betaling
@@ -208,25 +232,27 @@ function CustomerDetailsForm({
 /* ---- Helpers ---- */
 
 function SummaryRow({
-  icon: Icon,
+  icon: IconComp,
   label,
   value,
   sub,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   label: string;
   value: string;
   sub?: string;
 }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 rounded-lg bg-[grey-50] flex items-center justify-center flex-shrink-0">
-        <Icon className="w-4 h-4 text-[black]" />
+      <div className="w-9 h-9 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+        <IconComp className="w-4 h-4 text-primary" strokeWidth={2} />
       </div>
-      <div className="min-w-0">
-        <p className="text-xs text-[grey-400] uppercase tracking-wider">{label}</p>
-        <p className="text-sm font-medium text-[black] truncate">{value}</p>
-        {sub && <p className="text-xs text-[grey-400] truncate">{sub}</p>}
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-ink-subtle">
+          {label}
+        </p>
+        <p className="text-[13px] font-semibold text-ink truncate">{value}</p>
+        {sub && <p className="text-[12px] text-ink-muted truncate">{sub}</p>}
       </div>
     </div>
   );
@@ -239,7 +265,7 @@ function InputField({
   value,
   onChange,
   placeholder,
-  icon: Icon,
+  icon: IconComp,
   hint,
 }: {
   label: string;
@@ -248,31 +274,32 @@ function InputField({
   value: string;
   onChange: (v: string) => void;
   placeholder: string;
-  icon?: React.ComponentType<{ className?: string }>;
+  icon?: LucideIcon;
   hint?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-[black] mb-1.5">
-        {label} {required && <span className="text-[error]">*</span>}
+      <label className="block text-[13px] font-semibold text-ink mb-1.5">
+        {label} {required && <span className="text-danger">*</span>}
       </label>
       <div className="relative">
-        {Icon && (
-          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[grey-300]" />
+        {IconComp && (
+          <IconComp
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle"
+            strokeWidth={2}
+          />
         )}
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={[
-            "w-full py-3 rounded-lg border border-[grey-200] bg-surface-container-lowest text-[black] placeholder:text-[grey-300]",
-            "focus:outline-none focus:border-[black] focus:ring-1 focus:ring-[black]/20 transition-colors",
-            Icon ? "pl-10 pr-4" : "px-4",
-          ].join(" ")}
+          className={`w-full py-3 rounded-lg border border-line bg-card text-[14px] text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-soft transition-colors ${
+            IconComp ? "pl-10 pr-4" : "px-4"
+          }`}
         />
       </div>
-      {hint && <p className="text-xs text-[grey-400] mt-1">{hint}</p>}
+      {hint && <p className="text-[12px] text-ink-subtle mt-1">{hint}</p>}
     </div>
   );
 }
