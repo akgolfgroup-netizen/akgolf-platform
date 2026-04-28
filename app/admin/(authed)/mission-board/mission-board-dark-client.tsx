@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   CoachHQDarkShell,
   PageHead,
@@ -65,6 +66,7 @@ const DEADLINE_STYLES: Record<MissionCard["deadlineTone"], React.CSSProperties> 
   };
 
 export function MissionBoardDarkClient({ user }: MissionBoardDarkClientProps) {
+  const router = useRouter();
   return (
     <CoachHQDarkShell
       user={user}
@@ -77,13 +79,25 @@ export function MissionBoardDarkClient({ user }: MissionBoardDarkClientProps) {
         description="Hver spiller har 1–3 aktive oppdrag. Klikk for å se hele veien — fra første kartlegging til mål."
         actions={
           <>
-            <Button variant="ghost" icon={<Filter className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<Filter className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/elever")}
+            >
               Alle oppdrag
             </Button>
-            <Button variant="ghost" icon={<LayoutList className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              icon={<LayoutList className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/elever/oversikt")}
+            >
               Tabell-visning
             </Button>
-            <Button variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+            <Button
+              variant="primary"
+              icon={<Plus className="w-3.5 h-3.5" />}
+              onClick={() => router.push("/admin/treningsplan")}
+            >
               Nytt oppdrag
             </Button>
           </>
@@ -101,7 +115,12 @@ export function MissionBoardDarkClient({ user }: MissionBoardDarkClientProps) {
       {/* Mission grid */}
       <div className="grid grid-cols-3 gap-4">
         {MISSIONS.map((m) => (
-          <MissionCardView key={m.id} card={m} />
+          <MissionCardView
+            key={m.id}
+            card={m}
+            onPrimary={() => router.push("/admin/meldinger")}
+            onDetail={() => router.push("/admin/elever")}
+          />
         ))}
       </div>
     </CoachHQDarkShell>
@@ -147,7 +166,15 @@ function SummaryItem({
   );
 }
 
-function MissionCardView({ card }: { card: MissionCard }) {
+function MissionCardView({
+  card,
+  onPrimary,
+  onDetail,
+}: {
+  card: MissionCard;
+  onPrimary: () => void;
+  onDetail: () => void;
+}) {
   const FooterIcon = card.footer?.primaryIcon === "users" ? Users : MessageCircle;
 
   return (
@@ -306,10 +333,14 @@ function MissionCardView({ card }: { card: MissionCard }) {
         className="flex gap-1.5 pt-3"
         style={{ borderTop: "1px solid #1a4a3a" }}
       >
-        <Button size="sm" icon={<FooterIcon className="w-3 h-3" />}>
+        <Button
+          size="sm"
+          icon={<FooterIcon className="w-3 h-3" />}
+          onClick={onPrimary}
+        >
           {card.footer?.primaryLabel ?? "Notat"}
         </Button>
-        <Button size="sm" variant="ghost">
+        <Button size="sm" variant="ghost" onClick={onDetail}>
           Detalj →
         </Button>
       </div>
