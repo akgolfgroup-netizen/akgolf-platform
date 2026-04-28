@@ -92,6 +92,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     startH?: number;
     startM?: number;
     facilityId?: string;
+    lPhases?: string[];
+    lifeFocus?: string[];
   }) {
     "use server";
     return createSessionForWeek(data);

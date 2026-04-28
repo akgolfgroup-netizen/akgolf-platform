@@ -716,6 +716,10 @@ export async function createSessionForWeek(data: {
   startH?: number;
   startM?: number;
   facilityId?: string;
+  /** Bevegelse-fokus (L-faser, f.eks. ["L-KROPP", "L-ARM"]). Lagres som metadata i exercises-JSON. */
+  lPhases?: string[];
+  /** LIFE-dimensjoner (f.eks. ["LIFE-EMO", "LIFE-SELV"]). Lagres som metadata i exercises-JSON. */
+  lifeFocus?: string[];
 }) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke autentisert");
@@ -761,13 +765,21 @@ export async function createSessionForWeek(data: {
     }
   }
 
-  // Bygg exercises JSON med starttids-metadata
+  // Bygg exercises JSON med starttids-metadata + filter-pills (BEVEGELSE/LIFE)
   const exercises: Record<string, unknown>[] = [];
+  const meta: Record<string, unknown> = {};
   if (data.startH !== undefined && data.startM !== undefined) {
-    exercises.push({
-      _startH: data.startH,
-      _startM: data.startM,
-    });
+    meta._startH = data.startH;
+    meta._startM = data.startM;
+  }
+  if (data.lPhases && data.lPhases.length > 0) {
+    meta._lPhases = data.lPhases;
+  }
+  if (data.lifeFocus && data.lifeFocus.length > 0) {
+    meta._lifeFocus = data.lifeFocus;
+  }
+  if (Object.keys(meta).length > 0) {
+    exercises.push(meta);
   }
 
   // Opprett økt

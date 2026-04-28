@@ -154,6 +154,8 @@ interface TreningsplanPlannerProps {
     startH?: number;
     startM?: number;
     facilityId?: string;
+    lPhases?: string[];
+    lifeFocus?: string[];
   }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
   onAddExerciseToSession: (
     sessionId: string,
@@ -914,6 +916,12 @@ function CreateSessionModal({
   const [reps, setReps] = useState<string>("");
   const [focus, setFocus] = useState<string>("TEK");
   const [area, setArea] = useState<string>("");
+  /** Hva øver du på — én av de 4 hovedgruppene (tee/innspill/narspill/putting). */
+  const [areaGroup, setAreaGroup] = useState<string>("");
+  /** BEVEGELSE — multiselect L-faser (KROPP/ARM/KØLLE/BALL/AUTO). */
+  const [lPhases, setLPhases] = useState<string[]>([]);
+  /** LIFE — multiselect (SELV/SOS/EMO/KAR/RES). */
+  const [lifeFocus, setLifeFocus] = useState<string[]>([]);
   const [startH, setStartH] = useState(startHour);
   const [startM, setStartM] = useState(0);
   const [notes, setNotes] = useState("");
@@ -972,6 +980,8 @@ function CreateSessionModal({
       startH,
       startM,
       facilityId: facilityId || undefined,
+      lPhases: lPhases.length > 0 ? lPhases : undefined,
+      lifeFocus: lifeFocus.length > 0 ? lifeFocus : undefined,
     });
 
     if (result && "error" in result) {
@@ -1125,30 +1135,135 @@ function CreateSessionModal({
             </div>
           </div>
 
-          {/* Hva øver du på (Treningsområde) */}
+          {/* Hva øver du på (Treningsområde — gruppe-pills + sub-area-pills) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
               Hva øver du på (valgfri)
             </label>
             <p className="mt-1 text-[11px] text-on-surface-variant">
-              F.eks. innspill 50–100 m, chip eller putt 5–10 ft.
+              Velg hovedområde — du kan finjustere etter at gruppen er valgt.
             </p>
-            <select
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-            >
-              <option value="">Ingen valgt</option>
-              {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.label}>
-                  {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
-                    <option key={o.code} value={o.code}>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {OMRADE_GRUPPER.map((g) => {
+                const active = areaGroup === g.code;
+                return (
+                  <button
+                    key={g.code}
+                    type="button"
+                    onClick={() => {
+                      if (active) {
+                        setAreaGroup("");
+                        setArea("");
+                      } else {
+                        setAreaGroup(g.code);
+                        setArea("");
+                      }
+                    }}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {g.label}
+                  </button>
+                );
+              })}
+            </div>
+            {areaGroup && (
+              <div className="mt-2 flex flex-wrap gap-1.5 rounded-lg bg-surface-container/50 p-2">
+                {TRENINGSOMRADER.filter((o) => o.gruppe === areaGroup).map((o) => {
+                  const active = area === o.code;
+                  return (
+                    <button
+                      key={o.code}
+                      type="button"
+                      onClick={() => setArea(active ? "" : o.code)}
+                      className={`rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                        active
+                          ? "bg-primary text-surface"
+                          : "border border-outline-variant/20 bg-surface text-on-surface-variant hover:bg-surface-container"
+                      }`}
+                    >
                       {o.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* BEVEGELSE (L-faser — multiselect) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Bevegelse (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hvilke L-faser skal denne økten dekke? Velg én eller flere.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {L_FASER.map((l) => {
+                const active = lPhases.includes(l.code);
+                return (
+                  <button
+                    key={l.code}
+                    type="button"
+                    onClick={() =>
+                      setLPhases((prev) =>
+                        prev.includes(l.code)
+                          ? prev.filter((x) => x !== l.code)
+                          : [...prev, l.code],
+                      )
+                    }
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                    title={l.description}
+                  >
+                    {l.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* LIFE (multiselect) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Life (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Mental/livsstil-dimensjoner som økten støtter.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {LIFE_KODER.map((l) => {
+                const active = lifeFocus.includes(l.code);
+                const shortLabel = l.code.replace("LIFE-", "");
+                return (
+                  <button
+                    key={l.code}
+                    type="button"
+                    onClick={() =>
+                      setLifeFocus((prev) =>
+                        prev.includes(l.code)
+                          ? prev.filter((x) => x !== l.code)
+                          : [...prev, l.code],
+                      )
+                    }
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                    title={`${l.label} — ${l.description}`}
+                  >
+                    {shortLabel}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Fasilitet */}
