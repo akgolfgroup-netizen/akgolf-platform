@@ -4,6 +4,7 @@ const INK = "var(--akgolf-ink, #0A1F18)";
 const ACCENT = "var(--akgolf-accent, #D1F843)";
 
 export function UtviklingStatsRow() {
+  if (UTVIKLING_STATS_V2.length === 0) return null;
   return (
     <section className="px-10">
       <div className="mx-auto max-w-[1280px]">

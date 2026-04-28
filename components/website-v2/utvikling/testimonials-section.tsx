@@ -17,6 +17,7 @@ const AVATAR_STYLES: Record<"purple" | "green", string> = {
 };
 
 export function UtviklingTestimonialsSection() {
+  if (UTVIKLING_TESTIMONIALS_V2.length === 0) return null;
   return (
     <section className="px-10">
       <div className="mx-auto max-w-[1280px]">

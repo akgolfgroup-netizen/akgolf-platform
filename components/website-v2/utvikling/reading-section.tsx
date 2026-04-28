@@ -48,6 +48,7 @@ function renderMarkdownLite(text: string): React.ReactNode {
 }
 
 export function UtviklingReadingSection() {
+  if (!r.label && r.paragraphs.length === 0) return null;
   return (
     <article className="mx-auto max-w-[800px] px-10 py-25">
       <div

@@ -2015,31 +2015,18 @@ export const UTVIKLING_STATS_V2: Array<{
 }> = [];
 
 export const UTVIKLING_READING_V2 = {
-  label: "PERSPEKTIV · ERIK SOLHEIM",
-  headingStart: "Hvorfor de fleste golfere ikke",
-  headingEm: "egentlig",
-  headingEnd: "blir bedre.",
-  paragraphs: [
-    "I 2018 satt jeg meg ned med 80 av spillerne mine og spurte: «Hva har du faktisk forbedret de siste 12 månedene?» Mer enn halvparten kunne ikke svare. Det var ikke fordi de ikke trente — det var fordi vi som coacher ikke målte det riktige.",
-    "Det er hele grunnen til at AK Golf ble bygd opp slik det er i dag. **En spiller utvikler seg når tre ting er på plass: en plan, jevnlig måling, og noen som vet hva tallene betyr.** Mangler én av de tre, sirkler du.",
-  ],
-  pullquote:
-    "En spiller utvikler seg når tre ting er på plass: en plan, jevnlig måling, og noen som vet hva tallene betyr.",
-  v3Heading: "Hva er nytt i V3 (2026)",
-  v3Intro:
-    "Modellen vår har eksistert siden 2019. Hver vinter setter vi oss ned, ser på dataene fra forrige sesong, og spør hva som kan gjøres bedre. For 2026 er det fire endringer:",
-  v3Bullets: [
-    "**Mental-pillaren er flyttet fra «på etterspørsel» til en del av hovedplanen.** Vi har sett at spillere som jobber med Marte fra start, taper dramatisk færre slag i siste 4 hull.",
-    "**Strokes-Gained er innebygd, ikke et tillegg.** Hver runde du logger via PlayerHQ blir automatisk analysert. Du ser hvor du tjener og taper slag i sanntid.",
-    "**Vi har innført et «kvartal-spor».** Tre-måneders sykluser med kartlegging → fokus → re-test, slik at du alltid vet om noe rører på seg.",
-    "**Foreldre-portalen er rebygd fra grunnen.** Foreldre kan se nøyaktig hva barnet jobber med, uten at vi blottlegger barnet.",
-  ],
-  forYouHeading: "Hva betyr dette for deg som spiller?",
-  forYouParagraphs: [
-    "Helt konkret: Du får en treningsplan som oppdaterer seg basert på dine tall. Du møter en coach som vet hva du jobbet med sist. Du får færre «huller» mellom økter — og du føler at du beveger deg fremover, fordi du faktisk gjør det.",
-    "Tallene over er ikke der for å imponere. De er der fordi vi mener vi skylder deg åpenhet. Vi skal ikke være de største — vi skal være det __akademiet du anbefaler videre__ til vennen din om to år.",
-  ],
-} as const;
+  label: "",
+  headingStart: "",
+  headingEm: "",
+  headingEnd: "",
+  paragraphs: [] as string[],
+  pullquote: "",
+  v3Heading: "",
+  v3Intro: "",
+  v3Bullets: [] as string[],
+  forYouHeading: "",
+  forYouParagraphs: [] as string[],
+};
 
 export const UTVIKLING_COMPARE_V2 = {
   label: "VS. TYPISK PRO-TIME",
@@ -2079,32 +2066,21 @@ export const UTVIKLING_COMPARE_V2 = {
   ],
 } as const;
 
-export const UTVIKLING_TESTIMONIALS_V2 = [
-  {
-    quoteStart: "Jeg har vært hos tre andre coacher før Erik. Forskjellen var ",
-    quoteEm: "strukturen",
-    quoteEnd: ". Plutselig visste jeg hvor jeg sto — og hvor jeg skulle.",
-    name: "Sofie Aas",
-    meta: "HCP 12 → 7.7 PÅ 14 MND · ELITE-SPOR",
-    avatar: "purple" as const,
-  },
-  {
-    quoteStart: "Anders kommer hjem og ",
-    quoteEm: "snakker om",
-    quoteEnd:
-      " golf — og det har han aldri gjort før. Han forstår at det er en plan, og han er ivrig på neste økt.",
-    name: "Marte Kristiansen",
-    meta: "MOR · ANDERS · 14 ÅR · JUNIOR-SPOR",
-    avatar: "green" as const,
-  },
-] as const;
+export const UTVIKLING_TESTIMONIALS_V2: Array<{
+  quoteStart: string;
+  quoteEm: string;
+  quoteEnd: string;
+  name: string;
+  meta: string;
+  avatar: "purple" | "green";
+}> = [];
 
 export const UTVIKLING_CTA_V2 = {
   headingStart: "Klar for å bygge din egen",
   headingEm: "plan?",
   description:
-    "30 minutter med Erik — gratis, uforpliktende. Vi diskuterer hvor du står, hvor du vil, og om akademiet er rett match. Ingen salg på første time.",
-  ctaPrimary: "Book intro · gratis",
+    "Ta kontakt for en uforpliktende prat. Vi diskuterer hvor du står, hvor du vil, og om akademiet er rett match.",
+  ctaPrimary: "Ta kontakt",
   ctaPrimaryHref: "/kontakt",
   ctaSecondary: "Se priser",
   ctaSecondaryHref: "/pricing",
