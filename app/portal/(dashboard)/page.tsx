@@ -48,8 +48,9 @@ export default async function DashboardPage({
   const user = await requirePortalUser();
   const sp = (await searchParams) ?? {};
   const cookieStore = await cookies();
-  const wantsBento =
-    sp.dashboard === "bento" || cookieStore.get("dashboard")?.value === "bento";
+  const wantsLegacy =
+    sp.dashboard === "v3" || cookieStore.get("dashboard")?.value === "v3";
+  const wantsBento = !wantsLegacy;
 
   // Check if onboarding is completed
   const supabase = await createServerSupabase();
