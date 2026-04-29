@@ -2341,6 +2341,11 @@ export const JUNIOR_HERO_V3 = {
   photoDescription:
     "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
   photoSrc: "/images/branding/ak-golf-academy-22.jpg",
+  meta: [
+    { v: "3", l: "Aldersnivåer" },
+    { v: "6–17", l: "Aldersspenn" },
+    { v: "Egen", l: "Juniortrener" },
+  ] as Array<{ v: string; l: string }>,
 } as const;
 
 export const JUNIOR_AGE_GROUPS_V3 = {

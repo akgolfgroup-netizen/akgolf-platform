@@ -5,6 +5,7 @@ import { JUNIOR_HERO_V3 } from "@/lib/website-constants";
 
 export function JuniorHeroSection() {
   const h = JUNIOR_HERO_V3;
+  const meta = h.meta ?? [];
   return (
     <section
       className="relative px-10 pb-20 pt-[130px]"
@@ -45,7 +46,7 @@ export function JuniorHeroSection() {
             </em>
             {h.headingTrail}
           </h1>
-          <p className="max-w-[56ch] text-[18px] leading-[1.55] text-[var(--akgolf-text,#324D45)]">
+          <p className="max-w-[60ch] text-[19px] leading-[1.55] text-[var(--akgolf-text,#324D45)] text-pretty">
             {h.description}
           </p>
           <div className="mt-9 flex flex-wrap gap-3.5">
@@ -59,6 +60,45 @@ export function JuniorHeroSection() {
             </WebButton>
           </div>
 
+          {meta.length > 0 ? (
+            <div
+              className="mt-9 flex flex-wrap items-center gap-7 border-t pt-7"
+              style={{ borderColor: "var(--akgolf-line-light, #e0e8e5)" }}
+            >
+              {meta.map((m, i) => (
+                <div key={m.l} className="flex items-center gap-7">
+                  <div className="flex flex-col gap-0.5">
+                    <div
+                      className="text-[28px] font-extrabold tracking-[-0.025em] text-[var(--akgolf-ink,#0A1F18)] tabular-nums"
+                      style={{
+                        fontFamily: "var(--font-inter), Inter, sans-serif",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      {m.v}
+                    </div>
+                    <div
+                      className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--akgolf-muted,#A5B2AD)]"
+                      style={{
+                        fontFamily: "var(--font-jetbrains-mono), monospace",
+                      }}
+                    >
+                      {m.l}
+                    </div>
+                  </div>
+                  {i < meta.length - 1 ? (
+                    <div
+                      className="h-8 w-px"
+                      style={{
+                        background: "var(--akgolf-line-light, #e0e8e5)",
+                      }}
+                      aria-hidden="true"
+                    />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div>

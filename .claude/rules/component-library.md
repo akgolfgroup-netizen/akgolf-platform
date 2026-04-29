@@ -3,6 +3,21 @@
 Sjekk ALLTID denne filen FØR du bygger en ny komponent.
 Gjenbruk eksisterende — aldri bygg duplikater.
 
+## Markedsside Kontakt v2 (Brand Guide V2.0 — pixel-rebuild 2026-04-29)
+Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens/g10-kontakt.html`.
+Default visning av `/kontakt`. Bruker `/api/contact`-endepunktet for skjema-submit.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| ContactPageClient | components/website-v2/contact-page-client.tsx | Orchestrator: hero, quick-tiles, form+sidebar, lokasjoner, FAQ |
+| ContactHero | components/website-v2/contact/contact-hero.tsx | "Vi svarer samme dag." hero med Fraunces-italic |
+| ContactQuickTiles | components/website-v2/contact/contact-quick-tiles.tsx | 4 quick-cards (e-post, Anders telefon, Markus telefon, Instagram) |
+| ContactFormSection | components/website-v2/contact/contact-form-section.tsx | Container med form-card + sidebar i 1.5fr/1fr grid |
+| ContactFormCard | components/website-v2/contact/contact-form-card.tsx | Hovedskjema: navn, kontakt, lokasjon, melding, samtykke |
+| ContactTopicGrid | components/website-v2/contact/contact-topic-grid.tsx | 6 topic-pills (Bli spiller, Junior, Booking, Bedrift, Presse, Annet) |
+| ContactSidebar | components/website-v2/contact/contact-sidebar.tsx | Mork CTA-kort + info-rader (org-nr, coacher, generell e-post) |
+| ContactLocations | components/website-v2/contact/contact-locations.tsx | Kart-tile + lokasjonskort for Gamle Fredrikstad GK |
+| ContactFaq | components/website-v2/contact/contact-faq.tsx | 5 vanlige spsorsmal i toggle-liste |
+
 ## Booking Wizard-komponenter (delt mellom markedsside og portal)
 | Komponent | Fil | Bruk |
 |---|---|---|
