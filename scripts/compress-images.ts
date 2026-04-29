@@ -1,19 +1,16 @@
 /**
  * Konservativ bildekomprimering for public/images/.
  *
- * Bruker sharp (kommer med Next.js-installasjonen) til a:
- *   1. Konvertere store .jpg/.jpeg/.png til WebP @ kvalitet 82
- *   2. Bytte ut originalen kun hvis ny fil er minst 30% mindre
- *   3. Lagre originaler i public/images/_backup-pre-compress/<sti>
+ * Bruker sharp til a re-komprimere store JPG-filer i samme format (.jpg)
+ * med kvalitet 82 + mozjpeg, sa import-stier i koden ikke breaker.
  *
- * Kjor manuelt etter visuell sammenligning av et utvalg:
+ * For format-bytte til WebP/AVIF: oppdater alle .jpg-referanser i koden
+ * forst, deretter modify dette scriptet til a outputte .webp.
+ *
  *   npx tsx scripts/compress-images.ts --dry-run   # vis hva som vil endres
  *   npx tsx scripts/compress-images.ts --apply     # gjor endringene
  *
- * NB: <Image>-komponenten i Next.js velger automatisk WebP/AVIF for
- * stottede browsere — vi trenger ikke endre import-stier i koden.
- *
- * Kun .jpg/.jpeg → .webp. PNG-filer beholdes (kan ha alpha-kanal).
+ * Kun .jpg/.jpeg → .jpg (mozjpeg). PNG beholdes (alpha-kanal).
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -59,10 +56,12 @@ async function compressOne(file: string): Promise<Result> {
   const ext = path.extname(file).toLowerCase();
   const isPng = ext === ".png";
 
-  // Generer komprimert versjon i minne
+  // Generer komprimert versjon i minne. JPG → JPG (mozjpeg) for a beholde
+  // import-stier i koden. WebP-konvertering krever forst kode-oppdatering
+  // av alle .jpg-referanser.
   const buf = isPng
     ? await sharp(file).png({ quality: QUALITY, compressionLevel: 9 }).toBuffer()
-    : await sharp(file).webp({ quality: QUALITY }).toBuffer();
+    : await sharp(file).jpeg({ quality: QUALITY, mozjpeg: true }).toBuffer();
 
   const newKB = Math.round(buf.length / 1024);
   const reductionPct = Math.round((1 - newKB / origKB) * 100);
@@ -88,12 +87,8 @@ async function compressOne(file: string): Promise<Result> {
   await fs.mkdir(path.dirname(backupPath), { recursive: true });
   await fs.copyFile(file, backupPath);
 
-  // Skriv komprimert. For JPG → WebP (ny extension)
-  const newFile = isPng ? file : file.replace(/\.(jpe?g)$/i, ".webp");
-  await fs.writeFile(newFile, buf);
-  if (newFile !== file) {
-    await fs.unlink(file); // slett original .jpg
-  }
+  // Skriv komprimert i samme format og samme sti — ingen extension-bytte.
+  await fs.writeFile(file, buf);
 
   return { file, origKB, newKB, reductionPct, applied: true };
 }
