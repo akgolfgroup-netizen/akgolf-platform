@@ -126,11 +126,11 @@ function categorizeFocusArea(focusArea: string | null): string | null {
 async function withWidgetGuard<T>(
   name: string,
   fallback: T,
-  fn: () => Promise<T>,
+  fn: (userId: string) => Promise<T>,
 ): Promise<T> {
   try {
-    await requirePortalUser();
-    return await fn();
+    const user = await requirePortalUser();
+    return await fn(user.id);
   } catch (error) {
     console.error(`[widgets/${name}] failed:`, error);
     return fallback;
@@ -146,10 +146,8 @@ async function withWidgetGuard<T>(
  * spillere bor dette skrives om til DISTINCT ON (raw SQL) for a finne kun
  * topp 5 i DB i stedet for a laste alle og sortere i JS.
  */
-export async function getLeaderboard(
-  currentUserId: string,
-): Promise<LeaderboardEntry[]> {
-  return withWidgetGuard("getLeaderboard", [], async () => {
+export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
+  return withWidgetGuard("getLeaderboard", [], async (currentUserId) => {
     const users = await prisma.user.findMany({
       where: { role: "STUDENT", isActive: true },
       take: LEADERBOARD_USER_LIMIT,
@@ -204,10 +202,8 @@ export async function getLeaderboard(
 /**
  * Naermeste fremtidige Tournament der userId har TournamentPrep.
  */
-export async function getNextCompetition(
-  userId: string,
-): Promise<NextCompetition | null> {
-  return withWidgetGuard("getNextCompetition", null, async () => {
+export async function getNextCompetition(): Promise<NextCompetition | null> {
+  return withWidgetGuard("getNextCompetition", null, async (userId) => {
     const now = new Date();
     const prep = await prisma.tournamentPrep.findFirst({
       where: { userId, Tournament: { startDate: { gte: now } } },
@@ -235,10 +231,9 @@ export async function getNextCompetition(
  * Bruker PYRAMIDE som farge- og kategori-kilde.
  */
 export async function getTrainingVolume(
-  userId: string,
   period: "week" | "month",
 ): Promise<TrainingVolumeBucket[]> {
-  return withWidgetGuard("getTrainingVolume", [], async () => {
+  return withWidgetGuard("getTrainingVolume", [], async (userId) => {
     const since = new Date();
     if (period === "week") {
       since.setDate(since.getDate() - 7);
@@ -275,10 +270,8 @@ export async function getTrainingVolume(
 /**
  * Siste DegradationTracking per skill-area (shotType).
  */
-export async function getDegradationAlerts(
-  userId: string,
-): Promise<DegradationAlert[]> {
-  return withWidgetGuard("getDegradationAlerts", [], async () => {
+export async function getDegradationAlerts(): Promise<DegradationAlert[]> {
+  return withWidgetGuard("getDegradationAlerts", [], async (userId) => {
     const tracking = await prisma.degradationTracking.findMany({
       where: { userId },
       orderBy: { lastUpdated: "desc" },
@@ -323,8 +316,8 @@ export async function getDegradationAlerts(
 /**
  * Mental-trender — fra MentalProfile + siste 5 MentalScorecardEntry-snapshots.
  */
-export async function getMentalTrends(userId: string): Promise<MentalTrend[]> {
-  return withWidgetGuard("getMentalTrends", [], async () => {
+export async function getMentalTrends(): Promise<MentalTrend[]> {
+  return withWidgetGuard("getMentalTrends", [], async (userId) => {
     const [profile, snapshots] = await Promise.all([
       prisma.mentalProfile.findUnique({
         where: { userId },
@@ -411,8 +404,8 @@ export async function getMentalTrends(userId: string): Promise<MentalTrend[]> {
 /**
  * Alle PeriodizationPeriod for inneverende ar, mappet til maneder.
  */
-export async function getSeasonPlan(userId: string): Promise<SeasonPlanMonth[]> {
-  return withWidgetGuard("getSeasonPlan", [], async () => {
+export async function getSeasonPlan(): Promise<SeasonPlanMonth[]> {
+  return withWidgetGuard("getSeasonPlan", [], async (userId) => {
     const now = new Date();
     const yearStart = new Date(now.getFullYear(), 0, 1);
     const yearEnd = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
@@ -447,10 +440,8 @@ export async function getSeasonPlan(userId: string): Promise<SeasonPlanMonth[]> 
 /**
  * Siste publiserte CoachingSession for userId.
  */
-export async function getRecentCoachingFeedback(
-  userId: string,
-): Promise<RecentCoachingFeedback | null> {
-  return withWidgetGuard("getRecentCoachingFeedback", null, async () => {
+export async function getRecentCoachingFeedback(): Promise<RecentCoachingFeedback | null> {
+  return withWidgetGuard("getRecentCoachingFeedback", null, async (userId) => {
     const session = await prisma.coachingSession.findFirst({
       where: { studentId: userId, publishedToStudent: true },
       orderBy: { sessionDate: "desc" },
@@ -483,10 +474,8 @@ export async function getRecentCoachingFeedback(
  * Bruker _count i Prisma for a unnga over-fetch (var: hentet hver Week +
  * Session + take:1 pa TrainingLog → ~50 nostete rader for 12-ukers plan).
  */
-export async function getPlanProgress(
-  userId: string,
-): Promise<PlanProgress | null> {
-  return withWidgetGuard("getPlanProgress", null, async () => {
+export async function getPlanProgress(): Promise<PlanProgress | null> {
+  return withWidgetGuard("getPlanProgress", null, async (userId) => {
     const plan = await prisma.trainingPlan.findFirst({
       where: { studentId: userId, isActive: true },
       orderBy: { startDate: "desc" },
@@ -523,10 +512,8 @@ export async function getPlanProgress(
 /**
  * Alle PeriodizationPeriod for studentId i inneverende ar.
  */
-export async function getPeriodSummary(
-  userId: string,
-): Promise<PeriodSummaryPhase[]> {
-  return withWidgetGuard("getPeriodSummary", [], async () => {
+export async function getPeriodSummary(): Promise<PeriodSummaryPhase[]> {
+  return withWidgetGuard("getPeriodSummary", [], async (userId) => {
     const now = new Date();
     const yearStart = new Date(now.getFullYear(), 0, 1);
     const yearEnd = new Date(now.getFullYear(), 11, 31, 23, 59, 59);

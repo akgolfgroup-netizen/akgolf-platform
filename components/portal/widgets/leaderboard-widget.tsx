@@ -1,24 +1,20 @@
 "use client";
 
-
-
-
 import { Icon } from "@/components/ui/icon";
+import { getLeaderboard } from "@/lib/portal/widgets/actions";
+import { useWidgetData } from "./use-widget-data";
+
 /**
- * LeaderboardWidget — rangering blant AK-elever.
+ * LeaderboardWidget — rangering blant AK-spillere.
  *
- * Data-kilde: User + Round aggregert
- * Brukes på: P1 (Dashboard), PB06 (Benchmark), PB13, PB14, N08
+ * Data-kilde: User + HandicapEntry aggregert via getLeaderboard()
+ * Brukes pa: P1 (Dashboard), PB06 (Benchmark), PB13, PB14, N08
  */
 export function LeaderboardWidget() {
-  // TODO: Koble til reelle data via server action
-  const players = [
-    { name: "Ola N.", hcp: 4.2, trend: -0.8, rank: 1 },
-    { name: "Kari L.", hcp: 5.1, trend: -0.3, rank: 2 },
-    { name: "Deg", hcp: 6.5, trend: -1.2, rank: 3, isMe: true },
-    { name: "Per H.", hcp: 7.8, trend: 0.5, rank: 4 },
-    { name: "Mia S.", hcp: 8.3, trend: -0.4, rank: 5 },
-  ];
+  const { data: players, loading } = useWidgetData(getLeaderboard, []);
+
+  if (loading) return <SkeletonRows count={5} />;
+  if (players.length === 0) return <EmptyState />;
 
   return (
     <div className="space-y-2">
@@ -41,13 +37,20 @@ export function LeaderboardWidget() {
             >
               {p.rank}
             </span>
-            <span className={"text-xs " + (p.isMe ? "font-semibold text-text" : "text-muted")}>
-              {p.name}
+            <span
+              className={
+                "text-xs " +
+                (p.isMe ? "font-semibold text-text" : "text-muted")
+              }
+            >
+              {p.isMe ? "Deg" : p.name}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-text">HCP {p.hcp}</span>
+            <span className="text-xs font-medium text-text">
+              HCP {p.hcp.toFixed(1)}
+            </span>
             <span
               className={
                 "flex items-center gap-0.5 text-[10px] font-medium " +
@@ -59,11 +62,32 @@ export function LeaderboardWidget() {
               ) : (
                 <Icon name="arrow_outward" className="w-3 h-3" />
               )}
-              {Math.abs(p.trend)}
+              {Math.abs(p.trend).toFixed(1)}
             </span>
           </div>
         </div>
       ))}
     </div>
+  );
+}
+
+function SkeletonRows({ count }: { count: number }) {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: count }).map((_, i) => (
+        <div
+          key={i}
+          className="h-8 bg-surface-container animate-pulse rounded-lg"
+        />
+      ))}
+    </div>
+  );
+}
+
+function EmptyState() {
+  return (
+    <p className="text-xs text-muted py-4 text-center">
+      Ingen ranking-data tilgjengelig.
+    </p>
   );
 }
