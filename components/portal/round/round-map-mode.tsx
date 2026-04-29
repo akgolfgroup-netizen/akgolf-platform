@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useTransition } from "react";
-import { distance } from "@turf/turf";
+import { distance } from "@turf/distance";
 import { HoleMap } from "./hole-map";
 import { ClubSuggester } from "./club-suggester";
 import { detectLieFromGps } from "@/lib/portal/round/lie-detection";

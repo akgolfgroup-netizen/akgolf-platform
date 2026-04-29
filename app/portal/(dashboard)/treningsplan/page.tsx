@@ -51,14 +51,19 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const weekOffset = parseInt(week ?? "0", 10) || 0;
   const isEditor = modus === "editor";
 
-  const plan = await getActivePlan();
+  // Parallel fetch all independent data sources (Vercel best practice: async-parallel)
+  const [plan, periodization, events, historyEvents, facilities, myPlans, goalsSummary] =
+    await Promise.all([
+      getActivePlan(),
+      getCurrentPeriodization(),
+      getWeekEvents(weekOffset),
+      getWeekEvents(weekOffset - 1),
+      listAvailableFacilities(),
+      listMyPlans(),
+      getPlanGoalsProgress(),
+    ]);
+
   const planId = plan?.id ?? null;
-  const periodization = await getCurrentPeriodization();
-  const events = await getWeekEvents(weekOffset);
-  const historyEvents = await getWeekEvents(weekOffset - 1);
-  const facilities = await listAvailableFacilities();
-  const myPlans = await listMyPlans();
-  const goalsSummary = await getPlanGoalsProgress();
 
   const coachFeedback = plan?.coachFeedback
     ? {
@@ -74,8 +79,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       }
     : null;
 
-  const pendingSuggestions = await listMyPendingSuggestions();
-  const templates = await listStandardTemplates();
+  const [pendingSuggestions, templates, adjustmentSuggestion, coachName] = await Promise.all([
+    listMyPendingSuggestions(),
+    listStandardTemplates(),
+    analyzePlanDeviation(),
+    getActiveCoachName(),
+  ]);
 
   // Server action wrappers bound to the user context
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
@@ -227,13 +236,10 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const doneCount = events.filter((e) => e.done).length;
   const adherencePct = sessionCount > 0 ? Math.round((doneCount / sessionCount) * 100) : 0;
 
-  const adjustmentSuggestion = await analyzePlanDeviation();
-
   // ─── Default: ny lese-modus (Brand Guide V2.0) ────────────────────
   if (!isEditor) {
     const targets = computeWeeklyTargets(periodization);
     const library = buildLibraryItems(events);
-    const coachName = await getActiveCoachName();
     const pyramidDist = plan?.pyramidDistribution
       ? (plan.pyramidDistribution as Record<string, number>)
       : null;

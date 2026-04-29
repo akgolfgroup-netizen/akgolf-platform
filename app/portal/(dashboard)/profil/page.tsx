@@ -76,10 +76,14 @@ export default async function ProfilPage() {
       ? +(stats.currentHandicap - hcpHistoryPoints[0].handicapIndex).toFixed(2)
       : null;
 
-  // Runder denne måneden — fra RoundStats hvis tilgjengelig
+  // Runder denne måneden + coaches — parallell (Vercel best practice: async-parallel)
   const monthStart = startOfMonth(new Date());
   const lastMonthStart = startOfMonth(subMonths(new Date(), 1));
-  const [roundsThisMonth, roundsLastMonth] = await Promise.all([
+  const [
+    roundsThisMonth,
+    roundsLastMonth,
+    coachRelations,
+  ] = await Promise.all([
     prisma.roundStats
       .count({
         where: {
@@ -96,26 +100,26 @@ export default async function ProfilPage() {
         },
       })
       .catch(() => 0),
+    prisma.coachPlayerRelation
+      .findMany({
+        where: {
+          OR: [{ playerUserId: user.id }, { playerUserId: profile.id }],
+          status: "ACTIVE",
+        },
+        include: {
+          Coach: {
+            select: { id: true, name: true, image: true },
+          },
+        },
+        take: 4,
+      })
+      .catch(() => []),
   ]);
 
   const roundsDelta =
     roundsThisMonth > 0 || roundsLastMonth > 0
       ? roundsThisMonth - roundsLastMonth
       : null;
-
-  // Coaches — hent fra CoachPlayerRelation hvis aktiv
-  const coachRelations = await prisma.coachPlayerRelation.findMany({
-    where: {
-      OR: [{ playerUserId: user.id }, { playerUserId: profile.id }],
-      status: "ACTIVE",
-    },
-    include: {
-      Coach: {
-        select: { id: true, name: true, image: true },
-      },
-    },
-    take: 4,
-  }).catch(() => []);
 
   const coachColors = ["#D1F843", "#C896E8", "#7FA3FF", "#F49283"];
   const coaches = coachRelations.map((r, idx) => {

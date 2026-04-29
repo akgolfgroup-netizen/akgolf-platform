@@ -30,15 +30,9 @@ export default async function PlayerHQPreviewPage() {
   const user = await requirePortalUser();
 
   const supabase = await createServerSupabase();
-  const { data: userData } = await supabase
-    .from("User")
-    .select("onboardingCompletedAt, createdAt")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  const needsOnboarding = !userData?.onboardingCompletedAt;
 
   const [
+    userData,
     stats,
     handicap,
     handicapHistory,
@@ -56,6 +50,12 @@ export default async function PlayerHQPreviewPage() {
     roundMetrics,
     todayTasks,
   ] = await Promise.all([
+    supabase
+      .from("User")
+      .select("onboardingCompletedAt, createdAt")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then((r) => r.data),
     getDashboardStats(user.id),
     getHandicapData(user.id),
     getHandicapHistory(user.id),
@@ -73,6 +73,8 @@ export default async function PlayerHQPreviewPage() {
     getRoundAggregateMetrics(user.id),
     getTodayTasks(user.id),
   ]);
+
+  const needsOnboarding = !userData?.onboardingCompletedAt;
 
   const memberSince = userData?.createdAt
     ? new Date(userData.createdAt as string).getFullYear().toString()
