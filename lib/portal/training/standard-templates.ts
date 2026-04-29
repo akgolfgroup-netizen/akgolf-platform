@@ -16,7 +16,8 @@ export type TemplateId =
   | "short-game"
   | "allround"
   | "konkurranse-prep"
-  | "off-season-styrke";
+  | "off-season-styrke"
+  | "specialisering";
 
 export interface TemplateSession {
   /** 1=mandag, 7=søndag */
@@ -113,6 +114,23 @@ export const STANDARD_TEMPLATES: StandardTemplate[] = [
       { dayOfWeek: 3, title: "Styrke B — over­kropp/core", durationMinutes: 60, focusArea: FOCUS.FYS },
       { dayOfWeek: 5, title: "Styrke C — eksplosivitet", durationMinutes: 50, focusArea: FOCUS.FYS },
       { dayOfWeek: 6, title: "Simulator — short game", durationMinutes: 45, focusArea: FOCUS.CHIPPING },
+    ],
+  },
+  {
+    id: "specialisering",
+    title: "Spesialisering",
+    description: "Høyvolums spesialisering for M3/M4-spillere. Tung vekt på én ferdighet med støtteøkter.",
+    iconName: "target",
+    badge: "M3/M4",
+    periodType: "PREPARATION",
+    weeklyFocusTemplate: "Spesialisering — uke {n}: tung blokking + restitusjon",
+    weekPattern: [
+      { dayOfWeek: 1, title: "Blokk A — hovedferdighet", durationMinutes: 90, focusArea: FOCUS.JERN },
+      { dayOfWeek: 2, title: "Støtteøkt — kort spill", durationMinutes: 45, focusArea: FOCUS.CHIPPING },
+      { dayOfWeek: 3, title: "Blokk B — hovedferdighet", durationMinutes: 90, focusArea: FOCUS.JERN },
+      { dayOfWeek: 4, title: "Restitusjon + mobilitet", durationMinutes: 40, focusArea: FOCUS.FYS },
+      { dayOfWeek: 5, title: "Blokk C — hovedferdighet", durationMinutes: 75, focusArea: FOCUS.JERN },
+      { dayOfWeek: 6, title: "Testrunde 9 hull", durationMinutes: 150, focusArea: FOCUS.SPILL },
     ],
   },
 ];

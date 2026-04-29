@@ -31,11 +31,6 @@ interface DagbokV2ClientProps {
   onLogClick?: () => void;
 }
 
-/**
- * Pixel-naer reskin av dagbok.html (handoff 2026-04-27).
- *
- * Bevarer alle eksisterende server-actions; tar kun visning.
- */
 export function DagbokV2Client({
   logs,
   streakData,
@@ -49,10 +44,7 @@ export function DagbokV2Client({
   }, [logs, now]);
 
   const sessions90d = within.length;
-  const minutes90d = within.reduce(
-    (acc, l) => acc + (l.durationMinutes ?? 0),
-    0
-  );
+  const minutes90d = within.reduce((acc, l) => acc + (l.durationMinutes ?? 0), 0);
   const hours90d = Math.round(minutes90d / 60);
 
   const rounds90d = within.filter((l) => {
@@ -78,23 +70,18 @@ export function DagbokV2Client({
       const m = l.durationMinutes ?? 0;
       if (fa.includes("TURN")) buckets.Turnering += m;
       else if (fa.includes("SPILL") || fa.includes("ROUND")) buckets.Spill += m;
-      else if (
-        fa.includes("FYS") ||
-        fa.includes("STRENGTH") ||
-        fa.includes("PHYSICAL")
-      )
+      else if (fa.includes("FYS") || fa.includes("STRENGTH") || fa.includes("PHYSICAL"))
         buckets.Fysisk += m;
-      else if (fa.includes("TECH") || fa.includes("TEKNIKK"))
-        buckets.Teknikk += m;
+      else if (fa.includes("TECH") || fa.includes("TEKNIKK")) buckets.Teknikk += m;
       else buckets.Slag += m;
     }
     const total = Object.values(buckets).reduce((a, b) => a + b, 0) || 1;
     const colors: Record<string, string> = {
-      Turnering: "#0A1F18",
-      Spill: "#005840",
-      Slag: "#2A7D5A",
-      Teknikk: "#7FB88F",
-      Fysisk: "#B8D9BF",
+      Turnering: "var(--color-ink)",
+      Spill: "var(--color-primary)",
+      Slag: "var(--color-success)",
+      Teknikk: "var(--color-data-sage-light)",
+      Fysisk: "var(--color-line-soft)",
     };
     return Object.entries(buckets).map(([name, mins]) => ({
       name,
@@ -116,25 +103,20 @@ export function DagbokV2Client({
           return d >= start && d < end;
         })
         .reduce((s, l) => s + (l.durationMinutes ?? 0), 0);
-      out.push({
-        week: `U${format(start, "II", { locale: nb })}`,
-        hours: totalMin / 60,
-        start,
-      });
+      out.push({ week: `U${format(start, "II", { locale: nb })}`, hours: totalMin / 60, start });
     }
     return out;
   }, [within, now]);
 
-  const weeklyAvg =
-    weekly.reduce((s, w) => s + w.hours, 0) / Math.max(1, weekly.length);
+  const weeklyAvg = weekly.reduce((s, w) => s + w.hours, 0) / Math.max(1, weekly.length);
 
   const typeDistribution = useMemo(() => {
-    const colors = ["#0A1F18", "#2A7D5A", "#D1F843", "#AF52DE", "#ECF0EF"];
+    const colors = ["var(--color-ink)", "var(--color-success)", "var(--color-accent)", "var(--color-ai)", "var(--color-line-soft)"];
     const total = pyramid.reduce((s, p) => s + p.pct, 0) || 1;
     return pyramid.map((p, i) => ({
       name: p.name,
       pct: Math.round((p.pct / total) * 100),
-      color: colors[i] ?? "#ECF0EF",
+      color: colors[i] ?? "var(--color-line-soft)",
     }));
   }, [pyramid]);
 
@@ -150,34 +132,28 @@ export function DagbokV2Client({
       return {
         id: l.id,
         date: new Date(l.date),
-        title: l.focusArea
-          ? `${l.focusArea}${dur ? ` · ${dur}` : ""}`
-          : `Okt${dur ? ` · ${dur}` : ""}`,
+        title: l.focusArea ? `${l.focusArea}${dur ? ` · ${dur}` : ""}` : `Økt${dur ? ` · ${dur}` : ""}`,
         meta: l.notes ?? "Ingen notater",
-        tags: [
-          fa || null,
-          l.rating !== null ? `RATING ${l.rating}/5` : null,
-        ].filter(Boolean) as string[],
+        tags: [fa || null, l.rating !== null ? `RATING ${l.rating}/5` : null].filter(Boolean) as string[],
         variant,
       };
     });
   }, [logs]);
 
   const completionLabel = planProgress
-    ? `${planProgress.loggedCount} av ${planProgress.plannedCount} okter denne uken`
-    : `${streakData.currentStreak} dager pa rad`;
+    ? `${planProgress.loggedCount} av ${planProgress.plannedCount} økter denne uken`
+    : `${streakData.currentStreak} dager på rad`;
 
-  // Estimer hvor mange uker over plan (placeholder: bruk diff mellom okter og lineaer plan)
   const yearStart = new Date(now.getFullYear(), 0, 1);
   const dayOfYear = differenceInDays(now, yearStart) + 1;
   const expectedSessions = Math.round((dayOfYear / 365) * 400);
   const weeksAhead = Math.round((within.length - expectedSessions) / 8);
 
   return (
-    <div className="-mx-6 lg:-mx-8 -mt-8 lg:-mt-10 p-6 lg:p-7" style={{ background: "#FAFAF7" }}>
+    <div className="-mx-6 lg:-mx-8 -mt-8 lg:-mt-10 p-6 lg:p-7 bg-surface">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <div className="text-[22px] font-bold tracking-tight text-ink">
+          <div className="text-[22px] font-bold tracking-tight text-ink font-[family-name:var(--font-inter-tight)]">
             Dagbok
           </div>
           <div className="text-xs text-ink-muted mt-0.5">
@@ -185,21 +161,21 @@ export function DagbokV2Client({
           </div>
         </div>
         <div className="flex gap-2 items-center">
-          <div className="px-2.5 py-1 rounded-full bg-card border border-[color:var(--color-line)] text-xs flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2A7D5A]" />
+          <div className="px-2.5 py-1 rounded-full bg-card border border-line text-xs flex items-center gap-1.5 text-ink-muted">
+            <span className="w-1.5 h-1.5 rounded-full bg-success" />
             {completionLabel}
           </div>
           <button
             type="button"
-            className="px-3 py-1.5 rounded-lg border border-[color:var(--color-line)] bg-card text-sm font-medium hover:bg-[#F5F8F7] flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-lg border border-line bg-card text-sm font-medium hover:bg-surface-soft transition-colors flex items-center gap-1.5 text-ink-muted"
           >
             <Download className="w-3.5 h-3.5" /> Eksporter
           </button>
           <button
             type="button"
-            className="px-3 py-1.5 rounded-lg bg-[#D1F843] text-ink text-sm font-semibold flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-lg bg-accent text-ink text-sm font-semibold flex items-center gap-1.5 hover:bg-accent-deep transition-colors"
           >
-            <Plus className="w-3.5 h-3.5" /> Logg okt
+            <Plus className="w-3.5 h-3.5" /> Logg økt
           </button>
         </div>
       </div>

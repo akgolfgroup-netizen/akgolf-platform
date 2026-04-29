@@ -2,7 +2,6 @@
 interface StreakCardProps {
   currentDays: number;
   personalBest?: number | null;
-  /** Last 14 days, true = trained that day */
   last14Days?: boolean[];
 }
 
@@ -19,9 +18,9 @@ export function StreakCard({
 
   return (
     <div
-      className="col-span-12 sm:col-span-6 lg:col-span-4 relative flex flex-col overflow-hidden rounded-[22px] p-5 text-white"
+      className="col-span-12 sm:col-span-6 lg:col-span-4 relative flex flex-col overflow-hidden rounded-2xl p-5 text-white"
       style={{
-        background: "linear-gradient(160deg, #0A1F18, #0F2E22)",
+        background: "linear-gradient(160deg, var(--color-sidebar), #172B22)",
       }}
     >
       <div
@@ -31,36 +30,23 @@ export function StreakCard({
           right: "-40px",
           width: "200px",
           height: "200px",
-          background:
-            "radial-gradient(circle, rgba(209, 248, 67, 0.18), transparent 70%)",
+          background: "radial-gradient(circle, rgba(209, 248, 67, 0.18), transparent 70%)",
         }}
       />
       <div className="relative z-10">
-        <div
-          className="text-[10px] font-bold uppercase tracking-[0.16em]"
-          style={{ color: "rgba(255,255,255,0.5)" }}
-        >
+        <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">
           Konsistens-streak
         </div>
-        <div
-          className="mt-1.5 text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums"
-          style={{ fontVariantNumeric: "tabular-nums" }}
-        >
+        <div className="mt-1.5 text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums font-[family-name:var(--font-jetbrains-mono)]">
           {currentDays}
-          <span
-            className="ml-1.5 text-sm font-medium tracking-normal"
-            style={{ color: "rgba(255,255,255,0.5)" }}
-          >
+          <span className="ml-1.5 text-sm font-medium tracking-normal text-white/50">
             dager
           </span>
         </div>
-        <div
-          className="mt-2.5 text-[13px]"
-          style={{ color: "rgba(255,255,255,0.7)" }}
-        >
+        <div className="mt-2.5 text-[13px] text-white/70">
           {daysToBeat !== null ? (
             <>
-              Personlig rekord på <b style={{ color: "#D1F843" }}>{personalBest} dager</b>{" "}
+              Personlig rekord på <b className="text-accent">{personalBest} dager</b>{" "}
               venter. {daysToBeat} dager igjen.
             </>
           ) : currentDays > 0 ? (
@@ -78,19 +64,11 @@ export function StreakCard({
             <div
               key={i}
               className="h-6 flex-1 rounded-[3px]"
-              style={{
-                background: on ? "#D1F843" : "rgba(255,255,255,0.1)",
-              }}
+              style={{ background: on ? "var(--color-accent)" : "rgba(255,255,255,0.1)" }}
             />
           ))}
         </div>
-        <div
-          className="mt-2 text-[10px] uppercase tracking-[0.1em]"
-          style={{
-            color: "rgba(255,255,255,0.4)",
-            fontFamily: "JetBrains Mono, monospace",
-          }}
-        >
+        <div className="mt-2 text-[10px] uppercase tracking-[0.1em] text-white/40 font-mono">
           — Siste 14 dager —
         </div>
       </div>

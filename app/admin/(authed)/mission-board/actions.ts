@@ -3,123 +3,171 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
-import { subDays, startOfDay, format } from "date-fns";
-import { nb } from "date-fns/locale";
+import { BookingStatus } from "@prisma/client";
 
-export interface MissionBoardCharts {
-  bookingTrend: { label: string; value: number }[];
-  serviceDistribution: { label: string; value: number }[];
-  heatmap: { row: string; col: string; value: number }[];
-  sparkBookings: number[];
-  sparkRevenue: number[];
-  sparkStudents: number[];
-  monthlyGoal: number;
-  monthlyCurrent: number;
+export type MissionStatus = "todo" | "in_progress" | "done";
+
+export interface MissionCard {
+  id: string;
+  title: string;
+  playerName: string | null;
+  initials: string;
+  avatarColor: string;
+  priority: "low" | "medium" | "high" | "urgent";
+  dueText: string;
+  assignee: string | null;
+  tags: string[];
+  status: MissionStatus;
+  href: string;
 }
 
-const WEEKDAY_LABELS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
-const HOUR_LABELS = ["08", "10", "12", "14", "16", "18", "20"];
+export interface MissionBoardData {
+  columns: Record<MissionStatus, MissionCard[]>;
+  counts: Record<MissionStatus, number>;
+}
 
-export async function getMissionBoardCharts(): Promise<MissionBoardCharts> {
-  await requirePortalUser().then((u) => {
-    if (!isStaff(u.role)) throw new Error("Ikke autorisert");
-  });
+const AVATAR_PALETTE = [
+  "#6FCBA1",
+  "#6FB3FF",
+  "#E8B967",
+  "#C896E8",
+  "#F49283",
+  "#D1F843",
+];
+
+function avatarColorFor(seed: string): string {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+  return AVATAR_PALETTE[hash % AVATAR_PALETTE.length];
+}
+
+function initialsFor(name: string | null | undefined): string {
+  if (!name) return "??";
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "??";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function formatDue(date: Date): string {
+  const now = new Date();
+  const diffDays = Math.ceil((date.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  if (diffDays < 0) return `${Math.abs(diffDays)}d forbi`;
+  if (diffDays === 0) return "I dag";
+  if (diffDays === 1) return "I morgen";
+  return `${diffDays}d`;
+}
+
+export async function fetchMissionBoardKanban(): Promise<MissionBoardData> {
+  const user = await requirePortalUser();
+  if (!isStaff(user.role)) {
+    return { columns: { todo: [], in_progress: [], done: [] }, counts: { todo: 0, in_progress: 0, done: 0 } };
+  }
 
   const now = new Date();
-  const thirtyDaysAgo = startOfDay(subDays(now, 30));
+  const windowStart = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 14);
+  const windowEnd = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 14);
 
-  // Hent alle bookinger og betalinger siste 30 dager i to queries
-  const [bookings, payments] = await Promise.all([
+  const [bookings, goals] = await Promise.all([
     prisma.booking.findMany({
-      where: { startTime: { gte: thirtyDaysAgo }, status: { in: ["CONFIRMED", "COMPLETED"] } },
-      select: { startTime: true, serviceTypeId: true },
+      where: {
+        startTime: { gte: windowStart, lte: windowEnd },
+        status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED, BookingStatus.COMPLETED] },
+      },
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+        status: true,
+        User: { select: { id: true, name: true } },
+        ServiceType: { select: { name: true } },
+        Instructor: { select: { User: { select: { name: true } } } },
+      },
+      orderBy: { startTime: "asc" },
+      take: 150,
     }),
-    prisma.paymentTransaction.findMany({
-      where: { status: "PAID", paidAt: { gte: thirtyDaysAgo } },
-      select: { grossAmount: true, paidAt: true },
+    prisma.goal.findMany({
+      where: { status: "ACTIVE", targetDate: { gte: windowStart, lte: windowEnd } },
+      select: {
+        id: true,
+        title: true,
+        targetDate: true,
+        currentValue: true,
+        targetValue: true,
+        User: { select: { id: true, name: true } },
+      },
+      take: 50,
     }),
   ]);
 
-  // Booking-trend per dag (30 dager)
-  const bookingTrend: { label: string; value: number }[] = [];
-  for (let i = 29; i >= 0; i--) {
-    const day = startOfDay(subDays(now, i));
-    const nextDay = startOfDay(subDays(now, i - 1));
-    const count = bookings.filter((b) => b.startTime >= day && b.startTime < nextDay).length;
-    bookingTrend.push({ label: format(day, "d. MMM", { locale: nb }), value: count });
+  const todo: MissionCard[] = [];
+  const inProgress: MissionCard[] = [];
+  const done: MissionCard[] = [];
+
+  for (const b of bookings) {
+    const name = b.User?.name ?? "Ukjent";
+    const isFuture = b.startTime > now;
+    const isPast = b.endTime < now;
+    const isLive = b.startTime <= now && b.endTime >= now && b.status === BookingStatus.CONFIRMED;
+
+    const card: MissionCard = {
+      id: `b-${b.id}`,
+      title: b.ServiceType?.name ?? "Booking",
+      playerName: name,
+      initials: initialsFor(name),
+      avatarColor: avatarColorFor(b.User?.id ?? b.id),
+      priority: isLive ? "urgent" : isFuture && b.startTime.getTime() - now.getTime() < 86400000 ? "high" : "medium",
+      dueText: formatDue(b.startTime),
+      assignee: b.Instructor?.User?.name ?? null,
+      tags: [b.status === BookingStatus.PENDING ? "Venter" : "Bekreftet"],
+      status: isLive ? "in_progress" : isPast ? "done" : "todo",
+      href: `/admin/bookinger?id=${b.id}`,
+    };
+
+    if (card.status === "todo") todo.push(card);
+    else if (card.status === "in_progress") inProgress.push(card);
+    else done.push(card);
   }
 
-  // Service-fordeling
-  const svcCounts = new Map<string, number>();
-  bookings.forEach((b) => {
-    svcCounts.set(b.serviceTypeId, (svcCounts.get(b.serviceTypeId) ?? 0) + 1);
-  });
-  const serviceTypeIds = [...svcCounts.keys()];
-  const serviceTypes = serviceTypeIds.length > 0
-    ? await prisma.serviceType.findMany({ where: { id: { in: serviceTypeIds } }, select: { id: true, name: true } })
-    : [];
-  const svcNameMap = new Map(serviceTypes.map((s) => [s.id, s.name]));
-  const serviceDistribution = [...svcCounts.entries()]
-    .map(([id, count]) => ({ label: svcNameMap.get(id) ?? "Ukjent", value: count }))
-    .sort((a, b) => b.value - a.value);
+  for (const g of goals) {
+    const name = g.User?.name ?? "Ukjent";
+    const progress = g.targetValue && g.targetValue > 0 ? (g.currentValue ?? 0) / g.targetValue : 0;
+    const card: MissionCard = {
+      id: `g-${g.id}`,
+      title: g.title,
+      playerName: name,
+      initials: initialsFor(name),
+      avatarColor: avatarColorFor(g.User?.id ?? g.id),
+      priority: progress > 0.7 ? "medium" : "high",
+      dueText: g.targetDate ? formatDue(g.targetDate) : "—",
+      assignee: null,
+      tags: ["Mål"],
+      status: progress >= 1 ? "done" : progress > 0 ? "in_progress" : "todo",
+      href: `/admin/elever/${g.User?.id ?? ""}`,
+    };
 
-  // Heatmap (dag x time)
-  const grid: Record<string, number> = {};
-  WEEKDAY_LABELS.forEach((d) => HOUR_LABELS.forEach((h) => { grid[`${d}-${h}`] = 0; }));
-  bookings.forEach((b) => {
-    const dayIdx = (b.startTime.getDay() + 6) % 7;
-    const hour = b.startTime.getHours();
-    const bucket = HOUR_LABELS.find((h) => Math.abs(hour - parseInt(h)) <= 1);
-    if (bucket) grid[`${WEEKDAY_LABELS[dayIdx]}-${bucket}`]++;
-  });
-  const heatmap = Object.entries(grid).map(([key, value]) => {
-    const [row, col] = key.split("-");
-    return { row, col, value };
-  });
-
-  // Sparklines (14 dager)
-  const sparkBookings: number[] = [];
-  const sparkRevenue: number[] = [];
-  for (let i = 13; i >= 0; i--) {
-    const day = startOfDay(subDays(now, i));
-    const nextDay = startOfDay(subDays(now, i - 1));
-    sparkBookings.push(bookings.filter((b) => b.startTime >= day && b.startTime < nextDay).length);
-    sparkRevenue.push(
-      payments.filter((p) => p.paidAt && p.paidAt >= day && p.paidAt < nextDay).reduce((s, p) => s + p.grossAmount, 0) / 1000,
-    );
+    if (card.status === "todo") todo.push(card);
+    else if (card.status === "in_progress") inProgress.push(card);
+    else done.push(card);
   }
 
-  // Sparkline nye elever (14 dager)
-  const fourteenDaysAgo = startOfDay(subDays(now, 14));
-  const newStudents = await prisma.user.findMany({
-    where: { role: "STUDENT", createdAt: { gte: fourteenDaysAgo } },
-    select: { createdAt: true },
-  });
-  const sparkStudents: number[] = [];
-  let cumStudents = await prisma.user.count({
-    where: { role: "STUDENT", createdAt: { lt: fourteenDaysAgo } },
-  });
-  for (let i = 13; i >= 0; i--) {
-    const day = startOfDay(subDays(now, i));
-    const nextDay = startOfDay(subDays(now, i - 1));
-    cumStudents += newStudents.filter((s) => s.createdAt >= day && s.createdAt < nextDay).length;
-    sparkStudents.push(cumStudents);
-  }
+  // Sorter: urgent først, så etter due date
+  const sortCards = (a: MissionCard, b: MissionCard) => {
+    const pMap = { urgent: 0, high: 1, medium: 2, low: 3 };
+    return pMap[a.priority] - pMap[b.priority];
+  };
 
-  // Månedlig mål
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-  const monthlyCurrent = await prisma.booking.count({
-    where: { startTime: { gte: monthStart }, status: { in: ["CONFIRMED", "COMPLETED"] } },
-  });
+  todo.sort(sortCards);
+  inProgress.sort(sortCards);
+  done.sort(sortCards);
 
   return {
-    bookingTrend,
-    serviceDistribution,
-    heatmap,
-    sparkBookings,
-    sparkRevenue,
-    sparkStudents,
-    monthlyGoal: 240,
-    monthlyCurrent,
+    columns: { todo, in_progress: inProgress, done },
+    counts: { todo: todo.length, in_progress: inProgress.length, done: done.length },
   };
 }
+
+// Tidligere getMissionBoardCharts — fjernet ved rewrite til Kanban.
+// Charts-data hentes via fetchMissionBoardKanban() nå.

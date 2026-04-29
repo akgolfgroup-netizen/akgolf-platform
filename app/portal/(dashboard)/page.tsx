@@ -1,25 +1,6 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
-
-export const metadata: Metadata = {
-  title: "Dashboard | PlayersHQ",
-  description:
-    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
-  openGraph: {
-    title: "Dashboard | PlayersHQ",
-    description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
-    type: "website",
-    locale: "nb_NO",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Dashboard | PlayersHQ",
-    description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
-  },
-};
 import {
   getDashboardStats,
   getHandicapData,
@@ -36,23 +17,30 @@ import {
   getDashboardTrainingIndex,
   getTestProgress,
 } from "./dashboard-actions";
-import { DashboardClientV3 } from "./dashboard-client-v3";
-import { DashboardBentoClient } from "./dashboard-bento-client";
-import { cookies } from "next/headers";
+import { DashboardV2Client } from "./dashboard-v2-client";
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ dashboard?: string }>;
-}) {
+export const metadata: Metadata = {
+  title: "Dashboard | AK Golf",
+  description:
+    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
+  openGraph: {
+    title: "Dashboard | AK Golf",
+    description:
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
+    type: "website",
+    locale: "nb_NO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dashboard | AK Golf",
+    description:
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
+  },
+};
+
+export default async function DashboardPage() {
   const user = await requirePortalUser();
-  const sp = (await searchParams) ?? {};
-  const cookieStore = await cookies();
-  const wantsLegacy =
-    sp.dashboard === "v3" || cookieStore.get("dashboard")?.value === "v3";
-  const wantsBento = !wantsLegacy;
 
-  // Check if onboarding is completed
   const supabase = await createServerSupabase();
   const { data: userData } = await supabase
     .from("User")
@@ -62,7 +50,6 @@ export default async function DashboardPage({
 
   const needsOnboarding = !userData?.onboardingCompletedAt;
 
-  // Hent all dashboard-data parallelt
   const [
     stats,
     handicap,
@@ -99,10 +86,8 @@ export default async function DashboardPage({
     ? new Date(userData.createdAt as string).getFullYear().toString()
     : null;
 
-  const Client = wantsBento ? DashboardBentoClient : DashboardClientV3;
-
   return (
-    <Client
+    <DashboardV2Client
       userName={user.name}
       tier={user.subscriptionTier}
       memberSince={memberSince}

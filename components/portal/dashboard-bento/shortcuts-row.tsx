@@ -1,5 +1,4 @@
 // Server Component — statisk navigasjonsrad. Lucide-ikoner og next/link
-// fungerer fint i Server Components.
 import Link from "next/link";
 import {
   FlagTriangleRight,
@@ -35,16 +34,10 @@ export function ShortcutsRow() {
           <Link
             key={s.href}
             href={s.href}
-            className="flex items-center gap-2.5 rounded-[14px] border bg-white px-3.5 py-3 text-xs font-semibold text-[var(--ak-g-700,#324D45)] transition-all hover:-translate-y-0.5 hover:border-transparent hover:shadow-md"
-            style={{
-              borderColor: "var(--ak-border, rgba(10, 31, 24, 0.08))",
-            }}
+            className="flex items-center gap-2.5 rounded-xl border border-line bg-card px-3.5 py-3 text-xs font-semibold text-ink-muted transition-all hover:-translate-y-0.5 hover:border-transparent hover:shadow-card-hover"
           >
-            <span
-              className="grid h-8 w-8 place-items-center rounded-lg"
-              style={{ background: "var(--ak-g-50, #F5F8F7)" }}
-            >
-              <Icon className="h-4 w-4" />
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-surface-soft">
+              <Icon className="h-4 w-4 text-ink-muted" />
             </span>
             {s.label}
           </Link>

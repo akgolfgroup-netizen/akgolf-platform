@@ -12,11 +12,11 @@ import type { PeriodKey } from "./actions";
 import { getPlayerUSI } from "@/lib/portal/usi/actions";
 
 export const metadata: Metadata = {
-  title: "Statistikk | PlayersHQ",
+  title: "Statistikk | AK Golf",
   description:
     "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
   openGraph: {
-    title: "Statistikk | PlayersHQ",
+    title: "Statistikk | AK Golf",
     description:
       "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
     type: "website",

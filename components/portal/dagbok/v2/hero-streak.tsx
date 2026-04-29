@@ -8,9 +8,6 @@ interface HeroStreakProps {
   rounds90d: number;
 }
 
-/**
- * Mort hero-kort for dagbok v2 — viser aktiv streak + 3 KPIer.
- */
 export function HeroStreak({
   streakDays,
   longestStreak,
@@ -23,44 +20,43 @@ export function HeroStreak({
 
   return (
     <div
-      className="rounded-2xl text-white"
+      className="rounded-2xl text-white p-7"
       style={{
-        background: "linear-gradient(135deg, #0A1F18, #12302B)",
-        padding: 28,
+        background: "linear-gradient(135deg, var(--color-sidebar), #172B22)",
       }}
     >
-      <div className="font-mono text-[10px] tracking-[0.14em] text-[#D1F843]">
+      <div className="font-mono text-[10px] tracking-[0.14em] text-accent uppercase">
         Streak · aktiv
       </div>
-      <h2 className="mt-2 mb-1 text-[44px] font-bold tracking-tight leading-none">
+      <h2 className="mt-2 mb-1 text-[44px] font-bold tracking-tight leading-none font-[family-name:var(--font-inter-tight)]">
         {streakDays}{" "}
-        <span className="text-[#D1F843] text-[30px] font-semibold">dager</span>
+        <span className="text-accent text-[30px] font-semibold">dager</span>
       </h2>
-      <div className="text-[#A5B2AD] text-[13px]">
-        Forrige rekord: {longestStreak} dager. Neste milepel:{" "}
+      <div className="text-ink-subtle text-[13px]">
+        Forrige rekord: {longestStreak} dager. Neste milepæl:{" "}
         {nextMilestone} dager — {daysToMilestone} dager igjen.
       </div>
 
       <div className="grid grid-cols-3 gap-3 mt-6">
         <div className="p-3 rounded-xl bg-white/5">
-          <div className="font-mono text-[9px] text-[#A5B2AD] tracking-[0.14em] uppercase">
-            okter 90d
+          <div className="font-mono text-[9px] text-white/50 tracking-[0.14em] uppercase">
+            Økter 90d
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {sessions90d}
           </div>
         </div>
         <div className="p-3 rounded-xl bg-white/5">
-          <div className="font-mono text-[9px] text-[#A5B2AD] tracking-[0.14em] uppercase">
-            timer 90d
+          <div className="font-mono text-[9px] text-white/50 tracking-[0.14em] uppercase">
+            Timer 90d
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {hours90d}
           </div>
         </div>
         <div className="p-3 rounded-xl bg-white/5">
-          <div className="font-mono text-[9px] text-[#A5B2AD] tracking-[0.14em] uppercase">
-            runder 90d
+          <div className="font-mono text-[9px] text-white/50 tracking-[0.14em] uppercase">
+            Runder 90d
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {rounds90d}

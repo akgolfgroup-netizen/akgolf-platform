@@ -34,64 +34,48 @@ export function NextSessionCard({
 
   return (
     <div
-      className="col-span-12 sm:col-span-6 lg:col-span-4 flex flex-col rounded-[22px] bg-white p-5"
-      style={{
-        boxShadow:
-          "0 0 0 1px rgba(10, 31, 24, 0.05), 0 1px 2px rgba(10, 31, 24, 0.03), 0 6px 20px rgba(10, 31, 24, 0.05)",
-        minHeight: "260px",
-      }}
+      className="col-span-12 sm:col-span-6 lg:col-span-4 flex flex-col rounded-2xl bg-card p-5"
+      style={{ boxShadow: "var(--shadow-card)", minHeight: "260px" }}
     >
-      <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ak-g-400,#7A8C85)]">
+      <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-ink-subtle">
         Neste økt
       </div>
-      <div className="mt-2 text-[22px] font-bold tracking-[-0.02em] text-[var(--ak-g-900,#0A1F18)]">
+      <div className="mt-2 text-[22px] font-bold tracking-[-0.02em] text-ink">
         {hasBooking ? when : "Ingen kommende økt"}
       </div>
 
       {hasBooking ? (
         <>
-          <div className="mt-3.5 flex items-center gap-2.5 rounded-[10px] bg-[var(--ak-g-50,#F5F8F7)] px-3 py-2.5">
+          <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-surface-soft px-3 py-2.5">
             <div
               className="grid h-9 w-9 place-items-center rounded-full text-xs font-bold"
               style={{
-                background: "linear-gradient(135deg, #005840, #0A1F18)",
-                color: "#D1F843",
+                background: "linear-gradient(135deg, var(--color-primary), var(--color-sidebar))",
+                color: "var(--color-accent)",
               }}
             >
               {initials(instructorName)}
             </div>
             <div>
-              <div className="text-[13px] font-semibold">
+              <div className="text-[13px] font-semibold text-ink">
                 Coach {instructorName}
               </div>
-              <div className="mt-px text-[11px] text-[var(--ak-g-500,#5A6E66)]">
+              <div className="mt-px text-[11px] text-ink-muted">
                 {serviceName ?? "Privat"} · {duration ?? 60} min
               </div>
             </div>
           </div>
 
           {focusLabel && focusValue ? (
-            <div
-              className="mt-3.5 flex items-center gap-2.5 rounded-[10px] p-3"
-              style={{ background: "#D1F843" }}
-            >
-              <div
-                className="grid h-7 w-7 place-items-center rounded-lg text-[11px] font-extrabold"
-                style={{
-                  background: "var(--ak-g-900, #0A1F18)",
-                  color: "#D1F843",
-                }}
-              >
+            <div className="mt-3.5 flex items-center gap-2.5 rounded-xl p-3 bg-accent">
+              <div className="grid h-7 w-7 place-items-center rounded-lg text-[11px] font-extrabold bg-sidebar text-accent">
                 {focusLabel.slice(0, 3).toUpperCase()}
               </div>
               <div>
-                <div
-                  className="text-[10px] font-bold uppercase tracking-[0.12em]"
-                  style={{ color: "rgba(10, 31, 24, 0.6)" }}
-                >
+                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-ink/60">
                   Fokus
                 </div>
-                <div className="mt-px text-[13px] font-semibold text-[var(--ak-g-900,#0A1F18)]">
+                <div className="mt-px text-[13px] font-semibold text-ink">
                   {focusValue}
                 </div>
               </div>
@@ -102,7 +86,7 @@ export function NextSessionCard({
             {bookingId ? (
               <Link
                 href={`/portal/bookinger/${bookingId}`}
-                className="flex-1 rounded-[10px] bg-[var(--ak-g-900,#0A1F18)] py-2.5 text-center text-xs font-semibold text-white"
+                className="flex-1 rounded-xl bg-sidebar py-2.5 text-center text-xs font-semibold text-white hover:bg-sidebar-hover transition-colors"
               >
                 Åpne økt
               </Link>
@@ -110,7 +94,7 @@ export function NextSessionCard({
             {bookingId ? (
               <Link
                 href={`/portal/bookinger/${bookingId}/endre`}
-                className="flex-1 rounded-[10px] bg-[var(--ak-g-50,#F5F8F7)] py-2.5 text-center text-xs font-semibold text-[var(--ak-g-700,#324D45)]"
+                className="flex-1 rounded-xl bg-surface-soft py-2.5 text-center text-xs font-semibold text-ink-muted hover:bg-line transition-colors"
               >
                 Flytt
               </Link>
@@ -119,13 +103,13 @@ export function NextSessionCard({
         </>
       ) : (
         <>
-          <div className="mt-3.5 rounded-[10px] bg-[var(--ak-g-50,#F5F8F7)] px-3 py-3 text-[13px] text-[var(--ak-g-500,#5A6E66)]">
+          <div className="mt-3.5 rounded-xl bg-surface-soft px-3 py-3 text-[13px] text-ink-muted">
             Du har ingen planlagte økter de neste ukene.
           </div>
           <div className="mt-auto flex gap-2 pt-3.5">
             <Link
               href="/booking-v2"
-              className="flex-1 rounded-[10px] bg-[var(--ak-g-900,#0A1F18)] py-2.5 text-center text-xs font-semibold text-white"
+              className="flex-1 rounded-xl bg-sidebar py-2.5 text-center text-xs font-semibold text-white hover:bg-sidebar-hover transition-colors"
             >
               Bestill økt
             </Link>

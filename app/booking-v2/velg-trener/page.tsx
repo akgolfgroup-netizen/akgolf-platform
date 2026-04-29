@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Stepper } from "@/components/booking-v2/Stepper";
+import { User } from "lucide-react";
+import { BookingPageTemplate } from "@/components/booking-v2/BookingPageTemplate";
+import { BookingCard } from "@/components/booking-v2/BookingCard";
 import {
   getBookingV2InstructorsAtLocation,
   getBookingV2Locations,
@@ -31,64 +32,60 @@ export default async function VelgTrenerPage({ searchParams }: PageProps) {
   }
 
   return (
-    <>
-      <Stepper current={2} />
-      <section className="step-page active" data-step={2}>
-        <p className="eyebrow">
-          <span className="num">02 / 07</span>
-          Velg trener
-        </p>
-        <h1 className="t-section">
-          Med hvem vil <em>du</em> trene?
-        </h1>
-        <p className="lede">
-          Trenere som er tilgjengelige på <strong>{location.name}</strong>.
-          Hver trener har sine egne tjenester og tider.
-        </p>
-
-        {instructors.length === 0 ? (
-          <div className="alert warn" style={{ maxWidth: 680, marginTop: 24 }}>
-            <span className="ic">i</span>
-            <div>
-              <b>Ingen trenere på denne lokasjonen ennå.</b>
-              <p>
-                Velg en annen lokasjon, eller kontakt oss på{" "}
-                <a href="mailto:hei@akgolf.no">hei@akgolf.no</a>.
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div className="svc-list" style={{ marginTop: 24 }}>
-            {instructors.map((i) => {
-              const carry = new URLSearchParams();
-              carry.set("locationId", locationId);
-              carry.set("instructorId", i.id);
-              return (
-                <Link
-                  key={i.id}
-                  href={`/booking-v2/velg-tjeneste?${carry.toString()}`}
-                  className="svc-row"
-                >
-                  <span className="num">→</span>
-                  <div style={{ flex: 1 }}>
-                    <h3>{i.name}</h3>
-                    {i.title ? <p>{i.title}</p> : null}
-                    {i.bio ? (
-                      <p style={{ opacity: 0.7, fontSize: 13 }}>{i.bio.slice(0, 140)}</p>
-                    ) : null}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        <div style={{ marginTop: 24 }}>
-          <Link href="/booking-v2/lokasjon" className="btn btn-secondary">
-            ← Tilbake
-          </Link>
+    <BookingPageTemplate
+      step={2}
+      eyebrow="Steg 2 av 7 — Velg trener"
+      title={
+        <>
+          Med hvem vil <em className="not-italic" style={{ color: "var(--color-primary)" }}>du</em> trene?
+        </>
+      }
+      lede={`Trenere som er tilgjengelige på ${location.name}. Hver trener har sine egne tjenester og tider.`}
+    >
+      {instructors.length === 0 ? (
+        <div
+          className="rounded-xl border p-5"
+          style={{ background: "var(--color-warning-light)", borderColor: "var(--color-warning)" }}
+        >
+          <p className="text-sm font-medium" style={{ color: "var(--color-warning)" }}>
+            Ingen trenere på denne lokasjonen ennå.
+          </p>
+          <p className="mt-1 text-sm" style={{ color: "var(--color-ink-muted)" }}>
+            Velg en annen lokasjon, eller kontakt oss på{" "}
+            <a href="mailto:post@akgolf.no" className="underline">
+              post@akgolf.no
+            </a>
+            .
+          </p>
         </div>
-      </section>
-    </>
+      ) : (
+        <div className="flex flex-col gap-3 md:gap-4">
+          {instructors.map((i) => {
+            const carry = new URLSearchParams();
+            carry.set("locationId", locationId);
+            carry.set("instructorId", i.id);
+            return (
+              <BookingCard
+                key={i.id}
+                href={`/booking-v2/velg-tjeneste?${carry.toString()}`}
+                title={i.name}
+                description={i.title ?? i.bio?.slice(0, 140) ?? undefined}
+                icon={<User className="h-5 w-5 md:h-6 md:w-6" />}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      <div className="mt-6">
+        <a
+          href="/booking-v2/lokasjon"
+          className="inline-flex items-center gap-2 text-sm font-medium underline underline-offset-4 transition-colors hover:text-[var(--color-primary)]"
+          style={{ color: "var(--color-ink-muted)" }}
+        >
+          ← Tilbake til lokasjon
+        </a>
+      </div>
+    </BookingPageTemplate>
   );
 }

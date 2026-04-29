@@ -85,7 +85,7 @@ export async function getFilteredRoundStats(period: PeriodKey = "30d"): Promise<
   });
 }
 
-export function computeAggregates(rounds: RoundStatsRow[]) {
+export async function computeAggregates(rounds: RoundStatsRow[]) {
   if (rounds.length === 0) {
     return null;
   }

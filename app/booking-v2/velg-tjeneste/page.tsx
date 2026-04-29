@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Stepper } from "@/components/booking-v2/Stepper";
+import { Zap, CalendarDays, Flag, GraduationCap } from "lucide-react";
+import { BookingPageTemplate } from "@/components/booking-v2/BookingPageTemplate";
+import { BookingCard } from "@/components/booking-v2/BookingCard";
+import { BookingSummary } from "@/components/booking-v2/BookingSummary";
 import {
   getBookingV2Locations,
   getBookingV2Instructors,
@@ -16,6 +18,13 @@ interface PageProps {
   }>;
 }
 
+const CATEGORY_ICON: Record<string, React.ReactNode> = {
+  abonnement: <Zap className="h-5 w-5 md:h-6 md:w-6" />,
+  flex: <CalendarDays className="h-5 w-5 md:h-6 md:w-6" />,
+  bane: <Flag className="h-5 w-5 md:h-6 md:w-6" />,
+  kurs: <GraduationCap className="h-5 w-5 md:h-6 md:w-6" />,
+};
+
 const CATEGORY_LABEL: Record<string, string> = {
   abonnement: "Abonnement",
   flex: "Flex",
@@ -27,12 +36,8 @@ export default async function VelgTjenestePage({ searchParams }: PageProps) {
   const params = await searchParams;
   const { locationId, instructorId } = params;
 
-  if (!locationId) {
-    redirect("/booking-v2/lokasjon");
-  }
-  if (!instructorId) {
-    redirect(`/booking-v2/velg-trener?locationId=${encodeURIComponent(locationId)}`);
-  }
+  if (!locationId) redirect("/booking-v2/lokasjon");
+  if (!instructorId) redirect(`/booking-v2/velg-trener?locationId=${encodeURIComponent(locationId)}`);
 
   const [services, locations, instructors] = await Promise.all([
     getBookingV2ServicesAtLocation(locationId, instructorId),
@@ -43,82 +48,74 @@ export default async function VelgTjenestePage({ searchParams }: PageProps) {
   const location = locations.find((l) => l.id === locationId);
   const instructor = instructors.find((i) => i.id === instructorId);
 
-  if (!location || !instructor) {
-    redirect("/booking-v2/lokasjon");
-  }
+  if (!location || !instructor) redirect("/booking-v2/lokasjon");
 
   return (
-    <>
-      <Stepper current={3} />
-      <section className="step-page active" data-step={3}>
-        <p className="eyebrow">
-          <span className="num">03 / 07</span>
-          Velg tjeneste
-        </p>
-        <h1 className="t-section">
-          Hva skal vi <em>jobbe</em> med?
-        </h1>
-        <p className="lede">
-          Tjenester som <strong>{instructor.name}</strong> tilbyr på{" "}
-          <strong>{location.name}</strong>. Abonnement gir lavere pris per økt.
-        </p>
-
-        {services.length === 0 ? (
-          <div className="alert warn" style={{ maxWidth: 680, marginTop: 24 }}>
-            <span className="ic">i</span>
-            <div>
-              <b>Ingen tjenester satt opp ennå.</b>
-              <p>
-                {instructor.name} har ikke aktivert noen tjenester på {location.name}.
-                Velg en annen kombinasjon, eller kontakt oss.
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div className="svc-list" style={{ marginTop: 24 }}>
-            {services.map((s) => {
-              const carry = new URLSearchParams();
-              carry.set("locationId", locationId);
-              carry.set("instructorId", instructorId);
-              carry.set("serviceTypeId", s.id);
-              return (
-                <Link
-                  key={s.id}
-                  href={`/booking-v2/tid?${carry.toString()}`}
-                  className="svc-row"
-                >
-                  <span className="num">→</span>
-                  <div style={{ flex: 1 }}>
-                    <h3>{s.name}</h3>
-                    {s.description ? (
-                      <p style={{ opacity: 0.85 }}>{s.description}</p>
-                    ) : null}
-                    <div className="meta">
-                      <span>{s.duration} min</span>
-                      <span>·</span>
-                      <span>
-                        {s.priceLabel}
-                        {s.category === "abonnement" ? " /mnd" : ""}
-                      </span>
-                      <span>·</span>
-                      <span>{CATEGORY_LABEL[s.category] ?? s.category}</span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        <div style={{ marginTop: 24 }}>
-          <Link
-            href={`/booking-v2/velg-trener?locationId=${encodeURIComponent(locationId)}`}
-            className="btn btn-secondary"
-          >
-            ← Tilbake
-          </Link>
+    <BookingPageTemplate
+      step={3}
+      eyebrow="Steg 3 av 7 — Velg tjeneste"
+      title={
+        <>
+          Hva skal vi <em className="not-italic" style={{ color: "var(--color-primary)" }}>jobbe</em> med?
+        </>
+      }
+      lede={`Tjenester som ${instructor.name} tilbyr på ${location.name}. Abonnement gir lavere pris per økt.`}
+      sidebar={
+        <BookingSummary
+          items={[
+            { label: "Lokasjon", value: location.name },
+            { label: "Trener", value: instructor.name },
+          ]}
+          backHref={`/booking-v2/velg-trener?locationId=${encodeURIComponent(locationId)}`}
+        />
+      }
+    >
+      {services.length === 0 ? (
+        <div
+          className="rounded-xl border p-5"
+          style={{ background: "var(--color-warning-light)", borderColor: "var(--color-warning)" }}
+        >
+          <p className="text-sm font-medium" style={{ color: "var(--color-warning)" }}>
+            Ingen tjenester satt opp ennå.
+          </p>
+          <p className="mt-1 text-sm" style={{ color: "var(--color-ink-muted)" }}>
+            {instructor.name} har ikke aktivert noen tjenester på {location.name}.
+          </p>
         </div>
-      </section>
-    </>
+      ) : (
+        <div className="flex flex-col gap-3 md:gap-4">
+          {services.map((s) => {
+            const carry = new URLSearchParams();
+            carry.set("locationId", locationId);
+            carry.set("instructorId", instructorId);
+            carry.set("serviceTypeId", s.id);
+            return (
+              <BookingCard
+                key={s.id}
+                href={`/booking-v2/tid?${carry.toString()}`}
+                title={s.name}
+                description={s.description ?? undefined}
+                meta={[
+                  `${s.duration} min`,
+                  s.priceLabel + (s.category === "abonnement" ? "/mnd" : ""),
+                  CATEGORY_LABEL[s.category] ?? s.category,
+                ]}
+                icon={CATEGORY_ICON[s.category] ?? <Zap className="h-5 w-5" />}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      <div className="mt-6">
+        <a
+          href={`/booking-v2/velg-trener?locationId=${encodeURIComponent(locationId)}`}
+          className="inline-flex items-center gap-2 text-sm font-medium underline underline-offset-4 transition-colors hover:text-[var(--color-primary)]"
+          style={{ color: "var(--color-ink-muted)" }}
+        >
+          ← Tilbake til trener
+        </a>
+      </div>
+    </BookingPageTemplate>
   );
 }
