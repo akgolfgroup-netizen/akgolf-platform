@@ -317,7 +317,8 @@ export async function getRoundDetail(roundId: string) {
       HoleResult (
         *,
         Shot (*)
-      )
+      ),
+      RoundLiveState (*)
     `)
     .eq("id", roundId)
     .eq("Course.Hole.teeColor", "yellow")

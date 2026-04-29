@@ -39,7 +39,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
     startTransition(async () => {
       try {
         const result = await startRound(selectedCourse.id, teeColor, weather || undefined);
-        router.push(`/portal/runde/${result.roundId}`);
+        router.push(`/portal/runde/${result.roundId}/live`);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Feil ved oppstart av runde");
       }
