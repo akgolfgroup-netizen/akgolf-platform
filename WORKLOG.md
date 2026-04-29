@@ -9,6 +9,7 @@
 ---
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 2026-04-25 — Booking-systemet: P2, P3, waitlist-UI og reconcile-CRON
 
 **Jobbet med:** Fullført alle åpne saker fra `docs/status/BOOKING_AUDIT.md` + to BACKLOG-saker (waitlist-UI og webhook redundancy CRON). Acuity-flyten beholdes til siden lanseres — derfor ikke wired dagens slot-helper inn ennå.
@@ -1022,6 +1023,70 @@ Notion-prosjekt: `34f35a45-535a-814f-b11c-f469ea28b7b3` "AK Golf Innholdsbibliot
 3. `proposeSessionEdit` + `acceptSuggestion` + `rejectSuggestion` server actions.
 4. `PlanSuggestionInbox`-komponent med diff-visning.
 5. Utvide eksisterende `updateSession`/`createSessionForWeek` med `mode: "DIRECT" | "SUGGEST"` og bruke `canAccessPlan` for coach-tilgang.
+=======
+## 2026-04-25 — Fasilitets-bookingkart GFGK: ekte soner + live-feed
+
+**Jobbet med:** Tilpasset kartet til ekte GFGK-treningsområde basert på drone-video Anders delte, og lagt til live-indikator drevet av booking-tider.
+
+- **Ekte fasilitets-liste:** Erstattet "Klubbhus" med "Performance Studio" (ligger nederst på Driving Range-bygningen). Korthullsbanen er IKKE synlig på treningsområde-flyfotoet, så den er off-map (`ON_MAP_FACILITIES`-konstant skiller).
+- **Nye sone-koordinater** matcher video-layouten:
+  - Putting Green: oppe venstre stor oval
+  - Short Game Area: nederst sentrum
+  - Driving Range: høyre side øvre 2/3 (lang vertikal bygning)
+  - Performance Studio: nederste del av range-bygningen
+- **Live-indikator** (auto fra bookinger):
+  - `getLiveStatus()` server action returnerer `{ activeNow, nextStart, nextPerson }` per fasilitet basert på `startTime ≤ nå < endTime`
+  - Pulserende lime-grønn ring rundt sone i SVG (animate stroke-opacity 2s loop)
+  - "LIVE n"-badge på sonen når `activeNow > 0`
+  - Pulserende ping-prikk i glasspanel + "n aktive nå" eller "Neste: HH:MM · Person"
+  - Klient poller hvert 30s for ferske live-tall
+- **Off-map-pille:** Korthullsbane vises som pille under kartet med samme klikk-til-glasspanel-flyt og live-badge
+- **Splittet FacilityMap** i `components/admin/facility-map/` (zone-detail-panel + off-map-strip) for å holde under 300-linjers regelen
+- **Updated docs:** `component-library.md` + `WORKLOG.md`
+
+**Status:** Lint og TS-rene. Migrasjonen er fortsatt ikke kjørt mot Supabase.
+
+**Neste steg:**
+1. Bytt ut `public/admin/gfgk-aerial.jpg` med ekte stillbilde fra GFGK-droneklipp (Anders).
+2. Kjør Prisma migrate mot Supabase.
+3. Finjuster polygon-koordinater visuelt etter at ekte bilde er på plass.
+4. Vurder QR check-in (alternativ D) i en oppfølger for å fange aktivitet uten booking.
+
+**Nøkkelfiler:**
+- Endret: `app/admin/(authed)/fasiliteter/{actions,page,fasiliteter-client}.{ts,tsx}`, `components/admin/FacilityMap.tsx`, `.claude/rules/component-library.md`
+- Nye: `components/admin/facility-map/{zone-detail-panel,off-map-strip}.tsx`
+
+---
+
+## 2026-04-25 — Fasilitets-bookingkart GFGK (CoachHQ)
+
+**Jobbet med:** Ny fasilitets-bookingside for CoachHQ med tre visninger (Kart, Kalender, Liste) og modal for å legge til aktivitet, basert på ny `FacilityBooking`-modell. Branch `feature/facility-booking`.
+
+- **Prisma:** Lagt til `FacilityBooking` (id, facility, person, type, date, startTime, endTime, userId, createdAt) + indekser. Migrasjon `20260425_add_facility_booking_map`.
+- **Aerial-bilde:** `public/admin/gfgk-aerial-placeholder.svg` + konvertert JPG via `sips`. **TODO Anders:** bytt ut `public/admin/gfgk-aerial.jpg` med ekte flyfoto av GFGK-anlegget.
+- **Komponenter** (i `components/admin/`):
+  - `FacilityMap.tsx` — flyfoto-bakgrunn + 5 SVG-soner (Driving Range, Putting Green, Short Game Area, Klubbhus, Korthullsbane). Fargekoding per kapasitet (#2A7D5A ledig, #C48A32 nesten fullt, #B84233 fullt). Klikk sone → mørkt glasspanel med dagens bookinger + "Book nå".
+  - `FacilityCalendar.tsx` — dagvelger venstre (7 dager frem) + tidsplan 08:00–20:00 med fargede booking-blokker per fasilitet.
+  - `FacilityList.tsx` — bookinger gruppert per fasilitet, status-badge per type.
+  - `AddActivityModal.tsx` — felt: Fasilitet, Person/Gruppe, Type, Dato, Starttid, Varighet (pills 30/45/60/90/120/180 min). Kaller server action `createFacilityBooking`.
+- **Server Actions** (`app/admin/(authed)/fasiliteter/actions.ts`): `getWeekBookings`, `createFacilityBooking`, `deleteFacilityBooking` med `canAccessMissionControl`-guard.
+- **Migrert eksisterende handlere** (FacilityActivity-flyt for `innstillinger/` og `ny-aktivitet/`) til `actions-legacy.ts` så de undermappene fortsatt fungerer.
+- **Page:** `app/admin/(authed)/fasiliteter/page.tsx` — server-render med auth-guard, `fasiliteter-client.tsx` styrer view-switcher (Kart/Kalender/Liste).
+- **Design:** Heritage M3 (DM Sans, Material Symbols, primary #154212, surface #fdf9f0, secondary-fixed #d2f000). Semantiske kapasitetsfarger fra prompten.
+- **Component-library:** Registrert 4 nye komponenter i `.claude/rules/component-library.md`.
+
+**Status:** Alle nye filer ESLint-rene. Pre-eksisterende TS-feil andre steder ikke adressert. Migrasjonen er **ikke** kjørt mot Supabase ennå — kjør `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy` etter merge.
+
+**Neste steg:**
+1. Bytt ut `public/admin/gfgk-aerial.jpg` med ekte flyfoto av GFGK (placeholder er en grovt SVG-konvertert bakgrunn).
+2. Kjør Prisma migrate mot Supabase (DIRECT_URL, port 5432).
+3. Juster SVG-polygoner i `FacilityMap.tsx` etter at ekte flyfoto er på plass — koordinatene er normaliserte (viewBox 0–100) og må re-tegnes til faktisk anleggslayout.
+4. Vurder å koble `userId` til reell bruker-relasjon (Prisma `User`) i en oppfølger.
+
+**Nøkkelfiler:**
+- Nye: `app/admin/(authed)/fasiliteter/{page,actions,actions-legacy,fasiliteter-client}.tsx`/`.ts`, `components/admin/{FacilityMap,FacilityCalendar,FacilityList,AddActivityModal}.tsx`, `prisma/migrations/20260425_add_facility_booking_map/migration.sql`, `public/admin/{gfgk-aerial.jpg,gfgk-aerial-placeholder.svg}`.
+- Endret: `prisma/schema.prisma` (ny model), `.claude/rules/component-library.md`, `app/admin/(authed)/fasiliteter/innstillinger/{page,innstillinger-client}.tsx`, `app/admin/(authed)/fasiliteter/ny-aktivitet/{page,ny-aktivitet-client}.tsx` (importer fra actions-legacy).
+>>>>>>> feature/facility-booking
 
 ---
 
