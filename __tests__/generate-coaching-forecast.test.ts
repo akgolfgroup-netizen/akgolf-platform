@@ -26,8 +26,8 @@ function mkRound(partial: Partial<RoundInput> & { id: string; date: Date }): Rou
 
 /**
  * Emil: 17 år, HCP 4–5 (kategori B), snitt-score 75 på Srixon Tour.
- * PGA-Tour-skalert SG: -0.8 total, fordelt ca. i tråd med SG_BENCHMARKS for B:
- * OTT -0.3, APP -0.3, ARG -0.1, PUTT -0.1
+ * PGA-Tour-skalert SG: +0.8 total, fordelt ca. i tråd med SG_BENCHMARKS for B:
+ * OTT +0.2, APP +0.3, ARG +0.1, PUTT +0.2
  */
 function emilHistory(): RoundInput[] {
   const rounds: RoundInput[] = [];
@@ -37,11 +37,11 @@ function emilHistory(): RoundInput[] {
         id: `r${i}`,
         date: new Date(2026, 3, 1 + i),
         totalScore: 75,
-        sgTotal: -0.8,
-        sgOffTheTee: -0.3,
-        sgApproach: -0.3,
-        sgAroundTheGreen: -0.1,
-        sgPutting: -0.1,
+        sgTotal: 0.8,
+        sgOffTheTee: 0.2,
+        sgApproach: 0.3,
+        sgAroundTheGreen: 0.1,
+        sgPutting: 0.2,
       }),
     );
   }
@@ -146,19 +146,19 @@ describe("generateCoachingForecast — Emil-casen (75 → 72)", () => {
   it("identifiserer nåværende tilstand korrekt (PGA-Tour-skala)", () => {
     const result = generateCoachingForecast(emilInput());
     expect(result.currentState.sampleSize).toBeGreaterThan(10);
-    expect(result.currentState.sgTotal).toBeCloseTo(-0.8, 1);
+    expect(result.currentState.sgTotal).toBeCloseTo(0.8, 1);
     expect(result.currentState.confidence).toBe("high");
-    // SG -0.8 → HCP 4 → kategori B
+    // SG +0.8 → HCP 4 → kategori B
     expect(result.currentState.category).toBe("B");
   });
 
   it("beregner nødvendig SG-delta på PGA-Tour-skala (75 → 72)", () => {
     const result = generateCoachingForecast(emilInput());
-    // 75 på CR 71, Slope 125 → diff 3.6 → HCP 4 → B → SG -0.8
-    // 72 på CR 71, Slope 125 → diff 0.9 → HCP 1 → A → SG -0.3
-    // Delta ≈ 0.5 SG (PGA-Tour-skala, IKKE differential-skala)
-    expect(result.target.requiredSgDelta).toBeGreaterThan(0.3);
-    expect(result.target.requiredSgDelta).toBeLessThan(0.8);
+    // 75 på CR 71, Slope 125 → diff 3.6 → HCP 4 → B → SG +0.8
+    // 72 på CR 71, Slope 125 → diff 0.9 → HCP 1 → A → SG +3.5
+    // Delta ≈ 2.7 SG (PGA-Tour-skala, IKKE differential-skala)
+    expect(result.target.requiredSgDelta).toBeGreaterThan(2.0);
+    expect(result.target.requiredSgDelta).toBeLessThan(3.5);
   });
 
   it("APP får størst andel av forbedringen (empirisk + headroom)", () => {
@@ -182,10 +182,10 @@ describe("generateCoachingForecast — Emil-casen (75 → 72)", () => {
 
   it("estimert tidsbruk er realistisk for 0.5 SG-delta (100-500 timer etter overlap)", () => {
     const result = generateCoachingForecast(emilInput());
-    // Med delta ~0.5 SG og B-nivå kalibrering (APP 140h/+0.1):
-    // Raw ~550h, etter overlap (0.55) ~300h
-    expect(result.estimatedTotalHours).toBeGreaterThan(100);
-    expect(result.estimatedTotalHours).toBeLessThan(600);
+    // Med delta ~2.7 SG og B-nivå kalibrering (APP 140h/+0.1):
+    // Raw ~3000h+, etter overlap ~1500h+
+    expect(result.estimatedTotalHours).toBeGreaterThan(1000);
+    expect(result.estimatedTotalHours).toBeLessThan(4000);
   });
 
   it("CI er konsistent (low ≤ mid ≤ high)", () => {
@@ -262,13 +262,13 @@ describe("generateCoachingForecast — edge cases", () => {
     // Hvis spiller allerede er bedre enn målet
     already.rounds = already.rounds.map((r) => ({
       ...r,
-      sgTotal: 0,
-      sgOffTheTee: 0,
-      sgApproach: 0,
-      sgAroundTheGreen: 0,
-      sgPutting: 0,
+      sgTotal: 3.5,
+      sgOffTheTee: 0.8,
+      sgApproach: 1.3,
+      sgAroundTheGreen: 0.6,
+      sgPutting: 0.8,
     }));
-    already.targetScoreAvg = 75; // dårligere enn dagens
+    already.targetScoreAvg = 75; // dårligere enn dagens (spiller A-nivå, mål B-nivå)
     const result = generateCoachingForecast(already);
     expect(result.target.requiredSgDelta).toBe(0);
     expect(result.probabilityOfSuccess).toBe(1);
@@ -311,8 +311,8 @@ describe("generateCoachingForecast — edge cases", () => {
       rounds: scoreOnlyHistory,
     });
     expect(result.currentState.sampleSize).toBe(15);
-    // PGA-Tour-skalert SG fra differential 3.6 → kategori B → SG -0.8
-    expect(result.currentState.sgTotal).toBeCloseTo(-0.8, 1);
+    // PGA-Tour-skalert SG fra differential 3.6 → kategori B → SG +0.8
+    expect(result.currentState.sgTotal).toBeCloseTo(0.8, 1);
     expect(result.currentState.confidence).toBe("medium");
     // Fordelingen skal stadig fungere via empirisk regularisering
     expect(result.allocations.length).toBe(4);

@@ -1,8 +1,9 @@
 # Lanseringsrapport — AK Golf Platform
 **Dato:** 2026-04-29  
-**Branch:** main (synket med origin)  
-**Build:** ✅ Compiled successfully (22.7s)  
+**Branch:** main (pushed til origin)  
+**Build:** ✅ Compiled successfully (26.5s)  
 **TypeScript:** ✅ 0 errors  
+**Performance audit:** ✅ Vercel React Best Practices (waterfalls, bundle size)  
 
 ---
 

@@ -8,8 +8,8 @@ import { STANDARD_TEMPLATES, getTemplate } from "@/lib/portal/training/standard-
 import { TEMPLATE_FOCUS } from "@/lib/portal/training/ak-taxonomy";
 
 describe("STANDARD_TEMPLATES", () => {
-  it("har 5 forhåndsdefinerte maler", () => {
-    expect(STANDARD_TEMPLATES).toHaveLength(5);
+  it("har 6 forhåndsdefinerte maler", () => {
+    expect(STANDARD_TEMPLATES).toHaveLength(6);
   });
 
   it("hver mal har gyldig id, tittel og minst én økt", () => {

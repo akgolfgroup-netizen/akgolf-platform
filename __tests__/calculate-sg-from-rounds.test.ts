@@ -66,19 +66,19 @@ describe("calculateDifferential", () => {
 
 describe("differentialToSgEquivalent", () => {
   it("mapper differential til PGA-Tour-skalert SG via A–K-benchmark", () => {
-    // Differential 4 ≈ HCP 4 → kategori B → SG ≈ -0.8
+    // Differential 4 ≈ HCP 4 → kategori B → SG ≈ +0.8 (PGA Tour: positiv = bedre enn snitt)
     const sg = differentialToSgEquivalent(4);
-    expect(sg).toBeCloseTo(-0.8, 1);
+    expect(sg).toBeCloseTo(0.8, 1);
   });
 
-  it("HCP 0-2 (scratch) ≈ kategori A ≈ SG -0.3", () => {
+  it("HCP 0-2 (scratch) ≈ kategori A ≈ SG +3.5", () => {
     const sg = differentialToSgEquivalent(1);
-    expect(sg).toBeCloseTo(-0.3, 1);
+    expect(sg).toBeCloseTo(3.5, 1);
   });
 
-  it("HCP 15 ≈ kategori F ≈ SG -2.5", () => {
+  it("HCP 15 ≈ kategori F ≈ SG -2.0", () => {
     const sg = differentialToSgEquivalent(15);
-    expect(sg).toBeCloseTo(-2.5, 1);
+    expect(sg).toBeCloseTo(-2.0, 1);
   });
 
   it("null-input gir null-output", () => {
@@ -156,8 +156,8 @@ describe("computeRoundSg", () => {
     const result = computeRoundSg(baseRound);
     expect(result.source).toBe("differential");
     expect(result.confidence).toBe("medium");
-    // Differential 3.616 → HCP ~4 → kategori B → SG ≈ -0.8 (PGA-Tour-skala)
-    expect(result.sgTotal).toBeCloseTo(-0.8, 1);
+    // Differential 3.616 → HCP ~4 → kategori B → SG ≈ +0.8 (PGA-Tour-skala)
+    expect(result.sgTotal).toBeCloseTo(0.8, 1);
     // Per-kategori skal være null uten shot-level data
     expect(result.sgOffTheTee).toBeNull();
     expect(result.sgApproach).toBeNull();
@@ -343,30 +343,30 @@ describe("computePlayerSgProfile", () => {
 // ── predictScoreFromSg ─────────────────────────────────────────────
 
 describe("predictScoreFromSg", () => {
-  it("scratch (SG ≈ -0.3) gir ca Course Rating på nøytral bane", () => {
-    // SG -0.3 → HCP 0-1 → score ≈ CR + ~1*slope/113
-    const score = predictScoreFromSg(-0.3, 72, 113);
+  it("elite (SG ≈ +3.5) gir ca Course Rating på nøytral bane", () => {
+    // SG +3.5 → HCP ~0 → score ≈ CR
+    const score = predictScoreFromSg(3.5, 72, 113);
     expect(score).toBeGreaterThanOrEqual(71);
     expect(score).toBeLessThanOrEqual(73);
   });
 
-  it("HCP 5-ish spiller (SG -0.8, kategori B) ≈ CR + 4 på slope 113", () => {
-    // sgToHandicap(-0.8) ≈ 4 → score ≈ 72 + 4*113/113 = 76
-    const score = predictScoreFromSg(-0.8, 72, 113);
+  it("HCP 5-ish spiller (SG +0.8, kategori B) ≈ CR + 4 på slope 113", () => {
+    // sgToHandicap(+0.8) ≈ 4 → score ≈ 72 + 4*113/113 = 76
+    const score = predictScoreFromSg(0.8, 72, 113);
     expect(score).toBeGreaterThan(74);
     expect(score).toBeLessThan(78);
   });
 
-  it("Emil-scenariet: SG -0.8 på CR 71, slope 125 → score ≈ 75", () => {
-    // sgToHandicap(-0.8) ≈ 4 → score ≈ 71 + 4 * 125/113 = 75.4
-    const score = predictScoreFromSg(-0.8, 71, 125);
+  it("Emil-scenariet: SG +0.8 på CR 71, slope 125 → score ≈ 75", () => {
+    // sgToHandicap(+0.8) ≈ 4 → score ≈ 71 + 4 * 125/113 = 75.4
+    const score = predictScoreFromSg(0.8, 71, 125);
     expect(score).toBeGreaterThan(74);
     expect(score).toBeLessThan(77);
   });
 
   it("dårligere SG gir høyere score (monotoni)", () => {
-    const betterPlayer = predictScoreFromSg(-0.8, 71, 125);
-    const worsePlayer = predictScoreFromSg(-2.5, 71, 125);
+    const betterPlayer = predictScoreFromSg(0.8, 71, 125);
+    const worsePlayer = predictScoreFromSg(-2.0, 71, 125);
     expect(worsePlayer).toBeGreaterThan(betterPlayer);
   });
 
