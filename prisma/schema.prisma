@@ -2189,6 +2189,7 @@ model User {
   PeriodizationPeriod                         PeriodizationPeriod[]
   PlayerAchievement                           PlayerAchievement[]
   PlayerBag                                   PlayerBag?
+  ClubInBag                                   ClubInBag[]
   PlayerTournamentPlan                        PlayerTournamentPlan[]
   Round                                       Round[]
   RoundStats                                  RoundStats[]
@@ -2619,9 +2620,10 @@ model Round {
   updatedAt       DateTime
   gameSessionId   String?
   HoleResult      HoleResult[]
-  Course          Course       @relation(fields: [courseId], references: [id])
-  GameSession     GameSession? @relation(fields: [gameSessionId], references: [id])
-  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course          Course          @relation(fields: [courseId], references: [id])
+  GameSession     GameSession?    @relation(fields: [gameSessionId], references: [id])
+  User            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  RoundLiveState  RoundLiveState?
 
   @@index([userId, date])
   @@index([courseId])
@@ -2711,11 +2713,57 @@ model Shot {
   preRoutineCompleted Boolean?
   confidenceLevel     Int?
   trackmanShotId      String?    @unique
+  // Round/UpGame Pro Sprint A — GPS-koordinater + tidsstempel for live shot-logging
+  fromLat             Float?
+  fromLng             Float?
+  toLat               Float?
+  toLng               Float?
+  elevationDelta      Int?
+  loggedAt            DateTime?
+  fromLieDetail       String?
+  toLieDetail         String?
   Hole                Hole       @relation(fields: [holeId], references: [id])
   HoleResult          HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
 
   @@index([holeResultId])
   @@index([sgCategory])
+  @@index([loggedAt])
+}
+
+model ClubInBag {
+  id              String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId          String
+  club            String
+  loft            Float?
+  shaft           String?
+  avgCarryMeters  Float?
+  avgTotalMeters  Float?
+  isInActiveBag   Boolean  @default(true)
+  position        Int      @default(0)
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, club])
+  @@index([userId])
+  @@index([userId, isInActiveBag])
+}
+
+model RoundLiveState {
+  id                String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  roundId           String   @unique
+  currentHoleNumber Int      @default(1)
+  currentShotNumber Int      @default(0)
+  isPaused          Boolean  @default(false)
+  pausedAt          DateTime?
+  lastActivityAt    DateTime @default(now())
+  deviceId          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  Round             Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@index([roundId])
 }
 
 model PlayerBag {
