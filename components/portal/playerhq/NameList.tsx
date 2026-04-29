@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
@@ -28,15 +29,26 @@ interface NameListProps {
  */
 export function NameList({ user, onSignOut, onItemClick }: NameListProps) {
   const pathname = usePathname();
-  const initials = (user.name ?? user.email ?? "U")
-    .split(/[\s@]/)[0]
-    .slice(0, 2)
-    .toUpperCase();
 
-  const sectionsWithVisibleItems = PLAYERHQ_NAV.map((section) => ({
-    ...section,
-    items: section.items.filter((item) => isPlayerHQRouteVisible(item.href)),
-  })).filter((section) => section.items.length > 0);
+  // Initials kommer kun an pa user.name/email — utled en gang per render-runde der user endres.
+  const initials = useMemo(
+    () =>
+      (user.name ?? user.email ?? "U")
+        .split(/[\s@]/)[0]
+        .slice(0, 2)
+        .toUpperCase(),
+    [user.name, user.email],
+  );
+
+  // Feature-flag-filtrering er statisk — kjor en gang ved mount (PLAYERHQ_NAV er konstant).
+  const sectionsWithVisibleItems = useMemo(
+    () =>
+      PLAYERHQ_NAV.map((section) => ({
+        ...section,
+        items: section.items.filter((item) => isPlayerHQRouteVisible(item.href)),
+      })).filter((section) => section.items.length > 0),
+    [],
+  );
 
   return (
     <aside

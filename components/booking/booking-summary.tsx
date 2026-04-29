@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -47,7 +48,7 @@ export function BookingSummary({
   isDetailsValid,
   onProceedToConfirm,
 }: BookingSummaryProps) {
-  const slotDate = new Date(slot);
+  const slotDate = useMemo(() => new Date(slot), [slot]);
 
   if (showDetails && mode === "public") {
     return (
@@ -165,7 +166,7 @@ function CustomerDetailsForm({
   instructor,
   slot,
 }: CustomerDetailsFormProps) {
-  const slotDate = new Date(slot);
+  const slotDate = useMemo(() => new Date(slot), [slot]);
 
   return (
     <div>

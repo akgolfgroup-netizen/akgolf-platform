@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   format,
   startOfMonth,
@@ -51,18 +51,28 @@ export function BookingDatePicker({
     return days;
   }, [currentMonth]);
 
-  const canGoBack = isSameMonth(currentMonth, new Date()) === false &&
-    !isBefore(currentMonth, startOfMonth(new Date()));
-  const canGoForward = isBefore(startOfMonth(addMonths(currentMonth, 1)), maxDate);
+  const canGoBack = useMemo(
+    () =>
+      isSameMonth(currentMonth, new Date()) === false &&
+      !isBefore(currentMonth, startOfMonth(new Date())),
+    [currentMonth],
+  );
+  const canGoForward = useMemo(
+    () => isBefore(startOfMonth(addMonths(currentMonth, 1)), maxDate),
+    [currentMonth, maxDate],
+  );
 
-  function isDisabled(date: Date): boolean {
-    if (isBefore(date, today)) return true;
-    if (isSameDay(date, today)) return true;
-    if (isBefore(maxDate, date)) return true;
-    const dow = date.getDay();
-    if (dow === 0 || dow === 6) return true;
-    return false;
-  }
+  const isDisabled = useCallback(
+    (date: Date): boolean => {
+      if (isBefore(date, today)) return true;
+      if (isSameDay(date, today)) return true;
+      if (isBefore(maxDate, date)) return true;
+      const dow = date.getDay();
+      if (dow === 0 || dow === 6) return true;
+      return false;
+    },
+    [today, maxDate],
+  );
 
   return (
     <div className="bg-card border border-line rounded-2xl p-4 select-none">
@@ -120,7 +130,7 @@ export function BookingDatePicker({
           return (
             <button
               type="button"
-              key={date.toISOString()}
+              key={date.getTime()}
               onClick={() => !disabled && inMonth && onSelect(date)}
               disabled={disabled || !inMonth}
               aria-disabled={disabled || !inMonth ? "true" : undefined}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -14,6 +15,11 @@ interface TimeSlotsProps {
 }
 
 export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: TimeSlotsProps) {
+  // Pre-formater HH:mm pa hver slot — unngar new Date() per render i map.
+  const formattedSlots = useMemo(
+    () => slots.map((slot) => ({ slot, timeStr: format(new Date(slot), "HH:mm") })),
+    [slots],
+  );
   if (!date) {
     return (
       <div className="bg-card border border-line rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[220px]">
@@ -55,9 +61,7 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>
       <div className="grid grid-cols-2 gap-2">
-        {slots.map((slot, index) => {
-          const slotDate = new Date(slot);
-          const timeStr = format(slotDate, "HH:mm");
+        {formattedSlots.map(({ slot, timeStr }, index) => {
           const isSelected = selectedSlot === slot;
 
           return (
