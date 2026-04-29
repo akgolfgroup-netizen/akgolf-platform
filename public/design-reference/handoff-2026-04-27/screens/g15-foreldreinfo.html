@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — For foreldre</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  /* Hero */
+  .par-hero { padding: 160px 0 60px; position:relative; }
+  .par-hero-grid { display:grid; grid-template-columns: 1.1fr 0.9fr; gap:72px; align-items:center; }
+  .par-eyebrow { font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color: var(--akgolf-primary); font-weight:700; margin-bottom:22px; display:flex; align-items:center; gap:10px; }
+  .par-eyebrow::before { content:''; display:block; width:34px; height:1px; background: var(--akgolf-primary); }
+  .par-hero h1 { font-size: clamp(52px, 6vw, 92px); line-height:0.96; letter-spacing:-0.04em; color:var(--akgolf-ink); font-weight:800; margin:0 0 24px; text-wrap:balance; }
+  .par-hero h1 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); display:block; letter-spacing:-0.025em; }
+  .par-hero p.lede { font-size:19px; line-height:1.6; color:var(--akgolf-text); max-width:54ch; margin:0 0 32px; }
+  .par-hero-cta { display:flex; gap:12px; }
+  .par-img-ph { aspect-ratio: 4/5; border-radius:24px; background: linear-gradient(135deg, var(--akgolf-primary), #0A1F18); position:relative; overflow:hidden; }
+  .par-img-ph .lab { position:absolute; bottom:18px; left:20px; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.7); letter-spacing:0.14em; }
+  .par-img-ph::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 14px, rgba(255,255,255,0.0) 14px 28px); }
+
+  /* Trust strip */
+  .trust { padding: 40px 0; border-top:1px solid rgba(10,31,24,0.10); border-bottom:1px solid rgba(10,31,24,0.10); display:grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin: 32px 0 80px; }
+  .trust-cell .l { font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.14em; color: var(--akgolf-muted); text-transform:uppercase; font-weight:700; margin-bottom:8px; }
+  .trust-cell .v { font-size:38px; font-weight:800; color:var(--akgolf-ink); letter-spacing:-0.025em; line-height:1; }
+  .trust-cell .v em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); }
+  .trust-cell .sub { font-size:13px; color:var(--akgolf-text); margin-top:6px; }
+
+  /* Big quote */
+  .quote-block { padding: 80px 0; background: var(--akgolf-ink); color:#fff; margin: 60px 0; border-radius: 28px; }
+  .quote-block .inner { padding: 0 60px; max-width: 1080px; margin: 0 auto; }
+  .quote-block .lab { font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color: var(--akgolf-accent); font-weight:700; margin-bottom:24px; }
+  .quote-block blockquote { margin:0; font-size: clamp(28px, 3.4vw, 44px); line-height:1.25; letter-spacing:-0.025em; font-weight:300; max-width: 30ch; }
+  .quote-block blockquote em { font-family:'Fraunces', serif; font-style: italic; font-weight:500; color: var(--akgolf-accent); }
+  .quote-block cite { display:flex; gap:14px; align-items:center; margin-top:32px; font-style:normal; }
+  .quote-block cite .av { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #C99CF3, #6BB1FF); }
+  .quote-block cite .nm { font-weight:600; font-size:14px; }
+  .quote-block cite .nm small { display:block; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.6); margin-top:3px; letter-spacing:0.04em; }
+
+  /* What you get as parent */
+  .what-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin: 80px 0; }
+  .what-card { background:#fff; border:1px solid rgba(10,31,24,0.08); border-radius:18px; padding: 28px 30px; }
+  .what-card .ic { width:46px; height:46px; border-radius:12px; background: rgba(0,88,64,0.08); color:var(--akgolf-primary); display:grid; place-items:center; margin-bottom:18px; }
+  .what-card .ic [data-lucide]{ width:20px; height:20px; }
+  .what-card h3 { margin:0 0 10px; font-size:18px; color:var(--akgolf-ink); font-weight:700; letter-spacing:-0.015em; }
+  .what-card p { font-size:14px; line-height:1.6; color:var(--akgolf-text); margin:0; }
+  .what-card .bullets { list-style:none; padding:0; margin:14px 0 0; font-size:13px; color:var(--akgolf-text); }
+  .what-card .bullets li { padding:7px 0; padding-left:22px; position:relative; border-top:1px solid rgba(10,31,24,0.06); }
+  .what-card .bullets li:first-child { border-top:none; }
+  .what-card .bullets li::before { content:'✓'; position:absolute; left:0; top:7px; color:var(--akgolf-primary); font-weight:700; }
+
+  /* Faq */
+  .faq-section { padding: 80px 0; }
+  .faq-grid { display:grid; grid-template-columns: 1fr 1.5fr; gap:64px; }
+  .faq-item { padding: 22px 0; border-top: 1px solid rgba(10,31,24,0.10); }
+  .faq-item:last-child { border-bottom: 1px solid rgba(10,31,24,0.10); }
+  .faq-q { display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+  .faq-q h4 { margin:0; font-size:17px; color:var(--akgolf-ink); font-weight:600; letter-spacing:-0.015em; padding-right:24px; }
+  .faq-q .ic { color: var(--akgolf-primary); }
+  .faq-q .ic [data-lucide]{ width:18px; height:18px; }
+  .faq-a { font-size:14px; color:var(--akgolf-text); line-height:1.65; padding-top:14px; max-width: 64ch; }
+  .faq-item.open .faq-q .ic { transform: rotate(45deg); }
+  .faq-item:not(.open) .faq-a { display:none; }
+  .faq-q .ic { transition: transform 200ms; }
+
+  /* Roadmap junior */
+  .road-section { background: linear-gradient(180deg, transparent, rgba(0,88,64,0.04)); padding: 90px 0; border-top: 1px solid rgba(10,31,24,0.08); }
+  .road-track { position:relative; display:grid; grid-template-columns: repeat(4, 1fr); gap:18px; margin-top:50px; }
+  .road-track::before { content:''; position:absolute; top:24px; left:60px; right:60px; height:2px; background: var(--akgolf-primary); opacity:0.2; }
+  .road-step { background:#fff; border:1px solid rgba(10,31,24,0.08); border-radius:16px; padding: 64px 22px 22px; position:relative; }
+  .road-step .num { position:absolute; top:8px; left:50%; transform:translateX(-50%); width:36px; height:36px; border-radius:50%; background:var(--akgolf-primary); color:var(--akgolf-accent); display:grid; place-items:center; font-weight:800; font-size:14px; border: 4px solid var(--akgolf-surface); }
+  .road-step .age { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:var(--akgolf-primary); text-transform:uppercase; font-weight:700; }
+  .road-step h4 { margin:6px 0 8px; font-size:18px; color:var(--akgolf-ink); font-weight:700; letter-spacing:-0.02em; }
+  .road-step p { font-size:13px; color:var(--akgolf-text); line-height:1.55; margin:0; }
+
+  /* CTA card */
+  .cta-card { margin: 60px 0 100px; background: var(--akgolf-accent); border-radius: 28px; padding: 56px 60px; display:grid; grid-template-columns: 1.4fr 1fr; gap:40px; align-items:center; }
+  .cta-card h3 { margin:0 0 12px; font-size: 36px; color:#0A1F18; font-weight:800; letter-spacing:-0.025em; line-height:1.1; }
+  .cta-card h3 em { font-family:'Fraunces',serif; font-style:italic; color: var(--akgolf-primary); font-weight:500; }
+  .cta-card p { font-size:15px; line-height:1.65; color:#0A1F18; margin:0; max-width: 50ch; }
+  .cta-card .acts { display:flex; flex-direction:column; gap:10px; }
+  .cta-card .ax { background: #0A1F18; color:#fff; padding:14px 22px; border-radius:999px; font-size:14px; font-weight:700; display:flex; gap:8px; align-items:center; justify-content:center; }
+  .cta-card .ax.outline { background:transparent; color:#0A1F18; border:1.5px solid rgba(10,31,24,0.30); }
+  .cta-card .ax [data-lucide]{ width:14px; height:14px; }
+
+  .container { max-width:1280px; margin:0 auto; padding:0 40px; }
+</style>
+</head>
+<body>
+<nav class="web-nav solid">
+  <div class="web-logo"><div class="mark">AK</div>AK Golf Akademi</div>
+  <div class="web-nav-links">
+    <a href="#">Akademiet</a>
+    <a href="#">Junior</a>
+    <a href="#" class="active">For foreldre</a>
+    <a href="#">Booking</a>
+    <a href="#">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-cta">Logg inn <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<section class="par-hero">
+  <div class="container">
+    <div class="par-hero-grid">
+      <div>
+        <div class="par-eyebrow">FOR FORELDRE</div>
+        <h1>Trygg utvikling. <em>Glade barn.</em></h1>
+        <p class="lede">Du trenger ikke å være golfekspert for å støtte barnet ditt. Vi tar oss av det faglige — du får oversikt, åpenhet og noen gleder å dele når dere kjører hjem.</p>
+        <div class="par-hero-cta">
+          <a href="#" class="web-nav-cta">Book intro-samtale<i data-lucide="arrow-right"></i></a>
+          <a href="#" style="font-size:14px; font-weight:600; color:var(--akgolf-ink); padding:12px 22px;">Last ned foreldre-guide PDF →</a>
+        </div>
+      </div>
+      <div class="par-img-ph"><span class="lab">FOTO · BARN PÅ DRIVING RANGE I MORGENLYS</span></div>
+    </div>
+
+    <div class="trust">
+      <div class="trust-cell">
+        <div class="l">Aktive juniorer</div>
+        <div class="v">142</div>
+        <div class="sub">8–18 år · alle nivåer</div>
+      </div>
+      <div class="trust-cell">
+        <div class="l">Foreldre-tilfredshet</div>
+        <div class="v">96<em>%</em></div>
+        <div class="sub">Vil anbefale akademiet</div>
+      </div>
+      <div class="trust-cell">
+        <div class="l">PGA-sertifisert team</div>
+        <div class="v">5</div>
+        <div class="sub">Inkl. mental + fysisk-trener</div>
+      </div>
+      <div class="trust-cell">
+        <div class="l">Politiattest</div>
+        <div class="v">100<em>%</em></div>
+        <div class="sub">Alle coacher · oppdatert</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="quote-block">
+    <div class="inner">
+      <div class="lab">★ FORELDRE-STEMMER · MARS 2026</div>
+      <blockquote>«Det viktigste for oss var ikke at Aksel ble best — det var at han fortsatt elsker å gå på trening. <em>Det har Erik klart å bevare.</em>»</blockquote>
+      <cite><div class="av"></div><div class="nm">Henrik Berg<small>FAR · AKSEL · 12 ÅR · 3 ÅR I AKADEMIET</small></div></cite>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div style="text-align:center; max-width: 720px; margin: 80px auto 60px;">
+    <div class="par-eyebrow" style="justify-content:center;">SLIK FUNGERER DET</div>
+    <h2 style="font-size:46px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin:0 0 16px;">Hva du faktisk får som forelder.</h2>
+    <p style="font-size:17px; color:var(--akgolf-text); line-height:1.6;">Tre ting vi skylder deg: oversikt, åpenhet og forutsigbarhet. Vi sender ikke spam — vi sender det som faktisk hjelper.</p>
+  </div>
+
+  <div class="what-grid">
+    <article class="what-card">
+      <div class="ic"><i data-lucide="layout-dashboard"></i></div>
+      <h3>Foreldre-portal</h3>
+      <p>Egen login. Du ser hva barnet trener på, neste avtaler, fakturaer, fremgang.</p>
+      <ul class="bullets">
+        <li>Bookinger &amp; kvitteringer på ett sted</li>
+        <li>Coach-notater (det som er trygt å dele)</li>
+        <li>Bilder &amp; klipp fra økter (med samtykke)</li>
+      </ul>
+    </article>
+
+    <article class="what-card">
+      <div class="ic"><i data-lucide="message-circle"></i></div>
+      <h3>Direkte linje til Erik</h3>
+      <p>Spørsmål om utstyr, motivasjon eller noe sosialt? Send melding — Erik svarer.</p>
+      <ul class="bullets">
+        <li>Svar innen 24 timer (hverdager)</li>
+        <li>Kvartalsvis foreldre-samtale (15 min)</li>
+        <li>Tilgang til mental-trener Marte ved behov</li>
+      </ul>
+    </article>
+
+    <article class="what-card">
+      <div class="ic"><i data-lucide="shield-check"></i></div>
+      <h3>Trygt &amp; forutsigbart</h3>
+      <p>Faste tider. Politiattester. Klare retningslinjer på sosiale medier &amp; bilder.</p>
+      <ul class="bullets">
+        <li>Fast pris per måned · ingen overraskelser</li>
+        <li>Ferier &amp; vinter: alltid en plan</li>
+        <li>Skadefri-protokoll med fysio Anne</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="road-section">
+  <div class="container">
+    <div style="text-align:center; max-width:680px; margin: 0 auto 30px;">
+      <div class="par-eyebrow" style="justify-content:center;">JUNIOR-LØYPA</div>
+      <h2 style="font-size:42px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin:0 0 14px;">Fire steg, fra mini til elite.</h2>
+      <p style="font-size:16px; color:var(--akgolf-text); line-height:1.6;">Barn flyttes oppover når <em>de</em> er klare — ikke etter alder. Ingen presses, ingen holdes igjen.</p>
+    </div>
+
+    <div class="road-track">
+      <div class="road-step">
+        <div class="num">1</div>
+        <div class="age">6–9 år</div>
+        <h4>Mini-Akademi</h4>
+        <p>Lek &amp; basisferdigheter. 1×/uke · 60 min · plast-køller, mini-baner. Mål: å ha det gøy med utstyret.</p>
+      </div>
+      <div class="road-step">
+        <div class="num">2</div>
+        <div class="age">10–13 år</div>
+        <h4>Junior</h4>
+        <p>Teknisk fundament + introduksjon til bane-spill. 1–2×/uke. Første HCP rundt slutten av sesongen.</p>
+      </div>
+      <div class="road-step">
+        <div class="num">3</div>
+        <div class="age">14–17 år</div>
+        <h4>Pre-Elite</h4>
+        <p>Konkurranse-orientert · Trackman + mental-trening. 2–3×/uke + camp. Mål: HCP &lt; 10.</p>
+      </div>
+      <div class="road-step">
+        <div class="num">4</div>
+        <div class="age">15+ år</div>
+        <h4>Elite</h4>
+        <p>NTG/USA-rute · individuell plan, fysisk + mental + ernæring. Inntak etter testing &amp; samtale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <div class="par-eyebrow">VANLIGE SPØRSMÅL</div>
+        <h2 style="font-size:42px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin: 8px 0 20px;">Det vi <em style="font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary);">oftest</em> får spørsmål om.</h2>
+        <p style="font-size:14.5px; color:var(--akgolf-text); line-height:1.65;">Finner du ikke svaret? Ring oss på 22 58 30 12 eller send en e-post til <a href="#" style="color:var(--akgolf-primary); font-weight:600;">foreldre@akgolf.no</a> — vi svarer innen samme dag.</p>
+      </div>
+      <div>
+        <div class="faq-item open">
+          <div class="faq-q"><h4>Må barnet mitt allerede kunne golf?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Nei, absolutt ikke. Mange av barna våre kommer uten erfaring. På Mini-Akademiet starter vi fra null — vi har plast-køller, mini-mål, og vi spiller mer enn vi øver. Målet er at de skal komme tilbake neste uke fordi det var gøy.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><h4>Hva koster det?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Junior fra 850 kr/mnd. Mini-Akademi 600 kr/mnd. Elite varierer etter individuell plan. Inkluderer trening, tilgang til portal og en kvartalsvis foreldre-samtale. Ingen oppstart-avgift.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><h4>Hva med ferier og vinter?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Sesongen er hele året. Sommer på Bogstad/Skjeberg, vinter på Skullerud (innendørs Trackman-anlegg). Ferier får dere planlagt 4 uker i forveien — så dere kan booke familieturer rundt det.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><h4>Hvordan vet jeg at barnet mitt utvikler seg?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Du får tilgang til foreldre-portalen der vi sporer 4 nøkkelområder: ferdighet, motivasjon, sosial-trivsel og fysisk. Hver 3. måned får du en kort PDF-rapport. Hvis vi er bekymret for noe, ringer vi før vi mailer.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><h4>Er det mulighet for prøvetime?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Ja — gratis prøvetime på 30 minutter, alltid. Book den nederst på siden, så ringer Erik for en uforpliktende prat før dere kommer.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><h4>Hva om barnet mitt vil slutte?</h4><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq-a">Da slutter de. Måneds-oppsigelse, ingen bindingstid. Vi pleier å ringe og høre om vi kan justere noe (kanskje ny coach, ny dag) — men trykker aldri på.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="cta-card">
+    <div>
+      <h3>Klar til å prøve? <em>Vi gir første time gratis.</em></h3>
+      <p>30 minutter med Erik eller en av juniortrenerne. Ingen utstyr nødvendig — vi har lånekøller. Ta med vanlige sko og noe komfortabelt å bevege seg i.</p>
+    </div>
+    <div class="acts">
+      <a href="#" class="ax">Book gratis prøvetime <i data-lucide="arrow-right"></i></a>
+      <a href="#" class="ax outline">Ring oss · 22 58 30 12 <i data-lucide="phone"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--akgolf-ink); color:#fff; padding: 60px 0 40px;">
+  <div class="container" style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:60px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.10);">
+    <div>
+      <div style="display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px;"><div class="mark" style="width:34px; height:34px; border-radius:9px; background: var(--akgolf-accent); color:#0A1F18; display:grid; place-items:center; font-weight:800; font-size:14px;">AK</div>AK Golf Akademi</div>
+      <p style="margin:18px 0 0; font-size:13.5px; color:rgba(255,255,255,0.65); line-height:1.65; max-width:36ch;">Et seriøst akademi for golfere som vil noe — fra mini til elite. Bygget av Erik Solheim, PGA Master Pro.</p>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:14px; font-weight:700;">Akademiet</div>
+      <div style="display:flex; flex-direction:column; gap:9px; font-size:13.5px;"><a style="color:rgba(255,255,255,0.85);">Junior</a><a style="color:rgba(255,255,255,0.85);">Voksen</a><a style="color:rgba(255,255,255,0.85);">Elite</a></div>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:14px; font-weight:700;">For foreldre</div>
+      <div style="display:flex; flex-direction:column; gap:9px; font-size:13.5px;"><a style="color:rgba(255,255,255,0.85);">FAQ</a><a style="color:rgba(255,255,255,0.85);">Pris</a><a style="color:rgba(255,255,255,0.85);">Politiattest</a></div>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:14px; font-weight:700;">Kontakt</div>
+      <div style="font-size:13.5px; color:rgba(255,255,255,0.85); line-height:1.7;">22 58 30 12<br>foreldre@akgolf.no<br>Skullerud · Bogstad · Skjeberg</div>
+    </div>
+  </div>
+  <div class="container" style="display:flex; justify-content:space-between; align-items:center; padding-top:22px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(255,255,255,0.4); letter-spacing:0.10em;">
+    <span>© 2026 AK GOLF AKADEMI · ORG 998 472 134</span>
+    <span style="display:flex; gap:18px;"><a style="color:rgba(255,255,255,0.55);">PERSONVERN</a><a style="color:rgba(255,255,255,0.55);">VILKÅR</a></span>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

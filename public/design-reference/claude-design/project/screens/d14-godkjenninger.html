@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D14 — Godkjenninger · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .approve-layout { display:grid; grid-template-columns: 360px 1fr; gap:18px; }
+
+  /* Inbox */
+  .inbox { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; overflow:hidden; }
+  .inbox-head { padding:14px 16px; border-bottom:1px solid var(--akgolf-line-dark); display:flex; justify-content:space-between; align-items:center; }
+  .inbox-head h3 { margin:0; font-size:13px; color:#fff; font-weight:600; }
+  .inbox-head .count { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--akgolf-accent); letter-spacing:0.06em; }
+  .inbox-tabs { display:flex; padding:0 8px; border-bottom:1px solid var(--akgolf-line-dark); }
+  .inbox-tab { padding:10px 12px; font-size:11px; color:rgba(255,255,255,0.5); cursor:pointer; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; border-bottom:2px solid transparent; }
+  .inbox-tab.active { color:var(--akgolf-accent); border-color:var(--akgolf-accent); }
+
+  .inbox-row { padding:14px 16px; border-bottom:1px solid var(--akgolf-line-dark); cursor:pointer; display:flex; gap:12px; align-items:flex-start; position:relative; }
+  .inbox-row:last-child { border-bottom:none; }
+  .inbox-row.active { background: rgba(209,248,67,0.06); }
+  .inbox-row.active::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--akgolf-accent); }
+  .inbox-row:hover:not(.active) { background:rgba(255,255,255,0.025); }
+  .inbox-row .av { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:700; color:#0A1F18; flex-shrink:0; }
+  .inbox-row .body { flex:1; min-width:0; }
+  .inbox-row .who { font-size:13px; color:#fff; font-weight:600; margin-bottom:2px; }
+  .inbox-row .what { font-size:11px; color:rgba(255,255,255,0.6); margin-bottom:6px; }
+  .inbox-row .meta-row { display:flex; gap:8px; align-items:center; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.06em; }
+  .badge-type { padding:2px 6px; border-radius:4px; text-transform:uppercase; font-weight:600; }
+  .badge-type.video { background:rgba(175,82,222,0.18); color:#C896E8; }
+  .badge-type.refund { background:rgba(184,66,51,0.18); color:#F49283; }
+  .badge-type.contract { background:rgba(0,122,255,0.18); color:#6FB3FF; }
+  .badge-type.discount { background:rgba(196,138,50,0.18); color:#E8B967; }
+  .badge-type.cancel { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); }
+  .when { color:rgba(255,255,255,0.5); }
+  .urgency-dot { width:6px; height:6px; border-radius:50%; }
+  .urgency-dot.high { background:#F49283; }
+  .urgency-dot.med { background:#E8B967; }
+  .urgency-dot.low { background:rgba(255,255,255,0.3); }
+
+  /* Detail */
+  .detail { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .detail-head { padding:18px 22px; border-bottom:1px solid var(--akgolf-line-dark); }
+  .detail-head .crumbs { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.06em; margin-bottom:6px; }
+  .detail-head h2 { margin:0; font-size:22px; color:#fff; font-weight:700; letter-spacing:-0.02em; }
+  .detail-head .sub { font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px; }
+
+  .detail-body { padding:22px; flex:1; overflow:auto; }
+  .video-frame { aspect-ratio:16/9; background: linear-gradient(135deg, #1a1f1c, #2a3530); border:1px solid var(--akgolf-line-dark); border-radius:10px; position:relative; overflow:hidden; margin-bottom:18px; }
+  .video-frame::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(209,248,67,0.10), transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(0,122,255,0.10), transparent 60%);
+  }
+  .video-frame .play { position:absolute; inset:0; display:grid; place-items:center; }
+  .video-frame .play-btn { width:64px; height:64px; border-radius:50%; background:rgba(0,0,0,0.5); border:2px solid var(--akgolf-accent); display:grid; place-items:center; backdrop-filter: blur(8px); }
+  .video-frame .play-btn [data-lucide]{ width:24px; height:24px; color:var(--akgolf-accent); }
+  .video-frame .timeline { position:absolute; left:18px; right:18px; bottom:18px; height:4px; background:rgba(255,255,255,0.15); border-radius:2px; overflow:hidden; }
+  .video-frame .timeline-bar { height:100%; width:34%; background:var(--akgolf-accent); }
+  .video-frame .meta { position:absolute; left:18px; bottom:30px; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.7); letter-spacing:0.06em; }
+  .video-frame .label-tl { position:absolute; left:18px; top:18px; padding:4px 10px; background:rgba(0,0,0,0.6); border:1px solid rgba(209,248,67,0.30); border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--akgolf-accent); letter-spacing:0.08em; }
+
+  .feedback-block { background: rgba(209,248,67,0.05); border:1px solid rgba(209,248,67,0.18); border-left:3px solid var(--akgolf-accent); border-radius:10px; padding:14px 16px; margin-bottom:14px; }
+  .feedback-block .lbl { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:6px; }
+  .feedback-block p { margin:0; font-size:14px; color:#fff; line-height:1.55; }
+
+  .info-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:18px; }
+  .info-cell { padding:12px 14px; background:rgba(255,255,255,0.025); border:1px solid var(--akgolf-line-dark); border-radius:8px; }
+  .info-cell .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .info-cell .v { font-size:14px; color:#fff; font-weight:500; margin-top:4px; }
+
+  .checklist { background:rgba(255,255,255,0.025); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:14px 16px; margin-bottom:18px; }
+  .checklist h4 { margin:0 0 10px; font-size:11px; color:rgba(255,255,255,0.7); font-family:'JetBrains Mono',monospace; letter-spacing:0.14em; text-transform:uppercase; }
+  .check-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:13px; color:rgba(255,255,255,0.85); }
+  .check-row .ck { width:16px; height:16px; border-radius:4px; display:grid; place-items:center; flex-shrink:0; }
+  .check-row .ck.ok { background:#6FCBA1; }
+  .check-row .ck.ok [data-lucide]{ width:10px; height:10px; color:#0A1F18; stroke-width:3; }
+  .check-row .ck.warn { background:rgba(232,185,103,0.20); color:#E8B967; border:1px solid rgba(232,185,103,0.40); }
+  .check-row .ck.warn [data-lucide]{ width:10px; height:10px; }
+
+  /* Action footer */
+  .detail-actions { padding:16px 22px; border-top:1px solid var(--akgolf-line-dark); display:flex; gap:10px; align-items:center; background: rgba(255,255,255,0.02); }
+  .approve-btn { background:var(--akgolf-accent); color:#0A1F18; padding:10px 20px; border-radius:8px; border:none; font-weight:600; font-size:13px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+  .approve-btn [data-lucide]{ width:14px; height:14px; }
+  .reject-btn { background:transparent; color:#F49283; padding:10px 18px; border-radius:8px; border:1px solid rgba(184,66,51,0.40); font-size:13px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+  .reject-btn [data-lucide]{ width:14px; height:14px; }
+
+  .approve-meta { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.06em; }
+
+  .ai-flag { background:rgba(175,82,222,0.06); border:1px solid rgba(175,82,222,0.20); border-radius:10px; padding:12px 14px; display:flex; gap:10px; margin-bottom:14px; align-items:flex-start; }
+  .ai-flag .ic { width:24px; height:24px; border-radius:6px; background:rgba(175,82,222,0.20); color:#C896E8; display:grid; place-items:center; flex-shrink:0; }
+  .ai-flag .ic [data-lucide]{ width:13px; height:13px; }
+  .ai-flag p { margin:0; font-size:12px; color:rgba(255,255,255,0.85); line-height:1.5; }
+  .ai-flag p strong { color:#C896E8; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn active" title="Godkjenninger"><i data-lucide="check-square"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item active"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Godkjenninger</div>
+      <div class="chq-top-meta tabular">3 ventende · 12 godkjent denne uken</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Operasjon · Godkjenninger</div>
+        <h1 class="chq-h1" style="margin-top:8px;">Inbox for ting som krever deg</h1>
+        <p>Video-feedback fra coacher, refusjoner, kontrakter, rabatter — alt som skal igjennom deg før det går ut. Hovedregel: avgjør innen 24 t.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="settings-2"></i> Regler</button>
+        <button class="chq-btn ghost"><i data-lucide="check-check"></i> Bulk-godkjenn</button>
+      </div>
+    </div>
+
+    <div class="approve-layout">
+      <!-- Inbox -->
+      <div class="inbox">
+        <div class="inbox-head">
+          <h3>Ventende</h3>
+          <div class="count">3 nye</div>
+        </div>
+        <div class="inbox-tabs">
+          <div class="inbox-tab active">VENTER 3</div>
+          <div class="inbox-tab">GODKJENT 12</div>
+          <div class="inbox-tab">AVSLÅTT 1</div>
+        </div>
+
+        <div class="inbox-row active">
+          <div class="av" style="background:#C896E8">MT</div>
+          <div class="body">
+            <div class="who">Maria T. · video-feedback</div>
+            <div class="what">Sving-analyse for Camilla Ruud · 2:14</div>
+            <div class="meta-row">
+              <span class="urgency-dot high"></span>
+              <span class="badge-type video">VIDEO</span>
+              <span class="when">FOR 18 MIN SIDEN</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inbox-row">
+          <div class="av" style="background:#F49283">JR</div>
+          <div class="body">
+            <div class="who">Jonas R. · refusjon</div>
+            <div class="what">2.500 kr · avlyst Pro-plan måned 3 av 6</div>
+            <div class="meta-row">
+              <span class="urgency-dot med"></span>
+              <span class="badge-type refund">REFUSJON</span>
+              <span class="when">FOR 4 T SIDEN</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inbox-row">
+          <div class="av" style="background:#E8B967">AR</div>
+          <div class="body">
+            <div class="who">Anna R. · rabatt-forespørsel</div>
+            <div class="what">15% på 6mnd-pakke · venn av eksisterende</div>
+            <div class="meta-row">
+              <span class="urgency-dot low"></span>
+              <span class="badge-type discount">RABATT</span>
+              <span class="when">I GÅR 16:42</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Done items, faded -->
+        <div class="inbox-row" style="opacity:0.45;">
+          <div class="av" style="background:#6FCBA1">EL</div>
+          <div class="body">
+            <div class="who">Emma L. · re-onboarding</div>
+            <div class="what">Du godkjente Pro-plan i går</div>
+            <div class="meta-row">
+              <span class="badge-type contract">KONTRAKT</span>
+              <span class="when">✓ 28 APR</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inbox-row" style="opacity:0.45;">
+          <div class="av" style="background:#6FB3FF">PB</div>
+          <div class="body">
+            <div class="who">Per B. · kanselleringsfee</div>
+            <div class="what">Du frafalt 800 kr i forrige uke</div>
+            <div class="meta-row">
+              <span class="badge-type cancel">FRAFALL</span>
+              <span class="when">✓ 24 APR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail -->
+      <div class="detail">
+        <div class="detail-head">
+          <div class="crumbs">VENTER · 18 MIN</div>
+          <h2>Maria T. har laget video-feedback til Camilla Ruud</h2>
+          <div class="sub">Sving-analyse fra økten 28. apr · publiseres til Camilla når du godkjenner</div>
+        </div>
+
+        <div class="detail-body">
+          <div class="video-frame">
+            <div class="label-tl">02:14 · 1080p · TRACKMAN</div>
+            <div class="play"><div class="play-btn"><i data-lucide="play"></i></div></div>
+            <div class="meta">00:48 / 02:14</div>
+            <div class="timeline"><div class="timeline-bar"></div></div>
+          </div>
+
+          <div class="feedback-block">
+            <div class="lbl">Marias kommentar til Camilla</div>
+            <p>«Hei Camilla! Vi gikk gjennom oppstillingen din i forrige økt — kjempebra fremgang. Det jeg vil du skal jobbe med før vi møtes igjen er hofte-rotasjonen i nedsving. Jeg har laget tre drills (se eget dokument). Spol til 01:10 for å se sammenligningen mellom forrige og denne uken — du ser at skuldrene er roligere allerede.»</p>
+          </div>
+
+          <div class="ai-flag">
+            <div class="ic"><i data-lucide="sparkles"></i></div>
+            <div>
+              <p><strong>Coach AI har sjekket:</strong> ingen merknader. Tonen er innenfor merkevareprofilen din, alle drills refererer til godkjent treningsbibliotek, video-kvaliteten oppfyller kravene (1080p, &gt; 60 fps), og innholdet matcher Camillas plan.</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-cell"><div class="l">Spiller</div><div class="v">Camilla Ruud · HCP 15.3</div></div>
+            <div class="info-cell"><div class="l">Plan</div><div class="v">Standard 12 mnd</div></div>
+            <div class="info-cell"><div class="l">Coach</div><div class="v">Maria Tønnesen</div></div>
+            <div class="info-cell"><div class="l">Lengde</div><div class="v">2 min 14 sek</div></div>
+            <div class="info-cell"><div class="l">Knyttet til</div><div class="v">Mission #M-117 hofte-rotasjon</div></div>
+            <div class="info-cell"><div class="l">Levering</div><div class="v">App + e-post når godkjent</div></div>
+          </div>
+
+          <div class="checklist">
+            <h4>Sjekkliste før godkjenning</h4>
+            <div class="check-row"><div class="ck ok"><i data-lucide="check"></i></div> Video matcher spillerens nåværende fokusområde</div>
+            <div class="check-row"><div class="ck ok"><i data-lucide="check"></i></div> Drills er fra godkjent bibliotek (3/3)</div>
+            <div class="check-row"><div class="ck ok"><i data-lucide="check"></i></div> Bildekvalitet og lyd over terskel</div>
+            <div class="check-row"><div class="ck ok"><i data-lucide="check"></i></div> Tone-of-voice innenfor profil</div>
+            <div class="check-row"><div class="ck warn"><i data-lucide="alert-triangle"></i></div> Manglende kobling til neste planlagte økt — vurder å legge til CTA før publisering</div>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="approve-btn"><i data-lucide="check"></i> Godkjenn og publiser</button>
+          <button class="chq-btn ghost"><i data-lucide="message-square"></i> Be om endring</button>
+          <button class="reject-btn"><i data-lucide="x"></i> Avslå</button>
+          <div class="approve-meta">SHIFT+↩ FOR HURTIG-GODKJENN</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auto-rules info -->
+    <div style="margin-top:18px; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 20px; display:grid; grid-template-columns: 1fr auto; gap:20px; align-items:center;">
+      <div>
+        <h3 style="margin:0; font-size:13px; color:#fff; font-weight:600;">Automatiseringsregler aktive</h3>
+        <p style="margin:6px 0 0; font-size:12px; color:rgba(255,255,255,0.65); line-height:1.6;">
+          Refusjoner under 500 kr, video-feedback fra coacher med 12+ mnd erfaring som har lavere enn 0,3% rejection-rate, og rabatt-koder for eksisterende spillere — disse bypass’er denne inboxen og logges direkte i Audit. Du har spart <strong style="color:var(--akgolf-accent);">~14 godkjenninger</strong> denne uken.
+        </p>
+      </div>
+      <button class="chq-btn ghost"><i data-lucide="settings-2"></i> Endre regler</button>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

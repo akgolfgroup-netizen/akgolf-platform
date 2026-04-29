@@ -1,7 +1,7 @@
 // MentalAgent — designer mentalt program per spiller
 // Spec: software/dokumenter/ai-system/agents-spec.md sek 7
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT = `
 Du er MentalAgent for AK Golf Academy.

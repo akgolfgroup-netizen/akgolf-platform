@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A22 — Sosialt · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero */
+  .soc-hero {
+    background:
+      radial-gradient(circle at 80% 30%, rgba(209,248,67,0.08), transparent 60%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .soc-hero .lab { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; margin-bottom: 8px; }
+  .soc-hero h2 { margin: 0; font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.025em; }
+  .soc-hero h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .soc-hero .lede { margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 50ch; }
+  .soc-hero .actions { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .st {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .st .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .st .v { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; margin-top: 6px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .st .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 3px; font-weight: 500; }
+
+  /* Two-column layout */
+  .grid-2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: start; }
+
+  /* Section header */
+  .sec-h { display: flex; justify-content: space-between; align-items: end; margin: 0 0 14px; }
+  .sec-h h3 { margin: 0; font-size: 18px; color:#fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  /* Feed */
+  .feed { display: flex; flex-direction: column; gap: 12px; }
+  .post {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 22px;
+  }
+  .post-h { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .post-h .av {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(209,248,67,0.16);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 12px;
+    border: 1px solid rgba(209,248,67,0.20);
+  }
+  .post-h .who { flex: 1; }
+  .post-h .who .n { font-size: 13px; color: #fff; font-weight: 700; letter-spacing: -0.005em; }
+  .post-h .who .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+  .post-h .pin {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: rgba(255,255,255,0.04);
+    padding: 4px 8px; border-radius: 5px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 700;
+  }
+  .post-h .pin.score { background: rgba(42,125,90,0.25); color: #6FCBA1; }
+  .post-h .pin.coach { background: rgba(175,82,222,0.20); color: #C99CF3; }
+
+  .post-body { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  .post-body strong { color: #fff; font-weight: 600; }
+  .post-stats {
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .post-stat {
+    background: rgba(0,0,0,0.20);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .post-stat .l { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 700; }
+  .post-stat .v { font-size: 14px; color: #fff; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  .post-card-image {
+    margin-top: 12px;
+    border-radius: 10px;
+    aspect-ratio: 16/9;
+    background:
+      linear-gradient(135deg, rgba(209,248,67,0.10), rgba(13,46,35,0.0)),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, rgba(255,255,255,0.04) 12px 24px),
+      var(--akgolf-card-dark);
+    border: 1px solid rgba(255,255,255,0.06);
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.35);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .post-actions {
+    margin-top: 12px;
+    display: flex; gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .post-actions button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 500;
+  }
+  .post-actions button [data-lucide] { width: 14px; height: 14px; }
+  .post-actions button.active { color: var(--akgolf-accent); }
+
+  /* Right column */
+  .rcol { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 88px; }
+
+  .friends-card, .group-card, .leaderboard-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .rh {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+  .rh h4 { margin: 0; font-size: 13px; color: #fff; font-weight: 700; letter-spacing: -0.005em; }
+  .rh .more {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 700;
+  }
+
+  .friend {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .friend:first-of-type { border-top: none; }
+  .friend .av {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 11px;
+  }
+  .friend .av.green { background: rgba(42,125,90,0.30); color: #6FCBA1; }
+  .friend .av.blue { background: rgba(107,177,255,0.20); color: #6BB1FF; }
+  .friend .av.purple { background: rgba(175,82,222,0.20); color: #C99CF3; }
+  .friend .av.amber { background: rgba(196,138,50,0.22); color: #E8B967; }
+  .friend .nm { font-size: 12.5px; color: #fff; font-weight: 600; }
+  .friend .meta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; margin-top: 1px; }
+  .friend .hcp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    text-align: right;
+    font-weight: 700;
+  }
+  .friend .hcp small { font-size: 9px; color: rgba(255,255,255,0.4); display: block; letter-spacing: 0.10em; text-transform: uppercase; }
+
+  .group-card .body { font-size: 12.5px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+  .group-card .body strong { color: #fff; }
+
+  .lb-row {
+    display: grid;
+    grid-template-columns: 22px 1fr auto auto;
+    gap: 10px;
+    padding: 8px 0;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .lb-row:first-of-type { border-top: none; }
+  .lb-row .rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    font-weight: 700;
+    text-align: center;
+  }
+  .lb-row.you { background: rgba(209,248,67,0.06); border-radius: 6px; padding: 8px 6px; margin: 4px -6px; }
+  .lb-row.you .rank { color: var(--akgolf-accent); }
+  .lb-row .nm { font-size: 12.5px; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .lb-row.you .nm { color: #fff; }
+  .lb-row .nm small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.4); display: block; margin-top: 1px; letter-spacing: 0.05em; }
+  .lb-row .delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #6FCBA1; font-weight: 700;
+  }
+  .lb-row .hcp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 700;
+    min-width: 32px; text-align: right;
+  }
+
+  /* Privacy footer */
+  .privacy {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.10);
+    border-radius: 12px;
+    display: flex; gap: 14px;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+  }
+  .privacy [data-lucide] { width: 18px; height: 18px; color: var(--akgolf-accent); flex-shrink: 0; }
+  .privacy strong { color: #fff; font-weight: 600; }
+
+  @media (max-width: 1100px) {
+    .soc-hero { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .rcol { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="message-square-heart"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Felleskap</div>
+    <div class="phq-nav-item active"><i data-lucide="message-square-heart"></i> Sosialt</div>
+    <div class="phq-nav-item"><i data-lucide="users"></i> Grupper</div>
+    <div class="phq-nav-item"><i data-lucide="trophy"></i> Leaderboards</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Sosialt<span class="date">12 VENNER · 3 GRUPPER · OFFENTLIG PROFIL: AV</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk venner, runder, økter…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ FELLESKAP · SOSIALT</div>
+      <h1 class="phq-h1">Treningskompiser, runder, framgang.</h1>
+      <p class="lede">Du deler bare med venner og grupper du har valgt. Erik (coach) ser alt. Alt annet er privat med mindre du eksplisitt poster — strykbart i ett klikk.</p>
+    </div>
+
+    <!-- Hero -->
+    <section class="soc-hero">
+      <div>
+        <div class="lab">Felleskap</div>
+        <h2>Holtsmark Race-of-15 <em>· du er nr 4.</em></h2>
+        <p class="lede">Mai-utfordringen i Junior Elite-gruppen: 15 runder telt, beste 10 brukes. Markus leder med snitt 74.2 — du ligger 0.8 slag bak. 6 runder igjen før spurten.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="plus"></i>Ny post</button>
+          <button class="phq-btn"><i data-lucide="users"></i>Mine grupper</button>
+          <button class="phq-btn ghost"><i data-lucide="shield"></i>Personvern</button>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="st"><div class="l">Venner</div><div class="v">12</div></div>
+        <div class="st"><div class="l">Aktive grupper</div><div class="v">3</div></div>
+        <div class="st"><div class="l">Runder logget · mai</div><div class="v">9</div></div>
+        <div class="st"><div class="l">Posts denne mnd</div><div class="v">4</div></div>
+      </div>
+    </section>
+
+    <div class="grid-2">
+
+      <!-- LEFT — feed -->
+      <div>
+        <div class="sec-h"><h3>Aktivitet · venner og grupper</h3><div class="sub">5 NYE SIDEN I GÅR</div></div>
+        <div class="feed">
+
+          <!-- Coach pin -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av" style="background: rgba(175,82,222,0.20); color: #C99CF3; border-color: rgba(175,82,222,0.30);">ES</div>
+              <div class="who">
+                <div class="n">Erik Solheim · coach</div>
+                <div class="meta">DELT MED DEG · I DAG 09:14</div>
+              </div>
+              <span class="pin coach">COACH PIN</span>
+            </div>
+            <div class="post-body">«God innsats på Trackman-testen i går! +2 mph club-speed på driver siden januar er et tydelig tegn på at alignment-arbeidet sitter. <strong>Behold gate-drill 2 uker til</strong> så lukker vi spin-axis enda noen grader.»</div>
+            <div class="post-actions">
+              <button class="active"><i data-lucide="heart"></i>Takk · 1</button>
+              <button><i data-lucide="message-circle"></i>Svar</button>
+              <button><i data-lucide="bookmark"></i>Lagre</button>
+            </div>
+          </article>
+
+          <!-- Markus runde -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av" style="background: rgba(107,177,255,0.18); color: #6BB1FF;">MN</div>
+              <div class="who">
+                <div class="n">Markus Nordby</div>
+                <div class="meta">JUNIOR ELITE · I GÅR 17:42</div>
+              </div>
+              <span class="pin score">73 · −1</span>
+            </div>
+            <div class="post-body">«Bortebanetur til Holtsmark. Drove det godt fra start, fikk en heldig kort birdie på 14. Putt-statistikken sier 1.61/hull — noe rart i dag, men jeg tar det.»</div>
+            <div class="post-stats">
+              <div class="post-stat"><div class="l">FW Hit</div><div class="v">11/14</div></div>
+              <div class="post-stat"><div class="l">GIR</div><div class="v">14/18</div></div>
+              <div class="post-stat"><div class="l">Putt/hull</div><div class="v">1.61</div></div>
+              <div class="post-stat"><div class="l">SG: Total</div><div class="v">+3.8</div></div>
+            </div>
+            <div class="post-actions">
+              <button class="active"><i data-lucide="heart"></i>Pep · 4</button>
+              <button><i data-lucide="message-circle"></i>Svar · 2</button>
+              <button><i data-lucide="bar-chart-3"></i>Sammenlign</button>
+              <button><i data-lucide="bookmark"></i>Lagre</button>
+            </div>
+          </article>
+
+          <!-- Hannah video -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av green">HJ</div>
+              <div class="who">
+                <div class="n">Hannah Johansen</div>
+                <div class="meta">RANGE-BUDDIES · I GÅR 16:08</div>
+              </div>
+            </div>
+            <div class="post-body">«Tok video av nye takeaway-trigger. Gameplan @ Erik foreslo — føles 100x bedre. Noen av dere som vil prøve?»</div>
+            <div class="post-card-image">VIDEO 0:34<br>SLOW-MO · DRIVER TAKEAWAY</div>
+            <div class="post-actions">
+              <button><i data-lucide="heart"></i>Pep · 7</button>
+              <button><i data-lucide="message-circle"></i>Svar · 3</button>
+              <button><i data-lucide="bookmark"></i>Lagre</button>
+            </div>
+          </article>
+
+          <!-- Group milestone -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av" style="background: rgba(232,185,103,0.20); color: #E8B967;">★</div>
+              <div class="who">
+                <div class="n">Holtsmark Race-of-15</div>
+                <div class="meta">GRUPPE · MILEPÆL · I GÅR 12:00</div>
+              </div>
+              <span class="pin">GRUPPE</span>
+            </div>
+            <div class="post-body">Halvveis i mai-utfordringen! 9 av 15 runder logget på tvers av gruppen. Topp-3: Markus (74.2), Sofie (74.5), Jonas (75.1). Du er 4. med 75.0 snitt over 9 runder — kjempetett.</div>
+            <div class="post-actions">
+              <button><i data-lucide="trophy"></i>Se leaderboard</button>
+              <button><i data-lucide="message-circle"></i>2 kommentarer</button>
+            </div>
+          </article>
+
+          <!-- Sofie achievement -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av" style="background: rgba(209,248,67,0.20); color: var(--akgolf-accent);">SA</div>
+              <div class="who">
+                <div class="n">Sofie Aas</div>
+                <div class="meta">JUNIOR ELITE · 2 DAGER SIDEN</div>
+              </div>
+              <span class="pin score">HCP −0.4</span>
+            </div>
+            <div class="post-body">«Ny PB! HCP fra 8.1 → 7.7 etter helgen på Bogstad. Tre runder under par i hovedsak takket være kortspill — det vinter-arbeidet med wedger virker. 🏌️‍♀️»</div>
+            <div class="post-actions">
+              <button class="active"><i data-lucide="heart"></i>Pep · 9</button>
+              <button><i data-lucide="message-circle"></i>Svar · 5</button>
+              <button><i data-lucide="bookmark"></i>Lagre</button>
+            </div>
+          </article>
+
+          <!-- Range buddies -->
+          <article class="post">
+            <div class="post-h">
+              <div class="av blue">JT</div>
+              <div class="who">
+                <div class="n">Jonas Tvedt</div>
+                <div class="meta">RANGE-BUDDIES · 3 DAGER SIDEN</div>
+              </div>
+            </div>
+            <div class="post-body">«Noen som er på Bogstad fredag kveld? Booket bay 14, har plass til 1 til. 2 timer, blocked practice + match-play på short game.»</div>
+            <div class="post-actions">
+              <button><i data-lucide="hand"></i>Bli med · 2</button>
+              <button><i data-lucide="message-circle"></i>Svar · 4</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- RIGHT — sidebar -->
+      <aside class="rcol">
+
+        <!-- Leaderboard -->
+        <div class="leaderboard-card">
+          <div class="rh"><h4>Race-of-15 · mai</h4><span class="more">SE ALLE</span></div>
+          <div class="lb-row">
+            <span class="rank">1</span>
+            <div class="nm">Markus Nordby<small>9 runder · snitt 74.2</small></div>
+            <span class="delta">−2.1</span>
+            <span class="hcp">7.4</span>
+          </div>
+          <div class="lb-row">
+            <span class="rank">2</span>
+            <div class="nm">Sofie Aas<small>8 runder · snitt 74.5</small></div>
+            <span class="delta">−1.7</span>
+            <span class="hcp">7.7</span>
+          </div>
+          <div class="lb-row">
+            <span class="rank">3</span>
+            <div class="nm">Jonas Tvedt<small>10 runder · snitt 75.1</small></div>
+            <span class="delta">−0.6</span>
+            <span class="hcp">8.0</span>
+          </div>
+          <div class="lb-row you">
+            <span class="rank">4</span>
+            <div class="nm">Anders Kristiansen <small>· DEG</small><small>9 runder · snitt 75.0</small></div>
+            <span class="delta">−0.8</span>
+            <span class="hcp">8.4</span>
+          </div>
+          <div class="lb-row">
+            <span class="rank">5</span>
+            <div class="nm">Hannah Johansen<small>7 runder · snitt 75.7</small></div>
+            <span class="delta">+0.1</span>
+            <span class="hcp">8.6</span>
+          </div>
+        </div>
+
+        <!-- Friends online -->
+        <div class="friends-card">
+          <div class="rh"><h4>Venner · på range nå</h4><span class="more">3 AKTIVE</span></div>
+          <div class="friend">
+            <div class="av blue">MN</div>
+            <div>
+              <div class="nm">Markus Nordby</div>
+              <div class="meta">BOGSTAD · BAY 04 · 18 MIN</div>
+            </div>
+            <div class="hcp">7.4<small>HCP</small></div>
+          </div>
+          <div class="friend">
+            <div class="av green">HJ</div>
+            <div>
+              <div class="nm">Hannah Johansen</div>
+              <div class="meta">SKULLERUD · STUDIO B · 35 MIN</div>
+            </div>
+            <div class="hcp">8.6<small>HCP</small></div>
+          </div>
+          <div class="friend">
+            <div class="av purple">LK</div>
+            <div>
+              <div class="nm">Lars Kvam</div>
+              <div class="meta">OSLO GK · PUTTING-GREEN</div>
+            </div>
+            <div class="hcp">9.1<small>HCP</small></div>
+          </div>
+          <div class="friend">
+            <div class="av amber">SA</div>
+            <div>
+              <div class="nm">Sofie Aas</div>
+              <div class="meta">SIST AKTIV: I GÅR</div>
+            </div>
+            <div class="hcp">7.7<small>HCP</small></div>
+          </div>
+        </div>
+
+        <!-- Groups -->
+        <div class="group-card">
+          <div class="rh"><h4>Mine grupper</h4><span class="more">3</span></div>
+          <div class="body">
+            <div style="display:flex; gap:10px; align-items:center; padding:8px 0; border-top:1px solid rgba(255,255,255,0.04);">
+              <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--akgolf-accent);"></span>
+              <strong style="flex:1;">Junior Elite Oslo</strong>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5);">14 medl.</span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; padding:8px 0; border-top:1px solid rgba(255,255,255,0.04);">
+              <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#6BB1FF;"></span>
+              <strong style="flex:1;">Range-buddies Bogstad</strong>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5);">7 medl.</span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; padding:8px 0; border-top:1px solid rgba(255,255,255,0.04);">
+              <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#E8B967;"></span>
+              <strong style="flex:1;">Holtsmark Race-of-15</strong>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5);">12 medl.</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- Privacy footer -->
+    <div class="privacy">
+      <i data-lucide="shield-check"></i>
+      <div>
+        <strong>Du deler privat.</strong> Profilen din er ikke offentlig. Posts er synlige for venner og grupper du velger. Erik (coach) ser alle øktdata uansett, men ikke posts du ikke deler eksplisitt. Endre i Innstillinger → Personvern.
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

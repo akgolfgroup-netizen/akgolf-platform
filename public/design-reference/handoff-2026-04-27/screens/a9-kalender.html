@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A9 — Treningsplanlegger · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Override main grid: add right sidebar */
+  .phq-shell {
+    grid-template-columns: 48px 200px 1fr 388px;
+    grid-template-areas:
+      "rail nav top   side"
+      "rail nav main  side";
+  }
+  .phq-side {
+    grid-area: side;
+    background: #0A1F18;
+    border-left: 1px solid rgba(255,255,255,0.05);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ──────── Top focus strip ──────── */
+  .focus-strip {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 18px;
+  }
+  .focus-card {
+    background: linear-gradient(135deg, rgba(209,248,67,0.14), rgba(209,248,67,0.04));
+    border: 1px solid rgba(209,248,67,0.28);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .focus-card .ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .focus-card .ico [data-lucide] { width: 18px; height: 18px; stroke-width: 2.2; }
+  .focus-card .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+  }
+  .focus-card .txt { font-size: 14px; color: #fff; font-weight: 600; margin-top: 2px; line-height: 1.35; }
+  .focus-card .from { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 4px; letter-spacing: 0.06em; }
+
+  .ai-cta {
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    border: none;
+    border-radius: 14px;
+    padding: 0 22px;
+    font-weight: 800; font-size: 13px;
+    letter-spacing: -0.005em;
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .ai-cta:hover { transform: translateY(-1px); }
+  .ai-cta [data-lucide] { width: 16px; height: 16px; }
+  .ai-cta .sub { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.10em; opacity: 0.65; text-transform: uppercase; display: block; margin-top: 2px; font-weight: 700; }
+  .ai-cta .stack { text-align: left; }
+
+  .export-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: #fff;
+    border-radius: 14px;
+    padding: 0 18px;
+    font-weight: 600; font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+  .export-btn [data-lucide] { width: 14px; height: 14px; opacity: 0.7; }
+
+  /* ──────── Cal toolbar ──────── */
+  .cal-toolbar {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 0;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--akgolf-line-dark);
+  }
+  .cal-month {
+    font-size: 26px; font-weight: 800; letter-spacing: -0.025em;
+    color: #fff; min-width: 230px;
+  }
+  .cal-month .yr { color: rgba(255,255,255,0.50); margin-left: 8px; font-weight: 500; }
+  .nav-arrows { display: flex; gap: 4px; }
+  .nav-arrows button {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .nav-arrows button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .today-btn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+    font-weight: 700; cursor: pointer;
+  }
+
+  .seg {
+    margin-left: auto;
+    display: inline-flex;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 3px;
+  }
+  .seg button {
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.6);
+    padding: 6px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    border-radius: 7px; cursor: pointer;
+  }
+  .seg button.active { background: var(--akgolf-accent); color: #0A1F18; }
+
+  /* ──────── Calendar grid ──────── */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .cal-dow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    padding: 6px 8px;
+    text-align: left;
+  }
+
+  .cal-cells {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: minmax(140px, 1fr);
+    gap: 6px;
+  }
+  .cell {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 12px;
+    padding: 8px 8px 6px;
+    display: flex; flex-direction: column;
+    gap: 4px;
+    min-height: 140px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .cell:hover { border-color: rgba(209,248,67,0.30); }
+  .cell.other-month { opacity: 0.40; }
+  .cell.today { border-color: rgba(209,248,67,0.55); background: rgba(209,248,67,0.04); }
+  .cell.drop-target { border-color: var(--akgolf-accent); border-style: dashed; background: rgba(209,248,67,0.07); }
+
+  .cell-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2px 4px;
+  }
+  .cell-day {
+    font-family:'Inter',sans-serif;
+    font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cell.today .cell-day .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 0 3px rgba(209,248,67,0.20);
+  }
+  .cell-meta {
+    font-family:'JetBrains Mono',monospace; font-size: 9px;
+    color: rgba(255,255,255,0.40); letter-spacing: 0.06em;
+  }
+
+  /* Session blocks (drag-bare) */
+  .sess {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: grab;
+    user-select: none;
+    transition: background 0.12s, transform 0.12s;
+  }
+  .sess:hover { background: rgba(255,255,255,0.10); }
+  .sess:active { cursor: grabbing; transform: scale(0.98); }
+  .sess.dragging { opacity: 0.40; }
+  .sess .t { font-family:'Inter',sans-serif; font-size: 12px; font-weight: 700; color: #fff; line-height: 1.25; letter-spacing: -0.01em; }
+  .sess .m { font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; margin-top: 2px; }
+
+  /* AK pyramide colors */
+  .sess.lvl-fys { border-color: #6FCBA1; background: rgba(111,203,161,0.12); }
+  .sess.lvl-tek { border-color: #7AB8E0; background: rgba(122,184,224,0.12); }
+  .sess.lvl-slag { border-color: #E0C77A; background: rgba(224,199,122,0.12); }
+  .sess.lvl-spill { border-color: #D49A6A; background: rgba(212,154,106,0.12); }
+  .sess.lvl-turn { border-color: #C589E8; background: rgba(197,137,232,0.12); }
+  .sess.ai-suggest {
+    border-color: var(--akgolf-accent);
+    background: rgba(209,248,67,0.10);
+    border-style: dashed;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-width: 1px;
+  }
+  .sess.ai-suggest .t { color: var(--akgolf-accent); }
+
+  .sess-stack-more {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.55);
+    padding: 3px 8px;
+    cursor: pointer;
+    text-align: center;
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 6px;
+  }
+  .sess-stack-more:hover { color: var(--akgolf-accent); border-color: rgba(209,248,67,0.40); }
+
+  /* ──────── Right sidebar ──────── */
+  .side-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 0 12px;
+    background: #0A1F18;
+  }
+  .side-tab {
+    flex: 1;
+    padding: 14px 8px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family:'Inter',sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .side-tab.active { color: var(--akgolf-accent); border-bottom-color: var(--akgolf-accent); }
+  .side-tab .count { font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.40); margin-left: 4px; }
+  .side-tab.active .count { color: var(--akgolf-accent); }
+
+  .side-content {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .side-pane { display: none; flex-direction: column; gap: 14px; }
+  .side-pane.active { display: flex; }
+
+  .side-search {
+    position: relative;
+  }
+  .side-search input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 12px 10px 36px;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+  }
+  .side-search input:focus { outline: none; border-color: rgba(209,248,67,0.30); }
+  .side-search [data-lucide] {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 14px; color: rgba(255,255,255,0.4);
+  }
+
+  /* AK pyramide bar */
+  .pyramid-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .pyramid-bar button {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px 6px;
+    cursor: pointer;
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .pyramid-bar button .num {
+    display: block;
+    font-family:'Inter',sans-serif;
+    font-size: 16px; font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+  .pyramid-bar button.active.fys { background: rgba(111,203,161,0.20); border-color: rgba(111,203,161,0.50); color: #6FCBA1; }
+  .pyramid-bar button.active.fys .num { color: #6FCBA1; }
+  .pyramid-bar button.active.tek { background: rgba(122,184,224,0.20); border-color: rgba(122,184,224,0.50); color: #7AB8E0; }
+  .pyramid-bar button.active.tek .num { color: #7AB8E0; }
+  .pyramid-bar button.active.slag { background: rgba(224,199,122,0.20); border-color: rgba(224,199,122,0.50); color: #E0C77A; }
+  .pyramid-bar button.active.slag .num { color: #E0C77A; }
+  .pyramid-bar button.active.spill { background: rgba(212,154,106,0.20); border-color: rgba(212,154,106,0.50); color: #D49A6A; }
+  .pyramid-bar button.active.spill .num { color: #D49A6A; }
+  .pyramid-bar button.active.turn { background: rgba(197,137,232,0.20); border-color: rgba(197,137,232,0.50); color: #C589E8; }
+  .pyramid-bar button.active.turn .num { color: #C589E8; }
+
+  .filter-meta {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .filter-meta button {
+    background: transparent; border: none;
+    color: var(--akgolf-accent);
+    font-family: inherit; font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase;
+    font-weight: 700; cursor: pointer;
+  }
+
+  /* Exercise card */
+  .ex {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.15s;
+  }
+  .ex:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); transform: translateX(-1px); }
+  .ex:active { cursor: grabbing; }
+  .ex.lvl-fys { border-left-color: #6FCBA1; }
+  .ex.lvl-tek { border-left-color: #7AB8E0; }
+  .ex.lvl-slag { border-left-color: #E0C77A; }
+  .ex.lvl-spill { border-left-color: #D49A6A; }
+  .ex.lvl-turn { border-left-color: #C589E8; }
+
+  .ex-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 4px;
+  }
+  .ex-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; letter-spacing: -0.01em; }
+  .ex-pill {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 3px 6px; border-radius: 4px;
+    flex-shrink: 0; margin-left: 8px;
+  }
+  .ex-pill.fys { background: rgba(111,203,161,0.15); color: #6FCBA1; }
+  .ex-pill.tek { background: rgba(122,184,224,0.15); color: #7AB8E0; }
+  .ex-pill.slag { background: rgba(224,199,122,0.15); color: #E0C77A; }
+  .ex-pill.spill { background: rgba(212,154,106,0.15); color: #D49A6A; }
+  .ex-pill.turn { background: rgba(197,137,232,0.15); color: #C589E8; }
+  .ex-meta {
+    font-family:'JetBrains Mono',monospace; font-size: 10px;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.04em;
+    display: flex; gap: 12px; margin-top: 6px;
+  }
+  .ex-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .ex-meta [data-lucide] { width: 10px; height: 10px; }
+  .ex-drag-hint {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; color: rgba(255,255,255,0.30);
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .ex-drag-hint [data-lucide] { width: 10px; height: 10px; opacity: 0.8; }
+
+  /* Maler */
+  .mal {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mal:hover { background: rgba(255,255,255,0.06); border-color: rgba(209,248,67,0.20); }
+  .mal-title { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .mal-meta { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.50); margin-top: 4px; letter-spacing: 0.04em; }
+  .mal-tags { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+  .mal-tag {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 8px; padding: 2px 5px; border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.10em; text-transform: uppercase;
+  }
+
+  /* AI suggest panel */
+  .ai-panel {
+    background: linear-gradient(135deg, rgba(209,248,67,0.10), rgba(209,248,67,0.02));
+    border: 1px solid rgba(209,248,67,0.25);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .ai-panel .lbl {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 6px;
+  }
+  .ai-panel .lbl [data-lucide] { width: 12px; height: 12px; }
+  .ai-panel .why { font-size: 12px; color: rgba(255,255,255,0.78); line-height: 1.5; }
+  .ai-panel .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .ai-panel .actions button {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+  }
+  .ai-panel .actions .accept { background: var(--akgolf-accent); color: #0A1F18; }
+  .ai-panel .actions .dismiss { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); }
+
+  /* FAB - mobile */
+  .fab {
+    display: none;
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    border: none;
+    box-shadow: 0 6px 24px rgba(209,248,67,0.30);
+    cursor: pointer;
+    z-index: 60;
+    place-items: center;
+  }
+  .fab [data-lucide] { width: 24px; height: 24px; stroke-width: 2.4; }
+
+  @media (max-width: 1100px) {
+    .phq-shell { grid-template-columns: 48px 1fr; grid-template-areas: "rail top" "rail main"; }
+    .phq-nav { display: none; }
+    .phq-side { display: none; }
+    .fab { display: grid; }
+  }
+  @media (max-width: 768px) {
+    .cal-cells { grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .cal-dow { display: none; }
+    .cell { min-height: auto; padding: 14px 14px 12px; }
+    .cell.other-month { display: none; }
+    .focus-strip { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="activity"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-item active"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="bookmark"></i> Bookinger</div>
+    <div class="phq-nav-section">Meg</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="settings"></i> Innstillinger</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Treningskalender<span class="date">PLANLEGG · UTFØR · LOGG</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main" style="padding-top: 22px;">
+
+    <!-- Top focus strip -->
+    <div class="focus-strip">
+      <div class="focus-card">
+        <div class="ico"><i data-lucide="flag"></i></div>
+        <div>
+          <div class="lbl">Ukens fokus · uke 14</div>
+          <div class="txt">Bygg avstandskontroll på 50–100m wedges. Tre hardøkter på range, én testrunde.</div>
+          <div class="from">FRA ANDERS · MAN 09:14</div>
+        </div>
+      </div>
+
+      <button class="ai-cta">
+        <i data-lucide="sparkles"></i>
+        <span class="stack">
+          Generer økt for fredag
+          <span class="sub">AI · 3-15 ledig kl 14</span>
+        </span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+
+      <button class="export-btn">
+        <i data-lucide="calendar-plus"></i>
+        Eksporter til Apple/Google
+      </button>
+    </div>
+
+    <!-- Cal toolbar -->
+    <div class="cal-toolbar">
+      <div class="cal-month">April<span class="yr">2026</span></div>
+      <div class="nav-arrows">
+        <button><i data-lucide="chevron-left" style="width:16px;height:16px;"></i></button>
+        <button><i data-lucide="chevron-right" style="width:16px;height:16px;"></i></button>
+      </div>
+      <button class="today-btn">I dag</button>
+      <div class="seg">
+        <button>Dag</button>
+        <button>Uke</button>
+        <button class="active">Måned</button>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="cal-grid">
+      <div class="cal-dow">Man</div>
+      <div class="cal-dow">Tir</div>
+      <div class="cal-dow">Ons</div>
+      <div class="cal-dow">Tor</div>
+      <div class="cal-dow">Fre</div>
+      <div class="cal-dow">Lør</div>
+      <div class="cal-dow">Søn</div>
+    </div>
+
+    <div class="cal-cells" id="calCells">
+      <!-- Week 1: 30 Mar – 5 Apr -->
+      <div class="cell other-month"><div class="cell-head"><div class="cell-day">30</div></div></div>
+      <div class="cell other-month"><div class="cell-head"><div class="cell-day">31</div></div></div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">1</div><div class="cell-meta">2 økter</div></div>
+        <div class="sess lvl-fys" draggable="true">
+          <div class="t">Mobility + warmup</div>
+          <div class="m">06:30 · 25 MIN · FYS</div>
+        </div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Range · driver tempo</div>
+          <div class="m">17:00 · 60 MIN · TEK</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">2</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-slag" draggable="true">
+          <div class="t">Wedges 50–100m</div>
+          <div class="m">17:30 · 75 MIN · SLAG</div>
+        </div>
+      </div>
+      <div class="cell"><div class="cell-head"><div class="cell-day">3</div><div class="cell-meta">REST</div></div></div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">4</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">9-hull løsrunde · Bærum</div>
+          <div class="m">10:00 · 2T · SPILL</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">5</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-turn" draggable="true">
+          <div class="t">Klubbserie · Q1</div>
+          <div class="m">09:30 · 4T · TURN</div>
+        </div>
+      </div>
+
+      <!-- Week 2: 6–12 Apr -->
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">6</div><div class="cell-meta">REST</div></div>
+      </div>
+      <div class="cell today" data-day="7">
+        <div class="cell-head"><div class="cell-day"><span class="dot"></span>7</div><div class="cell-meta">3 økter</div></div>
+        <div class="sess lvl-fys" draggable="true">
+          <div class="t">Hofte-mobility</div>
+          <div class="m">07:00 · 20 MIN · FYS</div>
+        </div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Range · iron flush</div>
+          <div class="m">17:30 · 60 MIN · TEK</div>
+        </div>
+        <div class="sess-stack-more">+ 1 til</div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">8</div><div class="cell-meta">2 økter</div></div>
+        <div class="sess lvl-slag" draggable="true">
+          <div class="t">Putts · 6/10/15ft</div>
+          <div class="m">07:30 · 30 MIN · SLAG</div>
+        </div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">Chip & putt · 30 baller</div>
+          <div class="m">17:00 · 45 MIN · SPILL</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">9</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Lesson m/Anders</div>
+          <div class="m">15:00 · 60 MIN · TEK</div>
+        </div>
+      </div>
+      <div class="cell" data-day="10">
+        <div class="cell-head"><div class="cell-day">10</div><div class="cell-meta">AI-forslag</div></div>
+        <div class="sess ai-suggest" draggable="true">
+          <div class="t">⚡ Wedges 50–100m</div>
+          <div class="m">14:00 · 75 MIN · FORESLÅTT</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">11</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">18-hull · Holtsmark</div>
+          <div class="m">09:00 · 4T · SPILL</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">12</div><div class="cell-meta">REST</div></div>
+      </div>
+
+      <!-- Week 3: 13–19 Apr -->
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">13</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-fys" draggable="true">
+          <div class="t">Styrke · underkropp</div>
+          <div class="m">07:00 · 45 MIN · FYS</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">14</div><div class="cell-meta">2 økter</div></div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Range · driver dispersion</div>
+          <div class="m">17:00 · 60 MIN · TEK</div>
+        </div>
+        <div class="sess lvl-slag" draggable="true">
+          <div class="t">Putts · stress-drill</div>
+          <div class="m">18:30 · 30 MIN · SLAG</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">15</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">Par-3 banen · 9 hull</div>
+          <div class="m">17:00 · 90 MIN · SPILL</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">16</div><div class="cell-meta">REST</div></div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">17</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Lesson m/Anders</div>
+          <div class="m">15:00 · 60 MIN · TEK</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">18</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-turn" draggable="true">
+          <div class="t">Klubbserie · Q2</div>
+          <div class="m">09:30 · 4T · TURN</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">19</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">18-hull · m/coach</div>
+          <div class="m">10:00 · 4T · SPILL</div>
+        </div>
+      </div>
+
+      <!-- Week 4: 20–26 Apr -->
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">20</div><div class="cell-meta">REST</div></div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">21</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-fys" draggable="true">
+          <div class="t">Mobility flow</div>
+          <div class="m">07:00 · 20 MIN · FYS</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">22</div><div class="cell-meta">2 økter</div></div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Range · wedges igjen</div>
+          <div class="m">17:00 · 75 MIN · TEK</div>
+        </div>
+        <div class="sess lvl-slag" draggable="true">
+          <div class="t">Putts retest 3/6/10ft</div>
+          <div class="m">19:00 · 30 MIN · SLAG</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">23</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">Course management drill</div>
+          <div class="m">17:00 · 90 MIN · SPILL</div>
+        </div>
+      </div>
+      <div class="cell"><div class="cell-head"><div class="cell-day">24</div><div class="cell-meta">REST</div></div></div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">25</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-turn" draggable="true">
+          <div class="t">Pinx Open · runde 1</div>
+          <div class="m">08:00 · 5T · TURN</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">26</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-turn" draggable="true">
+          <div class="t">Pinx Open · runde 2</div>
+          <div class="m">08:00 · 5T · TURN</div>
+        </div>
+      </div>
+
+      <!-- Week 5: 27–30 Apr + 1–3 May -->
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">27</div><div class="cell-meta">REST</div></div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">28</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-fys" draggable="true">
+          <div class="t">Recovery · light mobility</div>
+          <div class="m">07:00 · 25 MIN · FYS</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">29</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-tek" draggable="true">
+          <div class="t">Range · hele bag</div>
+          <div class="m">17:00 · 60 MIN · TEK</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="cell-head"><div class="cell-day">30</div><div class="cell-meta">1 økt</div></div>
+        <div class="sess lvl-spill" draggable="true">
+          <div class="t">Test-runde Pinx</div>
+          <div class="m">10:00 · 4T · SPILL</div>
+        </div>
+      </div>
+      <div class="cell other-month"><div class="cell-head"><div class="cell-day">1</div></div></div>
+      <div class="cell other-month"><div class="cell-head"><div class="cell-day">2</div></div></div>
+      <div class="cell other-month"><div class="cell-head"><div class="cell-day">3</div></div></div>
+    </div>
+  </main>
+
+  <!-- Right sidebar -->
+  <aside class="phq-side">
+    <div class="side-tabs">
+      <button class="side-tab active" data-tab="ex">Øvelser <span class="count">142</span></button>
+      <button class="side-tab" data-tab="pyr">AK-pyramide</button>
+      <button class="side-tab" data-tab="mal">Maler <span class="count">8</span></button>
+    </div>
+
+    <div class="side-content">
+
+      <!-- Pane: Øvelser -->
+      <div class="side-pane active" data-pane="ex">
+        <div class="side-search">
+          <i data-lucide="search"></i>
+          <input placeholder="Søk øvelser, drills, baner…">
+        </div>
+
+        <div class="ai-panel">
+          <div class="lbl"><i data-lucide="sparkles"></i> AI foreslår for fredag 10. apr</div>
+          <div class="why">Wedges 50–100m matcher ukens fokus — du har ikke loggført denne typen siden 2. apr. Ledig slot kl 14:00 på Bærum range.</div>
+          <div class="actions">
+            <button class="accept">Legg inn</button>
+            <button class="dismiss">Forkast</button>
+          </div>
+        </div>
+
+        <div class="filter-meta">
+          <span>3 øvelser · filter: alle</span>
+          <button>Nullstill</button>
+        </div>
+
+        <div class="ex lvl-slag" draggable="true">
+          <div class="ex-head">
+            <div class="ex-title">Wedges 50–100m kontroll</div>
+            <span class="ex-pill slag">SLAG</span>
+          </div>
+          <div class="ex-meta">
+            <span><i data-lucide="clock"></i> 60–75 min</span>
+            <span><i data-lucide="map-pin"></i> Range</span>
+            <span><i data-lucide="target"></i> 30 baller</span>
+          </div>
+          <div class="ex-drag-hint"><i data-lucide="grip-vertical"></i> Dra til kalender</div>
+        </div>
+
+        <div class="ex lvl-tek" draggable="true">
+          <div class="ex-head">
+            <div class="ex-title">Driver tempo · Aim Point</div>
+            <span class="ex-pill tek">TEK</span>
+          </div>
+          <div class="ex-meta">
+            <span><i data-lucide="clock"></i> 45 min</span>
+            <span><i data-lucide="map-pin"></i> Range</span>
+            <span><i data-lucide="target"></i> 20 baller</span>
+          </div>
+          <div class="ex-drag-hint"><i data-lucide="grip-vertical"></i> Dra til kalender</div>
+        </div>
+
+        <div class="ex lvl-fys" draggable="true">
+          <div class="ex-head">
+            <div class="ex-title">Hofte-mobility morgen-flow</div>
+            <span class="ex-pill fys">FYS</span>
+          </div>
+          <div class="ex-meta">
+            <span><i data-lucide="clock"></i> 20 min</span>
+            <span><i data-lucide="map-pin"></i> Hjemme</span>
+            <span><i data-lucide="repeat"></i> 8 øvelser</span>
+          </div>
+          <div class="ex-drag-hint"><i data-lucide="grip-vertical"></i> Dra til kalender</div>
+        </div>
+
+        <div class="ex lvl-spill" draggable="true">
+          <div class="ex-head">
+            <div class="ex-title">Worst-ball · 9 hull</div>
+            <span class="ex-pill spill">SPILL</span>
+          </div>
+          <div class="ex-meta">
+            <span><i data-lucide="clock"></i> 2t</span>
+            <span><i data-lucide="map-pin"></i> 9-hulls bane</span>
+            <span><i data-lucide="target"></i> 1 spiller</span>
+          </div>
+          <div class="ex-drag-hint"><i data-lucide="grip-vertical"></i> Dra til kalender</div>
+        </div>
+
+        <div class="ex lvl-turn" draggable="true">
+          <div class="ex-head">
+            <div class="ex-title">Pre-turnerings rutine</div>
+            <span class="ex-pill turn">TURN</span>
+          </div>
+          <div class="ex-meta">
+            <span><i data-lucide="clock"></i> 60 min</span>
+            <span><i data-lucide="map-pin"></i> Bane + range</span>
+            <span><i data-lucide="brain"></i> Mental</span>
+          </div>
+          <div class="ex-drag-hint"><i data-lucide="grip-vertical"></i> Dra til kalender</div>
+        </div>
+      </div>
+
+      <!-- Pane: AK-pyramide -->
+      <div class="side-pane" data-pane="pyr">
+        <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5;">
+          AK-pyramiden er rammeverket vi bruker for å fordele tid mellom de fem nivåene. Klikk på et nivå for å filtrere øvelsesbanken.
+        </div>
+        <div class="pyramid-bar">
+          <button class="active fys"><span class="num">22%</span>FYS</button>
+          <button class="active tek"><span class="num">28%</span>TEK</button>
+          <button class="active slag"><span class="num">20%</span>SLAG</button>
+          <button class="active spill"><span class="num">18%</span>SPILL</button>
+          <button class="active turn"><span class="num">12%</span>TURN</button>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px;">
+          Faktisk fordeling siste 30 dager — mål: 25/25/20/20/10
+        </div>
+
+        <div style="margin-top: 8px; padding: 14px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--akgolf-accent); text-transform: uppercase; margin-bottom: 8px;">UKENS BIAS</div>
+          <div style="font-size: 13px; color: #fff; font-weight: 600; line-height: 1.45;">
+            Du har for mye TEK denne uka og mangler SPILL. Anders foreslår å bytte én range-økt mot en 9-hulls runde.
+          </div>
+          <button class="phq-btn ghost sm" style="margin-top: 12px;">Se forslag <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></button>
+        </div>
+      </div>
+
+      <!-- Pane: Maler -->
+      <div class="side-pane" data-pane="mal">
+        <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); text-transform: uppercase;">
+          MINE GJENBRUKBARE UKER · 4
+        </div>
+
+        <div class="mal">
+          <div class="mal-title">Standarduke · sesong</div>
+          <div class="mal-meta">5 ØKTER · 8T 30 MIN · SIST BRUKT 10. APR</div>
+          <div class="mal-tags">
+            <span class="mal-tag">FYS</span><span class="mal-tag">TEK</span><span class="mal-tag">SLAG</span><span class="mal-tag">SPILL</span>
+          </div>
+        </div>
+
+        <div class="mal">
+          <div class="mal-title">Pre-turneringsuke</div>
+          <div class="mal-meta">4 ØKTER · 5T · TAPER + REST</div>
+          <div class="mal-tags">
+            <span class="mal-tag">TEK</span><span class="mal-tag">TURN</span><span class="mal-tag">SPILL</span>
+          </div>
+        </div>
+
+        <div class="mal">
+          <div class="mal-title">Restitusjonsuke</div>
+          <div class="mal-meta">2 ØKTER · 1T 30 MIN · KUN MOBILITY</div>
+          <div class="mal-tags">
+            <span class="mal-tag">FYS</span>
+          </div>
+        </div>
+
+        <div class="mal">
+          <div class="mal-title">Bygg-uke · vinter</div>
+          <div class="mal-meta">6 ØKTER · 9T · STYRKE-FOKUS</div>
+          <div class="mal-tags">
+            <span class="mal-tag">FYS</span><span class="mal-tag">TEK</span>
+          </div>
+        </div>
+
+        <button class="phq-btn ghost" style="margin-top: 6px;"><i data-lucide="plus"></i> Lagre denne uka som mal</button>
+      </div>
+
+    </div>
+  </aside>
+</div>
+
+<button class="fab"><i data-lucide="plus"></i></button>
+
+<script>
+lucide.createIcons();
+
+// Tab switch
+document.querySelectorAll('.side-tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.side-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.side-pane').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelector(`.side-pane[data-pane="${t.dataset.tab}"]`).classList.add('active');
+  });
+});
+
+// Drag-drop
+let draggedEl = null;
+document.querySelectorAll('.sess, .ex').forEach(el => {
+  el.addEventListener('dragstart', e => {
+    draggedEl = el;
+    el.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  el.addEventListener('dragend', () => {
+    if (draggedEl) draggedEl.classList.remove('dragging');
+    draggedEl = null;
+    document.querySelectorAll('.cell.drop-target').forEach(c => c.classList.remove('drop-target'));
+  });
+});
+document.querySelectorAll('.cell').forEach(cell => {
+  cell.addEventListener('dragover', e => {
+    e.preventDefault();
+    cell.classList.add('drop-target');
+  });
+  cell.addEventListener('dragleave', () => cell.classList.remove('drop-target'));
+  cell.addEventListener('drop', e => {
+    e.preventDefault();
+    cell.classList.remove('drop-target');
+    if (draggedEl && draggedEl.classList.contains('sess')) {
+      cell.appendChild(draggedEl);
+    } else if (draggedEl && draggedEl.classList.contains('ex')) {
+      // Convert exercise → session
+      const lvl = [...draggedEl.classList].find(c => c.startsWith('lvl-'));
+      const t = draggedEl.querySelector('.ex-title').textContent;
+      const dur = draggedEl.querySelector('.ex-meta span').textContent.trim();
+      const sess = document.createElement('div');
+      sess.className = `sess ${lvl}`;
+      sess.draggable = true;
+      sess.innerHTML = `<div class="t">${t}</div><div class="m">${dur} · NY</div>`;
+      cell.appendChild(sess);
+      // re-bind drag
+      sess.addEventListener('dragstart', e => { draggedEl = sess; sess.classList.add('dragging'); });
+      sess.addEventListener('dragend', () => sess.classList.remove('dragging'));
+    }
+  });
+});
+</script>
+</body>
+</html>

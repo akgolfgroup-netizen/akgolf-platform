@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Om oss</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  .om-hero { padding: 180px 0 70px; }
+  .om-hero h1 { font-size: clamp(56px, 6.6vw, 96px); line-height: 0.96; letter-spacing: -0.04em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 22px; max-width: 16ch; text-wrap: balance; }
+  .om-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.025em; }
+  .om-hero p.lede { font-size: 20px; line-height: 1.6; color: var(--akgolf-text); max-width: 60ch; margin: 0; }
+
+  /* Stats strip */
+  .om-stats { padding: 50px 0 90px; }
+  .om-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1.5px solid var(--akgolf-line-light); border-bottom: 1.5px solid var(--akgolf-line-light); }
+  .om-stats-grid .stat { padding: 36px 0; border-right: 1px solid var(--akgolf-line-light); }
+  .om-stats-grid .stat:last-child { border-right: none; }
+  .om-stats-grid .v { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 64px; line-height: 1; letter-spacing: -0.025em; color: var(--akgolf-ink); }
+  .om-stats-grid .l { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); margin-top: 12px; font-weight: 700; }
+
+  /* Story */
+  .story-section { padding: 90px 0; background: #fff; }
+  .story-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+  .story-photo { aspect-ratio: 4/5; position: sticky; top: 100px; }
+  .story-text h2 { font-size: clamp(36px, 4.2vw, 52px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 28px; line-height: 1.05; max-width: 18ch; }
+  .story-text h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .story-text p { font-size: 17px; color: var(--akgolf-text); line-height: 1.7; margin: 0 0 20px; }
+  .story-text p:first-of-type::first-letter { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 64px; float: left; color: var(--akgolf-primary); line-height: 0.9; padding-right: 12px; padding-top: 6px; }
+  .story-text blockquote { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 28px; line-height: 1.35; color: var(--akgolf-ink); padding: 26px 0 26px 28px; border-left: 3px solid var(--akgolf-primary); margin: 28px 0; letter-spacing: -0.01em; }
+
+  /* Values */
+  .values-section { padding: 100px 0; }
+  .values-head h2 { font-size: clamp(40px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 14px; line-height: 1.05; max-width: 18ch; }
+  .values-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .values-head p { font-size: 16px; color: var(--akgolf-text); max-width: 60ch; line-height: 1.6; margin: 0 0 50px; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .value-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 28px; padding: 40px 38px 36px; display: flex; flex-direction: column; }
+  .value-card .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 24px; }
+  .value-card h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0 0 14px; line-height: 1.15; }
+  .value-card h3 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .value-card p { font-size: 15px; color: var(--akgolf-text); line-height: 1.65; margin: 0 0 24px; }
+  .value-card .pillars { display: flex; flex-direction: column; gap: 8px; padding-top: 22px; border-top: 1px solid var(--akgolf-line-light); margin-top: auto; }
+  .value-card .pillars li { list-style: none; font-size: 13px; color: var(--akgolf-text); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .value-card .pillars li [data-lucide] { width: 13px; height: 13px; color: var(--akgolf-primary); margin-top: 3px; flex-shrink: 0; stroke-width: 2.5; }
+
+  /* Team */
+  .team-section { padding: 100px 0; background: var(--akgolf-ink); color: #fff; }
+  .team-head h2 { font-size: clamp(40px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.03em; margin: 0 0 14px; line-height: 1.05; max-width: 18ch; color: #fff; }
+  .team-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .team-head p { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 60ch; line-height: 1.6; margin: 0 0 50px; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-bottom: 60px; }
+  .team-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; overflow: hidden; transition: all 0.2s; }
+  .team-card:hover { transform: translateY(-3px); border-color: var(--akgolf-accent); }
+  .team-card .web-photo { aspect-ratio: 4/5; }
+  .team-card .body { padding: 22px 24px 26px; }
+  .team-card .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; margin-bottom: 8px; }
+  .team-card h4 { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; color: #fff; margin: 0 0 10px; }
+  .team-card p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0 0 14px; min-height: 46px; }
+  .team-card .creds { display: flex; flex-wrap: wrap; gap: 6px; }
+  .team-card .creds span { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase; padding: 4px 8px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.78); border-radius: 999px; font-weight: 700; }
+
+  .team-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.10); }
+  .team-board-it { display: flex; gap: 14px; align-items: center; }
+  .team-board-it .av { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.10); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .team-board-it .role { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-accent); margin-bottom: 3px; font-weight: 700; }
+  .team-board-it h5 { font-size: 14px; font-weight: 700; color: #fff; margin: 0; }
+  .team-board-it .meta { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* Locations */
+  .loc-section { padding: 100px 0; background: #fff; }
+  .loc-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 50px; gap: 40px; }
+  .loc-head h2 { font-size: clamp(40px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0; line-height: 1.05; }
+  .loc-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .loc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .loc-card { background: var(--akgolf-surface); border: 1.5px solid var(--akgolf-line-light); border-radius: 24px; overflow: hidden; }
+  .loc-card .web-photo { aspect-ratio: 4/3; }
+  .loc-card .body { padding: 28px 30px 32px; }
+  .loc-card .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 10px; }
+  .loc-card h4 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--akgolf-ink); margin: 0 0 12px; }
+  .loc-card p { font-size: 14px; color: var(--akgolf-text); line-height: 1.6; margin: 0 0 18px; }
+  .loc-card .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-top: 18px; border-top: 1px solid var(--akgolf-line-light); }
+  .loc-card .meta .it { font-size: 12px; color: var(--akgolf-text); display: flex; gap: 8px; align-items: flex-start; }
+  .loc-card .meta .it [data-lucide] { width: 13px; height: 13px; color: var(--akgolf-primary); margin-top: 3px; flex-shrink: 0; }
+  .loc-card .meta .it strong { color: var(--akgolf-ink); }
+
+  /* Press */
+  .press-section { padding: 90px 0 110px; }
+  .press-head { margin-bottom: 36px; }
+  .press-head h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0; }
+  .press-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .press-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .press-card { background: #fff; border: 1px solid var(--akgolf-line-light); border-radius: 18px; padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 10px; transition: all 0.2s; cursor: pointer; }
+  .press-card:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(10,31,24,0.06); }
+  .press-card .src { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; }
+  .press-card h4 { font-size: 16px; font-weight: 700; color: var(--akgolf-ink); letter-spacing: -0.015em; margin: 0; line-height: 1.35; }
+  .press-card .date { font-size: 11px; color: var(--akgolf-muted); margin-top: auto; padding-top: 14px; border-top: 1px solid var(--akgolf-line-light); display: flex; justify-content: space-between; align-items: center; }
+  .press-card .date [data-lucide] { width: 12px; height: 12px; color: var(--akgolf-primary); }
+
+  @media (max-width: 1100px) {
+    .om-stats-grid, .values-grid, .team-grid, .loc-grid, .press-grid, .team-board { grid-template-columns: 1fr 1fr; }
+    .story-grid { grid-template-columns: 1fr; }
+    .story-photo { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html">Utvikling</a>
+    <a href="g9-om-oss.html" class="active">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="om-hero">
+  <div class="web-container">
+    <div class="web-eyebrow">Om oss</div>
+    <h1>Et lite team. <em>Veldig dedikert.</em></h1>
+    <p class="lede">Vi er en coaching-drevet klubb på Bærum, Holtsmark og Pinx. Vi tror at mindre, men dypere — er bedre enn alt og alle. Du kjenner coachen din, og coachen kjenner spillet ditt.</p>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="om-stats">
+  <div class="web-container">
+    <div class="om-stats-grid">
+      <div class="stat" style="padding-left: 0;"><div class="v">2018</div><div class="l">Grunnlagt</div></div>
+      <div class="stat" style="padding-left: 32px;"><div class="v">412</div><div class="l">Aktive medlemmer</div></div>
+      <div class="stat" style="padding-left: 32px;"><div class="v">3</div><div class="l">Lokasjoner</div></div>
+      <div class="stat" style="padding-left: 32px;"><div class="v">14</div><div class="l">Coacher · ansatte</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story-section">
+  <div class="web-container">
+    <div class="story-grid">
+      <div class="story-photo web-photo" data-ratio="4-5">
+        <div class="web-photo-label">
+          <div class="ico"><i data-lucide="camera"></i></div>
+          <div class="tag">[Foto: Anders unge år]</div>
+          <div class="desc">Anders som junior med stafettsekk — varm bakgrunnsstemning</div>
+          <div class="ratio">4:5 · portrait</div>
+        </div>
+      </div>
+      <div class="story-text">
+        <div class="web-eyebrow">Historien</div>
+        <h2>Vi startet med <em>én ide</em>: gjør coaching personlig igjen.</h2>
+
+        <p>I 2018 åpnet Anders Krohn dørene til en liten coaching-virksomhet på Bærum med fire spillere og ett løfte: at hver eneste time skulle handle om akkurat den spilleren — og ingen andre. Ingen storgruppe-PRograms, ingen sjablong-økter, ingen trener-rotasjon mellom timene.</p>
+
+        <p>Det viste seg å være vanskelig å skalere på den måten. Men også enkelt: jo dypere du går med færre, jo mer fremgang. Vi vokste sakte. Vi takket nei til mer enn vi takket ja til. Vi bygde vår egen plattform fordi den som fantes, ikke passet for det vi gjorde.</p>
+
+        <blockquote>"Du kan kopiere et golfsving. Du kan ikke kopiere et tillitsforhold over tid."</blockquote>
+
+        <p>I 2022 åpnet vi Junior-akademiet med Markus, og lærte at det å coache 8-åringer krever en helt annen tilnærming enn voksne — men samme prinsipp. Færre, men dypere. Foreldre som faktisk vet hva som skjer.</p>
+
+        <p>I 2024 utvidet vi til Holtsmark og inngikk samarbeid med Pinx Golf Resort. I 2025 startet vi piloten av PlayerHQ + CoachHQ med våre egne medlemmer. I dag er vi 14 ansatte og 412 medlemmer — fortsatt små nok til å huske navnet ditt, store nok til å gjøre dette skikkelig.</p>
+
+        <p style="font-size: 14px; color: var(--akgolf-muted); margin-top: 32px;">— Anders Krohn, grunnlegger og hovedcoach</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="values-section">
+  <div class="web-container">
+    <div class="values-head">
+      <div class="web-eyebrow">Vår filosofi</div>
+      <h2>Tre prinsipper som <em>former alt</em> vi gjør.</h2>
+      <p>De er ikke skreve på en plakat på kontoret — de er testet i hver eneste avgjørelse vi tar om coaches, priser, og hva slags spillere vi tar inn.</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="num">01 · Prinsipp</div>
+        <h3>Færre <em>spillere</em>, dypere coaching.</h3>
+        <p>En coach kan ikke gjøre god jobb med 50 spillere samtidig. Vi setter taket på 18 per coach, og holder oss til det selv om det betyr venteliste.</p>
+        <ul class="pillars">
+          <li><i data-lucide="check"></i>Maks 18 Academy-spillere per coach</li>
+          <li><i data-lucide="check"></i>Junior-grupper på maks 8 barn</li>
+          <li><i data-lucide="check"></i>Søknadsbasert opptak til Elite</li>
+        </ul>
+      </div>
+
+      <div class="value-card">
+        <div class="num">02 · Prinsipp</div>
+        <h3>Måling før <em>magefølelse</em>.</h3>
+        <p>Vi måler Strokes Gained månedlig for hver spiller. Du skal se fremgangen i tall, ikke bare føle den. Og hvis vi ikke leverer, vil du vite hvorfor.</p>
+        <ul class="pillars">
+          <li><i data-lucide="check"></i>Månedlig SG-rapport, alltid</li>
+          <li><i data-lucide="check"></i>Trackman-data for hver økt</li>
+          <li><i data-lucide="check"></i>Resultatgaranti etter 6 måneder</li>
+        </ul>
+      </div>
+
+      <div class="value-card">
+        <div class="num">03 · Prinsipp</div>
+        <h3>Mennesket <em>først</em>, klubben etterpå.</h3>
+        <p>Mental ro, fysisk helse, familie og tid på banen kommer i den rekkefølgen — alltid. Vi sier nei til turneringer som koster mer enn de gir.</p>
+        <ul class="pillars">
+          <li><i data-lucide="check"></i>Mental coaching inkludert</li>
+          <li><i data-lucide="check"></i>Helse-screening 1× per år</li>
+          <li><i data-lucide="check"></i>Pause-rett ved skader, alltid</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="team-section">
+  <div class="web-container">
+    <div class="team-head">
+      <div class="web-eyebrow" style="color: var(--akgolf-accent);">Coachene</div>
+      <h2>Folka <em>du faktisk</em> kommer til å trene med.</h2>
+      <p>Hver av oss har vår egen reise gjennom golfen — og samme tilnærming til hvordan coaching bør gjøres.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="web-photo" data-ratio="4-5">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Portrett: Anders]</div>
+            <div class="desc">Halvprofil ute, dempet bakgrunn</div>
+            <div class="ratio">4:5</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Hovedcoach · Grunnlegger</div>
+          <h4>Anders Krohn</h4>
+          <p>Tour-spiller bakgrunn. PGA Class A. Tror på færre, dypere relasjoner.</p>
+          <div class="creds"><span>PGA A</span><span>TPI L2</span><span>Trackman</span></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="web-photo lime" data-ratio="4-5">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Portrett: Markus]</div>
+            <div class="desc">Smilende, varm tone</div>
+            <div class="ratio">4:5</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Hovedcoach · Junior</div>
+          <h4>Markus Lien</h4>
+          <p>Coach for 6–17 år. Ex-elitespiller, sertifisert idrettspedagog.</p>
+          <div class="creds"><span>PGA A</span><span>NIH</span><span>Junior Pro</span></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="web-photo cream" data-ratio="4-5">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Portrett: Sara]</div>
+            <div class="desc">Profesjonelt portrett</div>
+            <div class="ratio">4:5</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Coach · Performance</div>
+          <h4>Sara Hagen</h4>
+          <p>Spesialist på kortspill og putting. Ex-LET, 12 års coaching-erfaring.</p>
+          <div class="creds"><span>PGA A</span><span>SAM Putt Lab</span></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="web-photo" data-ratio="4-5">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Portrett: Tor]</div>
+            <div class="desc">Profesjonelt portrett</div>
+            <div class="ratio">4:5</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Mental coach</div>
+          <h4>Tor Brekke</h4>
+          <p>Idrettspsykolog. Jobber med våre Elite- og turneringsspillere.</p>
+          <div class="creds"><span>NPF</span><span>OL-coach</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operations -->
+    <div class="team-board">
+      <div class="team-board-it"><div class="av">EH</div><div><div class="role">Daglig leder</div><h5>Eline Hauge</h5><div class="meta">Drift, økonomi, strategi</div></div></div>
+      <div class="team-board-it"><div class="av">JN</div><div><div class="role">CTO · Utvikling</div><h5>Jonas Nygård</h5><div class="meta">PlayerHQ + CoachHQ</div></div></div>
+      <div class="team-board-it"><div class="av">VK</div><div><div class="role">Markedsføring</div><h5>Vilde Kristiansen</h5><div class="meta">Brand, content, partnere</div></div></div>
+      <div class="team-board-it"><div class="av">SF</div><div><div class="role">Junior-coordinator</div><h5>Silje Fjell</h5><div class="meta">Foreldre, camps, turneringer</div></div></div>
+      <div class="team-board-it"><div class="av">ML</div><div><div class="role">Coach · Holtsmark</div><h5>Mathias Lund</h5><div class="meta">Voksne, teknikk</div></div></div>
+      <div class="team-board-it"><div class="av">IB</div><div><div class="role">Coach · Pinx</div><h5>Ida Berg</h5><div class="meta">Banecoaching, camps</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Locations -->
+<section class="loc-section">
+  <div class="web-container">
+    <div class="loc-head">
+      <div>
+        <div class="web-eyebrow">Lokasjoner</div>
+        <h2>Tre steder. <em>En filosofi.</em></h2>
+      </div>
+      <a href="g10-kontakt.html" class="web-btn ghost">Se på kart <i data-lucide="map-pin"></i></a>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-card">
+        <div class="web-photo" data-ratio="4-3">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="image"></i></div>
+            <div class="tag">[Foto: Bærum-anlegg]</div>
+            <div class="desc">Eksteriør · range + bay-bygning</div>
+            <div class="ratio">4:3</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Hovedkontor</div>
+          <h4>Bærum · Hamang</h4>
+          <p>12-bays Trackman-anlegg, simulator-rom, bay-fitting og full coaching-stab. Åpent året rundt.</p>
+          <div class="meta">
+            <div class="it"><i data-lucide="map-pin"></i><span><strong>Hamangsletta 4</strong><br>1336 Sandvika</span></div>
+            <div class="it"><i data-lucide="clock"></i><span><strong>Man–lør</strong><br>06–22</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="web-photo lime" data-ratio="4-3">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="image"></i></div>
+            <div class="tag">[Foto: Holtsmark-bane]</div>
+            <div class="desc">18-hulls bane · sommer</div>
+            <div class="ratio">4:3</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Bane-samarbeid</div>
+          <h4>Holtsmark GK</h4>
+          <p>Vår faste 18-hulls samarbeidsbane. On-course coaching, klubbkvelder og medlems-runder hele sommeren.</p>
+          <div class="meta">
+            <div class="it"><i data-lucide="map-pin"></i><span><strong>Sylling</strong><br>3410 Holtsmark</span></div>
+            <div class="it"><i data-lucide="calendar"></i><span><strong>Apr–okt</strong><br>06–21</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="loc-card">
+        <div class="web-photo cream" data-ratio="4-3">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="image"></i></div>
+            <div class="tag">[Foto: Pinx Resort]</div>
+            <div class="desc">Resort · panorama landskap</div>
+            <div class="ratio">4:3</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="role">Camp-partner</div>
+          <h4>Pinx Golf Resort</h4>
+          <p>3-dagers camps med full pension, banecoaching og 36 hull. Sommer- og høst-program for medlemmer.</p>
+          <div class="meta">
+            <div class="it"><i data-lucide="map-pin"></i><span><strong>Pinx</strong><br>Sør-Korea</span></div>
+            <div class="it"><i data-lucide="users"></i><span><strong>6 plasser</strong><br>per camp</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Press -->
+<section class="press-section">
+  <div class="web-container">
+    <div class="press-head">
+      <div class="web-eyebrow">I mediene</div>
+      <h2>Hva andre <em>har sagt</em>.</h2>
+    </div>
+    <div class="press-grid">
+      <div class="press-card">
+        <div class="src">Norsk Golf</div>
+        <h4>Coaching-klubben som vokser ved å si nei</h4>
+        <div class="date"><span>Mars 2026</span><i data-lucide="arrow-up-right"></i></div>
+      </div>
+      <div class="press-card">
+        <div class="src">DN Magasinet</div>
+        <h4>Bygger sin egen golfteknologi fra Bærum</h4>
+        <div class="date"><span>Februar 2026</span><i data-lucide="arrow-up-right"></i></div>
+      </div>
+      <div class="press-card">
+        <div class="src">Golf Digest NO</div>
+        <h4>Junior-akademiet som tar foreldrene på alvor</h4>
+        <div class="date"><span>Januar 2026</span><i data-lucide="arrow-up-right"></i></div>
+      </div>
+      <div class="press-card">
+        <div class="src">Aftenposten</div>
+        <h4>Da Anders Krohn sa farvel til touren</h4>
+        <div class="date"><span>September 2025</span><i data-lucide="arrow-up-right"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li><li><a href="g8-utvikling.html">Utvikling</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g10-kontakt.html">Kontakt</a></li><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2026 AK Golf Group AS · ORG 925 884 102</span>
+      <div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div>
+    </div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -46,7 +46,7 @@ export async function GET() {
   const dbStart = Date.now();
   try {
     const supabase = createServiceClient();
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("profiles")
       .select("count", { count: "exact", head: true })
       .limit(1);

@@ -12,7 +12,6 @@ import {
  AdminLineChart,
  AdminDataTable,
  AdminGauge,
- AdminSparkline,
  type AdminDateRange,
  type AdminDataTableColumn,
  type AdminDonutChartDatum,
@@ -41,14 +40,8 @@ function formatRelativeDate(isoDate: string): string {
  return date.toLocaleDateString("nb-NO", { day: "numeric", month: "short"});
 }
 
-// ── Mock tillegg (sammenligning i fjor + sparkline) ─────────────────────────
-
-const sparkDaily = [3200, 4100, 3800, 4500, 5200, 4900, 5800];
-const sparkWeekly = [21000, 23500, 22800, 25300, 27100, 26400, 28900];
-const sparkMonthly = [85000, 92000, 88000, 98000, 102000, 110000, 118000];
-const sparkYearly = [780000, 820000, 860000, 910000, 950000, 1010000, 1080000];
-
-// Fiktive i-fjor-verdier for sammenligning
+// Fiktive i-fjor-verdier — venter på en ekte historikk-pipeline
+// før vi viser sammenligningskurven igjen.
 function buildYearComparison(monthlyTrend: { label: string; value: number }[]) {
  return monthlyTrend.map((point) => ({
  label: point.label,
@@ -220,17 +213,20 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  />
 
  <div className="p-6 space-y-6">
- {/* Heritage Grid Header */}
- <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">
- CoachHQ
- </MonoLabel>
- <h1 className="text-2xl font-bold tracking-tight text-on-surface">
- Økonomi<span className="text-outline">.</span>
+ {/* Brand V2 page header — d20 mockup */}
+ <div className="flex items-end justify-between border-b border-line pb-5">
+ <div>
+ <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+ / ØKONOMI · OVERSIKT
+ </div>
+ <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+ Cash flow.
  </h1>
- <p className="text-on-surface-variant">
- Oversikt over inntekter, fakturaer og refusjoner
+ <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+ Brutto inntekt, utbetalinger og kategori-fordeling for valgt periode.
+ Stripe-data oppdatert kontinuerlig.
  </p>
+ </div>
  </div>
 
  {/* Tidsperiode og handlinger */}
@@ -261,22 +257,10 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
  {formatKr(data.revenue.day)}
  </p>
- <div className="mt-2 flex items-center gap-1 text-xs font-medium">
- <span className="text-success-text">+8%</span>
- <span className="text-on-surface-variant">vs forrige</span>
- </div>
  </div>
  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success-text shrink-0">
  <DollarSign className="w-5 h-5" />
  </div>
- </div>
- <div className="mt-3">
- <AdminSparkline
- data={sparkDaily}
- color="#0A1F18"
- width="100%"
- height={32}
- />
  </div>
  </BentoCard>
 
@@ -287,22 +271,10 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
  {formatKr(data.revenue.week)}
  </p>
- <div className="mt-2 flex items-center gap-1 text-xs font-medium">
- <span className="text-success-text">+12%</span>
- <span className="text-on-surface-variant">vs forrige</span>
- </div>
  </div>
  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success-text shrink-0">
  <Icon name="credit_card" className="w-5 h-5" />
  </div>
- </div>
- <div className="mt-3">
- <AdminSparkline
- data={sparkWeekly}
- color="#1A4D36"
- width="100%"
- height={32}
- />
  </div>
  </BentoCard>
 
@@ -313,22 +285,10 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
  {formatKr(data.revenue.month)}
  </p>
- <div className="mt-2 flex items-center gap-1 text-xs font-medium">
- <span className="text-warning">+15%</span>
- <span className="text-on-surface-variant">vs forrige</span>
- </div>
  </div>
  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-warning-light text-warning shrink-0">
  <Icon name="error" className="w-5 h-5" />
  </div>
- </div>
- <div className="mt-3">
- <AdminSparkline
- data={sparkMonthly}
- color="#C48A32"
- width="100%"
- height={32}
- />
  </div>
  </BentoCard>
 
@@ -339,22 +299,10 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
  {yearTotal}
  </p>
- <div className="mt-2 flex items-center gap-1 text-xs font-medium">
- <span className="text-success-text">+22%</span>
- <span className="text-on-surface-variant">vs forrige</span>
- </div>
  </div>
  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-fixed/20 text-secondary-fixed shrink-0">
  <Icon name="restart_alt" className="w-5 h-5" />
  </div>
- </div>
- <div className="mt-3">
- <AdminSparkline
- data={sparkYearly}
- color="#D1F843"
- width="100%"
- height={32}
- />
  </div>
  </BentoCard>
  </BentoGrid>

@@ -56,8 +56,10 @@ export default async function BookingStatusPage({ params }: Props) {
   const user = await getPortalUser();
   const supabase = await createServerSupabase();
 
-  // Fetch booking with all related data
-  const query = supabase
+  // Fetch booking with all related data.
+  // Innloggede brukere kan kun se egne bookinger; anonyme får se via ID
+  // (brukes for e-postlenker fra bekreftelsen).
+  let query = supabase
     .from("Booking")
     .select(`
       id,
@@ -80,10 +82,13 @@ export default async function BookingStatusPage({ params }: Props) {
       Location:locationId(name, address),
       User:studentId(name, email)
     `)
-    .eq("id", id)
-    .single();
+    .eq("id", id);
 
-  const { data: booking, error } = await query;
+  if (user?.id) {
+    query = query.eq("studentId", user.id);
+  }
+
+  const { data: booking, error } = await query.maybeSingle();
 
   if (error || !booking) {
     return <NotFoundView />;

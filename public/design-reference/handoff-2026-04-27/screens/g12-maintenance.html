@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Oppgradering pågår</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-ink); color: rgba(255,255,255,0.85); overflow: hidden; }
+  .stage {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: stretch;
+    position: relative;
+  }
+  .stage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 25% 35%, rgba(0,88,64,0.35), transparent 55%),
+      radial-gradient(circle at 80% 75%, rgba(209,248,67,0.10), transparent 50%);
+    pointer-events: none;
+  }
+  .left {
+    padding: 56px 64px 48px;
+    display: flex; flex-direction: column;
+    position: relative; z-index: 2;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: #fff;
+    font-weight: 800; font-size: 18px; letter-spacing: -0.02em;
+  }
+  .brand .mark {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 13px;
+  }
+
+  .body {
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    max-width: 600px;
+    margin-top: 60px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .eyebrow .pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(209,248,67,0.6); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 10px rgba(209,248,67,0); }
+  }
+
+  h1 {
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    color: #fff;
+    font-weight: 800;
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+  h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); letter-spacing: -0.02em; }
+  .lede { color: rgba(255,255,255,0.75); font-size: 17px; line-height: 1.6; margin: 0 0 36px; max-width: 50ch; text-wrap: pretty; }
+
+  .progress-block {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
+    padding: 22px 24px;
+    backdrop-filter: blur(8px);
+    margin-bottom: 32px;
+  }
+  .pb-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .pb-row .lab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .pb-row .val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--akgolf-accent); font-weight: 700; letter-spacing: 0.06em; }
+  .bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .bar > div {
+    height: 100%;
+    width: 72%;
+    background: linear-gradient(90deg, var(--akgolf-primary), var(--akgolf-accent));
+    border-radius: 999px;
+    box-shadow: 0 0 20px rgba(209,248,67,0.4);
+  }
+  .pb-meta {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .pb-meta .it .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+  .pb-meta .it .v { font-size: 14px; color: #fff; font-weight: 600; }
+
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary, .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 700;
+    transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+  }
+  .btn-primary { background: var(--akgolf-accent); color: #0A1F18; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(209,248,67,0.35); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.14); }
+
+  .footer-info {
+    margin-top: auto;
+    padding-top: 40px;
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-info .stat-line span { margin-right: 24px; }
+  .footer-info .stat-line strong { color: rgba(255,255,255,0.8); margin-right: 4px; }
+
+  .right {
+    background: linear-gradient(135deg, #0d2419 0%, #003528 100%);
+    position: relative; overflow: hidden;
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  .right::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(209,248,67,0.10), transparent 50%),
+      repeating-linear-gradient(45deg, transparent 0 20px, rgba(255,255,255,0.015) 20px 40px);
+  }
+
+  /* Floating mechanic illustration via clean geometric shapes */
+  .scene {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    z-index: 2;
+  }
+  .scene-grid {
+    width: 88%; max-width: 460px;
+    aspect-ratio: 1;
+    position: relative;
+  }
+  .ball {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff 0%, #d8d8d8 60%, #888 100%);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset -16px -16px 40px rgba(0,0,0,0.18);
+  }
+  .ball::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 22% 22%, rgba(0,0,0,0.10) 1px, transparent 2px) 0 0 / 32px 32px,
+      radial-gradient(circle at 22% 22%, rgba(0,0,0,0.06) 1px, transparent 2px) 16px 16px / 32px 32px;
+    opacity: 0.5;
+  }
+  .gear {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    box-shadow: 0 12px 30px rgba(209,248,67,0.30);
+    animation: spin 12s linear infinite;
+  }
+  .gear-a { width: 88px; height: 88px; bottom: -20px; right: -20px; }
+  .gear-b { width: 60px; height: 60px; top: 30px; left: -20px; animation-direction: reverse; animation-duration: 9s; }
+  .gear [data-lucide] { width: 36px; height: 36px; stroke-width: 2; }
+  .gear-b [data-lucide] { width: 24px; height: 24px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .scene-label {
+    position: absolute; bottom: 32px; left: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    z-index: 3;
+  }
+
+  @media (max-width: 900px) {
+    .stage { grid-template-columns: 1fr; }
+    .right { display: none; }
+    .left { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="left">
+    <a href="g1-forsiden.html" class="brand"><span class="mark">AK</span> AK Golf</a>
+
+    <div class="body">
+      <div class="eyebrow"><span class="pulse"></span>Status · Planlagt vedlikehold</div>
+
+      <h1>Vi pusser opp <em>under panseret.</em></h1>
+      <p class="lede">PlayerHQ er nede mens vi ruller ut en oppgradering av bookings-motoren og Trackman-synkroniseringen. Alt er tilbake innen kort tid — bookingene dine er trygge.</p>
+
+      <div class="progress-block">
+        <div class="pb-row">
+          <div class="lab">Fremdrift</div>
+          <div class="val">72% — db-migrering</div>
+        </div>
+        <div class="bar"><div></div></div>
+        <div class="pb-meta">
+          <div class="it">
+            <div class="l">Estimat ferdig</div>
+            <div class="v">~22 min</div>
+          </div>
+          <div class="it">
+            <div class="l">Oppdatert</div>
+            <div class="v">2 min siden</div>
+          </div>
+          <div class="it">
+            <div class="l">Versjon</div>
+            <div class="v">v4.2.0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="g1-forsiden.html" class="btn-primary">Gå til forsiden <i data-lucide="arrow-right"></i></a>
+        <a href="https://status.akgolf.no" class="btn-ghost"><i data-lucide="activity"></i>Live status</a>
+      </div>
+
+      <div class="footer-info">
+        <div class="stat-line">
+          <span><strong>Hjelp:</strong> 67 12 34 56</span>
+          <span><strong>E-post:</strong> hjelp@akgolf.no</span>
+        </div>
+        <span>2. mar 14:22</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="scene">
+      <div class="scene-grid">
+        <div class="ball"></div>
+        <div class="gear gear-a"><i data-lucide="settings"></i></div>
+        <div class="gear gear-b"><i data-lucide="settings"></i></div>
+      </div>
+    </div>
+    <div class="scene-label">◈ Maintenance · 503</div>
+  </div>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

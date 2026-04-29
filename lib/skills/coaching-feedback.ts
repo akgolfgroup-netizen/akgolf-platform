@@ -1,7 +1,7 @@
 // Skill: coaching-feedback
 // Genererer strukturert feedback til spilleren etter en treningsøkt
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT = `
 Du genererer coaching-feedback til AK Golf Academy-spillere etter en treningsøkt.

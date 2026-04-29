@@ -8,8 +8,10 @@ import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import type { AgentResult } from "./types";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "degradation-flag";
+const MODEL = "rule-based";
 const DRIVER_DROP_THRESHOLD_M = 5;
 
 export async function runDegradationFlag(userId: string): Promise<AgentResult> {
@@ -50,17 +52,36 @@ export async function runDegradationFlag(userId: string): Promise<AgentResult> {
     return { ran: true };
   } catch (err) {
     logger.error(`[${AGENT_NAME}] failed`, err);
+    await logAgentRun({
+      name: AGENT_NAME,
+      model: MODEL,
+      status: "error",
+      duration: Date.now() - started,
+      input: userId,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return { ran: false, reason: "error" };
   }
 }
 
 async function logSuccess(started: number, userId: string, output: string) {
-  await prisma.agentLog.create({
-    data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "success", duration: Date.now() - started, input: userId, output },
-  }).catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "success",
+    duration: Date.now() - started,
+    input: userId,
+    output,
+  });
 }
+
 async function logSkip(started: number, userId: string, reason: string) {
-  await prisma.agentLog.create({
-    data: { id: nanoid(), agentType: AGENT_NAME, model: "rule-based", status: "skipped", duration: Date.now() - started, input: userId, output: reason },
-  }).catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "skipped",
+    duration: Date.now() - started,
+    input: userId,
+    output: reason,
+  });
 }

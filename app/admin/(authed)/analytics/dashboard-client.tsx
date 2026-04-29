@@ -86,17 +86,20 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
       <MCTopbar title="Analytics" subtitle={data.periodLabel} onMenuClick={toggle} />
 
       <div className={cn("p-6 space-y-6", isPending && "opacity-60 pointer-events-none transition-opacity")}>
-        {/* Heritage Grid Header */}
-        <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">
-            CoachHQ
-          </MonoLabel>
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
-            Analytics<span className="text-outline">.</span>
-          </h1>
-          <p className="text-on-surface-variant">
-            {data.periodLabel}
-          </p>
+        {/* Brand V2 page header — d30 mockup */}
+        <div className="flex items-end justify-between border-b border-line pb-5">
+          <div>
+            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+              / INNSIKT · ANALYTICS
+            </div>
+            <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+              Trender og funnel.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+              {data.periodLabel} — heatmap, funnel, NPS og 12-ukers nye
+              spillere.
+            </p>
+          </div>
         </div>
 
         {/* Period selector - Chips with grey tokens */}

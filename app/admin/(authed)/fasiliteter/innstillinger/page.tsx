@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getAllFacilities, getInstructorFacilityDefaults } from "../actions";
+import { getAllFacilities, getInstructorFacilityDefaults } from "../actions-legacy";
 import { InnstillingerClient } from "./innstillinger-client";
 
 export default async function FasilitetInnstillingerPage() {

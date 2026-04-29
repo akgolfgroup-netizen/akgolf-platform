@@ -126,12 +126,12 @@ export async function exportRevenueCSV(
 
   const rows = transactions.map((t) => [
     format(t.createdAt, "yyyy-MM-dd"),
-    format(t.Booking.startTime, "yyyy-MM-dd"),
-    t.Booking.User.name ?? "",
-    t.Booking.User.email ?? "",
-    t.Booking.ServiceType.name,
-    t.Booking.ServiceType.category,
-    t.Booking.Instructor.User.name ?? "",
+    t.Booking?.startTime ? format(t.Booking.startTime, "yyyy-MM-dd") : "",
+    t.Booking?.User?.name ?? "",
+    t.Booking?.User?.email ?? "",
+    t.Booking?.ServiceType?.name ?? "",
+    t.Booking?.ServiceType?.category ?? "",
+    t.Booking?.Instructor?.User?.name ?? "",
     t.paymentMethod,
     String(t.grossAmount),
     String(t.vatAmount),

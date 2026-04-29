@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Data viz</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;color:#324D45;font-family:Inter,sans-serif;padding:20px}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .panel{background:#ECF0EF;border:1px solid #e0e8e5;border-radius:12px;padding:14px;height:120px;display:flex;flex-direction:column;justify-content:space-between}
+  .lbl{font-size:10px;color:#7a9a8e;text-transform:uppercase;letter-spacing:.04em;font-family:ui-monospace,monospace}
+</style></head><body>
+<div class="grid">
+  <!-- paired bars -->
+  <div class="panel">
+    <div class="lbl">Paired bars · Uke</div>
+    <div style="display:flex;gap:8px;align-items:flex-end;height:60px">
+      <div style="display:flex;gap:2px"><div style="width:7px;height:30px;background:#B8D4CC;border-radius:2px"></div><div style="width:7px;height:40px;background:#005840;border-radius:2px"></div></div>
+      <div style="display:flex;gap:2px"><div style="width:7px;height:20px;background:#B8D4CC;border-radius:2px"></div><div style="width:7px;height:35px;background:#005840;border-radius:2px"></div></div>
+      <div style="display:flex;gap:2px"><div style="width:7px;height:25px;background:#B8D4CC;border-radius:2px"></div><div style="width:7px;height:28px;background:#005840;border-radius:2px"></div></div>
+      <div style="display:flex;gap:2px"><div style="width:7px;height:45px;background:#B8D4CC;border-radius:2px"></div><div style="width:7px;height:50px;background:#005840;border-radius:2px"></div></div>
+      <div style="display:flex;gap:2px"><div style="width:7px;height:22px;background:#B8D4CC;border-radius:2px"></div><div style="width:7px;height:18px;background:#005840;border-radius:2px"></div></div>
+    </div>
+  </div>
+  <!-- circular progress -->
+  <div class="panel" style="align-items:center;justify-content:space-between">
+    <div class="lbl" style="align-self:flex-start">Circle · HCP</div>
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="32" fill="none" stroke="#e0e8e5" stroke-width="6"/>
+      <circle cx="40" cy="40" r="32" fill="none" stroke="#005840" stroke-width="6" stroke-dasharray="125 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+      <text x="40" y="44" text-anchor="middle" fill="#324D45" font-weight="800" font-size="16" font-family="Inter">15,9</text>
+    </svg>
+    <div></div>
+  </div>
+  <!-- signal bars -->
+  <div class="panel">
+    <div class="lbl">Signal · TrackMan</div>
+    <div style="display:flex;align-items:flex-end;gap:2px;height:60px">
+      <script>document.currentScript.outerHTML = Array.from({length:28},(_,i)=>{const h=10+Math.floor(Math.random()*40);const danger=i>=12&&i<17;const c=danger?'#B84233':i%3===0?'#B8D4CC':'#005840';return `<div style="width:3.5px;height:${h}px;background:${c};border-radius:1.5px"></div>`}).join('')</script>
+    </div>
+  </div>
+</div>
+</body></html>

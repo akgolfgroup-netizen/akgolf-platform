@@ -143,10 +143,10 @@ Dette er planen for neste kvartal — 4 hovedinitiativer med estimert innsats og
 
 | Avhengighet | Blokkerer | Status |
 |-------------|-----------|--------|
-| `TrackManSessionAnalytics`-tabell | #1, #2 | ✅ Eksisterer |
-| `TrainingLog` ↔ `TrainingPlanExercise` mapping | #3 | ✅ Eksisterer |
-| Anthropic SDK med `ai`-biblioteket | #1, #3 | ✅ Konfigurert |
-| Admin RBAC | #4 | ✅ `canAccessMissionControl()` |
+| `TrackManSessionAnalytics`-tabell | #1, #2 | Eksisterer |
+| `TrainingLog` ↔ `TrainingPlanExercise` mapping | #3 | Eksisterer |
+| Anthropic SDK med `ai`-biblioteket | #1, #3 | Konfigurert |
+| Admin RBAC | #4 | `canAccessMissionControl()` |
 
 ---
 

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A7 — Onboarding · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: #0A1F18; }
+  .onb-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 80px 1fr 88px;
+  }
+  .onb-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .onb-logo { display:flex; align-items:center; gap: 10px; }
+  .onb-logo .l-mark { width:32px; height:32px; border-radius: 8px; background: var(--akgolf-accent); color:#0A1F18; display:grid; place-items:center; font-weight: 800; font-size: 13px; }
+  .onb-logo .l-name { color:#fff; font-weight: 700; letter-spacing: -0.01em; }
+  .skip-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; }
+  .skip-link:hover { color: #fff; }
+
+  .onb-main {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    overflow: hidden;
+  }
+  .onb-side {
+    background: #0A1F18;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 36px 28px;
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .onb-progress-head {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 22px;
+  }
+  .ring {
+    position: relative; width: 64px; height: 64px;
+  }
+  .ring svg { transform: rotate(-90deg); }
+  .ring .lb {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 13px; color: var(--akgolf-accent); font-weight: 700;
+  }
+  .onb-progress-head .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .onb-progress-head .h { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 4px; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 12px;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+  .step .num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.6);
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; font-weight: 700;
+  }
+  .step .t { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .step .s { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.10em; color: rgba(255,255,255,0.4); margin-top: 2px; text-transform: uppercase; }
+  .step.done .num { background: rgba(118,193,156,0.20); color: #6FCBA1; }
+  .step.done .t { color: rgba(255,255,255,0.5); text-decoration: line-through; }
+  .step.active {
+    background: rgba(209,248,67,0.08);
+    border: 1px solid rgba(209,248,67,0.20);
+    padding: 11px 11px;
+  }
+  .step.active .num { background: var(--akgolf-accent); color: #0A1F18; }
+  .step.active .t { color: #fff; }
+
+  /* Main content */
+  .onb-content {
+    padding: 56px 64px;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+    align-items: center;
+  }
+  .onb-card {
+    width: 100%;
+    max-width: 720px;
+  }
+  .step-eyebrow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+  }
+  .step-title {
+    margin: 10px 0 14px;
+    font-size: 36px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .step-lede {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
+    margin: 0 0 32px;
+    max-width: 56ch;
+  }
+
+  /* Form layouts */
+  .lvl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .lvl-card {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1.5px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lvl-card:hover { border-color: rgba(255,255,255,0.20); }
+  .lvl-card.selected { border-color: var(--akgolf-accent); background: rgba(209,248,67,0.06); }
+  .lvl-card .ico {
+    width: 36px; height: 36px;
+    background: rgba(209,248,67,0.15);
+    color: var(--akgolf-accent);
+    border-radius: 9px;
+    display: grid; place-items: center;
+    margin-bottom: 12px;
+  }
+  .lvl-card .t { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .lvl-card .d { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.4; }
+  .lvl-card.selected .ico { background: var(--akgolf-accent); color: #0A1F18; }
+
+  .field {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--akgolf-line-dark);
+    color: #fff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+  }
+  .field:focus { outline: 1px solid var(--akgolf-accent); border-color: var(--akgolf-accent); }
+  .field-label { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+
+  /* Bottom action bar */
+  .onb-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: #0A1F18;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 64px;
+  }
+  .bottom-meta { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Step 2 chips */
+  .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip-pick {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip-pick.selected { background: rgba(209,248,67,0.14); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); font-weight: 600; }
+  .chip-pick [data-lucide] { width: 13px; height: 13px; }
+
+  /* Step 3 toggle list */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+  .toggle-row .info {
+    display:flex; align-items:center; gap: 14px;
+  }
+  .toggle-row .ico {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7);
+    display: grid; place-items: center;
+  }
+  .toggle-row .t { color: #fff; font-weight: 600; font-size: 14px; }
+  .toggle-row .s { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 2px; }
+  .switch {
+    position: relative; width: 38px; height: 22px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 999px; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .switch::after {
+    content:''; position:absolute; top:2px; left:2px;
+    width: 18px; height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: left 0.2s;
+  }
+  .switch.on { background: var(--akgolf-accent); }
+  .switch.on::after { left: 18px; background: #0A1F18; }
+
+  /* Step 4 - hours slider */
+  .hours-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .hours-display {
+    display: flex; align-items: baseline; gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 56px; font-weight: 800;
+    color: var(--akgolf-accent);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .hours-display small { font-size: 16px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .ticks { display: flex; justify-content: space-between; margin-top: 24px; }
+  .tick {
+    flex: 1; padding: 10px;
+    text-align: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    margin: 0 3px;
+    cursor: pointer;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; color: rgba(255,255,255,0.6);
+  }
+  .tick.active { background: rgba(209,248,67,0.10); color: var(--akgolf-accent); border-color: rgba(209,248,67,0.30); font-weight: 700; }
+
+  .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 22px; }
+  .day-pick { padding: 10px; text-align: center; border-radius: 8px; background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.7); cursor: pointer; font-family:'JetBrains Mono',monospace; font-size: 11px; }
+  .day-pick.selected { background: var(--akgolf-accent); color: #0A1F18; font-weight: 800; }
+
+  /* Step 5 connect cards */
+  .conn-row {
+    display: flex; align-items: center;
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 16px 20px;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .conn-row .ico { width: 40px; height: 40px; border-radius: 10px; display:grid; place-items:center; flex-shrink: 0; }
+  .conn-row .ico.gb { background: #23304D; color: #7FA3FF; }
+  .conn-row .ico.tm { background: #3D2820; color: #F49283; }
+  .conn-row .ico.gar { background: #1F3A2C; color: #6FCBA1; }
+  .conn-row .ico.ap { background: #2C2C2E; color: #fff; }
+  .conn-row .body { flex: 1; }
+  .conn-row .t { color: #fff; font-weight: 700; font-size: 14px; }
+  .conn-row .s { color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 2px; }
+
+  @media (max-width: 900px) {
+    .onb-main { grid-template-columns: 1fr; }
+    .onb-side { display: none; }
+    .onb-content { padding: 28px 20px; }
+    .onb-bottom { padding: 0 20px; }
+    .step-title { font-size: 26px; }
+    .lvl-grid { grid-template-columns: 1fr; }
+    .pair { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="onb-shell">
+  <header class="onb-top">
+    <div class="onb-logo">
+      <div class="l-mark">AK</div>
+      <div class="l-name">AK Golf · Velkommen</div>
+    </div>
+    <a class="skip-link" href="#">Hopp over og fyll inn senere →</a>
+  </header>
+
+  <div class="onb-main">
+    <aside class="onb-side">
+      <div class="onb-progress-head">
+        <div class="ring">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.10)" stroke-width="6" fill="none"/>
+            <circle cx="32" cy="32" r="26" stroke="#D1F843" stroke-width="6" fill="none"
+                    stroke-dasharray="163" stroke-dashoffset="98" stroke-linecap="round"/>
+          </svg>
+          <div class="lb">2/5</div>
+        </div>
+        <div>
+          <div class="l">Profil-oppsett</div>
+          <div class="h">Steg 2 av 5</div>
+        </div>
+      </div>
+
+      <div class="step done">
+        <div class="num"><i data-lucide="check" style="width:13px;height:13px;"></i></div>
+        <div><div class="t">Nivå + HCP</div><div class="s">Fullført</div></div>
+      </div>
+      <div class="step active">
+        <div class="num">2</div>
+        <div><div class="t">Mål</div><div class="s">Nå</div></div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><div class="t">Utstyr</div><div class="s">Køller, måleinstr.</div></div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div><div class="t">Tid per uke</div><div class="s">Volum + dager</div></div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div><div class="t">Integrasjoner</div><div class="s">TrackMan, Garmin…</div></div>
+      </div>
+
+      <div style="margin-top:auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em;">
+        EST. 3 MIN IGJEN
+      </div>
+    </aside>
+
+    <main class="onb-content">
+      <div class="onb-card">
+        <div class="step-eyebrow">Steg 2 av 5 · Mål</div>
+        <h1 class="step-title">Hva vil du oppnå?</h1>
+        <p class="step-lede">Vi bruker dette til å bygge planen din og kalibrere AI-coach. Du kan endre når som helst.</p>
+
+        <!-- HCP target -->
+        <div style="margin-bottom: 24px;">
+          <div class="field-label">HCP-mål</div>
+          <div class="pair">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 6px;">FRA</div>
+              <input class="field" value="7.4" disabled style="opacity:0.7;">
+            </div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: var(--akgolf-accent); margin-bottom: 6px;">TIL</div>
+              <input class="field" value="5.0" style="border-color: var(--akgolf-accent); background: rgba(209,248,67,0.05);">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tidsperspektiv -->
+        <div style="margin-bottom: 24px;">
+          <div class="field-label">Tidsperspektiv</div>
+          <div class="chip-grid">
+            <button class="chip-pick">3 mnd</button>
+            <button class="chip-pick">6 mnd</button>
+            <button class="chip-pick selected">12 mnd</button>
+            <button class="chip-pick">2 år</button>
+            <button class="chip-pick">Ingen frist</button>
+          </div>
+        </div>
+
+        <!-- Fokusområder -->
+        <div style="margin-bottom: 28px;">
+          <div class="field-label">Fokusområder · velg 1–3</div>
+          <div class="chip-grid">
+            <button class="chip-pick selected"><i data-lucide="circle-dot"></i> Putting</button>
+            <button class="chip-pick selected"><i data-lucide="target"></i> Iron 100–150m</button>
+            <button class="chip-pick"><i data-lucide="zap"></i> Driver / lengde</button>
+            <button class="chip-pick selected"><i data-lucide="flag-triangle-right"></i> Short game</button>
+            <button class="chip-pick"><i data-lucide="brain"></i> Mental / pre-shot</button>
+            <button class="chip-pick"><i data-lucide="trending-up"></i> Score / SG</button>
+            <button class="chip-pick"><i data-lucide="dumbbell"></i> Fysisk / mobilitet</button>
+          </div>
+        </div>
+
+        <!-- Type spiller -->
+        <div>
+          <div class="field-label">Hva beskriver deg best?</div>
+          <div class="lvl-grid" style="margin-top: 10px;">
+            <div class="lvl-card selected">
+              <div class="ico"><i data-lucide="trophy"></i></div>
+              <div class="t">Performance</div>
+              <div class="d">Konkurransespiller — vil ned i HCP, klubbmesterskap, turneringer.</div>
+            </div>
+            <div class="lvl-card">
+              <div class="ico"><i data-lucide="leaf"></i></div>
+              <div class="t">Fritids­spiller</div>
+              <div class="d">Jeg spiller for moro skyld og vil bli litt bedre, ikke nødvendigvis konkurrere.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <footer class="onb-bottom">
+    <button class="phq-btn"><i data-lucide="chevron-left"></i> Tilbake</button>
+    <div class="bottom-meta">STEG 2 / 5 · TRYKK ENTER FOR NESTE</div>
+    <button class="phq-btn primary lg">Neste <i data-lucide="chevron-right"></i></button>
+  </footer>
+</div>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.chip-pick').forEach(c=>{
+  c.addEventListener('click', ()=> c.classList.toggle('selected'));
+});
+document.querySelectorAll('.lvl-card').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.lvl-card').forEach(x=>x.classList.remove('selected'));
+    c.classList.add('selected');
+  });
+});
+</script>
+</body>
+</html>

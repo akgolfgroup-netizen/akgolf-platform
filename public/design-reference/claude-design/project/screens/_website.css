@@ -1,0 +1,376 @@
+/* ============================================================
+   AK Golf · Public Website Shell — LIGHT mode
+   Markedsside: cream surface, white cards, lime accent
+   ============================================================ */
+@import url("../tokens.css");
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--akgolf-surface);
+  color: var(--akgolf-text);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv02","cv03","cv04","cv11","ss01";
+}
+
+.web-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.web-italic { font-family: 'Fraunces', 'Georgia', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+
+/* ──────── NAV (transparent → solid on scroll) ──────── */
+.web-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 18px 40px;
+  display: flex; align-items: center; gap: 36px;
+  background: transparent;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+.web-nav.solid {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(10,31,24,0.06);
+  padding: 12px 40px;
+}
+.web-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family:'Inter',sans-serif;
+  font-weight: 800; font-size: 18px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.web-nav.solid .web-logo { color: var(--akgolf-ink); }
+.web-logo .mark {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--akgolf-accent);
+  color: #0A1F18;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 13px;
+  letter-spacing: -0.04em;
+}
+.web-nav-links {
+  display: flex; align-items: center; gap: 28px;
+  margin-left: auto;
+}
+.web-nav-links a {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px; font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: color 0.2s;
+}
+.web-nav.solid .web-nav-links a { color: var(--akgolf-text); }
+.web-nav-links a:hover { color: #fff; }
+.web-nav.solid .web-nav-links a:hover { color: var(--akgolf-ink); }
+.web-nav-links a.active { color: #fff; font-weight: 600; }
+.web-nav.solid .web-nav-links a.active { color: var(--akgolf-ink); font-weight: 700; }
+
+.web-nav-cta {
+  background: var(--akgolf-accent);
+  color: #0A1F18;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: -0.005em;
+  transition: transform 0.15s ease, box-shadow 0.2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.web-nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(209,248,67,0.35); }
+.web-nav-login {
+  color: rgba(255,255,255,0.85);
+  font-size: 13px; font-weight: 500;
+}
+.web-nav.solid .web-nav-login { color: var(--akgolf-text); }
+
+/* ──────── PAGE WRAPPERS ──────── */
+.web-section { padding: 96px 0; }
+.web-section.tight { padding: 64px 0; }
+.web-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.web-container.narrow { max-width: 960px; }
+
+.web-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--akgolf-primary);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.web-h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.0;
+  color: var(--akgolf-ink);
+  margin: 0 0 22px;
+  text-wrap: balance;
+}
+.web-h1.on-photo { color: #fff; text-shadow: 0 2px 30px rgba(0,0,0,0.4); }
+.web-h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(36px, 4.4vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.030em;
+  line-height: 1.05;
+  color: var(--akgolf-ink);
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.web-h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px; font-weight: 700;
+  letter-spacing: -0.020em;
+  color: var(--akgolf-ink);
+  margin: 0 0 8px;
+}
+.web-lede {
+  font-size: 19px; line-height: 1.55;
+  color: var(--akgolf-text);
+  font-weight: 400;
+  margin: 0 0 30px;
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+.web-lede.on-photo { color: rgba(255,255,255,0.92); text-shadow: 0 2px 14px rgba(0,0,0,0.35); }
+
+/* ──────── BUTTONS ──────── */
+.web-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+.web-btn.primary {
+  background: var(--akgolf-accent);
+  color: #0A1F18;
+}
+.web-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(209,248,67,0.35); }
+.web-btn.dark {
+  background: var(--akgolf-ink);
+  color: #fff;
+}
+.web-btn.dark:hover { transform: translateY(-1px); background: #112e22; }
+.web-btn.ghost {
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border-color: rgba(255,255,255,0.30);
+  backdrop-filter: blur(8px);
+}
+.web-btn.ghost:hover { background: rgba(255,255,255,0.18); }
+.web-btn.line {
+  background: transparent;
+  color: var(--akgolf-ink);
+  border-color: rgba(10,31,24,0.20);
+}
+.web-btn.line:hover { background: var(--akgolf-ink); color: #fff; }
+.web-btn.lg { padding: 18px 32px; font-size: 15px; }
+.web-btn [data-lucide] { width: 16px; height: 16px; stroke-width: 2.4; }
+
+/* ──────── CARDS ──────── */
+.web-card {
+  background: #fff;
+  border: 1px solid var(--akgolf-line-light);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 1px 2px rgba(10,31,24,0.03), 0 8px 24px rgba(10,31,24,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.web-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 2px rgba(10,31,24,0.05), 0 18px 48px rgba(10,31,24,0.10);
+}
+.web-card.feature {
+  border-color: rgba(0,88,64,0.15);
+  border-width: 1.5px;
+}
+
+/* Glass panel (over photo) */
+.web-glass {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 20px;
+  padding: 24px;
+  color: #fff;
+}
+
+/* Pill */
+.web-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0,88,64,0.10);
+  color: var(--akgolf-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+  font-weight: 700;
+}
+.web-pill.lime { background: var(--akgolf-accent); color: #0A1F18; }
+.web-pill.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* ──────── FOOTER ──────── */
+.web-footer {
+  background: var(--akgolf-ink);
+  color: rgba(255,255,255,0.65);
+  padding: 80px 0 40px;
+}
+.web-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.web-footer h4 {
+  color: #fff;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin: 0 0 18px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.web-footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.web-footer ul a {
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  transition: color 0.15s;
+}
+.web-footer ul a:hover { color: var(--akgolf-accent); }
+.web-footer-brand .desc {
+  color: rgba(255,255,255,0.55);
+  font-size: 14px; line-height: 1.6;
+  max-width: 32ch;
+  margin-top: 14px;
+}
+.web-footer-bottom {
+  padding-top: 30px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.web-footer-bottom .socials { display: flex; gap: 12px; }
+.web-footer-bottom .socials a {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: grid; place-items: center;
+  color: rgba(255,255,255,0.7);
+  transition: all 0.15s;
+}
+.web-footer-bottom .socials a:hover { background: var(--akgolf-accent); color: #0A1F18; }
+.web-footer-bottom .socials [data-lucide] { width: 14px; height: 14px; }
+
+/* ──────── PHOTO PLACEHOLDER ──────── */
+/* Semantic photo block — Anders bytter ut <div class="web-photo"> med <img>
+   senere. Klassen styrer aspect ratio + placeholder-stil + label-overlay. */
+.web-photo {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(135deg, #0A1F18 0%, #005840 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  isolation: isolate;
+}
+.web-photo::before {
+  /* Subtle texture so placeholder doesn't read as flat */
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(209,248,67,0.10), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 60%),
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(255,255,255,0.02) 12px 24px);
+  z-index: 0;
+}
+.web-photo[data-ratio="16-9"] { aspect-ratio: 16 / 9; }
+.web-photo[data-ratio="4-3"]  { aspect-ratio: 4 / 3; }
+.web-photo[data-ratio="3-2"]  { aspect-ratio: 3 / 2; }
+.web-photo[data-ratio="1-1"]  { aspect-ratio: 1 / 1; }
+.web-photo[data-ratio="3-4"]  { aspect-ratio: 3 / 4; }
+.web-photo[data-ratio="2-3"]  { aspect-ratio: 2 / 3; }
+.web-photo[data-ratio="21-9"] { aspect-ratio: 21 / 9; }
+
+.web-photo > .web-photo-label {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 24px;
+  text-align: center;
+  max-width: 80%;
+}
+.web-photo > .web-photo-label .ico {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.20);
+  display: grid; place-items: center;
+  color: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+}
+.web-photo > .web-photo-label .ico [data-lucide] { width: 26px; height: 26px; stroke-width: 1.6; }
+.web-photo > .web-photo-label .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(209,248,67,0.95);
+  font-weight: 700;
+}
+.web-photo > .web-photo-label .desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+.web-photo > .web-photo-label .ratio {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.45);
+  margin-top: 4px;
+}
+
+/* Variants for tonal range across page */
+.web-photo.warm   { background: linear-gradient(135deg, #2a1a10 0%, #5a3a20 100%); }
+.web-photo.lime   { background: linear-gradient(135deg, #1a2a08 0%, #3d5a15 100%); }
+.web-photo.cream  { background: linear-gradient(135deg, #d8d0bc 0%, #f5efde 100%); }
+.web-photo.cream > .web-photo-label .desc { color: rgba(10,31,24,0.75); }
+.web-photo.cream > .web-photo-label .ico  { background: rgba(10,31,24,0.08); border-color: rgba(10,31,24,0.15); color: var(--akgolf-ink); }
+.web-photo.cream > .web-photo-label .tag  { color: var(--akgolf-primary); }
+.web-photo.cream > .web-photo-label .ratio { color: rgba(10,31,24,0.40); }
+
+/* Fade-in motion */
+@keyframes web-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.web-rise { animation: web-rise 0.9s var(--ak-ease, cubic-bezier(0.4,0,0.2,1)) both; }
+.web-rise.d1 { animation-delay: 0.10s; }
+.web-rise.d2 { animation-delay: 0.20s; }
+.web-rise.d3 { animation-delay: 0.30s; }
+.web-rise.d4 { animation-delay: 0.40s; }
+
+@media (max-width: 900px) {
+  .web-nav { padding: 14px 20px; }
+  .web-nav-links { display: none; }
+  .web-section { padding: 64px 0; }
+  .web-container { padding: 0 20px; }
+  .web-footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}

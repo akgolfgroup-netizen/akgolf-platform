@@ -5,11 +5,11 @@ import { createServerSupabase } from "@/lib/supabase/server";
 export const metadata: Metadata = {
   title: "Dashboard | PlayersHQ",
   description:
-    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
   openGraph: {
     title: "Dashboard | PlayersHQ",
     description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
     type: "website",
     locale: "nb_NO",
   },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dashboard | PlayersHQ",
     description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
   },
 };
 import {
@@ -37,9 +37,20 @@ import {
   getTestProgress,
 } from "./dashboard-actions";
 import { DashboardClientV3 } from "./dashboard-client-v3";
+import { DashboardBentoClient } from "./dashboard-bento-client";
+import { cookies } from "next/headers";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ dashboard?: string }>;
+}) {
   const user = await requirePortalUser();
+  const sp = (await searchParams) ?? {};
+  const cookieStore = await cookies();
+  const wantsLegacy =
+    sp.dashboard === "v3" || cookieStore.get("dashboard")?.value === "v3";
+  const wantsBento = !wantsLegacy;
 
   // Check if onboarding is completed
   const supabase = await createServerSupabase();
@@ -88,8 +99,10 @@ export default async function DashboardPage() {
     ? new Date(userData.createdAt as string).getFullYear().toString()
     : null;
 
+  const Client = wantsBento ? DashboardBentoClient : DashboardClientV3;
+
   return (
-    <DashboardClientV3
+    <Client
       userName={user.name}
       tier={user.subscriptionTier}
       memberSince={memberSince}

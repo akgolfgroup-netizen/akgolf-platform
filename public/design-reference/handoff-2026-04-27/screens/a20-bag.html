@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A20 — Min bag · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero */
+  .bag-hero {
+    background:
+      radial-gradient(circle at 80% 30%, rgba(209,248,67,0.08), transparent 60%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.08);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .bag-hero .lab { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-accent); font-weight: 700; margin-bottom: 8px; }
+  .bag-hero h2 { margin: 0; font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.025em; }
+  .bag-hero h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .bag-hero .lede { margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 50ch; }
+  .bag-hero .actions { margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .bag-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .bs {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .bs .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .bs .v { font-size: 22px; font-weight: 800; color:#fff; letter-spacing: -0.02em; line-height: 1; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .bs .v small { font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 3px; font-weight: 500; }
+  .bs .delta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6FCBA1; margin-top: 4px; font-weight: 700; }
+
+  /* Section header */
+  .sec-h { display: flex; justify-content: space-between; align-items: end; margin: 28px 0 14px; }
+  .sec-h h3 { margin: 0; font-size: 18px; color:#fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  /* Gapping chart */
+  .gap-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .gap-h { display: flex; justify-content: space-between; align-items: end; margin-bottom: 18px; }
+  .gap-h h4 { margin: 0; font-size: 16px; color: #fff; font-weight: 700; letter-spacing: -0.01em; }
+  .gap-h .legend { font-size: 11px; color: rgba(255,255,255,0.55); }
+  .gap-h .legend span { margin-left: 14px; }
+  .gap-h .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+  .gap-rows { display: flex; flex-direction: column; gap: 8px; }
+  .gap-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px 60px;
+    align-items: center;
+    gap: 16px;
+  }
+  .gap-row .name {
+    color: #fff; font-weight: 600; font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .gap-row .name .ic {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .gap-row .bar-track {
+    position: relative;
+    height: 22px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+  }
+  .gap-row .bar-min, .gap-row .bar-max {
+    position: absolute;
+    height: 100%;
+  }
+  .gap-row .bar-fill {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(209,248,67,0.30), rgba(209,248,67,0.50), rgba(209,248,67,0.30));
+    border-radius: 4px;
+    border: 1px solid rgba(209,248,67,0.50);
+  }
+  .gap-row .bar-mid {
+    position: absolute; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 6px rgba(209,248,67,0.60);
+  }
+  .gap-row .carry {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+    color: #fff; font-weight: 700; font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  .gap-row .carry small { font-size: 11px; color: rgba(255,255,255,0.5); margin-left: 2px; font-weight: 500; }
+  .gap-row .gap {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    text-align: right;
+  }
+  .gap-row .gap.warn { color: #E8B967; }
+  .gap-row .gap.bad { color: #F49283; }
+
+  .gap-axis {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px 60px;
+    gap: 16px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+  }
+  .gap-axis .ax { display: flex; justify-content: space-between; }
+
+  /* Equipment grid */
+  .equip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .equip-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 16px;
+    align-items: center;
+  }
+  .equip-card .ic {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: rgba(209,248,67,0.10);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+  }
+  .equip-card .ic [data-lucide] { width: 26px; height: 26px; }
+  .equip-card .body .cat { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .equip-card .body .name { font-size: 14px; color: #fff; font-weight: 700; letter-spacing: -0.005em; }
+  .equip-card .body .meta { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+  .equip-card .body .meta strong { color: #fff; font-weight: 600; }
+  .equip-card .age {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    padding: 4px 8px; border-radius: 5px;
+    text-align: center;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .equip-card .age.fresh { background: rgba(42,125,90,0.20); color: #6FCBA1; }
+  .equip-card .age.due { background: rgba(196,138,50,0.22); color: #E8B967; }
+  .equip-card .age.old { background: rgba(232,93,78,0.22); color: #F49283; }
+
+  /* Recommendations card */
+  .rec-card {
+    background: linear-gradient(160deg, rgba(175,82,222,0.06), rgba(13,46,35,0.0)), var(--akgolf-card-dark);
+    border: 1px solid rgba(175,82,222,0.20);
+    border-radius: 16px;
+    padding: 22px 26px;
+    margin-top: 24px;
+  }
+  .rec-card .h {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #C99CF3; font-weight: 700;
+  }
+  .rec-card .h [data-lucide] { width: 14px; height: 14px; }
+  .rec-card h4 { margin: 0 0 8px; font-size: 17px; color: #fff; font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; }
+  .rec-card h4 em { font-style: normal; color: var(--akgolf-accent); }
+  .rec-card p { margin: 0 0 14px; font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.55; max-width: 70ch; }
+  .rec-bullets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .rec-b {
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .rec-b .l {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #C99CF3; font-weight: 700;
+  }
+  .rec-b .v { font-size: 13px; color: #fff; font-weight: 600; margin-top: 4px; }
+  .rec-b .meta { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  @media (max-width: 1100px) {
+    .bag-hero { grid-template-columns: 1fr; }
+    .equip-grid { grid-template-columns: 1fr; }
+    .rec-bullets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="briefcase"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Utstyr</div>
+    <div class="phq-nav-item active"><i data-lucide="briefcase"></i> Min bag</div>
+    <div class="phq-nav-item"><i data-lucide="ruler"></i> Gapping</div>
+    <div class="phq-nav-item"><i data-lucide="shopping-bag"></i> Ønskeliste</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Min bag<span class="date">14 KLUBBER · BALL TP5x · OPPDATERT 26. APR</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk klubb, modell…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ UTSTYR · BAG</div>
+      <h1 class="phq-h1">14 klubber. Klar for sesongen.</h1>
+      <p class="lede">Carry-distansene oppdateres fra Trackman-økter. To gapping-flagg: 8 m mellom 4-jern og 5-hybrid (for stort), og under 5 m mellom GW og SW (for lite). Erik foreslår tilpasning før Holtsmark.</p>
+    </div>
+
+    <!-- Hero -->
+    <section class="bag-hero">
+      <div>
+        <div class="lab">Bag-status</div>
+        <h2>Sterk WITB <em>med 2 gap-flagg.</em></h2>
+        <p class="lede">Driver er det lengste klubben din vs peer (+17 yds). Hybridrekken trenger sjekk før neste turnering — 8 m gap mellom 4-jern og 5-hybrid betyr at du står i ingenmannsland på 175 m-shots.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="plus"></i>Logg ny klubb</button>
+          <button class="phq-btn"><i data-lucide="ruler"></i>Trackman-test</button>
+          <button class="phq-btn ghost"><i data-lucide="message-circle"></i>Spør Erik om gap</button>
+        </div>
+      </div>
+      <div class="bag-stats">
+        <div class="bs"><div class="l">Klubber i bag</div><div class="v">14<small> / 14</small></div><div class="delta">Lovlig oppsett</div></div>
+        <div class="bs"><div class="l">Driver carry</div><div class="v">258 <small>m</small></div><div class="delta">82. percentil</div></div>
+        <div class="bs"><div class="l">Snitt-gap jern</div><div class="v">11.4 <small>m</small></div><div class="delta">Innenfor 10–15</div></div>
+        <div class="bs"><div class="l">Gap-flagg</div><div class="v" style="color:#E8B967;">2</div><div class="delta" style="color:#E8B967;">Sjekk hybrider</div></div>
+      </div>
+    </section>
+
+    <!-- Gapping -->
+    <section class="gap-card">
+      <div class="gap-h">
+        <h4>Gapping-chart · carry-distanse</h4>
+        <div class="legend">
+          <span><span class="dot" style="background:rgba(209,248,67,0.40);"></span>Spread (10 swings)</span>
+          <span><span class="dot" style="background:var(--akgolf-accent);"></span>Median</span>
+        </div>
+      </div>
+      <div class="gap-rows">
+        <div class="gap-row">
+          <div class="name"><span class="ic">D</span>Driver</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 76%; right: 8%;"></div>
+            <div class="bar-mid" style="left: 88%;"></div>
+          </div>
+          <div class="carry">258 <small>m</small></div>
+          <div class="gap">—</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">3W</span>3-wood</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 65%; right: 19%;"></div>
+            <div class="bar-mid" style="left: 76%;"></div>
+          </div>
+          <div class="carry">232 <small>m</small></div>
+          <div class="gap">−26 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">5W</span>5-wood</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 56%; right: 28%;"></div>
+            <div class="bar-mid" style="left: 67%;"></div>
+          </div>
+          <div class="carry">214 <small>m</small></div>
+          <div class="gap">−18 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">4i</span>4-jern</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 50%; right: 35%;"></div>
+            <div class="bar-mid" style="left: 60%;"></div>
+          </div>
+          <div class="carry">192 <small>m</small></div>
+          <div class="gap warn">−22 m ⚠</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">5H</span>5-hybrid</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 47%; right: 39%;"></div>
+            <div class="bar-mid" style="left: 56%;"></div>
+          </div>
+          <div class="carry">184 <small>m</small></div>
+          <div class="gap warn">−8 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">6i</span>6-jern</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 41%; right: 45%;"></div>
+            <div class="bar-mid" style="left: 50%;"></div>
+          </div>
+          <div class="carry">172 <small>m</small></div>
+          <div class="gap">−12 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">7i</span>7-jern</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 37%; right: 50%;"></div>
+            <div class="bar-mid" style="left: 45%;"></div>
+          </div>
+          <div class="carry">160 <small>m</small></div>
+          <div class="gap">−12 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">8i</span>8-jern</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 32%; right: 55%;"></div>
+            <div class="bar-mid" style="left: 40%;"></div>
+          </div>
+          <div class="carry">147 <small>m</small></div>
+          <div class="gap">−13 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">9i</span>9-jern</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 26%; right: 60%;"></div>
+            <div class="bar-mid" style="left: 35%;"></div>
+          </div>
+          <div class="carry">133 <small>m</small></div>
+          <div class="gap">−14 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">PW</span>PW · 46°</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 22%; right: 65%;"></div>
+            <div class="bar-mid" style="left: 30%;"></div>
+          </div>
+          <div class="carry">120 <small>m</small></div>
+          <div class="gap">−13 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">GW</span>GW · 50°</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 18%; right: 70%;"></div>
+            <div class="bar-mid" style="left: 26%;"></div>
+          </div>
+          <div class="carry">106 <small>m</small></div>
+          <div class="gap">−14 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">SW</span>SW · 54°</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 15%; right: 73%;"></div>
+            <div class="bar-mid" style="left: 23%;"></div>
+          </div>
+          <div class="carry">94 <small>m</small></div>
+          <div class="gap warn">−12 m</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">LW</span>LW · 60°</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="left: 9%; right: 79%;"></div>
+            <div class="bar-mid" style="left: 16%;"></div>
+          </div>
+          <div class="carry">76 <small>m</small></div>
+          <div class="gap bad">−18 m ⚠</div>
+        </div>
+        <div class="gap-row">
+          <div class="name"><span class="ic">P</span>Putter</div>
+          <div class="bar-track">
+            <div style="position: absolute; left: 0; top: 50%; height: 1px; width: 100%; background: rgba(255,255,255,0.08); border-top: 1px dashed rgba(255,255,255,0.15);"></div>
+          </div>
+          <div class="carry">—</div>
+          <div class="gap">Spider Tour</div>
+        </div>
+      </div>
+      <div class="gap-axis">
+        <div></div>
+        <div class="ax">
+          <span>0 m</span><span>50</span><span>100</span><span>150</span><span>200</span><span>260</span>
+        </div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+
+    <!-- Equipment -->
+    <div class="sec-h">
+      <h3>Bag-utstyr</h3>
+      <div class="sub">SPILLEUTSTYR · BALL · GLOVE · TILBEHØR</div>
+    </div>
+    <div class="equip-grid">
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="rocket"></i></div>
+        <div class="body">
+          <div class="cat">Driver</div>
+          <div class="name">TaylorMade Qi10 Max · 9.0°</div>
+          <div class="meta">Ventus Blue 6 X · <strong>Tilpasset feb 2024</strong></div>
+        </div>
+        <span class="age fresh">FRESH</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="zap"></i></div>
+        <div class="body">
+          <div class="cat">Wood</div>
+          <div class="name">TaylorMade Qi10 · 3W 15°</div>
+          <div class="meta">Diamana TB 7 X · stiff</div>
+        </div>
+        <span class="age fresh">FRESH</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="layers"></i></div>
+        <div class="body">
+          <div class="cat">Jernsett</div>
+          <div class="name">Mizuno Pro 245 · 4–PW</div>
+          <div class="meta">Project X 6.0 · <strong>Standard lengde</strong></div>
+        </div>
+        <span class="age due">2 ÅR</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="triangle"></i></div>
+        <div class="body">
+          <div class="cat">Wedger</div>
+          <div class="name">Vokey SM10 · 50/54/60</div>
+          <div class="meta">DG S200 · <strong>Bør groove-checkes</strong></div>
+        </div>
+        <span class="age due">SLITT</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="circle-dot"></i></div>
+        <div class="body">
+          <div class="cat">Putter</div>
+          <div class="name">TaylorMade Spider Tour · 34"</div>
+          <div class="meta">Pistol-grep · <strong>Quintic-tilpasset 2023</strong></div>
+        </div>
+        <span class="age fresh">OK</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="circle"></i></div>
+        <div class="body">
+          <div class="cat">Spilleball</div>
+          <div class="name">TaylorMade TP5x · gult merke</div>
+          <div class="meta">3 dusin gjenværende · <strong>2024-modell</strong></div>
+        </div>
+        <span class="age fresh">FRESH</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="hand"></i></div>
+        <div class="body">
+          <div class="cat">Hanske</div>
+          <div class="name">FootJoy Pure Touch Limited</div>
+          <div class="meta">M · <strong>2 nye i bag · 1 i bruk</strong></div>
+        </div>
+        <span class="age fresh">FRESH</span>
+      </div>
+      <div class="equip-card">
+        <div class="ic"><i data-lucide="footprints"></i></div>
+        <div class="body">
+          <div class="cat">Sko</div>
+          <div class="name">FootJoy Pro/SLX · 43</div>
+          <div class="meta">Hvit / sort · <strong>Kjøpt mars 2024</strong></div>
+        </div>
+        <span class="age fresh">FRESH</span>
+      </div>
+    </div>
+
+    <!-- Recommendation -->
+    <section class="rec-card">
+      <div class="h"><i data-lucide="sparkles"></i>AI-anbefaling · gapping &amp; utstyr</div>
+      <h4>Lukk hybrid-gapet før <em>NM Amatør 14. juli.</em></h4>
+      <p>3 enkle tiltak vil gi deg jevn dekning fra 130–200 m. Vi har sett på din carry-spread og hva 142 spillere i din peer-gruppe gjør — du står ut på akkurat hybrid-rekken.</p>
+      <div class="rec-bullets">
+        <div class="rec-b">
+          <div class="l">Tiltak 1</div>
+          <div class="v">Bytt 4-jern til 4-hybrid</div>
+          <div class="meta">Lukker −22 m gapet · 4 av 10 i peer har dette</div>
+        </div>
+        <div class="rec-b">
+          <div class="l">Tiltak 2</div>
+          <div class="v">Re-loft GW: 50° → 52°</div>
+          <div class="meta">Slutter ned PW–GW · enkelt på verksted</div>
+        </div>
+        <div class="rec-b">
+          <div class="l">Tiltak 3</div>
+          <div class="v">Groove-check wedger</div>
+          <div class="meta">Vokey-er er 18 mnd · spin tap synlig på Trackman</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

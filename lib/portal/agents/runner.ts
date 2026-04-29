@@ -17,6 +17,7 @@ import { generateNextSessionDraft } from "@/lib/portal/ai/next-session-orchestra
 import { generateCoachingSummary } from "@/lib/portal/ai/coaching-summary";
 import { transcribeAudio } from "@/lib/portal/ai/transcribe-audio";
 import { createServiceClient } from "@/lib/supabase/server";
+import { logAgentRun } from "./log";
 
 const AGENT_AUDIO = "post-session-transcriber";
 const AGENT_NEXT_SESSION = "next-session-planner";
@@ -38,22 +39,15 @@ async function logRun(params: {
   output?: string;
   error?: string;
 }) {
-  try {
-    await prisma.agentLog.create({
-      data: {
-        id: nanoid(),
-        agentType: params.agentType,
-        model: params.model,
-        status: params.status,
-        duration: params.duration,
-        input: params.input,
-        output: params.output,
-        error: params.error,
-      },
-    });
-  } catch (err) {
-    logger.error("[agent-runner] log failed", err);
-  }
+  await logAgentRun({
+    name: params.agentType,
+    model: params.model,
+    status: params.status,
+    duration: params.duration,
+    input: params.input,
+    output: params.output,
+    error: params.error,
+  });
 }
 
 /**

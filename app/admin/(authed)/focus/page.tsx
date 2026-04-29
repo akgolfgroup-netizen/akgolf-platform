@@ -1,11 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getTasks, getDivisionStats, getTodayBookingsByDivision } from "./actions";
-import { FocusClient } from "./focus-client";
+import { getTasks } from "./actions";
+import { FocusDarkClient } from "./focus-dark-client";
 
 export const metadata = {
-  title: "Focus | AK Golf CoachHQ",
+  title: "Dagens fokus | AK Golf CoachHQ",
 };
 
 export default async function FocusPage() {
@@ -15,17 +15,7 @@ export default async function FocusPage() {
     redirect("/portal");
   }
 
-  const [tasks, stats, todayBookings] = await Promise.all([
-    getTasks(),
-    getDivisionStats(),
-    getTodayBookingsByDivision(),
-  ]);
+  const tasks = await getTasks();
 
-  return (
-    <FocusClient
-      initialTasks={tasks}
-      initialStats={stats}
-      todayBookings={todayBookings}
-    />
-  );
+  return <FocusDarkClient user={user} initialTasks={tasks} />;
 }

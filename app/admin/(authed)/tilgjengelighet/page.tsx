@@ -16,7 +16,20 @@ import { Card, Button, Tabs, Badge } from "@/components/ui";
 import type { TabItem } from "@/components/ui";
 import { format, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, NightSurface, GlassPanel } from "@/components/portal/patterns";
+
+function KpiTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-line bg-card px-4 py-3.5 shadow-card">
+      <div className="font-mono text-[9px] uppercase tracking-[0.10em] text-ink-subtle">
+        {label}
+      </div>
+      <div className="mt-1.5 font-mono text-[22px] font-bold leading-none text-ink">
+        {value}
+      </div>
+    </div>
+  );
+}
 import {
   getAvailability,
   upsertAvailability,
@@ -26,6 +39,7 @@ import {
   syncGoogleCalendar,
   getInstructors,
 } from "./actions";
+import { ClosedPeriodDialog } from "@/components/admin/tilgjengelighet/closed-period-dialog";
 
 interface Instructor {
   id: string;
@@ -93,6 +107,7 @@ export default function TilgjengelighetPage() {
     Record<number, Array<{ start: string; end: string }>>
   >({});
   const [showAddException, setShowAddException] = useState(false);
+  const [showClosedPeriod, setShowClosedPeriod] = useState(false);
   const [exceptionForm, setExceptionForm] = useState({
     date: "",
     startTime: "09:00",
@@ -124,8 +139,14 @@ export default function TilgjengelighetPage() {
       setBlockedTimes(
         blockedData.map((bt) => ({
           ...bt,
-          startTime: bt.startTime.toISOString(),
-          endTime: bt.endTime.toISOString(),
+          startTime:
+            bt.startTime instanceof Date
+              ? bt.startTime.toISOString()
+              : String(bt.startTime),
+          endTime:
+            bt.endTime instanceof Date
+              ? bt.endTime.toISOString()
+              : String(bt.endTime),
         })),
       );
 
@@ -350,27 +371,33 @@ export default function TilgjengelighetPage() {
       />
 
       <div className="p-6 space-y-6">
-        {/* Heritage Grid Header */}
-        <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">Tilgjengelighet<span className="text-outline">.</span></h1>
-          <p className="text-on-surface-variant">Sett arbeidstider og unntak for instruktører</p>
+        {/* Brand V2 page header — d18 mockup */}
+        <div className="flex items-end justify-between border-b border-line pb-5">
+          <div>
+            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+              / DRIFT · TILGJENGELIGHET
+            </div>
+            <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+              Når du jobber.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+              Sett arbeidstider og unntak per instruktør. Spillere ser bare
+              ledige tider i bookingflow.
+            </p>
+          </div>
         </div>
 
-        <BentoGrid cols={3} gap="md">
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Instruktører</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{instructors.length}</p>
-          </BentoCard>
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Blokkeringer</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{blockedTimes.length}</p>
-          </BentoCard>
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Google-synk</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{blockedTimes.filter((bt) => bt.source === "GOOGLE_CALENDAR").length}</p>
-          </BentoCard>
-        </BentoGrid>
+        <div className="grid grid-cols-3 gap-3">
+          <KpiTile label="Instruktører" value={String(instructors.length)} />
+          <KpiTile label="Blokkeringer" value={String(blockedTimes.length)} />
+          <KpiTile
+            label="Google-synk"
+            value={String(
+              blockedTimes.filter((bt) => bt.source === "GOOGLE_CALENDAR")
+                .length,
+            )}
+          />
+        </div>
         {/* Instructor Selector */}
         <Card padding="sm">
           <div className="flex items-center gap-4 flex-wrap">
@@ -397,6 +424,14 @@ export default function TilgjengelighetPage() {
               ))}
             </div>
             <div className="ml-auto flex gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => setShowClosedPeriod(true)}
+                disabled={!selectedInstructor}
+              >
+                <Icon name="event_busy" className="w-4 h-4" />
+                Steng periode
+              </Button>
               <Button
                 variant="accent"
                 onClick={() => setShowAddException(true)}
@@ -727,6 +762,13 @@ export default function TilgjengelighetPage() {
           />
         </div>
       </AdminDialog>
+
+      <ClosedPeriodDialog
+        instructorId={selectedInstructor || null}
+        open={showClosedPeriod}
+        onOpenChange={setShowClosedPeriod}
+        onCreated={loadData}
+      />
     </>
   );
 }

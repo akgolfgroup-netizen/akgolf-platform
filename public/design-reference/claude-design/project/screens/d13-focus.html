@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D13 — Focus · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .focus-hero { background: linear-gradient(135deg, rgba(209,248,67,0.10), rgba(209,248,67,0.02) 60%); border: 1px solid rgba(209,248,67,0.20); border-radius:16px; padding:24px 28px; margin-bottom:20px; display:grid; grid-template-columns: 1fr auto; gap:24px; align-items:center; }
+  .focus-hero h1 { margin:0; font-size:32px; font-weight:700; color:#fff; letter-spacing:-0.025em; line-height:1.15; }
+  .focus-hero .lede { margin:8px 0 0; color:rgba(255,255,255,0.7); font-size:14px; max-width:520px; }
+  .focus-clock { font-family:'JetBrains Mono',monospace; font-size:48px; color:var(--akgolf-accent); letter-spacing:-0.04em; font-weight:300; line-height:1; }
+  .focus-clock small { display:block; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.14em; text-transform:uppercase; margin-top:6px; font-weight:500; }
+
+  .three-up { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:20px; }
+  .focus-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:20px; position:relative; overflow:hidden; }
+  .focus-card .num { position:absolute; top:16px; right:18px; font-family:'JetBrains Mono',monospace; font-size:48px; color:rgba(255,255,255,0.06); font-weight:700; letter-spacing:-0.04em; }
+  .focus-card .tag { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:var(--akgolf-accent); text-transform:uppercase; }
+  .focus-card h3 { margin:6px 0 4px; font-size:18px; color:#fff; font-weight:700; letter-spacing:-0.01em; }
+  .focus-card .why { font-size:12px; color:rgba(255,255,255,0.6); line-height:1.5; margin-bottom:14px; }
+  .focus-card .stu-row { display:flex; align-items:center; gap:8px; padding:8px 10px; background:rgba(255,255,255,0.03); border-radius:8px; margin-bottom:6px; font-size:12px; color:#fff; }
+  .focus-card .stu-row .av { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:9px; font-weight:700; color:#0A1F18; flex-shrink:0; }
+  .focus-card .stu-row .right { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); }
+  .focus-card .actions { display:flex; gap:8px; margin-top:12px; }
+
+  .completed-strip { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:16px 20px; }
+  .completed-strip .head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .completed-list { display:flex; flex-direction:column; gap:6px; }
+  .completed-row { display:grid; grid-template-columns: 16px 1fr auto; gap:12px; align-items:center; padding:8px 10px; background:rgba(42,125,90,0.06); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85); }
+  .completed-row.done { opacity:0.55; text-decoration: line-through; }
+  .completed-row .check { width:14px; height:14px; border-radius:50%; background:#6FCBA1; display:grid; place-items:center; }
+  .completed-row .check [data-lucide]{ width:9px; height:9px; color:#0A1F18; stroke-width:3; }
+  .completed-row .when { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); }
+
+  .ai-strip { background:rgba(175,82,222,0.06); border:1px solid rgba(175,82,222,0.20); border-radius:14px; padding:16px 20px; display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+  .ai-icon { width:32px; height:32px; border-radius:8px; background:rgba(175,82,222,0.20); color:#C896E8; display:grid; place-items:center; flex-shrink:0; }
+  .ai-icon [data-lucide]{ width:16px; height:16px; }
+  .ai-strip h4 { margin:0 0 4px; font-size:13px; color:#fff; font-weight:600; }
+  .ai-strip p { margin:0; font-size:12px; color:rgba(255,255,255,0.7); line-height:1.55; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item active"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Dagens fokus</div>
+      <div class="chq-top-meta tabular">onsdag · 30 april · uke 18</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+    <div class="focus-hero">
+      <div>
+        <div class="chq-eyebrow accent">Focus · Dagens 3</div>
+        <h1>De tre tingene som flytter mest i dag</h1>
+        <p class="lede">Alt annet er støy. Klikk på en oppgave for å starte. Når dagens 3 er ferdig — gå hjem.</p>
+      </div>
+      <div class="focus-clock" id="now">17:24<small>i dag</small></div>
+    </div>
+
+    <div class="ai-strip">
+      <div class="ai-icon"><i data-lucide="sparkles"></i></div>
+      <div>
+        <h4>Coach AI har valgt dagens 3 basert på risiko, plan-momentum og din kalender.</h4>
+        <p>Sofie H. er foran skjema og trenger en konkret «next-step» før klubbmesterskapet søndag. Pelle K. har en LIVE-økt nå — bruk de 18 minuttene før neste til å sende en klar oppsummering. Kari S. har vist signaler på drop-out (ingen booking siste 14 dager) og bør få en personlig melding nå mens hun husker deg.</p>
+      </div>
+    </div>
+
+    <div class="three-up">
+      <div class="focus-card">
+        <div class="num">01</div>
+        <div class="tag">★ Topp prioritet</div>
+        <h3>Send plan til Sofie H. før klubbmesterskap</h3>
+        <p class="why">Hun er foran skjema og spiller søndag. Hvis hun går inn uten en konkret plan blir det rotete. 5 minutter nå er bedre enn 25 minutter etter.</p>
+        <div class="stu-row">
+          <div class="av" style="background:#D1F843">SH</div>
+          Sofie Holm <span class="right">HCP 4.2</span>
+        </div>
+        <div class="actions">
+          <button class="chq-btn primary sm" style="flex:1"><i data-lucide="send"></i> Send</button>
+          <button class="chq-btn ghost sm"><i data-lucide="file-text"></i></button>
+          <button class="chq-btn ghost sm"><i data-lucide="clock"></i></button>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="num">02</div>
+        <div class="tag">⏱ Tidssensitiv</div>
+        <h3>Logg innsikt fra Pelle K. sin LIVE-økt</h3>
+        <p class="why">Han er midt i økten nå. Du har 18 min før neste spiller. Skriv 3 setninger om hva som funket — det er gull i 6-måneders-rapporten hans.</p>
+        <div class="stu-row">
+          <div class="av" style="background:#6FB3FF">PK</div>
+          Pelle Kvist <span class="right">● LIVE 17:24</span>
+        </div>
+        <div class="actions">
+          <button class="chq-btn primary sm" style="flex:1"><i data-lucide="edit-3"></i> Logg</button>
+          <button class="chq-btn ghost sm"><i data-lucide="mic"></i></button>
+          <button class="chq-btn ghost sm"><i data-lucide="clock"></i></button>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="num">03</div>
+        <div class="tag">⚠ Risiko</div>
+        <h3>Personlig melding til Kari S.</h3>
+        <p class="why">14 dager siden siste booking. AI flagget henne som drop-out-risiko. En kort melding nå koster 2 min — å miste henne koster 14.000 kr/år.</p>
+        <div class="stu-row">
+          <div class="av" style="background:#F49283">KS</div>
+          Kari Solem <span class="right">14 dager</span>
+        </div>
+        <div class="actions">
+          <button class="chq-btn primary sm" style="flex:1"><i data-lucide="message-circle"></i> Skriv</button>
+          <button class="chq-btn ghost sm"><i data-lucide="phone"></i></button>
+          <button class="chq-btn ghost sm"><i data-lucide="clock"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="completed-strip">
+      <div class="head">
+        <div>
+          <h3 style="margin:0; font-size:14px; color:#fff; font-weight:600;">Allerede ute av veien i dag</h3>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:#6FCBA1; text-transform:uppercase; margin-top:2px;">+4 fullført · god start</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.06em;">SISTE 8T</div>
+      </div>
+      <div class="completed-list">
+        <div class="completed-row done"><div class="check"><i data-lucide="check"></i></div><div>Sjekket SwingScore-data fra Erik L.</div><div class="when">07:42</div></div>
+        <div class="completed-row done"><div class="check"><i data-lucide="check"></i></div><div>Godkjent video-feedback til Mona K.</div><div class="when">09:12</div></div>
+        <div class="completed-row done"><div class="check"><i data-lucide="check"></i></div><div>Booking onsdag 14:00 flyttet til torsdag 09:00</div><div class="when">11:30</div></div>
+        <div class="completed-row done"><div class="check"><i data-lucide="check"></i></div><div>Faktura sendt til Henrik V.</div><div class="when">15:18</div></div>
+      </div>
+    </div>
+
+    <!-- Tomorrow preview -->
+    <div style="margin-top:20px; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div>
+          <h3 style="margin:0; font-size:13px; color:#fff; font-weight:600;">Forhåndsvisning · i morgen</h3>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.45); text-transform:uppercase; margin-top:2px;">torsdag 1. mai · stille dag</div>
+        </div>
+        <button class="chq-btn ghost sm">Se hele <i data-lucide="arrow-right"></i></button>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;">
+        <div style="padding:10px 12px; background:rgba(255,255,255,0.03); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:3px;">08:00 · 60 min</div>
+          Iron-økt med Alex Brandt
+        </div>
+        <div style="padding:10px 12px; background:rgba(255,255,255,0.03); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:3px;">10:00 · 60 min</div>
+          Sving-analyse — Kari S.
+        </div>
+        <div style="padding:10px 12px; background:rgba(255,255,255,0.03); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:3px;">13:00 · 60 min</div>
+          Re-onboarding — Emma L.
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

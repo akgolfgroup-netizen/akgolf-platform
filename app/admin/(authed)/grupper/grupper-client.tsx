@@ -1,14 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Icon } from "@/components/ui/icon";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/portal/utils/cn";
+import { Filter, Plus, AlertTriangle, Calendar } from "lucide-react";
+import { GroupsKpiRow } from "@/components/admin/grupper/groups-kpi-row";
 import {
   createGroup,
   deleteGroup,
@@ -29,11 +24,7 @@ const PERIOD_LABELS: Record<string, string> = {
   turneringsperiode: "Turnering",
 };
 
-const PERIOD_COLORS: Record<string, string> = {
-  grunnperiode: "bg-info/10 text-info",
-  spesialiseringsperiode: "bg-warning/10 text-warning",
-  turneringsperiode: "bg-error/10 text-error",
-};
+const AVATAR_COLORS = ["#6BB1FF", "#C99CF3", "#E8B967", "#6FCBA1", "#D1F843"];
 
 interface GrupperClientProps {
   initialGroups: GroupSummary[];
@@ -44,7 +35,6 @@ export function GrupperClient({
   initialGroups,
   initialPlayers,
 }: GrupperClientProps) {
-  const { toggle } = useMCSidebar();
   const [groups, setGroups] = useState<GroupSummary[]>(initialGroups);
   const [isPending, startTransition] = useTransition();
 
@@ -59,6 +49,30 @@ export function GrupperClient({
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [newPeriod, setNewPeriod] = useState("grunnperiode");
+
+  const totalMembers = groups.reduce((sum, g) => sum + g.memberCount, 0);
+  const totalPlans = groups.reduce((sum, g) => sum + g.planCount, 0);
+  const underbooked = groups.filter((g) => g.memberCount === 0).length;
+
+  const kpis = [
+    { label: "Aktive grupper", value: String(groups.length) },
+    { label: "Spillere på roster", value: String(totalMembers) },
+    { label: "Planer totalt", value: String(totalPlans) },
+    {
+      label: "Snitt per gruppe",
+      value: groups.length
+        ? String(Math.round(totalMembers / groups.length))
+        : "0",
+    },
+    underbooked > 0
+      ? {
+          label: "Uten spillere",
+          value: String(underbooked),
+          suffix: "grupper",
+          tone: "alert" as const,
+        }
+      : { label: "Uten spillere", value: "0", suffix: "grupper" },
+  ];
 
   function handleCreate() {
     if (!newName.trim()) return;
@@ -127,80 +141,158 @@ export function GrupperClient({
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
-      <MCTopbar
-        title="Treningsgrupper"
-        subtitle="Opprett og administrer grupper"
-        onMenuClick={toggle}
-      />
-
-      <div className="flex-1 overflow-y-auto p-6">
-        <AdminPageHeader
-          title="Treningsgrupper"
-          subtitle="Coach grupper med spillere og synkroniserte planer"
-          breadcrumbs={[{ label: "Treningsgrupper" }]}
-        />
-
-        <div className="mt-6 flex justify-between items-center">
-          <Button onClick={() => setCreateOpen(true)}>
-            <Icon name="add" size={16} className="mr-2" />
-            Ny gruppe
-          </Button>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {groups.map((group) => (
-            <Card
-              key={group.id}
-              className="p-5 cursor-pointer hover:border-primary/30 transition-colors"
-              onClick={() => openDetail(group)}
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="font-semibold text-on-surface">{group.name}</h3>
-                  {group.description && (
-                    <p className="text-sm text-on-surface-variant mt-1 line-clamp-2">
-                      {group.description}
-                    </p>
-                  )}
-                </div>
-                <Badge
-                  className={cn(
-                    "text-[10px] uppercase",
-                    PERIOD_COLORS[group.periodType],
-                  )}
-                >
-                  {PERIOD_LABELS[group.periodType] ?? group.periodType}
-                </Badge>
-              </div>
-              <div className="mt-4 flex items-center gap-4 text-sm text-on-surface-variant">
-                <span className="flex items-center gap-1">
-                  <Icon name="people" size={16} />
-                  {group.memberCount} medlemmer
-                </span>
-                <span className="flex items-center gap-1">
-                  <Icon name="menu_book" size={16} />
-                  {group.planCount} planer
-                </span>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {groups.length === 0 && (
-          <div className="mt-12 text-center">
-            <Icon
-              name="groups"
-              size={48}
-              className="text-on-surface-variant/40 mx-auto mb-3"
-            />
-            <p className="text-on-surface-variant">Ingen grupper ennå.</p>
-            <p className="text-sm text-on-surface-variant/70 mt-1">
-              Klikk &quot;Ny gruppe&quot; for å komme i gang.
-            </p>
+    <div className="min-h-full bg-[#102B1E] px-7 pb-12 pt-6 text-white">
+      {/* Header */}
+      <div className="mb-6 flex items-end justify-between border-b border-[#1a4a3a] pb-5">
+        <div>
+          <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-accent">
+            / MENNESKER · GRUPPER
           </div>
-        )}
+          <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-white">
+            Treningsgrupper og kohorter.
+          </h1>
+          <p className="mt-1.5 max-w-2xl text-[13px] text-white/60">
+            {groups.length} aktive grupper. Klikk en gruppe for å redigere
+            spillere og planer.
+          </p>
+        </div>
+        <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => alert("Filter kommer snart — alle grupper vises foreløpig")}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2 text-[13px] font-medium text-white/90 transition hover:border-white/20 hover:bg-white/10"
+          >
+            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Filter
+          </button>
+          <button
+            type="button"
+            onClick={() => setCreateOpen(true)}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-primary px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#00422F]"
+          >
+            <Plus className="h-3.5 w-3.5" strokeWidth={1.8} /> Ny gruppe
+          </button>
+        </div>
       </div>
+
+      <GroupsKpiRow kpis={kpis} />
+
+      {/* Grid */}
+      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+        {groups.map((group) => {
+          const initials =
+            group.name
+              .split(/\s+/)
+              .slice(0, 2)
+              .map((w) => w[0]?.toUpperCase() ?? "")
+              .join("") || "GR";
+          const periodLabel =
+            PERIOD_LABELS[group.periodType] ?? group.periodType;
+          const isEmpty = group.memberCount === 0;
+          return (
+            <button
+              key={group.id}
+              type="button"
+              onClick={() => openDetail(group)}
+              className={
+                "flex flex-col gap-3 rounded-[14px] border border-white/[0.06] bg-[#0D2E23] p-[18px] text-left transition hover:border-white/[0.12] " +
+                (isEmpty ? "opacity-70" : "")
+              }
+            >
+              <div className="flex items-center justify-between">
+                <div className="text-[15px] font-bold tracking-tight text-white">
+                  {group.name}
+                </div>
+                <span
+                  className={
+                    "rounded-[5px] px-[7px] py-[3px] font-mono text-[9px] font-bold uppercase tracking-[0.14em] " +
+                    (isEmpty
+                      ? "bg-[rgba(184,66,51,0.20)] text-[#F49283]"
+                      : "bg-[rgba(209,248,67,0.18)] text-accent")
+                  }
+                >
+                  {periodLabel}
+                </span>
+              </div>
+
+              <div className="text-[12px] leading-[1.55] text-white/65">
+                {group.description ?? "Ingen beskrivelse."}
+              </div>
+
+              <div className="flex">
+                <div
+                  className="grid h-[26px] w-[26px] place-items-center rounded-full border-2 border-[#0D2E23] text-[9px] font-bold text-[#0A1F18]"
+                  style={{ background: AVATAR_COLORS[0] }}
+                >
+                  {initials}
+                </div>
+                {group.memberCount > 1 ? (
+                  <div
+                    className="grid h-[26px] w-[26px] place-items-center rounded-full border-2 border-[#0D2E23] bg-white/[0.08] text-[9px] font-bold text-white/70"
+                    style={{ marginLeft: -6 }}
+                  >
+                    +{group.memberCount - 1}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="flex items-center gap-2 rounded-lg bg-black/20 px-3 py-2.5 text-[12px] text-white/85">
+                {isEmpty ? (
+                  <AlertTriangle
+                    className="h-3.5 w-3.5 text-[#E8B967]"
+                    strokeWidth={1.8}
+                  />
+                ) : (
+                  <Calendar
+                    className="h-3.5 w-3.5 text-accent"
+                    strokeWidth={1.8}
+                  />
+                )}
+                <span className="truncate">
+                  {isEmpty
+                    ? "Ingen spillere — legg til for å starte"
+                    : `${group.planCount} ${group.planCount === 1 ? "plan" : "planer"} aktive`}
+                </span>
+              </div>
+
+              <div className="mt-auto grid grid-cols-3 gap-2 border-t border-white/[0.06] pt-3">
+                <div className="font-mono">
+                  <div className="text-[9px] uppercase tracking-[0.10em] text-white/50">
+                    Roster
+                  </div>
+                  <div className="mt-0.5 text-[16px] font-bold text-white">
+                    {group.memberCount}
+                  </div>
+                </div>
+                <div className="font-mono">
+                  <div className="text-[9px] uppercase tracking-[0.10em] text-white/50">
+                    Planer
+                  </div>
+                  <div className="mt-0.5 text-[16px] font-bold text-white">
+                    {group.planCount}
+                  </div>
+                </div>
+                <div className="font-mono">
+                  <div className="text-[9px] uppercase tracking-[0.10em] text-white/50">
+                    Periode
+                  </div>
+                  <div className="mt-0.5 text-[11px] font-bold text-white">
+                    {periodLabel}
+                  </div>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {groups.length === 0 && (
+        <div className="mt-12 rounded-2xl border border-white/[0.06] bg-[#0D2E23] p-12 text-center">
+          <p className="text-white/70">Ingen grupper ennå.</p>
+          <p className="mt-1 text-sm text-white/50">
+            Klikk &quot;Ny gruppe&quot; for å komme i gang.
+          </p>
+        </div>
+      )}
 
       <AnimatePresence>
         {createOpen && (
@@ -231,8 +323,9 @@ export function GrupperClient({
           />
         )}
       </AnimatePresence>
+
+      {/* Avoid unused-prop warning while initialPlayers is reserved for future inline-add UI */}
+      <span className="hidden">{initialPlayers.length}</span>
     </div>
   );
 }
-
-

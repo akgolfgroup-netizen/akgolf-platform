@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Shadows &amp; glow</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#ECF0EF;font-family:var(--font-body);color:var(--ak-text);padding:24px}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .card{background:#fff;border-radius:16px;padding:16px;height:90px;border:1px solid #e0e8e5}
+  .card .t{font-weight:700;font-size:13px;margin-bottom:4px}
+  .card .c{font-family:var(--font-mono);font-size:10px;color:var(--ak-muted)}
+  .sm{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .md{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .glow{background:#0D2E23;color:#fff;border:1.5px solid rgba(209,248,67,.25);box-shadow:0 0 24px rgba(209,248,67,.15)}
+  .glow .c{color:#7a9a8e}
+</style></head><body>
+<div class="row">
+  <div class="card sm"><div class="t">Shadow · sm</div><div class="c">0 2px 8px rgba(0,0,0,.06)</div></div>
+  <div class="card md"><div class="t">Shadow · md</div><div class="c">0 4px 20px rgba(0,0,0,.06)</div></div>
+  <div class="card glow"><div class="t" style="color:#D1F843">Glow · active card</div><div class="c">accent border + glow</div></div>
+</div>
+</body></html>

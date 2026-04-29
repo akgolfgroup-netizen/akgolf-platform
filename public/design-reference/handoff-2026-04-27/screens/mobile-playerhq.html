@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile · PlayerHQ — AK Golf</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_mobile.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* PlayerHQ styles */
+  .pl-hd { padding: 12px 4px 14px; display:flex; justify-content:space-between; align-items:center; }
+  .pl-hd .greet { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:rgba(10,31,24,0.55); text-transform:uppercase; font-weight:700; }
+  .pl-hd .nm { margin:3px 0 0; font-size:24px; font-weight:800; letter-spacing:-0.025em; line-height:1.1; }
+  .pl-hd .nm em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); }
+  .pl-av { width:42px; height:42px; border-radius:50%; background: linear-gradient(135deg, #0A1F18, #005840); color:var(--akgolf-accent); display:grid; place-items:center; font-weight:800; font-size:13px; position:relative; flex-shrink:0; }
+  .pl-av::after { content:''; position:absolute; bottom:-2px; right:-2px; width:12px; height:12px; background:var(--akgolf-accent); border-radius:50%; border:2.5px solid var(--akgolf-surface); }
+
+  /* Hero card */
+  .ph-hero { background: linear-gradient(160deg, #0A1F18, #002820); color:#fff; border-radius:22px; padding:20px; position:relative; overflow:hidden; margin-bottom:14px; }
+  .ph-hero::before { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background: radial-gradient(circle, rgba(209,248,67,0.20), transparent 70%); }
+  .ph-hero .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--akgolf-accent); letter-spacing:0.14em; font-weight:700; }
+  .ph-hero h2 { margin:6px 0 4px; font-size:22px; font-weight:800; letter-spacing:-0.025em; line-height:1.15; }
+  .ph-hero h2 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-accent); }
+  .ph-hero p { margin:0; font-size:12.5px; color:rgba(255,255,255,0.7); line-height:1.5; max-width: 32ch; }
+  .ph-ring-row { display:flex; gap:14px; align-items:center; margin-top:18px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.10); }
+  .ring { width:62px; height:62px; position:relative; flex-shrink:0; }
+  .ring svg { transform: rotate(-90deg); width:100%; height:100%; }
+  .ring-tx { position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+  .ring-tx .v { font-size:13px; font-weight:800; color:#fff; line-height:1; letter-spacing:-0.01em; }
+  .ring-tx .l { font-family:'JetBrains Mono',monospace; font-size:7.5px; color:rgba(255,255,255,0.55); letter-spacing:0.16em; margin-top:1px; font-weight:700; }
+  .ph-ring-row .copy { font-size:11.5px; color:rgba(255,255,255,0.75); line-height:1.5; flex:1; }
+  .ph-ring-row .copy strong { color:var(--akgolf-accent); }
+
+  /* Quick metrics 2x2 */
+  .qm { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:14px; }
+  .qm-c { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:14px; padding:13px 14px; }
+  .qm-c .l { font-family:'JetBrains Mono',monospace; font-size:8.5px; color:rgba(10,31,24,0.5); letter-spacing:0.12em; text-transform:uppercase; font-weight:700; }
+  .qm-c .v { font-size:22px; font-weight:800; letter-spacing:-0.025em; margin-top:4px; line-height:1; font-variant-numeric:tabular-nums; }
+  .qm-c .v small { font-size:11px; color:#2A7D5A; margin-left:3px; font-weight:600; }
+  .qm-c .sub { font-size:10.5px; color:rgba(10,31,24,0.55); margin-top:3px; line-height:1.4; }
+
+  /* AI hint (purple) */
+  .ph-ai { background: linear-gradient(135deg, rgba(175,82,222,0.10), rgba(0,88,64,0.05)); border:1px solid rgba(175,82,222,0.25); border-radius:14px; padding:14px 16px; margin-bottom:14px; display:flex; gap:12px; align-items:flex-start; }
+  .ph-ai .ico { width:30px; height:30px; border-radius:8px; background:#AF52DE; color:#fff; display:grid; place-items:center; flex-shrink:0; }
+  .ph-ai .ico [data-lucide]{ width:14px; height:14px; }
+  .ph-ai .lab { font-family:'JetBrains Mono',monospace; font-size:9px; color:#AF52DE; letter-spacing:0.14em; font-weight:700; }
+  .ph-ai .body { flex:1; }
+  .ph-ai p { margin:3px 0 8px; font-size:12.5px; line-height:1.45; color:var(--akgolf-ink); }
+  .ph-ai p strong { font-weight:700; }
+  .ph-ai .row { display:flex; gap:6px; }
+  .ph-ai .btn { background:var(--akgolf-ink); color:#fff; border-radius:99px; padding:6px 12px; font-size:11px; font-weight:600; }
+  .ph-ai .btn.outline { background:transparent; color:rgba(10,31,24,0.65); border:1px solid rgba(10,31,24,0.15); }
+
+  /* Today schedule */
+  .sec-h { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(10,31,24,0.55); margin: 6px 4px 10px; font-weight:700; display:flex; justify-content:space-between; text-transform:uppercase; }
+  .sec-h a { color:var(--akgolf-primary); font-weight:700; }
+  .day { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:14px; overflow:hidden; margin-bottom:14px; }
+  .day-row { display:grid; grid-template-columns: 56px 1fr auto; gap:10px; padding:13px 14px; border-top:1px solid rgba(10,31,24,0.06); align-items:center; }
+  .day-row:first-child { border-top:none; }
+  .day-row .t { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:800; color:var(--akgolf-ink); letter-spacing:0.02em; }
+  .day-row .t small { display:block; font-size:8.5px; color:rgba(10,31,24,0.5); letter-spacing:0.14em; font-weight:700; margin-top:1px; }
+  .day-row .ttl { font-size:12.5px; font-weight:600; color:var(--akgolf-ink); line-height:1.3; }
+  .day-row .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(10,31,24,0.55); letter-spacing:0.04em; margin-top:2px; }
+  .day-row.now { background: rgba(209,248,67,0.20); }
+  .day-row.now::before { content:''; display:block; width:4px; }
+  .day-row.done .t { color: rgba(10,31,24,0.4); }
+  .day-row.done .ttl { color: rgba(10,31,24,0.5); text-decoration: line-through; text-decoration-thickness:1px; }
+  .day-row .arrow { color: rgba(10,31,24,0.35); }
+  .day-row .arrow [data-lucide]{ width:16px; height:16px; }
+  .day-row .check { color:#2A7D5A; }
+  .day-row .check [data-lucide]{ width:14px; height:14px; }
+
+  /* ======= PLAN SCREEN ======= */
+  .plan-h { padding: 12px 4px 16px; }
+  .plan-h .lbl { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:rgba(10,31,24,0.55); text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+  .plan-h h2 { margin:0; font-size:24px; font-weight:800; letter-spacing:-0.025em; line-height:1.1; }
+  .plan-h h2 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color:var(--akgolf-primary); }
+
+  /* Goal card */
+  .goal-card { background: linear-gradient(160deg, var(--akgolf-primary), #002820); color:#fff; border-radius:22px; padding:18px 20px; margin-bottom:14px; position:relative; overflow:hidden; }
+  .goal-card .lab { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--akgolf-accent); letter-spacing:0.14em; font-weight:700; }
+  .goal-card .ttl { margin: 4px 0 0; font-size: 16px; font-weight:700; letter-spacing:-0.015em; }
+  .goal-card .hcps { display:flex; align-items:baseline; gap:10px; margin-top:14px; }
+  .goal-card .now { font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:54px; line-height:1; color:var(--akgolf-accent); letter-spacing:-0.03em; }
+  .goal-card .arr { font-size:18px; color:rgba(255,255,255,0.50); }
+  .goal-card .target { font-size:24px; font-weight:700; color:rgba(255,255,255,0.85); letter-spacing:-0.02em; }
+  .goal-card .target small { font-size:11px; color:rgba(255,255,255,0.55); display:block; font-family:'JetBrains Mono',monospace; letter-spacing:0.10em; font-weight:700; }
+  .goal-card .pct { margin-top:14px; height:4px; background:rgba(255,255,255,0.10); border-radius:99px; overflow:hidden; }
+  .goal-card .pct span { display:block; height:100%; background: var(--akgolf-accent); width:64%; border-radius:99px; }
+  .goal-card .pct-meta { display:flex; justify-content:space-between; margin-top:7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.65); letter-spacing:0.10em; font-weight:600; }
+
+  /* Week strip */
+  .week { display:grid; grid-template-columns: repeat(7, 1fr); gap:5px; margin-bottom:14px; }
+  .wd { aspect-ratio:1/1.4; border-radius:11px; background:#fff; border:1px solid rgba(10,31,24,0.06); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:6px 0; }
+  .wd .d { font-family:'JetBrains Mono',monospace; font-size:8.5px; color:rgba(10,31,24,0.5); letter-spacing:0.10em; font-weight:700; }
+  .wd .n { font-size:15px; font-weight:800; margin-top:3px; letter-spacing:-0.02em; }
+  .wd .dot { width:6px; height:6px; border-radius:50%; margin-top:5px; }
+  .wd.done .n { color:rgba(10,31,24,0.4); }
+  .wd.done .dot { background: rgba(10,31,24,0.30); }
+  .wd.today { background: var(--akgolf-ink); border-color:var(--akgolf-ink); }
+  .wd.today .d { color: rgba(255,255,255,0.6); }
+  .wd.today .n { color:#fff; }
+  .wd.today .dot { background: var(--akgolf-accent); width:8px; height:8px; }
+  .wd.up .dot { background: var(--akgolf-primary); }
+  .wd.empty .dot { background: rgba(10,31,24,0.10); }
+
+  /* Plan blocks */
+  .pb { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:14px; padding:14px 16px; margin-bottom:9px; }
+  .pb-hd { display:flex; justify-content:space-between; align-items:center; }
+  .pb-day { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.10em; color:rgba(10,31,24,0.55); font-weight:700; }
+  .pb-status { font-family:'JetBrains Mono',monospace; font-size:9px; padding:3px 7px; border-radius:5px; letter-spacing:0.10em; font-weight:700; }
+  .pb-status.done { background:rgba(42,125,90,0.15); color:#2A7D5A; }
+  .pb-status.next { background:rgba(209,248,67,0.30); color:#0A1F18; }
+  .pb-status.future { background:rgba(10,31,24,0.05); color:rgba(10,31,24,0.55); }
+  .pb-ttl { margin:6px 0 4px; font-size:14px; font-weight:700; letter-spacing:-0.015em; line-height:1.3; }
+  .pb-meta { font-size:11.5px; color:rgba(10,31,24,0.6); line-height:1.4; }
+  .pb-tags { display:flex; gap:5px; margin-top:8px; flex-wrap:wrap; }
+  .pb-tags span { font-family:'JetBrains Mono',monospace; font-size:8.5px; padding:3px 6px; background:rgba(10,31,24,0.04); color:rgba(10,31,24,0.65); border-radius:4px; letter-spacing:0.06em; font-weight:700; }
+
+  /* ======= COACH MESSAGES ======= */
+  .msg-hd { padding: 16px 4px 14px; display:flex; justify-content:space-between; align-items:flex-start; }
+  .msg-hd h2 { margin:0; font-size:22px; font-weight:800; letter-spacing:-0.025em; }
+  .msg-hd .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(10,31,24,0.55); letter-spacing:0.10em; margin-top:3px; font-weight:700; }
+  .coach-card { background:#fff; border:1px solid rgba(10,31,24,0.06); border-radius:18px; padding:14px 16px; display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .coach-card .av { width:46px; height:46px; border-radius:50%; background: linear-gradient(135deg, #C99CF3, #6BB1FF); flex-shrink:0; display:grid; place-items:center; color:#fff; font-weight:800; font-size:13px; }
+  .coach-card .av.online::after { content:''; display:block; width:11px; height:11px; background:#2A7D5A; border-radius:50%; border:2.5px solid #fff; position:absolute; bottom:-2px; right:-2px; }
+  .coach-card .av-w { position:relative; flex-shrink:0; }
+  .coach-card .nm { font-size:14px; font-weight:700; color:var(--akgolf-ink); letter-spacing:-0.015em; }
+  .coach-card .role { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(10,31,24,0.55); letter-spacing:0.06em; margin-top:2px; font-weight:700; }
+  .coach-card .ic { color:rgba(10,31,24,0.4); margin-left:auto; }
+  .coach-card .ic [data-lucide]{ width:18px; height:18px; }
+
+  .chat-day { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(10,31,24,0.4); letter-spacing:0.14em; font-weight:700; text-align:center; margin: 14px 0 8px; }
+  .b { display:flex; gap:8px; margin-bottom:8px; max-width:78%; }
+  .b.theirs { align-self:flex-start; }
+  .b.mine { align-self:flex-end; flex-direction:row-reverse; margin-left:auto; }
+  .b .av { width:28px; height:28px; border-radius:50%; background: linear-gradient(135deg, #C99CF3, #6BB1FF); flex-shrink:0; }
+  .b .bbl { padding:10px 13px; border-radius:14px; font-size:13px; line-height:1.45; }
+  .b.theirs .bbl { background:#fff; color:var(--akgolf-ink); border:1px solid rgba(10,31,24,0.06); border-bottom-left-radius:4px; }
+  .b.mine .bbl { background: var(--akgolf-ink); color:#fff; border-bottom-right-radius:4px; }
+  .b.mine .bbl em { font-family:'Fraunces',serif; font-style:italic; color:var(--akgolf-accent); font-weight:500; }
+  .b .when { font-family:'JetBrains Mono',monospace; font-size:8.5px; color:rgba(10,31,24,0.45); letter-spacing:0.06em; margin-top:3px; padding: 0 4px; font-weight:700; }
+  .b.mine .when { text-align:right; }
+
+  .video-attach { background:#fff; border:1px solid rgba(10,31,24,0.08); border-radius:12px; padding: 0; overflow:hidden; margin-top:6px; max-width:240px; }
+  .video-attach .thumb { aspect-ratio: 16/10; background: linear-gradient(135deg, var(--akgolf-primary), #0A1F18); position:relative; display:grid; place-items:center; }
+  .video-attach .thumb::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 10px, transparent 10px 20px); }
+  .video-attach .thumb .play { width:36px; height:36px; border-radius:50%; background: rgba(0,0,0,0.5); border:1.5px solid rgba(255,255,255,0.5); display:grid; place-items:center; z-index:2; }
+  .video-attach .thumb .play [data-lucide]{ width:14px; height:14px; color:#fff; }
+  .video-attach .thumb .dur { position:absolute; bottom:7px; right:8px; font-family:'JetBrains Mono',monospace; font-size:9px; color:#fff; padding:2px 5px; background:rgba(0,0,0,0.6); border-radius:4px; font-weight:700; }
+  .video-attach .meta { padding:8px 10px; font-size:11px; font-weight:600; color:var(--akgolf-ink); }
+  .video-attach .meta small { display:block; font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(10,31,24,0.5); margin-top:1px; letter-spacing:0.04em; font-weight:700; }
+
+  .composer {
+    position:absolute; left:0; right:0; bottom:84px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top:1px solid rgba(10,31,24,0.06);
+    display:flex; align-items:center; gap:8px;
+  }
+  .composer .pl { width:32px; height:32px; border-radius:50%; background:rgba(10,31,24,0.06); display:grid; place-items:center; color:var(--akgolf-ink); flex-shrink:0; }
+  .composer .pl [data-lucide]{ width:16px; height:16px; }
+  .composer .input { flex:1; background:rgba(10,31,24,0.05); border-radius:99px; padding:9px 14px; font-size:12.5px; color:rgba(10,31,24,0.55); }
+  .composer .send { width:32px; height:32px; border-radius:50%; background:var(--akgolf-primary); color:var(--akgolf-accent); display:grid; place-items:center; flex-shrink:0; }
+  .composer .send [data-lucide]{ width:14px; height:14px; }
+
+  .chat-flex { display:flex; flex-direction:column; padding-bottom: 80px; }
+
+  .header-mob {
+    text-align:center; max-width: 720px; margin: 0 auto 40px;
+  }
+  .header-mob .tag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.16em; color:var(--akgolf-primary); text-transform:uppercase; font-weight:700; }
+  .header-mob h1 { font-size:48px; font-weight:800; letter-spacing:-0.03em; color:var(--akgolf-ink); margin:14px 0 14px; line-height:1.05; }
+  .header-mob h1 em { font-family:'Fraunces',serif; font-style:italic; font-weight:500; color: var(--akgolf-primary); }
+  .header-mob p { font-size:15px; color:rgba(10,31,24,0.7); line-height:1.6; max-width: 56ch; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="header-mob" style="padding-top:60px;">
+  <div class="tag">PLAYERHQ · MOBILE · A12</div>
+  <h1>Spilleren — på mobil. <em>Tre nøkkel-skjermer.</em></h1>
+  <p>Hjem-skjerm med dagens fokus, treningsplan-uke, og samtale med coach Erik. Designet for å bruke 30 sekunder før økt og 30 sekunder etterpå — ikke mer.</p>
+</div>
+
+<div class="mob-stage" style="padding-top:0;">
+
+  <!-- ============ HOME ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body">
+          <div class="pl-hd">
+            <div>
+              <div class="greet">TIRSDAG · 30. APRIL</div>
+              <div class="nm">God morgen, <em>Sofie.</em></div>
+            </div>
+            <div class="pl-av">SA</div>
+          </div>
+
+          <section class="ph-hero">
+            <div class="lab">◉ FORM · SISTE 10 RUNDER</div>
+            <h2>Du er <em>i form.</em></h2>
+            <p>HCP 8.1 → 7.7 etter helgen. Ny PB! Approach er elite — chip neste fokus.</p>
+            <div class="ph-ring-row">
+              <div class="ring">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="9"/>
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#D1F843" stroke-width="9" stroke-linecap="round" stroke-dasharray="180 240"/>
+                </svg>
+                <div class="ring-tx"><div class="v">+1.8</div><div class="l">SG TOT</div></div>
+              </div>
+              <div class="copy"><strong>+0.4 SG</strong> vs HCP 8-peer. Topp 12 % i akademiet denne måneden.</div>
+            </div>
+          </section>
+
+          <div class="qm">
+            <div class="qm-c">
+              <div class="l">STREAK</div>
+              <div class="v">41<small>d</small></div>
+              <div class="sub">Lengste i 2026</div>
+            </div>
+            <div class="qm-c">
+              <div class="l">NESTE MÅL</div>
+              <div class="v">HCP 5</div>
+              <div class="sub">2.7 unna</div>
+            </div>
+            <div class="qm-c">
+              <div class="l">UKE 18 · ØKTER</div>
+              <div class="v">3<small style="color:rgba(10,31,24,0.4);">/4</small></div>
+              <div class="sub">1 igjen denne uken</div>
+            </div>
+            <div class="qm-c">
+              <div class="l">LØR · MATCH</div>
+              <div class="v" style="font-size:18px; padding-top:4px;">08:00</div>
+              <div class="sub">Klubbmatch · Bogstad</div>
+            </div>
+          </div>
+
+          <div class="ph-ai">
+            <div class="ico"><i data-lucide="sparkles"></i></div>
+            <div class="body">
+              <div class="lab">◈ DAGENS FOKUS</div>
+              <p>Chip-drill med Erik kl 15:00. Se video-review først (5 min) så er du forberedt.</p>
+              <div class="row">
+                <span class="btn">Åpne review</span>
+                <span class="btn outline">Senere</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-h"><span>I DAG · 3 AVTALER</span><a>SE ALLE →</a></div>
+          <div class="day">
+            <div class="day-row done">
+              <div class="t">07:30<small>FERDIG</small></div>
+              <div><div class="ttl">Trackman · 7J–9J</div><div class="meta">162 SLAG · CARRY +2.1m</div></div>
+              <div class="check"><i data-lucide="check-circle-2"></i></div>
+            </div>
+            <div class="day-row now">
+              <div class="t">15:00<small>OM 5T 46M</small></div>
+              <div><div class="ttl">Chip med Erik</div><div class="meta">SKULLERUD · 60 MIN · BAY 3</div></div>
+              <div class="arrow"><i data-lucide="arrow-right"></i></div>
+            </div>
+            <div class="day-row">
+              <div class="t">18:00<small>KVELD</small></div>
+              <div><div class="ttl">Video-review · selvstudie</div><div class="meta">15 MIN · MENTAL-RUTINE</div></div>
+              <div class="arrow"><i data-lucide="arrow-right"></i></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ios-tab">
+          <div class="tab on"><i data-lucide="home"></i>Hjem</div>
+          <div class="tab"><i data-lucide="layers"></i>Plan</div>
+          <div class="tab"><i data-lucide="trending-up"></i>Stats</div>
+          <div class="tab"><i data-lucide="message-circle"></i>Coach</div>
+          <div class="tab"><i data-lucide="user"></i>Meg</div>
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>1 · Hjem</strong>HERO · MILEPÆL · DAGENS · AI-NUDGE</div>
+  </div>
+
+  <!-- ============ PLAN ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body">
+          <div class="plan-h">
+            <div class="lbl">PLAN · UKE 18 · 30. APRIL</div>
+            <h2>Din <em>treningsplan.</em></h2>
+          </div>
+
+          <div class="goal-card">
+            <div class="lab">◎ KVARTAL-MÅL · Q2 2026</div>
+            <div class="ttl">HCP under 7 før sommer-cup</div>
+            <div class="hcps">
+              <span class="now">7.7</span>
+              <span class="arr">→</span>
+              <span class="target">6.9<small>MÅL · 30. JUN</small></span>
+            </div>
+            <div class="pct"><span></span></div>
+            <div class="pct-meta"><span>64 % · 8 UKER UTFØRT</span><span>4 UKER IGJEN</span></div>
+          </div>
+
+          <div class="sec-h"><span>UKE 18</span><a>NESTE UKE →</a></div>
+          <div class="week">
+            <div class="wd done"><div class="d">MAN</div><div class="n">28</div><div class="dot"></div></div>
+            <div class="wd today"><div class="d">TIR</div><div class="n">30</div><div class="dot"></div></div>
+            <div class="wd up"><div class="d">ONS</div><div class="n">01</div><div class="dot"></div></div>
+            <div class="wd empty"><div class="d">TOR</div><div class="n">02</div><div class="dot"></div></div>
+            <div class="wd up"><div class="d">FRE</div><div class="n">03</div><div class="dot"></div></div>
+            <div class="wd up"><div class="d">LØR</div><div class="n">04</div><div class="dot"></div></div>
+            <div class="wd empty"><div class="d">SØN</div><div class="n">05</div><div class="dot"></div></div>
+          </div>
+
+          <div class="pb">
+            <div class="pb-hd"><span class="pb-day">TIR · I DAG</span><span class="pb-status next">PÅGÅENDE</span></div>
+            <div class="pb-ttl">Chip-drill · ¾-swing klokke</div>
+            <div class="pb-meta">15:00 · Skullerud · Bay 3 · m/ Erik</div>
+            <div class="pb-tags"><span>SHORT-GAME</span><span>WEDGE</span><span>60 MIN</span></div>
+          </div>
+          <div class="pb">
+            <div class="pb-hd"><span class="pb-day">ONS · I MORGEN</span><span class="pb-status future">SOLO</span></div>
+            <div class="pb-ttl">Putting · 6-fot rytme</div>
+            <div class="pb-meta">Hjemme-grønn · 30 min</div>
+            <div class="pb-tags"><span>PUTTING</span><span>SOLO</span></div>
+          </div>
+          <div class="pb">
+            <div class="pb-hd"><span class="pb-day">FRE · 03. MAI</span><span class="pb-status future">M/ ANNE</span></div>
+            <div class="pb-ttl">TPI mobilitet · skulder</div>
+            <div class="pb-meta">10:00 · Sandvika · 45 min</div>
+            <div class="pb-tags"><span>FYSISK</span><span>TPI</span></div>
+          </div>
+          <div class="pb">
+            <div class="pb-hd"><span class="pb-day">LØR · 04. MAI</span><span class="pb-status future">MATCH</span></div>
+            <div class="pb-ttl">Klubbmatch · Bogstad</div>
+            <div class="pb-meta">08:00 · 18 hull · stableford</div>
+            <div class="pb-tags"><span>MATCH</span><span>LIVE</span></div>
+          </div>
+        </div>
+        <div class="ios-tab">
+          <div class="tab"><i data-lucide="home"></i>Hjem</div>
+          <div class="tab on"><i data-lucide="layers"></i>Plan</div>
+          <div class="tab"><i data-lucide="trending-up"></i>Stats</div>
+          <div class="tab"><i data-lucide="message-circle"></i>Coach</div>
+          <div class="tab"><i data-lucide="user"></i>Meg</div>
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>2 · Plan</strong>MÅL · UKE-STRIPE · 4 ØKTER</div>
+  </div>
+
+  <!-- ============ COACH CHAT ============ -->
+  <div>
+    <div class="ios">
+      <div class="ios-notch"></div>
+      <div class="ios-screen">
+        <div class="ios-status">
+          <span>09:14</span>
+          <span class="right">
+            <i data-lucide="signal"></i>
+            <i data-lucide="wifi"></i>
+            <i data-lucide="battery-full"></i>
+          </span>
+        </div>
+        <div class="ios-body" style="padding: 4px 16px 0;">
+
+          <div class="msg-hd">
+            <div>
+              <h2>Coach</h2>
+              <div class="meta">3 SAMTALER · 2 ULESTE</div>
+            </div>
+            <div style="color:rgba(10,31,24,0.5);"><i data-lucide="search" style="width:18px; height:18px;"></i></div>
+          </div>
+
+          <div class="coach-card">
+            <div class="av-w">
+              <div class="av">ES</div>
+              <div style="content:''; display:block; width:11px; height:11px; background:#2A7D5A; border-radius:50%; border:2.5px solid #fff; position:absolute; bottom:-2px; right:-2px;"></div>
+            </div>
+            <div>
+              <div class="nm">Erik Solheim</div>
+              <div class="role">PGA MASTER · DIN COACH</div>
+            </div>
+            <div class="ic"><i data-lucide="phone"></i></div>
+          </div>
+
+          <div class="chat-flex">
+
+            <div class="chat-day">I GÅR · 16:42</div>
+
+            <div class="b theirs">
+              <div class="av"></div>
+              <div>
+                <div class="bbl">Hei Sofie! Så at du klarte 7.7 i helgen — ny PB! 🎉 Hvordan føltes det?</div>
+                <div class="when">16:42</div>
+              </div>
+            </div>
+
+            <div class="b mine">
+              <div>
+                <div class="bbl">Tusen takk! Litt nervøs på siste 4 hull, men putt-rutinen vi øvde på sitter — fikk birdie på 17! <em>Endelig.</em></div>
+                <div class="when">17:01</div>
+              </div>
+            </div>
+
+            <div class="b theirs">
+              <div class="av"></div>
+              <div>
+                <div class="bbl">Det er det jeg liker å høre. Sendte deg en kort video-review fra runden — 90 sek, jeg går gjennom approach-shotene dine.</div>
+                <div class="when">17:08</div>
+                <div class="video-attach">
+                  <div class="thumb">
+                    <div class="play"><i data-lucide="play"></i></div>
+                    <span class="dur">01:32</span>
+                  </div>
+                  <div class="meta">Approach-review · runde 27. apr<small>BOGSTAD · 8 SHOT-ANALYSE</small></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-day">I DAG · 09:12</div>
+
+            <div class="b theirs">
+              <div class="av"></div>
+              <div>
+                <div class="bbl">Husk å se review før chip-drillen i dag 15:00. Vi bygger på det vi snakket om sist 👇</div>
+                <div class="when">09:12 · NÅ</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="composer">
+          <div class="pl"><i data-lucide="plus"></i></div>
+          <div class="input">Skriv til Erik…</div>
+          <div class="send"><i data-lucide="arrow-up"></i></div>
+        </div>
+        <div class="ios-tab">
+          <div class="tab"><i data-lucide="home"></i>Hjem</div>
+          <div class="tab"><i data-lucide="layers"></i>Plan</div>
+          <div class="tab"><i data-lucide="trending-up"></i>Stats</div>
+          <div class="tab on"><i data-lucide="message-circle"></i>Coach</div>
+          <div class="tab"><i data-lucide="user"></i>Meg</div>
+        </div>
+        <div class="ios-home"></div>
+      </div>
+    </div>
+    <div class="ios-label"><strong>3 · Coach</strong>SAMTALE · VIDEO-VEDLEGG · COMPOSER</div>
+  </div>
+
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

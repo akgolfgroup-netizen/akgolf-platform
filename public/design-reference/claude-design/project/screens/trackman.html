@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>TrackMan Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #0b0d0c; color:#E6EAE8; }
+  .screen { background:#0b0d0c; }
+  .sidebar { background:#0A1F18; border-right:1px solid rgba(255,255,255,0.06); color:#E6EAE8; }
+  .sidebar-brand { border-bottom:1px solid rgba(255,255,255,0.06); }
+  .sidebar-logo { background:#D1F843; color:#0A1F18; }
+  .nav-item { color:#A5B2AD; }
+  .nav-item:hover { background:rgba(255,255,255,0.05); color:#fff; }
+  .nav-item.active { background:#D1F843; color:#0A1F18; }
+  .sidebar-user { background:rgba(255,255,255,0.05); }
+  .sidebar-user .name { color:#fff; }
+
+  .main { background:#0b0d0c; color:#E6EAE8; padding:24px 32px 60px; }
+  .lab-card { background:#121614; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:18px; }
+  .lab-card h3 { margin:0 0 4px; font-size:13px; font-weight:700; color:#F7FAF8; }
+  .lab-card .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; }
+
+  .mono { font-family:'JetBrains Mono',monospace; }
+  .grid-kpi { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:16px; }
+  .kpi-tile {
+    background:#121614; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px;
+  }
+  .kpi-tile .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase; }
+  .kpi-tile .v { font-size:22px; font-weight:700; color:#fff; letter-spacing:-0.01em; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .kpi-tile .d { font-size:11px; margin-top:2px; font-family:'JetBrains Mono',monospace; }
+  .kpi-tile .d.p { color:#D1F843; }
+  .kpi-tile .d.n { color:#E85D4E; }
+
+  .club-row {
+    display:grid; grid-template-columns: 50px 1fr 80px 80px 80px 70px; gap:10px; align-items:center;
+    padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:12px;
+  }
+  .club-row.h { color:#7A8C85; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .club-bar { height:6px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden; position:relative; }
+  .club-bar > div { height:100%; background:#D1F843; border-radius:2px; }
+  .club-bar .ref {
+    position:absolute; top:-3px; bottom:-3px; width:2px; background:#AF52DE;
+  }
+
+  /* ── Dispersion plots (approach + tee) ───────────────────────────── */
+  .disp-plot {
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 100%, rgba(209,248,67,0.05), transparent 65%),
+      linear-gradient(180deg, #0d1110 0%, #0a0d0c 100%);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    position:relative;
+    overflow:hidden;
+    aspect-ratio: 5/6;
+  }
+  .disp-plot svg { width:100%; height:100%; display:block; }
+  .disp-plot .corner {
+    position:absolute; top:10px; left:10px;
+    font-family:'JetBrains Mono',monospace; font-size:9px;
+    color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase;
+    display:flex; gap:8px; align-items:center;
+    background:rgba(0,0,0,0.4); backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.06);
+    padding:5px 9px; border-radius:6px;
+  }
+  .disp-plot .corner.r { left:auto; right:10px; }
+  .disp-plot .corner .sw { width:8px; height:8px; border-radius:50%; }
+  .disp-plot .legend {
+    position:absolute; bottom:10px; left:10px; right:10px;
+    display:flex; gap:14px; flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace; font-size:9px;
+    color:#A5B2AD; letter-spacing:0.1em; text-transform:uppercase;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.06);
+    padding:7px 10px; border-radius:6px;
+  }
+  .disp-plot .legend .it { display:flex; gap:6px; align-items:center; }
+  .disp-plot .legend .sw { width:10px; height:10px; border-radius:50%; }
+  .disp-plot .legend .sw.ring { background:transparent; border:1.5px dashed; }
+  .disp-plot .legend .sw.ell { border-radius:2px; height:8px; width:14px; }
+
+  .disp-stats {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px;
+  }
+  .disp-stats .s { padding:10px 12px; background:rgba(255,255,255,0.025); border-radius:8px; border:1px solid rgba(255,255,255,0.05); }
+  .disp-stats .s .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase; }
+  .disp-stats .s .v { font-size:18px; font-weight:700; color:#fff; letter-spacing:-0.01em; font-variant-numeric:tabular-nums; margin-top:3px; }
+  .disp-stats .s .v.lime { color:#D1F843; }
+  .disp-stats .s .v.red { color:#E85D4E; }
+  .disp-stats .s .d { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; margin-top:1px; }
+
+  .disp-tabs {
+    display:flex; gap:4px; padding:3px; background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06); border-radius:8px;
+  }
+  .disp-tabs button {
+    background:transparent; color:#A5B2AD; border:0; padding:5px 11px;
+    font-size:11px; font-weight:600; border-radius:5px; cursor:pointer;
+    font-family:inherit;
+  }
+  .disp-tabs button.active { background:#D1F843; color:#0A1F18; }
+
+  .waveform { background:#0a0d0c; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; }
+  .waveform svg { width:100%; display:block; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title">AK Golf</div><div class="sub">Elite · LAB</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item"><i data-lucide="home" class="icon-md"></i> Oversikt</div>
+      <div class="nav-item">◱ Planlegg</div>
+      <div class="nav-item">◎ Tren</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
+      <div class="nav-item">△ Analyse</div>
+      <div style="height:14px;"></div>
+      <div class="nav-item">◈ AI Coach</div>
+      <div class="nav-item active">⊙ TrackMan</div>
+      <div class="nav-item">◉ Dagbok</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div><div class="name">Marius A.</div><div class="tier" style="color:#D1F843;">◉ LIVE</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="row-between" style="margin-bottom:20px;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#D1F843;letter-spacing:0.14em;">◉ LIVE · SESJON #0418</div>
+        <h1 style="margin:4px 0 2px;font-size:26px;font-weight:700;letter-spacing:-0.03em;color:#F7FAF8;">TrackMan Lab</h1>
+        <div style="font-size:13px;color:#A5B2AD;">Oslo Golfsenter · Bay 3 · 162 slag logget · 54 min</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="pill dark"><span class="dot" style="background:#D1F843;"></span> Tilkoblet</div>
+        <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.2);background:transparent;">Last ned CSV</button>
+        <button class="btn btn-accent">Lagre sesjon</button>
+      </div>
+    </div>
+
+    <div class="grid-kpi">
+      <div class="kpi-tile"><div class="l">CLUB</div><div class="v">7J</div><div class="d" style="color:#A5B2AD;">MP-20</div></div>
+      <div class="kpi-tile"><div class="l">CARRY</div><div class="v">152.4</div><div class="d p">+2.1 m</div></div>
+      <div class="kpi-tile"><div class="l">BALL MPH</div><div class="v">128.6</div><div class="d p">+1.2</div></div>
+      <div class="kpi-tile"><div class="l">SPIN RPM</div><div class="v">6 820</div><div class="d n">−180</div></div>
+      <div class="kpi-tile"><div class="l">LAUNCH°</div><div class="v">17.2</div><div class="d p">+0.4</div></div>
+      <div class="kpi-tile"><div class="l">SMASH</div><div class="v">1.38</div><div class="d p">opt</div></div>
+    </div>
+
+    <!-- ────────────── Dispersion: Approach + Tee ────────────── -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+      <!-- ╭─ APPROACH · 7-jern → green ─╮ -->
+      <div class="lab-card">
+        <div class="row-between" style="margin-bottom:10px;">
+          <div>
+            <h3>Inn til green · 7-jern</h3>
+            <div class="sub">40 SLAG · MÅL 152m · SISTE 30d</div>
+          </div>
+          <div class="disp-tabs">
+            <button class="active">7J</button>
+            <button>6J</button>
+            <button>8J</button>
+            <button>PW</button>
+          </div>
+        </div>
+
+        <div class="disp-plot">
+          <svg viewBox="0 0 360 432" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <!-- gress / fairway base, varierende grønntoner som referansebildet -->
+              <radialGradient id="grassBase" cx="50%" cy="48%" r="62%">
+                <stop offset="0%" stop-color="#5A8F3E"/>
+                <stop offset="55%" stop-color="#4A7A35"/>
+                <stop offset="100%" stop-color="#2F5524"/>
+              </radialGradient>
+              <!-- konsentriske ringer rundt green (mowing patterns) -->
+              <radialGradient id="ringDark" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3D6B2C" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#2E5220" stop-opacity="0.7"/>
+              </radialGradient>
+              <!-- bunker sand -->
+              <radialGradient id="sand" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#E8D4A8"/>
+                <stop offset="80%" stop-color="#C9B077"/>
+                <stop offset="100%" stop-color="#A8915F"/>
+              </radialGradient>
+              <!-- green surface -->
+              <radialGradient id="puttingGreen" cx="50%" cy="48%" r="55%">
+                <stop offset="0%" stop-color="#7BB04A"/>
+                <stop offset="70%" stop-color="#5E924A"/>
+                <stop offset="100%" stop-color="#3F6B30"/>
+              </radialGradient>
+              <!-- subtle vignette so it feels photographic -->
+              <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+                <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+              </radialGradient>
+              <!-- 50% / 90% dispersion fills -->
+              <radialGradient id="ellWide" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFF7B0" stop-opacity="0.32"/>
+                <stop offset="100%" stop-color="#D1F843" stop-opacity="0.06"/>
+              </radialGradient>
+              <radialGradient id="ellTight" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+                <stop offset="60%" stop-color="#D1F843" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#D1F843" stop-opacity="0.18"/>
+              </radialGradient>
+              <!-- shadow under shots/bunkers -->
+              <radialGradient id="shadowSoft" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#000" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="grain" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="3"/>
+                <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0"/>
+                <feComposite in2="SourceGraphic" operator="in"/>
+              </filter>
+            </defs>
+
+            <!-- ── BASE GRESS ── -->
+            <rect x="0" y="0" width="360" height="432" fill="url(#grassBase)"/>
+
+            <!-- mowing-stripes diagonal (svake) -->
+            <g opacity="0.10" stroke="#2E5220" stroke-width="14">
+              <line x1="-50" y1="0" x2="220" y2="540"/>
+              <line x1="20" y1="0" x2="290" y2="540"/>
+              <line x1="90" y1="0" x2="360" y2="540"/>
+              <line x1="160" y1="0" x2="430" y2="540"/>
+            </g>
+
+            <!-- trær / mørk vegetasjon top-venstre (som referanse) -->
+            <g opacity="0.85">
+              <path d="M -10 -10 Q 60 30 90 70 Q 70 110 30 100 Q -20 80 -30 30 Z" fill="#1F3814"/>
+              <path d="M 30 -10 Q 80 10 100 60 Q 70 70 50 50 Q 30 30 30 -10 Z" fill="#274518"/>
+              <circle cx="20" cy="20" r="22" fill="#2A4A1A"/>
+              <circle cx="55" cy="40" r="28" fill="#2F5220"/>
+              <circle cx="85" cy="65" r="18" fill="#3A6428"/>
+            </g>
+            <!-- liten busk top-høyre -->
+            <g opacity="0.7">
+              <ellipse cx="345" cy="20" rx="30" ry="26" fill="#1F3814"/>
+              <circle cx="335" cy="30" r="14" fill="#2A4A1A"/>
+            </g>
+
+            <!-- ── KONSENTRISKE RINGER (target/distance bands) ── -->
+            <g transform="translate(180, 200)">
+              <!-- ytterste mowing ring -->
+              <circle r="180" fill="url(#ringDark)"/>
+              <circle r="155" fill="#3D6B2C" opacity="0.55"/>
+              <circle r="135" fill="#4F8538" opacity="0.55"/>
+              <circle r="115" fill="#3F6B30" opacity="0.7"/>
+              <!-- collar -->
+              <circle r="92" fill="#5E924A"/>
+              <circle r="84" fill="#4A7A35"/>
+              <!-- green -->
+              <circle r="70" fill="url(#puttingGreen)"/>
+              <!-- inner contour på greenen -->
+              <g fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="0.6">
+                <circle r="58"/><circle r="44"/><circle r="28"/>
+              </g>
+            </g>
+
+            <!-- ── BUNKERS — organiske, peanut-form fra referansebildet ── -->
+            <!-- høyre øvre bunker (pæreformet) -->
+            <g transform="translate(296, 130)">
+              <ellipse cx="2" cy="3" rx="42" ry="28" fill="url(#shadowSoft)" opacity="0.5"/>
+              <path d="M -28 -16 Q -22 -34 -2 -34 Q 18 -32 22 -16 Q 38 -8 38 8 Q 36 26 18 30 Q -2 32 -10 18 Q -28 14 -32 0 Z"
+                fill="url(#sand)" stroke="#A8915F" stroke-width="0.6"/>
+              <path d="M -22 -10 Q -18 -22 0 -22 Q 14 -22 18 -10" fill="none" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="0.5"/>
+            </g>
+            <!-- høyre nedre bunker (mer rund) -->
+            <g transform="translate(310, 320)">
+              <ellipse cx="2" cy="3" rx="34" ry="22" fill="url(#shadowSoft)" opacity="0.5"/>
+              <path d="M -22 -10 Q -18 -24 0 -26 Q 18 -24 24 -10 Q 30 4 22 16 Q 6 24 -10 18 Q -26 10 -24 -2 Z"
+                fill="url(#sand)" stroke="#A8915F" stroke-width="0.6"/>
+            </g>
+
+            <!-- distance-ring labels (pen, mono) -->
+            <g font-family="JetBrains Mono" font-size="9" fill="#FFFFFF" fill-opacity="0.55" letter-spacing="0.1em">
+              <text x="180" y="60" text-anchor="middle">170m</text>
+              <text x="180" y="80" text-anchor="middle">160m</text>
+              <text x="180" y="118" text-anchor="middle" font-weight="600" fill="#D1F843" fill-opacity="0.9">152m · MÅL</text>
+              <text x="180" y="318" text-anchor="middle">140m</text>
+              <text x="180" y="356" text-anchor="middle">130m</text>
+            </g>
+
+            <!-- pin / flagg (sentrum av green) -->
+            <g transform="translate(180, 200)">
+              <ellipse cx="2" cy="14" rx="9" ry="2.5" fill="#000" opacity="0.35"/>
+              <line x1="0" y1="0" x2="0" y2="-26" stroke="#F4F4F0" stroke-width="1.4"/>
+              <path d="M 0 -26 L 12 -22 L 0 -18 Z" fill="#F4F4F0"/>
+              <circle cx="0" cy="0" r="2.4" fill="#0A1F18"/>
+            </g>
+
+            <!-- ── DISPERSION OVERLAY ── -->
+            <!-- 90% bånd -->
+            <ellipse cx="178" cy="208" rx="46" ry="64"
+              fill="url(#ellWide)"
+              stroke="#FFF7B0" stroke-opacity="0.45" stroke-width="1" stroke-dasharray="3,3"
+              transform="rotate(-4 178 208)"/>
+            <!-- 50% bånd -->
+            <ellipse cx="180" cy="204" rx="22" ry="32"
+              fill="url(#ellTight)"
+              stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.2"
+              transform="rotate(-4 180 204)"/>
+
+            <!-- 40 slag -->
+            <g>
+              <circle cx="180" cy="206" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="176" cy="198" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="184" cy="210" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="172" cy="204" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="186" cy="200" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="178" cy="216" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="190" cy="208" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="170" cy="190" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="182" cy="220" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="166" cy="196" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="194" cy="204" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="178" cy="184" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="174" cy="226" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="184" cy="190" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="162" cy="212" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="190" cy="196" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="168" cy="184" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="186" cy="230" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="178" cy="180" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="196" cy="216" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="160" cy="200" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="188" cy="184" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="164" cy="226" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="200" cy="200" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="170" cy="234" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="190" cy="178" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="156" cy="208" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="202" cy="212" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="178" cy="172" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="184" cy="240" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="152" cy="190" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="206" cy="196" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="172" cy="168" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="190" cy="244" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="160" cy="240" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="198" cy="184" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="148" cy="216" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+            </g>
+
+            <!-- median -->
+            <g transform="translate(180, 204)">
+              <circle r="7" fill="#0A1F18" stroke="#D1F843" stroke-width="1.5"/>
+              <circle r="2.4" fill="#D1F843"/>
+            </g>
+            <text x="192" y="200" font-family="JetBrains Mono" font-size="9" fill="#D1F843" font-weight="700">MEDIAN 152.4m</text>
+
+            <!-- outliers -->
+            <g>
+              <circle cx="120" cy="260" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+              <circle cx="232" cy="148" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+              <circle cx="124" cy="142" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+            </g>
+
+            <!-- ── SPILLER NEDERST (skala-referanse, akkurat som bildet) ── -->
+            <g transform="translate(184, 405)">
+              <!-- skygge -->
+              <ellipse cx="6" cy="3" rx="14" ry="3" fill="#000" opacity="0.4"/>
+              <!-- person, top-down -->
+              <circle cx="0" cy="0" r="3.2" fill="#F0F0EA"/>
+              <ellipse cx="0" cy="3" rx="3.6" ry="5" fill="#F4F4F0"/>
+              <!-- skygge fra spilleren strekker seg -->
+              <path d="M 0 4 L 22 28 L 14 30 L -2 6 Z" fill="#000" opacity="0.32"/>
+              <text y="-12" x="0" font-family="JetBrains Mono" font-size="9" fill="#FFF" text-anchor="middle" font-weight="700" letter-spacing="0.1em">DU</text>
+            </g>
+
+            <!-- vignette -->
+            <rect x="0" y="0" width="360" height="432" fill="url(#vignette)" pointer-events="none"/>
+          </svg>
+
+          <div class="corner">
+            <span class="sw" style="background:#D1F843;"></span>
+            <span>40 SLAG</span>
+          </div>
+          <div class="corner r">
+            <span>GIR 68% ↑</span>
+          </div>
+
+          <div class="legend">
+            <div class="it"><span class="sw ell" style="background:rgba(209,248,67,0.45);"></span>50% spredning</div>
+            <div class="it"><span class="sw ring" style="border-color:rgba(209,248,67,0.6);"></span>90% spredning</div>
+            <div class="it"><span class="sw" style="background:#D1F843;"></span>Slag</div>
+            <div class="it"><span class="sw" style="background:#E85D4E;"></span>Outlier</div>
+          </div>
+        </div>
+
+        <div class="disp-stats">
+          <div class="s"><div class="l">MEDIAN CARRY</div><div class="v">152.4m</div><div class="d">mål 152m</div></div>
+          <div class="s"><div class="l">DEPTH SPREAD</div><div class="v">±8.2m</div><div class="d">90% bånd</div></div>
+          <div class="s"><div class="l">SIDE BIAS</div><div class="v lime">−1.4m</div><div class="d">venstre tendens</div></div>
+          <div class="s"><div class="l">SHOT SHAPE</div><div class="v">Draw</div><div class="d">−4° vinkel</div></div>
+        </div>
+      </div>
+
+      <!-- ╭─ TEE · Driver → fairway ─╮ -->
+      <div class="lab-card">
+        <div class="row-between" style="margin-bottom:10px;">
+          <div>
+            <h3>Fra tee · Driver</h3>
+            <div class="sub">28 SLAG · BANE-SIM · MÅL CARRY 240m</div>
+          </div>
+          <div class="disp-tabs">
+            <button class="active">DR</button>
+            <button>3W</button>
+            <button>5W</button>
+            <button>HY</button>
+          </div>
+        </div>
+
+        <div class="disp-plot">
+          <svg viewBox="0 0 360 432" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <!-- rough/skog rundt fairway -->
+              <radialGradient id="teeRough" cx="50%" cy="60%" r="80%">
+                <stop offset="0%" stop-color="#3A5A28"/>
+                <stop offset="60%" stop-color="#284018"/>
+                <stop offset="100%" stop-color="#1A2C10"/>
+              </radialGradient>
+              <!-- fairway -->
+              <linearGradient id="teeFw" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#5E924A"/>
+                <stop offset="50%" stop-color="#6FA854"/>
+                <stop offset="100%" stop-color="#5E924A"/>
+              </linearGradient>
+              <radialGradient id="teeSand" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#E8D4A8"/>
+                <stop offset="80%" stop-color="#C9B077"/>
+                <stop offset="100%" stop-color="#A8915F"/>
+              </radialGradient>
+              <linearGradient id="teeWater" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3D7CC9"/>
+                <stop offset="100%" stop-color="#1F4A82"/>
+              </linearGradient>
+              <radialGradient id="teeWide" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFF7B0" stop-opacity="0.32"/>
+                <stop offset="100%" stop-color="#D1F843" stop-opacity="0.06"/>
+              </radialGradient>
+              <radialGradient id="teeTight" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+                <stop offset="60%" stop-color="#D1F843" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#D1F843" stop-opacity="0.18"/>
+              </radialGradient>
+              <radialGradient id="teeVignette" cx="50%" cy="50%" r="70%">
+                <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+              </radialGradient>
+            </defs>
+
+            <!-- ── rough/skog base ── -->
+            <rect x="0" y="0" width="360" height="432" fill="url(#teeRough)"/>
+
+            <!-- skogkant venstre (mørk vegetasjon) -->
+            <g opacity="0.95">
+              <path d="M 0 0 L 90 0 Q 70 80 60 180 Q 70 280 50 380 L 0 432 Z" fill="#1A2C10"/>
+              <circle cx="20" cy="80" r="22" fill="#243B16"/>
+              <circle cx="55" cy="160" r="20" fill="#2E4A1C"/>
+              <circle cx="35" cy="260" r="24" fill="#243B16"/>
+              <circle cx="60" cy="350" r="22" fill="#2A4218"/>
+            </g>
+            <!-- skogkant høyre -->
+            <g opacity="0.95">
+              <path d="M 360 0 L 280 0 Q 290 80 300 180 Q 295 280 310 380 L 360 432 Z" fill="#1A2C10"/>
+              <circle cx="340" cy="60" r="20" fill="#243B16"/>
+              <circle cx="312" cy="140" r="22" fill="#2E4A1C"/>
+              <circle cx="335" cy="240" r="24" fill="#243B16"/>
+              <circle cx="318" cy="340" r="20" fill="#2A4218"/>
+            </g>
+
+            <!-- ── FAIRWAY (forsvinner mot målet — perspektivisk smal i topp) ── -->
+            <path d="M 110 432 L 280 432 L 240 60 L 156 60 Z" fill="url(#teeFw)"/>
+
+            <!-- fairway mowing-bånd (horisontale på tvers av fairway) -->
+            <g opacity="0.22">
+              <path d="M 112 400 L 278 400 L 268 360 L 122 360 Z" fill="#4A7A35"/>
+              <path d="M 122 320 L 268 320 L 258 280 L 132 280 Z" fill="#4A7A35"/>
+              <path d="M 132 240 L 258 240 L 248 200 L 142 200 Z" fill="#4A7A35"/>
+              <path d="M 142 160 L 248 160 L 238 120 L 152 120 Z" fill="#4A7A35"/>
+            </g>
+
+            <!-- semirough kant inn mot fairway -->
+            <g opacity="0.5" fill="#3F6B30">
+              <path d="M 95 432 L 110 432 L 156 60 L 148 60 Z"/>
+              <path d="M 290 432 L 280 432 L 240 60 L 248 60 Z"/>
+            </g>
+
+            <!-- ── BUNKERS (peanut-form) ── -->
+            <!-- venstre fairway bunker (peanut) -->
+            <g transform="translate(135, 240)">
+              <ellipse cx="2" cy="3" rx="34" ry="14" fill="#000" opacity="0.35"/>
+              <path d="M -28 -8 Q -22 -16 -10 -14 Q -2 -10 4 -14 Q 16 -16 24 -8 Q 30 2 22 10 Q 8 14 0 8 Q -10 14 -22 8 Q -32 0 -28 -8 Z"
+                fill="url(#teeSand)" stroke="#A8915F" stroke-width="0.6"/>
+            </g>
+            <!-- høyre fairway bunker (større peanut) -->
+            <g transform="translate(252, 200)">
+              <ellipse cx="2" cy="3" rx="38" ry="18" fill="#000" opacity="0.35"/>
+              <path d="M -32 -10 Q -26 -22 -10 -20 Q 0 -16 8 -20 Q 22 -22 30 -10 Q 36 4 26 14 Q 10 18 0 10 Q -10 18 -24 12 Q -38 4 -32 -10 Z"
+                fill="url(#teeSand)" stroke="#A8915F" stroke-width="0.6"/>
+            </g>
+            <!-- liten greenside-bunker øverst -->
+            <g transform="translate(214, 90)">
+              <ellipse cx="2" cy="3" rx="22" ry="9" fill="#000" opacity="0.35"/>
+              <path d="M -18 -6 Q -14 -12 -2 -12 Q 12 -12 18 -4 Q 20 6 10 8 Q -2 10 -14 6 Q -22 0 -18 -6 Z"
+                fill="url(#teeSand)" stroke="#A8915F" stroke-width="0.6"/>
+            </g>
+
+            <!-- vannhinder venstre (organisk dam) -->
+            <g transform="translate(78, 200)">
+              <ellipse cx="2" cy="3" rx="24" ry="32" fill="#000" opacity="0.4"/>
+              <path d="M -18 -22 Q -4 -28 12 -22 Q 22 -8 18 8 Q 14 24 0 28 Q -16 26 -22 10 Q -26 -8 -18 -22 Z"
+                fill="url(#teeWater)" stroke="#5A95D9" stroke-width="0.5"/>
+              <!-- bølger -->
+              <g fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="0.5">
+                <path d="M -10 -5 Q -4 -7 4 -5"/>
+                <path d="M -8 4 Q 0 2 8 4"/>
+                <path d="M -10 14 Q -2 12 8 14"/>
+              </g>
+            </g>
+
+            <!-- distance-bånd labels på fairway -->
+            <g font-family="JetBrains Mono" font-size="9" fill="#FFFFFF" fill-opacity="0.6" letter-spacing="0.1em">
+              <text x="195" y="375" text-anchor="middle">200m</text>
+              <text x="195" y="295" text-anchor="middle" font-weight="600" fill="#D1F843" fill-opacity="0.95">240m · MÅL</text>
+              <text x="195" y="215" text-anchor="middle">280m</text>
+              <text x="195" y="135" text-anchor="middle">320m</text>
+            </g>
+
+            <!-- ── TARGET landing zone ── -->
+            <ellipse cx="195" cy="278" rx="32" ry="14" fill="none"
+              stroke="#D1F843" stroke-opacity="0.55" stroke-width="1.4" stroke-dasharray="3,3"/>
+
+            <!-- ── DISPERSION OVERLAY ── -->
+            <ellipse cx="200" cy="270" rx="56" ry="42"
+              fill="url(#teeWide)"
+              stroke="#FFF7B0" stroke-opacity="0.45" stroke-width="1" stroke-dasharray="3,3"
+              transform="rotate(-8 200 270)"/>
+            <ellipse cx="202" cy="272" rx="28" ry="22"
+              fill="url(#teeTight)"
+              stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.2"
+              transform="rotate(-8 202 272)"/>
+
+            <!-- ── 28 slag (svak høyre-bias) ── -->
+            <g>
+              <circle cx="200" cy="272" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="206" cy="266" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="194" cy="278" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="212" cy="262" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="198" cy="284" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="218" cy="256" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="188" cy="290" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="224" cy="250" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="186" cy="298" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="228" cy="244" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="178" cy="304" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="232" cy="240" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="174" cy="310" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="208" cy="286" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="214" cy="278" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="192" cy="296" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="222" cy="270" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="202" cy="290" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="206" cy="254" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="184" cy="284" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="230" cy="260" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="198" cy="258" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="218" cy="290" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="170" cy="290" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+              <circle cx="236" cy="276" r="3.2" fill="#FFFCEA" stroke="#0A1F18" stroke-width="0.6"/>
+            </g>
+
+            <!-- outliers (en i bunker, en i vann, en i rough) -->
+            <g>
+              <circle cx="252" cy="200" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+              <circle cx="78" cy="208" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+              <circle cx="135" cy="240" r="4.2" fill="#FF6B5A" stroke="#0A1F18" stroke-width="0.8"/>
+            </g>
+
+            <!-- median -->
+            <g transform="translate(202, 272)">
+              <circle r="7" fill="#0A1F18" stroke="#D1F843" stroke-width="1.5"/>
+              <circle r="2.4" fill="#D1F843"/>
+            </g>
+            <text x="214" y="268" font-family="JetBrains Mono" font-size="9" fill="#D1F843" font-weight="700">238m</text>
+
+            <!-- ── TEE BOX nederst ── -->
+            <g transform="translate(195, 410)">
+              <rect x="-14" y="-3" width="28" height="6" rx="1" fill="#7A6240" stroke="#A8915F" stroke-width="0.5"/>
+              <circle cx="-6" cy="0" r="1.4" fill="#FFFFFF"/>
+              <circle cx="6" cy="0" r="1.4" fill="#FFFFFF"/>
+              <!-- spiller på tee (top-down) -->
+              <g transform="translate(0, 14)">
+                <ellipse cx="3" cy="2" rx="8" ry="2" fill="#000" opacity="0.4"/>
+                <circle cx="0" cy="0" r="2.6" fill="#F0F0EA"/>
+                <ellipse cx="0" cy="2.5" rx="3" ry="4" fill="#F4F4F0"/>
+              </g>
+              <text y="-9" font-family="JetBrains Mono" font-size="9" fill="#D1F843" text-anchor="middle" font-weight="700" letter-spacing="0.1em">TEE</text>
+            </g>
+
+            <!-- vignette -->
+            <rect x="0" y="0" width="360" height="432" fill="url(#teeVignette)" pointer-events="none"/>
+          </svg>
+
+          <div class="corner">
+            <span class="sw" style="background:#D1F843;"></span>
+            <span>28 SLAG</span>
+          </div>
+          <div class="corner r">
+            <span>FW 71% ↑</span>
+          </div>
+
+          <div class="legend">
+            <div class="it"><span class="sw ell" style="background:rgba(209,248,67,0.5);"></span>50%</div>
+            <div class="it"><span class="sw ring" style="border-color:rgba(209,248,67,0.6);"></span>90%</div>
+            <div class="it"><span class="sw" style="background:#3BAF6E;"></span>Fairway</div>
+            <div class="it"><span class="sw" style="background:#E5D9B8;"></span>Bunker</div>
+            <div class="it"><span class="sw" style="background:#E85D4E;"></span>Miss</div>
+          </div>
+        </div>
+
+        <div class="disp-stats">
+          <div class="s"><div class="l">MEDIAN CARRY</div><div class="v">238m</div><div class="d">mål 240m</div></div>
+          <div class="s"><div class="l">DEPTH SPREAD</div><div class="v">±18m</div><div class="d">90% bånd</div></div>
+          <div class="s"><div class="l">SIDE BIAS</div><div class="v red">+4.8m</div><div class="d">høyre push</div></div>
+          <div class="s"><div class="l">FAIRWAY HIT</div><div class="v lime">71%</div><div class="d">20 / 28</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="row-between">
+        <div><h3>Klubbesammenligning</h3><div class="sub">CARRY VS BENCHMARK (TOUR-SNITT) · 30d MEDIAN</div></div>
+        <div style="display:flex;gap:8px;align-items:center;font-size:11px;color:#A5B2AD;">
+          <span style="display:inline-block;width:18px;height:4px;background:#D1F843;border-radius:2px;"></span> Din carry
+          <span style="display:inline-block;width:2px;height:10px;background:#AF52DE;margin-left:8px;"></span> Tour-snitt
+        </div>
+      </div>
+      <div class="club-row h">
+        <div>Klubbe</div><div>Carry · m</div><div class="mono">Ball mph</div><div class="mono">Spin</div><div class="mono">Launch°</div><div>Slag 30d</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">DR</div>
+        <div class="club-bar"><div style="width:82%;"></div><div class="ref" style="left:88%;"></div></div>
+        <div class="mono">164.2</div><div class="mono">2 420</div><div class="mono">11.8</div><div>184</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">3W</div>
+        <div class="club-bar"><div style="width:74%;"></div><div class="ref" style="left:80%;"></div></div>
+        <div class="mono">158.8</div><div class="mono">3 180</div><div class="mono">13.2</div><div>92</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">5J</div>
+        <div class="club-bar"><div style="width:60%;"></div><div class="ref" style="left:62%;"></div></div>
+        <div class="mono">135.8</div><div class="mono">5 420</div><div class="mono">15.8</div><div>52</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">6J</div>
+        <div class="club-bar"><div style="width:54%;"></div><div class="ref" style="left:56%;"></div></div>
+        <div class="mono">144.2</div><div class="mono">6 140</div><div class="mono">16.4</div><div>68</div>
+      </div>
+      <div class="club-row" style="background:rgba(209,248,67,0.04);">
+        <div class="mono" style="color:#D1F843;font-weight:700;">7J</div>
+        <div class="club-bar"><div style="width:48%;"></div><div class="ref" style="left:50%;"></div></div>
+        <div class="mono">152.4</div><div class="mono">6 820</div><div class="mono">17.2</div><div style="color:#D1F843;">162 ●</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">8J</div>
+        <div class="club-bar"><div style="width:42%;"></div><div class="ref" style="left:44%;"></div></div>
+        <div class="mono">130.2</div><div class="mono">7 240</div><div class="mono">18.8</div><div>88</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">9J</div>
+        <div class="club-bar"><div style="width:36%;"></div><div class="ref" style="left:38%;"></div></div>
+        <div class="mono">118.4</div><div class="mono">7 860</div><div class="mono">20.2</div><div>102</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">PW</div>
+        <div class="club-bar"><div style="width:30%;"></div><div class="ref" style="left:32%;"></div></div>
+        <div class="mono">104.8</div><div class="mono">8 420</div><div class="mono">22.1</div><div>144</div>
+      </div>
+      <div style="margin-top:16px; padding:14px; background:rgba(175,82,222,0.08); border-radius:10px; border:1px solid rgba(175,82,222,0.15);">
+        <div class="mono" style="font-size:10px;color:#AF52DE;letter-spacing:0.14em;">◈ AI-ANALYSE</div>
+        <div style="font-size:13px; color:#E6EAE8; margin-top:4px; line-height:1.5;">
+          Carry-tallene dine ligger 2–6m under tour-benchmark, men spredning er <b style="color:#D1F843;">elite</b> (±4.2m på 7-jern). Fokus videre: øk ballhastighet på 8J/9J (+2 m/s) for å tette gap mot 130m-snitt. Sjekk lie-vinkel — smash på 6J-7J tyder på toe-kontakt.
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

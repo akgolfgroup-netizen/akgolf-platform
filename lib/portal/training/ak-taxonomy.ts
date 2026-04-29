@@ -15,15 +15,17 @@ export interface PyramideNivaa {
   code: "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
   label: string;
   description: string;
-  color: string; // Heritage-token-farge for visualisering
+  // Brand Guide V2.0 — gradient fra dyp skogsgrønn (basis: FYS) til lime (topp: TURN).
+  // Følger pyramide-metafor visuelt: tyngst nederst, lettest på toppen.
+  color: string;
 }
 
 export const PYRAMIDE: readonly PyramideNivaa[] = [
-  { code: "FYS", label: "Fysisk", description: "Styrke, power, mobilitet, stabilitet", color: "#154212" },
-  { code: "TEK", label: "Teknikk", description: "Bevegelsesmønster, posisjoner, sekvens", color: "#2d5a27" },
-  { code: "SLAG", label: "Golfslag", description: "Slagkvalitet, avstand, nøyaktighet", color: "#bcf0ae" },
-  { code: "SPILL", label: "Spill", description: "Strategi, banehåndtering, scoring", color: "#a1d494" },
-  { code: "TURN", label: "Turnering", description: "Mental prestasjon, konkurransefokus", color: "#d2f000" },
+  { code: "FYS", label: "Fysisk", description: "Styrke, power, mobilitet, stabilitet", color: "#003B2A" },
+  { code: "TEK", label: "Teknikk", description: "Bevegelsesmønster, posisjoner, sekvens", color: "#005840" },
+  { code: "SLAG", label: "Golfslag", description: "Slagkvalitet, avstand, nøyaktighet", color: "#2A7D5A" },
+  { code: "SPILL", label: "Spill", description: "Strategi, banehåndtering, scoring", color: "#B7C97D" },
+  { code: "TURN", label: "Turnering", description: "Mental prestasjon, konkurransefokus", color: "#D1F843" },
 ] as const;
 
 export type PyramideCode = (typeof PYRAMIDE)[number]["code"];
@@ -33,18 +35,22 @@ export type PyramideCode = (typeof PYRAMIDE)[number]["code"];
 export interface Treningsomraade {
   code: string;
   label: string;
-  gruppe: "fullSwing" | "narspill" | "putting";
+  gruppe: "tee" | "innspill" | "narspill" | "putting";
   csRelevant: boolean;
   pSystem: boolean;
 }
 
+// Rekkefølge: Tee Total → Innspill → Nærspill → Putting
+// Tee og Innspill er begge full swing, men splittet i to grupper for
+// klarere navigasjon i UI. "fullSwing" som samlegruppe er fjernet.
 export const TRENINGSOMRADER: readonly Treningsomraade[] = [
-  // Full swing
-  { code: "TEE", label: "Tee Total", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN200", label: "Innspill 200+ m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN150", label: "Innspill 150–200 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN100", label: "Innspill 100–150 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN50", label: "Innspill 50–100 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
+  // Tee
+  { code: "TEE", label: "Tee Total", gruppe: "tee", csRelevant: true, pSystem: true },
+  // Innspill (full swing fra ulik avstand)
+  { code: "INN200", label: "Innspill 200+ m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN150", label: "Innspill 150–200 m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN100", label: "Innspill 100–150 m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN50", label: "Innspill 50–100 m", gruppe: "innspill", csRelevant: true, pSystem: true },
   // Nærspill
   { code: "CHIP", label: "Chip", gruppe: "narspill", csRelevant: false, pSystem: true },
   { code: "PITCH", label: "Pitch", gruppe: "narspill", csRelevant: false, pSystem: true },
@@ -63,7 +69,8 @@ export const TRENINGSOMRADER: readonly Treningsomraade[] = [
 export type TreningsomraadeCode = (typeof TRENINGSOMRADER)[number]["code"];
 
 export const OMRADE_GRUPPER = [
-  { code: "fullSwing", label: "Full sving" },
+  { code: "tee", label: "Tee Total" },
+  { code: "innspill", label: "Innspill" },
   { code: "narspill", label: "Nærspill" },
   { code: "putting", label: "Putting" },
 ] as const;
@@ -79,10 +86,10 @@ export interface LFase {
 }
 
 export const L_FASER: readonly LFase[] = [
-  { code: "L-KROPP", label: "Kropp", description: "Kun kroppsbevegelse", equipment: "Ingen", csAnbefalt: "CS0" },
-  { code: "L-ARM", label: "Arm", description: "Kropp + armer", equipment: "Ingen kølle/ball", csAnbefalt: "CS0" },
-  { code: "L-KØLLE", label: "Kølle", description: "Kropp + armer + kølle", equipment: "Ingen ball", csAnbefalt: "CS20–40" },
-  { code: "L-BALL", label: "Ball", description: "Alt inkludert, lav hastighet", equipment: "Ball", csAnbefalt: "CS40–60" },
+  { code: "L-KROPP", label: "Kropp", description: "Kun kroppsbevegelse", equipment: "Ingen", csAnbefalt: "—" },
+  { code: "L-ARM", label: "Arm", description: "Kropp + armer", equipment: "Ingen kølle/ball", csAnbefalt: "—" },
+  { code: "L-KØLLE", label: "Kølle", description: "Kropp + armer + kølle", equipment: "Ingen ball", csAnbefalt: "CS50" },
+  { code: "L-BALL", label: "Ball", description: "Alt inkludert, lav hastighet", equipment: "Ball", csAnbefalt: "CS50–60" },
   { code: "L-AUTO", label: "Auto", description: "Full hastighet, automatisert", equipment: "Alt", csAnbefalt: "CS70–100" },
 ] as const;
 
@@ -96,11 +103,12 @@ export interface CSNivaa {
   description: string;
 }
 
+// CS-skalaen starter på 50 % av maks innsats — CS-nivåer under 50
+// brukes ikke i ny treningsplan. Eldre AI-pipeline (AGE_GROUP_TABLE
+// for de yngste aldersgruppene) refererer fortsatt til CS20/CS40
+// som historiske aldersbegrensninger; de oppdateres når AI-pipelinen
+// reaktiveres.
 export const CS_NIVAER: readonly CSNivaa[] = [
-  { code: "CS0", percent: 0, description: "Ingen sving (FYS, L-KROPP, L-ARM)" },
-  { code: "CS20", percent: 20, description: "Posisjonskontroll, L-KØLLE" },
-  { code: "CS30", percent: 30, description: "Langsom øving" },
-  { code: "CS40", percent: 40, description: "Koordinasjon, L-BALL start" },
   { code: "CS50", percent: 50, description: "Minimum for balltrening" },
   { code: "CS60", percent: 60, description: "Konsistens" },
   { code: "CS70", percent: 70, description: "Konkurranselignende" },

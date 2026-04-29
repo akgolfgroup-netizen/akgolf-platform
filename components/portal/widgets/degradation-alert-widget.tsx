@@ -1,47 +1,61 @@
 "use client";
 
 import { cn } from "@/lib/portal/utils/cn";
+import { getDegradationAlerts } from "@/lib/portal/widgets/actions";
+import { useWidgetData } from "./use-widget-data";
+
+const STATUS_CONFIG = {
+  good: {
+    dot: "bg-success",
+    text: "text-success",
+    label: "Stabil",
+  },
+  warning: {
+    dot: "bg-warning",
+    text: "text-warning",
+    label: "Nedgang",
+  },
+  alert: {
+    dot: "bg-error",
+    text: "text-error",
+    label: "Kritisk",
+  },
+} as const;
 
 /**
  * DegradationAlertWidget — viser nedgang i teknikk under press.
  *
- * Data-kilde: DegradationTracking
- * Brukes på: A1 (MC Dashboard), A4 (MC Elever), N17
+ * Data-kilde: DegradationTracking via getDegradationAlerts()
+ * Brukes pa: A1 (MC Dashboard), A4 (MC Elever), N17
  */
 export function DegradationAlertWidget() {
-  // TODO: Koble til reelle data via server action
-  const areas = [
-    { name: "Teknikk", status: "good" as const, score: 8.2, change: 0.3 },
-    { name: "Slag", status: "warning" as const, score: 6.8, change: -1.2 },
-    { name: "Spill", status: "good" as const, score: 7.5, change: 0.1 },
-    { name: "Turnering", status: "alert" as const, score: 5.1, change: -2.4 },
-  ];
+  const { data: areas, loading } = useWidgetData(getDegradationAlerts, []);
 
-  const statusConfig = {
-    good: {
-      dot: "bg-success",
-      text: "text-success",
-      bg: "bg-success/10",
-      label: "Stabil",
-    },
-    warning: {
-      dot: "bg-warning",
-      text: "text-warning",
-      bg: "bg-warning/10",
-      label: "Nedgang",
-    },
-    alert: {
-      dot: "bg-error",
-      text: "text-error",
-      bg: "bg-error/10",
-      label: "Kritisk",
-    },
-  };
+  if (loading) {
+    return (
+      <div className="space-y-3">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-12 bg-surface-container animate-pulse rounded-xl"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (areas.length === 0) {
+    return (
+      <p className="text-xs text-muted py-4 text-center">
+        Ingen nedgangs-varsler aktive.
+      </p>
+    );
+  }
 
   return (
     <div className="space-y-3">
       {areas.map((area) => {
-        const config = statusConfig[area.status];
+        const config = STATUS_CONFIG[area.status];
         return (
           <div
             key={area.name}
@@ -62,7 +76,7 @@ export function DegradationAlertWidget() {
               <p
                 className={cn(
                   "text-[10px] font-medium",
-                  area.change < 0 ? "text-error" : "text-success"
+                  area.change < 0 ? "text-error" : "text-success",
                 )}
               >
                 {area.change > 0 ? "+" : ""}
@@ -74,7 +88,7 @@ export function DegradationAlertWidget() {
       })}
 
       <div className="pt-1 text-[10px] text-muted">
-        Basert på siste 10 økter per nivå
+        Basert pa siste 10 okter per niva
       </div>
     </div>
   );

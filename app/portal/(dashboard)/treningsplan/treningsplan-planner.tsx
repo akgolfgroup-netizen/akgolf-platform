@@ -26,18 +26,30 @@ import {
 import {
   searchExercises,
   createUserExercise,
+  toggleFavoriteExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
-import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
 } from "./components/plan-adjustment-banner";
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
+import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
+import { PlanSuggestionInbox } from "@/components/portal/treningsplan/plan-suggestion-inbox";
+import {
+  ExerciseConfigPopover,
+  type ExerciseConfigDraft,
+  type ExerciseConfigResult,
+} from "@/components/portal/treningsplan/exercise-config-popover";
+import {
+  SessionContextMenu,
+  type SessionContextMenuItem,
+} from "@/components/portal/treningsplan/session-context-menu";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
+import type { PlanSuggestionView } from "@/lib/portal/training/plan-suggestion-types";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -50,7 +62,14 @@ interface V2Event {
   startM: number;
   dur: number;
   title: string;
+  /** Pyramide-kode (FYS/TEK/SLAG/SPILL/TURN) */
   focus: string;
+  /** Treningsområde (PUTT, CHIP, IRON_50_100, ...) */
+  area?: string | null;
+  /** Total reps for økten */
+  repsTotal?: number | null;
+  description?: string | null;
+  facilityId?: string | null;
   exercises: unknown[];
   done: boolean;
   isGroupSession?: boolean;
@@ -88,9 +107,23 @@ export interface ConflictDetailUI {
   message: string;
 }
 
+export interface TemplateSummary {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  badge?: string;
+  sessionCount: number;
+}
+
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
+  templates?: TemplateSummary[];
+  onApplyTemplate?: (
+    templateId: string,
+    weekOffset: number
+  ) => Promise<{ success: boolean; createdCount?: number; error?: string }>;
   sessionCount?: number;
   totalMinutes?: number;
   adherencePct?: number;
@@ -101,6 +134,18 @@ interface TreningsplanPlannerProps {
   myPlans?: MyPlanSummary[];
   goalsSummary?: PlanGoalsSummary | null;
   coachFeedback?: { text: string; at: string | null } | null;
+  playerComment?: { text: string; at: string | null } | null;
+  onSavePlayerComment?: (
+    text: string | null
+  ) => Promise<{ success: boolean; error?: string }>;
+  pendingSuggestions?: PlanSuggestionView[];
+  onAcceptSuggestion?: (
+    suggestionId: string
+  ) => Promise<{ success: boolean; error?: string }>;
+  onRejectSuggestion?: (
+    suggestionId: string,
+    reason?: string
+  ) => Promise<{ success: boolean; error?: string }>;
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -108,9 +153,13 @@ interface TreningsplanPlannerProps {
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    area?: string;
+    repsTotal?: number;
     startH?: number;
     startM?: number;
     facilityId?: string;
+    lPhases?: string[];
+    lifeFocus?: string[];
   }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
   onAddExerciseToSession: (
     sessionId: string,
@@ -121,6 +170,11 @@ interface TreningsplanPlannerProps {
       pyramid: string;
       area: string;
       lPhase?: string;
+      durationMinutes?: number;
+      repsWithBall?: number;
+      repsWithoutBall?: number;
+      focus?: string;
+      notes?: string;
     }
   ) => Promise<{ success: boolean }>;
   onUpdateSession: (
@@ -130,6 +184,8 @@ interface TreningsplanPlannerProps {
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
+      area?: string | null;
+      repsTotal?: number | null;
       facilityId?: string | null;
     }
   ) => Promise<{ success: boolean }>;
@@ -166,6 +222,8 @@ interface TreningsplanPlannerProps {
 export function TreningsplanPlanner({
   weekOffset,
   planId,
+  templates = [],
+  onApplyTemplate,
   sessionCount = 0,
   totalMinutes = 0,
   adherencePct = 0,
@@ -176,6 +234,11 @@ export function TreningsplanPlanner({
   myPlans = [],
   goalsSummary,
   coachFeedback,
+  playerComment,
+  onSavePlayerComment,
+  pendingSuggestions = [],
+  onAcceptSuggestion,
+  onRejectSuggestion,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
@@ -201,6 +264,70 @@ export function TreningsplanPlanner({
   const [editEvent, setEditEvent] = useState<V2Event | null>(null);
   const [adjustModalOpen, setAdjustModalOpen] = useState(false);
   const [planCreatorOpen, setPlanCreatorOpen] = useState(false);
+
+  // Drag-drop popover for konfigurasjon av nye øvelser på en økt
+  const [exerciseConfig, setExerciseConfig] = useState<{
+    sessionId: string;
+    draft: ExerciseConfigDraft;
+  } | null>(null);
+
+  // Høyreklikk-meny på en eksisterende økt
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    event: V2Event;
+  } | null>(null);
+
+  const handleEventContextMenu = (
+    e: React.MouseEvent,
+    event: V2Event,
+  ) => {
+    if (event.isGroupSession) {
+      // Gruppeøkter kan ikke dupliseres — la nettleserens egen meny åpne
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    setContextMenu({ x: e.clientX, y: e.clientY, event });
+  };
+
+  const buildContextMenuItems = (event: V2Event): SessionContextMenuItem[] => {
+    const items: SessionContextMenuItem[] = [];
+    if (onDuplicateSession) {
+      items.push({
+        id: "duplicate",
+        label: "Dupliser",
+        iconName: "content_copy",
+        onSelect: async () => {
+          const result = await onDuplicateSession(event.id);
+          if (result.success) {
+            router.refresh();
+          }
+        },
+      });
+    }
+    return items;
+  };
+
+  const handleConfirmExerciseConfig = async (config: ExerciseConfigResult) => {
+    if (!exerciseConfig) return;
+    const { sessionId, draft } = exerciseConfig;
+    await onAddExerciseToSession(sessionId, {
+      id: draft.id,
+      name: draft.name,
+      description: draft.description,
+      pyramid: draft.pyramid,
+      area: draft.area,
+      lPhase: draft.lPhase,
+      durationMinutes: config.durationMinutes,
+      repsWithBall: config.repsWithBall,
+      repsWithoutBall: config.repsWithoutBall,
+      focus: config.focus,
+      notes: config.notes,
+    });
+    setExerciseConfig(null);
+    window.location.reload();
+  };
 
   const showEmptyState = !planId;
 
@@ -355,9 +482,9 @@ export function TreningsplanPlanner({
         <EmptyState
           iconName="event_note"
           title="Du har ingen aktiv treningsplan"
-          description="Velg hvordan du vil starte: la AI lage en plan basert på din profil, velg en standardmal, eller bygg helt selv."
+          description="Velg en standardmal eller bygg planen din helt selv."
           actionLabel="Lag treningsplan"
-          actionIconName="auto_awesome"
+          actionIconName="add"
           onAction={() => setPlanCreatorOpen(true)}
         />
       )}
@@ -393,27 +520,27 @@ export function TreningsplanPlanner({
         }}
       />
 
-      {/* Coach-kommentar på plan-nivå (Epic 9) */}
-      {!showEmptyState && coachFeedback && coachFeedback.text && (
-        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
-          <div className="flex items-start gap-3">
-            <Icon name="comment" size={18} className="mt-0.5 text-primary" />
-            <div className="flex-1">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary">
-                Kommentar fra coach
-              </p>
-              <p className="mt-1 text-sm text-on-surface whitespace-pre-wrap">
-                {coachFeedback.text}
-              </p>
-              {coachFeedback.at && (
-                <p className="mt-1 font-mono text-[10px] text-on-surface-variant">
-                  {format(new Date(coachFeedback.at), "d. MMM yyyy", { locale: nb })}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+      {/* Samtale: coach-feedback + spiller-kommentar (Sprint 1) */}
+      {!showEmptyState && (
+        <PlanConversationCard
+          coachFeedback={coachFeedback}
+          playerComment={playerComment}
+          canEdit={Boolean(planId && onSavePlayerComment)}
+          onSavePlayerComment={onSavePlayerComment}
+        />
       )}
+
+      {/* Forslag fra coach (Sprint 2) */}
+      {!showEmptyState &&
+        pendingSuggestions.length > 0 &&
+        onAcceptSuggestion &&
+        onRejectSuggestion && (
+          <PlanSuggestionInbox
+            suggestions={pendingSuggestions}
+            onAccept={onAcceptSuggestion}
+            onReject={onRejectSuggestion}
+          />
+        )}
 
       {/* Plan-mål med progress (Epic 7) */}
       {!showEmptyState && goalsSummary && goalsSummary.totalCount > 0 && (
@@ -429,6 +556,7 @@ export function TreningsplanPlanner({
             <WeekGrid
               weekDates={weekDates}
               events={events}
+              weekOffset={weekOffset}
               onCellClick={(dayIndex, hour) => {
                 setModalDay(dayIndex);
                 setModalHour(hour);
@@ -441,7 +569,11 @@ export function TreningsplanPlanner({
                 setEditEvent(ev);
                 setEditModalOpen(true);
               }}
+              onEventContextMenu={handleEventContextMenu}
               onAddExerciseToSession={onAddExerciseToSession}
+              onRequestExerciseConfig={(sessionId, draft) =>
+                setExerciseConfig({ sessionId, draft })
+              }
             />
           </div>
           {/* Mobil-liste (under md) */}
@@ -461,6 +593,7 @@ export function TreningsplanPlanner({
                 setEditEvent(ev);
                 setEditModalOpen(true);
               }}
+              onEventContextMenu={handleEventContextMenu}
             />
           </div>
         </div>
@@ -513,6 +646,24 @@ export function TreningsplanPlanner({
         />
       )}
 
+      {/* Popover: konfigurer øvelse ved drag-drop */}
+      <ExerciseConfigPopover
+        open={exerciseConfig !== null}
+        draft={exerciseConfig?.draft ?? null}
+        onConfirm={handleConfirmExerciseConfig}
+        onCancel={() => setExerciseConfig(null)}
+      />
+
+      {/* Høyreklikk-meny på en eksisterende økt */}
+      {contextMenu && (
+        <SessionContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          items={buildContextMenuItems(contextMenu.event)}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
+
       {/* Stats-stripe */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
         <div className="flex gap-8">
@@ -550,7 +701,9 @@ function WeekGrid({
   weekOffset,
   onCellClick,
   onEventClick,
+  onEventContextMenu,
   onAddExerciseToSession,
+  onRequestExerciseConfig,
   onMoveEvent,
   onResizeEvent,
   onApplyTemplate,
@@ -560,7 +713,11 @@ function WeekGrid({
   weekOffset: number;
   onCellClick: (dayIndex: number, hour: number) => void;
   onEventClick: (event: V2Event) => void;
+  /** Høyreklikk på en økt — åpner kontekstmeny ved cursor. */
+  onEventContextMenu?: (e: React.MouseEvent, event: V2Event) => void;
   onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
+  /** Åpner popover for å konfigurere reps/tid før øvelsen lagres på økten. */
+  onRequestExerciseConfig?: (sessionId: string, draft: ExerciseConfigDraft) => void;
   onMoveEvent?: TreningsplanPlannerProps["onMoveEvent"];
   onResizeEvent?: TreningsplanPlannerProps["onResizeEvent"];
   onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
@@ -685,6 +842,9 @@ function WeekGrid({
                           e.stopPropagation();
                           onEventClick(ev);
                         }}
+                        onContextMenu={(e) => {
+                          if (onEventContextMenu) onEventContextMenu(e, ev);
+                        }}
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={async (e) => {
                           e.preventDefault();
@@ -703,7 +863,21 @@ function WeekGrid({
                               window.location.reload();
                               return;
                             }
-                            // Default: behandle som øvelse (legacy + nytt format)
+                            // Default: åpne konfigurasjons-popover for øvelsen
+                            // slik at spilleren kan sette tid + reps før lagring.
+                            if (onRequestExerciseConfig && payload?.id && payload?.name) {
+                              onRequestExerciseConfig(ev.id, {
+                                id: payload.id,
+                                name: payload.name,
+                                description: payload.description,
+                                pyramid: payload.pyramid,
+                                area: payload.area,
+                                lPhase: payload.lPhase,
+                                defaultDurationMinutes: payload.defaultDurationMinutes,
+                              });
+                              return;
+                            }
+                            // Fallback (legacy): lagre direkte uten config
                             await onAddExerciseToSession(ev.id, payload);
                             window.location.reload();
                           } catch {
@@ -731,12 +905,8 @@ function WeekGrid({
                             <span className="ml-1 text-info">· {ev.groupName}</span>
                           )}
                         </span>
-                        {!ev.isGroupSession && onResizeEvent && (
-                          <ResizeHandle
-                            currentDuration={ev.dur}
-                            onResize={(newDur) => onResizeEvent(ev.id, newDur)}
-                          />
-                        )}
+                        {/* TODO: ResizeHandle-komponent ikke implementert enda. onResizeEvent-prop er klar når UI bygges. */}
+                        {!ev.isGroupSession && onResizeEvent && null}
                       </div>
                     ))}
                   </div>
@@ -803,7 +973,17 @@ function CreateSessionModal({
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(60);
+  const [reps, setReps] = useState<string>("");
   const [focus, setFocus] = useState<string>("TEK");
+  const [area, setArea] = useState<string>("");
+  /** Hva øver du på — én av de 4 hovedgruppene (tee/innspill/narspill/putting). */
+  const [areaGroup, setAreaGroup] = useState<string>("");
+  /** BEVEGELSE — multiselect L-faser (KROPP/ARM/KØLLE/BALL/AUTO). */
+  const [lPhases, setLPhases] = useState<string[]>([]);
+  /** LIFE — multiselect (SELV/SOS/EMO/KAR/RES). */
+  const [lifeFocus, setLifeFocus] = useState<string[]>([]);
+  const [startH, setStartH] = useState(startHour);
+  const [startM, setStartM] = useState(0);
   const [notes, setNotes] = useState("");
   const [facilityId, setFacilityId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -820,8 +1000,8 @@ function CreateSessionModal({
     let cancelled = false;
     onCheckConflicts({
       date: dateStr,
-      startH: startHour,
-      startM: 0,
+      startH,
+      startM,
       durationMinutes: duration,
     }).then((result) => {
       if (!cancelled) {
@@ -832,7 +1012,7 @@ function CreateSessionModal({
     return () => {
       cancelled = true;
     };
-  }, [onCheckConflicts, dateStr, startHour, duration]);
+  }, [onCheckConflicts, dateStr, startH, startM, duration]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -846,6 +1026,8 @@ function CreateSessionModal({
       return;
     }
 
+    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : undefined;
+
     const result = await onCreate({
       weekOffset,
       dayOfWeek,
@@ -853,9 +1035,13 @@ function CreateSessionModal({
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
-      startH: startHour,
-      startM: 0,
+      area: area || undefined,
+      repsTotal: Number.isFinite(repsTotal) ? repsTotal : undefined,
+      startH,
+      startM,
       facilityId: facilityId || undefined,
+      lPhases: lPhases.length > 0 ? lPhases : undefined,
+      lifeFocus: lifeFocus.length > 0 ? lifeFocus : undefined,
     });
 
     if (result && "error" in result) {
@@ -886,8 +1072,7 @@ function CreateSessionModal({
         </div>
 
         <p className="mt-1 font-mono text-[11px] text-on-surface-variant">
-          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })} · kl{" "}
-          {String(startHour).padStart(2, "0")}:00
+          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })}
         </p>
 
         {error && (
@@ -912,35 +1097,86 @@ function CreateSessionModal({
             />
           </div>
 
-          {/* Varighet */}
+          {/* Tidspunkt (15-min intervaller) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Varighet
+              Tidspunkt
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
-              {[15, 30, 45, 60, 90, 120].map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setDuration(m)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                    duration === m
-                      ? "bg-primary text-surface"
-                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                  }`}
-                >
-                  {m}m
-                </button>
-              ))}
+            <div className="mt-1 flex items-center gap-2">
+              <select
+                value={startH}
+                onChange={(e) => setStartH(parseInt(e.target.value, 10))}
+                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                {Array.from({ length: 17 }, (_, i) => i + 6).map((h) => (
+                  <option key={h} value={h}>
+                    {String(h).padStart(2, "0")}
+                  </option>
+                ))}
+              </select>
+              <span className="text-sm text-on-surface-variant">:</span>
+              <select
+                value={startM}
+                onChange={(e) => setStartM(parseInt(e.target.value, 10))}
+                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                {[0, 15, 30, 45].map((m) => (
+                  <option key={m} value={m}>
+                    {String(m).padStart(2, "0")}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
-          {/* Pyramide-fokus */}
+          {/* Varighet og Reps */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Varighet
+              </label>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {[15, 30, 45, 60, 90, 120].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setDuration(m)}
+                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                      duration === m
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {m}m
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Reps (valgfri)
+              </label>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={0}
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                placeholder="f.eks. 50"
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Type trening (Pyramide) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Fokus
+              Type trening
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hva slags økt er dette? Velg én hovedtype.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -956,6 +1192,137 @@ function CreateSessionModal({
                   {p.label}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Hva øver du på (Treningsområde — gruppe-pills + sub-area-pills) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Hva øver du på (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Velg hovedområde — du kan finjustere etter at gruppen er valgt.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {OMRADE_GRUPPER.map((g) => {
+                const active = areaGroup === g.code;
+                return (
+                  <button
+                    key={g.code}
+                    type="button"
+                    onClick={() => {
+                      if (active) {
+                        setAreaGroup("");
+                        setArea("");
+                      } else {
+                        setAreaGroup(g.code);
+                        setArea("");
+                      }
+                    }}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {g.label}
+                  </button>
+                );
+              })}
+            </div>
+            {areaGroup && (
+              <div className="mt-2 flex flex-wrap gap-1.5 rounded-lg bg-surface-container/50 p-2">
+                {TRENINGSOMRADER.filter((o) => o.gruppe === areaGroup).map((o) => {
+                  const active = area === o.code;
+                  return (
+                    <button
+                      key={o.code}
+                      type="button"
+                      onClick={() => setArea(active ? "" : o.code)}
+                      className={`rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                        active
+                          ? "bg-primary text-surface"
+                          : "border border-outline-variant/20 bg-surface text-on-surface-variant hover:bg-surface-container"
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* BEVEGELSE (L-faser — multiselect) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Bevegelse (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hvilke L-faser skal denne økten dekke? Velg én eller flere.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {L_FASER.map((l) => {
+                const active = lPhases.includes(l.code);
+                return (
+                  <button
+                    key={l.code}
+                    type="button"
+                    onClick={() =>
+                      setLPhases((prev) =>
+                        prev.includes(l.code)
+                          ? prev.filter((x) => x !== l.code)
+                          : [...prev, l.code],
+                      )
+                    }
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                    title={l.description}
+                  >
+                    {l.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* LIFE (multiselect) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Life (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Mental/livsstil-dimensjoner som økten støtter.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {LIFE_KODER.map((l) => {
+                const active = lifeFocus.includes(l.code);
+                const shortLabel = l.code.replace("LIFE-", "");
+                return (
+                  <button
+                    key={l.code}
+                    type="button"
+                    onClick={() =>
+                      setLifeFocus((prev) =>
+                        prev.includes(l.code)
+                          ? prev.filter((x) => x !== l.code)
+                          : [...prev, l.code],
+                      )
+                    }
+                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+                      active
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                    title={`${l.label} — ${l.description}`}
+                  >
+                    {shortLabel}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -1073,9 +1440,13 @@ function EditSessionModal({
   const router = useRouter();
   const [title, setTitle] = useState(event.title);
   const [duration, setDuration] = useState(event.dur);
+  const [reps, setReps] = useState<string>(
+    event.repsTotal != null ? String(event.repsTotal) : ""
+  );
   const [focus, setFocus] = useState<string>(event.focus);
-  const [notes, setNotes] = useState("");
-  const [facilityId, setFacilityId] = useState<string>("");
+  const [area, setArea] = useState<string>(event.area ?? "");
+  const [notes, setNotes] = useState(event.description ?? "");
+  const [facilityId, setFacilityId] = useState<string>(event.facilityId ?? "");
   const [error, setError] = useState<string | null>(null);
   const [duplicating, setDuplicating] = useState(false);
 
@@ -1087,11 +1458,15 @@ function EditSessionModal({
       return;
     }
 
+    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : null;
+
     const result = await onUpdate(event.id, {
       title: title.trim(),
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
+      area: area || null,
+      repsTotal: Number.isFinite(repsTotal) ? repsTotal : null,
       facilityId: facilityId || null,
     });
 
@@ -1147,33 +1522,52 @@ function EditSessionModal({
             />
           </div>
 
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Varighet
-            </label>
-            <div className="mt-1 flex flex-wrap gap-2">
-              {[15, 30, 45, 60, 90, 120].map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setDuration(m)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                    duration === m
-                      ? "bg-primary text-surface"
-                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                  }`}
-                >
-                  {m}m
-                </button>
-              ))}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Varighet
+              </label>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {[15, 30, 45, 60, 90, 120].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setDuration(m)}
+                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                      duration === m
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {m}m
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Reps (valgfri)
+              </label>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={0}
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                placeholder="f.eks. 50"
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+              />
             </div>
           </div>
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Fokus
+              Type trening
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hva slags økt er dette? Velg én hovedtype.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -1190,6 +1584,31 @@ function EditSessionModal({
                 </button>
               ))}
             </div>
+          </div>
+
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Hva øver du på (valgfri)
+            </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              F.eks. innspill 50–100 m, chip eller putt 5–10 ft.
+            </p>
+            <select
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+            >
+              <option value="">Ingen valgt</option>
+              {OMRADE_GRUPPER.map((gruppe) => (
+                <optgroup key={gruppe.code} label={gruppe.label}>
+                  {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
+                    <option key={o.code} value={o.code}>
+                      {o.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
           </div>
 
           {facilities.length > 0 && (
@@ -1351,6 +1770,7 @@ function ExercisesPlaceholder() {
   const [lFase, setLFase] = useState<string | null>(null);
   const [life, setLife] = useState<string | null>(null);
   const [sok, setSok] = useState("");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [results, setResults] = useState<ExerciseSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -1375,10 +1795,30 @@ function ExercisesPlaceholder() {
     setLFase(null);
     setLife(null);
     setSok("");
+    setFavoritesOnly(false);
   };
 
   const hasFilters =
-    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
+    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok || favoritesOnly;
+
+  const handleToggleFavorite = async (exerciseId: string) => {
+    // Optimistisk oppdatering
+    setResults((prev) =>
+      prev.map((r) =>
+        r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
+      )
+    );
+    try {
+      await toggleFavoriteExercise(exerciseId);
+    } catch {
+      // Rull tilbake hvis serveren feiler
+      setResults((prev) =>
+        prev.map((r) =>
+          r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
+        )
+      );
+    }
+  };
 
   const doSearch = async () => {
     setLoading(true);
@@ -1389,6 +1829,7 @@ function ExercisesPlaceholder() {
         area: omraadeCode ?? undefined,
         lPhase: lFase ?? undefined,
         lifeCode: life ?? undefined,
+        onlyFavorites: favoritesOnly || undefined,
         limit: 30,
       });
       setResults(data);
@@ -1411,6 +1852,7 @@ function ExercisesPlaceholder() {
           area: omraadeCode ?? undefined,
           lPhase: lFase ?? undefined,
           lifeCode: life ?? undefined,
+          onlyFavorites: favoritesOnly || undefined,
           limit: 30,
         });
         if (!cancelled) setResults(data);
@@ -1424,7 +1866,7 @@ function ExercisesPlaceholder() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [sok, pyramide, omraadeCode, lFase, life]);
+  }, [sok, pyramide, omraadeCode, lFase, life, favoritesOnly]);
 
   const handleCreateExercise = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1475,8 +1917,34 @@ function ExercisesPlaceholder() {
         )}
       </div>
 
-      {/* Pyramide */}
-      <FilterSection label="Pyramide">
+      {/* Favoritt-filter — vis kun lagrede favoritter */}
+      <button
+        type="button"
+        onClick={() => setFavoritesOnly((v) => !v)}
+        className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 transition-colors ${
+          favoritesOnly
+            ? "border-secondary-fixed bg-secondary-fixed/15 text-primary"
+            : "border-outline-variant/30 bg-surface text-on-surface-variant hover:bg-surface-container"
+        }`}
+      >
+        <span className="flex items-center gap-2">
+          <Icon
+            name="star"
+            filled={favoritesOnly}
+            size={14}
+            className={favoritesOnly ? "text-secondary-fixed-dim" : "text-on-surface-variant"}
+          />
+          <span className="text-[11px] font-bold uppercase tracking-wide">
+            Mine favoritter
+          </span>
+        </span>
+        <span className="font-mono text-[10px] text-on-surface-variant">
+          {favoritesOnly ? "Vises" : "Skjult"}
+        </span>
+      </button>
+
+      {/* Type trening (Pyramide) */}
+      <FilterSection label="Type">
         <div className="flex flex-wrap gap-1">
           {PYRAMIDE.map((p) => {
             const active = pyramide === p.code;
@@ -1484,22 +1952,22 @@ function ExercisesPlaceholder() {
               <button
                 key={p.code}
                 onClick={() => setPyramide(active ? null : p.code)}
-                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
                 title={p.description}
               >
-                {p.code}
+                {p.label}
               </button>
             );
           })}
         </div>
       </FilterSection>
 
-      {/* Område */}
-      <FilterSection label="Område">
+      {/* Hva øver du på (Treningsområde) */}
+      <FilterSection label="Hva øver du på">
         <div className="flex flex-wrap gap-1">
           {OMRADE_GRUPPER.map((g) => {
             const active = omraadeGruppe === g.code;
@@ -1515,7 +1983,7 @@ function ExercisesPlaceholder() {
                     setOmraadeCode(null);
                   }
                 }}
-                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
@@ -1534,14 +2002,14 @@ function ExercisesPlaceholder() {
                 <button
                   key={o.code}
                   onClick={() => setOmraadeCode(active ? null : o.code)}
-                  className={`rounded px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight transition-colors ${
+                  className={`rounded px-2 py-0.5 text-[10px] tracking-tight transition-colors ${
                     active
                       ? "bg-secondary-fixed text-primary"
                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container"
                   }`}
                   title={o.label}
                 >
-                  {o.code}
+                  {o.label}
                 </button>
               );
             })}
@@ -1549,8 +2017,8 @@ function ExercisesPlaceholder() {
         )}
       </FilterSection>
 
-      {/* L-fase */}
-      <FilterSection label="L-fase">
+      {/* Bevegelse (L-fase, fagord — beholdt for treneres behov) */}
+      <FilterSection label="Bevegelse">
         <div className="flex flex-wrap gap-1">
           {L_FASER.map((f) => {
             const active = lFase === f.code;
@@ -1597,7 +2065,12 @@ function ExercisesPlaceholder() {
       </FilterSection>
 
       {/* Resultater */}
-      <ExerciseList results={results} loading={loading} hasFilters={Boolean(hasFilters)} />
+      <ExerciseList
+        results={results}
+        loading={loading}
+        hasFilters={Boolean(hasFilters)}
+        onToggleFavorite={handleToggleFavorite}
+      />
 
       {/* X-6: Opprett egen øvelse */}
       {!showCreateForm ? (
@@ -1734,10 +2207,12 @@ function ExerciseList({
   results,
   loading,
   hasFilters,
+  onToggleFavorite,
 }: {
   results: ExerciseSearchResult[];
   loading: boolean;
   hasFilters: boolean;
+  onToggleFavorite?: (exerciseId: string) => void;
 }) {
   if (loading) {
     return (
@@ -1778,13 +2253,23 @@ function ExerciseList({
         {results.length} treff
       </p>
       {results.map((r) => (
-        <ExerciseCard key={r.id} exercise={r} />
+        <ExerciseCard
+          key={r.id}
+          exercise={r}
+          onToggleFavorite={onToggleFavorite}
+        />
       ))}
     </div>
   );
 }
 
-function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
+function ExerciseCard({
+  exercise,
+  onToggleFavorite,
+}: {
+  exercise: ExerciseSearchResult;
+  onToggleFavorite?: (exerciseId: string) => void;
+}) {
   const durationLabel =
     exercise.minDurationMinutes === exercise.maxDurationMinutes
       ? `${exercise.minDurationMinutes}m`
@@ -1802,6 +2287,7 @@ function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
             pyramid: exercise.pyramid,
             area: exercise.area,
             lPhase: exercise.lPhase ?? undefined,
+            defaultDurationMinutes: exercise.minDurationMinutes,
           })
         );
         e.dataTransfer.effectAllowed = "copy";
@@ -1813,9 +2299,27 @@ function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
         <p className="flex-1 text-xs font-bold text-primary leading-tight">
           {exercise.name}
         </p>
-        {exercise.isFavorite && (
-          <Icon name="star" filled size={12} className="text-secondary-fixed-dim flex-shrink-0" />
-        )}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onToggleFavorite?.(exercise.id);
+          }}
+          className="flex-shrink-0 rounded p-0.5 transition-colors hover:bg-secondary-fixed/20"
+          title={exercise.isFavorite ? "Fjern fra favoritter" : "Lagre som favoritt"}
+        >
+          <Icon
+            name="star"
+            filled={exercise.isFavorite}
+            size={14}
+            className={
+              exercise.isFavorite
+                ? "text-secondary-fixed-dim"
+                : "text-on-surface-variant/40 hover:text-secondary-fixed-dim"
+            }
+          />
+        </button>
       </div>
       <div className="mt-1.5 flex flex-wrap items-center gap-1">
         <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight text-primary">
@@ -2039,11 +2543,13 @@ function MobileWeekView({
   events,
   onAddSession,
   onEventClick,
+  onEventContextMenu,
 }: {
   weekDates: Date[];
   events: V2Event[];
   onAddSession: (dayIndex: number) => void;
   onEventClick: (ev: V2Event) => void;
+  onEventContextMenu?: (e: React.MouseEvent, ev: V2Event) => void;
 }) {
   const today = new Date();
   const todayISO = format(today, "yyyy-MM-dd");
@@ -2099,6 +2605,9 @@ function MobileWeekView({
                   <button
                     key={ev.id}
                     onClick={() => onEventClick(ev)}
+                    onContextMenu={(e) => {
+                      if (onEventContextMenu) onEventContextMenu(e, ev);
+                    }}
                     className={`w-full rounded-xl px-3 py-2.5 text-left transition-colors ${
                       ev.done
                         ? "bg-primary/15 text-primary line-through"

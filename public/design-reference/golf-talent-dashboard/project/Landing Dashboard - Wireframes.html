@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Landing Dashboard — Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Caveat:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --paper-2: #efeadd;
+    --ink: #1a1a1a;
+    --ink-2: #4a4a4a;
+    --ink-3: #8a8a8a;
+    --line: #2a2a2a;
+    --lime: #D1F843;
+    --green: #005840;
+    --red: #d34a3a;
+    --hand: 'Kalam', 'Caveat', cursive;
+    --label: 'Caveat', cursive;
+    --ui: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--ui); }
+  body {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,0.02) 1px, transparent 1px),
+      radial-gradient(circle at 70% 80%, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 40px 40px, 60px 60px;
+  }
+
+  /* ── Page chrome ── */
+  .page-head {
+    max-width: 1320px; margin: 0 auto; padding: 28px 32px 0;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand .logo {
+    width: 44px; height: 44px; background: var(--green);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    transform: rotate(-2deg);
+  }
+  .brand .logo img { width: 28px; height: 28px; }
+  .brand .name { font-family: var(--ui); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
+  .brand .name small { display: block; font-size: 10px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.18em; margin-top: 2px;}
+
+  .page-title { font-family: var(--hand); font-weight: 700; font-size: 34px; line-height: 1; margin: 0; transform: rotate(-1deg); }
+  .page-sub { font-family: var(--hand); font-size: 16px; color: var(--ink-2); margin-top: 6px; }
+
+  /* ── Tabs ── */
+  .tabs {
+    max-width: 1320px; margin: 18px auto 0; padding: 0 32px;
+    display: flex; gap: 0; align-items: flex-end;
+    border-bottom: 2px dashed rgba(0,0,0,0.18);
+  }
+  .tab {
+    appearance: none; background: transparent; border: none; cursor: pointer;
+    font-family: var(--hand); font-size: 18px; font-weight: 700;
+    padding: 10px 20px 12px; color: var(--ink-3);
+    border: 2px solid transparent; border-bottom: none;
+    border-radius: 12px 12px 0 0; margin-bottom: -2px;
+    transition: all 0.15s;
+    transform: rotate(0deg);
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    background: var(--paper);
+    border-color: var(--line);
+    color: var(--ink);
+    transform: translateY(2px) rotate(-0.5deg);
+  }
+  .tab .num {
+    display: inline-block; width: 22px; height: 22px; border: 1.5px solid currentColor;
+    border-radius: 50%; text-align: center; font-size: 12px; line-height: 19px; margin-right: 6px;
+    font-family: var(--ui); font-weight: 700;
+  }
+
+  /* ── Stage ── */
+  .stage {
+    max-width: 1320px; margin: 0 auto; padding: 32px;
+  }
+  .concept { display: none; }
+  .concept.active { display: block; animation: fadeIn 0.3s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to {opacity:1; transform: translateY(0);} }
+
+  .concept-head {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+    margin-bottom: 24px;
+  }
+  .concept-head h2 {
+    font-family: var(--hand); font-size: 32px; font-weight: 700; line-height: 1.1; margin: 0;
+    transform: rotate(-0.6deg);
+  }
+  .concept-head .label { font-family: var(--label); color: var(--ink-3); font-size: 18px; }
+  .concept-head .desc { font-family: var(--hand); font-size: 16px; color: var(--ink-2); max-width: 480px; margin-top: 8px; }
+  .pros {
+    font-family: var(--hand); font-size: 14px; color: var(--ink-2);
+    background: var(--paper-2); border: 1.5px solid var(--line); border-radius: 14px;
+    padding: 14px 18px; max-width: 380px;
+    transform: rotate(0.5deg);
+  }
+  .pros b { font-weight: 700; color: var(--ink); }
+  .pros ul { margin: 4px 0 0; padding-left: 18px; }
+  .pros li { margin: 2px 0; }
+
+  /* ── Wireframe (browser frame) ── */
+  .wf {
+    background: #fff;
+    border: 2.5px solid var(--line);
+    border-radius: 18px;
+    padding: 0;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+  .wf-chrome {
+    height: 28px; background: var(--paper-2);
+    border-bottom: 1.5px solid var(--line);
+    display: flex; align-items: center; padding: 0 12px; gap: 6px;
+  }
+  .wf-chrome .dot { width: 9px; height: 9px; border-radius: 50%; border: 1.2px solid var(--line); }
+  .wf-chrome .url {
+    flex: 1; height: 16px; background: #fff; border: 1.2px solid var(--line);
+    border-radius: 8px; margin: 0 60px 0 14px;
+    font-family: var(--hand); font-size: 11px; color: var(--ink-3);
+    display: flex; align-items: center; padding: 0 8px;
+  }
+
+  /* App layout inside wf */
+  .wf-app { display: flex; min-height: 720px; }
+  .wf-side {
+    width: 56px; background: #f9f7f0;
+    border-right: 1.5px dashed var(--line);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 0; gap: 6px;
+    flex-shrink: 0;
+  }
+  .wf-side .logo-mini {
+    width: 28px; height: 28px; background: var(--green); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+  }
+  .wf-side .logo-mini img { width: 18px; height: 18px; }
+  .nav-i {
+    width: 32px; height: 32px; border: 1.5px solid var(--line); border-radius: 6px;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+    font-family: var(--hand); font-size: 11px; color: var(--ink-2);
+  }
+  .nav-i.active { background: var(--lime); border-color: var(--line); color: var(--ink); }
+
+  .wf-main { flex: 1; padding: 18px 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 10px; padding-bottom: 10px;
+    border-bottom: 1.5px dashed rgba(0,0,0,0.2);
+  }
+  .topbar h1 {
+    font-family: var(--hand); font-size: 20px; font-weight: 700; margin: 0;
+  }
+  .topbar .breadcrumb { font-family: var(--hand); font-size: 13px; color: var(--ink-3); }
+  .topbar .spacer { flex: 1; }
+  .pill {
+    font-family: var(--hand); font-size: 12px; padding: 4px 10px;
+    border: 1.5px solid var(--line); border-radius: 14px; background: #fff;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .pill.lime { background: var(--lime); }
+  .pill.dark { background: var(--ink); color: #fff; }
+
+  /* generic boxes */
+  .box {
+    background: #fff;
+    border: 1.8px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    position: relative;
+    font-family: var(--hand);
+  }
+  .box.dashed { border-style: dashed; }
+  .box.tilt-l { transform: rotate(-0.4deg); }
+  .box.tilt-r { transform: rotate(0.4deg); }
+  .box.lime { background: var(--lime); }
+  .box.dark { background: var(--ink); color: #fff; }
+  .box.paper { background: var(--paper-2); }
+
+  .eyebrow {
+    font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 600; color: var(--ink-3);
+  }
+  .box.dark .eyebrow { color: rgba(255,255,255,0.6); }
+  .h-title { font-family: var(--hand); font-size: 16px; font-weight: 700; margin: 4px 0 0; line-height: 1.1;}
+  .kpi-num { font-family: var(--hand); font-size: 32px; font-weight: 700; line-height: 1; margin-top: 6px; }
+  .kpi-sub { font-family: var(--hand); font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+  .box.dark .kpi-sub { color: rgba(255,255,255,0.65); }
+
+  /* placeholders */
+  .ph {
+    background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(0,0,0,0.06) 6px 7px);
+    border: 1.5px dashed rgba(0,0,0,0.4);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ui); font-size: 10px; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500;
+  }
+  .ph.tall { min-height: 140px; }
+  .ph.short { min-height: 60px; }
+  .ph.med { min-height: 90px; }
+  .ph.lime { background: rgba(209,248,67,0.35); border-color: var(--green); color: var(--green); }
+
+  /* sketchy chart bars */
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 70px; padding-top: 8px; }
+  .bars .b { flex: 1; background: var(--ink); border-radius: 2px 2px 0 0; }
+  .bars .b.lime { background: var(--lime); border: 1.5px solid var(--line); }
+  .bars .b.green { background: var(--green); }
+
+  /* funnel */
+  .funnel { display: flex; flex-direction: column; gap: 4px; }
+  .funnel-row {
+    display: flex; align-items: center; gap: 10px; font-family: var(--hand);
+  }
+  .funnel-row .bar {
+    height: 26px; background: var(--green); border: 1.5px solid var(--line); border-radius: 4px;
+    display: flex; align-items: center; padding: 0 8px; color: #fff; font-size: 12px; font-weight: 700;
+    min-width: 60px;
+  }
+  .funnel-row .bar.lime { background: var(--lime); color: var(--ink); }
+  .funnel-row .bar.empty { background: #fff; color: var(--ink); }
+  .funnel-row .lbl { font-size: 13px; min-width: 90px; }
+  .funnel-row .cnt { margin-left: auto; font-family: var(--ui); font-weight: 700; font-size: 14px; }
+
+  /* lists */
+  .ulist { list-style: none; padding: 0; margin: 0; font-family: var(--hand); }
+  .ulist li {
+    display: flex; align-items: center; gap: 8px; padding: 6px 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.15); font-size: 13px;
+  }
+  .ulist li:last-child { border-bottom: none; }
+  .ulist .av {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--paper-2);
+    border: 1.5px solid var(--line); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ui); font-size: 9px; font-weight: 700; color: var(--ink-2);
+  }
+  .ulist .meta { color: var(--ink-3); font-size: 11px; }
+  .ulist .right { margin-left: auto; font-family: var(--ui); font-weight: 700; font-size: 12px; }
+  .ulist .right.up { color: var(--green); }
+  .ulist .right.dn { color: var(--red); }
+
+  /* arrows / annotations */
+  .anno {
+    position: absolute;
+    font-family: var(--label); font-size: 14px; color: var(--red);
+    transform: rotate(-3deg);
+    pointer-events: none;
+  }
+  .anno svg { display: block; }
+
+  /* grid layouts */
+  .grid { display: grid; gap: 12px; }
+  .g-4 { grid-template-columns: repeat(4, 1fr); }
+  .g-3 { grid-template-columns: repeat(3, 1fr); }
+  .g-2 { grid-template-columns: 1fr 1fr; }
+  .g-2-1 { grid-template-columns: 2fr 1fr; }
+  .g-1-2 { grid-template-columns: 1fr 2fr; }
+
+  /* hero card variants */
+  .hero {
+    border: 2px solid var(--line); border-radius: 14px; overflow: hidden;
+    background: var(--ink); color: #fff; padding: 18px;
+    position: relative;
+  }
+  .hero .eyebrow { color: rgba(255,255,255,0.6); }
+  .hero h3 { font-family: var(--hand); font-size: 26px; margin: 6px 0 4px; line-height: 1; }
+  .hero .meta { font-family: var(--hand); font-size: 13px; color: rgba(255,255,255,0.7); }
+  .hero .num {
+    position: absolute; right: 18px; top: 18px;
+    font-family: var(--hand); font-size: 64px; font-weight: 700;
+    color: var(--lime); line-height: 1;
+  }
+
+  .stage-pip {
+    display: flex; gap: 4px; align-items: center; margin-top: 14px;
+  }
+  .stage-pip .seg {
+    height: 10px; flex: 1; background: rgba(255,255,255,0.15); border-radius: 2px;
+  }
+  .stage-pip .seg.on { background: var(--green); }
+  .stage-pip .seg.now { background: var(--lime); }
+
+  /* tweaks panel */
+  .tweaks {
+    position: fixed; bottom: 18px; right: 18px; z-index: 50;
+    background: var(--paper-2); border: 2px solid var(--line); border-radius: 14px;
+    padding: 14px; width: 220px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    font-family: var(--hand);
+    transform: rotate(-1deg);
+  }
+  .tweaks h4 { font-family: var(--hand); font-weight: 700; font-size: 16px; margin: 0 0 10px; }
+  .tweaks .row { display: flex; align-items: center; justify-content: space-between; margin: 8px 0; font-size: 13px; }
+  .tweaks .seg-ctrl {
+    display: flex; gap: 4px; margin-top: 6px;
+  }
+  .tweaks .seg-ctrl button {
+    flex: 1; appearance: none; border: 1.5px solid var(--line); background: #fff;
+    font-family: var(--hand); font-size: 12px; padding: 4px 6px; border-radius: 6px; cursor: pointer;
+  }
+  .tweaks .seg-ctrl button.on { background: var(--lime); }
+
+  /* footer note */
+  .footnote {
+    max-width: 1320px; margin: 0 auto; padding: 12px 32px 60px;
+    font-family: var(--hand); color: var(--ink-3); font-size: 14px;
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .footnote .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .footnote .sw { width: 14px; height: 14px; border: 1.5px solid var(--line); border-radius: 3px; }
+
+  /* tiny doodles */
+  .doodle-arrow {
+    position: absolute; pointer-events: none;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div class="brand">
+    <div class="logo"><img src="assets/ak-logo-dark.svg" alt="AK"/></div>
+    <div>
+      <div class="name">AK Golf Group <small>Spillerutvikling</small></div>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <h1 class="page-title">Landing dashboard — wireframes</h1>
+    <div class="page-sub">4 retninger · samme data, ulik komposisjon · velg en å bygge ut</div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-c="c1"><span class="num">1</span>Klassisk grid</button>
+  <button class="tab" data-c="c2"><span class="num">2</span>Pipeline-først</button>
+  <button class="tab" data-c="c3"><span class="num">3</span>Min dag</button>
+  <button class="tab" data-c="c4"><span class="num">4</span>Magasin</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- ════════ CONCEPT 1 — KLASSISK GRID ════════ -->
+  <section class="concept active" data-c="c1">
+    <div class="concept-head">
+      <div>
+        <div class="label">Konsept 01</div>
+        <h2>Klassisk grid — alt på ett brett</h2>
+        <p class="desc">KPI-er på toppen, modulkort i rutenett under. Trygg, lesbar, lett å skanne. Hver modul er en inngang til en delvisning.</p>
+      </div>
+      <div class="pros">
+        <b>Når dette passer ↓</b>
+        <ul>
+          <li>Bredt publikum (trenere, ledelse, sponsorer)</li>
+          <li>Daglig statussjekk uten dyp analyse</li>
+          <li>Forutsigbart, tradisjonelt sportsdata-feel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wf">
+      <div class="wf-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url">akgolf.platform/oversikt</div>
+      </div>
+      <div class="wf-app">
+        <aside class="wf-side">
+          <div class="logo-mini"><img src="assets/ak-logo-dark.svg" alt=""/></div>
+          <div class="nav-i active">⌂</div>
+          <div class="nav-i">≡</div>
+          <div class="nav-i">◐</div>
+          <div class="nav-i">▦</div>
+          <div class="nav-i">★</div>
+          <div class="nav-i">📖</div>
+          <div class="nav-i">⚑</div>
+          <div class="nav-i">📈</div>
+        </aside>
+
+        <main class="wf-main">
+          <div class="topbar">
+            <h1>Oversikt</h1>
+            <span class="breadcrumb">/ 925 spillere · sesong 2026</span>
+            <div class="spacer"></div>
+            <span class="pill">Alle aldre ▾</span>
+            <span class="pill">2026 ▾</span>
+            <span class="pill lime">Eksporter</span>
+          </div>
+
+          <!-- KPI row -->
+          <div class="grid g-4">
+            <div class="box">
+              <div class="eyebrow">I pipeline</div>
+              <div class="kpi-num">925</div>
+              <div class="kpi-sub">↑ 18 vs forrige mnd</div>
+            </div>
+            <div class="box lime">
+              <div class="eyebrow">Klare for opprykk</div>
+              <div class="kpi-num">14</div>
+              <div class="kpi-sub">ML-flagg + benchmarks</div>
+            </div>
+            <div class="box">
+              <div class="eyebrow">SG vs trinn-ref</div>
+              <div class="kpi-num">+0,42</div>
+              <div class="kpi-sub">↑ 0,12 hele kohort</div>
+            </div>
+            <div class="box dark">
+              <div class="eyebrow">I sterk progresjon</div>
+              <div class="kpi-num">62</div>
+              <div class="kpi-sub">7 % av total</div>
+            </div>
+          </div>
+
+          <!-- Module grid -->
+          <div class="grid g-3">
+            <div class="box tilt-l">
+              <div class="eyebrow">Modul · pipeline</div>
+              <div class="h-title">Utviklingsstige</div>
+              <div class="funnel" style="margin-top:10px">
+                <div class="funnel-row"><span class="lbl">PGA</span><span class="bar" style="width:8%"></span><span class="cnt">3</span></div>
+                <div class="funnel-row"><span class="lbl">Korn Ferry</span><span class="bar" style="width:14%"></span><span class="cnt">7</span></div>
+                <div class="funnel-row"><span class="lbl">Challenge</span><span class="bar" style="width:22%"></span><span class="cnt">12</span></div>
+                <div class="funnel-row"><span class="lbl">College</span><span class="bar lime" style="width:50%"></span><span class="cnt">60</span></div>
+                <div class="funnel-row"><span class="lbl">Elite</span><span class="bar empty" style="width:80%"></span><span class="cnt">142</span></div>
+                <div class="funnel-row"><span class="lbl">Junior</span><span class="bar empty" style="width:100%"></span><span class="cnt">701</span></div>
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="eyebrow">Modul · spillere</div>
+              <div class="h-title">Beveger seg opp</div>
+              <ul class="ulist" style="margin-top:8px">
+                <li><span class="av">EL</span> Eirik Langeland <span class="meta">Challenge</span><span class="right up">+0,22</span></li>
+                <li><span class="av">MK</span> Magnus K. <span class="meta">Arizona St.</span><span class="right up">−1,4</span></li>
+                <li><span class="av">JR</span> Jonas Rian <span class="meta">Bærum GK</span><span class="right up">−0,9</span></li>
+                <li><span class="av">EM</span> Emil M. <span class="meta">Larvik GK</span><span class="right up">−1,8</span></li>
+                <li><span class="av">SG</span> Sigurd Grip <span class="meta">Korn Ferry</span><span class="right up">+0,15</span></li>
+              </ul>
+            </div>
+
+            <div class="box tilt-r">
+              <div class="eyebrow">Modul · benk</div>
+              <div class="h-title">Sammenligning</div>
+              <div class="ph med" style="margin-top:8px">Radar — 3 spillere overlay</div>
+              <div style="display:flex; gap:6px; margin-top:8px;">
+                <span class="pill">Magnus K.</span>
+                <span class="pill">Sondre L.</span>
+                <span class="pill">Anna S.</span>
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="eyebrow">Modul · juniorer</div>
+              <div class="h-title">Norske juniorer</div>
+              <div class="bars" style="margin-top:8px">
+                <div class="b" style="height:30%"></div>
+                <div class="b" style="height:50%"></div>
+                <div class="b green" style="height:75%"></div>
+                <div class="b lime" style="height:90%"></div>
+                <div class="b" style="height:60%"></div>
+                <div class="b" style="height:40%"></div>
+                <div class="b green" style="height:80%"></div>
+              </div>
+              <div class="kpi-sub" style="margin-top:8px">701 spillere · OLYO + Srixon Junior</div>
+            </div>
+
+            <div class="box">
+              <div class="eyebrow">Modul · datagolf</div>
+              <div class="h-title">SG-snitt — proff</div>
+              <div class="ph med" style="margin-top:8px">Tabell · 22 spillere · SG putt/app/tee/around</div>
+            </div>
+
+            <div class="box">
+              <div class="eyebrow">Modul · spillerlogg</div>
+              <div class="h-title">Siste hendelser</div>
+              <ul class="ulist" style="margin-top:8px">
+                <li><span class="av">●</span><span>Magnus opprykk Trinn 2→3</span><span class="meta">2d</span></li>
+                <li><span class="av">★</span><span>Topp-150 WAGR</span><span class="meta">5d</span></li>
+                <li><span class="av">📝</span><span>Notat fra Henrik H.</span><span class="meta">1u</span></li>
+                <li><span class="av">⚑</span><span>Benchmark passert</span><span class="meta">1u</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="anno" style="left: 580px; top: 250px;">
+            jevne kortstørrelser — ingen hierarki ↓
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONCEPT 2 — PIPELINE-FØRST ════════ -->
+  <section class="concept" data-c="c2">
+    <div class="concept-head">
+      <div>
+        <div class="label">Konsept 02</div>
+        <h2>Pipeline-først — funnelen er produktet</h2>
+        <p class="desc">Den 6-trinns utviklingsstigen er hero-elementet. Klikkbar — velger trinn → moduler nedenfor filtreres. Pipeline IS the dashboard.</p>
+      </div>
+      <div class="pros">
+        <b>Når dette passer ↓</b>
+        <ul>
+          <li>Når pipeline er kjernen i forretningsmodellen</li>
+          <li>Tydelig storytelling: junior → PGA</li>
+          <li>Ledelse + sponsorer ser «motoren» direkte</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wf">
+      <div class="wf-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url">akgolf.platform/oversikt</div>
+      </div>
+      <div class="wf-app">
+        <aside class="wf-side">
+          <div class="logo-mini"><img src="assets/ak-logo-dark.svg" alt=""/></div>
+          <div class="nav-i active">⌂</div>
+          <div class="nav-i">≡</div>
+          <div class="nav-i">◐</div>
+          <div class="nav-i">▦</div>
+          <div class="nav-i">★</div>
+          <div class="nav-i">📖</div>
+          <div class="nav-i">⚑</div>
+          <div class="nav-i">📈</div>
+        </aside>
+
+        <main class="wf-main">
+          <div class="topbar">
+            <h1>Pipeline 2026</h1>
+            <span class="breadcrumb">/ 925 totalt · 5 datakilder</span>
+            <div class="spacer"></div>
+            <span class="pill">Alle aldre ▾</span>
+            <span class="pill lime">Eksporter</span>
+          </div>
+
+          <!-- Hero pipeline visualization -->
+          <div class="box dark" style="padding: 24px 22px; position: relative; overflow: hidden;">
+            <div class="eyebrow">Utviklingsstige · klikk et trinn for å filtrere</div>
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 16px; align-items: end;">
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 30px; background: var(--lime); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; color:var(--ink); font-family:var(--hand); font-weight:700;">701</div>
+                <div style="font-family:var(--hand); font-size:12px;">Junior</div>
+              </div>
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 60px; background: rgba(255,255,255,0.15); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-family:var(--hand); font-weight:700;">142</div>
+                <div style="font-family:var(--hand); font-size:12px;">Elite</div>
+              </div>
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 100px; background: rgba(255,255,255,0.2); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-family:var(--hand); font-weight:700; font-size:18px;">60</div>
+                <div style="font-family:var(--hand); font-size:12px;">College</div>
+              </div>
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 130px; background: var(--green); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-family:var(--hand); font-weight:700; font-size:22px; color:#fff;">12</div>
+                <div style="font-family:var(--hand); font-size:12px; color: var(--lime); font-weight:700;">Challenge ←valgt</div>
+              </div>
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 160px; background: rgba(255,255,255,0.2); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-family:var(--hand); font-weight:700; font-size:24px;">7</div>
+                <div style="font-family:var(--hand); font-size:12px;">Korn Ferry</div>
+              </div>
+              <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+                <div style="width: 100%; height: 190px; background: rgba(255,255,255,0.2); border: 1.5px solid #fff; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-family:var(--hand); font-weight:700; font-size:28px;">3</div>
+                <div style="font-family:var(--hand); font-size:12px;">PGA Tour</div>
+              </div>
+            </div>
+
+            <!-- Annotation -->
+            <div style="position:absolute; right: 20px; top: 20px; font-family: var(--label); color: var(--lime); font-size: 14px; transform: rotate(2deg);">
+              ↑ omvendt funnel — drømmeretning
+            </div>
+          </div>
+
+          <!-- Quick stats strip -->
+          <div class="grid g-4">
+            <div class="box paper"><div class="eyebrow">↑ siste uke</div><div class="kpi-num">+3</div><div class="kpi-sub">opprykk</div></div>
+            <div class="box paper"><div class="eyebrow">⚑ Klare</div><div class="kpi-num">14</div><div class="kpi-sub">flagget av modell</div></div>
+            <div class="box paper"><div class="eyebrow">⚠ Risiko</div><div class="kpi-num">5</div><div class="kpi-sub">faller bak ref</div></div>
+            <div class="box paper"><div class="eyebrow">★ WAGR-debut</div><div class="kpi-num">2</div><div class="kpi-sub">denne sesongen</div></div>
+          </div>
+
+          <!-- Filtered context: Challenge tier -->
+          <div class="grid g-2-1">
+            <div class="box">
+              <div class="eyebrow">Trinn-detalj · Challenge / Nordic</div>
+              <div class="h-title">12 spillere — sortert SG</div>
+              <ul class="ulist" style="margin-top:8px">
+                <li><span class="av">EL</span> Eirik Langeland <span class="meta">24 år</span><span class="right up">+0,88</span></li>
+                <li><span class="av">TS</span> Tobias Strand <span class="meta">23 år</span><span class="right">+0,41</span></li>
+                <li><span class="av">AH</span> Anders Heldal <span class="meta">22 år</span><span class="right">+0,28</span></li>
+                <li><span class="av">…</span> +9 til <span class="meta"></span><span class="right meta">se alle →</span></li>
+              </ul>
+            </div>
+            <div class="box dashed">
+              <div class="eyebrow">Trinn-benchmark</div>
+              <div class="h-title">Hva kreves for opprykk?</div>
+              <div class="ph short" style="margin-top:8px">SG-grense KF: +0,55</div>
+              <div class="ph short" style="margin-top:6px">WAGR-mål: < 250</div>
+              <div class="ph short" style="margin-top:6px">Score vs felt: −0,8</div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONCEPT 3 — MIN DAG ════════ -->
+  <section class="concept" data-c="c3">
+    <div class="concept-head">
+      <div>
+        <div class="label">Konsept 03</div>
+        <h2>Min dag — handlingsdrevet</h2>
+        <p class="desc">«Hva trenger oppmerksomhet i dag?» Inbox-stil over data-stil. Flagg, varsler, oppgaver først; tall som støtte.</p>
+      </div>
+      <div class="pros">
+        <b>Når dette passer ↓</b>
+        <ul>
+          <li>Trenere som bruker plattformen daglig</li>
+          <li>Dyttet til å handle, ikke bare titte</li>
+          <li>Reduserer bruker-paralyse av mye data</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wf">
+      <div class="wf-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url">akgolf.platform/oversikt</div>
+      </div>
+      <div class="wf-app">
+        <aside class="wf-side">
+          <div class="logo-mini"><img src="assets/ak-logo-dark.svg" alt=""/></div>
+          <div class="nav-i active">⌂</div>
+          <div class="nav-i">≡</div>
+          <div class="nav-i">◐</div>
+          <div class="nav-i">▦</div>
+          <div class="nav-i">★</div>
+          <div class="nav-i">📖</div>
+          <div class="nav-i">⚑</div>
+          <div class="nav-i">📈</div>
+        </aside>
+
+        <main class="wf-main">
+          <div class="topbar">
+            <h1>God morgen, Henrik</h1>
+            <span class="breadcrumb">/ mandag 27. april 2026 · 7 nye signaler</span>
+            <div class="spacer"></div>
+            <span class="pill">Mine spillere ▾</span>
+            <span class="pill lime">Ny rapport +</span>
+          </div>
+
+          <div class="grid g-1-2">
+            <!-- Left: action inbox -->
+            <div class="box" style="padding: 0;">
+              <div style="padding: 14px 16px 8px; border-bottom: 1.5px dashed rgba(0,0,0,0.15);">
+                <div class="eyebrow">Inbox · 7 signaler</div>
+                <div class="h-title">Trenger din oppmerksomhet</div>
+              </div>
+              <ul class="ulist" style="padding: 0 16px;">
+                <li>
+                  <span class="av" style="background:var(--lime); border-color:var(--green);">⚑</span>
+                  <div>
+                    <div><b>Magnus K.</b> klar for Trinn 4</div>
+                    <div class="meta">ML-flagg · 3 benchmarks passert · WAGR ↑22</div>
+                  </div>
+                  <span class="right" style="color:var(--green)">handle</span>
+                </li>
+                <li>
+                  <span class="av" style="background: #ffe7e3; border-color: var(--red); color: var(--red);">⚠</span>
+                  <div>
+                    <div><b>Petter Lindh</b> faller bak ref</div>
+                    <div class="meta">3 mnd negativ trend · score Δ +0,4</div>
+                  </div>
+                  <span class="right dn">se</span>
+                </li>
+                <li>
+                  <span class="av">★</span>
+                  <div>
+                    <div><b>Ingrid Berg</b> ny WAGR-topp 84</div>
+                    <div class="meta">Stanford · ↑8 plasser denne uken</div>
+                  </div>
+                  <span class="right">notat</span>
+                </li>
+                <li>
+                  <span class="av">📝</span>
+                  <div>
+                    <div>Ukerapport venter på godkjenning</div>
+                    <div class="meta">DataGolf-sync 26.04 · klar for sponsor</div>
+                  </div>
+                  <span class="right">åpne</span>
+                </li>
+                <li>
+                  <span class="av">📅</span>
+                  <div>
+                    <div>3 turneringsstart i morgen</div>
+                    <div class="meta">Korn Ferry · Challenge · NCAA</div>
+                  </div>
+                  <span class="right">se</span>
+                </li>
+                <li>
+                  <span class="av">●</span>
+                  <div>
+                    <div>OLYO Region Øst — ny runde</div>
+                    <div class="meta">22 nye scorelinjer · 4 norske topp-10</div>
+                  </div>
+                  <span class="right">åpne</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Right column -->
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="grid g-3">
+                <div class="box lime">
+                  <div class="eyebrow">Klare</div>
+                  <div class="kpi-num">14</div>
+                </div>
+                <div class="box dark">
+                  <div class="eyebrow">Watchlist</div>
+                  <div class="kpi-num">23</div>
+                </div>
+                <div class="box">
+                  <div class="eyebrow">Kommer hjem</div>
+                  <div class="kpi-num">5</div>
+                  <div class="kpi-sub">college 2026</div>
+                </div>
+              </div>
+
+              <div class="box">
+                <div class="eyebrow">Pinnet · dine 6 spillere</div>
+                <div class="h-title">Ukens form</div>
+                <div class="grid g-3" style="margin-top:10px;">
+                  <div class="ph med">Magnus K. · spark</div>
+                  <div class="ph med">Sondre L. · spark</div>
+                  <div class="ph med">Ingrid B. · spark</div>
+                  <div class="ph med">Anna S. · spark</div>
+                  <div class="ph med">Eirik H. · spark</div>
+                  <div class="ph med">Tobias S. · spark</div>
+                </div>
+              </div>
+
+              <div class="box paper">
+                <div class="eyebrow">Snarvei</div>
+                <div class="h-title">Hopp inn i…</div>
+                <div style="display:flex; gap:8px; flex-wrap: wrap; margin-top: 8px;">
+                  <span class="pill">Pipeline</span>
+                  <span class="pill">Sammenligning</span>
+                  <span class="pill">DataGolf</span>
+                  <span class="pill">Juniorer</span>
+                  <span class="pill">Spillerlogg</span>
+                  <span class="pill">Benchmarks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONCEPT 4 — MAGASIN ════════ -->
+  <section class="concept" data-c="c4">
+    <div class="concept-head">
+      <div>
+        <div class="label">Konsept 04</div>
+        <h2>Magasin — én hovedhistorie + støttekort</h2>
+        <p class="desc">Editorial. Én utvalgt spiller eller hendelse i hero. Resten av modulene rundt. Føles redaksjonelt og premium — godt for sponsorer/styre.</p>
+      </div>
+      <div class="pros">
+        <b>Når dette passer ↓</b>
+        <ul>
+          <li>Hver dag har én sak verdt å løfte fram</li>
+          <li>Sponsor-dashboard, ekstern visning</li>
+          <li>Skiller AK fra «standard SaaS-dashboard»</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wf">
+      <div class="wf-chrome">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url">akgolf.platform/oversikt</div>
+      </div>
+      <div class="wf-app">
+        <aside class="wf-side">
+          <div class="logo-mini"><img src="assets/ak-logo-dark.svg" alt=""/></div>
+          <div class="nav-i active">⌂</div>
+          <div class="nav-i">≡</div>
+          <div class="nav-i">◐</div>
+          <div class="nav-i">▦</div>
+          <div class="nav-i">★</div>
+          <div class="nav-i">📖</div>
+          <div class="nav-i">⚑</div>
+          <div class="nav-i">📈</div>
+        </aside>
+
+        <main class="wf-main">
+          <div class="topbar">
+            <h1>Oversikt</h1>
+            <span class="breadcrumb">/ uke 17 · 2026</span>
+            <div class="spacer"></div>
+            <span class="pill">Sesong 2026 ▾</span>
+            <span class="pill lime">Del med sponsor</span>
+          </div>
+
+          <div class="grid g-2-1">
+            <!-- Hero feature -->
+            <div class="hero" style="min-height: 320px;">
+              <div class="eyebrow">Ukens spiller</div>
+              <div class="num">★</div>
+              <h3 style="font-size: 32px;">Magnus Kristoffersen</h3>
+              <div class="meta">Arizona State · 21 år · Trinn 3 → 4 i sikte</div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 22px;">
+                <div>
+                  <div class="eyebrow">WAGR</div>
+                  <div style="font-family: var(--hand); font-size: 28px; font-weight: 700; color: var(--lime);">147</div>
+                  <div class="kpi-sub">↑ 22</div>
+                </div>
+                <div>
+                  <div class="eyebrow">Snitt</div>
+                  <div style="font-family: var(--hand); font-size: 28px; font-weight: 700; color: var(--lime);">70,4</div>
+                  <div class="kpi-sub">−1,4 vs felt</div>
+                </div>
+                <div>
+                  <div class="eyebrow">Beste</div>
+                  <div style="font-family: var(--hand); font-size: 28px; font-weight: 700; color: var(--lime);">64</div>
+                  <div class="kpi-sub">NCAA · 2 mnd siden</div>
+                </div>
+              </div>
+
+              <div class="stage-pip">
+                <div class="seg on"></div>
+                <div class="seg on"></div>
+                <div class="seg now"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+                <div class="seg"></div>
+              </div>
+              <div style="font-family: var(--hand); font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 6px;">
+                Junior · Elite · College ←nå · Challenge · KF · PGA
+              </div>
+
+              <div style="font-family: var(--hand); font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 18px; line-height: 1.4; max-width: 520px;">
+                «Tre uker rad under feltsnitt. Modellen flagget opprykk-modus 21. april. Henrik H. anbefaler debut Nordic Tour i juni.»
+              </div>
+
+              <div style="display:flex; gap:8px; margin-top: 16px;">
+                <span class="pill lime">Åpne profil</span>
+                <span class="pill" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: #fff;">Spillerlogg</span>
+              </div>
+            </div>
+
+            <!-- Right rail -->
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="box paper">
+                <div class="eyebrow">Tall · uke 17</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+                  <div><div class="kpi-sub" style="margin-top:0">Total</div><div style="font-family:var(--hand); font-size:24px; font-weight:700;">925</div></div>
+                  <div><div class="kpi-sub" style="margin-top:0">Klare</div><div style="font-family:var(--hand); font-size:24px; font-weight:700; color:var(--green);">14</div></div>
+                  <div><div class="kpi-sub" style="margin-top:0">Opprykk</div><div style="font-family:var(--hand); font-size:24px; font-weight:700;">+3</div></div>
+                  <div><div class="kpi-sub" style="margin-top:0">Watch</div><div style="font-family:var(--hand); font-size:24px; font-weight:700;">23</div></div>
+                </div>
+              </div>
+
+              <div class="box">
+                <div class="eyebrow">Også verdt å lese</div>
+                <ul class="ulist" style="margin-top:6px">
+                  <li><span class="av">VH</span><span>Hovland topp-15 i Augusta</span></li>
+                  <li><span class="av">EL</span><span>Eirik Langeland vinner Nordic</span></li>
+                  <li><span class="av">EM</span><span>Emil M. — 1. norske 2009-årgang</span></li>
+                  <li><span class="av">📊</span><span>OLYO sluttsync — 22 nye runder</span></li>
+                </ul>
+              </div>
+
+              <div class="box dark">
+                <div class="eyebrow">Trender</div>
+                <div class="h-title">Score college ↓</div>
+                <div class="ph short" style="margin-top:6px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6);">
+                  Sparkline · 12 mnd
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom strip: modules -->
+          <div class="grid g-4">
+            <div class="box dashed"><div class="eyebrow">→</div><div class="h-title">Pipeline</div><div class="kpi-sub">925 · 6 trinn</div></div>
+            <div class="box dashed"><div class="eyebrow">→</div><div class="h-title">Spillere</div><div class="kpi-sub">søk · filtrer · profil</div></div>
+            <div class="box dashed"><div class="eyebrow">→</div><div class="h-title">Benk</div><div class="kpi-sub">sammenlign 2–6</div></div>
+            <div class="box dashed"><div class="eyebrow">→</div><div class="h-title">Juniorer</div><div class="kpi-sub">701 · OLYO + Srixon</div></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="footnote">
+  <div class="legend-item"><span class="sw" style="background: var(--lime);"></span>AK lime — aksent / handling</div>
+  <div class="legend-item"><span class="sw" style="background: var(--green);"></span>AK grønn — primær</div>
+  <div class="legend-item"><span class="sw" style="background: #fff; border:1.5px dashed rgba(0,0,0,0.4);"></span>Stripet = bilde / graf-placeholder</div>
+  <div class="legend-item">Klikk fanene øverst for å bla mellom retningene · alt er lo-fi/skissestadium</div>
+</div>
+
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks">
+  <h4>Tweaks ✏︎</h4>
+  <div>
+    <div style="font-size: 12px; color: var(--ink-3);">Densitet</div>
+    <div class="seg-ctrl" id="density">
+      <button class="on" data-v="cozy">Romslig</button>
+      <button data-v="compact">Kompakt</button>
+    </div>
+  </div>
+  <div style="margin-top: 10px;">
+    <div style="font-size: 12px; color: var(--ink-3);">Annoteringer</div>
+    <div class="seg-ctrl" id="anno">
+      <button class="on" data-v="on">På</button>
+      <button data-v="off">Av</button>
+    </div>
+  </div>
+  <div style="margin-top: 10px;">
+    <div style="font-size: 12px; color: var(--ink-3);">Tone</div>
+    <div class="seg-ctrl" id="tone">
+      <button class="on" data-v="paper">Skisse</button>
+      <button data-v="clean">Renere</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // tab switching
+  const tabs = document.querySelectorAll('#tabs .tab');
+  const concepts = document.querySelectorAll('.concept');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    concepts.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelector('.concept[data-c="' + t.dataset.c + '"]').classList.add('active');
+  }));
+
+  // tweaks
+  function bindSeg(id, fn) {
+    const seg = document.getElementById(id);
+    seg.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      seg.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      fn(b.dataset.v);
+    }));
+  }
+  bindSeg('density', v => {
+    document.body.style.setProperty('--gap', v === 'compact' ? '6px' : '12px');
+    document.querySelectorAll('.grid').forEach(g => g.style.gap = v === 'compact' ? '6px' : '12px');
+    document.querySelectorAll('.box').forEach(b => b.style.padding = v === 'compact' ? '10px' : '14px');
+  });
+  bindSeg('anno', v => {
+    document.querySelectorAll('.anno').forEach(a => a.style.display = v === 'off' ? 'none' : '');
+  });
+  bindSeg('tone', v => {
+    if (v === 'clean') {
+      document.body.style.background = '#fff';
+      document.body.style.backgroundImage = 'none';
+      document.querySelectorAll('.box, .wf, .tab.active').forEach(b => {
+        b.style.transform = 'none';
+      });
+    } else {
+      document.body.style.background = '#f6f3ec';
+      document.body.style.backgroundImage = '';
+      document.querySelectorAll('.box, .wf, .tab.active').forEach(b => {
+        b.style.transform = '';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

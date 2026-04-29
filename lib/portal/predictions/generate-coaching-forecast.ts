@@ -30,6 +30,8 @@ import {
   getTableVersion,
   type SgCategory,
 } from "./hours-per-sg-table";
+
+export type { SgCategory } from "./hours-per-sg-table";
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
 
 // ── Typer ───────────────────────────────────────────────────────────

@@ -10,7 +10,7 @@ export function CoachingCard({ coaching }: CoachingCardProps) {
   return (
     <CardShell
       label="Coaching"
-      title="Siste økter + AI-innsikt"
+      title="Siste økter + Anbefalt"
       actionLabel={`Alle ${coaching.lastFiveSessions.length}+ økter`}
     >
       <ul className="space-y-2.5">

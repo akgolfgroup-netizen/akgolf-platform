@@ -1,0 +1,92 @@
+/* ═══════════════════════════════════════════════
+   AK Golf Group — Design Tokens
+   Versjon 2.0 · 2026
+   ═══════════════════════════════════════════════ */
+
+:root {
+  /* ── Kjernefarger ── */
+  --akgolf-primary: #005840;
+  --akgolf-accent: #D1F843;
+  --akgolf-surface: #ECF0EF;
+  --akgolf-text: #324D45;
+  --akgolf-ink: #0A1F18;
+  --akgolf-muted: #A5B2AD;
+
+  /* ── Dark mode ── */
+  --akgolf-dark-bg: #102B1E;
+  --akgolf-card-dark: #0D2E23;
+  --akgolf-card-light: #FFFFFF;
+  --akgolf-primary-light: #B8D4CC;
+
+  /* ── Semantiske farger ── */
+  --akgolf-success: #2A7D5A;
+  --akgolf-success-bg: #E8F5EF;
+  --akgolf-warning: #C48A32;
+  --akgolf-warning-bg: #FDF4E4;
+  --akgolf-danger: #B84233;
+  --akgolf-danger-bg: #FCEAE8;
+
+  /* ── Semantiske farger (dark mode) ── */
+  --akgolf-success-dark-bg: #1A3D2E;
+  --akgolf-warning-dark-bg: #3D2E14;
+  --akgolf-danger-dark-bg: #3D1A14;
+
+  /* ── Typografi ── */
+  --akgolf-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --akgolf-font-h1: 800 48px/1.1 var(--akgolf-font-family);
+  --akgolf-font-h2: 700 32px/1.2 var(--akgolf-font-family);
+  --akgolf-font-h3: 700 24px/1.3 var(--akgolf-font-family);
+  --akgolf-font-body: 400 16px/1.6 var(--akgolf-font-family);
+  --akgolf-font-small: 400 14px/1.5 var(--akgolf-font-family);
+  --akgolf-font-caption: 400 12px/1.4 var(--akgolf-font-family);
+
+  /* ── Spacing (8pt grid) ── */
+  --akgolf-space-xs: 4px;
+  --akgolf-space-sm: 8px;
+  --akgolf-space-md: 16px;
+  --akgolf-space-lg: 24px;
+  --akgolf-space-xl: 32px;
+  --akgolf-space-2xl: 48px;
+  --akgolf-space-3xl: 64px;
+
+  /* ── Border radius ── */
+  --akgolf-radius-sm: 8px;
+  --akgolf-radius-md: 12px;
+  --akgolf-radius-card: 16px;
+  --akgolf-radius-pill: 20px;
+  --akgolf-radius-circle: 50%;
+
+  /* ── Shadows ── */
+  --akgolf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --akgolf-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --akgolf-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
+  --akgolf-shadow-dark-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --akgolf-shadow-dark-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --akgolf-shadow-glow: 0 0 20px rgba(209, 248, 67, 0.08);
+
+  /* ── Borders ── */
+  --akgolf-border-light: 1px solid #e0e8e5;
+  --akgolf-border-dark: 1px solid #1a4a3a;
+  --akgolf-border-glow: 1.5px solid rgba(209, 248, 67, 0.25);
+
+  /* ── Transitions ── */
+  --akgolf-transition-fast: 150ms ease;
+  --akgolf-transition-normal: 250ms ease;
+  --akgolf-transition-slow: 400ms ease;
+}
+
+/* ── Dark mode overrides ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --akgolf-surface: var(--akgolf-dark-bg);
+    --akgolf-card-light: var(--akgolf-card-dark);
+    --akgolf-text: #FFFFFF;
+    --akgolf-muted: #7a9a8e;
+    --akgolf-shadow-sm: var(--akgolf-shadow-dark-sm);
+    --akgolf-shadow-md: var(--akgolf-shadow-dark-md);
+    --akgolf-border-light: var(--akgolf-border-dark);
+    --akgolf-success-bg: var(--akgolf-success-dark-bg);
+    --akgolf-warning-bg: var(--akgolf-warning-dark-bg);
+    --akgolf-danger-bg: var(--akgolf-danger-dark-bg);
+  }
+}

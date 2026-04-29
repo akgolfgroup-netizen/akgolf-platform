@@ -152,6 +152,12 @@ export async function POST(req: NextRequest) {
       throw updateError;
     }
 
+    // Fire-and-forget: trigger cancellation-agent.
+    // Beregner refund og kjorer Stripe refund/credit-note hvis applicable.
+    void import("@/lib/portal/agents/cancellation")
+      .then(({ runCancellation }) => runCancellation(bookingId))
+      .catch((err) => logger.error("[Cancel] cancellation agent failed", err));
+
     // Slett Google Calendar-event (non-blocking)
     if (booking.googleCalendarEventId && booking.Instructor?.userId) {
       removeFromCalendar(

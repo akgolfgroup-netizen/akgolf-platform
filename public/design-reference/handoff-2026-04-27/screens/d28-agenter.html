@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D28 — Agenter · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .ag-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; }
+  .ag-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; padding:22px 26px; position:relative; }
+  .ag-card.on { border-color: rgba(209,248,67,0.30); background: linear-gradient(160deg, rgba(209,248,67,0.05), rgba(13,46,35,0.0)), var(--akgolf-card-dark); }
+  .ag-head { display:flex; gap:14px; align-items:flex-start; margin-bottom:14px; }
+  .ag-head .ic { width:44px; height:44px; border-radius:11px; background:rgba(209,248,67,0.15); color:var(--akgolf-accent); display:grid; place-items:center; flex-shrink:0; }
+  .ag-head .ic [data-lucide]{ width:20px; height:20px; }
+  .ag-head .nm { font-size:16px; color:#fff; font-weight:700; letter-spacing:-0.015em; }
+  .ag-head .desc { font-size:12.5px; color:rgba(255,255,255,0.65); line-height:1.5; margin-top:4px; }
+
+  /* Toggle */
+  .toggle { width:38px; height:22px; border-radius:12px; background:rgba(255,255,255,0.08); position:relative; cursor:pointer; flex-shrink:0; }
+  .toggle::after { content:''; position:absolute; left:3px; top:3px; width:16px; height:16px; border-radius:50%; background:#fff; transition: all 200ms; }
+  .toggle.on { background:var(--akgolf-accent); }
+  .toggle.on::after { left:19px; background:#0A1F18; }
+
+  .ag-conditions { background:rgba(0,0,0,0.20); border-radius:10px; padding:12px 14px; font-size:12.5px; color:rgba(255,255,255,0.85); line-height:1.6; margin-bottom:12px; }
+  .ag-conditions .lab { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--akgolf-accent); letter-spacing:0.14em; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+  .ag-conditions code { font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--akgolf-accent); background:rgba(209,248,67,0.10); padding:1px 5px; border-radius:3px; }
+
+  .ag-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
+  .ag-cell { background:rgba(0,0,0,0.20); border-radius:7px; padding:8px 10px; }
+  .ag-cell .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; font-weight:700; }
+  .ag-cell .v { font-size:13px; color:#fff; font-weight:700; margin-top:2px; }
+
+  .ag-recent { font-size:12px; color:rgba(255,255,255,0.65); }
+  .ag-recent .when { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--akgolf-accent); letter-spacing:0.06em; }
+
+  .ag-actions { display:flex; gap:6px; margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.05); }
+  .ag-actions .btn { flex:1; padding:7px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:7px; font-size:11.5px; color:rgba(255,255,255,0.85); display:flex; justify-content:center; align-items:center; gap:6px; cursor:pointer; }
+  .ag-actions .btn [data-lucide]{ width:12px; height:12px; }
+
+  .ag-status { position:absolute; top:18px; right:22px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="bot"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Automatisering</div>
+    <div class="chq-nav-item active"><i data-lucide="bot"></i>Agenter<span class="badge">6/8</span></div>
+    <div class="chq-nav-item"><i data-lucide="sparkles"></i>AI-assistent</div>
+    <div class="chq-nav-item"><i data-lucide="git-branch"></i>Workflows</div>
+    <div class="chq-nav-item"><i data-lucide="history"></i>Logg</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Agenter</div>
+    <div class="chq-top-meta">6 AKTIVE · 2 PAUSE · 142 KJØRT SISTE 7 DAGER · 0 FEIL</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk agenter…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ AUTOMATISERING · AGENTER</div>
+        <h1 class="chq-h1">Boter som jobber for deg.</h1>
+        <p>Små bakgrunns-agenter som tar repetitive oppgaver — purringer, oppfølgings-meldinger, no-show flagging, sesongtransisjoner. Kjører på regler du setter; varsler deg når noe trenger blikk.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="history"></i>Logg</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Ny agent</button>
+      </div>
+    </div>
+
+    <div class="ag-grid">
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="bell-ring"></i></div>
+          <div><div class="nm">Booking-påminnelse</div><div class="desc">Sender SMS 24t før avtalt økt. Inkluderer Bay-nr, tid, parkerings-info.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>before(booking.start, 24h)</code> &nbsp;OG&nbsp; <code>booking.status = confirmed</code>
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Kjørt · 7d</div><div class="v">42</div></div>
+          <div class="ag-cell"><div class="l">No-show ↓</div><div class="v">−68%</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist kjørt: <span class="when">I DAG 09:00</span> · 6 SMS sendt for økter i morgen</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="user-x"></i></div>
+          <div><div class="nm">No-show flagger</div><div class="desc">Markerer spillere som har 2+ no-show siste 30 dager. Oppretter task til Erik.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>noshow.count(30d) ≥ 2</code> → opprett task: «Følg opp [spiller]»
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Flagg · 7d</div><div class="v">2</div></div>
+          <div class="ag-cell"><div class="l">Tasks åpne</div><div class="v">1</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist trigget: <span class="when">I GÅR 12:30</span> · Per Rasmussen flagget</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="receipt"></i></div>
+          <div><div class="nm">Faktura-purring</div><div class="desc">Sender vennlig påminnelse 7d og 14d etter forfall. Stripe-integrert.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>invoice.overdue ∈ {7d, 14d}</code> → email + push
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Kjørt · 7d</div><div class="v">3</div></div>
+          <div class="ag-cell"><div class="l">Inn-betalt</div><div class="v">2</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist kjørt: <span class="when">I GÅR 10:00</span> · 1 betaling registrert siden</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="trending-up"></i></div>
+          <div><div class="nm">HCP-milepæl-gratulant</div><div class="desc">Når en spiller passerer en milepæl (single, scratch, ny PB) sendes auto-melding.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>hcp.crosses({10, 5, 0}) OR hcp.new_pb</code>
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Kjørt · 7d</div><div class="v">3</div></div>
+          <div class="ag-cell"><div class="l">PB · siste</div><div class="v">SOFIE</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist kjørt: <span class="when">2 t SIDEN</span> · Sofie Aas (8.1 → 7.7) gratulert</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="leaf"></i></div>
+          <div><div class="nm">Sesongtransisjon</div><div class="desc">Når været endrer seg (under 5°C 5d), foreslår indoor-økter for outdoor-bookinger.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>weather.avg(5d) &lt; 5°C</code> → foreslå Skullerud
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Pause</div><div class="v">SOMMER</div></div>
+          <div class="ag-cell"><div class="l">Sesong-prep</div><div class="v">OKT</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist kjørt: <span class="when">15. APRIL</span> · Aktiveres igjen oktober</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card on">
+        <div class="ag-status"><div class="toggle on"></div></div>
+        <div class="ag-head">
+          <div class="ic"><i data-lucide="message-circle"></i></div>
+          <div><div class="nm">Smart-svar (foreldre)</div><div class="desc">Genererer utkast til foreldrespørsmål om bookinger. Erik godkjenner før send.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>message.from = parent</code> AND classifier(booking_question) = true
+        </div>
+        <div class="ag-stats">
+          <div class="ag-cell"><div class="l">Utkast · 7d</div><div class="v">8</div></div>
+          <div class="ag-cell"><div class="l">Godkjent</div><div class="v">7</div></div>
+          <div class="ag-cell"><div class="l">Feil</div><div class="v" style="color:#6FCBA1;">0</div></div>
+        </div>
+        <div class="ag-recent">Sist kjørt: <span class="when">3 t SIDEN</span> · Foreldre Hansen (svar lagt klar)</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn"><i data-lucide="play"></i>Test-kjør</div>
+          <div class="btn"><i data-lucide="history"></i>Logg</div>
+        </div>
+      </article>
+
+      <article class="ag-card">
+        <div class="ag-status"><div class="toggle"></div></div>
+        <div class="ag-head">
+          <div class="ic" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.55);"><i data-lucide="zap-off"></i></div>
+          <div><div class="nm" style="color:rgba(255,255,255,0.7);">Re-engagement</div><div class="desc">Spillere som ikke har booket siste 30d får påminnelse + tilbud om gratis 30 min.</div></div>
+        </div>
+        <div class="ag-conditions">
+          <div class="lab">Trigger</div>
+          <code>last_booking &gt; 30d</code> → SMS m/ promo-link
+        </div>
+        <div class="ag-recent" style="color:rgba(255,255,255,0.5);">Pause · Erik vurderer policy om gratis-økt-tilbud</div>
+        <div class="ag-actions">
+          <div class="btn"><i data-lucide="settings"></i>Innstillinger</div>
+          <div class="btn" style="background:rgba(209,248,67,0.10); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.20);"><i data-lucide="play"></i>Aktiver</div>
+        </div>
+      </article>
+
+      <article class="ag-card" style="border-style:dashed; opacity:0.65;">
+        <div class="ag-head">
+          <div class="ic" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6);"><i data-lucide="plus"></i></div>
+          <div><div class="nm" style="color:rgba(255,255,255,0.75);">Ny agent</div><div class="desc">Bygg din egen automatisering. Triggere: tid, hendelse, terskelverdier. Handlinger: SMS, email, task, faktura.</div></div>
+        </div>
+        <div class="ag-actions">
+          <div class="btn" style="background:rgba(209,248,67,0.10); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.20);"><i data-lucide="hammer"></i>Bygg agent</div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Junior Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero */
+  .j-hero {
+    padding: 130px 0 80px;
+    background: var(--akgolf-surface);
+    position: relative;
+  }
+  .j-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .j-hero h1 {
+    font-size: clamp(46px, 6.2vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.038em;
+    color: var(--akgolf-ink);
+    font-weight: 800;
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+  .j-hero h1 em {
+    font-family:'Fraunces',serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--akgolf-primary);
+  }
+  .j-hero-eyebrow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    color: var(--akgolf-primary); text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .j-hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--akgolf-accent);
+    box-shadow: 0 0 0 4px rgba(209,248,67,0.30);
+  }
+  .j-hero-meta {
+    display: flex; gap: 28px; align-items: center;
+    margin-top: 36px; padding-top: 28px;
+    border-top: 1px solid var(--akgolf-line-light);
+  }
+  .j-hero-meta .it { display: flex; flex-direction: column; gap: 2px; }
+  .j-hero-meta .it .v { font-size: 28px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); }
+  .j-hero-meta .it .l { font-family:'JetBrains Mono',monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; }
+  .j-hero-meta .sep { width: 1px; height: 32px; background: var(--akgolf-line-light); }
+
+  /* Age groups */
+  .age-section { padding: 100px 0; background: #fff; }
+  .age-head { text-align: center; margin-bottom: 60px; }
+  .age-head h2 { max-width: 22ch; margin: 0 auto 16px; }
+  .age-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .age {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .age:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 1px 2px rgba(10,31,24,0.04), 0 24px 60px rgba(10,31,24,0.10);
+  }
+  .age-thumb { border-radius: 0 !important; }
+  .age-thumb .pill {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(255,255,255,0.95);
+    color: var(--akgolf-ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    font-weight: 700;
+    z-index: 3;
+  }
+  .age-body { padding: 28px 28px 30px; display: flex; flex-direction: column; flex: 1; }
+  .age-body h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0 0 6px; }
+  .age-body .tag { font-size: 13px; color: var(--akgolf-muted); margin-bottom: 18px; }
+  .age-body p { font-size: 14px; color: var(--akgolf-text); line-height: 1.55; margin: 0 0 20px; }
+  .age-body ul { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .age-body ul li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--akgolf-text); }
+  .age-body ul li [data-lucide] { width: 14px; height: 14px; color: var(--akgolf-primary); margin-top: 3px; flex-shrink: 0; }
+  .age-stats {
+    display: flex; gap: 18px;
+    padding: 16px 0;
+    margin: 0 0 18px;
+    border-top: 1px solid var(--akgolf-line-light);
+    border-bottom: 1px solid var(--akgolf-line-light);
+  }
+  .age-stats .s { display: flex; flex-direction: column; gap: 2px; }
+  .age-stats .s .v { font-size: 18px; font-weight: 800; color: var(--akgolf-ink); letter-spacing: -0.02em; }
+  .age-stats .s .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; }
+  .age-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700;
+    color: var(--akgolf-primary);
+    margin-top: auto;
+  }
+  .age-cta:hover { gap: 12px; }
+  .age-cta [data-lucide] { width: 14px; height: 14px; }
+
+  /* Foreldre / 3-up benefits */
+  .parent-section { padding: 100px 0; background: var(--akgolf-surface); }
+  .parent-head { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; margin-bottom: 60px; }
+  .parent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pcard {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 20px;
+    padding: 32px 28px;
+  }
+  .pcard .ico {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(0,88,64,0.10);
+    color: var(--akgolf-primary);
+    display: grid; place-items: center;
+    margin-bottom: 22px;
+  }
+  .pcard .ico [data-lucide] { width: 22px; height: 22px; stroke-width: 1.8; }
+  .pcard h4 { font-size: 19px; font-weight: 700; letter-spacing: -0.020em; color: var(--akgolf-ink); margin: 0 0 8px; }
+  .pcard p { font-size: 14px; color: var(--akgolf-text); line-height: 1.55; margin: 0; text-wrap: pretty; }
+
+  /* Big season programs */
+  .season-section { padding: 100px 0; background: #fff; }
+  .season-head { text-align: center; margin-bottom: 60px; }
+  .season-head h2 { max-width: 22ch; margin: 0 auto 16px; }
+  .season-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .season {
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    display: grid; grid-template-rows: 240px 1fr;
+  }
+  .season-img { border-radius: 0 !important; }
+  .season-body { padding: 32px; display: flex; flex-direction: column; }
+  .season-body .lab {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-primary);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .season-body h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0 0 12px; }
+  .season-body p { font-size: 14.5px; color: var(--akgolf-text); line-height: 1.55; margin: 0 0 20px; }
+  .season-body .row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--akgolf-line-light);
+    margin-bottom: 20px;
+  }
+  .season-body .row .it .v { font-size: 18px; font-weight: 800; color: var(--akgolf-ink); letter-spacing: -0.02em; }
+  .season-body .row .it .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; }
+
+  /* Trener / coach profile */
+  .jcoach-section { background: var(--akgolf-ink); color: #fff; padding: 100px 0; }
+  .jcoach-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: center; }
+  .jcoach-portrait {
+    border-radius: 24px;
+    background: linear-gradient(135deg, #112e22 0%, #1a3a2a 100%);
+  }
+  .jcoach-side .lab {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .jcoach-side h2 {
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 800; letter-spacing: -0.030em;
+    color: #fff; line-height: 1.05;
+    margin: 0 0 24px;
+  }
+  .jcoach-side h2 em {
+    font-family:'Fraunces',serif;
+    font-style: italic; font-weight: 500;
+    color: var(--akgolf-accent);
+  }
+  .jcoach-side blockquote {
+    margin: 0 0 28px;
+    font-size: 18px; line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    text-wrap: pretty;
+    max-width: 52ch;
+    border-left: 3px solid var(--akgolf-accent);
+    padding-left: 22px;
+  }
+  .jcoach-credits {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .jcoach-credits .cr { display: flex; flex-direction: column; gap: 4px; }
+  .jcoach-credits .cr .v { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .jcoach-credits .cr .l { font-family:'JetBrains Mono',monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 700; }
+
+  /* Pricing strip */
+  .priceband {
+    padding: 60px 0;
+    background: var(--akgolf-accent);
+    color: var(--akgolf-ink);
+  }
+  .priceband-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px; align-items: center;
+  }
+  .priceband h3 {
+    font-size: 28px; font-weight: 800; letter-spacing: -0.025em;
+    margin: 0 0 6px;
+  }
+  .priceband p { margin: 0; font-size: 14px; color: rgba(10,31,24,0.7); }
+  .priceband .pp { display: flex; flex-direction: column; gap: 2px; }
+  .priceband .pp .v { font-size: 26px; font-weight: 800; letter-spacing: -0.025em; }
+  .priceband .pp .l { font-family:'JetBrains Mono',monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+
+  /* FAQ */
+  .faq-section { background: var(--akgolf-surface); padding: 100px 0; }
+  .faq-list { max-width: 800px; margin: 60px auto 0; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--akgolf-line-light);
+    border-radius: 16px;
+    padding: 24px 28px;
+  }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 17px; font-weight: 700; letter-spacing: -0.015em;
+    color: var(--akgolf-ink);
+  }
+  .faq-q [data-lucide] { width: 18px; height: 18px; color: var(--akgolf-muted); }
+  .faq-a {
+    margin-top: 12px;
+    font-size: 15px; color: var(--akgolf-text); line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* Big CTA */
+  .j-cta {
+    padding: 100px 0;
+    background: var(--akgolf-ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .j-cta::before {
+    content:''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 30%, rgba(209,248,67,0.12), transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(0,88,64,0.30), transparent 50%);
+  }
+  .j-cta .content { position: relative; z-index: 2; text-align: center; }
+  .j-cta h2 {
+    font-size: clamp(40px, 5.4vw, 68px);
+    font-weight: 800; letter-spacing: -0.030em;
+    color: #fff; max-width: 22ch; margin: 0 auto 20px;
+    line-height: 1.05;
+  }
+  .j-cta h2 em { font-family:'Fraunces',serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .j-cta p { color: rgba(255,255,255,0.7); font-size: 17px; max-width: 50ch; margin: 0 auto 36px; }
+
+  @media (max-width: 900px) {
+    .j-hero-grid, .jcoach-grid { grid-template-columns: 1fr; gap: 40px; }
+    .age-grid, .parent-grid, .season-grid { grid-template-columns: 1fr; }
+    .priceband-grid { grid-template-columns: 1fr; gap: 20px; text-align: left; }
+    .parent-head { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html">Academy</a>
+    <a href="#" class="active">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="#">Bane</a>
+    <a href="#">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="#" class="web-nav-cta">Bli medlem <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="j-hero">
+  <div class="web-container">
+    <div class="j-hero-grid">
+      <div>
+        <div class="j-hero-eyebrow"><span class="dot"></span>Junior Academy · 6–17 år</div>
+        <h1 class="web-rise d1">Lekent, <em>strukturert</em>, og stolt foreldreapp.</h1>
+        <p class="web-lede web-rise d2">Tre aldersgrupper, egne juniortrenere og en foreldreapp som viser hva ungene faktisk trener på — uke for uke. Sommerleir, klubbturnering og talentstige inkludert.</p>
+        <div class="hero-actions web-rise d3" style="display:flex; gap: 14px; flex-wrap:wrap;">
+          <a href="#aldersgrupper" class="web-btn dark lg">Se aldersgrupper <i data-lucide="arrow-right"></i></a>
+          <a href="#" class="web-btn line lg">Book prøvetime <i data-lucide="calendar"></i></a>
+        </div>
+        <div class="j-hero-meta web-rise d4">
+          <div class="it"><div class="v">128</div><div class="l">Aktive juniorer</div></div>
+          <div class="sep"></div>
+          <div class="it"><div class="v">3</div><div class="l">Aldersnivåer</div></div>
+          <div class="sep"></div>
+          <div class="it"><div class="v">96%</div><div class="l">Foreldre-fornyer</div></div>
+        </div>
+      </div>
+      <div class="web-rise d2">
+        <div class="web-photo lime" data-ratio="16-9" style="border-radius: 24px;">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Junior-foto]</div>
+            <div class="desc">Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning</div>
+            <div class="ratio">16:9 · landscape</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Age groups -->
+<section class="age-section" id="aldersgrupper">
+  <div class="web-container">
+    <div class="age-head">
+      <div class="web-eyebrow" style="display:inline-block;">Tre aldersgrupper</div>
+      <h2 class="web-h2">Lek, læring, <em class="web-italic">og turnering</em>.</h2>
+    </div>
+
+    <div class="age-grid">
+      <!-- 6–9 år: Sprout -->
+      <div class="age">
+        <div class="web-photo age-thumb" data-ratio="3-2">
+          <span class="pill">6–9 ÅR</span>
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Foto]</div>
+            <div class="desc">Smilende 7-åring med plast-kølle, fargerik mini-bane</div>
+            <div class="ratio">3:2 · landscape</div>
+          </div>
+        </div>
+        <div class="age-body">
+          <h3>Sprout</h3>
+          <div class="tag">Lekbasert intro · 60 min × uke</div>
+          <p>Motorikk, koordinasjon og gledesfylt første møte med golf. Plast-køller, fargerike mål, og masse løping.</p>
+          <ul>
+            <li><i data-lucide="check"></i> Mini-baner og lek-stasjoner</li>
+            <li><i data-lucide="check"></i> Foreldre kan delta gratis</li>
+            <li><i data-lucide="check"></i> Sommer-uke i juli</li>
+            <li><i data-lucide="check"></i> Kort tilpasset (avskåret)</li>
+          </ul>
+          <div class="age-stats">
+            <div class="s"><div class="v">8 stk</div><div class="l">Pr. gruppe</div></div>
+            <div class="s"><div class="v">1.290</div><div class="l">Kr / mnd</div></div>
+          </div>
+          <a href="#" class="age-cta">Mer om Sprout <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 10–13 år: Grow -->
+      <div class="age">
+        <div class="web-photo lime age-thumb" data-ratio="3-2">
+          <span class="pill">10–13 ÅR</span>
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Foto]</div>
+            <div class="desc">Junior 11 år i full sving, range, fokusert ansiktsuttrykk</div>
+            <div class="ratio">3:2 · landscape</div>
+          </div>
+        </div>
+        <div class="age-body">
+          <h3>Grow</h3>
+          <div class="tag">Teknikk + bane · 90 min × uke</div>
+          <p>Strukturert teknikk-bygging med Trackman-feedback, banevandring annenhver uke, og første HCP-runde i gruppe.</p>
+          <ul>
+            <li><i data-lucide="check"></i> Trackman-tilpasset i smågruppe</li>
+            <li><i data-lucide="check"></i> 4× banevandring 9 hull / sesong</li>
+            <li><i data-lucide="check"></i> Egen klubbturnering · vår + høst</li>
+            <li><i data-lucide="check"></i> PlayerHQ Junior i appen</li>
+          </ul>
+          <div class="age-stats">
+            <div class="s"><div class="v">6 stk</div><div class="l">Pr. gruppe</div></div>
+            <div class="s"><div class="v">1.890</div><div class="l">Kr / mnd</div></div>
+          </div>
+          <a href="#" class="age-cta">Mer om Grow <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 14–17 år: Compete -->
+      <div class="age">
+        <div class="web-photo warm age-thumb" data-ratio="3-2">
+          <span class="pill">14–17 ÅR</span>
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Foto]</div>
+            <div class="desc">Tenåring i ferdig follow-through på fairway, golden hour, fokus</div>
+            <div class="ratio">3:2 · landscape</div>
+          </div>
+        </div>
+        <div class="age-body">
+          <h3>Compete</h3>
+          <div class="tag">Talent / turnering · 2× uke</div>
+          <p>For ambisiøse tenåringer. Personlig coach, fysisk testing, mental forberedelse og oppfølging på regionale turneringer.</p>
+          <ul>
+            <li><i data-lucide="check"></i> Personlig coach + treningsplan</li>
+            <li><i data-lucide="check"></i> Fysisk testing 4× / år</li>
+            <li><i data-lucide="check"></i> Turnering-coaching helger</li>
+            <li><i data-lucide="check"></i> Talentstige mot regionalt nivå</li>
+          </ul>
+          <div class="age-stats">
+            <div class="s"><div class="v">4 stk</div><div class="l">Pr. gruppe</div></div>
+            <div class="s"><div class="v">2.890</div><div class="l">Kr / mnd</div></div>
+          </div>
+          <a href="#" class="age-cta">Mer om Compete <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Foreldre / 3-up benefits -->
+<section class="parent-section">
+  <div class="web-container">
+    <div class="parent-head">
+      <div>
+        <div class="web-eyebrow">For foreldre</div>
+        <h2 class="web-h2">Vi viser dere <em class="web-italic">det dere lurer på</em>.</h2>
+      </div>
+      <a href="#" class="web-btn line">Last ned foreldreapp <i data-lucide="smartphone"></i></a>
+    </div>
+
+    <div class="parent-grid">
+      <div class="pcard">
+        <div class="ico"><i data-lucide="bell"></i></div>
+        <h4>Push fra trener</h4>
+        <p>Du får varsel når neste økt er, når den flyttes, og når trener legger ut bilder eller video fra timen — slik at du alltid vet hva som skjer.</p>
+      </div>
+      <div class="pcard">
+        <div class="ico"><i data-lucide="line-chart"></i></div>
+        <h4>Fremgang du forstår</h4>
+        <p>En enkel månedsrapport per junior: hva treningen handlet om, hva som ble bedre, og hva neste mål er. Ingen tekniske diagrammer du må tolke.</p>
+      </div>
+      <div class="pcard">
+        <div class="ico"><i data-lucide="users"></i></div>
+        <h4>Forelder-fellesskap</h4>
+        <p>Privat foreldregruppe per aldersnivå for samkjøring, turneringspåmelding og kafé-prat. Trener er moderator.</p>
+      </div>
+      <div class="pcard">
+        <div class="ico"><i data-lucide="shield-check"></i></div>
+        <h4>Trygghet og sikkerhet</h4>
+        <p>Alle trenere er politiattestert og fullt forsikret. Vi har voksenansvarlig på alle samlinger og førstehjelpsutstyr på plass.</p>
+      </div>
+      <div class="pcard">
+        <div class="ico"><i data-lucide="calendar-check"></i></div>
+        <h4>Ferier og leir</h4>
+        <p>4 sommerleir-uker (juni–august) og 2 vinterleir-helger inkludert i Compete. Vi tar oss av lunsj, transport og bilder.</p>
+      </div>
+      <div class="pcard">
+        <div class="ico"><i data-lucide="message-square"></i></div>
+        <h4>Direkte med trener</h4>
+        <p>Chat trener via appen — svar i løpet av samme dag. Ingen telefontag, ingen e-post som forsvinner i innboksen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Season programs -->
+<section class="season-section">
+  <div class="web-container">
+    <div class="season-head">
+      <div class="web-eyebrow" style="display:inline-block;">Sesongprogrammer</div>
+      <h2 class="web-h2">Sommerleir og <em class="web-italic">talentstige</em>.</h2>
+    </div>
+
+    <div class="season-grid">
+      <div class="season">
+        <div class="web-photo lime season-img" data-ratio="16-9">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Foto]</div>
+            <div class="desc">Sommerleir-gruppe juniorer på range, sol, ryggsekker, pizza-pause i bakgrunnen</div>
+            <div class="ratio">16:9 · landscape</div>
+          </div>
+        </div>
+        <div class="season-body">
+          <div class="lab">SOMMERLEIR · UKE 26–30</div>
+          <h3>AK Sommerleir</h3>
+          <p>5-dagers leir for 6–13 år: golf, lek, baneturer, lunsj, pizza-fredag og turnering med pokaler. Tilgjengelig for ikke-medlemmer.</p>
+          <div class="row">
+            <div class="it"><div class="v">5 dager</div><div class="l">09–15 hver dag</div></div>
+            <div class="it"><div class="v">3.490 kr</div><div class="l">Pris pr. uke</div></div>
+          </div>
+          <a href="#" class="web-btn dark" style="align-self:flex-start;">Se uker og påmelding <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="season">
+        <div class="web-photo warm season-img" data-ratio="16-9">
+          <div class="web-photo-label">
+            <div class="ico"><i data-lucide="camera"></i></div>
+            <div class="tag">[Foto]</div>
+            <div class="desc">Tenåring med pokal og foreldre etter klubbturnering, scoreboard i bakgrunnen</div>
+            <div class="ratio">16:9 · landscape</div>
+          </div>
+        </div>
+        <div class="season-body">
+          <div class="lab">TALENTSTIGE · 14–17 ÅR</div>
+          <h3>Compete-spor mot regionalt nivå</h3>
+          <p>For Compete-juniorer som sikter mot regionale og nasjonale turneringer. Vi følger på 4–6 turneringer i året, hjelper med skole-balansen, og følger talentutviklingen tett gjennom sesongen.</p>
+          <div class="row">
+            <div class="it"><div class="v">6 turneringer</div><div class="l">Coach følger</div></div>
+            <div class="it"><div class="v">Regionalt</div><div class="l">Talentspor</div></div>
+          </div>
+          <a href="#" class="web-btn dark" style="align-self:flex-start;">Søk om plass <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Junior-coach profile -->
+<section class="jcoach-section">
+  <div class="web-container">
+    <div class="jcoach-grid">
+      <div class="web-photo jcoach-portrait" data-ratio="3-4">
+        <div class="web-photo-label">
+          <div class="ico"><i data-lucide="user"></i></div>
+          <div class="tag">[Portrett]</div>
+          <div class="desc">Markus Lien (juniortrener) i naturlig coaching-positur med smilende junior-elev, mid-shot</div>
+          <div class="ratio">3:4 · portrett</div>
+        </div>
+      </div>
+      <div class="jcoach-side">
+        <div class="lab">Hovedansvarlig junior</div>
+        <h2>Markus Lien — <em>juniortrener med hjerte for laget.</em></h2>
+        <blockquote>"Det viktigste er at de har det gøy. Når en 9-åring vil tilbake neste uke, har vi gjort jobben — teknikk og handicap kommer av seg selv når gleden er der."</blockquote>
+        <div class="jcoach-credits">
+          <div class="cr"><div class="v">Hovedcoach</div><div class="l">Junior Academy</div></div>
+          <div class="cr"><div class="v">6–17 år</div><div class="l">Aldersspenn</div></div>
+          <div class="cr"><div class="v">Sommerleir</div><div class="l">Hovedansvar</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing strip -->
+<section class="priceband">
+  <div class="web-container">
+    <div class="priceband-grid">
+      <div>
+        <h3>Søsken-rabatt 25%</h3>
+        <p>Andre junior fra samme familie får automatisk 25% rabatt — alle nivåer.</p>
+      </div>
+      <div class="pp"><div class="v">1.290 kr</div><div class="l">SPROUT · MND</div></div>
+      <div class="pp"><div class="v">1.890 kr</div><div class="l">GROW · MND</div></div>
+      <div class="pp"><div class="v">2.890 kr</div><div class="l">COMPETE · MND</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="web-container">
+    <div style="text-align: center;">
+      <div class="web-eyebrow">For foreldre</div>
+      <h2 class="web-h2">Det vi får spørsmål om.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Hva trenger ungen å ha med? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Sportstøy og innesko de første ukene — vi har køller i alle størrelser tilgjengelig på range. Etter 4–6 uker hjelper trener til å velge riktig junior-sett som familien kan kjøpe brukt eller via klubbens utlånspool.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Kan vi prøve én gang før vi melder oss på? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Ja — vi har gratis prøvetimer hver lørdag i sesongen (april–oktober). Book direkte i kalenderen, eller stikk innom Bærum GK kl. 11–13. Ingen påmelding nødvendig.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Hva skjer ved sykdom eller bortreise? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Du melder fra i appen. Hvis junior misser mer enn 2 uker sammenhengende, krediterer vi tiden eller flytter den til sommerleir-tilbud. Vi forventer ikke perfekt oppmøte.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Hvordan er det med voksenansvar og sikkerhet? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Alle trenere er politiattestert og fullt forsikret. Vi har minimum to voksne på samlinger over 4 timer, og legger ut førstehjelpsplan før hver leir.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Trenger ungen klubbmedlemskap i tillegg? <i data-lucide="plus"></i></div>
+        <div class="faq-a">Bærum GK gir alle Junior Academy-deltakere gratis junior-medlemskap første år. Etter det er det 590 kr / år for tilgang til bane og turneringer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Big CTA -->
+<section class="j-cta">
+  <div class="web-container content">
+    <h2>Bli med på <em>gratis prøvetime</em>.</h2>
+    <p>Hver lørdag april–oktober på Bærum GK. Ungen prøver, dere får møte trenerne, og dere kan melde dere på samme dag — eller bare prøve, helt forpliktelsesfritt.</p>
+    <div style="display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+      <a href="#" class="web-btn primary lg">Book prøvetime <i data-lucide="arrow-right"></i></a>
+      <a href="#" class="web-btn ghost lg">Spør oss noe <i data-lucide="message-circle"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--akgolf-accent); color: #0A1F18; display: grid; place-items: center; font-weight: 800; font-size: 13px; letter-spacing: -0.04em;">AK</div>
+          <span style="color: #fff; font-weight: 800; font-size: 18px; letter-spacing: -0.02em;">AK Golf</span>
+        </div>
+        <p class="desc">Bane, akademi og personlig coaching i én sammenhengende reise. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div>
+        <h4>Tjenester</h4>
+        <ul>
+          <li><a href="g2-academy.html">Academy</a></li>
+          <li><a href="g3-junior-academy.html">Junior</a></li>
+          <li><a href="g4-pricing.html">Booking</a></li>
+          <li><a href="#">Bedrift</a></li>
+          <li><a href="#">Bane & green-fee</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>AK Golf</h4>
+        <ul>
+          <li><a href="#">Om oss</a></li>
+          <li><a href="#">Coacher</a></li>
+          <li><a href="#">Karriere</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="#">post@akgolf.no</a></li>
+          <li><a href="#">+47 22 00 00 00</a></li>
+          <li><a href="#">Bærum GK</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2025 AK Golf AS · Org.nr 999 999 999</span>
+      <div class="socials">
+        <a href="#"><i data-lucide="instagram"></i></a>
+        <a href="#"><i data-lucide="facebook"></i></a>
+        <a href="#"><i data-lucide="youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

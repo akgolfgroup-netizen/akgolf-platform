@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrackManOverview } from "./actions";
-import { TrackManClient } from "./trackman-client";
+import { TrackManLabClient } from "@/components/portal/trackman/v2/trackman-lab-client";
 
 export const metadata: Metadata = {
   title: "TrackMan | PlayersHQ",
@@ -22,10 +22,24 @@ export const metadata: Metadata = {
   },
 };
 
+const EMPTY_TRACKMAN_OVERVIEW = {
+  sessions: [],
+  clubStats: [],
+  carryTrend: [],
+  totalSessions: 0,
+  totalShots: 0,
+  bestCarry: 0,
+  avgCarry: 0,
+  recentAnalytics: [],
+};
+
 export default async function TrackManPage() {
   await requirePortalUser();
 
-  const data = await getTrackManOverview();
+  const data = await getTrackManOverview().catch((err) => {
+    console.error("[trackman] getTrackManOverview failed:", err);
+    return EMPTY_TRACKMAN_OVERVIEW;
+  });
 
-  return <TrackManClient data={data} />;
+  return <TrackManLabClient data={data} />;
 }

@@ -462,7 +462,8 @@ export async function getTrackManData(userId: string): Promise<TrackManData | nu
 /* ── Social Data ── */
 
 interface SocialData {
-  rank: number;
+  /** null inntil vi har en faktisk ranking-pipeline. */
+  rank: number | null;
   totalPlayers: number;
   challenges: {
     id: string;
@@ -471,13 +472,13 @@ interface SocialData {
     endDate: string;
   }[];
   streak: number;
-  friendsOnline: number;
+  /** null inntil vi har online-status på venner. */
+  friendsOnline: number | null;
 }
 
 export async function getSocialData(userId: string): Promise<SocialData | null> {
   const supabase = await createServerSupabase();
 
-  // Hent brukerens rank (mock data for nå)
   const { count: totalPlayers } = await supabase
     .from("User")
     .select("id", { count: "exact", head: true });
@@ -507,25 +508,38 @@ export async function getSocialData(userId: string): Promise<SocialData | null> 
     }
   }
 
+  // Hent aktive challenges brukeren deltar i
+  const now = new Date().toISOString();
+  const { data: participations } = await supabase
+    .from("ChallengeParticipant")
+    .select(
+      "currentValue, Challenge!inner(id, title, endDate, metric)"
+    )
+    .eq("userId", userId)
+    .gte("Challenge.endDate", now)
+    .limit(5);
+
+  const challenges = (participations ?? [])
+    .map((p) => {
+      const c = (p as unknown as { Challenge: { id: string; title: string; endDate: string; metric: string } }).Challenge;
+      if (!c) return null;
+      const endsAt = new Date(c.endDate);
+      const daysLeft = Math.max(0, Math.ceil((endsAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+      return {
+        id: c.id,
+        name: c.title,
+        progress: 0, // beregnes senere når vi har target-verdier
+        endDate: daysLeft === 1 ? "1 dag" : `${daysLeft} dager`,
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x !== null);
+
   return {
-    rank: Math.floor(Math.random() * 100) + 1, // Mock rank
-    totalPlayers: totalPlayers || 150,
-    challenges: [
-      {
-        id: "1",
-        name: "Putting Master",
-        progress: 65,
-        endDate: "3 dager",
-      },
-      {
-        id: "2",
-        name: "Fairway Finder",
-        progress: 40,
-        endDate: "1 uke",
-      },
-    ],
+    rank: null, // venter på ranking-pipeline
+    totalPlayers: totalPlayers || 0,
+    challenges,
     streak,
-    friendsOnline: Math.floor(Math.random() * 5), // Mock
+    friendsOnline: null, // venter på online-tracking
   };
 }
 
@@ -541,7 +555,7 @@ export async function getPlayerLevel(userId: string): Promise<"beginner" | "inte
       .eq("userId", userId)
       .order("date", { ascending: false })
       .limit(1)
-      .single(),
+      .maybeSingle(),
     supabase
       .from("RoundStats")
       .select("id", { count: "exact", head: true })

@@ -166,17 +166,20 @@ export function ChatClient() {
       />
 
       <div className="p-6 space-y-6 flex flex-col h-[calc(100vh-56px)]">
-        {/* Heritage Grid Header */}
-        <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">
-            CoachHQ
-          </MonoLabel>
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
-            AI-assistent<span className="text-outline">.</span>
-          </h1>
-          <p className="text-on-surface-variant">
-            Still spørsmål om data, elever og analytikk
-          </p>
+        {/* Brand V2 page header — d29 mockup */}
+        <div className="flex items-end justify-between border-b border-line pb-5">
+          <div>
+            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-primary">
+              / AI · COACH COPILOT
+            </div>
+            <h1 className="mt-2 font-inter-tight text-[28px] font-bold leading-tight tracking-tight text-ink">
+              AI Coach.
+            </h1>
+            <p className="mt-1.5 max-w-2xl text-[13px] text-ink-muted">
+              Still spørsmål om spillere, økonomi og trender. AI har full
+              kontekst.
+            </p>
+          </div>
         </div>
 
         <GlassPanel variant="light" padding="none" className="flex flex-col flex-1 min-h-0">

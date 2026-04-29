@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D11 — Kalender · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .cal-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .cal-nav { display:inline-flex; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:8px; padding:2px; }
+  .cal-nav button { background:transparent; border:none; color:#fff; padding:6px 10px; border-radius:6px; cursor:pointer; display:grid; place-items:center; }
+  .cal-nav button [data-lucide]{ width:14px; height:14px; }
+  .cal-period { font-size:18px; font-weight:600; color:#fff; letter-spacing:-0.01em; min-width:160px; }
+  .cal-period small { display:block; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); font-weight:400; letter-spacing:0.06em; margin-top:2px; }
+  .view-toggle { display:inline-flex; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:8px; padding:2px; }
+  .view-toggle button { background:transparent; border:none; color:rgba(255,255,255,0.6); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; }
+  .view-toggle button.active { background:rgba(209,248,67,0.14); color:var(--akgolf-accent); }
+
+  /* Coach legend */
+  .coach-legend { display:flex; gap:10px; margin-left:auto; align-items:center; }
+  .coach-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:999px; font-size:11px; color:rgba(255,255,255,0.85); cursor:pointer; }
+  .coach-pill .dot { width:8px; height:8px; border-radius:50%; }
+  .coach-pill.muted { opacity:0.4; }
+
+  /* Week grid */
+  .week-grid {
+    display:grid;
+    grid-template-columns: 60px repeat(7, 1fr);
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .wg-corner { padding: 12px 8px; border-right:1px solid var(--akgolf-line-dark); border-bottom:1px solid var(--akgolf-line-dark); background:rgba(255,255,255,0.025); }
+  .wg-day-h { padding: 12px 10px; border-right:1px solid var(--akgolf-line-dark); border-bottom:1px solid var(--akgolf-line-dark); background:rgba(255,255,255,0.025); }
+  .wg-day-h:last-child { border-right:none; }
+  .wg-day-h .dow { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .wg-day-h .num { font-size:20px; font-weight:700; color:#fff; margin-top:2px; letter-spacing:-0.02em; }
+  .wg-day-h.today .num { color: var(--akgolf-accent); }
+  .wg-day-h .meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); margin-top:2px; }
+
+  .wg-time { padding: 8px; border-right:1px solid var(--akgolf-line-dark); border-top:1px solid rgba(255,255,255,0.04); font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.45); text-align:right; letter-spacing:0.06em; height:60px; box-sizing:border-box; }
+  .wg-cell { position:relative; border-right:1px solid var(--akgolf-line-dark); border-top:1px solid rgba(255,255,255,0.04); height:60px; }
+  .wg-cell:last-child { border-right:none; }
+  .wg-cell:hover { background: rgba(255,255,255,0.02); }
+  .wg-cell.now { background: rgba(209,248,67,0.04); }
+
+  /* Now line */
+  .now-line { position:absolute; left:0; right:0; height:2px; background:var(--akgolf-accent); z-index:5; pointer-events:none; }
+  .now-line::before { content:''; position:absolute; left:-4px; top:-3px; width:8px; height:8px; border-radius:50%; background:var(--akgolf-accent); box-shadow: 0 0 8px var(--akgolf-accent); }
+
+  /* Booking blocks */
+  .blk {
+    position:absolute; left:3px; right:3px;
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:11px;
+    color:#fff;
+    cursor:grab;
+    overflow:hidden;
+    border-left: 3px solid;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    z-index:2;
+    line-height:1.3;
+  }
+  .blk:active { cursor:grabbing; }
+  .blk .who { font-weight:600; color:#fff; }
+  .blk .what { font-size:10px; color:rgba(255,255,255,0.85); margin-top:1px; }
+  .blk .when { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.7); letter-spacing:0.04em; margin-top:2px; }
+
+  /* Coach colors */
+  .blk.anders { background: rgba(0,122,255,0.20); border-left-color:#6FB3FF; }
+  .blk.maria  { background: rgba(175,82,222,0.20); border-left-color:#C896E8; }
+  .blk.erik   { background: rgba(196,138,50,0.20); border-left-color:#E8B967; }
+  .blk.lisa   { background: rgba(42,125,90,0.22); border-left-color:#6FCBA1; }
+  .blk.live   { background: rgba(209,248,67,0.18); border-left-color:var(--akgolf-accent); box-shadow: 0 0 0 1px rgba(209,248,67,0.30), 0 0 12px rgba(209,248,67,0.20); }
+  .blk.pending { opacity: 0.55; border-style: dashed solid solid solid; border-style:dashed; }
+  .blk.gym { background: rgba(255,255,255,0.05); border-left-color: rgba(255,255,255,0.20); color: rgba(255,255,255,0.6); }
+
+  .blk-drag-ghost { position:absolute; pointer-events:none; left:3px; right:3px; border:2px dashed var(--akgolf-accent); border-radius:6px; background: rgba(209,248,67,0.08); z-index:8; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item active"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Kalender</div>
+      <div class="chq-top-meta tabular">uke 18 · 4 coacher · 23 økter</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Plan · Kalender</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Uke 18 · 28 apr–4 mai</h1>
+        <p>Drag-drop for å flytte. Fargene er per coach. Klikk en blokk for handlinger.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="filter"></i> Filter</button>
+        <button class="chq-btn ghost"><i data-lucide="printer"></i> Print</button>
+        <button class="chq-btn primary"><i data-lucide="calendar-plus"></i> Ny booking</button>
+      </div>
+    </div>
+
+    <div class="cal-toolbar">
+      <div class="cal-nav">
+        <button title="Forrige"><i data-lucide="chevron-left"></i></button>
+        <button title="I dag" style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em;">I DAG</button>
+        <button title="Neste"><i data-lucide="chevron-right"></i></button>
+      </div>
+      <div class="cal-period">Uke 18 · 2025<small>28 APR – 4 MAI</small></div>
+      <div class="view-toggle">
+        <button>DAG</button>
+        <button class="active">UKE</button>
+        <button>MÅNED</button>
+        <button>AGENDA</button>
+      </div>
+      <div class="coach-legend">
+        <div class="coach-pill"><span class="dot" style="background:#6FB3FF;"></span>Anders K.<span style="opacity:0.5; font-family:'JetBrains Mono',monospace; font-size:10px;">9</span></div>
+        <div class="coach-pill"><span class="dot" style="background:#C896E8;"></span>Maria T.<span style="opacity:0.5; font-family:'JetBrains Mono',monospace; font-size:10px;">5</span></div>
+        <div class="coach-pill"><span class="dot" style="background:#E8B967;"></span>Erik S.<span style="opacity:0.5; font-family:'JetBrains Mono',monospace; font-size:10px;">7</span></div>
+        <div class="coach-pill muted"><span class="dot" style="background:#6FCBA1;"></span>Lisa M.<span style="opacity:0.5; font-family:'JetBrains Mono',monospace; font-size:10px;">2</span></div>
+      </div>
+    </div>
+
+    <div class="week-grid">
+      <div class="wg-corner"></div>
+      <div class="wg-day-h"><div class="dow">Man</div><div class="num">28</div><div class="meta">3 økter</div></div>
+      <div class="wg-day-h"><div class="dow">Tir</div><div class="num">29</div><div class="meta">2 økter</div></div>
+      <div class="wg-day-h today"><div class="dow">Ons · I DAG</div><div class="num">30</div><div class="meta">6 økter</div></div>
+      <div class="wg-day-h"><div class="dow">Tor</div><div class="num">01</div><div class="meta">4 økter</div></div>
+      <div class="wg-day-h"><div class="dow">Fre</div><div class="num">02</div><div class="meta">5 økter</div></div>
+      <div class="wg-day-h"><div class="dow">Lør</div><div class="num">03</div><div class="meta">2 økter</div></div>
+      <div class="wg-day-h"><div class="dow">Søn</div><div class="num">04</div><div class="meta">1 økt</div></div>
+
+      <!-- 09:00 -->
+      <div class="wg-time">09:00</div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:60px;"><div class="who">Pelle K.</div><div class="what">Iron · Studio 1</div><div class="when">09:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk maria" style="top:30px; height:45px;"><div class="who">Mona K.</div><div class="what">Sving · S1</div><div class="when">09:30 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk live" style="top:0; height:60px;"><div class="who">● Pelle K. (LIVE)</div><div class="what">Iron · Studio 1</div><div class="when">09:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:0; height:30px;"><div class="who">Pelle K.</div><div class="when">09:00 · Putting</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 10:00 -->
+      <div class="wg-time">10:00</div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:30px; height:45px;"><div class="who">Erik L.</div><div class="what">Driver · Range 4</div><div class="when">10:30 · 45M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:30px; height:45px;"><div class="who">Erik L.</div><div class="what">Driver · Range 4</div><div class="when">10:30 · 45M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk maria" style="top:0; height:45px;"><div class="who">Kari S.</div><div class="what">Sving · S1</div><div class="when">10:00 · 45M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Tor S.</div><div class="when">10:30 · Chip</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 11:00 -->
+      <div class="wg-time">11:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Markus E.</div><div class="when">11:30 · Bunker</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk lisa" style="top:0; height:90px;"><div class="who">Junior-clinic</div><div class="what">5 spillere · Range</div><div class="when">11:00 · 90M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+
+      <!-- 12:00 -->
+      <div class="wg-time">12:00</div>
+      <div class="wg-cell">
+        <div class="blk maria pending" style="top:0; height:60px;"><div class="who">Camilla R.</div><div class="what">Sving · pending</div><div class="when">12:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk gym" style="top:0; height:60px;"><div class="who">Lunsj</div><div class="when">12:00–13:00</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk maria" style="top:0; height:60px;"><div class="who">Camilla R.</div><div class="what">Sving · S2</div><div class="when">12:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk maria pending" style="top:0; height:45px;"><div class="who">Anne M.</div><div class="what">Onboarding</div><div class="when">12:00 · 45M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 13:00 -->
+      <div class="wg-time">13:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:45px;"><div class="who">Sofie H.</div><div class="what">Tempo · Perf studio</div><div class="when">13:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk anders pending" style="top:0; height:60px;"><div class="who">Emma L.</div><div class="what">Re-onboarding</div><div class="when">13:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Camilla R.</div><div class="when">13:30 · Putting</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 14:00 -->
+      <div class="wg-time">14:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:60px;"><div class="who">Sofie H.</div><div class="what">Tempo · Perf studio</div><div class="when">14:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:0; height:30px; box-shadow: 0 0 0 2px var(--akgolf-accent);"><div class="who">Sofie H. (NY)</div><div class="when">14:00 · Bunker</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 15:00 -->
+      <div class="wg-time">15:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Tor S.</div><div class="when">15:30 · Putting</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:60px;"><div class="who">Rune J.</div><div class="what">Iron · Perf studio</div><div class="when">15:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Anne M.</div><div class="when">15:30 · Chip</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+
+      <!-- 16:00 -->
+      <div class="wg-time">16:00</div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:60px;"><div class="who">Alex B.</div><div class="what">Iron · Perf studio</div><div class="when">16:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:30px; height:30px;"><div class="who">Camilla R.</div><div class="when">16:30 · Putting</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk lisa" style="top:0; height:60px;"><div class="who">Pro-am-trening</div><div class="what">Range · 4 spillere</div><div class="when">16:00 · 60M</div></div>
+      </div>
+      <div class="wg-cell"></div>
+
+      <!-- 17:00 -->
+      <div class="wg-time">17:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk maria" style="top:0; height:60px;"><div class="who">Jonas H.</div><div class="what">Full sving · Range 2</div><div class="when">17:00 · 60M</div></div>
+        <!-- now line at 17:24 (24 of 60 = 40%) -->
+        <div class="now-line" style="top: 24px;"></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:30px; height:60px;"><div class="who">Per B.</div><div class="what">Driver · Range 3</div><div class="when">17:30 · 60M</div></div>
+      </div>
+      <div class="wg-cell">
+        <div class="blk erik" style="top:0; height:30px;"><div class="who">Henrik V.</div><div class="when">17:00 · Putting</div></div>
+      </div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell">
+        <div class="blk anders" style="top:0; height:90px;"><div class="who">Klubbmesterskap</div><div class="what">Sofie H. starter</div><div class="when">søn 09:00 →</div></div>
+      </div>
+
+      <!-- 18:00 -->
+      <div class="wg-time">18:00</div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+      <div class="wg-cell"></div>
+    </div>
+
+    <!-- Footer summary -->
+    <div style="margin-top: 14px; display:grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+      <div style="background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);">Total økter</div>
+        <div style="font-size:22px; font-weight:700; color:#fff; margin-top:4px;">23</div>
+      </div>
+      <div style="background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);">Utnyttelse</div>
+        <div style="font-size:22px; font-weight:700; color:var(--akgolf-accent); margin-top:4px;">82%</div>
+      </div>
+      <div style="background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);">Pending</div>
+        <div style="font-size:22px; font-weight:700; color:#E8B967; margin-top:4px;">3</div>
+      </div>
+      <div style="background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);">Ledige timer</div>
+        <div style="font-size:22px; font-weight:700; color:#fff; margin-top:4px;">14</div>
+      </div>
+      <div style="background: var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:10px; padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);">Inntekt uke</div>
+        <div style="font-size:22px; font-weight:700; color:#6FCBA1; margin-top:4px;">14.290 <span style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:500;">kr</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

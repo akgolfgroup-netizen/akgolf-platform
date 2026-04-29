@@ -1,0 +1,179 @@
+/* ============================================================
+   AK Golf Group — Design System v2.0  (låst 2026-04-27)
+   Single source of truth for design tokens.
+   ============================================================ */
+:root {
+  /* ──────────── v2.0 brand tokens ──────────── */
+  --akgolf-primary: #005840;
+  --akgolf-accent: #D1F843;
+  --akgolf-accent-soft: rgba(209, 248, 67, 0.18);
+  --akgolf-surface: #ECF0EF;
+  --akgolf-card-light: #FFFFFF;
+  --akgolf-dark-bg: #102B1E;          /* litt lysere enn før */
+  --akgolf-card-dark: #0D2E23;
+  --akgolf-card-dark-hover: #143A2D;
+  --akgolf-text: #324D45;
+  --akgolf-ink: #0A1F18;
+  --akgolf-muted: #A5B2AD;
+  --akgolf-success: #2A7D5A;
+  --akgolf-warning: #C48A32;
+  --akgolf-danger: #B84233;
+  --akgolf-line-dark: #1a4a3a;
+  --akgolf-line-light: #e0e8e5;
+
+  /* Glow rule (max ONE per view): use these together */
+  --akgolf-glow-border: 1.5px solid rgba(209, 248, 67, 0.25);
+  --akgolf-glow-shadow: 0 0 24px rgba(209, 248, 67, 0.10);
+
+  /* ──────────── Legacy alias-layer (do not remove) ──────────── */
+  /* Eksisterende skjermer bruker --ak-* — vi peker dem mot v2.0 verdiene
+     så hele plattformen får ny look uten å brekke noe. Nye skjermer
+     bruker --akgolf-* direkte. */
+  --ak-primary: var(--akgolf-primary);
+  --ak-primary-dark: var(--akgolf-dark-bg);
+  --ak-primary-deep: #072a1f;
+  --ak-accent: var(--akgolf-accent);
+  --ak-accent-soft: var(--akgolf-accent-soft);
+  --ak-surface: var(--akgolf-surface);
+
+  /* Grey scale aliased to v2.0 semantic */
+  --ak-g-50: #F5F8F7;
+  --ak-g-100: var(--akgolf-surface);
+  --ak-g-150: #E1E8E5;
+  --ak-g-200: #D5DFDB;
+  --ak-g-300: var(--akgolf-muted);
+  --ak-g-400: #7A8C85;
+  --ak-g-500: #5A6E66;
+  --ak-g-600: #3D5249;
+  --ak-g-700: var(--akgolf-text);
+  --ak-g-800: #1A3529;
+  --ak-g-900: var(--akgolf-ink);
+
+  /* Semantic */
+  --ak-success: var(--akgolf-success);
+  --ak-success-soft: #E8F5EF;
+  --ak-error: var(--akgolf-danger);
+  --ak-error-soft: #FCEAE8;
+  --ak-warning: var(--akgolf-warning);
+  --ak-warning-soft: #FDF4E4;
+  --ak-info: #007AFF;
+  --ak-info-soft: #EFF6FF;
+  --ak-ai: #AF52DE;
+  --ak-ai-soft: #FAF5FF;
+
+  /* Data viz */
+  --ak-data-sage: var(--akgolf-success);
+  --ak-data-coral: #E85D4E;
+  --ak-data-blue: #007AFF;
+  --ak-data-lime: var(--akgolf-accent);
+  --ak-data-amber: #E8A94A;
+  --ak-data-violet: #AF52DE;
+
+  /* Portal surfaces */
+  --ak-bg: #F5F5F7;
+  --ak-card: var(--akgolf-card-light);
+  --ak-card-alt: #FAFAF9;
+  --ak-border: rgba(10, 31, 24, 0.08);
+  --ak-border-strong: rgba(10, 31, 24, 0.14);
+
+  /* Shadows — softer per v2.0 */
+  --ak-shadow-sm: 0 1px 2px rgba(10, 31, 24, 0.04);
+  --ak-shadow: 0 0 0 1px rgba(10, 31, 24, 0.05), 0 1px 2px rgba(10, 31, 24, 0.03), 0 6px 20px rgba(10, 31, 24, 0.05);
+  --ak-shadow-hover: 0 0 0 1px rgba(10, 31, 24, 0.08), 0 12px 32px rgba(10, 31, 24, 0.10);
+  --ak-shadow-lg: 0 20px 50px rgba(10, 31, 24, 0.14);
+
+  /* Radius — 16px standard for cards (v2.0) */
+  --ak-r-sm: 6px;
+  --ak-r: 10px;
+  --ak-r-md: 14px;
+  --ak-r-card: 16px;       /* v2.0 cards */
+  --ak-r-lg: 18px;
+  --ak-r-xl: 22px;
+  --ak-r-2xl: 28px;
+  --ak-r-full: 9999px;
+
+  /* 8pt grid */
+  --ak-s-1: 8px;
+  --ak-s-2: 16px;
+  --ak-s-3: 24px;
+  --ak-s-4: 32px;
+  --ak-s-5: 40px;
+  --ak-s-6: 48px;
+  --ak-s-8: 64px;
+
+  /* Density (tweakable) */
+  --ak-density: 1;
+  --ak-pad: calc(20px * var(--ak-density));
+  --ak-pad-sm: calc(12px * var(--ak-density));
+  --ak-gap: calc(20px * var(--ak-density));
+  --ak-font-base: 14px;
+
+  /* Motion */
+  --ak-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ak-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Dark surface ⇢ when used as page background, alias updated bg */
+.surface-dark, body.surface-dark { background: var(--akgolf-dark-bg); }
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: var(--ak-font-base);
+  color: var(--akgolf-ink);
+  background: var(--ak-g-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; }
+input, select, textarea { font-family: inherit; }
+
+.tabular { font-variant-numeric: tabular-nums; }
+.mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; }
+
+/* Eyebrow label */
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ak-g-400);
+}
+
+/* v2.0 card primitive — 16r + 1px border + soft shadow */
+.akg-card {
+  background: var(--akgolf-card-light);
+  border: 1px solid var(--akgolf-line-light);
+  border-radius: var(--ak-r-card);
+  box-shadow: 0 1px 2px rgba(10,31,24,0.03), 0 6px 20px rgba(10,31,24,0.04);
+}
+.akg-card.dark {
+  background: var(--akgolf-card-dark);
+  border-color: var(--akgolf-line-dark);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.20), 0 8px 24px rgba(0,0,0,0.30);
+  color: #E6EAE8;
+}
+.akg-card.dark:hover { background: var(--akgolf-card-dark-hover); }
+
+/* Glow utility — max 1 per view */
+.akg-glow {
+  border: var(--akgolf-glow-border);
+  box-shadow: var(--akgolf-glow-shadow);
+}
+
+/* Lucide sizing helper (data-lucide replaces) */
+[data-lucide] { width: 1em; height: 1em; stroke-width: 1.75; vertical-align: -2px; }
+.icon-sm[data-lucide] { width: 14px; height: 14px; }
+.icon-md[data-lucide] { width: 16px; height: 16px; }
+.icon-lg[data-lucide] { width: 20px; height: 20px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ak-g-200); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ak-g-300); }

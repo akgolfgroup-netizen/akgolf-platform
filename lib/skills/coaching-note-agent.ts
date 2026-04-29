@@ -1,7 +1,7 @@
 // CoachingNoteAgent — strukturer coaching-notater fra trener
 // Bruker Sonnet for å forstå norsk + golf-domene
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT = `
 Du strukturer coaching-notater fra AK Golf-trenere.

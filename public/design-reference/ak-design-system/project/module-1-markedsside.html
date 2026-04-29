@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf Group — Modul 1 · Markedsside (Foundation)</title>
+<link rel="icon" href="assets/favicon/favicon-32.png">
+<style>
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: #102B1E; color: #fff; }
+  .canvas-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 14px 24px;
+    background: rgba(10, 31, 24, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .canvas-header__left { display: flex; align-items: center; gap: 16px; }
+  .canvas-header__crumb {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.5);
+  }
+  .canvas-header__title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .canvas-header__title em { font-style: italic; font-weight: 400; color: #d1f843; }
+  .canvas-header__right {
+    display: flex; gap: 8px; align-items: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .pill {
+    padding: 4px 10px;
+    background: rgba(209,248,67,0.12);
+    border: 1px solid rgba(209,248,67,0.3);
+    color: #d1f843;
+    border-radius: 999px;
+  }
+  .pill--muted {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.65);
+  }
+  #canvas-root { padding-top: 56px; height: 100vh; }
+</style>
+</head>
+<body>
+
+<div class="canvas-header">
+  <div class="canvas-header__left">
+    <span class="canvas-header__crumb">Modul 01 / 09</span>
+    <span class="canvas-header__title">Markedsside — <em>Foundation</em></span>
+  </div>
+  <div class="canvas-header__right">
+    <span class="pill">2 / 15 screens</span>
+    <span class="pill--muted pill">Reference templates</span>
+  </div>
+</div>
+
+<div id="canvas-root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel">
+  const { DesignCanvas, DCSection, DCArtboard } = window;
+
+  const ScreenFrame = ({ src }) => (
+    <iframe
+      src={src}
+      title={src}
+      style={{
+        width: '100%',
+        height: '100%',
+        border: 'none',
+        background: '#ECF0EF',
+        display: 'block'
+      }}
+    />
+  );
+
+  const App = () => (
+    <DesignCanvas
+      title="AK Golf Group — Modul 1 (Markedsside)"
+      subtitle="Foundation pass · 2 av 15 screens · resterende 13 bygges på godkjent retning"
+      bg="#0A1F18"
+    >
+      <DCSection id="references" title="Referansemaler — godkjenn før resten av modulen">
+        <DCArtboard
+          id="01-forsiden"
+          label="01 · Forsiden — hero-tung"
+          width={1440}
+          height={4200}
+        >
+          <ScreenFrame src="screens/01-forsiden.html" />
+        </DCArtboard>
+        <DCArtboard
+          id="08-pricing"
+          label="08 · Priser — datatung"
+          width={1440}
+          height={4400}
+        >
+          <ScreenFrame src="screens/08-pricing.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="responsive" title="Responsiv sjekk — samme skjermer i mobil bredde (390px)">
+        <DCArtboard
+          id="01-mobile"
+          label="01 · Forsiden — mobil"
+          width={390}
+          height={3600}
+        >
+          <ScreenFrame src="screens/01-forsiden.html" />
+        </DCArtboard>
+        <DCArtboard
+          id="08-mobile"
+          label="08 · Priser — mobil"
+          width={390}
+          height={4200}
+        >
+          <ScreenFrame src="screens/08-pricing.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="todo" title="Resterende screens i modul 1 — bygges etter godkjenning">
+        <DCArtboard id="02" label="02 · Academy"            width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#0A1F18',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Academy oversikt</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Performance-pyramide, TrackMan, mental, banecoaching</div></div></DCArtboard>
+        <DCArtboard id="03" label="03 · Coach-profil"      width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Coach-profil (Anders/Markus)</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Bio, filosofi, anbefalt for, book-flow</div></div></DCArtboard>
+        <DCArtboard id="04" label="04 · Booking-flyt"      width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Academy-booking</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>3-stegs flow: pakke → trener → tid → betaling</div></div></DCArtboard>
+        <DCArtboard id="05" label="05 · Junior Academy"    width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Junior Academy</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>3 aldersgrupper, foreldrenes side, søknad</div></div></DCArtboard>
+        <DCArtboard id="06" label="06 · Booking direkte"   width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Direktebooking</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Kalender, slot-velger, ikke-medlem</div></div></DCArtboard>
+        <DCArtboard id="07" label="07 · Klubbutvikling"    width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Utvikling for klubber</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>B2B-side: hva vi tilbyr klubber, case</div></div></DCArtboard>
+        <DCArtboard id="09" label="09 · Om oss"            width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Om oss</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Anders + Markus historie, filosofi, Fredrikstad</div></div></DCArtboard>
+        <DCArtboard id="10" label="10 · Kontakt"            width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Kontakt</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Skjema, kart, åpningstider, sosiale medier</div></div></DCArtboard>
+        <DCArtboard id="11" label="11 · Personvern"         width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Personvern + vilkår</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>GDPR, cookies, betalingsvilkår</div></div></DCArtboard>
+        <DCArtboard id="12" label="12 · Blogg-oversikt"     width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Blogg / artikler</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Listevisning, kategorier, søk</div></div></DCArtboard>
+        <DCArtboard id="13" label="13 · Blogg-artikkel"     width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Artikkel-detalj</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Lesemodus, forfatter, relaterte</div></div></DCArtboard>
+        <DCArtboard id="14" label="14 · Cases / Stories"    width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>Elev-historier</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Før/etter, HCP-reise, sitater</div></div></DCArtboard>
+        <DCArtboard id="15" label="15 · 404"                 width={520} height={360}><div style={{padding:32,fontFamily:'Inter',color:'#102B1E',background:'#ECF0EF',height:'100%',display:'flex',flexDirection:'column',justifyContent:'center'}}><div style={{fontFamily:'JetBrains Mono',fontSize:11,letterSpacing:'0.14em',textTransform:'uppercase',color:'#005840',marginBottom:12}}>Pending</div><div style={{fontSize:24,fontWeight:700,letterSpacing:'-0.025em'}}>404 — fairway off-line</div><div style={{fontSize:13,color:'#5C6660',marginTop:8}}>Vennlig feilmelding, retur til hjem</div></div></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+
+  ReactDOM.createRoot(document.getElementById('canvas-root')).render(<App />);
+</script>
+
+</body>
+</html>

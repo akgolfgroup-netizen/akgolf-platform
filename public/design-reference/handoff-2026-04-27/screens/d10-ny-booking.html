@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D10 — Ny booking · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .nb-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: start; }
+  .panel { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 14px; padding: 22px; }
+  .panel h2 { margin: 0 0 4px; font-size: 16px; font-weight: 600; color: #fff; letter-spacing:-0.01em; }
+  .panel .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 18px; }
+
+  .field { margin-bottom: 18px; }
+  .field-label { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 500; margin-bottom: 8px; }
+  .field-label .req { color: var(--akgolf-accent); margin-left: 4px; }
+  .field-label .hint { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+  .input { width: 100%; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 8px; padding: 11px 12px; color: #fff; font-size: 13px; font-family: inherit; outline: none; transition: border-color 0.15s; box-sizing: border-box; }
+  .input:focus { border-color: rgba(209,248,67,0.40); background: rgba(209,248,67,0.04); }
+  .input.with-icon { padding-left: 36px; }
+  .input-wrap { position: relative; }
+  .input-wrap > [data-lucide] { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: rgba(255,255,255,0.4); }
+
+  /* Student picker — selected state */
+  .stu-pick { display: flex; gap: 12px; align-items: center; padding: 10px 12px; background: rgba(209,248,67,0.10); border: 1px solid rgba(209,248,67,0.30); border-radius: 10px; }
+  .stu-pick .av { width: 36px; height: 36px; border-radius: 50%; background: var(--akgolf-accent); color: #0A1F18; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .stu-pick .name { color: #fff; font-weight: 600; font-size: 13px; }
+  .stu-pick .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; margin-top: 1px; }
+  .stu-pick .change { margin-left: auto; font-size: 11px; color: var(--akgolf-accent); cursor: pointer; font-weight: 600; }
+
+  /* Type segmented */
+  .seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .seg-opt { padding: 12px 10px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .seg-opt.active { background: rgba(209,248,67,0.10); border-color: rgba(209,248,67,0.30); }
+  .seg-opt .ico { width: 20px; height: 20px; margin: 0 auto 6px; color: rgba(255,255,255,0.7); }
+  .seg-opt.active .ico { color: var(--akgolf-accent); }
+  .seg-opt .lbl { font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .seg-opt.active .lbl { color: #fff; }
+  .seg-opt .px { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; letter-spacing: 0.04em; }
+
+  /* Coach + location radio */
+  .radio-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .radio-opt { padding: 8px 14px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 999px; font-size: 12px; color: rgba(255,255,255,0.85); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .radio-opt.active { background: rgba(209,248,67,0.10); border-color: rgba(209,248,67,0.30); color: var(--akgolf-accent); font-weight: 600; }
+  .radio-opt [data-lucide] { width: 12px; height: 12px; }
+
+  /* Date row */
+  .date-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .date-cell { padding: 10px 6px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 8px; text-align: center; cursor: pointer; }
+  .date-cell.active { background: rgba(209,248,67,0.10); border-color: rgba(209,248,67,0.30); }
+  .date-cell .dow { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+  .date-cell.active .dow { color: var(--akgolf-accent); }
+  .date-cell .day { font-size: 18px; font-weight: 700; color: #fff; margin-top: 2px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .date-cell .free { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .date-cell.full .free { color: #F49283; }
+
+  /* Time slots */
+  .slot-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .slot { padding: 9px 6px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 7px; text-align: center; font-size: 12px; color: #fff; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+  .slot.taken { background: rgba(255,255,255,0.015); color: rgba(255,255,255,0.25); cursor: not-allowed; text-decoration: line-through; }
+  .slot.active { background: var(--akgolf-accent); color: #0A1F18; border-color: var(--akgolf-accent); font-weight: 700; }
+  .slot.suggested { border-color: rgba(209,248,67,0.50); border-style: dashed; }
+
+  /* Summary panel */
+  .sum-card { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 14px; overflow: hidden; position: sticky; top: 78px; }
+  .sum-head { padding: 16px 20px; background: linear-gradient(135deg, rgba(209,248,67,0.10), rgba(209,248,67,0.04)); border-bottom: 1px solid var(--akgolf-line-dark); }
+  .sum-head .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--akgolf-accent); }
+  .sum-head h3 { margin: 4px 0 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: #fff; letter-spacing: -0.02em; line-height: 1.1; }
+  .sum-row { display: flex; align-items: flex-start; gap: 14px; padding: 12px 20px; border-bottom: 1px solid var(--akgolf-line-dark); font-size: 13px; }
+  .sum-row:last-of-type { border-bottom: none; }
+  .sum-row .ico { width: 20px; flex-shrink: 0; color: rgba(255,255,255,0.5); padding-top: 2px; }
+  .sum-row .ico [data-lucide] { width: 14px; height: 14px; }
+  .sum-row .k { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .sum-row .v { color: #fff; font-weight: 500; margin-top: 2px; }
+  .sum-row .body { flex: 1; }
+
+  .sum-foot { padding: 16px 20px; background: rgba(0,0,0,0.20); border-top: 1px solid var(--akgolf-line-dark); }
+  .sum-price { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .sum-price .k { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .sum-price .v { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: #fff; }
+  .sum-foot .actions { display: flex; gap: 8px; }
+
+  /* Conflict warning */
+  .conflict { padding: 12px 14px; background: rgba(196,138,50,0.10); border: 1px solid rgba(196,138,50,0.30); border-left: 3px solid #E8B967; border-radius: 8px; display: flex; gap: 10px; align-items: flex-start; }
+  .conflict [data-lucide] { width: 14px; height: 14px; color: #E8B967; flex-shrink: 0; margin-top: 2px; }
+  .conflict h4 { margin: 0 0 2px; font-size: 12px; font-weight: 600; color: #fff; }
+  .conflict p { margin: 0; font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+  /* AI suggestion */
+  .ai-card { padding: 14px; background: rgba(175,82,222,0.08); border: 1px solid rgba(175,82,222,0.25); border-radius: 10px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 18px; }
+  .ai-card [data-lucide] { width: 16px; height: 16px; color: #C896E8; flex-shrink: 0; margin-top: 2px; }
+  .ai-card h4 { margin: 0 0 4px; font-size: 12px; font-weight: 600; color: #fff; }
+  .ai-card p { margin: 0; font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .ai-card .pin { display: inline-block; margin-top: 6px; padding: 3px 8px; background: rgba(209,248,67,0.14); color: var(--akgolf-accent); border-radius: 999px; font-size: 11px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn active" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item active"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title" style="display:flex; align-items:center; gap:8px;">
+        <span style="color:rgba(255,255,255,0.5); font-weight:500;">Bookinger</span>
+        <span style="color:rgba(255,255,255,0.3);">›</span>
+        <span>Ny booking</span>
+      </div>
+      <div class="chq-top-meta tabular">trinn 1 av 1 · live forhåndsvisning</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Plan · Ny booking</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Bok ny økt</h1>
+        <p>Velg spiller, type, tid og lokasjon. Konflikter og forslag oppdateres i sanntid.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="x"></i> Avbryt</button>
+      </div>
+    </div>
+
+    <div class="nb-layout">
+
+      <!-- LEFT: form -->
+      <div class="panel">
+        <h2>Detaljer</h2>
+        <div class="sub">trinn 1 — fyll ut</div>
+
+        <div class="ai-card">
+          <i data-lucide="sparkles"></i>
+          <div>
+            <h4>AI-forslag</h4>
+            <p>Sofie har ikke booket short-game denne uken og around-green er svakeste ledd. Foreslå <strong style="color:#fff;">30 min bunker-økt fredag 14:00</strong> med Erik S.?</p>
+            <span class="pin">Bruk forslag</span>
+          </div>
+        </div>
+
+        <!-- Spiller -->
+        <div class="field">
+          <div class="field-label"><span>Spiller <span class="req">*</span></span><span class="hint">Søk eller velg</span></div>
+          <div class="stu-pick">
+            <div class="av">SH</div>
+            <div>
+              <div class="name">Sofie Holm</div>
+              <div class="meta">HCP 4.2 · PERFORMANCE PLAN · ASKER GK</div>
+            </div>
+            <span class="change"><i data-lucide="repeat" style="width:11px;height:11px;display:inline-block;vertical-align:-1px;"></i> Bytt</span>
+          </div>
+        </div>
+
+        <!-- Type -->
+        <div class="field">
+          <div class="field-label"><span>Økt-type <span class="req">*</span></span><span class="hint">Påvirker pris og varighet</span></div>
+          <div class="seg">
+            <div class="seg-opt active">
+              <i data-lucide="dumbbell" class="ico"></i>
+              <div class="lbl">Coaching</div>
+              <div class="px">FRA 690 KR</div>
+            </div>
+            <div class="seg-opt">
+              <i data-lucide="bar-chart-3" class="ico"></i>
+              <div class="lbl">Trackman</div>
+              <div class="px">FRA 890 KR</div>
+            </div>
+            <div class="seg-opt">
+              <i data-lucide="users-2" class="ico"></i>
+              <div class="lbl">Gruppe</div>
+              <div class="px">FRA 290 KR</div>
+            </div>
+            <div class="seg-opt">
+              <i data-lucide="flag" class="ico"></i>
+              <div class="lbl">På banen</div>
+              <div class="px">FRA 990 KR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Underkategori -->
+        <div class="field">
+          <div class="field-label"><span>Fokus <span class="req">*</span></span></div>
+          <div class="radio-row">
+            <span class="radio-opt"><i data-lucide="zap"></i> Driver</span>
+            <span class="radio-opt"><i data-lucide="target"></i> Iron</span>
+            <span class="radio-opt active"><i data-lucide="circle-dot"></i> Short-game</span>
+            <span class="radio-opt"><i data-lucide="circle"></i> Putting</span>
+            <span class="radio-opt"><i data-lucide="activity"></i> Bunker</span>
+            <span class="radio-opt"><i data-lucide="brain"></i> Mental</span>
+            <span class="radio-opt"><i data-lucide="sliders"></i> Annet</span>
+          </div>
+        </div>
+
+        <!-- Coach -->
+        <div class="field">
+          <div class="field-label"><span>Coach <span class="req">*</span></span><span class="hint">3 tilgjengelig i tidsrommet</span></div>
+          <div class="radio-row">
+            <span class="radio-opt"><i data-lucide="user"></i> Anders K. <span style="opacity:0.6">· primær</span></span>
+            <span class="radio-opt"><i data-lucide="user"></i> Maria T.</span>
+            <span class="radio-opt active"><i data-lucide="user-check"></i> Erik S. <span style="opacity:0.7">· short-game</span></span>
+          </div>
+        </div>
+
+        <!-- Lokasjon -->
+        <div class="field">
+          <div class="field-label"><span>Lokasjon <span class="req">*</span></span></div>
+          <div class="radio-row">
+            <span class="radio-opt"><i data-lucide="map-pin"></i> Studio 1</span>
+            <span class="radio-opt"><i data-lucide="map-pin"></i> Studio 2</span>
+            <span class="radio-opt"><i data-lucide="map-pin"></i> Performance studio</span>
+            <span class="radio-opt"><i data-lucide="map-pin"></i> Range bay 1–6</span>
+            <span class="radio-opt"><i data-lucide="map-pin"></i> Putting green</span>
+            <span class="radio-opt active"><i data-lucide="map-pin"></i> Bunker</span>
+          </div>
+        </div>
+
+        <!-- Dato -->
+        <div class="field">
+          <div class="field-label"><span>Dato <span class="req">*</span></span><span class="hint">Uke 18 · 28 apr–4 mai</span></div>
+          <div class="date-strip">
+            <div class="date-cell"><div class="dow">Man</div><div class="day">28</div><div class="free">3 ledig</div></div>
+            <div class="date-cell"><div class="dow">Tir</div><div class="day">29</div><div class="free">2 ledig</div></div>
+            <div class="date-cell full"><div class="dow">Ons</div><div class="day">30</div><div class="free">FULL</div></div>
+            <div class="date-cell"><div class="dow">Tor</div><div class="day">01</div><div class="free">5 ledig</div></div>
+            <div class="date-cell active"><div class="dow">Fre</div><div class="day">02</div><div class="free">7 ledig</div></div>
+            <div class="date-cell"><div class="dow">Lør</div><div class="day">03</div><div class="free">4 ledig</div></div>
+            <div class="date-cell"><div class="dow">Søn</div><div class="day">04</div><div class="free">2 ledig</div></div>
+          </div>
+        </div>
+
+        <!-- Tidspunkt -->
+        <div class="field">
+          <div class="field-label"><span>Tidspunkt <span class="req">*</span></span><span class="hint">Erik S. · Fre 2. mai</span></div>
+          <div class="slot-grid">
+            <div class="slot taken">08:00</div>
+            <div class="slot">09:00</div>
+            <div class="slot">09:30</div>
+            <div class="slot">10:00</div>
+            <div class="slot taken">10:30</div>
+            <div class="slot">11:00</div>
+            <div class="slot taken">11:30</div>
+            <div class="slot">12:00</div>
+            <div class="slot">12:30</div>
+            <div class="slot">13:00</div>
+            <div class="slot suggested">13:30</div>
+            <div class="slot active">14:00</div>
+            <div class="slot">14:30</div>
+            <div class="slot">15:00</div>
+            <div class="slot taken">15:30</div>
+            <div class="slot">16:00</div>
+            <div class="slot">16:30</div>
+            <div class="slot">17:00</div>
+          </div>
+        </div>
+
+        <!-- Varighet -->
+        <div class="field">
+          <div class="field-label"><span>Varighet <span class="req">*</span></span></div>
+          <div class="radio-row">
+            <span class="radio-opt">15 min</span>
+            <span class="radio-opt active">30 min</span>
+            <span class="radio-opt">45 min</span>
+            <span class="radio-opt">60 min</span>
+            <span class="radio-opt">90 min</span>
+          </div>
+        </div>
+
+        <!-- Konflikt -->
+        <div class="field">
+          <div class="conflict">
+            <i data-lucide="alert-triangle"></i>
+            <div>
+              <h4>Hint: Erik S. har Putting-økt 13:30–14:00</h4>
+              <p>Kun 0 min bytte mellom økter. OK hvis lokasjonene er nær — bunker er 50 m fra putting green.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notat -->
+        <div class="field">
+          <div class="field-label"><span>Notat til spiller</span><span class="hint">Sendes som SMS · valgfritt</span></div>
+          <textarea class="input" rows="3" placeholder="«Møt opp med wedge og bunker-jern. 5–10 min oppvarming først.»">Møt opp med wedge og bunker-jern. 5–10 min oppvarming først.</textarea>
+        </div>
+
+        <!-- Tilbakekommende -->
+        <div class="field">
+          <div class="field-label"><span>Gjenta?</span></div>
+          <div class="radio-row">
+            <span class="radio-opt active">Engangs</span>
+            <span class="radio-opt">Hver uke</span>
+            <span class="radio-opt">Annen hver</span>
+            <span class="radio-opt">Hver måned</span>
+            <span class="radio-opt">Tilpass…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: summary -->
+      <div>
+        <div class="sum-card">
+          <div class="sum-head">
+            <div class="l">Forhåndsvisning · Live</div>
+            <h3>Short-game-økt<br>med Erik S.</h3>
+          </div>
+
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="user"></i></div>
+            <div class="body">
+              <div class="k">Spiller</div>
+              <div class="v">Sofie Holm · HCP 4.2</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="dumbbell"></i></div>
+            <div class="body">
+              <div class="k">Type · Fokus</div>
+              <div class="v">Coaching · Short-game (bunker)</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="user-check"></i></div>
+            <div class="body">
+              <div class="k">Coach</div>
+              <div class="v">Erik S. · short-game-spesialist</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="map-pin"></i></div>
+            <div class="body">
+              <div class="k">Lokasjon</div>
+              <div class="v">Bunker (utendørs)</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="calendar"></i></div>
+            <div class="body">
+              <div class="k">Når</div>
+              <div class="v">Fredag 2. mai · 14:00–14:30</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="repeat"></i></div>
+            <div class="body">
+              <div class="k">Gjentakelse</div>
+              <div class="v">Engangs</div>
+            </div>
+          </div>
+          <div class="sum-row">
+            <div class="ico"><i data-lucide="message-square"></i></div>
+            <div class="body">
+              <div class="k">Notat (SMS)</div>
+              <div class="v" style="font-size:12px; color:rgba(255,255,255,0.7); font-weight:400; line-height:1.5;">«Møt opp med wedge og bunker-jern. 5–10 min oppvarming først.»</div>
+            </div>
+          </div>
+
+          <div class="sum-foot">
+            <div class="sum-price">
+              <div>
+                <div class="k">Pris</div>
+                <div class="v" style="margin-top:4px;">490 <span style="font-size:12px; color:rgba(255,255,255,0.5); font-weight:500;">kr</span></div>
+              </div>
+              <div style="text-align:right;">
+                <div class="k">Belastes</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:4px; font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;">PERFORMANCE +<br>SUPPLEMENT</div>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="chq-btn ghost" style="flex:1;"><i data-lucide="save"></i> Lagre utkast</button>
+              <button class="chq-btn primary" style="flex:2;"><i data-lucide="check"></i> Bekreft & bok</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini calendar context -->
+        <div style="margin-top: 14px; padding: 16px; background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+            <div style="font-size:12px; font-weight:600; color:#fff;">Fredag 2. mai · Erik S.</div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.06em;">7 ØKTER</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; font-family:'JetBrains Mono',monospace;">
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">09:00</span><span style="color:rgba(255,255,255,0.85);">Pelle K. · Putting</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">10:30</span><span style="color:rgba(255,255,255,0.85);">Tor S. · Chip</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">11:30</span><span style="color:rgba(255,255,255,0.85);">Markus E. · Bunker</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">13:30</span><span style="color:rgba(255,255,255,0.85);">Camilla R. · Putting</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(209,248,67,0.14); border-radius:5px; border:1px solid rgba(209,248,67,0.30);"><span style="color:var(--akgolf-accent); width:50px; font-weight:600;">14:00</span><span style="color:#fff; font-weight:600;">Sofie H. · Bunker (NY)</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">15:30</span><span style="color:rgba(255,255,255,0.85);">Anne M. · Chip</span></div>
+            <div style="display:flex; gap:10px; padding:6px 8px; background:rgba(255,255,255,0.025); border-radius:5px;"><span style="color:rgba(255,255,255,0.5); width:50px;">17:00</span><span style="color:rgba(255,255,255,0.85);">Henrik V. · Putting</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

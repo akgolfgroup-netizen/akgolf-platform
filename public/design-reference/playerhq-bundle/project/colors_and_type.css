@@ -1,0 +1,169 @@
+/* ═══════════════════════════════════════════════
+   AK Golf Group — Colors & Type
+   Base tokens + semantic CSS variables + typography rules
+   ═══════════════════════════════════════════════ */
+
+/* Inter — self-hosted variable font (SIL Open Font License 1.1)
+   Source: rsms/inter v4.0 · woff2 in assets/fonts/
+   One @font-face per style, weight range 100–900 via font-weight axis. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/InterVariable.woff2') format('woff2-variations'),
+       url('assets/fonts/InterVariable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/InterVariable-Italic.woff2') format('woff2-variations'),
+       url('assets/fonts/InterVariable-Italic.woff2') format('woff2');
+}
+
+:root {
+  /* ── Brand core colors ── */
+  --ak-primary:        #005840;   /* Pantone 3425 C */
+  --ak-accent:         #D1F843;   /* Pantone 389 C  — lime */
+  --ak-surface:        #ECF0EF;
+  --ak-text:           #324D45;
+  --ak-muted:          #A5B2AD;
+
+  /* ── Dark mode surfaces ── */
+  --ak-dark-bg:        #0A1F18;
+  --ak-card-dark:      #0D2E23;
+  --ak-card-light:     #FFFFFF;
+  --ak-primary-light:  #B8D4CC;
+  --ak-border-dark:    #1a4a3a;
+  --ak-muted-dark:     #7a9a8e;
+
+  /* ── Semantic colors ── */
+  --ak-success:        #2A7D5A;
+  --ak-success-bg:     #E8F5EF;
+  --ak-warning:        #C48A32;
+  --ak-warning-bg:     #FDF4E4;
+  --ak-danger:         #B84233;
+  --ak-danger-bg:      #FCEAE8;
+
+  /* ── Semantic foreground aliases ── */
+  --fg-1: var(--ak-text);                /* primary body */
+  --fg-2: var(--ak-muted);               /* secondary body */
+  --fg-inverse: #FFFFFF;
+  --fg-brand: var(--ak-primary);
+  --bg-1: var(--ak-card-light);
+  --bg-2: var(--ak-surface);
+  --bg-brand: var(--ak-primary);
+  --bg-dark: var(--ak-dark-bg);
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;     /* headings */
+  --font-body: 'Inter', system-ui, sans-serif;         /* body */
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Weights used across the system */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* Scale — px sizes from the type reference */
+  --fs-h1: 48px;
+  --fs-h2: 32px;
+  --fs-h3: 24px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-caption: 12px;
+
+  --lh-tight: 1.1;
+  --lh-snug: 1.2;
+  --lh-heading: 1.3;
+  --lh-body: 1.6;
+  --lh-small: 1.5;
+  --lh-caption: 1.4;
+
+  /* ── Spacing (8pt grid) ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Radii ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card: 16px;
+  --radius-pill: 20px;
+  --radius-circle: 50%;
+
+  /* ── Shadows ── */
+  --shadow-sm:   0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md:   0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg:   0 8px 40px rgba(0, 0, 0, 0.08);
+  --shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 24px rgba(209, 248, 67, 0.10);
+
+  /* ── Borders ── */
+  --border-light: 1px solid #e0e8e5;
+  --border-glow:  1.5px solid rgba(209, 248, 67, 0.25);
+
+  /* ── Motion ── */
+  --t-fast:   150ms ease;
+  --t-normal: 250ms ease;
+  --t-slow:   400ms ease;
+}
+
+/* ═══════════════════════════════════════════════
+   Semantic typography helpers
+   ═══════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ak-h1, h1.ak {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  color: var(--fg-1);
+}
+.ak-h2, h2.ak {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+.ak-h3, h3.ak {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+}
+.ak-body  { font-size: var(--fs-body);    font-weight: var(--fw-regular); line-height: var(--lh-body); }
+.ak-small { font-size: var(--fs-small);   font-weight: var(--fw-regular); line-height: var(--lh-small); }
+.ak-caption { font-size: var(--fs-caption); font-weight: var(--fw-regular); line-height: var(--lh-caption); color: var(--fg-2); }
+.ak-label { font-size: var(--fs-small); font-weight: var(--fw-medium); letter-spacing: 0.01em; }
+.ak-kpi   { font-size: 40px; font-weight: var(--fw-extrabold); line-height: 1; letter-spacing: -0.02em; }
+
+/* Utility colors */
+.ak-fg-primary { color: var(--ak-primary); }
+.ak-fg-accent  { color: var(--ak-accent); }
+.ak-fg-muted   { color: var(--ak-muted); }
+.ak-bg-primary { background: var(--ak-primary); color: #fff; }
+.ak-bg-accent  { background: var(--ak-accent); color: var(--ak-dark-bg); }
+.ak-bg-dark    { background: var(--ak-dark-bg); color: #fff; }
+.ak-bg-surface { background: var(--ak-surface); color: var(--ak-text); }

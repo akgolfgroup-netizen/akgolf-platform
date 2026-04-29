@@ -115,7 +115,7 @@ export function AthleticGridView({
               <div className="mb-6 flex items-center gap-2">
                 <Icon name="bolt" filled className="text-secondary-fixed" size={20} />
                 <span className="font-mono text-[10px] uppercase tracking-widest text-secondary-fixed">
-                  AI-analyse
+                  Anbefalt
                 </span>
               </div>
               <h3 className="mb-2 text-3xl font-bold leading-tight text-surface">

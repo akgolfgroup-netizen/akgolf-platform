@@ -20,22 +20,33 @@ import {
   dismissPlanAdjustment,
   checkSessionConflicts,
   getPlanGoalsProgress,
+  setPlanPlayerComment,
+  listMyPendingSuggestions,
+  acceptSuggestion,
+  rejectSuggestion,
+  listStandardTemplates,
+  applyTemplateToWeek,
 } from "./actions";
+import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import { TreningsplanPlanner } from "./treningsplan-planner";
+import { TreningsplanOverview } from "./treningsplan-overview";
+import { buildLibraryItems, computeWeeklyTargets, getActiveCoachName } from "./overview-helpers";
 
 // ---------------------------------------------------------------------
 // Server component
 // ---------------------------------------------------------------------
 
 interface TreningsplanPageProps {
-  searchParams: Promise<{ week?: string }>;
+  searchParams: Promise<{ week?: string; modus?: string }>;
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
-  const { week } = await searchParams;
+  const { week, modus } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
+  const isEditor = modus === "editor";
 
   const plan = await getActivePlan();
+  const planId = plan?.id ?? null;
   const periodization = await getCurrentPeriodization();
   const events = await getWeekEvents(weekOffset);
   const historyEvents = await getWeekEvents(weekOffset - 1);
@@ -49,6 +60,16 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
       }
     : null;
+
+  const playerComment = plan?.playerComment
+    ? {
+        text: plan.playerComment as string,
+        at: plan.playerCommentAt ? new Date(plan.playerCommentAt).toISOString() : null,
+      }
+    : null;
+
+  const pendingSuggestions = await listMyPendingSuggestions();
+  const templates = await listStandardTemplates();
 
   // Server action wrappers bound to the user context
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
@@ -66,8 +87,13 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    area?: string;
+    repsTotal?: number;
     startH?: number;
     startM?: number;
+    facilityId?: string;
+    lPhases?: string[];
+    lifeFocus?: string[];
   }) {
     "use server";
     return createSessionForWeek(data);
@@ -82,6 +108,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       pyramid: string;
       area: string;
       lPhase?: string;
+      durationMinutes?: number;
+      repsWithBall?: number;
+      repsWithoutBall?: number;
+      focus?: string;
+      notes?: string;
     }
   ) {
     "use server";
@@ -95,6 +126,9 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
+      area?: string | null;
+      repsTotal?: number | null;
+      facilityId?: string | null;
     }
   ) {
     "use server";
@@ -161,6 +195,27 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return checkSessionConflicts(input);
   }
 
+  async function handleSavePlayerComment(text: string | null) {
+    "use server";
+    if (!planId) return { success: false, error: "Ingen aktiv plan" };
+    return setPlanPlayerComment(planId, text);
+  }
+
+  async function handleAcceptSuggestion(suggestionId: string) {
+    "use server";
+    return acceptSuggestion(suggestionId);
+  }
+
+  async function handleRejectSuggestion(suggestionId: string, reason?: string) {
+    "use server";
+    return rejectSuggestion(suggestionId, reason);
+  }
+
+  async function handleApplyTemplate(templateId: string, offset: number) {
+    "use server";
+    return applyTemplateToWeek(offset, templateId as TemplateId);
+  }
+
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
   const doneCount = events.filter((e) => e.done).length;
@@ -168,10 +223,32 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   const adjustmentSuggestion = await analyzePlanDeviation();
 
+  // ─── Default: ny lese-modus (Brand Guide V2.0) ────────────────────
+  if (!isEditor) {
+    const targets = computeWeeklyTargets(periodization);
+    const library = buildLibraryItems(events);
+    const coachName = await getActiveCoachName();
+    return (
+      <TreningsplanOverview
+        weekOffset={weekOffset}
+        hasPlan={!!planId}
+        events={events}
+        totalMinutes={totalMinutes}
+        weeklyVolumeTargetMinutes={targets.volumeMinutes}
+        sessionCount={sessionCount}
+        weeklySessionTarget={targets.sessions}
+        doneCount={doneCount}
+        coachName={coachName}
+        library={library}
+      />
+    );
+  }
+
+  // ─── Editor (?modus=editor) ───────────────────────────────────────
   return (
     <TreningsplanPlanner
       weekOffset={weekOffset}
-      planId={plan?.id ?? null}
+      planId={planId}
       sessionCount={sessionCount}
       totalMinutes={totalMinutes}
       adherencePct={adherencePct}
@@ -182,6 +259,13 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       myPlans={myPlans}
       goalsSummary={goalsSummary}
       coachFeedback={coachFeedback}
+      playerComment={playerComment}
+      onSavePlayerComment={handleSavePlayerComment}
+      pendingSuggestions={pendingSuggestions}
+      onAcceptSuggestion={handleAcceptSuggestion}
+      onRejectSuggestion={handleRejectSuggestion}
+      templates={templates}
+      onApplyTemplate={handleApplyTemplate}
       onCreateSession={handleCreateSession}
       onAddExerciseToSession={handleAddExerciseToSession}
       onUpdateSession={handleUpdateSession}

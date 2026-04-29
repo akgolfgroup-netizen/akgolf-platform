@@ -3,6 +3,21 @@
 Sjekk ALLTID denne filen FØR du bygger en ny komponent.
 Gjenbruk eksisterende — aldri bygg duplikater.
 
+## Markedsside Kontakt v2 (Brand Guide V2.0 — pixel-rebuild 2026-04-29)
+Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens/g10-kontakt.html`.
+Default visning av `/kontakt`. Bruker `/api/contact`-endepunktet for skjema-submit.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| ContactPageClient | components/website-v2/contact-page-client.tsx | Orchestrator: hero, quick-tiles, form+sidebar, lokasjoner, FAQ |
+| ContactHero | components/website-v2/contact/contact-hero.tsx | "Vi svarer samme dag." hero med Fraunces-italic |
+| ContactQuickTiles | components/website-v2/contact/contact-quick-tiles.tsx | 4 quick-cards (e-post, Anders telefon, Markus telefon, Instagram) |
+| ContactFormSection | components/website-v2/contact/contact-form-section.tsx | Container med form-card + sidebar i 1.5fr/1fr grid |
+| ContactFormCard | components/website-v2/contact/contact-form-card.tsx | Hovedskjema: navn, kontakt, lokasjon, melding, samtykke |
+| ContactTopicGrid | components/website-v2/contact/contact-topic-grid.tsx | 6 topic-pills (Bli spiller, Junior, Booking, Bedrift, Presse, Annet) |
+| ContactSidebar | components/website-v2/contact/contact-sidebar.tsx | Mork CTA-kort + info-rader (org-nr, coacher, generell e-post) |
+| ContactLocations | components/website-v2/contact/contact-locations.tsx | Kart-tile + lokasjonskort for Gamle Fredrikstad GK |
+| ContactFaq | components/website-v2/contact/contact-faq.tsx | 5 vanlige spsorsmal i toggle-liste |
+
 ## Booking Wizard-komponenter (delt mellom markedsside og portal)
 | Komponent | Fil | Bruk |
 |---|---|---|
@@ -14,7 +29,22 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 | useBookingWizard | components/booking/use-booking-wizard.ts | Hook med all booking-state og logikk |
 | booking-types | components/booking/booking-types.ts | Felles typer og hjelpefunksjoner |
 
-## Portal Dashboard-komponenter
+## Portal Dashboard Bento (v1 — Brand Guide V2.0, valgt 2026-04-27)
+Pixel-nær implementasjon av `public/design-reference/handoff-2026-04-27/screens/dashboard-v1-bento.html`.
+Aktiveres via `?dashboard=bento` eller cookie `dashboard=bento`. Default fortsatt `DashboardClientV3`.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| DashboardBentoClient | app/portal/(dashboard)/dashboard-bento-client.tsx | Orchestrator: 12-kolonne grid + alle bento-kort |
+| HeroCard | components/portal/dashboard-bento/hero-card.tsx | Mørk gradient + animert lime-prikk + headline + 4 hero-stats |
+| NextSessionCard | components/portal/dashboard-bento/next-session-card.tsx | Hvit kort, fokus-pill (lime), "Åpne økt"/"Flytt"-knapper |
+| KpiCard | components/portal/dashboard-bento/kpi-card.tsx | Gjenbrukbar KPI med line/bars sparkline + accent-variant (lime bakgrunn) |
+| SgCard | components/portal/dashboard-bento/sg-card.tsx | Strokes Gained-barer +/- rundt 0-linje (Tee/Approach/Around green/Putting) |
+| TrendCard | components/portal/dashboard-bento/trend-card.tsx | Handicap 12-mnd SVG med gradient-fill + dot på siste punkt |
+| AiInsightCard | components/portal/dashboard-bento/ai-insight-card.tsx | Lilla AI-card med rec-bullets, fokus-pills og kilder |
+| StreakCard | components/portal/dashboard-bento/streak-card.tsx | Mørk gradient med 14-dagers streak-prikker + personlig rekord |
+| ShortcutsRow | components/portal/dashboard-bento/shortcuts-row.tsx | 6 hurtighandlinger med lucide-ikoner (Logg runde, Ukesplan, etc.) |
+
+## Portal Dashboard-komponenter (legacy v3)
 | Komponent | Fil | Bruk |
 |---|---|---|
 | NumberTicker | components/portal/dashboard/number-ticker.tsx | Animert tall som teller opp |
@@ -68,6 +98,31 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 | Komponent | Fil | Bruk |
 |---|---|---|
 | UpgradeOptions | components/portal/subscription/upgrade-options.tsx | Oppgraderingskort med planer |
+
+## Portal Statistikk V2 (Brand Guide V2.0 — pixel-rebuild 2026-04-28)
+Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens/stats-v2.html`,
+`a13-sammenligning.html` og `a14-strategi.html`. Default visning av `/portal/statistikk`.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| StatsV2Client | components/portal/statistikk/v2/stats-v2-client.tsx | Orchestrator: 12-kolonne grid med page header, hero benchmark, KPI-rad, fokus-callout, SG-fordeling, HCP-trend, sammenligning, AK-pyramide og rundetabell |
+| PeriodTabs | components/portal/statistikk/v2/period-tabs.tsx | Periodevelger pill-gruppe (30d/90d/sesong/1y) som skifter `?period=`-query |
+| StatsHeroBenchmark | components/portal/statistikk/v2/stats-hero-benchmark.tsx | Mork gradient-kort med animert percentil-dial og lede-tekst |
+| FocusCallout | components/portal/statistikk/v2/focus-callout.tsx | Fokus-callout med lime ikon-block + "Lag plan"-CTA |
+| SgDistributionCard | components/portal/statistikk/v2/sg-distribution-card.tsx | Strokes Gained-fordeling med +/- barer rundt 0-linje |
+| HcpTrendCard | components/portal/statistikk/v2/hcp-trend-card.tsx | Handicap-historikk SVG med gradient-fill, lime accent-prikk + 30/90d prognose |
+| CompareCard | components/portal/statistikk/v2/compare-card.tsx | Sammenligningskort med tre stablete barer (Du / Peer / Pyramide) + percentil-chip + delta |
+| AkPyramidCard | components/portal/statistikk/v2/ak-pyramid-card.tsx | A-K talentutviklingsmodell med uthevet "din rad" + 4 stat-bokser |
+| RoundsTable | components/portal/statistikk/v2/rounds-table.tsx | Runde-for-runde tabell (10 siste) med dato, score, FIR/GIR/putts/SG total |
+
+## Admin Fasiliteter-komponenter (CoachHQ — GFGK fasilitets-bookingkart)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| FacilityMap | components/admin/FacilityMap.tsx | Flyfoto-kart med 4 klikkbare SVG-soner (Driving Range, Performance Studio, Putting Green, Short Game Area), kapasitets-fargekoding og pulserende live-indikator når booking pågår nå |
+| ZoneDetailPanel | components/admin/facility-map/zone-detail-panel.tsx | Mørkt glasspanel som åpner fra kart-sone — viser dagens bookinger, live-status, "Book nå"-knapp |
+| OffMapStrip | components/admin/facility-map/off-map-strip.tsx | Pille-rad under kartet for fasiliteter som ikke er synlige (Korthullsbane), med samme klikk-til-glasspanel-flyt |
+| FacilityCalendar | components/admin/FacilityCalendar.tsx | Dagvelger (7 dager) + 08-20 timeplan med fargede booking-blokker per fasilitet |
+| FacilityList | components/admin/FacilityList.tsx | Bookinger gruppert per fasilitet med status-badge per type |
+| AddActivityModal | components/admin/AddActivityModal.tsx | Modal for å legge til ny FacilityBooking (fasilitet, person, type, dato, tid, varighet) |
 
 ## Delte UI-komponenter (shadcn/ui)
 Se components/ui/ for shadcn primitiver (Button, Dialog, Card, etc.)

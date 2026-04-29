@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D21 — Rapporter · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .rep-grid { display:grid; grid-template-columns: 280px 1fr; gap:18px; align-items:start; }
+  .rep-side { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:14px; position:sticky; top:80px; }
+  .rep-side h4 { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:14px 8px 6px; font-weight:700; }
+  .rep-side h4:first-child { margin-top:4px; }
+  .rep-side .item { display:flex; align-items:center; gap:9px; padding:8px 10px; border-radius:7px; font-size:13px; color:rgba(255,255,255,0.78); cursor:pointer; }
+  .rep-side .item [data-lucide] { width:14px; height:14px; }
+  .rep-side .item:hover { background:rgba(255,255,255,0.04); color:#fff; }
+  .rep-side .item.active { background:rgba(209,248,67,0.14); color:var(--akgolf-accent); }
+  .rep-side .item .ct { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); }
+
+  /* Main */
+  .filt-bar { display:flex; gap:8px; padding:12px 18px; background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:12px; margin-bottom:18px; align-items:center; flex-wrap:wrap; }
+  .filt-bar .lab { font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.10em; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:700; margin-right:4px; }
+  .pill-btn { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:7px; padding:6px 12px; font-size:12px; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:6px; cursor:pointer; }
+  .pill-btn [data-lucide]{ width:13px; height:13px; }
+  .pill-btn.active { background:rgba(209,248,67,0.16); color:var(--akgolf-accent); border-color:rgba(209,248,67,0.30); }
+
+  .kpi-row { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:18px; }
+
+  /* Big chart */
+  .big-chart-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:24px; margin-bottom:18px; }
+  .big-chart-card .head { display:flex; justify-content:space-between; align-items:end; margin-bottom:18px; }
+  .big-chart-card .head h3 { margin:0; font-size:15px; color:#fff; font-weight:700; }
+  .big-chart-card .head .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); letter-spacing:0.10em; }
+  .ln-chart { position:relative; height: 240px; padding-bottom: 24px; }
+  .ln-chart svg { width:100%; height:100%; display:block; }
+  .ln-chart .grid line { stroke: rgba(255,255,255,0.05); stroke-dasharray: 2 2; }
+  .ln-chart .lin1 { stroke: var(--akgolf-accent); stroke-width:2.5; fill:none; }
+  .ln-chart .lin1-fill { fill: url(#grad1); opacity:0.5; }
+  .ln-chart .lin2 { stroke: #6BB1FF; stroke-width:2; fill:none; stroke-dasharray: 4 3; }
+  .ln-chart .y-lab, .ln-chart .x-lab { font-family:'JetBrains Mono', monospace; font-size: 10px; fill: rgba(255,255,255,0.45); }
+  .ln-chart .marker { fill: var(--akgolf-accent); }
+
+  /* Lower grid */
+  .lower-grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+  .panel { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 22px; }
+  .panel h3 { margin:0 0 14px; font-size:14px; color:#fff; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .panel h3 .more { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); font-weight:700; }
+
+  .player-row { display:grid; grid-template-columns: 32px 1fr 90px 70px 60px; gap:12px; padding:9px 0; border-top:1px solid rgba(255,255,255,0.04); align-items:center; font-size:12.5px; }
+  .player-row:first-of-type { border-top:none; }
+  .player-row .av { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:11px; color:#0A1F18; }
+  .player-row .nm { color:#fff; font-weight:600; }
+  .player-row .nm small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); letter-spacing:0.04em; margin-top:2px; }
+  .player-row .num { font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; text-align:right; font-variant-numeric:tabular-nums; }
+  .player-row .num.up { color:#6FCBA1; }
+  .player-row .num.down { color:#F49283; }
+  .spark { width:60px; height:24px; }
+
+  /* Donut */
+  .donut-row { display:grid; grid-template-columns: 200px 1fr; gap:18px; align-items:center; }
+  .donut { position:relative; width: 200px; height: 200px; }
+  .donut .center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .donut .center .v { font-size:24px; color:#fff; font-weight:800; letter-spacing:-0.02em; }
+  .donut .center .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:0.10em; text-transform:uppercase; margin-top:2px; }
+  .leg-list { font-size:12.5px; }
+  .leg-row { display:grid; grid-template-columns: 14px 1fr 50px; gap:10px; padding:6px 0; align-items:center; }
+  .leg-row .sw { width:10px; height:10px; border-radius:2px; }
+  .leg-row .lab { color:#fff; }
+  .leg-row .pct { font-family:'JetBrains Mono',monospace; color:rgba(255,255,255,0.7); text-align:right; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="package"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="credit-card"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="credit-card"></i>Økonomi</div>
+    <div class="chq-nav-item active"><i data-lucide="bar-chart-3"></i>Rapporter</div>
+    <div class="chq-nav-item"><i data-lucide="receipt"></i>Fakturaer</div>
+    <div class="chq-nav-item"><i data-lucide="rotate-ccw"></i>Refusjoner</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Rapporter / Coach-effekt</div>
+    <div class="chq-top-meta">SISTE 12 MND · 42 SPILLERE · 28 RAPPORT-MAL</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk rapport…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ ØKONOMI · RAPPORTER</div>
+        <h1 class="chq-h1">Innsikt og effekt-måling.</h1>
+        <p>Ferdigbygde rapporter for coaching-effekt, drift og økonomi. Eksporter til PDF eller send rett til klubb-styret. Egen rapport-builder for tilpassede dashboards.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="plus"></i>Ny rapport</button>
+        <button class="chq-btn primary"><i data-lucide="download"></i>Eksport PDF</button>
+      </div>
+    </div>
+
+    <div class="rep-grid">
+      <aside class="rep-side">
+        <h4>Kjør en rapport</h4>
+        <div class="item active"><i data-lucide="trending-up"></i>Coach-effekt<span class="ct">★</span></div>
+        <div class="item"><i data-lucide="users"></i>Spiller-utvikling<span class="ct">42</span></div>
+        <div class="item"><i data-lucide="calendar-check-2"></i>Belegg &amp; bookinger</div>
+        <div class="item"><i data-lucide="circle-dot"></i>Putting-segmenter</div>
+        <div class="item"><i data-lucide="target"></i>Long-game shifts</div>
+
+        <h4>Drift</h4>
+        <div class="item"><i data-lucide="map-pin"></i>Lokasjon-belegg</div>
+        <div class="item"><i data-lucide="package"></i>Tjeneste-mix</div>
+        <div class="item"><i data-lucide="clock"></i>No-show-rate</div>
+
+        <h4>Økonomi</h4>
+        <div class="item"><i data-lucide="banknote"></i>P&amp;L · måned</div>
+        <div class="item"><i data-lucide="receipt"></i>Faktura-status</div>
+        <div class="item"><i data-lucide="rotate-ccw"></i>Refusjon-årsaker</div>
+
+        <h4>Klubb &amp; styre</h4>
+        <div class="item"><i data-lucide="file-text"></i>Kvartalsrapport</div>
+        <div class="item"><i data-lucide="presentation"></i>Foreldre-info</div>
+      </aside>
+
+      <div>
+        <div class="filt-bar">
+          <span class="lab">Filter</span>
+          <button class="pill-btn active"><i data-lucide="calendar"></i>SISTE 12 MND</button>
+          <button class="pill-btn"><i data-lucide="users"></i>ALLE SPILLERE (42)</button>
+          <button class="pill-btn"><i data-lucide="layers"></i>JUNIOR ELITE</button>
+          <button class="pill-btn"><i data-lucide="map-pin"></i>BOGSTAD + SKULLERUD</button>
+          <button class="pill-btn" style="margin-left:auto;"><i data-lucide="plus"></i>Legg til filter</button>
+        </div>
+
+        <div class="kpi-row">
+          <div class="chq-kpi"><div class="l">HCP-snitt før</div><div class="v">14.8</div></div>
+          <div class="chq-kpi"><div class="l">HCP-snitt nå</div><div class="v">12.2 <small>−2.6</small></div></div>
+          <div class="chq-kpi"><div class="l">% spillere ned</div><div class="v">76%</div></div>
+          <div class="chq-kpi"><div class="l">Snitt SG · gain</div><div class="v">+1.4</div></div>
+        </div>
+
+        <section class="big-chart-card">
+          <div class="head">
+            <div><h3>HCP-utvikling per spillertype · siste 12 måneder</h3></div>
+            <div class="sub">42 SPILLERE · MÅNEDLIG SNITT · ELITE = HCP &lt;12, MID = 12–24</div>
+          </div>
+          <div class="ln-chart">
+            <svg viewBox="0 0 800 220" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="grad1" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#D1F843" stop-opacity="0.30"/>
+                  <stop offset="100%" stop-color="#D1F843" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <g class="grid">
+                <line x1="0" y1="20" x2="800" y2="20"/>
+                <line x1="0" y1="65" x2="800" y2="65"/>
+                <line x1="0" y1="110" x2="800" y2="110"/>
+                <line x1="0" y1="155" x2="800" y2="155"/>
+                <line x1="0" y1="200" x2="800" y2="200"/>
+              </g>
+              <text class="y-lab" x="6" y="24">20</text>
+              <text class="y-lab" x="6" y="69">15</text>
+              <text class="y-lab" x="6" y="114">10</text>
+              <text class="y-lab" x="6" y="159">5</text>
+              <text class="y-lab" x="6" y="204">0</text>
+
+              <!-- Elite line (junior elite — descending from 12 to 8.2) -->
+              <path class="lin1-fill" d="M 40 138 L 100 132 L 160 128 L 220 130 L 280 122 L 340 116 L 400 110 L 460 108 L 520 105 L 580 100 L 640 96 L 700 92 L 760 86 L 760 200 L 40 200 Z"/>
+              <path class="lin1" d="M 40 138 L 100 132 L 160 128 L 220 130 L 280 122 L 340 116 L 400 110 L 460 108 L 520 105 L 580 100 L 640 96 L 700 92 L 760 86"/>
+              <circle class="marker" cx="760" cy="86" r="4"/>
+
+              <!-- Mid line dashed -->
+              <path class="lin2" d="M 40 60 L 100 62 L 160 60 L 220 58 L 280 60 L 340 56 L 400 52 L 460 54 L 520 50 L 580 46 L 640 44 L 700 42 L 760 38"/>
+              <circle cx="760" cy="38" r="3" fill="#6BB1FF"/>
+
+              <text class="x-lab" x="40" y="218">MAI</text>
+              <text class="x-lab" x="160" y="218">JUL</text>
+              <text class="x-lab" x="280" y="218">SEP</text>
+              <text class="x-lab" x="400" y="218">NOV</text>
+              <text class="x-lab" x="520" y="218">JAN</text>
+              <text class="x-lab" x="640" y="218">MAR</text>
+              <text class="x-lab" x="730" y="218">APR</text>
+            </svg>
+            <div style="position:absolute; top:6px; right:14px; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.65);">
+              <span style="color:var(--akgolf-accent);">●</span> ELITE 11.4 → 8.2 &nbsp;&nbsp; <span style="color:#6BB1FF;">●</span> MID 18.7 → 14.4
+            </div>
+          </div>
+        </section>
+
+        <div class="lower-grid">
+          <section class="panel">
+            <h3>Topp-5 fremgang · denne perioden<span class="more">SE ALLE 42</span></h3>
+            <div class="player-row">
+              <div class="av" style="background:#C99CF3;">SA</div>
+              <div class="nm">Sofie Aas<small>JUNIOR ELITE</small></div>
+              <div class="num">11.0 → 7.7</div>
+              <svg class="spark" viewBox="0 0 60 24"><path d="M0 8 L10 10 L20 8 L30 12 L40 14 L50 18 L60 20" stroke="#6FCBA1" fill="none" stroke-width="1.6"/></svg>
+              <div class="num up">−3.3</div>
+            </div>
+            <div class="player-row">
+              <div class="av" style="background:var(--akgolf-accent);">AK</div>
+              <div class="nm">Anders Kristiansen<small>JUNIOR ELITE</small></div>
+              <div class="num">11.4 → 8.4</div>
+              <svg class="spark" viewBox="0 0 60 24"><path d="M0 6 L10 9 L20 7 L30 11 L40 14 L50 16 L60 19" stroke="#6FCBA1" fill="none" stroke-width="1.6"/></svg>
+              <div class="num up">−3.0</div>
+            </div>
+            <div class="player-row">
+              <div class="av" style="background:#6BB1FF;">MN</div>
+              <div class="nm">Markus Nordby<small>JUNIOR ELITE</small></div>
+              <div class="num">10.0 → 7.4</div>
+              <svg class="spark" viewBox="0 0 60 24"><path d="M0 7 L10 9 L20 9 L30 12 L40 13 L50 17 L60 19" stroke="#6FCBA1" fill="none" stroke-width="1.6"/></svg>
+              <div class="num up">−2.6</div>
+            </div>
+            <div class="player-row">
+              <div class="av" style="background:#E8B967;">EH</div>
+              <div class="nm">Erik Hansen<small>JUNIOR MID</small></div>
+              <div class="num">11.6 → 9.2</div>
+              <svg class="spark" viewBox="0 0 60 24"><path d="M0 6 L10 9 L20 8 L30 12 L40 14 L50 16 L60 18" stroke="#6FCBA1" fill="none" stroke-width="1.6"/></svg>
+              <div class="num up">−2.4</div>
+            </div>
+            <div class="player-row">
+              <div class="av" style="background:#6FCBA1;">JT</div>
+              <div class="nm">Jonas Tvedt<small>JUNIOR ELITE</small></div>
+              <div class="num">10.2 → 8.0</div>
+              <svg class="spark" viewBox="0 0 60 24"><path d="M0 8 L10 10 L20 9 L30 12 L40 13 L50 16 L60 17" stroke="#6FCBA1" fill="none" stroke-width="1.6"/></svg>
+              <div class="num up">−2.2</div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h3>Tjeneste-mix · 12 mnd<span class="more">87 BOOKINGER MND</span></h3>
+            <div class="donut-row">
+              <div class="donut">
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                  <circle cx="100" cy="100" r="78" stroke="rgba(255,255,255,0.05)" stroke-width="20" fill="none"/>
+                  <!-- 1:1 52% -->
+                  <circle cx="100" cy="100" r="78" stroke="#D1F843" stroke-width="20" fill="none" stroke-dasharray="254 490" stroke-dashoffset="0" transform="rotate(-90 100 100)" stroke-linecap="butt"/>
+                  <!-- pakker 28% -->
+                  <circle cx="100" cy="100" r="78" stroke="#6BB1FF" stroke-width="20" fill="none" stroke-dasharray="137 490" stroke-dashoffset="-256" transform="rotate(-90 100 100)" stroke-linecap="butt"/>
+                  <!-- test 11% -->
+                  <circle cx="100" cy="100" r="78" stroke="#C99CF3" stroke-width="20" fill="none" stroke-dasharray="54 490" stroke-dashoffset="-394" transform="rotate(-90 100 100)" stroke-linecap="butt"/>
+                  <!-- camp 9% -->
+                  <circle cx="100" cy="100" r="78" stroke="#E8B967" stroke-width="20" fill="none" stroke-dasharray="44 490" stroke-dashoffset="-450" transform="rotate(-90 100 100)" stroke-linecap="butt"/>
+                </svg>
+                <div class="center"><div class="v">87</div><div class="l">PER MND</div></div>
+              </div>
+              <div class="leg-list">
+                <div class="leg-row"><span class="sw" style="background:var(--akgolf-accent);"></span><span class="lab">1:1 coaching</span><span class="pct">52%</span></div>
+                <div class="leg-row"><span class="sw" style="background:#6BB1FF;"></span><span class="lab">Pakker</span><span class="pct">28%</span></div>
+                <div class="leg-row"><span class="sw" style="background:#C99CF3;"></span><span class="lab">Test &amp; data</span><span class="pct">11%</span></div>
+                <div class="leg-row"><span class="sw" style="background:#E8B967;"></span><span class="lab">Camp + gruppe</span><span class="pct">9%</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D19 — Tjenester · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .svc-tabs { display:flex; gap:2px; margin-bottom:18px; border-bottom:1px solid var(--akgolf-line-dark); }
+  .svc-tab { padding:10px 16px; font-size:12.5px; color:rgba(255,255,255,0.55); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; display:flex; align-items:center; gap:6px; }
+  .svc-tab .ct { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.08); padding:1px 5px; border-radius:4px; font-weight:700; }
+  .svc-tab.active { color:var(--akgolf-accent); border-color:var(--akgolf-accent); }
+  .svc-tab.active .ct { color:var(--akgolf-accent); background:rgba(209,248,67,0.15); }
+
+  .svc-table-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; overflow:hidden; }
+  .svc-row { display:grid; grid-template-columns: 44px 1fr 100px 90px 110px 100px 60px; gap:14px; padding:14px 18px; align-items:center; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13px; }
+  .svc-row:last-child { border-bottom:none; }
+  .svc-row.head { background:rgba(0,0,0,0.20); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.10em; text-transform:uppercase; color:rgba(255,255,255,0.5); padding:10px 18px; font-weight:700; }
+  .svc-row .ic { width:44px; height:44px; border-radius:10px; background:rgba(209,248,67,0.10); color:var(--akgolf-accent); display:grid; place-items:center; }
+  .svc-row .ic [data-lucide] { width:20px; height:20px; }
+  .svc-row .ic.cat-coach { background:rgba(209,248,67,0.10); color:var(--akgolf-accent); }
+  .svc-row .ic.cat-test { background:rgba(107,177,255,0.18); color:#6BB1FF; }
+  .svc-row .ic.cat-pkg { background:rgba(175,82,222,0.18); color:#C99CF3; }
+  .svc-row .ic.cat-camp { background:rgba(232,185,103,0.20); color:#E8B967; }
+  .svc-row .nm { color:#fff; font-weight:600; }
+  .svc-row .nm small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.55); letter-spacing:0.04em; margin-top:2px; }
+  .svc-row .num { font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:13px; font-variant-numeric:tabular-nums; }
+  .svc-row .num small { font-size:10px; color:rgba(255,255,255,0.5); margin-left:2px; font-weight:500; }
+  .svc-row .stat { font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:3px 7px; border-radius:5px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; text-align:center; }
+  .svc-row .stat.live { background:rgba(42,125,90,0.25); color:#6FCBA1; }
+  .svc-row .stat.draft { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.65); }
+  .svc-row .stat.archived { background:rgba(184,66,51,0.18); color:#F49283; }
+  .svc-row .meta { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(255,255,255,0.65); }
+  .svc-row .actions { display:flex; gap:4px; justify-content:flex-end; }
+  .svc-row .ic-btn { width:28px; height:28px; border-radius:6px; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.65); display:grid; place-items:center; cursor:pointer; border:1px solid rgba(255,255,255,0.06); }
+  .svc-row .ic-btn [data-lucide]{ width:14px; height:14px; }
+
+  .summary { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:24px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="map-pin"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="clock"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="package"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+    <div class="chq-nav-item"><i data-lucide="clock"></i>Tilgjengelighet</div>
+    <div class="chq-nav-item active"><i data-lucide="package"></i>Tjenester<span class="badge">14</span></div>
+    <div class="chq-nav-item"><i data-lucide="building"></i>Fasiliteter</div>
+    <div class="chq-nav-section">Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="credit-card"></i>Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="bar-chart-3"></i>Rapporter</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Tjenester</div>
+    <div class="chq-top-meta">14 AKTIVE · 3 KLADD · 2 ARKIVERT · OMSETNING 87 % AV KAPASITET</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk tjeneste…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ DRIFT · TJENESTER</div>
+        <h1 class="chq-h1">Tjenestekatalog &amp; prising.</h1>
+        <p>Det spillere kan booke. Hver tjeneste har lokasjons-tilknytning, varighet, kapasitet og pris. Pakkepriser låser flere økter samtidig. Endringer går live ved publisering.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="upload"></i>Importer</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Ny tjeneste</button>
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="chq-kpi"><div class="l">Aktive tjenester</div><div class="v">14</div></div>
+      <div class="chq-kpi"><div class="l">Snittpris</div><div class="v">1 480 <small>kr</small></div></div>
+      <div class="chq-kpi"><div class="l">Bookinger denne mnd</div><div class="v">87</div></div>
+      <div class="chq-kpi"><div class="l">Topp-tjeneste</div><div class="v">SWING <small>·24</small></div></div>
+    </div>
+
+    <div class="svc-tabs">
+      <div class="svc-tab active">Alle <span class="ct">19</span></div>
+      <div class="svc-tab">Coaching 1:1 <span class="ct">6</span></div>
+      <div class="svc-tab">Test &amp; data <span class="ct">3</span></div>
+      <div class="svc-tab">Pakker <span class="ct">5</span></div>
+      <div class="svc-tab">Camp &amp; gruppe <span class="ct">3</span></div>
+      <div class="svc-tab">Arkivert <span class="ct">2</span></div>
+    </div>
+
+    <section class="svc-table-card">
+      <div class="svc-row head">
+        <div></div>
+        <div>NAVN</div>
+        <div>VARIGHET</div>
+        <div>PRIS</div>
+        <div>STATUS</div>
+        <div>BOOK / MND</div>
+        <div></div>
+      </div>
+
+      <div class="svc-row">
+        <div class="ic cat-coach"><i data-lucide="target"></i></div>
+        <div class="nm">Swing-økt 1:1<small>BOGSTAD · SKULLERUD · DRIVING-RANGE</small></div>
+        <div class="num">60 <small>min</small></div>
+        <div class="num">1 200 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">24 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-coach"><i data-lucide="circle-dot"></i></div>
+        <div class="nm">Putting-økt 1:1<small>SKULLERUD · QUINTIC</small></div>
+        <div class="num">45 <small>min</small></div>
+        <div class="num">900 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">12 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-coach"><i data-lucide="flag"></i></div>
+        <div class="nm">On-course 1:1<small>BOGSTAD · BANEN · 9 HULL</small></div>
+        <div class="num">2 t</div>
+        <div class="num">2 400 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">8 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-coach"><i data-lucide="video"></i></div>
+        <div class="nm">Video-analyse<small>SKULLERUD · 4K + DARTFISH</small></div>
+        <div class="num">75 <small>min</small></div>
+        <div class="num">1 350 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">7 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-coach"><i data-lucide="brain"></i></div>
+        <div class="nm">Mental-økt<small>SKULLERUD · COACHING-ROM</small></div>
+        <div class="num">60 <small>min</small></div>
+        <div class="num">1 100 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">5 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+
+      <div class="svc-row">
+        <div class="ic cat-test"><i data-lucide="activity"></i></div>
+        <div class="nm">Trackman fitting + test<small>SKULLERUD · TRACKMAN 4</small></div>
+        <div class="num">90 <small>min</small></div>
+        <div class="num">1 950 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">6 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-test"><i data-lucide="ruler"></i></div>
+        <div class="nm">TPI Level 1 screening<small>SKULLERUD · M/ FYSIO</small></div>
+        <div class="num">90 <small>min</small></div>
+        <div class="num">2 200 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">3 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-test"><i data-lucide="line-chart"></i></div>
+        <div class="nm">Quintic putting-test<small>SKULLERUD · STROKE + ROLL</small></div>
+        <div class="num">60 <small>min</small></div>
+        <div class="num">1 400 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">4 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+
+      <div class="svc-row">
+        <div class="ic cat-pkg"><i data-lucide="package-2"></i></div>
+        <div class="nm">Sesongpakke 10x<small>10 SWING-ØKTER · LÅS PRIS</small></div>
+        <div class="num">10 økt</div>
+        <div class="num">10 800 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">9 solgt</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-pkg"><i data-lucide="package"></i></div>
+        <div class="nm">Junior-pakke vår<small>8 ØKTER + KARTLEGGING + PLAN</small></div>
+        <div class="num">12 uker</div>
+        <div class="num">8 900 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">14 solgt</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-pkg"><i data-lucide="package-check"></i></div>
+        <div class="nm">Premium 360°<small>UBEGRENSET · 6 MND · ALL DATA</small></div>
+        <div class="num">6 mnd</div>
+        <div class="num">28 000 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">3 solgt</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+
+      <div class="svc-row">
+        <div class="ic cat-camp"><i data-lucide="tent"></i></div>
+        <div class="nm">Tour Camp Holtsmark<small>3 DAGER · INTENSIV · MAX 8</small></div>
+        <div class="num">3 dgr</div>
+        <div class="num">9 800 <small>kr</small></div>
+        <div class="stat live">LIVE · 8/8</div>
+        <div class="meta">FULL JUNI</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-camp"><i data-lucide="users"></i></div>
+        <div class="nm">Damegruppe Bogstad<small>UKENTLIG · 16 PLASSER</small></div>
+        <div class="num">90 min</div>
+        <div class="num">450 <small>kr / økt</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">14/16 plass</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row">
+        <div class="ic cat-camp"><i data-lucide="users-round"></i></div>
+        <div class="nm">Junior Mid 12–14 år<small>12 UKER · KOHORT</small></div>
+        <div class="num">12 uker</div>
+        <div class="num">6 200 <small>kr</small></div>
+        <div class="stat live">LIVE</div>
+        <div class="meta">12/12 plass</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+
+      <div class="svc-row" style="opacity:0.7;">
+        <div class="ic" style="background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.55);"><i data-lucide="file-text"></i></div>
+        <div class="nm">Beginner-pakke 6 uker<small>UTKAST · PRISING UAVKLART</small></div>
+        <div class="num">6 uker</div>
+        <div class="num">— <small></small></div>
+        <div class="stat draft">KLADD</div>
+        <div class="meta">—</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="pencil"></i></div><div class="ic-btn"><i data-lucide="more-horizontal"></i></div></div>
+      </div>
+      <div class="svc-row" style="opacity:0.5;">
+        <div class="ic" style="background:rgba(184,66,51,0.10); color:#F49283;"><i data-lucide="archive"></i></div>
+        <div class="nm">Old: Nybegynner-pakke 2024<small>ARKIVERT MARS 2025</small></div>
+        <div class="num">—</div>
+        <div class="num">5 600 <small>kr</small></div>
+        <div class="stat archived">ARKIVERT</div>
+        <div class="meta">0 booket</div>
+        <div class="actions"><div class="ic-btn"><i data-lucide="rotate-ccw"></i></div><div class="ic-btn"><i data-lucide="trash-2"></i></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

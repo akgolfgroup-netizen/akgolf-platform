@@ -1,0 +1,617 @@
+/* ============================================================
+   AK Golf · Reference Remix v5 — shared primitives
+   E1: Sharpen Every Step (dark burgundy)
+   E2: SkillSphere Academy (light green)
+   E3: Harvesta Field (aerial photo + chips)
+   ============================================================ */
+@import url("../tokens.css");
+
+:root {
+  /* E1 — Sharpen Every Step */
+  --rr-burgundy: #4a120e;
+  --rr-burgundy-deep: #2a0a06;
+  --rr-burgundy-mid: #6a1c17;
+  --rr-cream: #F4EFE7;
+  --rr-cream-dim: #D4CEC1;
+
+  /* E2 — SkillSphere */
+  --rr-paper: #F5F7F3;
+  --rr-card-light: #FFFFFF;
+  --rr-green-900: #0E3A1A;
+  --rr-green-700: #1F5E33;
+  --rr-green-500: #3E8752;
+  --rr-green-100: #DDE8D8;
+  --rr-green-soft: #B8CEA8;
+  --rr-ink: #0A1410;
+  --rr-ink-60: #5A6E66;
+  --rr-line-2: rgba(14, 58, 26, 0.12);
+
+  /* E3 — Harvesta */
+  --rr-lime: #D1F843;
+  --rr-bone: #EEE9DC;
+}
+
+body.rr {
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--rr-ink);
+}
+
+/* ============================================================
+   E1 — Sharpen Every Step (dark burgundy photo hero)
+   ============================================================ */
+body.rr-e1 {
+  background: var(--rr-burgundy-deep);
+  color: var(--rr-cream);
+}
+
+.rr1-root {
+  display: flex; flex-direction: column;
+  height: 100vh;
+  padding: 18px;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.rr1-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 12px;
+}
+.rr1-logo {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--rr-burgundy);
+  border: 1px solid rgba(244,239,231,0.2);
+  display: grid; place-items: center;
+  color: var(--rr-cream);
+  font-weight: 800;
+  font-size: 14px;
+}
+.rr1-nav {
+  display: flex; gap: 4px; align-items: center;
+  background: rgba(244,239,231,0.08);
+  padding: 4px;
+  border-radius: 99px;
+  backdrop-filter: blur(10px);
+}
+.rr1-nav a {
+  padding: 8px 18px;
+  font-size: 12px; font-weight: 500;
+  color: rgba(244,239,231,0.6);
+  border-radius: 99px;
+  cursor: pointer;
+}
+.rr1-nav a.active {
+  background: var(--rr-cream);
+  color: var(--rr-burgundy-deep);
+  font-weight: 600;
+}
+.rr1-top-actions { display: flex; gap: 8px; align-items: center; }
+.rr1-icon-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(244,239,231,0.08);
+  border: 1px solid rgba(244,239,231,0.15);
+  display: grid; place-items: center;
+  color: var(--rr-cream);
+  cursor: pointer;
+}
+
+/* Hero with photo + display type */
+.rr1-hero {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  height: 360px;
+  background: var(--rr-burgundy);
+}
+.rr1-hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('../assets/hero-golf-divot.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.rr1-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(26,6,4,0.85) 0%, rgba(26,6,4,0.45) 45%, rgba(26,6,4,0.15) 100%),
+    linear-gradient(180deg, rgba(26,6,4,0.2) 0%, rgba(26,6,4,0.4) 100%);
+}
+.rr1-hero-content {
+  position: relative; z-index: 2;
+  padding: 34px 40px;
+  height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.rr1-display {
+  font-size: 88px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--rr-cream);
+  margin: 0;
+}
+.rr1-caption {
+  font-size: 12px;
+  color: rgba(244,239,231,0.6);
+  max-width: 360px;
+  line-height: 1.5;
+  margin-top: 18px;
+}
+
+/* Small map chip on hero */
+.rr1-hero-mapchip {
+  position: absolute;
+  top: 32px; right: 32px;
+  background: rgba(26,6,4,0.7);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(244,239,231,0.12);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 14px;
+  min-width: 220px;
+  z-index: 3;
+}
+.rr1-hero-mapchip .mini-map {
+  width: 60px; height: 40px;
+  border-radius: 8px;
+  background: rgba(244,239,231,0.08);
+  display: grid; place-items: center;
+}
+.rr1-hero-mapchip .stack {
+  display: flex; flex-direction: column; gap: 1px;
+}
+.rr1-hero-mapchip .lbl {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244,239,231,0.5);
+}
+.rr1-hero-mapchip .v {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--rr-cream);
+  font-variant-numeric: tabular-nums;
+}
+.rr1-hero-mapchip .sub { font-size: 10px; color: rgba(244,239,231,0.6); }
+
+/* KPI bento grid */
+.rr1-bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 140px;
+  gap: 12px;
+}
+.rr1-card {
+  background: var(--rr-burgundy);
+  border: 1px solid rgba(244,239,231,0.08);
+  border-radius: 18px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.rr1-card .lbl {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(244,239,231,0.45);
+  margin-bottom: 8px;
+}
+.rr1-card .big {
+  font-size: 44px; font-weight: 700;
+  letter-spacing: -0.035em; line-height: 1;
+  color: var(--rr-cream);
+  font-variant-numeric: tabular-nums;
+}
+.rr1-card .delta {
+  font-size: 11px;
+  color: rgba(244,239,231,0.5);
+  margin-top: 6px;
+}
+.rr1-card.span2 { grid-column: span 2; }
+.rr1-card.span3 { grid-column: span 3; }
+.rr1-card.tall { grid-row: span 2; }
+
+/* ============================================================
+   E2 — SkillSphere Academy (light green)
+   ============================================================ */
+body.rr-e2 {
+  background: var(--rr-paper);
+  color: var(--rr-ink);
+}
+
+.rr2-root {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  height: 100vh;
+  gap: 16px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.rr2-sidebar {
+  background: var(--rr-card-light);
+  border-radius: 22px;
+  padding: 22px 18px;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--rr-line-2);
+}
+.rr2-sidebar .brand {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 8px 22px;
+  border-bottom: 1px solid var(--rr-line-2);
+  margin-bottom: 16px;
+}
+.rr2-sidebar .brand .mark {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--rr-green-700);
+  display: grid; place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+}
+.rr2-sidebar .brand .name {
+  font-size: 15px; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.rr2-nav { display: flex; flex-direction: column; gap: 2px; }
+.rr2-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rr-ink-60);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.rr2-nav a:hover { background: rgba(14,58,26,0.04); }
+.rr2-nav a.active {
+  background: var(--rr-green-100);
+  color: var(--rr-green-900);
+  font-weight: 600;
+}
+.rr2-nav .bottom {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--rr-line-2);
+}
+
+.rr2-main {
+  background: var(--rr-card-light);
+  border-radius: 22px;
+  padding: 22px 26px 30px;
+  overflow-y: auto;
+  border: 1px solid var(--rr-line-2);
+}
+
+.rr2-topbar {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 22px;
+}
+.rr2-search {
+  flex: 1; max-width: 360px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 18px;
+  background: var(--rr-paper);
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--rr-ink-60);
+}
+.rr2-top-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.rr2-top-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--rr-paper);
+  border-radius: 99px;
+  font-size: 11px; font-weight: 600;
+  cursor: pointer;
+}
+.rr2-top-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--rr-paper);
+  display: grid; place-items: center;
+  cursor: pointer;
+}
+
+/* Welcome header */
+.rr2-welcome {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.rr2-welcome h2 {
+  margin: 0;
+  font-size: 20px; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.rr2-welcome p {
+  margin: 4px 0 0;
+  font-size: 12px; color: var(--rr-ink-60);
+}
+
+/* KPI tiles row */
+.rr2-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.rr2-kpi {
+  background: var(--rr-card-light);
+  border: 1px solid var(--rr-line-2);
+  border-radius: 16px;
+  padding: 16px 18px;
+  position: relative;
+}
+.rr2-kpi.green {
+  background: var(--rr-green-900);
+  color: #fff;
+  border-color: transparent;
+}
+.rr2-kpi .lbl {
+  font-size: 12px; font-weight: 500;
+  color: var(--rr-ink-60);
+  margin-bottom: 4px;
+}
+.rr2-kpi.green .lbl { color: rgba(255,255,255,0.7); }
+.rr2-kpi .big {
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.rr2-kpi .sub {
+  font-size: 11px; color: var(--rr-ink-60);
+  margin-top: 6px;
+}
+.rr2-kpi.green .sub { color: rgba(255,255,255,0.6); }
+.rr2-kpi .arrow {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: var(--rr-paper);
+  display: grid; place-items: center;
+}
+.rr2-kpi.green .arrow { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* Status pills */
+.rr2-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.rr2-pill.received { background: var(--rr-green-100); color: var(--rr-green-900); }
+.rr2-pill.pending { background: #FFF4D6; color: #8A6A0E; }
+.rr2-pill.overdue { background: #FBDDD5; color: #A43A20; }
+
+/* ============================================================
+   E3 — Harvesta Field (aerial photo hero + chips + drawer)
+   ============================================================ */
+body.rr-e3 {
+  background: var(--rr-bone);
+  color: var(--rr-ink);
+}
+
+.rr3-root {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  height: 100vh;
+  gap: 0;
+  padding: 16px;
+  overflow: hidden;
+}
+.rr3-sidebar {
+  padding: 12px 8px;
+  display: flex; flex-direction: column;
+  gap: 4px;
+}
+.rr3-sidebar .brand {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px 18px;
+}
+.rr3-sidebar .brand .mark {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--rr-green-900);
+  display: grid; place-items: center;
+  color: var(--rr-lime);
+  font-weight: 700;
+  font-size: 11px;
+}
+.rr3-sidebar .brand .name {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.rr3-nav { display: flex; flex-direction: column; gap: 2px; }
+.rr3-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  font-size: 12px; font-weight: 500;
+  color: var(--rr-ink-60);
+  border-radius: 99px;
+  cursor: pointer;
+}
+.rr3-nav a:hover { background: rgba(14,58,26,0.05); }
+.rr3-nav a.active {
+  background: var(--rr-card-light);
+  color: var(--rr-green-900);
+  font-weight: 600;
+}
+.rr3-sidebar .bottom {
+  margin-top: auto;
+  border-top: 1px solid rgba(14,58,26,0.08);
+  padding-top: 12px;
+}
+
+.rr3-stage {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--rr-green-900);
+}
+.rr3-stage-bg {
+  position: absolute; inset: 0;
+  background-image: url('../assets/hero-aerial.svg');
+  background-size: cover;
+  background-position: center;
+}
+.rr3-stage-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(14,58,26,0.2) 0%, rgba(14,58,26,0) 40%, rgba(14,58,26,0.4) 100%);
+}
+.rr3-stage-content {
+  position: relative; z-index: 2;
+  padding: 22px 28px;
+  height: 100%;
+  display: flex; flex-direction: column;
+}
+
+.rr3-stage-topbar {
+  display: flex; align-items: center; gap: 18px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+.rr3-stage-topbar .title {
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 10px;
+}
+.rr3-stage-topbar .coords {
+  font-size: 10px;
+  color: rgba(255,255,255,0.7);
+  font-variant-numeric: tabular-nums;
+  display: flex; flex-direction: column;
+}
+
+.rr3-chip-row {
+  display: flex; gap: 10px;
+  margin-bottom: 14px;
+}
+.rr3-chip {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  padding: 10px 16px;
+  border-radius: 99px;
+  min-width: 170px;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.rr3-chip .ic {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(14,58,26,0.08);
+  display: grid; place-items: center;
+  color: var(--rr-green-900);
+}
+.rr3-chip .info { display: flex; flex-direction: column; gap: 0; }
+.rr3-chip .l { font-size: 10px; color: var(--rr-ink-60); font-weight: 500; }
+.rr3-chip .v { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+
+.rr3-feature {
+  background: #fff;
+  border-radius: 20px;
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 20px;
+  max-width: 620px;
+  margin-bottom: auto;
+}
+.rr3-feature .hero-num {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--rr-ink);
+}
+.rr3-feature .hero-num .u { font-size: 22px; font-weight: 700; }
+.rr3-feature .pill-top {
+  display: inline-flex;
+  padding: 3px 10px;
+  background: var(--rr-lime);
+  border-radius: 99px;
+  font-size: 10px; font-weight: 700;
+  color: var(--rr-ink);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.rr3-feature .caption {
+  font-size: 11px; color: var(--rr-ink-60); margin-top: 4px;
+}
+
+.rr3-feature-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+}
+.rr3-feature-split .item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 10px;
+  background: var(--rr-paper);
+  border-radius: 12px;
+}
+.rr3-feature-split .item .ic {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 14px;
+}
+.rr3-feature-split .item .stack { display: flex; flex-direction: column; }
+.rr3-feature-split .item .n { font-size: 12px; font-weight: 700; }
+.rr3-feature-split .item .s { font-size: 10px; color: var(--rr-ink-60); }
+.rr3-feature-split .item.add {
+  background: var(--rr-green-900);
+  color: var(--rr-lime);
+}
+.rr3-feature-split .item.add .n { color: var(--rr-lime); font-weight: 700; }
+
+/* Drawer at bottom */
+.rr3-drawer {
+  background: var(--rr-card-light);
+  border-radius: 18px;
+  padding: 16px 20px;
+  max-width: 500px;
+  margin-top: auto;
+}
+.rr3-drawer .dh {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.rr3-drawer .dh h5 { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.rr3-drawer .dh .sub { font-size: 10px; color: var(--rr-ink-60); }
+.rr3-drawer .tabs {
+  display: flex; gap: 2px;
+  background: var(--rr-paper);
+  padding: 3px;
+  border-radius: 99px;
+}
+.rr3-drawer .tabs button {
+  padding: 5px 14px;
+  font-size: 10px; font-weight: 700;
+  border-radius: 99px;
+  color: var(--rr-ink-60);
+  cursor: pointer;
+}
+.rr3-drawer .tabs button.active {
+  background: var(--rr-lime);
+  color: var(--rr-ink);
+}
+.rr3-drawer .row {
+  display: grid;
+  grid-template-columns: 90px 1fr 52px;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12px;
+}
+.rr3-drawer .row .n { font-weight: 600; }
+.rr3-drawer .row .bar {
+  height: 4px; background: var(--rr-paper); border-radius: 99px; overflow: hidden;
+}
+.rr3-drawer .row .bar .f { height: 100%; background: var(--rr-ink); border-radius: 99px; }
+.rr3-drawer .row .v {
+  font-size: 12px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.rr3-drawer .row .v .slash { color: var(--rr-ink-60); font-weight: 500; }

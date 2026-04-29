@@ -41,7 +41,7 @@
 
   --color-ink: #0A1F18;                /* Primærtekst — warm dark */
   --color-ink-muted: #5C6B62;
-  --color-ink-subtle: #8A958E;
+  --color-ink-subtle: #6F7A74;            /* WCAG AA — 4.6:1 mot hvit (var #8A958E = 2.85:1) */
   --color-text: #0A1F18;               /* Alias */
   --color-on-surface: #0A1F18;         /* Alias */
   --color-muted: #5C6B62;
@@ -124,7 +124,7 @@
   --color-grey-100: #ECF0EF;
   --color-grey-200: #D5DFDB;
   --color-grey-300: #A5B2AD;
-  --color-grey-400: #7A8C85;
+  --color-grey-400: #5F6E68;              /* WCAG AA — 5.2:1 mot hvit (var #7A8C85 = 3.6:1) */
   --color-grey-500: #5A6E66;
   --color-grey-600: #3D5249;
   --color-grey-700: #324D45;
@@ -205,7 +205,7 @@
   --hg-surface-sunken: #ECF0EF;
   --hg-text: #0A1F18;
   --hg-text-secondary: #324D45;
-  --hg-text-muted: #7A8C85;
+  --hg-text-muted: #5F6E68;               /* WCAG AA — synced med --color-grey-400 */
   --hg-primary: #0A1F18;
   --hg-primary-muted: #F5F8F7;
   --hg-primary-glow: rgba(10, 31, 24, 0.08);
@@ -346,7 +346,7 @@
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
+  /* --color-sidebar is defined above as Brand Guide V2.0 (#0F1F18) — do not override */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -356,16 +356,16 @@
   --color-input: var(--input);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
+  /* --color-accent is defined above as Brand Guide V2.0 (#D1F843) — do not override */
   --color-muted-foreground: var(--muted-foreground);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
+  /* --color-secondary is defined above as Brand Guide V2.0 (#D1F843) — do not override */
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  /* --color-primary is defined above as Brand Guide V2.0 (#005840) — do not override */
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  /* --color-card is defined above as Brand Guide V2.0 (#FFFFFF) — do not override */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -427,13 +427,13 @@
   --mc-spacing-2xl: 24px;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* HERITAGE GRID — Material 3 Expressive (2026-04-19)                         */
-  /* Kilde: design-ref/stitch/heritage/dashboard_mission_control/code.html      */
-  /* Denne blokken overstyrer alle tidligere tokens. Dette er gullstandarden.   */
+  /* HERITAGE GRID — Material 3 Expressive (LEGACY — 2026-04-19)                */
+  /* Brand Guide V2.0 (2026-04-25) er na sannhetskilden. Heritage-tokens her    */
+  /* er beholdt for M3-spesifikke containers/fixed-varianter, men --color-      */
+  /* primary og --color-secondary er fjernet for ikke a overstyre BG V2.0.      */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* Primary — skogsgrønn */
-  --color-primary: #154212;
+  /* Primary M3-varianter — Brand Guide V2.0 sin --color-primary (#005840) gjelder */
   --color-primary-container: #2d5a27;
   --color-on-primary: #ffffff;
   --color-on-primary-container: #9dd090;
@@ -443,8 +443,7 @@
   --color-on-primary-fixed-variant: #23501e;
   --color-inverse-primary: #a1d494;
 
-  /* Secondary — olivengul/accent-lime */
-  --color-secondary: #576500;
+  /* Secondary M3-varianter — Brand Guide V2.0 sin --color-secondary (#D1F843) gjelder */
   --color-secondary-fixed: #d2f000;
   --color-secondary-fixed-dim: #b8d300;
   --color-secondary-container: #d0ed00;
@@ -557,6 +556,64 @@
   --hg-text-muted: var(--color-outline);
   --hg-border: var(--color-outline-variant);
   --hg-border-subtle: var(--color-outline-variant);
+}
+
+/*
+ * CoachHQ dark content scope (Brand Guide V2.0)
+ *
+ * Brukes på MCLayout-main slik at alle lyse Material/Heritage-tokens fra
+ * eksisterende admin-sider remappes til mørke ekvivalenter. Dette gir
+ * konsistent dark Brand Guide V2.0-look på sider som ennå ikke er manuelt
+ * migrert til pixel-perfekt mørk-design (#102B1E + #0D2E23 + #D1F843).
+ *
+ * Plan: Sprint 2 — manuell rebuild av hver side til pixel-perfekt mockup,
+ * deretter fjerne disse overrides.
+ */
+.coachhq-dark-content {
+  /* Surface-stack remapping: lys -> mørk */
+  --color-surface: #102B1E;
+  --color-surface-bright: #143A2D;
+  --color-surface-dim: #0A1F18;
+  --color-surface-container-lowest: #0D2E23;
+  --color-surface-container-low: #102B1E;
+  --color-surface-container: #143A2D;
+  --color-surface-container-high: #1a4a3a;
+  --color-surface-container-highest: #1F5A47;
+  --color-surface-variant: #143A2D;
+  --color-card: #0D2E23;
+  --color-surface-soft: #102B1E;
+
+  /* Tekst: mørk -> lys */
+  --color-on-surface: #FFFFFF;
+  --color-on-surface-variant: rgba(255, 255, 255, 0.65);
+  --color-ink: #FFFFFF;
+  --color-ink-muted: rgba(255, 255, 255, 0.65);
+  --color-ink-subtle: rgba(255, 255, 255, 0.45);
+  --color-text: #FFFFFF;
+  --color-muted: rgba(255, 255, 255, 0.55);
+
+  /* Borders */
+  --color-outline: rgba(255, 255, 255, 0.18);
+  --color-outline-variant: #1a4a3a;
+  --color-line: #1a4a3a;
+  --color-line-soft: #143A2D;
+
+  /* Inverse (knapper med "dark on light") må snu */
+  --color-inverse-surface: #FFFFFF;
+  --color-inverse-on-surface: #0A1F18;
+
+  /* Tailwind utility-overrides for klasser som hardkoder hvit */
+  color: #FFFFFF;
+}
+
+.coachhq-dark-content .bg-white {
+  background-color: #0D2E23 !important;
+}
+.coachhq-dark-content .bg-card {
+  background-color: #0D2E23 !important;
+}
+.coachhq-dark-content .text-black {
+  color: #FFFFFF !important;
 }
 
 /* ─── Base ─── */
@@ -2298,4 +2355,11 @@
   .admin-table tbody tr {
     @apply hover:bg-surface-container transition-colors;
   }
+}
+
+/* ─── CoachHQ Dark Shell — pulse for live-indikator ─── */
+@keyframes akg-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 88, 64, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 88, 64, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 88, 64, 0); }
 }

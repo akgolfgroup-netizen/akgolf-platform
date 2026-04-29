@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D25 — Fasiliteter · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .fac-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
+  .fac-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:16px; overflow:hidden; }
+  .fac-photo { aspect-ratio: 16/8; position:relative; background: linear-gradient(135deg, rgba(13,46,35,0.40), rgba(0,0,0,0.20)), repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 14px, rgba(255,255,255,0.05) 14px 28px); display:flex; align-items:flex-end; padding:18px 22px; }
+  .fac-photo .badge { position:absolute; top:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; padding:3px 7px; background:rgba(0,0,0,0.50); border-radius:5px; color:rgba(255,255,255,0.85); text-transform:uppercase; font-weight:700; }
+  .fac-photo .badge.live { background: rgba(42,125,90,0.50); color:#9DE5BC; }
+  .fac-photo .lab { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .fac-photo .ttl { font-size:24px; color:#fff; font-weight:800; letter-spacing:-0.02em; margin-top:4px; }
+  .fac-body { padding:20px 22px; }
+  .fac-meta { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:16px; }
+  .fac-cell { background:rgba(0,0,0,0.20); border-radius:8px; padding:10px 12px; }
+  .fac-cell .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; font-weight:700; }
+  .fac-cell .v { font-size:14px; color:#fff; font-weight:700; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .fac-cell .v small { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; }
+
+  .equip-list { font-size:13px; }
+  .equip-row { display:grid; grid-template-columns: 22px 1fr auto; gap:10px; padding:8px 0; border-top:1px solid rgba(255,255,255,0.04); align-items:center; }
+  .equip-row:first-of-type { border-top:none; }
+  .equip-row [data-lucide] { width:14px; height:14px; color:rgba(255,255,255,0.55); }
+  .equip-row .nm { color:#fff; font-weight:600; }
+  .equip-row .nm small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:1px; letter-spacing:0.05em; font-weight:500; }
+  .stt {
+    font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em;
+    padding: 3px 7px; border-radius:5px; font-weight:700; text-transform:uppercase;
+  }
+  .stt.ok { background:rgba(42,125,90,0.25); color:#6FCBA1; }
+  .stt.due { background:rgba(232,185,103,0.20); color:#E8B967; }
+  .stt.warn { background:rgba(184,66,51,0.20); color:#F49283; }
+
+  .fac-acts { display:flex; gap:8px; padding:14px 22px; border-top:1px solid var(--akgolf-line-dark); background:rgba(0,0,0,0.10); }
+  .fac-acts .a { flex:1; padding:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; }
+  .fac-acts .a [data-lucide]{ width:13px; height:13px; }
+  .fac-acts .a.primary { background:var(--akgolf-accent); color:#0A1F18; border-color:var(--akgolf-accent); font-weight:700; }
+
+  .util-bar { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; margin:6px 0 0; }
+  .util-bar span { display:block; height:100%; background:var(--akgolf-accent); }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="map-pin"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+    <div class="chq-nav-item active"><i data-lucide="building-2"></i>Fasiliteter<span class="badge">5</span></div>
+    <div class="chq-nav-item"><i data-lucide="wrench"></i>Vedlikehold</div>
+    <div class="chq-nav-item"><i data-lucide="package"></i>Utstyr</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Fasiliteter</div>
+    <div class="chq-top-meta">5 BAYS · 2 STUDIO · 1 PUTTING-LAB · UTSTYRSTATUS LIVE</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk fasiliteter…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ DRIFT · FASILITETER</div>
+        <h1 class="chq-h1">Treningsbays, studio, lab.</h1>
+        <p>Hver fasilitet har eget utstyrs-register, vedlikeholds-historikk og live-belegg. Skullerud studio B er ledig nå — Bogstad bay 04 er i bruk fram til 17:30.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="wrench"></i>Vedlikehold</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Ny fasilitet</button>
+      </div>
+    </div>
+
+    <div class="fac-grid">
+
+      <article class="fac-card">
+        <div class="fac-photo">
+          <span class="badge live">● LIVE · I BRUK</span>
+          <div>
+            <div class="lab">BOGSTAD GK · BAY 04</div>
+            <div class="ttl">Outdoor Trackman bay</div>
+          </div>
+        </div>
+        <div class="fac-body">
+          <div class="fac-meta">
+            <div class="fac-cell"><div class="l">Belegg · uke</div><div class="v">94 <small>%</small></div><div class="util-bar"><span style="width:94%;"></span></div></div>
+            <div class="fac-cell"><div class="l">Bookinger · mnd</div><div class="v">68</div></div>
+            <div class="fac-cell"><div class="l">Neste ledig</div><div class="v">17:30</div></div>
+          </div>
+          <div class="equip-list">
+            <div class="equip-row"><i data-lucide="radar"></i><div class="nm">Trackman 4<small>SN: TM-4-2810 · KALIBRERT 12. APR</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="camera"></i><div class="nm">Foresight GCQuad-cam<small>1080p · 30 FPS</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="monitor"></i><div class="nm">55" 4K skjerm<small>SAMSUNG · 2023</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="wifi"></i><div class="nm">Studio WiFi 5G<small>BANDBREDDE 600 Mbps</small></div><span class="stt ok">OK</span></div>
+          </div>
+        </div>
+        <div class="fac-acts">
+          <div class="a"><i data-lucide="calendar"></i>Belegg</div>
+          <div class="a"><i data-lucide="wrench"></i>Vedlikehold</div>
+          <div class="a primary"><i data-lucide="plus"></i>Book bay</div>
+        </div>
+      </article>
+
+      <article class="fac-card">
+        <div class="fac-photo">
+          <span class="badge">LEDIG NÅ</span>
+          <div>
+            <div class="lab">SKULLERUD INDOOR · STUDIO B</div>
+            <div class="ttl">Quintic putting-lab</div>
+          </div>
+        </div>
+        <div class="fac-body">
+          <div class="fac-meta">
+            <div class="fac-cell"><div class="l">Belegg · uke</div><div class="v">68 <small>%</small></div><div class="util-bar"><span style="width:68%; background:#6BB1FF;"></span></div></div>
+            <div class="fac-cell"><div class="l">Bookinger · mnd</div><div class="v">42</div></div>
+            <div class="fac-cell"><div class="l">Neste økt</div><div class="v">15:00</div></div>
+          </div>
+          <div class="equip-list">
+            <div class="equip-row"><i data-lucide="circle-dot"></i><div class="nm">Quintic Ball Roll<small>SN: QBR-1144 · KAL 8. MAR</small></div><span class="stt due">KAL DUE</span></div>
+            <div class="equip-row"><i data-lucide="camera"></i><div class="nm">Highspeed putting-cam<small>240 FPS</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="square"></i><div class="nm">Wellputt-matte L</div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="monitor"></i><div class="nm">75" PuttView projector<small>FULL HD · 144 HZ</small></div><span class="stt ok">OK</span></div>
+          </div>
+        </div>
+        <div class="fac-acts">
+          <div class="a"><i data-lucide="calendar"></i>Belegg</div>
+          <div class="a"><i data-lucide="wrench"></i>Vedlikehold</div>
+          <div class="a primary"><i data-lucide="plus"></i>Book studio</div>
+        </div>
+      </article>
+
+      <article class="fac-card">
+        <div class="fac-photo">
+          <span class="badge live">● LIVE · I BRUK</span>
+          <div>
+            <div class="lab">BOGSTAD GK · BAY 02</div>
+            <div class="ttl">Outdoor Trackman bay</div>
+          </div>
+        </div>
+        <div class="fac-body">
+          <div class="fac-meta">
+            <div class="fac-cell"><div class="l">Belegg · uke</div><div class="v">88 <small>%</small></div><div class="util-bar"><span style="width:88%;"></span></div></div>
+            <div class="fac-cell"><div class="l">Bookinger · mnd</div><div class="v">61</div></div>
+            <div class="fac-cell"><div class="l">Neste ledig</div><div class="v">18:00</div></div>
+          </div>
+          <div class="equip-list">
+            <div class="equip-row"><i data-lucide="radar"></i><div class="nm">Trackman 4<small>SN: TM-4-1907</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="camera"></i><div class="nm">Side-cam HD</div><span class="stt warn">FOKUS</span></div>
+            <div class="equip-row"><i data-lucide="monitor"></i><div class="nm">43" skjerm</div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="square"></i><div class="nm">Range-matter (4x)<small>FILA · 2024</small></div><span class="stt ok">OK</span></div>
+          </div>
+        </div>
+        <div class="fac-acts">
+          <div class="a"><i data-lucide="calendar"></i>Belegg</div>
+          <div class="a"><i data-lucide="wrench"></i>Vedlikehold</div>
+          <div class="a primary"><i data-lucide="plus"></i>Book bay</div>
+        </div>
+      </article>
+
+      <article class="fac-card">
+        <div class="fac-photo">
+          <span class="badge">LEDIG NÅ</span>
+          <div>
+            <div class="lab">HOLTSMARK GK · COACHING-BAY</div>
+            <div class="ttl">Mobil coaching-rigg</div>
+          </div>
+        </div>
+        <div class="fac-body">
+          <div class="fac-meta">
+            <div class="fac-cell"><div class="l">Belegg · uke</div><div class="v">42 <small>%</small></div><div class="util-bar"><span style="width:42%; background:#E8B967;"></span></div></div>
+            <div class="fac-cell"><div class="l">Bookinger · mnd</div><div class="v">14</div></div>
+            <div class="fac-cell"><div class="l">Neste økt</div><div class="v">FRE 10:00</div></div>
+          </div>
+          <div class="equip-list">
+            <div class="equip-row"><i data-lucide="radar"></i><div class="nm">Mobil Trackman<small>BÆRBAR · M/STATIV</small></div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="camera"></i><div class="nm">iPhone 14 Pro · cam-rigg</div><span class="stt ok">OK</span></div>
+            <div class="equip-row"><i data-lucide="bluetooth"></i><div class="nm">Hotspot 5G</div><span class="stt ok">OK</span></div>
+          </div>
+        </div>
+        <div class="fac-acts">
+          <div class="a"><i data-lucide="calendar"></i>Belegg</div>
+          <div class="a"><i data-lucide="wrench"></i>Vedlikehold</div>
+          <div class="a primary"><i data-lucide="plus"></i>Book bay</div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

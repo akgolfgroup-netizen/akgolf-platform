@@ -1,0 +1,978 @@
+<!DOCTYPE html><html data-src-ver="32dfb39b" lang="no" data-om-id="32dfb39b:0"><head data-om-id="32dfb39b:1">
+
+
+  <meta charset="utf-8" data-om-id="32dfb39b:2">
+  <title>PlayerHQ — AK Golf Group</title>
+  <meta name="ext-resource-dependency" content="assets/profile-magnus.jpeg" data-resource-id="profileMagnus" />
+  <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" data-om-id="32dfb39b:3">
+  <link rel="stylesheet" href="colors_and_type.css" data-om-id="32dfb39b:4">
+  <style>
+    html, body { margin: 0; padding: 0; background: #C9D6CE; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    * { box-sizing: border-box; }
+    #root { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 28px 20px; }
+    /* Fluid scale wrapper — keeps 1240 design width, shrinks to fit viewport */
+    .phq-scale { width: 1240px; transform-origin: top center; }
+    @media (max-width: 1300px) { .phq-scale { transform: scale(calc((100vw - 40px) / 1240)); } }
+    ::selection { background: #D1F843; color: #0A1F18; }
+  </style>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body data-om-id="32dfb39b:5" data-cc-id="cc-1" style="cursor: crosshair; font-size: 14px;">
+  <template id="__bundler_thumbnail" data-bg-color="#E8F4A8">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#E8F4A8"/>
+      <g transform="translate(600 400)">
+        <circle r="140" fill="#0A1F18"/>
+        <text x="0" y="16" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+              font-size="110" font-weight="800" letter-spacing="-6" fill="#D1F843">P</text>
+      </g>
+      <text x="600" y="620" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+            font-size="34" font-weight="700" letter-spacing="-0.5" fill="#0A1F18">PlayerHQ</text>
+      <text x="600" y="660" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+            font-size="18" font-weight="500" fill="#324D45" opacity="0.7">AK Golf Group</text>
+    </svg>
+  </template>
+  <div id="root" data-om-id="32dfb39b:6"><div data-om-id="jsx:/Inline Babel script:754:21:9" style="height: 100052px; display: flex; justify-content: center;"><div class="phq-scale" data-om-id="jsx:/Inline Babel script:859:22:11"><div data-screen-label="01 PlayerHQ Crextio-replika" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:1128:30:5" style="width: 1240px; background: linear-gradient(rgb(241, 248, 198) 0%, rgb(232, 244, 168) 45%, rgb(241, 248, 198) 100%); border-radius: 28px; padding: 22px 28px 28px; box-shadow: rgba(10, 31, 24, 0.18) 0px 30px 80px, rgba(255, 255, 255, 0.6) 0px 2px 0px inset; color: rgb(10, 31, 24); font-family: Inter, system-ui, -apple-system, sans-serif;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:1844:52:5" style="display: flex; align-items: center; gap: 18px; padding: 6px 0px 26px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:1979:57:7" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px; border-radius: 999px; border: 1.5px solid rgb(10, 31, 24); background: transparent;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2199:63:9" style="width: 16px; height: 16px; border-radius: 3px; background: rgb(10, 31, 24); color: rgb(209, 248, 67); display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; letter-spacing: -0.05em;">P</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2496:69:9" style="font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: rgb(10, 31, 24);">PlayerHQ</span></div><nav data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2693:75:7" style="flex: 1 1 0%; display: flex; justify-content: center; align-items: center; gap: 4px;"><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 20px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: rgb(10, 31, 24); color: rgb(255, 255, 255); font-size: 13px; font-weight: 600; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Dashboard</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Runder</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Statistikk</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Trening</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Helse</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Kalender</button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:2890:79:13" style="padding: 9px 14px; border-radius: 999px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; background: transparent; color: rgb(10, 31, 24); font-size: 13px; font-weight: 500; letter-spacing: -0.005em; font-family: Inter, system-ui, -apple-system, sans-serif;">Coach</button></nav><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3371:92:7" style="display: flex; align-items: center; gap: 10px;"><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3444:93:9" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; background: transparent; border: 1px solid rgb(10, 31, 24); color: rgb(10, 31, 24); cursor: pointer; font-family: Inter, system-ui, -apple-system, sans-serif;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3552:95:11" style="font-size: 12px; font-weight: 500;">Innstillinger</span></button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3647:97:9" style="position: relative; width: 36px; height: 36px; border-radius: 50%; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bell" class="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3751:99:11" style="position: absolute; top: 6px; right: 6px; width: 6px; height: 6px; background: rgb(184, 66, 51); border-radius: 50%; border: 1.5px solid rgb(232, 244, 168);"></span></button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:3989:105:9" style="position: relative; width: 36px; height: 36px; border-radius: 50%; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span></button></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:4778:134:5" style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; padding-bottom: 22px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:4963:140:7"><h1 data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:4977:141:9" style="font-size: 56px; font-weight: 500; letter-spacing: -0.035em; margin: 0px 0px 18px; color: rgb(10, 31, 24); line-height: 1.02;">Velkommen tilbake, <em data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:5152:144:31" style="font-style: italic; font-weight: 500;">Magnus</em></h1><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:5304:147:9" style="display: flex; align-items: center; gap: 6px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:6365:171:7" style="display: flex; flex-direction: column; gap: 2px; padding: 8px 16px; border-radius: 999px; background: rgb(10, 31, 24); color: rgb(255, 255, 255); min-width: 170px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:6573:177:9" style="font-size: 10px; font-weight: 500; opacity: 0.65; text-transform: lowercase; letter-spacing: -0.005em;">Fairways</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:6713:178:9" style="font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums;">58%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:6883:185:7" style="display: flex; flex-direction: column; gap: 2px; padding: 8px 16px; border-radius: 999px; background: rgb(209, 248, 67); color: rgb(10, 31, 24); min-width: 170px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:7100:191:9" style="font-size: 10px; font-weight: 500; opacity: 0.65; letter-spacing: -0.005em;">GIR</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:7212:192:9" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;">52%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:7381:199:7" style="position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 16px; border-radius: 999px; background: repeating-linear-gradient(135deg, rgba(10, 31, 24, 0.133) 0px, rgba(10, 31, 24, 0.133) 1.5px, transparent 1.5px, transparent 9px), rgb(253, 254, 242); min-width: 170px; overflow: hidden;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:7707:205:9" style="font-size: 10px; font-weight: 500; color: rgb(50, 77, 69); letter-spacing: -0.005em;">Scrambling</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:7825:206:9" style="font-size: 14px; font-weight: 600; color: rgb(10, 31, 24); font-variant-numeric: tabular-nums;">41%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8010:213:5" style="position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 16px; border-radius: 999px; background: rgb(253, 254, 242); border: 1px solid rgba(10, 31, 24, 0.08); min-width: 260px; overflow: hidden;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8284:220:7" style="font-size: 10px; font-weight: 500; color: rgb(50, 77, 69); letter-spacing: -0.005em;">Scoring avg</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8400:221:7" style="font-size: 14px; font-weight: 600; color: rgb(10, 31, 24); font-variant-numeric: tabular-nums;">74.2</span></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:5796:156:7" style="display: flex; align-items: flex-end; gap: 30px; padding-bottom: 4px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8609:228:5" style="display: flex; align-items: baseline; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8693:231:7" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; align-self: flex-end; margin-bottom: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flag" class="lucide lucide-flag"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9051:239:7"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9065:240:9" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: rgb(10, 31, 24); line-height: 1; font-variant-numeric: tabular-nums;">14</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9256:244:9" style="font-size: 11px; color: rgb(50, 77, 69); margin-top: 2px; font-weight: 500; letter-spacing: -0.005em;">Runder</div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8609:228:5" style="display: flex; align-items: baseline; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8693:231:7" style="width: 28px; height: 28px; border-radius: 50%; background: rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; align-self: flex-end; margin-bottom: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="dumbbell" class="lucide lucide-dumbbell"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9051:239:7"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9065:240:9" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: rgb(10, 31, 24); line-height: 1; font-variant-numeric: tabular-nums;">56</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9256:244:9" style="font-size: 11px; color: rgb(50, 77, 69); margin-top: 2px; font-weight: 500; letter-spacing: -0.005em;">Økter</div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8609:228:5" style="display: flex; align-items: baseline; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:8693:231:7" style="width: 28px; height: 28px; border-radius: 50%; background: rgb(209, 248, 67); display: inline-flex; align-items: center; justify-content: center; align-self: flex-end; margin-bottom: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-down" class="lucide lucide-trending-down"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline><polyline points="16 17 22 17 22 11"></polyline></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9051:239:7"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9065:240:9" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: rgb(10, 31, 24); line-height: 1; font-variant-numeric: tabular-nums;">−2.4</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9256:244:9" style="font-size: 11px; color: rgb(50, 77, 69); margin-top: 2px; font-weight: 500; letter-spacing: -0.005em;">HCP ↓</div></div></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9543:256:5" style="display: grid; grid-template-columns: 1fr 1.2fr 1fr 1fr; gap: 14px; padding-bottom: 14px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:9834:271:5" style="position: relative; height: 320px; border-radius: 20px; overflow: hidden; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08);"><img src="assets/profile-magnus.jpeg" alt="Magnus Kjelsrud" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:10054:277:7" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; filter: saturate(1.05) contrast(1.02);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:10396:288:7" style="position: absolute; left: 0px; right: 0px; bottom: 0px; height: 52%; background: linear-gradient(rgba(10, 31, 24, 0) 0%, rgba(10, 31, 24, 0.55) 55%, rgba(10, 31, 24, 0.85) 100%);"></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:10669:293:7" style="position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:10863:298:9"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:10879:299:11" style="font-size: 18px; font-weight: 600; color: rgb(255, 255, 255); letter-spacing: -0.02em; line-height: 1.1;">Magnus Kjelsrud</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:11050:303:11" style="font-size: 11px; color: rgba(255, 255, 255, 0.72); margin-top: 3px;">Pro · AK Golf Group</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:11200:307:9" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: rgb(10, 31, 24); font-size: 12px; font-weight: 600;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:11456:313:11" style="color: rgb(110, 132, 120); font-size: 10px; font-weight: 500;">HCP</span>+1.2</div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:11908:333:5" style="height: 320px; border-radius: 20px; padding: 22px; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: flex; flex-direction: column;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12124:339:7" style="display: flex; align-items: flex-start; justify-content: space-between;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12225:340:9"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12241:341:11" style="font-size: 15px; font-weight: 600; color: rgb(10, 31, 24); letter-spacing: -0.01em;">Fremdrift</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12380:344:11" style="display: flex; align-items: baseline; gap: 8px; margin-top: 14px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12473:345:13" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: rgb(10, 31, 24); line-height: 1; font-variant-numeric: tabular-nums;">6.1<span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12658:348:19" style="font-size: 28px; font-weight: 500; letter-spacing: -0.02em;">t</span></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12759:349:13" style="font-size: 11px; color: rgb(50, 77, 69); line-height: 1.25; padding-bottom: 3px;">Treningstid<br data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12873:350:26">denne uken</span></div></div><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:12949:354:9" style="width: 30px; height: 30px; border-radius: 50%; background: transparent; border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up-right" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></button></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13356:365:7" style="flex: 1 1 0%; display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; padding-top: 18px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 70px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">S</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 100.8px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">M</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 95.2px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">T</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 61.6px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">O</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 113.4px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">T</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13781:376:15" style="position: absolute; top: -4px; transform: translateY(-100%); display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 999px; background: rgb(209, 248, 67); color: rgb(10, 31, 24); font-size: 10px; font-weight: 600; white-space: nowrap;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 10px; height: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></span>1t 35m</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 20px; height: 133px; background: rgb(209, 248, 67); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">F</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:13588:371:11" style="display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14292:387:13" style="width: 6px; height: 84px; background: rgb(10, 31, 24); border-radius: 99px;"></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14509:393:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">L</span></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14803:406:5" style="height: 320px; border-radius: 20px; padding: 22px; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: flex; flex-direction: column;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:14998:411:7" style="display: flex; align-items: flex-start; justify-content: space-between;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:15099:412:9" style="font-size: 15px; font-weight: 600; color: rgb(10, 31, 24); letter-spacing: -0.01em;">Økt-tracker</div><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:15234:415:9" style="width: 30px; height: 30px; border-radius: 50%; background: transparent; border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up-right" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></button></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:15645:426:7" style="flex: 1 1 0%; display: flex; align-items: center; justify-content: center; position: relative;"><svg width="170" height="170" viewBox="0 0 170 170" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:15766:427:9" style="display: block;"><line x1="85" y1="7" x2="85" y2="17" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="93.15322013487697" y1="7.4272921612746785" x2="92.52604935527106" y2="13.394423533484328" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="101.21711188378524" y1="8.70448714276317" x2="99.96964173887868" y2="14.573372747166005" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="109.1033255612459" y1="10.81759172897803" x2="107.24922359499621" y2="16.523930826748952" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="116.72545815991242" y1="13.74345430387713" x2="114.28503830145762" y2="19.224727049732735" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="124" y1="17.450018504813784" x2="119" y2="26.110272542658166" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="130.84724967881291" y1="21.896674438754097" x2="127.32053816505807" y2="26.750776405003784" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="137.19218729599095" y1="27.034703612763252" x2="133.1774036578378" y2="31.493572565627616" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="142.96529638723675" y1="32.80781270400906" x2="138.50642743437237" y2="36.82259634216221" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="148.1033255612459" y1="39.15275032118709" x2="143.2492235949962" y2="42.67946183494193" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="152.54998149518622" y1="46" x2="143.88972745734182" y2="51" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="156.25654569612288" y1="53.27454184008758" x2="150.77527295026727" y2="55.71496169854238" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="159.18240827102198" y1="60.896674438754104" x2="153.47606917325106" y2="62.75077640500379" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="161.29551285723684" y1="68.78288811621479" x2="155.426627252834" y2="70.03035826112134" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="162.5727078387253" y1="76.84677986512304" x2="156.60557646651569" y2="77.47395064472896" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="163" y1="85" x2="153" y2="85" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="162.5727078387253" y1="93.15322013487696" x2="156.60557646651569" y2="92.52604935527104" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="161.29551285723684" y1="101.21711188378521" x2="155.426627252834" y2="99.96964173887866" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="159.18240827102198" y1="109.1033255612459" x2="153.47606917325106" y2="107.24922359499621" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="156.25654569612288" y1="116.72545815991242" x2="150.77527295026727" y2="114.2850383014576" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="152.54998149518622" y1="123.99999999999999" x2="143.88972745734185" y2="118.99999999999999" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="148.1033255612459" y1="130.84724967881291" x2="143.2492235949962" y2="127.32053816505807" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="142.96529638723678" y1="137.19218729599092" x2="138.5064274343724" y2="133.17740365783777" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="137.19218729599092" y1="142.96529638723678" x2="133.17740365783777" y2="138.5064274343724" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="130.84724967881291" y1="148.1033255612459" x2="127.32053816505807" y2="143.2492235949962" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="124" y1="152.54998149518622" x2="119" y2="143.88972745734185" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="116.72545815991239" y1="156.25654569612288" x2="114.2850383014576" y2="150.77527295026727" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="109.1033255612459" y1="159.18240827102198" x2="107.24922359499621" y2="153.47606917325106" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="101.21711188378522" y1="161.29551285723684" x2="99.96964173887866" y2="155.426627252834" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="93.15322013487699" y1="162.5727078387253" x2="92.52604935527107" y2="156.60557646651569" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="85" y1="163" x2="85" y2="153" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="76.84677986512303" y1="162.5727078387253" x2="77.47395064472894" y2="156.60557646651569" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="68.78288811621479" y1="161.29551285723684" x2="70.03035826112134" y2="155.426627252834" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="60.896674438754076" y1="159.18240827102198" x2="62.75077640500376" y2="153.47606917325106" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="53.27454184008761" y1="156.25654569612288" x2="55.71496169854241" y2="150.77527295026727" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="45.999999999999986" y1="152.54998149518622" x2="50.999999999999986" y2="143.88972745734182" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="39.152750321187106" y1="148.1033255612459" x2="42.67946183494194" y2="143.2492235949962" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="32.80781270400906" y1="142.96529638723675" x2="36.82259634216221" y2="138.50642743437237" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="27.034703612763266" y1="137.19218729599095" x2="31.49357256562763" y2="133.1774036578378" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="21.896674438754104" y1="130.84724967881291" x2="26.75077640500379" y2="127.32053816505808" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="17.450018504813798" y1="124.00000000000003" x2="26.11027254265818" y2="119.00000000000003" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="13.74345430387713" y1="116.7254581599124" x2="19.224727049732735" y2="114.2850383014576" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="10.81759172897803" y1="109.10332556124591" x2="16.523930826748952" y2="107.24922359499622" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="8.70448714276317" y1="101.21711188378526" x2="14.573372747166005" y2="99.96964173887869" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="7.4272921612746785" y1="93.15322013487703" x2="13.394423533484328" y2="92.5260493552711" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="7" y1="85.00000000000001" x2="17" y2="85.00000000000001" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="7.4272921612746785" y1="76.846779865123" x2="13.394423533484328" y2="77.47395064472892" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="8.70448714276317" y1="68.78288811621476" x2="14.573372747166005" y2="70.03035826112131" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="10.817591728978016" y1="60.89667443875411" x2="16.523930826748938" y2="62.75077640500379" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="13.743454303877115" y1="53.274541840087615" x2="19.22472704973272" y2="55.71496169854241" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="17.450018504813784" y1="45.99999999999999" x2="26.110272542658173" y2="50.99999999999999" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="21.89667443875409" y1="39.152750321187106" x2="26.750776405003776" y2="42.67946183494194" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="27.034703612763273" y1="32.80781270400903" x2="31.493572565627638" y2="36.822596342162186" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="32.80781270400902" y1="27.034703612763295" x2="36.822596342162164" y2="31.49357256562765" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="39.152750321187085" y1="21.896674438754104" x2="42.679461834941925" y2="26.75077640500379" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="45.999999999999964" y1="17.450018504813812" x2="50.99999999999997" y2="26.110272542658194" stroke="#0A1F18" stroke-opacity="0.55" stroke-width="1.4" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="53.27454184008759" y1="13.74345430387713" x2="55.714961698542396" y2="19.224727049732735" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="60.89667443875409" y1="10.81759172897803" x2="62.750776405003776" y2="16.523930826748952" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="68.78288811621474" y1="8.70448714276317" x2="70.0303582611213" y2="14.573372747166005" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><line x1="76.84677986512297" y1="7.4272921612746785" x2="77.4739506447289" y2="13.394423533484328" stroke="#0A1F18" stroke-opacity="0.22" stroke-width="1" stroke-linecap="round" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16213:434:20"></line><circle cx="85" cy="85" r="60" fill="none" stroke="#D1F843" stroke-width="14" stroke-dasharray="241.2743157956961 376.99111843077515" stroke-dashoffset="94.24777960769379" stroke-linecap="round" transform="rotate(-90 85 85)" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16489:439:11"></circle><circle cx="85" cy="85" r="60" fill="none" stroke="#0A1F18" stroke-opacity="0.12" stroke-width="14" stroke-dasharray="135.71680263507903 376.99111843077515" stroke-dashoffset="-147.02653618800232" data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:16838:447:11"></circle></svg><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17126:453:9" style="position: absolute; inset: 0px; display: flex; flex-direction: column; align-items: center; justify-content: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17304:457:11" style="font-size: 32px; font-weight: 500; letter-spacing: -0.03em; color: rgb(10, 31, 24); font-variant-numeric: tabular-nums; line-height: 1;">02:35</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17501:461:11" style="font-size: 10px; color: rgb(50, 77, 69); margin-top: 4px;">Dagens trening</div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17645:466:7" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17750:467:9" style="display: flex; gap: 8px;"><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:17802:468:11" style="width: 28px; height: 28px; border-radius: 50%; background: transparent; border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 12px; height: 12px;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg></span></button><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:18167:475:11" style="width: 28px; height: 28px; border-radius: 50%; background: transparent; border: 1px solid rgba(10, 31, 24, 0.08); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 12px; height: 12px;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pause" class="lucide lucide-pause"><rect x="14" y="4" width="4" height="16" rx="1"></rect><rect x="6" y="4" width="4" height="16" rx="1"></rect></svg></span></button></div><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:18546:483:9" style="width: 28px; height: 28px; border-radius: 50%; background: rgb(10, 31, 24); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 11px; height: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="square" class="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg></span></button></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19177:503:5" style="height: 320px; border-radius: 20px; padding: 22px; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: flex; flex-direction: column;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19372:508:7" style="display: flex; align-items: flex-start; justify-content: space-between;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19473:509:9" style="font-size: 15px; font-weight: 600; color: rgb(10, 31, 24); letter-spacing: -0.01em;">Formsjekk</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19606:512:9" style="font-size: 24px; font-weight: 500; letter-spacing: -0.02em; color: rgb(10, 31, 24); font-variant-numeric: tabular-nums;">68%</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19876:519:7" style="display: flex; gap: 3px; align-items: center; margin-top: 18px; margin-bottom: 16px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:19981:520:9" style="height: 26px; border-radius: 999px; background: rgb(209, 248, 67); flex: 82 1 0%; position: relative;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20139:525:11" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 10px; font-weight: 600; color: rgb(10, 31, 24);">82%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20348:530:9" style="height: 26px; border-radius: 999px; background: rgb(10, 31, 24); flex: 64 1 0%;"></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20438:531:9" style="height: 26px; border-radius: 999px; background: rgba(10, 31, 24, 0.15); flex: 41 1 0%;"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20610:535:7" style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20732:537:11" style="display: flex; align-items: center; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20817:538:13" style="width: 10px; height: 10px; border-radius: 3px; background: rgb(209, 248, 67);"></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21087:544:13" style="font-size: 12px; color: rgb(10, 31, 24); flex: 1 1 0%; font-weight: 500;">Fysisk</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21190:545:13" style="font-size: 11px; color: rgb(50, 77, 69); font-variant-numeric: tabular-nums;">82%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20732:537:11" style="display: flex; align-items: center; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20817:538:13" style="width: 10px; height: 10px; border-radius: 3px; background: rgb(10, 31, 24);"></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21087:544:13" style="font-size: 12px; color: rgb(10, 31, 24); flex: 1 1 0%; font-weight: 500;">Mental</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21190:545:13" style="font-size: 11px; color: rgb(50, 77, 69); font-variant-numeric: tabular-nums;">64%</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20732:537:11" style="display: flex; align-items: center; gap: 10px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:20817:538:13" style="width: 10px; height: 10px; border-radius: 3px; background: rgba(10, 31, 24, 0.15);"></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21087:544:13" style="font-size: 12px; color: rgb(10, 31, 24); flex: 1 1 0%; font-weight: 500;">Teknisk</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21190:545:13" style="font-size: 11px; color: rgb(50, 77, 69); font-variant-numeric: tabular-nums;">41%</span></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21389:552:7" style="margin-top: auto; padding-top: 12px; border-top: 1px dashed rgba(10, 31, 24, 0.08); display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: rgb(50, 77, 69);"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21639:558:9">Siste vurdering</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21676:559:9">21. april · +4 pts</span></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:21842:568:5" style="display: grid; grid-template-columns: 1fr 1.6fr 1.1fr; gap: 14px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22527:592:5" style="border-radius: 20px; padding: 10px 0px; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); overflow: hidden;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22725:598:9" style="border-bottom: 1px dashed rgba(10, 31, 24, 0.08);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22859:601:11" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23036:605:13" style="font-size: 13px; font-weight: 500; color: rgb(10, 31, 24);">Statistikk-sammendrag</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#324D45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg></span></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22725:598:9" style="border-bottom: 1px dashed rgba(10, 31, 24, 0.08);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22859:601:11" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23036:605:13" style="font-size: 13px; font-weight: 500; color: rgb(10, 31, 24);">Utstyr</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#324D45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-up" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"></path></svg></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23285:609:13" style="padding: 0px 22px 14px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23382:611:17" style="display: flex; align-items: center; gap: 12px; padding: 6px 0px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23526:614:19" style="width: 34px; height: 34px; border-radius: 8px; background: rgb(232, 244, 168); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 15px; height: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flag" class="lucide lucide-flag"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23881:621:19" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23927:622:21" style="font-size: 12px; font-weight: 600; color: rgb(10, 31, 24);">Driver</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:24027:623:21" style="font-size: 10px; color: rgb(110, 132, 120); margin-top: 1px;">Ping G430 LST</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6E8478" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="more-vertical" class="lucide lucide-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23382:611:17" style="display: flex; align-items: center; gap: 12px; padding: 6px 0px;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23526:614:19" style="width: 34px; height: 34px; border-radius: 8px; background: rgb(232, 244, 168); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 15px; height: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="target" class="lucide lucide-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23881:621:19" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23927:622:21" style="font-size: 12px; font-weight: 600; color: rgb(10, 31, 24);">Putter</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:24027:623:21" style="font-size: 10px; color: rgb(110, 132, 120); margin-top: 1px;">Scotty Cameron Phantom X</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 13px; height: 13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6E8478" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="more-vertical" class="lucide lucide-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></span></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22725:598:9" style="border-bottom: 1px dashed rgba(10, 31, 24, 0.08);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22859:601:11" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23036:605:13" style="font-size: 13px; font-weight: 500; color: rgb(10, 31, 24);">Mål &amp; milepæler</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#324D45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg></span></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22725:598:9" style="border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:22859:601:11" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; cursor: pointer;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:23036:605:13" style="font-size: 13px; font-weight: 500; color: rgb(10, 31, 24);">Helsestatus</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#324D45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg></span></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:24688:649:5" style="border-radius: 20px; padding: 16px 22px; background: rgb(247, 250, 230); border: 1px solid rgba(10, 31, 24, 0.08); display: flex; flex-direction: column; gap: 10px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:24944:655:7" style="display: flex; align-items: center; justify-content: space-between;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25041:656:9" style="font-size: 11px; color: rgb(110, 132, 120);">Mars</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25111:657:9" style="font-size: 15px; font-weight: 600; color: rgb(10, 31, 24); letter-spacing: -0.01em;">April 2026</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25247:660:9" style="font-size: 11px; color: rgb(110, 132, 120);">Mai</span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25361:664:7" style="display: grid; grid-template-columns: 56px repeat(6, 1fr); align-items: center; gap: 6px; padding: 2px 0px 6px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25522:668:9"></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Man</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(50, 77, 69); margin-top: 2px;">21</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Tir</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(50, 77, 69); margin-top: 2px;">22</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Ons</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(10, 31, 24); margin-top: 2px;">23</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Tor</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(50, 77, 69); margin-top: 2px;">24</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Fre</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(50, 77, 69); margin-top: 2px;">25</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25570:670:11" style="text-align: center;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25628:671:13" style="font-size: 10px; color: rgb(110, 132, 120); font-weight: 500;">Lør</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25718:672:13" style="font-size: 15px; font-weight: 600; color: rgb(50, 77, 69); margin-top: 2px;">26</div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:25966:682:7" style="position: relative; min-height: 144px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26062:684:11" style="display: grid; grid-template-columns: 56px 1fr; align-items: center; height: 28px; border-top-width: medium; border-top-style: none; border-top-color: currentcolor;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26293:689:13" style="font-size: 10px; color: rgb(110, 132, 120);">08:00</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26366:690:13"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26062:684:11" style="display: grid; grid-template-columns: 56px 1fr; align-items: center; height: 28px; border-top: 1px dashed rgba(10, 31, 24, 0.08);"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26293:689:13" style="font-size: 10px; color: rgb(110, 132, 120);">09:00</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26366:690:13"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26062:684:11" style="display: grid; grid-template-columns: 56px 1fr; align-items: center; height: 28px; border-top: 1px dashed rgba(10, 31, 24, 0.08);"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26293:689:13" style="font-size: 10px; color: rgb(110, 132, 120);">10:00</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26366:690:13"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26062:684:11" style="display: grid; grid-template-columns: 56px 1fr; align-items: center; height: 28px; border-top: 1px dashed rgba(10, 31, 24, 0.08);"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26293:689:13" style="font-size: 10px; color: rgb(110, 132, 120);">11:00</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26366:690:13"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26062:684:11" style="display: grid; grid-template-columns: 56px 1fr; align-items: center; height: 28px; border-top: 1px dashed rgba(10, 31, 24, 0.08);"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26293:689:13" style="font-size: 10px; color: rgb(110, 132, 120);">12:00</span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26366:690:13"></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26466:695:9" style="position: absolute; top: 32px; left: 62px; width: 55%; display: flex; align-items: center; gap: 10px; padding: 7px 12px; border-radius: 999px; background: rgb(10, 31, 24); color: rgb(255, 255, 255);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26722:701:11" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26760:702:13" style="font-size: 11px; font-weight: 600;">Coaching — Andreas</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26844:703:13" style="font-size: 9px; opacity: 0.65;">Videoanalyse, range</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:26941:705:11" style="display: flex;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27052:707:15" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(232, 244, 168); border: 1.5px solid rgb(10, 31, 24); margin-left: 0px;"></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27052:707:15" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(175, 227, 204); border: 1.5px solid rgb(10, 31, 24); margin-left: -6px;"></span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27052:707:15" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(245, 210, 143); border: 1.5px solid rgb(10, 31, 24); margin-left: -6px;"></span></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27383:717:9" style="position: absolute; top: 92px; left: 42%; width: 48%; display: flex; align-items: center; gap: 10px; padding: 7px 12px; border-radius: 999px; background: rgb(209, 248, 67); color: rgb(10, 31, 24);"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27651:723:11" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27689:724:13" style="font-size: 11px; font-weight: 700;">Range · driver-konsistens</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27780:725:13" style="font-size: 9px; opacity: 0.75;">75 min · Trackman</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27875:727:11" style="display: flex;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27975:729:15" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(10, 31, 24); border: 1.5px solid rgb(209, 248, 67); margin-left: 0px; color: rgb(255, 255, 255); font-size: 8px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">M</span><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:27975:729:15" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(50, 77, 69); border: 1.5px solid rgb(209, 248, 67); margin-left: -6px; color: rgb(255, 255, 255); font-size: 8px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">A</span></div></div></div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29077:756:5" style="border-radius: 20px; padding: 22px; background: rgb(19, 43, 33); color: rgb(237, 245, 218); display: flex; flex-direction: column; box-shadow: rgba(237, 245, 218, 0.04) 0px 0px 0px 1px inset;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29303:762:7" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29418:763:9" style="font-size: 15px; font-weight: 600; color: rgb(255, 255, 255); letter-spacing: -0.01em;">Dagens plan</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29551:766:9" style="font-size: 13px; font-weight: 600; color: rgb(255, 255, 255); font-variant-numeric: tabular-nums;">2/5</div></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29731:772:7" style="display: flex; flex-direction: column; gap: 6px;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29839:774:11" style="display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; background: rgba(237, 245, 218, 0.04); opacity: 0.55;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30088:780:13" style="width: 30px; height: 30px; border-radius: 7px; background: rgba(237, 245, 218, 0.08); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1F843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flame" class="lucide lucide-flame"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30420:787:13" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30460:788:15" style="font-size: 12px; font-weight: 600; color: rgb(255, 255, 255); text-decoration: line-through rgba(255, 255, 255, 0.3);">Oppvarming</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30711:793:15" style="font-size: 10px; color: rgb(154, 180, 168); margin-top: 2px; font-variant-numeric: tabular-nums;">23. april · 08:00</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30919:798:13" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(209, 248, 67); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 11px; height: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29839:774:11" style="display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; background: rgba(237, 245, 218, 0.04); opacity: 0.55;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30088:780:13" style="width: 30px; height: 30px; border-radius: 7px; background: rgba(237, 245, 218, 0.08); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1F843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="dumbbell" class="lucide lucide-dumbbell"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30420:787:13" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30460:788:15" style="font-size: 12px; font-weight: 600; color: rgb(255, 255, 255); text-decoration: line-through rgba(255, 255, 255, 0.3);">Styrke · underkropp</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30711:793:15" style="font-size: 10px; color: rgb(154, 180, 168); margin-top: 2px; font-variant-numeric: tabular-nums;">23. april · 08:15</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30919:798:13" style="width: 18px; height: 18px; border-radius: 50%; background: rgb(209, 248, 67); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 11px; height: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29839:774:11" style="display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; background: rgba(237, 245, 218, 0.04); opacity: 1;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30088:780:13" style="width: 30px; height: 30px; border-radius: 7px; background: rgba(237, 245, 218, 0.08); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1F843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="target" class="lucide lucide-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30420:787:13" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30460:788:15" style="font-size: 12px; font-weight: 600; color: rgb(255, 255, 255); text-decoration: rgba(255, 255, 255, 0.3);">Putting · 2–4 meter</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30711:793:15" style="font-size: 10px; color: rgb(154, 180, 168); margin-top: 2px; font-variant-numeric: tabular-nums;">23. april · 11:00</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30919:798:13" style="width: 18px; height: 18px; border-radius: 50%; background: transparent; border: 1.5px solid rgba(237, 245, 218, 0.25); display: inline-flex; align-items: center; justify-content: center;"></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29839:774:11" style="display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; background: rgba(237, 245, 218, 0.04); opacity: 1;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30088:780:13" style="width: 30px; height: 30px; border-radius: 7px; background: rgba(237, 245, 218, 0.08); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1F843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="video" class="lucide lucide-video"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30420:787:13" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30460:788:15" style="font-size: 12px; font-weight: 600; color: rgb(255, 255, 255); text-decoration: rgba(255, 255, 255, 0.3);">Coaching — Andreas</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30711:793:15" style="font-size: 10px; color: rgb(154, 180, 168); margin-top: 2px; font-variant-numeric: tabular-nums;">23. april · 14:30</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30919:798:13" style="width: 18px; height: 18px; border-radius: 50%; background: transparent; border: 1.5px solid rgba(237, 245, 218, 0.25); display: inline-flex; align-items: center; justify-content: center;"></span></div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:29839:774:11" style="display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 12px; background: rgba(237, 245, 218, 0.04); opacity: 1;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30088:780:13" style="width: 30px; height: 30px; border-radius: 7px; background: rgba(237, 245, 218, 0.08); display: inline-flex; align-items: center; justify-content: center;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1F843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="flag" class="lucide lucide-flag"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg></span></span><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30420:787:13" style="flex: 1 1 0%;"><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30460:788:15" style="font-size: 12px; font-weight: 600; color: rgb(255, 255, 255); text-decoration: rgba(255, 255, 255, 0.3);">9 hull · oppvarming</div><div data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30711:793:15" style="font-size: 10px; color: rgb(154, 180, 168); margin-top: 2px; font-variant-numeric: tabular-nums;">23. april · 16:00</div></div><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:30919:798:13" style="width: 18px; height: 18px; border-radius: 50%; background: transparent; border: 1.5px solid rgba(237, 245, 218, 0.25); display: inline-flex; align-items: center; justify-content: center;"></span></div></div><button data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/screens/playerhq-crextio.jsx:31406:810:7" style="margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: rgb(209, 248, 67); color: rgb(10, 31, 24); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-family: Inter, system-ui, -apple-system, sans-serif;"><span data-om-id="jsx:/https:/c6aac173-69e9-4dd7-8c93-89c8173aad12.claudeusercontent.com/v1/design/projects/c6aac173-69e9-4dd7-8c93-89c8173aad12/serve/shared/tokens.jsx:2348:75:10" style="display: inline-flex; align-items: center; justify-content: center; line-height: 0; width: 12px; height: 12px;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A1F18" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg></span>Start første økt</button></div></div></div></div></div></div>
+
+  <script type="text/babel" data-plugins="transform-react-jsx-source,om-src-id" data-filename="shared/tokens.jsx">
+/* Shared palette + typography helpers for all three screens.
+   Grounded in brand-package V2 + colors_and_type.css.
+   Uses a SINGLE name (akC) to avoid global-scope collisions. */
+
+const akC = {
+  // brand
+  primary: "#005840",
+  accent:  "#D1F843",
+
+  // dark surfaces
+  dark:          "#0A1F18",
+  darkCard:      "#0D2E23",
+  darkCardHover: "#133A2D",
+  darkBorder:    "#1a4a3a",
+  darkMuted:     "#7a9a8e",
+  darkMutedSoft: "#A5B2AD",
+
+  // light surfaces
+  light:         "#ECF0EF",
+  lightCard:     "#FFFFFF",
+  lightCardSoft: "#F5F8F7",
+  lightBorder:   "#e0e8e5",
+  lightText:     "#324D45",
+  lightMuted:    "#A5B2AD",
+  lightMutedSoft:"#5A6E66",
+
+  // semantic
+  success: "#2A7D5A",
+  warning: "#C48A32",
+  danger:  "#B84233",
+  ai:      "#AF52DE",
+  white:   "#FFFFFF",
+  yellow:  "#FACC15",
+};
+
+function akT(theme) {
+  return theme === "light"
+    ? {
+        bg: akC.light,
+        bgSoft: akC.lightCardSoft,
+        card: akC.lightCard,
+        border: akC.lightBorder,
+        text: akC.lightText,
+        muted: akC.lightMutedSoft,
+        mutedSoft: akC.lightMuted,
+        accentInk: akC.primary,   // "accent" color used on light bg where lime would be too bright
+      }
+    : {
+        bg: akC.dark,
+        bgSoft: "#081A13",
+        card: akC.darkCard,
+        border: akC.darkBorder,
+        text: akC.white,
+        muted: akC.darkMuted,
+        mutedSoft: akC.darkMutedSoft,
+        accentInk: akC.accent,
+      };
+}
+
+const akFont = { fontFamily: "'Inter', system-ui, -apple-system, sans-serif" };
+
+/* Lucide icon — renders the requested name via the CDN library.
+   Usage:  <LucideIcon name="target" size={14} color="#fff" />
+   Falls back to nothing if the icon is missing from the library. */
+function LucideIcon({ name, size = 16, color = "currentColor", strokeWidth = 2, style }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!window.lucide || !ref.current) return;
+    ref.current.innerHTML = "";
+    const span = document.createElement("span");
+    span.setAttribute("data-lucide", name);
+    ref.current.appendChild(span);
+    try { window.lucide.createIcons({ nameAttr: "data-lucide", attrs: { width: size, height: size, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", "stroke-linejoin": "round" } }); } catch(e) {}
+  }, [name, size, color, strokeWidth]);
+  return <span ref={ref} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 0, width: size, height: size, ...style }} />;
+}
+
+Object.assign(window, { akC, akT, akFont, LucideIcon });
+
+</script>
+  <script type="text/babel" data-plugins="transform-react-jsx-source,om-src-id" data-filename="screens/playerhq-crextio.jsx">
+/* PlayerHQ — Crextio-replika med lime bakgrunn, for AK Golf Group.
+   Strukturerer seg i samme 3-rad rytme som originalen:
+     - Hero: hilsen + KPI-pills + 3 stats
+     - Rad 1: profilkort · fremdrift · økt-tracker · form
+     - Rad 2: liste · kalenderstrimmel · dagens oppgaver (mørkt kort)                   */
+
+const phqC = {
+  limeBg:        "#E8F4A8",   // lysere enn brand #D1F843 — dominerende BG
+  limeBgSoft:    "#F1F8C6",   // enda lysere variant for gradient
+  limeAccent:    "#D1F843",   // brand-aksent (fyllt)
+  limeAccentDk:  "#B9E034",   // litt mørkere for hover/ring
+  card:          "#D8E49A",   // kort-bg — tintet/shadet lime-mose
+  cardSoft:      "#E2ECB2",   // litt lysere variant
+  cardBorder:    "rgba(10,31,24,0.14)",
+  ink:           "#0A1F18",   // primær tekst
+  inkSoft:       "#324D45",
+  muted:         "#6E8478",
+  dark:          "#0A1F18",
+  darkCard:      "#132B21",
+  darkInk:       "#EDF5DA",
+  darkMuted:     "#9AB4A8",
+  danger:        "#B84233",
+  success:       "#2A7D5A",
+};
+
+const phqFont = { fontFamily: "'Inter', system-ui, -apple-system, sans-serif" };
+
+function PlayerHQCrextio() {
+  return (
+    <div data-screen-label="01 PlayerHQ Crextio-replika" style={{
+      width: 1240,
+      background: `linear-gradient(180deg, ${phqC.limeBgSoft} 0%, ${phqC.limeBg} 45%, ${phqC.limeBgSoft} 100%)`,
+      borderRadius: 28,
+      padding: "22px 28px 28px",
+      boxShadow: "0 30px 80px rgba(10,31,24,0.18), 0 2px 0 rgba(255,255,255,0.6) inset",
+      color: phqC.ink,
+      ...phqFont,
+    }}>
+      <PhqTopNav />
+      <PhqHero />
+      <PhqRowOne />
+      <PhqRowTwo />
+    </div>
+  );
+}
+
+/* ─── Top navigation ──────────────────────────────────────── */
+function PhqTopNav() {
+  const links = ["Dashboard", "Runder", "Statistikk", "Trening", "Helse", "Kalender", "Coach"];
+  const active = "Dashboard";
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 18,
+      padding: "6px 0 26px",
+    }}>
+      {/* Logo-pill */}
+      <div style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "9px 22px", borderRadius: 999,
+        border: `1.5px solid ${phqC.ink}`,
+        background: "transparent",
+      }}>
+        <span style={{
+          width: 16, height: 16, borderRadius: 3,
+          background: phqC.ink, color: phqC.limeAccent,
+          display: "inline-flex", alignItems: "center", justifyContent: "center",
+          fontSize: 10, fontWeight: 800, letterSpacing: "-.05em",
+        }}>P</span>
+        <span style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-.02em", color: phqC.ink }}>
+          PlayerHQ
+        </span>
+      </div>
+
+      {/* Nav links (Dashboard is a dark pill) */}
+      <nav style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: 4 }}>
+        {links.map(l => {
+          const isActive = l === active;
+          return (
+            <button key={l} style={{
+              padding: isActive ? "9px 20px" : "9px 14px",
+              borderRadius: 999, border: "none", cursor: "pointer",
+              background: isActive ? phqC.ink : "transparent",
+              color: isActive ? "#fff" : phqC.ink,
+              fontSize: 13, fontWeight: isActive ? 600 : 500,
+              letterSpacing: "-.005em", ...phqFont,
+            }}>{l}</button>
+          );
+        })}
+      </nav>
+
+      {/* Right cluster */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <button style={phqPillBtn()}>
+          <LucideIcon name="settings" size={13} color={phqC.ink} />
+          <span style={{ fontSize: 12, fontWeight: 500 }}>Innstillinger</span>
+        </button>
+        <button style={phqIconBtn()}>
+          <LucideIcon name="bell" size={14} color={phqC.ink} />
+          <span style={{
+            position: "absolute", top: 6, right: 6, width: 6, height: 6,
+            background: phqC.danger, borderRadius: "50%",
+            border: `1.5px solid ${phqC.limeBg}`,
+          }} />
+        </button>
+        <button style={phqIconBtn()}>
+          <LucideIcon name="user" size={14} color={phqC.ink} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function phqPillBtn() {
+  return {
+    display: "inline-flex", alignItems: "center", gap: 6,
+    padding: "9px 14px", borderRadius: 999,
+    background: "transparent", border: `1px solid ${phqC.ink}`,
+    color: phqC.ink, cursor: "pointer", ...phqFont,
+  };
+}
+function phqIconBtn() {
+  return {
+    position: "relative",
+    width: 36, height: 36, borderRadius: "50%",
+    background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+    display: "inline-flex", alignItems: "center", justifyContent: "center",
+    cursor: "pointer",
+  };
+}
+
+/* ─── Hero (welcome + KPI row + right stats) ──────────────── */
+function PhqHero() {
+  return (
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "1fr auto",
+      alignItems: "end", gap: 40, paddingBottom: 22,
+    }}>
+      {/* Left — headline + KPI pills */}
+      <div>
+        <h1 style={{
+          fontSize: 56, fontWeight: 500, letterSpacing: "-.035em",
+          margin: "0 0 18px", color: phqC.ink, lineHeight: 1.02,
+        }}>Velkommen tilbake, <em style={{ fontStyle: "italic", fontWeight: 500 }}>Magnus</em></h1>
+
+        {/* Progress pills row — fairways / GIR / scramble / scoring */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <PhqKpiPill label="Fairways"       value="58%" tone="dark"    size={0.58} />
+          <PhqKpiPill label="GIR"            value="52%" tone="accent"  size={0.52} />
+          <PhqKpiPill label="Scrambling"     value="41%" tone="hatch"   size={0.41} />
+          <PhqKpiPill label="Scoring avg"    value="74.2" tone="outline" size={0.74} wide />
+        </div>
+      </div>
+
+      {/* Right — 3 headline stats */}
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 30, paddingBottom: 4 }}>
+        <PhqHeadlineStat icon="flag" value="14" label="Runder" />
+        <PhqHeadlineStat icon="dumbbell" value="56" label="Økter" />
+        <PhqHeadlineStat icon="trending-down" value="−2.4" label="HCP ↓" accent />
+      </div>
+    </div>
+  );
+}
+
+function PhqKpiPill({ label, value, tone, size, wide }) {
+  // "tone" controls the visual language: dark pill, accent pill, hatched pill, outline-with-bar
+  const baseW = wide ? 260 : 170;
+
+  if (tone === "dark") {
+    return (
+      <div style={{
+        display: "flex", flexDirection: "column", gap: 2,
+        padding: "8px 16px", borderRadius: 999,
+        background: phqC.ink, color: "#fff",
+        minWidth: baseW,
+      }}>
+        <span style={{ fontSize: 10, fontWeight: 500, opacity: 0.65, textTransform: "lowercase", letterSpacing: "-.005em" }}>{label}</span>
+        <span style={{ fontSize: 14, fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>{value}</span>
+      </div>
+    );
+  }
+
+  if (tone === "accent") {
+    return (
+      <div style={{
+        display: "flex", flexDirection: "column", gap: 2,
+        padding: "8px 16px", borderRadius: 999,
+        background: phqC.limeAccent, color: phqC.ink,
+        minWidth: baseW,
+      }}>
+        <span style={{ fontSize: 10, fontWeight: 500, opacity: 0.65, letterSpacing: "-.005em" }}>{label}</span>
+        <span style={{ fontSize: 14, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{value}</span>
+      </div>
+    );
+  }
+
+  if (tone === "hatch") {
+    return (
+      <div style={{
+        position: "relative", display: "flex", flexDirection: "column", gap: 2,
+        padding: "8px 16px", borderRadius: 999,
+        background: `repeating-linear-gradient(135deg, ${phqC.ink}22 0 1.5px, transparent 1.5px 9px), ${phqC.cardSoft}`,
+        minWidth: baseW, overflow: "hidden",
+      }}>
+        <span style={{ fontSize: 10, fontWeight: 500, color: phqC.inkSoft, letterSpacing: "-.005em" }}>{label}</span>
+        <span style={{ fontSize: 14, fontWeight: 600, color: phqC.ink, fontVariantNumeric: "tabular-nums" }}>{value}</span>
+      </div>
+    );
+  }
+
+  // outline with inner fill
+  return (
+    <div style={{
+      position: "relative", display: "flex", flexDirection: "column", gap: 2,
+      padding: "8px 16px", borderRadius: 999,
+      background: phqC.cardSoft,
+      border: `1px solid ${phqC.cardBorder}`,
+      minWidth: baseW, overflow: "hidden",
+    }}>
+      <span style={{ fontSize: 10, fontWeight: 500, color: phqC.inkSoft, letterSpacing: "-.005em" }}>{label}</span>
+      <span style={{ fontSize: 14, fontWeight: 600, color: phqC.ink, fontVariantNumeric: "tabular-nums" }}>{value}</span>
+    </div>
+  );
+}
+
+function PhqHeadlineStat({ icon, value, label, accent }) {
+  return (
+    <div style={{
+      display: "flex", alignItems: "baseline", gap: 10,
+    }}>
+      <span style={{
+        width: 28, height: 28, borderRadius: "50%",
+        background: accent ? phqC.limeAccent : "rgba(10,31,24,0.08)",
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        alignSelf: "flex-end", marginBottom: 10,
+      }}>
+        <LucideIcon name={icon} size={13} color={phqC.ink} />
+      </span>
+      <div>
+        <div style={{
+          fontSize: 46, fontWeight: 500, letterSpacing: "-.03em",
+          color: phqC.ink, lineHeight: 1, fontVariantNumeric: "tabular-nums",
+        }}>{value}</div>
+        <div style={{
+          fontSize: 11, color: phqC.inkSoft, marginTop: 2,
+          fontWeight: 500, letterSpacing: "-.005em",
+        }}>{label}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Row 1: profile · progress · time tracker · onboarding ─ */
+function PhqRowOne() {
+  return (
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "1fr 1.2fr 1fr 1fr",
+      gap: 14, paddingBottom: 14,
+    }}>
+      <PhqProfileCard />
+      <PhqProgressCard />
+      <PhqTimeTrackerCard />
+      <PhqFormCard />
+    </div>
+  );
+}
+
+function PhqProfileCard() {
+  return (
+    <div style={{
+      position: "relative",
+      height: 320, borderRadius: 20, overflow: "hidden",
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+    }}>
+      {/* Portrait fills the card */}
+      <img src={window.__resources?.profileMagnus || "assets/profile-magnus.jpeg"}
+        alt="Magnus Kjelsrud"
+        style={{
+          position: "absolute", inset: 0,
+          width: "100%", height: "100%",
+          objectFit: "cover",
+          objectPosition: "50% 18%",
+          filter: "saturate(1.05) contrast(1.02)",
+        }}
+      />
+      {/* Bottom gradient */}
+      <div style={{
+        position: "absolute", left: 0, right: 0, bottom: 0, height: "52%",
+        background: "linear-gradient(180deg, rgba(10,31,24,0) 0%, rgba(10,31,24,0.55) 55%, rgba(10,31,24,0.85) 100%)",
+      }} />
+      {/* Bottom content — name + HCP pill */}
+      <div style={{
+        position: "absolute", left: 16, right: 16, bottom: 16,
+        display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+        gap: 10,
+      }}>
+        <div>
+          <div style={{
+            fontSize: 18, fontWeight: 600, color: "#fff",
+            letterSpacing: "-.02em", lineHeight: 1.1,
+          }}>Magnus Kjelsrud</div>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.72)", marginTop: 3 }}>
+            Pro · AK Golf Group
+          </div>
+        </div>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 6,
+          padding: "6px 12px", borderRadius: 999,
+          background: "rgba(255,255,255,0.92)", color: phqC.ink,
+          fontSize: 12, fontWeight: 600,
+        }}>
+          <span style={{ color: phqC.muted, fontSize: 10, fontWeight: 500 }}>HCP</span>
+          +1.2
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PhqProgressCard() {
+  // Bar chart: avg slag per runde per dag (S M T O T F L)
+  const bars = [
+    { d: "S", v: 0.50 },
+    { d: "M", v: 0.72 },
+    { d: "T", v: 0.68 },
+    { d: "O", v: 0.44 },
+    { d: "T", v: 0.81 },
+    { d: "F", v: 0.95, peak: true },
+    { d: "L", v: 0.60 },
+  ];
+  return (
+    <div style={{
+      height: 320, borderRadius: 20, padding: 22,
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+      display: "flex", flexDirection: "column",
+    }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: phqC.ink, letterSpacing: "-.01em" }}>
+            Fremdrift
+          </div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 14 }}>
+            <span style={{
+              fontSize: 46, fontWeight: 500, letterSpacing: "-.03em",
+              color: phqC.ink, lineHeight: 1, fontVariantNumeric: "tabular-nums",
+            }}>6.1<span style={{ fontSize: 28, fontWeight: 500, letterSpacing: "-.02em" }}>t</span></span>
+            <span style={{ fontSize: 11, color: phqC.inkSoft, lineHeight: 1.25, paddingBottom: 3 }}>
+              Treningstid<br/>denne uken
+            </span>
+          </div>
+        </div>
+        <button style={{
+          width: 30, height: 30, borderRadius: "50%",
+          background: "transparent", border: `1px solid ${phqC.cardBorder}`,
+          display: "inline-flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer",
+        }}>
+          <LucideIcon name="arrow-up-right" size={13} color={phqC.ink} />
+        </button>
+      </div>
+
+      {/* Bar chart */}
+      <div style={{
+        flex: 1, display: "grid",
+        gridTemplateColumns: `repeat(${bars.length}, 1fr)`,
+        alignItems: "end", gap: 10, paddingTop: 18, position: "relative",
+      }}>
+        {bars.map((b, i) => (
+          <div key={i} style={{
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+            position: "relative",
+          }}>
+            {b.peak && (
+              <span style={{
+                position: "absolute", top: -4, transform: "translateY(-100%)",
+                display: "inline-flex", alignItems: "center", gap: 4,
+                padding: "4px 9px", borderRadius: 999,
+                background: phqC.limeAccent, color: phqC.ink,
+                fontSize: 10, fontWeight: 600, whiteSpace: "nowrap",
+              }}>
+                <LucideIcon name="flame" size={10} color={phqC.ink} />
+                1t 35m
+              </span>
+            )}
+            <div style={{
+              width: b.peak ? 20 : 6,
+              height: `${b.v * 140}px`,
+              background: b.peak ? phqC.limeAccent : phqC.ink,
+              borderRadius: 99,
+            }} />
+            <span style={{ fontSize: 10, color: phqC.muted, fontWeight: 500 }}>{b.d}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PhqTimeTrackerCard() {
+  // Ring: 02:35 trening fullført av 04:00 plan
+  const total = 360; // circumference
+  const pct = 0.64;
+  return (
+    <div style={{
+      height: 320, borderRadius: 20, padding: 22,
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+      display: "flex", flexDirection: "column",
+    }}>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 15, fontWeight: 600, color: phqC.ink, letterSpacing: "-.01em" }}>
+          Økt-tracker
+        </div>
+        <button style={{
+          width: 30, height: 30, borderRadius: "50%",
+          background: "transparent", border: `1px solid ${phqC.cardBorder}`,
+          display: "inline-flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer",
+        }}>
+          <LucideIcon name="arrow-up-right" size={13} color={phqC.ink} />
+        </button>
+      </div>
+
+      {/* Ring + center */}
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+        <svg width={170} height={170} viewBox="0 0 170 170" style={{ display: "block" }}>
+          {/* Tick marks */}
+          {Array.from({ length: 60 }).map((_, i) => {
+            const a = (i / 60) * Math.PI * 2 - Math.PI / 2;
+            const r1 = 78, r2 = i % 5 === 0 ? 68 : 72;
+            const x1 = 85 + Math.cos(a) * r1, y1 = 85 + Math.sin(a) * r1;
+            const x2 = 85 + Math.cos(a) * r2, y2 = 85 + Math.sin(a) * r2;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke={phqC.ink} strokeOpacity={i % 5 === 0 ? 0.55 : 0.22}
+              strokeWidth={i % 5 === 0 ? 1.4 : 1} strokeLinecap="round" />;
+          })}
+          {/* Arc — lime fill for completed portion */}
+          <circle cx={85} cy={85} r={60}
+            fill="none" stroke={phqC.limeAccent} strokeWidth={14}
+            strokeDasharray={`${2*Math.PI*60*pct} ${2*Math.PI*60}`}
+            strokeDashoffset={2*Math.PI*60*0.25}
+            strokeLinecap="round"
+            transform="rotate(-90 85 85)"
+          />
+          {/* Remaining outline */}
+          <circle cx={85} cy={85} r={60}
+            fill="none" stroke={phqC.ink} strokeOpacity={0.12} strokeWidth={14}
+            strokeDasharray={`${2*Math.PI*60*(1-pct)} ${2*Math.PI*60}`}
+            strokeDashoffset={-2*Math.PI*60*pct + 2*Math.PI*60*0.25}
+          />
+        </svg>
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{
+            fontSize: 32, fontWeight: 500, letterSpacing: "-.03em",
+            color: phqC.ink, fontVariantNumeric: "tabular-nums", lineHeight: 1,
+          }}>02:35</div>
+          <div style={{ fontSize: 10, color: phqC.inkSoft, marginTop: 4 }}>Dagens trening</div>
+        </div>
+      </div>
+
+      {/* Play bar */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button style={{
+            width: 28, height: 28, borderRadius: "50%",
+            background: "transparent", border: `1px solid ${phqC.cardBorder}`,
+            display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+          }}>
+            <LucideIcon name="play" size={12} color={phqC.ink} />
+          </button>
+          <button style={{
+            width: 28, height: 28, borderRadius: "50%",
+            background: "transparent", border: `1px solid ${phqC.cardBorder}`,
+            display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+          }}>
+            <LucideIcon name="pause" size={12} color={phqC.ink} />
+          </button>
+        </div>
+        <button style={{
+          width: 28, height: 28, borderRadius: "50%",
+          background: phqC.ink, border: "none",
+          display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+        }}>
+          <LucideIcon name="square" size={11} color="#fff" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PhqFormCard() {
+  // "Formsjekk 68%" + 3 progress bars: Fysisk / Mental / Teknisk
+  const bars = [
+    { label: "Fysisk",   pct: 0.82, tone: "accent" },
+    { label: "Mental",   pct: 0.64, tone: "dark" },
+    { label: "Teknisk",  pct: 0.41, tone: "muted" },
+  ];
+  return (
+    <div style={{
+      height: 320, borderRadius: 20, padding: 22,
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+      display: "flex", flexDirection: "column",
+    }}>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 15, fontWeight: 600, color: phqC.ink, letterSpacing: "-.01em" }}>
+          Formsjekk
+        </div>
+        <div style={{
+          fontSize: 24, fontWeight: 500, letterSpacing: "-.02em",
+          color: phqC.ink, fontVariantNumeric: "tabular-nums",
+        }}>68%</div>
+      </div>
+
+      {/* Horizontal bar meter (proportion) — mirrors "task/pending/done" pattern */}
+      <div style={{ display: "flex", gap: 3, alignItems: "center", marginTop: 18, marginBottom: 16 }}>
+        <div style={{
+          height: 26, borderRadius: 999,
+          background: phqC.limeAccent, flex: 82,
+          position: "relative",
+        }}>
+          <span style={{
+            position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)",
+            fontSize: 10, fontWeight: 600, color: phqC.ink,
+          }}>82%</span>
+        </div>
+        <div style={{ height: 26, borderRadius: 999, background: phqC.ink, flex: 64 }} />
+        <div style={{ height: 26, borderRadius: 999, background: "rgba(10,31,24,0.15)", flex: 41 }} />
+      </div>
+
+      {/* Legend rows with sparkline-style indicator */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
+        {bars.map((b, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{
+              width: 10, height: 10, borderRadius: 3,
+              background: b.tone === "accent" ? phqC.limeAccent
+                        : b.tone === "dark"    ? phqC.ink
+                        : "rgba(10,31,24,0.15)",
+            }} />
+            <span style={{ fontSize: 12, color: phqC.ink, flex: 1, fontWeight: 500 }}>{b.label}</span>
+            <span style={{ fontSize: 11, color: phqC.inkSoft, fontVariantNumeric: "tabular-nums" }}>
+              {Math.round(b.pct * 100)}%
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{
+        marginTop: "auto", paddingTop: 12,
+        borderTop: `1px dashed ${phqC.cardBorder}`,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        fontSize: 11, color: phqC.inkSoft,
+      }}>
+        <span>Siste vurdering</span>
+        <span>21. april · +4 pts</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Row 2: equipment/list · calendar · today's tasks ──── */
+function PhqRowTwo() {
+  return (
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "1fr 1.6fr 1.1fr",
+      gap: 14,
+    }}>
+      <PhqListCard />
+      <PhqCalendarCard />
+      <PhqTasksCard />
+    </div>
+  );
+}
+
+function PhqListCard() {
+  // Accordion-style list like Crextio's "Pension / Devices / Compensation"
+  const groups = [
+    { label: "Statistikk-sammendrag",  open: false },
+    { label: "Utstyr", open: true, items: [
+      { icon: "flag",    name: "Driver", detail: "Ping G430 LST" },
+      { icon: "target",  name: "Putter",  detail: "Scotty Cameron Phantom X" },
+    ]},
+    { label: "Mål & milepæler", open: false },
+    { label: "Helsestatus",      open: false },
+  ];
+  return (
+    <div style={{
+      borderRadius: 20, padding: "10px 0",
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+      overflow: "hidden",
+    }}>
+      {groups.map((g, i) => (
+        <div key={i} style={{
+          borderBottom: i < groups.length - 1 ? `1px dashed ${phqC.cardBorder}` : "none",
+        }}>
+          <div style={{
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            padding: "14px 22px", cursor: "pointer",
+          }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: phqC.ink }}>{g.label}</span>
+            <LucideIcon name={g.open ? "chevron-up" : "chevron-down"} size={14} color={phqC.inkSoft} />
+          </div>
+          {g.open && g.items && (
+            <div style={{ padding: "0 22px 14px" }}>
+              {g.items.map((it, k) => (
+                <div key={k} style={{
+                  display: "flex", alignItems: "center", gap: 12, padding: "6px 0",
+                }}>
+                  <span style={{
+                    width: 34, height: 34, borderRadius: 8,
+                    background: phqC.limeBg,
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <LucideIcon name={it.icon} size={15} color={phqC.ink} />
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: phqC.ink }}>{it.name}</div>
+                    <div style={{ fontSize: 10, color: phqC.muted, marginTop: 1 }}>{it.detail}</div>
+                  </div>
+                  <LucideIcon name="more-vertical" size={13} color={phqC.muted} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PhqCalendarCard() {
+  // Crextio-style week strip (Mon–Sat) with two event chips
+  const days = [
+    { d: "Man", n: 21 },
+    { d: "Tir", n: 22 },
+    { d: "Ons", n: 23, active: true },
+    { d: "Tor", n: 24 },
+    { d: "Fre", n: 25 },
+    { d: "Lør", n: 26 },
+  ];
+  const hours = ["08:00", "09:00", "10:00", "11:00", "12:00"];
+
+  return (
+    <div style={{
+      borderRadius: 20, padding: "16px 22px",
+      background: phqC.card, border: `1px solid ${phqC.cardBorder}`,
+      display: "flex", flexDirection: "column", gap: 10,
+    }}>
+      {/* Header: prev-month · current · next-month */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={{ fontSize: 11, color: phqC.muted }}>Mars</span>
+        <span style={{ fontSize: 15, fontWeight: 600, color: phqC.ink, letterSpacing: "-.01em" }}>
+          April 2026
+        </span>
+        <span style={{ fontSize: 11, color: phqC.muted }}>Mai</span>
+      </div>
+
+      {/* Day columns header */}
+      <div style={{
+        display: "grid", gridTemplateColumns: "56px repeat(6, 1fr)",
+        alignItems: "center", gap: 6, padding: "2px 0 6px",
+      }}>
+        <div />
+        {days.map((d, i) => (
+          <div key={i} style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 10, color: phqC.muted, fontWeight: 500 }}>{d.d}</div>
+            <div style={{
+              fontSize: 15, fontWeight: 600,
+              color: d.active ? phqC.ink : phqC.inkSoft,
+              marginTop: 2,
+            }}>{d.n}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Timeline rows */}
+      <div style={{ position: "relative", minHeight: 144 }}>
+        {hours.map((h, i) => (
+          <div key={h} style={{
+            display: "grid", gridTemplateColumns: "56px 1fr",
+            alignItems: "center", height: 28,
+            borderTop: i === 0 ? "none" : `1px dashed ${phqC.cardBorder}`,
+          }}>
+            <span style={{ fontSize: 10, color: phqC.muted }}>{h}</span>
+            <div />
+          </div>
+        ))}
+
+        {/* Event 1: 09:15 — Teamsync (dark pill) */}
+        <div style={{
+          position: "absolute", top: 32, left: 62, width: "55%",
+          display: "flex", alignItems: "center", gap: 10,
+          padding: "7px 12px", borderRadius: 999,
+          background: phqC.ink, color: "#fff",
+        }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 11, fontWeight: 600 }}>Coaching — Andreas</div>
+            <div style={{ fontSize: 9, opacity: 0.65 }}>Videoanalyse, range</div>
+          </div>
+          <div style={{ display: "flex" }}>
+            {["#E8F4A8", "#AFE3CC", "#F5D28F"].map((c, i) => (
+              <span key={i} style={{
+                width: 18, height: 18, borderRadius: "50%",
+                background: c, border: `1.5px solid ${phqC.ink}`,
+                marginLeft: i === 0 ? 0 : -6,
+              }} />
+            ))}
+          </div>
+        </div>
+
+        {/* Event 2: 10:30 — Range session (lime pill) */}
+        <div style={{
+          position: "absolute", top: 92, left: "42%", width: "48%",
+          display: "flex", alignItems: "center", gap: 10,
+          padding: "7px 12px", borderRadius: 999,
+          background: phqC.limeAccent, color: phqC.ink,
+        }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 11, fontWeight: 700 }}>Range · driver-konsistens</div>
+            <div style={{ fontSize: 9, opacity: 0.75 }}>75 min · Trackman</div>
+          </div>
+          <div style={{ display: "flex" }}>
+            {["#0A1F18", "#324D45"].map((c, i) => (
+              <span key={i} style={{
+                width: 18, height: 18, borderRadius: "50%",
+                background: c, border: `1.5px solid ${phqC.limeAccent}`,
+                marginLeft: i === 0 ? 0 : -6,
+                color: "#fff", fontSize: 8, fontWeight: 700,
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+              }}>{i === 0 ? "M" : "A"}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PhqTasksCard() {
+  // Dark "Onboarding"-style card — shows today's training tasks.
+  const tasks = [
+    { icon: "flame",        label: "Oppvarming",          time: "08:00", done: true  },
+    { icon: "dumbbell",     label: "Styrke · underkropp", time: "08:15", done: true  },
+    { icon: "target",       label: "Putting · 2–4 meter", time: "11:00", done: false },
+    { icon: "video",        label: "Coaching — Andreas",  time: "14:30", done: false },
+    { icon: "flag",         label: "9 hull · oppvarming", time: "16:00", done: false },
+  ];
+  const doneCount = tasks.filter(t => t.done).length;
+
+  return (
+    <div style={{
+      borderRadius: 20, padding: 22,
+      background: phqC.darkCard, color: phqC.darkInk,
+      display: "flex", flexDirection: "column",
+      boxShadow: "inset 0 0 0 1px rgba(237,245,218,0.04)",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+        <div style={{ fontSize: 15, fontWeight: 600, color: "#fff", letterSpacing: "-.01em" }}>
+          Dagens plan
+        </div>
+        <div style={{
+          fontSize: 13, fontWeight: 600, color: "#fff",
+          fontVariantNumeric: "tabular-nums",
+        }}>{doneCount}/{tasks.length}</div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {tasks.map((t, i) => (
+          <div key={i} style={{
+            display: "flex", alignItems: "center", gap: 12,
+            padding: "9px 10px", borderRadius: 12,
+            background: "rgba(237,245,218,0.04)",
+            opacity: t.done ? 0.55 : 1,
+          }}>
+            <span style={{
+              width: 30, height: 30, borderRadius: 7,
+              background: "rgba(237,245,218,0.08)",
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <LucideIcon name={t.icon} size={14} color={phqC.limeAccent} />
+            </span>
+            <div style={{ flex: 1 }}>
+              <div style={{
+                fontSize: 12, fontWeight: 600, color: "#fff",
+                textDecoration: t.done ? "line-through" : "none",
+                textDecorationColor: "rgba(255,255,255,0.3)",
+              }}>{t.label}</div>
+              <div style={{
+                fontSize: 10, color: phqC.darkMuted, marginTop: 2,
+                fontVariantNumeric: "tabular-nums",
+              }}>23. april · {t.time}</div>
+            </div>
+            <span style={{
+              width: 18, height: 18, borderRadius: "50%",
+              background: t.done ? phqC.limeAccent : "transparent",
+              border: t.done ? "none" : "1.5px solid rgba(237,245,218,0.25)",
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+            }}>
+              {t.done && <LucideIcon name="check" size={11} color={phqC.ink} strokeWidth={3} />}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <button style={{
+        marginTop: 12, padding: "10px 12px", borderRadius: 12,
+        background: phqC.limeAccent, color: phqC.ink, border: "none",
+        fontSize: 12, fontWeight: 600, cursor: "pointer",
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+        ...phqFont,
+      }}>
+        <LucideIcon name="play" size={12} color={phqC.ink} strokeWidth={2.5} />
+        Start første økt
+      </button>
+    </div>
+  );
+}
+
+Object.assign(window, { PlayerHQCrextio });
+
+</script>
+
+  <script type="text/babel" data-plugins="transform-react-jsx-source,om-src-id" data-filename="inline-2">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    function ScaledHost() {
+      const wrapRef = React.useRef(null);
+      const [h, setH] = React.useState(null);
+      React.useLayoutEffect(() => {
+        const el = wrapRef.current; if (!el) return;
+        const update = () => {
+          const t = el.firstChild;
+          if (!t) return;
+          const r = t.getBoundingClientRect();
+          setH(r.height + 56);
+        };
+        update();
+        const ro = new ResizeObserver(update);
+        if (el.firstChild) ro.observe(el.firstChild);
+        window.addEventListener("resize", update);
+        return () => { ro.disconnect(); window.removeEventListener("resize", update); };
+      }, []);
+      return (
+        <div ref={wrapRef} style={{ height: h || "auto", display: "flex", justifyContent: "center" }}>
+          <div className="phq-scale"><PlayerHQCrextio /></div>
+        </div>
+      );
+    }
+    root.render(<ScaledHost />);
+  </script>
+
+
+<script type="application/json" id="__om_srcmap">{"gen":"32dfb39b","entries":[{"id":"32dfb39b:0","tag":"html","openStart":16,"attrEnd":31,"openEnd":32,"closeEnd":2702,"textRuns":[[32,33],[1503,1504],[2694,2695]],"parentId":null,"childIds":["32dfb39b:1","32dfb39b:5"]},{"id":"32dfb39b:1","tag":"head","openStart":33,"attrEnd":38,"openEnd":39,"closeEnd":1503,"textRuns":[[39,42],[64,67],[108,111],[185,188],[238,241],[835,838],[917,920],[1107,1110],[1305,1308],[1495,1496]],"parentId":"32dfb39b:0","childIds":["32dfb39b:2","32dfb39b:3","32dfb39b:4"]},{"id":"32dfb39b:2","tag":"meta","openStart":42,"attrEnd":63,"openEnd":64,"closeEnd":64,"textRuns":[],"parentId":"32dfb39b:1","childIds":[]},{"id":"32dfb39b:3","tag":"link","openStart":111,"attrEnd":184,"openEnd":185,"closeEnd":185,"textRuns":[],"parentId":"32dfb39b:1","childIds":[]},{"id":"32dfb39b:4","tag":"link","openStart":188,"attrEnd":237,"openEnd":238,"closeEnd":238,"textRuns":[],"parentId":"32dfb39b:1","childIds":[]},{"id":"32dfb39b:5","tag":"body","openStart":1504,"attrEnd":1509,"openEnd":1510,"closeEnd":2694,"textRuns":[[1510,1513],[1534,1538],[1597,1600],[1670,1674],[2686,2687]],"parentId":"32dfb39b:0","childIds":["32dfb39b:6"]},{"id":"32dfb39b:6","tag":"div","openStart":1513,"attrEnd":1527,"openEnd":1528,"closeEnd":1534,"textRuns":[],"parentId":"32dfb39b:5","childIds":[]}]}</script></body></html>

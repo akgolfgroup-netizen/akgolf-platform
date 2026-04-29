@@ -1,7 +1,7 @@
 // Skill: generer-treningsplan-ai
 // Bygger på MCP regelbasert plan, men beriker med AI-rationale + tilpasninger
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 import { generateTrainingPlan, calculateUSI, getMcpResource } from "@/lib/mcp-client";
 
 const SYSTEM_PROMPT = `

@@ -102,6 +102,12 @@ export async function getPortalUser(): Promise<PortalUser | null> {
       return null;
     }
 
+    // Fire-and-forget: trigger onboarding-agent for ny bruker.
+    // Sender velkomst-notifikasjon + mental-baseline-link.
+    void import("@/lib/portal/agents/onboarding")
+      .then(({ runOnboarding }) => runOnboarding(newUser.id))
+      .catch((err) => console.error("[getPortalUser] onboarding agent failed", err));
+
     return {
       id: newUser.id,
       name: newUser.name,

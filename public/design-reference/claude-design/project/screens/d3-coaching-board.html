@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D3 — Coaching Board · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .kanban { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: flex-start; }
+  .kcol { background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 14px; padding: 12px; min-height: 600px; }
+  .kcol-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 4px; }
+  .kcol-head .ttl { font-size: 12px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .kcol-head .ttl .pill { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 1px 6px; border-radius: 9px; letter-spacing: 0.06em; }
+  .kcol.preparation .pill { background: rgba(0,122,255,0.12); color: #6FB3FF; }
+  .kcol.active .pill { background: rgba(209,248,67,0.18); color: var(--akgolf-accent); }
+  .kcol.followup .pill { background: rgba(196,138,50,0.18); color: #E8B967; }
+  .kcol.done .pill { background: rgba(42,125,90,0.16); color: #6FCBA1; }
+  .kcol-head .add { color: rgba(255,255,255,0.5); cursor: pointer; }
+  .kcol-head .add:hover { color: #fff; }
+  .kcol-head .add [data-lucide] { width: 16px; height: 16px; }
+
+  .kcards { display: flex; flex-direction: column; gap: 10px; }
+  .kcard { background: var(--akgolf-card-dark, #0D2E23); border: 1px solid var(--akgolf-line-dark, #1a4a3a); border-radius: 10px; padding: 12px; cursor: grab; transition: all 0.12s; box-shadow: 0 1px 2px rgba(255,255,255,0.04); }
+  .kcard:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.06); }
+  .kcard .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .kcard .top .student { display: flex; align-items: center; gap: 8px; }
+  .kcard .name { font-size: 12px; font-weight: 600; color: #fff; }
+  .kcard .when { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; }
+  .kcard .focus { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .kcard .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .kcard .progress { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+  .kcard .progress > div { height: 100%; background: var(--akgolf-accent); border-radius: 2px; }
+  .kcard .footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 10px; color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; }
+  .kcard .footer [data-lucide] { width: 11px; height: 11px; }
+  .kcard .footer .icons { display: flex; gap: 8px; align-items: center; }
+  .kcard.live { border-color: rgba(209,248,67,0.4); box-shadow: 0 0 0 3px rgba(209,248,67,0.10), 0 4px 12px rgba(255,255,255,0.06); }
+  .kcard.urgent { border-left: 3px solid #B84233; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active" title="Board"><i data-lucide="kanban"></i></button>
+    <button class="chq-rail-btn" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn" title="Hjelp"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item active"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title">Coaching Board</div>
+      <div class="chq-top-meta tabular">28 økter denne uken</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk spillere, økter…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">Workflow · Drag og slipp</div>
+        <h1 class="chq-h1" style="margin-top: 8px;">Coaching Board</h1>
+        <p>Hver økt går gjennom 4 faser. Dra kort mellom kolonner for å oppdatere status.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn ghost"><i data-lucide="filter"></i> Anders + Markus</button>
+        <button class="chq-btn ghost"><i data-lucide="layers"></i> Denne uken</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i> Ny økt</button>
+      </div>
+    </div>
+
+    <div class="kanban">
+
+      <!-- Forberedelse -->
+      <div class="kcol preparation">
+        <div class="kcol-head">
+          <div class="ttl"><i data-lucide="clipboard-list" style="width:14px;height:14px;"></i> Forberedelse <span class="pill">6</span></div>
+          <span class="add"><i data-lucide="plus"></i></span>
+        </div>
+        <div class="kcards">
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">SH</div><div class="name">Sofie Holm</div></div><div class="when">TIR 14:00</div></div>
+            <div class="focus">Driver-tempo · forberede TrackMan-protokoll basert på siste 3 runder</div>
+            <div class="progress"><div style="width: 60%"></div></div>
+            <div class="footer"><span>3/5 steg</span><div class="icons"><i data-lucide="paperclip"></i> 2 <i data-lucide="message-square"></i> 1</div></div>
+          </div>
+          <div class="kcard urgent">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#E8B967">EL</div><div class="name">Emma Lien</div></div><div class="when">TIR 17:00</div></div>
+            <div class="focus">Fullswing-eval · ikke logget runder på 14d. Trenger re-engagement-plan først</div>
+            <div class="progress"><div style="width: 20%"></div></div>
+            <div class="footer"><span>1/5 · Forfaller 16:30</span><div class="icons"><i data-lucide="alert-triangle"></i></div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FB3FF">LB</div><div class="name">Lars Berg</div></div><div class="when">ONS 09:00</div></div>
+            <div class="focus">Iron-tempo · etter forrige økt. Klubbe-distance review</div>
+            <div class="progress"><div style="width: 40%"></div></div>
+            <div class="footer"><span>2/5 steg</span><div class="icons"><i data-lucide="paperclip"></i> 1</div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#C896E8">CR</div><div class="name">Camilla R.</div></div><div class="when">ONS 13:00</div></div>
+            <div class="focus">Putting-stroke · drift høyre — rotasjons-test før økt</div>
+            <div class="progress"><div style="width: 80%"></div></div>
+            <div class="footer"><span>4/5 steg</span><div class="icons"><i data-lucide="paperclip"></i> 3 <i data-lucide="message-square"></i> 2</div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#F49283">HV</div><div class="name">Henrik Vold</div></div><div class="when">MAN 15:30</div></div>
+            <div class="focus">Banecoaching · 9 hull · course management og strategi</div>
+            <div class="progress"><div style="width: 100%"></div></div>
+            <div class="footer"><span>5/5 ✓ Klar</span><div class="icons"><i data-lucide="check-circle"></i></div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:var(--akgolf-accent)">JG</div><div class="name">Junior Group A</div></div><div class="when">MAN 18:30</div></div>
+            <div class="focus">Kveldstrening · 8 stk · ferdighetsrotasjon 4 stasjoner</div>
+            <div class="progress"><div style="width: 70%"></div></div>
+            <div class="footer"><span>Markus assist</span><div class="icons"><i data-lucide="users"></i> 8</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pågår -->
+      <div class="kcol active">
+        <div class="kcol-head">
+          <div class="ttl"><i data-lucide="zap" style="width:14px;height:14px;"></i> Pågår <span class="pill">1</span></div>
+          <span class="add"><i data-lucide="plus"></i></span>
+        </div>
+        <div class="kcards">
+          <div class="kcard live">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:var(--akgolf-accent)">ME</div><div class="name">Markus Eide</div></div><div class="when">14:00 NÅ</div></div>
+            <div class="focus">Putting · lag-styring · TrackMan logger live · 32 min igjen</div>
+            <div class="progress"><div style="width: 47%"></div></div>
+            <div class="footer"><span>Putting Green · Live</span><div class="icons"><i data-lucide="circle-dot" style="color: var(--akgolf-accent)"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Etterarbeid -->
+      <div class="kcol followup">
+        <div class="kcol-head">
+          <div class="ttl"><i data-lucide="edit-3" style="width:14px;height:14px;"></i> Etterarbeid <span class="pill">5</span></div>
+          <span class="add"><i data-lucide="plus"></i></span>
+        </div>
+        <div class="kcards">
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">EL</div><div class="name">Erik Lund</div></div><div class="when">MAN 09:30</div></div>
+            <div class="focus">Iron consistency · skrive opp-summering, sende kveldsplan</div>
+            <div class="progress"><div style="width: 50%"></div></div>
+            <div class="footer"><span>2/4 oppgaver</span><div class="icons"><i data-lucide="file-text"></i> Draft</div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">SH</div><div class="name">Sofie Holm</div></div><div class="when">MAN 07:00</div></div>
+            <div class="focus">Driver · TrackMan eksportert · skrive AI-narrative + dele</div>
+            <div class="progress"><div style="width: 75%"></div></div>
+            <div class="footer"><span>3/4 oppgaver</span><div class="icons"><i data-lucide="sparkles"></i></div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#E8B967">MD</div><div class="name">Mia Dahl</div></div><div class="when">FRE 25 apr</div></div>
+            <div class="focus">Range-økt · venter på spiller-svar på hjemmeoppgave</div>
+            <div class="progress"><div style="width: 85%"></div></div>
+            <div class="footer"><span>Venter spiller</span><div class="icons"><i data-lucide="clock"></i></div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#C896E8">JG</div><div class="name">Junior B</div></div><div class="when">FRE 25 apr</div></div>
+            <div class="focus">8 stk · sende foreldre-rapport via e-post</div>
+            <div class="progress"><div style="width: 30%"></div></div>
+            <div class="footer"><span>Mal ikke ferdig</span><div class="icons"><i data-lucide="mail"></i></div></div>
+          </div>
+          <div class="kcard">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FB3FF">KN</div><div class="name">Kari Nord</div></div><div class="when">TOR 24 apr</div></div>
+            <div class="focus">Studio-økt · oppdater elevprofil + neste mål</div>
+            <div class="progress"><div style="width: 60%"></div></div>
+            <div class="footer"><span>3/5 oppgaver</span><div class="icons"><i data-lucide="user"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ferdig -->
+      <div class="kcol done">
+        <div class="kcol-head">
+          <div class="ttl"><i data-lucide="check-circle-2" style="width:14px;height:14px;"></i> Ferdig <span class="pill">12</span></div>
+          <span class="add"><i data-lucide="plus"></i></span>
+        </div>
+        <div class="kcards">
+          <div class="kcard" style="opacity: 0.7;">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">PK</div><div class="name">Pelle K.</div></div><div class="when">FRE 25</div></div>
+            <div class="focus">Studio · Iron-tempo · plan sendt + faktura</div>
+            <div class="footer"><span>Lukket fre 18:24</span><div class="icons"><i data-lucide="check"></i></div></div>
+          </div>
+          <div class="kcard" style="opacity: 0.7;">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">AM</div><div class="name">Anne M.</div></div><div class="when">TOR 24</div></div>
+            <div class="focus">Studio · Fullswing · alle aksjoner ferdig</div>
+            <div class="footer"><span>Lukket tor 20:11</span><div class="icons"><i data-lucide="check"></i></div></div>
+          </div>
+          <div class="kcard" style="opacity: 0.7;">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#6FCBA1">TS</div><div class="name">Tor Solberg</div></div><div class="when">TOR 24</div></div>
+            <div class="focus">Bane 9 hull · narrativ + neste plan ferdig</div>
+            <div class="footer"><span>Lukket tor 17:55</span><div class="icons"><i data-lucide="check"></i></div></div>
+          </div>
+          <div class="kcard" style="opacity: 0.55;">
+            <div class="top"><div class="student"><div class="chq-av sm" style="background:#7A8C85">+9</div><div class="name">9 flere lukket</div></div><div class="when">UKE 17</div></div>
+            <div class="footer"><span>Vis arkiv →</span><div class="icons"><i data-lucide="archive"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

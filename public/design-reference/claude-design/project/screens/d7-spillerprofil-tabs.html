@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D7 — Spillerprofil · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 0;
+    background: linear-gradient(135deg, #0D2E23 0%, #143A2D 100%);
+    border: 1px solid var(--akgolf-line-dark);
+    height: 240px;
+  }
+  .hero-photo {
+    position: absolute; inset: 0;
+    background-image: url("https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1600");
+    background-size: cover; background-position: center 30%;
+    opacity: 0.32;
+    filter: saturate(0.9);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(13,46,35,0.5) 0%, rgba(13,46,35,0.95) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    height: 100%;
+    padding: 26px 32px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  }
+  .hero-id { display: flex; align-items: flex-end; gap: 18px; }
+  .hero-av {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-size: 32px; font-weight: 800;
+    border: 3px solid #102B1E;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+  }
+  .hero-text { padding-bottom: 4px; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 6px;
+  }
+  .hero-eyebrow .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--akgolf-accent); box-shadow: 0 0 8px var(--akgolf-accent); }
+  .hero h1 {
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: #fff;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .hero-meta {
+    margin-top: 8px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    display: flex; gap: 14px;
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 5px; }
+  .hero-meta [data-lucide] { width: 12px; height: 12px; }
+  .hero-actions { display: flex; gap: 8px; padding-bottom: 6px; }
+
+  /* HCP badge */
+  .hero-badge {
+    background: rgba(209,248,67,0.16);
+    border: 1px solid rgba(209,248,67,0.30);
+    border-radius: 12px;
+    padding: 12px 18px;
+    text-align: center;
+  }
+  .hero-badge .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em;
+    color: var(--akgolf-accent); text-transform: uppercase;
+  }
+  .hero-badge .v {
+    font-size: 26px; font-weight: 700;
+    color: #fff; margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .hero-badge .delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: #6FCBA1;
+    margin-top: 2px;
+  }
+
+  /* Sticky tabs */
+  .profile-tabs {
+    position: sticky; top: 58px; z-index: 5;
+    background: var(--akgolf-dark-bg);
+    margin: 0 -28px;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--akgolf-line-dark);
+    display: flex; gap: 0;
+    margin-top: -1px;
+  }
+  .profile-tab {
+    padding: 14px 18px;
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    transition: all 0.15s var(--ak-ease);
+  }
+  .profile-tab [data-lucide] { width: 14px; height: 14px; }
+  .profile-tab:hover { color: #fff; }
+  .profile-tab.active { color: var(--akgolf-accent); border-bottom-color: var(--akgolf-accent); font-weight: 600; }
+  .profile-tab .badge {
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.75);
+    font-size: 10px;
+    padding: 1px 6px; border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .profile-tab.active .badge { background: rgba(209,248,67,0.20); color: var(--akgolf-accent); }
+  .profile-tab.alert .badge { background: rgba(184,66,51,0.30); color: #F49283; }
+
+  /* Body */
+  .tab-body { padding: 26px 0 0; }
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .panel { background: var(--akgolf-card-dark); border: 1px solid var(--akgolf-line-dark); border-radius: 14px; padding: 18px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .panel-head h3 { margin: 0; font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+  .panel-head .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  .stat-block { padding: 12px 14px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 10px; }
+  .stat-block .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .stat-block .v { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .stat-block .v small { font-size: 11px; font-weight: 500; margin-left: 4px; }
+  .stat-block .v small.up { color: #6FCBA1; }
+  .stat-block .v small.down { color: #F49283; }
+
+  /* Activity row */
+  .activity-list { display: flex; flex-direction: column; gap: 0; }
+  .activity-row { display: grid; grid-template-columns: 60px 32px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .activity-row:last-child { border-bottom: none; }
+  .ar-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; }
+  .ar-icon { width: 28px; height: 28px; border-radius: 7px; background: rgba(255,255,255,0.05); display: grid; place-items: center; color: rgba(255,255,255,0.7); }
+  .ar-icon.session { background: rgba(209,248,67,0.16); color: var(--akgolf-accent); }
+  .ar-icon.round { background: rgba(0,122,255,0.18); color: #6FB3FF; }
+  .ar-icon.note { background: rgba(175,82,222,0.18); color: #C896E8; }
+  .ar-icon [data-lucide] { width: 14px; height: 14px; }
+  .ar-title { font-size: 13px; font-weight: 500; color: #fff; }
+  .ar-meta { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+  .ar-tag { font-size: 11px; color: rgba(255,255,255,0.6); }
+
+  /* Goal card */
+  .goal-card { padding: 14px; background: rgba(255,255,255,0.025); border: 1px solid var(--akgolf-line-dark); border-radius: 10px; }
+  .goal-card .gl { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
+  .goal-card .gl .name { color: #fff; font-weight: 500; }
+  .goal-card .gl .pct { color: var(--akgolf-accent); font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .goal-card .bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .goal-card .bar > div { height: 100%; background: var(--akgolf-accent); border-radius: 3px; }
+  .goal-card .meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+  /* SG bars (negative-positive) */
+  .sg-row { display: grid; grid-template-columns: 96px 1fr 60px; gap: 12px; align-items: center; padding: 8px 0; }
+  .sg-row .cat { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .sg-row .track { position: relative; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; }
+  .sg-row .zero { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(255,255,255,0.25); }
+  .sg-row .fill { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .sg-row .fill.pos { background: #6FCBA1; left: 50%; }
+  .sg-row .fill.neg { background: #F49283; right: 50%; }
+  .sg-row .v { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; text-align: right; }
+  .sg-row .v.pos { color: #6FCBA1; }
+  .sg-row .v.neg { color: #F49283; }
+
+  .signal-card {
+    padding: 14px; border-radius: 10px;
+    background: rgba(184,66,51,0.10);
+    border: 1px solid rgba(184,66,51,0.30);
+    border-left: 3px solid #F49283;
+  }
+  .signal-card.warn { background: rgba(196,138,50,0.10); border-color: rgba(196,138,50,0.30); border-left-color: #E8B967; }
+  .signal-card.up { background: rgba(209,248,67,0.10); border-color: rgba(209,248,67,0.25); border-left-color: var(--akgolf-accent); }
+  .signal-card .h { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .signal-card .h h4 { margin: 0; font-size: 13px; font-weight: 600; color: #fff; }
+  .signal-card p { margin: 0; font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .signal-card [data-lucide] { width: 14px; height: 14px; }
+  .signal-card.warn [data-lucide] { color: #E8B967; }
+  .signal-card.up [data-lucide] { color: var(--akgolf-accent); }
+  .signal-card [data-lucide] { color: #F49283; }
+</style>
+</head>
+<body>
+
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn" title="Dashboard"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn active" title="Spillere"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn" title="Kalender"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn" title="Bookinger"><i data-lucide="bookmark"></i></button>
+    <button class="chq-rail-btn" title="Analytics"><i data-lucide="trending-up"></i></button>
+    <button class="chq-rail-btn" title="Økonomi"><i data-lucide="wallet"></i></button>
+    <button class="chq-rail-btn" title="AI"><i data-lucide="sparkles"></i></button>
+    <button class="chq-rail-btn" title="Innstillinger"><i data-lucide="settings"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="life-buoy"></i></button>
+  </aside>
+
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Operasjon</div>
+    <div class="chq-nav-item"><i data-lucide="target"></i> Dagens fokus</div>
+    <div class="chq-nav-item"><i data-lucide="calendar-days"></i> Denne uken</div>
+    <div class="chq-nav-item"><i data-lucide="kanban"></i> Coaching Board</div>
+    <div class="chq-nav-item"><i data-lucide="flag"></i> Mission Board</div>
+    <div class="chq-nav-section">Personer</div>
+    <div class="chq-nav-item active"><i data-lucide="users"></i> Spillere <span class="badge muted">42</span></div>
+    <div class="chq-nav-item"><i data-lucide="layout-grid"></i> Oversikt</div>
+    <div class="chq-nav-item"><i data-lucide="check-square"></i> Godkjenninger <span class="badge">3</span></div>
+    <div class="chq-nav-section">Plan</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i> Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="clipboard-list"></i> Bookinger</div>
+    <div class="chq-nav-item"><i data-lucide="dumbbell"></i> Økter</div>
+    <div class="chq-nav-item"><i data-lucide="zap"></i> Focus</div>
+  </nav>
+
+  <header class="chq-top">
+    <div>
+      <div class="chq-top-title" style="display:flex; align-items:center; gap:8px;">
+        <span style="color:rgba(255,255,255,0.5); font-weight:500;">Spillere</span>
+        <span style="color:rgba(255,255,255,0.3);">›</span>
+        <span>Sofie Holm</span>
+      </div>
+      <div class="chq-top-meta tabular">profil · oppdatert i sanntid</div>
+    </div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <button class="chq-top-btn"><i data-lucide="message-square"></i></button>
+    <div class="chq-top-avatar">AK</div>
+  </header>
+
+  <main class="chq-main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-photo"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-id">
+          <div class="hero-av">SH</div>
+          <div class="hero-text">
+            <div class="hero-eyebrow"><span class="pulse-dot"></span> Performance · Aktiv</div>
+            <h1>Sofie Holm</h1>
+            <div class="hero-meta">
+              <span><i data-lucide="map-pin"></i> Asker GK</span>
+              <span><i data-lucide="user"></i> 24 år</span>
+              <span><i data-lucide="calendar"></i> Medlem siden 2024</span>
+              <span><i data-lucide="phone"></i> sofie.holm</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:flex-end;">
+          <div class="hero-badge">
+            <div class="l">HCP</div>
+            <div class="v">4.2</div>
+            <div class="delta">↘ −0.6 (90d)</div>
+          </div>
+          <div class="hero-actions">
+            <button class="chq-btn"><i data-lucide="message-circle"></i> Melding</button>
+            <button class="chq-btn"><i data-lucide="calendar-plus"></i> Bok økt</button>
+            <button class="chq-btn accent"><i data-lucide="target"></i> Sett mål</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <nav class="profile-tabs">
+      <div class="profile-tab active"><i data-lucide="layout-dashboard"></i> Oversikt</div>
+      <div class="profile-tab"><i data-lucide="flag"></i> Golf <span class="badge">86</span></div>
+      <div class="profile-tab"><i data-lucide="dumbbell"></i> Coaching <span class="badge">23</span></div>
+      <div class="profile-tab"><i data-lucide="brain"></i> Mental</div>
+      <div class="profile-tab"><i data-lucide="activity"></i> Trening</div>
+      <div class="profile-tab"><i data-lucide="wallet"></i> Økonomi</div>
+      <div class="profile-tab alert"><i data-lucide="bell-ring"></i> Signaler <span class="badge">2</span></div>
+    </nav>
+
+    <div class="tab-body">
+
+      <!-- KPI strip -->
+      <div class="grid-4" style="margin-bottom: 18px;">
+        <div class="stat-block"><div class="l">HCP</div><div class="v tabular">4.2 <small class="up">↘ −0.6</small></div></div>
+        <div class="stat-block"><div class="l">SG / runde</div><div class="v tabular" style="color:#6FCBA1">+0.42 <small class="up">↗</small></div></div>
+        <div class="stat-block"><div class="l">Aktivitet 30d</div><div class="v tabular">22 <small>økter</small></div></div>
+        <div class="stat-block"><div class="l">Streak</div><div class="v tabular" style="color:var(--akgolf-accent)">14d 🔥</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 18px;">
+        <!-- HCP timeline -->
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>HCP-utvikling · 12 måneder</h3>
+              <div class="sub">3 PR-er denne måneden</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <span class="chq-pill accent">PR siste 30d</span>
+              <span class="chq-pill success">På mål</span>
+            </div>
+          </div>
+          <svg viewBox="0 0 720 180" style="width:100%; height:180px;">
+            <!-- grid -->
+            <line x1="0" y1="40" x2="720" y2="40" stroke="rgba(255,255,255,0.05)"/>
+            <line x1="0" y1="80" x2="720" y2="80" stroke="rgba(255,255,255,0.05)"/>
+            <line x1="0" y1="120" x2="720" y2="120" stroke="rgba(255,255,255,0.05)"/>
+            <!-- Goal line -->
+            <line x1="0" y1="135" x2="720" y2="135" stroke="rgba(209,248,67,0.4)" stroke-dasharray="3 4"/>
+            <text x="710" y="132" fill="rgba(209,248,67,0.6)" font-size="9" font-family="JetBrains Mono" text-anchor="end">MÅL: HCP 3.5</text>
+            <!-- area -->
+            <path d="M 0 50 L 60 55 L 120 60 L 180 70 L 240 78 L 300 88 L 360 95 L 420 100 L 480 108 L 540 113 L 600 118 L 660 122 L 720 125 L 720 180 L 0 180 Z" fill="rgba(209,248,67,0.10)"/>
+            <!-- line -->
+            <polyline points="0,50 60,55 120,60 180,70 240,78 300,88 360,95 420,100 480,108 540,113 600,118 660,122 720,125" fill="none" stroke="#D1F843" stroke-width="2"/>
+            <!-- PR markers -->
+            <circle cx="540" cy="113" r="4" fill="#D1F843"/>
+            <circle cx="600" cy="118" r="4" fill="#D1F843"/>
+            <circle cx="660" cy="122" r="4" fill="#D1F843"/>
+            <text x="600" y="108" fill="#D1F843" font-size="9" font-family="JetBrains Mono" text-anchor="middle">★ PR</text>
+            <!-- y axis -->
+            <text x="4" y="44" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">8.0</text>
+            <text x="4" y="84" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">6.0</text>
+            <text x="4" y="124" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">4.2</text>
+            <!-- x labels -->
+            <text x="0" y="170" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">MAI 24</text>
+            <text x="240" y="170" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">SEP</text>
+            <text x="480" y="170" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono">JAN 25</text>
+            <text x="720" y="170" fill="rgba(255,255,255,0.4)" font-size="9" font-family="JetBrains Mono" text-anchor="end">APR 25</text>
+          </svg>
+        </div>
+
+        <!-- Aktive mål -->
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Aktive mål</h3>
+              <div class="sub">3 / 4 på sporet</div>
+            </div>
+            <a class="chq-pill accent">Mission Board →</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div class="goal-card">
+              <div class="gl"><span class="name">HCP under 3.5</span><span class="pct">78%</span></div>
+              <div class="bar"><div style="width: 78%;"></div></div>
+              <div class="meta">Deadline 12 mai · 4.2 → 3.5</div>
+            </div>
+            <div class="goal-card">
+              <div class="gl"><span class="name">SG short-game +0.6</span><span class="pct">70%</span></div>
+              <div class="bar"><div style="width: 70%; background:#6FCBA1;"></div></div>
+              <div class="meta">+0.42 → +0.60 · på sporet</div>
+            </div>
+            <div class="goal-card">
+              <div class="gl"><span class="name">Kvalifisert NM jr.</span><span class="pct">62%</span></div>
+              <div class="bar"><div style="width: 62%; background:#6FB3FF;"></div></div>
+              <div class="meta">Trenger 1 turneringsrunde til</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Aktivitet -->
+        <div class="panel">
+          <div class="panel-head">
+            <div><h3>Siste aktivitet</h3><div class="sub">14 dager</div></div>
+            <a class="chq-pill">Se alt →</a>
+          </div>
+          <div class="activity-list">
+            <div class="activity-row">
+              <span class="ar-date">28 apr · 07:00</span>
+              <span class="ar-icon session"><i data-lucide="dumbbell"></i></span>
+              <div>
+                <div class="ar-title">Driver-økt · Driving Range</div>
+                <div class="ar-meta">45 MIN · BAY 4 · TRACKMAN · ANDERS K.</div>
+              </div>
+              <span class="ar-tag chq-pill success">Fullført</span>
+            </div>
+            <div class="activity-row">
+              <span class="ar-date">26 apr · 13:00</span>
+              <span class="ar-icon round"><i data-lucide="flag"></i></span>
+              <div>
+                <div class="ar-title">Klubbrunde · 18 hull</div>
+                <div class="ar-meta">76 (+4) · SG +0.51 · PR PUTT</div>
+              </div>
+              <span class="ar-tag chq-pill accent">★ PR</span>
+            </div>
+            <div class="activity-row">
+              <span class="ar-date">25 apr · 09:30</span>
+              <span class="ar-icon note"><i data-lucide="message-square"></i></span>
+              <div>
+                <div class="ar-title">Notat fra coach</div>
+                <div class="ar-meta">«Stødig kontakt på 7-jern, fortsett tempo-fokus.»</div>
+              </div>
+              <span class="ar-tag">Anders K.</span>
+            </div>
+            <div class="activity-row">
+              <span class="ar-date">24 apr · 16:00</span>
+              <span class="ar-icon session"><i data-lucide="dumbbell"></i></span>
+              <div>
+                <div class="ar-title">Putting-økt · Putting Green</div>
+                <div class="ar-meta">60 MIN · 3-fots-drill · 84% inn</div>
+              </div>
+              <span class="ar-tag chq-pill success">Fullført</span>
+            </div>
+            <div class="activity-row">
+              <span class="ar-date">22 apr · 14:30</span>
+              <span class="ar-icon round"><i data-lucide="flag"></i></span>
+              <div>
+                <div class="ar-title">Klubbrunde · 9 hull</div>
+                <div class="ar-meta">38 (+2) · SG +0.32</div>
+              </div>
+              <span class="ar-tag">−</span>
+            </div>
+            <div class="activity-row">
+              <span class="ar-date">20 apr · 10:00</span>
+              <span class="ar-icon session"><i data-lucide="dumbbell"></i></span>
+              <div>
+                <div class="ar-title">Bunker-økt · Studio 2</div>
+                <div class="ar-meta">30 MIN · 6 typer lies · video</div>
+              </div>
+              <span class="ar-tag chq-pill success">Fullført</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar: Strokes Gained + Signaler -->
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div class="panel">
+            <div class="panel-head"><div><h3>Strokes Gained · 30d</h3><div class="sub">vs. HCP-snitt</div></div></div>
+            <div class="sg-row">
+              <span class="cat">Off the tee</span>
+              <div class="track"><div class="zero"></div><div class="fill pos" style="width: 32%;"></div></div>
+              <span class="v pos">+0.18</span>
+            </div>
+            <div class="sg-row">
+              <span class="cat">Approach</span>
+              <div class="track"><div class="zero"></div><div class="fill pos" style="width: 14%;"></div></div>
+              <span class="v pos">+0.08</span>
+            </div>
+            <div class="sg-row">
+              <span class="cat">Around green</span>
+              <div class="track"><div class="zero"></div><div class="fill neg" style="width: 18%;"></div></div>
+              <span class="v neg">−0.10</span>
+            </div>
+            <div class="sg-row">
+              <span class="cat">Putting</span>
+              <div class="track"><div class="zero"></div><div class="fill pos" style="width: 48%;"></div></div>
+              <span class="v pos">+0.26</span>
+            </div>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--akgolf-line-dark); display:flex; justify-content:space-between; font-size:12px;">
+              <span style="color: rgba(255,255,255,0.55);">Total SG</span>
+              <span style="color:#6FCBA1; font-family:'JetBrains Mono',monospace; font-weight:600;">+0.42 / runde</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><div><h3>Signaler</h3><div class="sub">2 åpne</div></div></div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div class="signal-card up">
+                <div class="h"><i data-lucide="trophy"></i><h4>3 PR siste 30d</h4></div>
+                <p>Foreslå turneringsmål — Sofie er klar for å konkurrere.</p>
+              </div>
+              <div class="signal-card warn">
+                <div class="h"><i data-lucide="alert-triangle"></i><h4>Around-green svakest</h4></div>
+                <p>Chip- og pitch-volum kan økes. Anbefal short-game-blokk neste 2 uker.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><div><h3>Neste opp</h3><div class="sub">planlagt</div></div></div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; gap:10px; align-items:center; padding: 10px 12px; background: rgba(209,248,67,0.10); border-radius: 8px; border-left: 3px solid var(--akgolf-accent);">
+                <i data-lucide="calendar" style="width:14px;height:14px; color:var(--akgolf-accent);"></i>
+                <div style="flex:1;">
+                  <div style="font-size: 12px; font-weight: 600; color: #fff;">Tirsdag 30. apr · 14:00</div>
+                  <div style="font-size: 11px; color: rgba(255,255,255,0.55); font-family:'JetBrains Mono',monospace;">PERFORMANCE STUDIO · 60 MIN · ANDERS K.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; padding: 10px 12px; background: rgba(255,255,255,0.025); border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.15);">
+                <i data-lucide="flag" style="width:14px;height:14px; color: rgba(255,255,255,0.7);"></i>
+                <div style="flex:1;">
+                  <div style="font-size: 12px; font-weight: 600; color: #fff;">Lørdag 4. mai · 09:00</div>
+                  <div style="font-size: 11px; color: rgba(255,255,255,0.55); font-family:'JetBrains Mono',monospace;">KLUBBMESTERSKAP · 18 HULL</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

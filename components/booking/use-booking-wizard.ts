@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import type {
   BookingServiceType,
@@ -31,32 +31,48 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     customerPhone: "",
   });
 
-  const visibleSteps = getVisibleSteps(mode);
+  // Holder seneste state og onBookingComplete tilgjengelig for stable callbacks
+  // uten å invalidere referansene per render.
+  const stateRef = useRef(state);
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
+  const onBookingCompleteRef = useRef(onBookingComplete);
+  useEffect(() => {
+    onBookingCompleteRef.current = onBookingComplete;
+  }, [onBookingComplete]);
+
+  // Aborter in-flight slot-fetch nar bruker bytter dato raskt — uten denne
+  // kan en sen response overskrive en nyere state og vise feil tider.
+  const slotFetchAbortRef = useRef<AbortController | null>(null);
+  useEffect(() => {
+    return () => slotFetchAbortRef.current?.abort();
+  }, []);
+
+  const visibleSteps = useMemo(() => getVisibleSteps(mode), [mode]);
 
   const setStep = useCallback((step: BookingStep) => {
     setState((prev) => ({ ...prev, step }));
   }, []);
 
-  const selectService = useCallback(
-    (service: BookingServiceType) => {
-      if (service.instructors.length === 1) {
-        setState((prev) => ({
-          ...prev,
-          selectedService: service,
-          selectedInstructor: service.instructors[0],
-          step: "datetime",
-        }));
-      } else {
-        setState((prev) => ({
-          ...prev,
-          selectedService: service,
-          selectedInstructor: null,
-          step: "datetime",
-        }));
-      }
-    },
-    []
-  );
+  const selectService = useCallback((service: BookingServiceType) => {
+    if (service.instructors.length === 1) {
+      setState((prev) => ({
+        ...prev,
+        selectedService: service,
+        selectedInstructor: service.instructors[0],
+        step: "datetime",
+      }));
+    } else {
+      setState((prev) => ({
+        ...prev,
+        selectedService: service,
+        selectedInstructor: null,
+        step: "datetime",
+      }));
+    }
+  }, []);
 
   const selectInstructor = useCallback((instructor: BookingInstructor) => {
     setState((prev) => ({
@@ -68,39 +84,48 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     }));
   }, []);
 
-  const selectDate = useCallback(
-    async (date: Date) => {
-      if (!state.selectedService || !state.selectedInstructor) return;
+  const selectDate = useCallback(async (date: Date) => {
+    const { selectedService, selectedInstructor } = stateRef.current;
+    if (!selectedService || !selectedInstructor) return;
 
+    // Avbryt forrige request — beskytter mot race der eldre response lander
+    // sist og overskriver tider for ny dato.
+    slotFetchAbortRef.current?.abort();
+    const controller = new AbortController();
+    slotFetchAbortRef.current = controller;
+
+    setState((prev) => ({
+      ...prev,
+      selectedDate: date,
+      selectedSlot: null,
+      availableSlots: [],
+      loadingSlots: true,
+    }));
+
+    try {
+      const dateStr = format(date, "yyyy-MM-dd");
+      const res = await fetch(
+        `/api/portal/public/slots?serviceTypeId=${selectedService.id}&instructorId=${selectedInstructor.id}&date=${dateStr}`,
+        { signal: controller.signal },
+      );
+      const slots = await res.json();
+      // Bruk .aborted for a unnga at en sent landet "vinner" race
+      if (controller.signal.aborted) return;
       setState((prev) => ({
         ...prev,
-        selectedDate: date,
-        selectedSlot: null,
-        availableSlots: [],
-        loadingSlots: true,
+        availableSlots: Array.isArray(slots) ? slots : [],
+        loadingSlots: false,
       }));
-
-      try {
-        const dateStr = format(date, "yyyy-MM-dd");
-        const res = await fetch(
-          `/api/portal/public/slots?serviceTypeId=${state.selectedService.id}&instructorId=${state.selectedInstructor.id}&date=${dateStr}`
-        );
-        const slots = await res.json();
-        setState((prev) => ({
-          ...prev,
-          availableSlots: Array.isArray(slots) ? slots : [],
-          loadingSlots: false,
-        }));
-      } catch {
-        setState((prev) => ({ ...prev, availableSlots: [], loadingSlots: false }));
-      }
-    },
-    [state.selectedService, state.selectedInstructor]
-  );
+    } catch (err) {
+      // Ignorer abort — det er forventet ved rask dato-bytting
+      if (err instanceof Error && err.name === "AbortError") return;
+      setState((prev) => ({ ...prev, availableSlots: [], loadingSlots: false }));
+    }
+  }, []);
 
   const selectSlot = useCallback(
     (slot: string) => {
-      const nextStep = mode === "portal" ? "confirm" : "details";
+      const nextStep: BookingStep = mode === "portal" ? "confirm" : "details";
       setState((prev) => ({ ...prev, selectedSlot: slot, step: nextStep }));
     },
     [mode]
@@ -115,18 +140,20 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
 
   const validateCustomerDetails = useCallback((): boolean => {
     if (mode === "portal") return true;
-    const { customerName, customerEmail } = state;
+    const { customerName, customerEmail } = stateRef.current;
     if (!customerName.trim() || customerName.length < 2) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(customerEmail);
-  }, [mode, state]);
+  }, [mode]);
 
   const goBack = useCallback(() => {
-    const currentIndex = visibleSteps.indexOf(state.step);
-    if (currentIndex > 0) {
+    setState((prev) => {
+      const currentIndex = visibleSteps.indexOf(prev.step);
+      if (currentIndex <= 0) return prev;
+
       const prevStep = visibleSteps[currentIndex - 1];
       if (prevStep === "service") {
-        setState((prev) => ({
+        return {
           ...prev,
           step: "service",
           selectedService: null,
@@ -134,16 +161,16 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
           selectedDate: null,
           selectedSlot: null,
           availableSlots: [],
-        }));
-      } else {
-        setState((prev) => ({ ...prev, step: prevStep }));
+        };
       }
-    }
-  }, [state.step, visibleSteps]);
+      return { ...prev, step: prevStep };
+    });
+  }, [visibleSteps]);
 
   const handleBook = useCallback(
     async (paymentMethod: "STRIPE" = "STRIPE") => {
-      const { selectedService, selectedInstructor, selectedSlot, customerEmail, customerName } = state;
+      const { selectedService, selectedInstructor, selectedSlot, customerEmail, customerName } =
+        stateRef.current;
       if (!selectedService || !selectedInstructor || !selectedSlot) return;
 
       setState((prev) => ({ ...prev, booking: true }));
@@ -169,7 +196,7 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
 
         if (res.ok) {
           const data = await res.json();
-          onBookingComplete?.(data);
+          onBookingCompleteRef.current?.(data);
         } else {
           const error = await res.json().catch(() => ({ error: "Ukjent feil" }));
           alert(error.error || "Booking feilet. Prøv igjen.");
@@ -180,7 +207,7 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
         setState((prev) => ({ ...prev, booking: false }));
       }
     },
-    [state, mode, onBookingComplete]
+    [mode]
   );
 
   return {

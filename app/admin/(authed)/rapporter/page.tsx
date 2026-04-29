@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminSelect,
-  AdminInput,
   AdminPageHeader,
   AdminDataTable,
   AdminDropdown,
@@ -98,64 +97,12 @@ const reportTypes: ReportType[] = [
   },
 ];
 
-const scheduledReports: ScheduledReport[] = [
-  {
-    id: "1",
-    name: "Månedsrapport",
-    frequency: "Månedlig",
-    recipients: "anders@akgolf.no",
-    nextRun: "1. mai 2024",
-    active: true,
-  },
-  {
-    id: "2",
-    name: "Ukentlig oppsummering",
-    frequency: "Ukentlig",
-    recipients: "anders@akgolf.no",
-    nextRun: "8. april 2024",
-    active: true,
-  },
-];
+// Planlagte og nylig genererte rapporter mangler en datakilde —
+// vises som tomme tabeller inntil vi har en Reports-modell.
+const scheduledReports: ScheduledReport[] = [];
+const recentReports: RecentReportRow[] = [];
 
-const recentReports: RecentReportRow[] = [
-  {
-    id: "1",
-    name: "Månedsrapport - Mars 2024",
-    type: "Månedlig",
-    generatedAt: "1. april 2024",
-    size: "2.4 MB",
-  },
-  {
-    id: "2",
-    name: "Elev-statistikk Q1",
-    type: "Kvartalsvis",
-    generatedAt: "28. mars 2024",
-    size: "1.8 MB",
-  },
-  {
-    id: "3",
-    name: "Årsrapport 2023",
-    type: "Årlig",
-    generatedAt: "5. januar 2024",
-    size: "5.2 MB",
-  },
-  {
-    id: "4",
-    name: "Kapasitetsrapport - Mars",
-    type: "Månedlig",
-    generatedAt: "2. april 2024",
-    size: "1.1 MB",
-  },
-  {
-    id: "5",
-    name: "Økonomirapport Q1 2024",
-    type: "Kvartalsvis",
-    generatedAt: "3. april 2024",
-    size: "3.7 MB",
-  },
-];
-
-const exportFormats = ["PDF", "Excel", "CSV"] as const;
+const exportFormats = ["CSV"] as const;
 type ExportFormat = (typeof exportFormats)[number];
 
 function downloadCsv(csv: string, filename: string) {
@@ -173,7 +120,6 @@ export default function RapporterPage() {
   const [selectedReport, setSelectedReport] = useState<ReportTypeId | null>(
     null,
   );
-  const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("CSV");
   const [generateType, setGenerateType] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -416,29 +362,6 @@ export default function RapporterPage() {
                   onChange={setDialogRange}
                 />
               </div>
-              <div>
-                <label className="admin-label block mb-1.5">Format</label>
-                <div className="flex gap-2">
-                  {exportFormats.map((fmt) => {
-                    const isActive = selectedFormat === fmt;
-                    return (
-                      <button
-                        key={fmt}
-                        type="button"
-                        onClick={() => setSelectedFormat(fmt)}
-                        className={cn(
-                          "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
-                          isActive
-                            ? "bg-inverse-surface text-surface border-inverse-surface/30"
-                            : "bg-surface-container-lowest text-on-surface-variant/90 border-outline-variant/30 hover:bg-surface",
-                        )}
-                      >
-                        {fmt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
               <Button
                 variant="accent"
                 className="w-full justify-center"
@@ -446,7 +369,7 @@ export default function RapporterPage() {
                 disabled={!generateType || isPending}
               >
                 {isPending ? <Icon name="progress_activity" className="w-4 h-4 animate-spin mr-2" /> : <Icon name="description" className="w-4 h-4 mr-2" />}
-                {isPending ? "Genererer..." : "Generer rapport"}
+                {isPending ? "Genererer..." : "Generer CSV"}
               </Button>
             </div>
           </div>
@@ -531,7 +454,7 @@ export default function RapporterPage() {
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         title="Generer ny rapport"
-        description="Velg rapporttype, periode og format."
+        description="Velg rapporttype og periode. Eksporten leveres som CSV."
         size="md"
         footer={
           <>
@@ -571,30 +494,6 @@ export default function RapporterPage() {
               value={dialogRange}
               onChange={setDialogRange}
             />
-          </div>
-          <AdminInput label="Tittel (valgfritt)" placeholder="f.eks. Mars 2024" />
-          <div>
-            <label className="admin-label block mb-1.5">Format</label>
-            <div className="flex gap-2">
-              {exportFormats.map((fmt) => {
-                const isActive = selectedFormat === fmt;
-                return (
-                  <button
-                    key={fmt}
-                    type="button"
-                    onClick={() => setSelectedFormat(fmt)}
-                    className={cn(
-                      "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
-                      isActive
-                        ? "bg-inverse-surface text-surface border-inverse-surface/30"
-                        : "bg-surface-container-lowest text-on-surface-variant/90 border-outline-variant/30 hover:bg-surface",
-                    )}
-                  >
-                    {fmt}
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </div>
       </AdminDialog>

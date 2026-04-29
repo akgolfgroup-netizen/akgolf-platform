@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+const description =
+  "Utviklingsmodellen til AK Golf — fire pillarer (teknikk, fysisk, mental, strategi) og Strokes Gained-innsikt for varig framgang.";
 
 export const metadata: Metadata = {
-  title: "Utvikling | AK Golf",
-  description:
-    "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
+  title: "Utviklingsmodellen | AK Golf Akademi",
+  description,
   openGraph: {
-    title: "Utvikling | AK Golf",
-    description:
-      "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
+    title: "Utviklingsmodellen | AK Golf Akademi",
+    description,
     type: "website",
     locale: "nb_NO",
     url: "https://akgolf.no/utvikling",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Utvikling | AK Golf",
-    description:
-      "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
+    title: "Utviklingsmodellen | AK Golf Akademi",
+    description,
   },
 };
 

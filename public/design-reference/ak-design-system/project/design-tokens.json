@@ -1,0 +1,64 @@
+{
+  "akgolf": {
+    "color": {
+      "primary": { "value": "#005840", "type": "color", "description": "Hovedfarge" },
+      "accent": { "value": "#D1F843", "type": "color", "description": "CTA, uthevinger" },
+      "surface": { "value": "#ECF0EF", "type": "color", "description": "Bakgrunn, kort (light)" },
+      "text": { "value": "#324D45", "type": "color", "description": "Brødtekst (default body)" },
+      "ink": { "value": "#0A1F18", "type": "color", "description": "Headlines og KPI-tall" },
+      "muted": { "value": "#A5B2AD", "type": "color", "description": "Hjelpetekst, ikoner" },
+      "dark-bg": { "value": #102B1E, "type": "color", "description": "Mørk bakgrunn" },
+      "card-dark": { "value": "#0D2E23", "type": "color", "description": "Kort (dark mode)" },
+      "card-light": { "value": "#FFFFFF", "type": "color", "description": "Kort (light mode)" },
+      "primary-light": { "value": "#B8D4CC", "type": "color", "description": "Lys primary-variant" },
+      "success": { "value": "#2A7D5A", "type": "color", "description": "Positiv, fremgang" },
+      "success-bg": { "value": "#E8F5EF", "type": "color", "description": "Success bakgrunn" },
+      "warning": { "value": "#C48A32", "type": "color", "description": "Advarsel, middels" },
+      "warning-bg": { "value": "#FDF4E4", "type": "color", "description": "Warning bakgrunn" },
+      "danger": { "value": "#B84233", "type": "color", "description": "Kritisk, svakt" },
+      "danger-bg": { "value": "#FCEAE8", "type": "color", "description": "Danger bakgrunn" }
+    },
+    "font": {
+      "family": { "value": "Inter", "type": "fontFamily" },
+      "weight": {
+        "light": { "value": "300", "type": "fontWeight" },
+        "regular": { "value": "400", "type": "fontWeight" },
+        "medium": { "value": "500", "type": "fontWeight" },
+        "semibold": { "value": "600", "type": "fontWeight" },
+        "bold": { "value": "700", "type": "fontWeight" },
+        "extrabold": { "value": "800", "type": "fontWeight" }
+      },
+      "size": {
+        "h1": { "value": "48px", "type": "fontSize" },
+        "h2": { "value": "32px", "type": "fontSize" },
+        "h3": { "value": "24px", "type": "fontSize" },
+        "body": { "value": "16px", "type": "fontSize" },
+        "small": { "value": "14px", "type": "fontSize" },
+        "caption": { "value": "12px", "type": "fontSize" }
+      }
+    },
+    "spacing": {
+      "xs": { "value": "4px", "type": "spacing" },
+      "sm": { "value": "8px", "type": "spacing" },
+      "md": { "value": "16px", "type": "spacing" },
+      "lg": { "value": "24px", "type": "spacing" },
+      "xl": { "value": "32px", "type": "spacing" },
+      "2xl": { "value": "48px", "type": "spacing" },
+      "3xl": { "value": "64px", "type": "spacing" }
+    },
+    "radius": {
+      "sm": { "value": "8px", "type": "borderRadius" },
+      "md": { "value": "12px", "type": "borderRadius" },
+      "card": { "value": "16px", "type": "borderRadius" },
+      "pill": { "value": "20px", "type": "borderRadius" }
+    },
+    "pantone": {
+      "primary": { "value": "Pantone 3425 C", "cmyk": "C100 M0 Y58 K55" },
+      "accent": { "value": "Pantone 389 C", "cmyk": "C20 M0 Y80 K0" },
+      "dark": { "value": "Pantone Black 6 C", "cmyk": "C80 M30 Y50 K80" },
+      "success": { "value": "Pantone 7726 C", "cmyk": "C80 M0 Y52 K30" },
+      "warning": { "value": "Pantone 7510 C", "cmyk": "C0 M35 Y80 K15" },
+      "danger": { "value": "Pantone 7609 C", "cmyk": "C0 M70 Y65 K15" }
+    }
+  }
+}

@@ -235,7 +235,7 @@ export async function getRefundStatus(
   try {
     const refund = await stripe.refunds.retrieve(refundId);
     return {
-      status: refund.status,
+      status: refund.status ?? "unknown",
       amount: refund.amount / 100, // Konverter til kroner
     };
   } catch (error) {

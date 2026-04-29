@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A2 — Innstillinger · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .settings-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .settings-side {
+    position: sticky; top: 80px;
+    display: flex; flex-direction: column;
+    gap: 2px;
+  }
+  .side-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .side-link [data-lucide] { width: 14px; height: 14px; }
+  .side-link:hover { background: rgba(255,255,255,0.04); color: #fff; }
+  .side-link.active {
+    background: rgba(209,248,67,0.10);
+    color: var(--akgolf-accent);
+    border-color: rgba(209,248,67,0.20);
+  }
+
+  .panel { display: flex; flex-direction: column; gap: 14px; }
+
+  .row {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    gap: 22px;
+    align-items: center;
+  }
+  .row .l { font-weight: 600; color: #fff; font-size: 14px; }
+  .row .l .sub { font-family:'JetBrains Mono',monospace; font-size:9px; color: rgba(255,255,255,0.45); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; font-weight: 400; }
+  .row .v { color: rgba(255,255,255,0.7); font-size: 13px; }
+
+  /* Inline form */
+  .field-input, .field-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--akgolf-line-dark);
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+  }
+  .field-input:focus { outline: 1px solid var(--akgolf-accent); border-color: var(--akgolf-accent); }
+
+  /* Toggle */
+  .switch {
+    position: relative;
+    width: 38px; height: 22px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .switch::after {
+    content:'';
+    position:absolute;
+    top:2px; left:2px;
+    width: 18px; height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: left 0.2s;
+  }
+  .switch.on { background: var(--akgolf-accent); }
+  .switch.on::after { left: 18px; background: #0A1F18; }
+
+  /* Section */
+  .panel-h {
+    display: flex; align-items: end; justify-content: space-between;
+    margin: 24px 0 4px;
+  }
+  .panel-h:first-child { margin-top: 0; }
+  .panel-h h2 {
+    margin: 0;
+    font-size: 20px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em;
+  }
+  .panel-h .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+
+  /* Connect rows */
+  .connect {
+    display:flex; align-items:center; gap:14px;
+  }
+  .connect-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .connect-icon.golfbox { background:#23304D; color:#7FA3FF; }
+  .connect-icon.trackman { background:#3D2820; color:#F49283; }
+  .connect-icon.arccos { background:#1F3A2C; color:#6FCBA1; }
+  .connect-icon [data-lucide] { width: 18px; height: 18px; }
+
+  /* Danger zone */
+  .danger {
+    border-color: rgba(244,146,131,0.20);
+    background: rgba(244,146,131,0.04);
+  }
+  .danger .l { color: #F49283; }
+
+  @media (max-width: 900px) {
+    .settings-grid { grid-template-columns: 1fr; }
+    .settings-side { position: static; flex-direction: row; overflow-x: auto; }
+    .side-link { white-space: nowrap; }
+    .row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item active"><i data-lucide="settings"></i> Innstillinger</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Innstillinger<span class="date">PROFIL · KOBLINGER · VARSLER</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i innstillinger…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">Min side · Innstillinger</div>
+      <h1 class="phq-h1">Innstillinger</h1>
+      <p class="lede">Personlig info, koblinger, varsler og personvern. Alle endringer lagres automatisk.</p>
+    </div>
+
+    <div class="settings-grid">
+      <aside class="settings-side">
+        <div class="side-link active"><i data-lucide="user"></i> Personlig</div>
+        <div class="side-link"><i data-lucide="link"></i> Koblinger</div>
+        <div class="side-link"><i data-lucide="bell"></i> Varsler</div>
+        <div class="side-link"><i data-lucide="sliders"></i> Trenings-pref.</div>
+        <div class="side-link"><i data-lucide="lock"></i> Personvern</div>
+        <div class="side-link"><i data-lucide="credit-card"></i> Abonnement</div>
+        <div class="side-link"><i data-lucide="trash-2"></i> Konto</div>
+      </aside>
+
+      <section class="panel">
+        <!-- PERSONLIG -->
+        <div class="panel-h"><h2>Personlig info</h2><div class="sub">SYNKES MED GOLFBOX</div></div>
+
+        <div class="row">
+          <div class="l">Navn<div class="sub">FORNAVN ETTERNAVN</div></div>
+          <input class="field-input" value="Erik Kvist">
+          <span class="phq-pill">Fra GolfBox</span>
+        </div>
+        <div class="row">
+          <div class="l">E-post<div class="sub">PRIMÆR · INNLOGGING</div></div>
+          <input class="field-input" value="erik.kvist@example.no">
+          <button class="phq-btn ghost sm">Verifisér</button>
+        </div>
+        <div class="row">
+          <div class="l">Mobil<div class="sub">SMS-VARSLER</div></div>
+          <input class="field-input" value="+47 932 14 728">
+          <span class="phq-pill success">✓ Verifisert</span>
+        </div>
+        <div class="row">
+          <div class="l">Klubb<div class="sub">HJEMMEKLUBB</div></div>
+          <select class="field-select">
+            <option>Bærum GK</option><option>Oslo GK</option>
+          </select>
+          <span></span>
+        </div>
+        <div class="row">
+          <div class="l">Spillertype<div class="sub">PERFORMANCE / FRITID / NYBEGYNNER</div></div>
+          <select class="field-select">
+            <option>Performance</option><option>Fritid</option><option>Nybegynner</option>
+          </select>
+          <span class="phq-pill lime">Performance</span>
+        </div>
+
+        <!-- KOBLINGER -->
+        <div class="panel-h"><h2>Koblinger</h2><div class="sub">DATA-KILDER · 3 AV 4 AKTIVE</div></div>
+
+        <div class="row">
+          <div class="l">
+            <div class="connect">
+              <div class="connect-icon golfbox"><i data-lucide="flag"></i></div>
+              <div>GolfBox<div class="sub" style="margin-top:2px;">RUNDER · HCP · BOOKING</div></div>
+            </div>
+          </div>
+          <div class="v">Synket nå · 247 runder · HCP 7.4</div>
+          <span class="phq-pill success">✓ Tilkoblet</span>
+        </div>
+        <div class="row">
+          <div class="l">
+            <div class="connect">
+              <div class="connect-icon trackman"><i data-lucide="radar"></i></div>
+              <div>Trackman<div class="sub" style="margin-top:2px;">SVING-DATA · BALL FLIGHT</div></div>
+            </div>
+          </div>
+          <div class="v">Synket 28. apr · 1 248 svinger</div>
+          <span class="phq-pill success">✓ Tilkoblet</span>
+        </div>
+        <div class="row">
+          <div class="l">
+            <div class="connect">
+              <div class="connect-icon arccos"><i data-lucide="map-pin"></i></div>
+              <div>Arccos<div class="sub" style="margin-top:2px;">ON-COURSE · STROKES GAINED</div></div>
+            </div>
+          </div>
+          <div class="v">Synket nå · SG +0.42</div>
+          <span class="phq-pill success">✓ Tilkoblet</span>
+        </div>
+        <div class="row">
+          <div class="l">
+            <div class="connect">
+              <div class="connect-icon" style="background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.5);"><i data-lucide="watch"></i></div>
+              <div>Garmin / Apple Watch<div class="sub" style="margin-top:2px;">PULS · ENERGI</div></div>
+            </div>
+          </div>
+          <div class="v" style="color:rgba(255,255,255,0.5);">Ikke tilkoblet</div>
+          <button class="phq-btn primary sm">Koble til</button>
+        </div>
+
+        <!-- VARSLER -->
+        <div class="panel-h"><h2>Varsler</h2><div class="sub">NÅR · HVOR · HVA</div></div>
+
+        <div class="row">
+          <div class="l">Tildelte øvelser<div class="sub">NÅR COACH SENDER NY ØVELSE</div></div>
+          <div class="v">Push, e-post, SMS</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Booking-påminnelser<div class="sub">24T OG 1T FØR ØKT</div></div>
+          <div class="v">Push + SMS</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Coach-tilbakemelding<div class="sub">VIDEO ELLER TEKST FRA COACH</div></div>
+          <div class="v">Push + e-post</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Daglig fokus 07:00<div class="sub">DAGENS 3 ØVELSER</div></div>
+          <div class="v">Push</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Ukentlig progress-rapport<div class="sub">SØNDAG KVELD</div></div>
+          <div class="v">E-post</div>
+          <div class="switch" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Mission Board-oppdateringer<div class="sub">CO-WORKING SAMMEN MED COACH</div></div>
+          <div class="v">Push</div>
+          <div class="switch" data-toggle></div>
+        </div>
+
+        <!-- TRENING -->
+        <div class="panel-h"><h2>Trenings-preferanser</h2><div class="sub">MATCHER PLAN MED KALENDER</div></div>
+
+        <div class="row">
+          <div class="l">Ukentlige timer<div class="sub">MÅL VOLUM</div></div>
+          <div class="v">8 timer / uke</div>
+          <select class="field-select" style="max-width:140px;"><option>4 t</option><option>6 t</option><option selected>8 t</option><option>10 t</option><option>12 t</option></select>
+        </div>
+        <div class="row">
+          <div class="l">Foretrukne dager<div class="sub">NÅR DU TRENER</div></div>
+          <div class="v">Man, Ons, Fre, Lør</div>
+          <button class="phq-btn ghost sm">Endre</button>
+        </div>
+        <div class="row">
+          <div class="l">Foretrukket tidspunkt<div class="sub">BLOCKER PÅ KALENDER</div></div>
+          <div class="v">07:00 – 09:00</div>
+          <button class="phq-btn ghost sm">Endre</button>
+        </div>
+        <div class="row">
+          <div class="l">Hjemme-anlegg<div class="sub">FOR ØKT-FORSLAG</div></div>
+          <div class="v">Bærum Range · Driving + Putting</div>
+          <button class="phq-btn ghost sm">Endre</button>
+        </div>
+
+        <!-- PERSONVERN -->
+        <div class="panel-h"><h2>Personvern</h2><div class="sub">HVEM SER HVA</div></div>
+
+        <div class="row">
+          <div class="l">Coach kan se all data<div class="sub">GOLFBOX · TRACKMAN · ARCCOS</div></div>
+          <div class="v">Anders K. · Maria T.</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Del statistikk på leaderboard<div class="sub">KLUBB-RANKING</div></div>
+          <div class="v">Bærum GK Performance</div>
+          <div class="switch on" data-toggle></div>
+        </div>
+        <div class="row">
+          <div class="l">Anonymisert AI-trening<div class="sub">HJELP OSS BLI BEDRE</div></div>
+          <div class="v">Frivillig · ingen personlig info</div>
+          <div class="switch" data-toggle></div>
+        </div>
+
+        <!-- KONTO -->
+        <div class="panel-h"><h2>Konto</h2><div class="sub">EKSPORT · SLETTING</div></div>
+
+        <div class="row">
+          <div class="l">Last ned mine data<div class="sub">JSON · PDF · CSV</div></div>
+          <div class="v">Inkluderer runder, økter, video, analyser</div>
+          <button class="phq-btn ghost sm"><i data-lucide="download"></i> Last ned</button>
+        </div>
+        <div class="row danger">
+          <div class="l">Slett konto<div class="sub" style="color:#F49283;">PERMANENT · 30 DAGERS ANGRE</div></div>
+          <div class="v">All data slettes etter 30 dager</div>
+          <button class="phq-btn sm" style="background:rgba(244,146,131,0.10); color:#F49283; border-color:rgba(244,146,131,0.30);">Slett konto</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="calendar"></i>Plan</button>
+    <button class="tab"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab active"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('[data-toggle]').forEach(t=>{
+  t.addEventListener('click', () => t.classList.toggle('on'));
+});
+</script>
+</body>
+</html>

@@ -106,8 +106,6 @@ export function LiveRoundClient({
         fairwayHit: result.fairwayHit,
         gir: result.gir,
         sandSave: result.sandSave,
-        scramble: result.scramble,
-        notes: result.notes,
         strategyFollowed: result.strategyFollowed,
       });
 
@@ -130,8 +128,6 @@ export function LiveRoundClient({
         fairwayHit: result.fairwayHit,
         gir: result.gir,
         sandSave: result.sandSave,
-        scramble: result.scramble,
-        notes: result.notes,
         strategyFollowed: result.strategyFollowed,
       });
 

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <title>Spillerportalen — AK Golf Group</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../../assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <style>
+    html, body { margin: 0; padding: 0; background: #ECF0EF; }
+    * { box-sizing: border-box; }
+    /* clear any stale dark-theme preference from previous sessions on first view */
+  </style>
+  <script>
+    try {
+      if (!sessionStorage.getItem('ak.theme.reset')) {
+        localStorage.removeItem('ak.theme');
+        sessionStorage.setItem('ak.theme.reset', '1');
+      }
+    } catch(e) {}
+  </script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="../../assets/lucide.js"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="charts.jsx"></script>
+  <script type="text/babel" src="TopNav.jsx"></script>
+  <script type="text/babel" src="DashboardCards.jsx"></script>
+  <script type="text/babel" src="App.jsx"></script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A8 — Kartlegging · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { padding-bottom: 92px; }
+
+  .km-hero {
+    background:
+      radial-gradient(circle at 90% 20%, rgba(209,248,67,0.18), transparent 50%),
+      linear-gradient(135deg, rgba(13,46,35,0.96), rgba(10,31,24,1));
+    border: 1.5px solid rgba(209,248,67,0.30);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .km-hero h1 {
+    margin: 8px 0 6px;
+    font-size: 36px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em; line-height: 1.1;
+    max-width: 22ch;
+  }
+  .km-hero .lede {
+    color: rgba(255,255,255,0.7); margin: 0 0 22px;
+    font-size: 14px; max-width: 60ch;
+  }
+  .km-meta {
+    display: flex; gap: 28px; align-items: center;
+  }
+  .km-meta .pmg .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .km-meta .pmg .v { font-family:'Inter',sans-serif; font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 4px; }
+
+  /* Test cards */
+  .test-card {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 18px;
+    padding: 26px 28px;
+    margin-bottom: 16px;
+  }
+  .test-card.done {
+    background: rgba(118,193,156,0.04);
+    border-color: rgba(118,193,156,0.25);
+  }
+  .test-card.active {
+    border-color: rgba(209,248,67,0.30);
+    box-shadow: 0 0 0 4px rgba(209,248,67,0.05);
+  }
+
+  .test-head {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .test-num {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(209,248,67,0.10);
+    border: 1px solid rgba(209,248,67,0.25);
+    display: grid; place-items: center;
+    color: var(--akgolf-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .test-num strong { display: block; font-family:'Inter',sans-serif; font-size: 22px; font-weight: 800; color: var(--akgolf-accent); letter-spacing: -0.02em; }
+  .test-card.done .test-num {
+    background: rgba(118,193,156,0.20);
+    border-color: rgba(118,193,156,0.40);
+    color: #6FCBA1;
+  }
+  .test-card.done .test-num strong { color: #6FCBA1; }
+
+  .test-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.025em; }
+  .test-meta {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .instructions {
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.10);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+  }
+  .instructions .title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .instructions ol {
+    margin: 0; padding-left: 20px;
+    color: rgba(255,255,255,0.78);
+    font-size: 13px; line-height: 1.65;
+  }
+  .instructions ol li::marker { color: var(--akgolf-accent); font-weight: 700; }
+
+  /* Input grids per test */
+  .input-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .input-pair {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .input-pair .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .input-pair .num-field {
+    display: flex; align-items: baseline; gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 32px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .input-pair .num-field .unit { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0; }
+  .input-pair .num-field input {
+    background: transparent; border: none;
+    color: #fff;
+    font: inherit;
+    width: 80px;
+    padding: 0;
+    border-bottom: 2px dashed rgba(209,248,67,0.40);
+  }
+  .input-pair .num-field input:focus { outline: none; border-bottom-color: var(--akgolf-accent); }
+
+  /* Score field big */
+  .score-big {
+    background: rgba(209,248,67,0.06);
+    border: 1px solid rgba(209,248,67,0.25);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .score-big .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+  }
+  .score-big input {
+    background: transparent; border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 56px; font-weight: 800;
+    letter-spacing: -0.04em;
+    width: 130px;
+    text-align: center;
+    border-bottom: 2px dashed rgba(209,248,67,0.40);
+    padding-bottom: 4px;
+  }
+  .score-big input:focus { outline: none; border-bottom-color: var(--akgolf-accent); }
+  .score-big .right { margin-left: auto; }
+  .score-big .right .l { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; }
+  .score-big .right .v { font-family:'Inter',sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 4px; }
+
+  .test-actions {
+    display: flex; align-items: center; gap: 10px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--akgolf-line-dark);
+  }
+  .test-actions .right { margin-left: auto; }
+
+  .done-summary {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 18px;
+    background: rgba(118,193,156,0.10);
+    border: 1px solid rgba(118,193,156,0.25);
+    border-radius: 12px;
+    color: #6FCBA1;
+    font-size: 14px; font-weight: 600;
+  }
+  .done-summary [data-lucide] { width: 18px; height: 18px; }
+  .done-summary .stats {
+    margin-left: auto;
+    display: flex; gap: 22px;
+  }
+  .done-summary .stats div {
+    text-align: right;
+  }
+  .done-summary .stats .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(111,203,161,0.7); text-transform: uppercase; }
+  .done-summary .stats .v { font-family:'Inter',sans-serif; font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 2px; }
+
+  /* Bottom status bar */
+  .km-bottom {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, rgba(10,31,24,0.85), rgba(10,31,24,0.98));
+    border-top: 1px solid rgba(209,248,67,0.20);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 22px;
+    align-items: center;
+    z-index: 50;
+  }
+  .km-progress {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .km-progress .bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    max-width: 320px;
+  }
+  .km-progress .bar > span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #6FCBA1, var(--akgolf-accent));
+    border-radius: 999px;
+    width: 33%;
+  }
+  .km-progress .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+    font-weight: 700;
+  }
+  .km-progress .label .t { color: rgba(255,255,255,0.85); margin-left: 8px; font-weight: 500; letter-spacing: 0.06em; text-transform: none; }
+
+  /* Putt big tally */
+  .tally-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .tally-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .tally-card .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.10em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+  .tally-card .stepper {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-top: 6px;
+  }
+  .tally-card .stepper button {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 11px;
+    line-height: 1;
+  }
+  .tally-card .stepper .v {
+    font-family:'Inter',sans-serif;
+    font-size: 22px; font-weight: 800; color:#fff;
+    min-width: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .input-grid-3 { grid-template-columns: 1fr; }
+    .tally-grid { grid-template-columns: repeat(2, 1fr); }
+    .km-bottom { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="activity"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Velkommen</div>
+    <div class="phq-nav-item"><i data-lucide="user-plus"></i> Onboarding ✓</div>
+    <div class="phq-nav-item active"><i data-lucide="activity"></i> Kartlegging</div>
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Kartlegging<span class="date">INITIAL ASSESSMENT · STEG 1 ETTER ONBOARDING</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <!-- HERO -->
+    <section class="km-hero">
+      <div style="font-family:'JetBrains Mono',monospace; font-size: 10px; letter-spacing: 0.16em; color: var(--akgolf-accent); text-transform: uppercase;">Tre tester · ca. 60 min totalt</div>
+      <h1>Kartlegg utgangspunktet ditt</h1>
+      <p class="lede">Disse tre testene gir oss baseline for SG-mål og fokusområder. Du får en personlig plan etter du har fullført, og kan bruke samme tester månedlig for å måle utviklingen.</p>
+
+      <div class="km-meta">
+        <div class="pmg">
+          <div class="l">Fullført</div>
+          <div class="v">1 av 3</div>
+        </div>
+        <div class="pmg">
+          <div class="l">Estimert tid igjen</div>
+          <div class="v">~ 40 min</div>
+        </div>
+        <div class="pmg">
+          <div class="l">Lokasjon</div>
+          <div class="v" style="font-size: 14px;">Bærum Range + Bane</div>
+        </div>
+        <div style="margin-left:auto;">
+          <button class="phq-btn ghost"><i data-lucide="help-circle"></i> Spørsmål? Spør Anders</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEST 1 — DONE -->
+    <div class="test-card done">
+      <div class="test-head">
+        <div class="test-num"><strong>1</strong>50–150m</div>
+        <div>
+          <div class="test-title">50-100-150 jern-spredning</div>
+          <div class="test-meta">5 BALLER × 3 LENGDER · TRACKMAN ELLER MÅL · ✓ FULLFØRT</div>
+        </div>
+        <span class="phq-pill success"><i data-lucide="check" style="width:11px;height:11px;"></i> Logget</span>
+      </div>
+
+      <div class="done-summary">
+        <i data-lucide="check-circle-2"></i>
+        Test 1 fullført — vi loggfører som SG-baseline.
+        <div class="stats">
+          <div><div class="l">Avg 50m</div><div class="v">2.4m</div></div>
+          <div><div class="l">Avg 100m</div><div class="v">5.8m</div></div>
+          <div><div class="l">Avg 150m</div><div class="v">8.2m</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEST 2 — ACTIVE -->
+    <div class="test-card active">
+      <div class="test-head">
+        <div class="test-num"><strong>2</strong>9 hull</div>
+        <div>
+          <div class="test-title">9-hulls test-runde</div>
+          <div class="test-meta">FRA HVITT TEE · BASELINE FOR SCORE · CA. 90 MIN</div>
+        </div>
+        <span class="phq-pill lime">PÅGÅR</span>
+      </div>
+
+      <div class="instructions">
+        <div class="title">SLIK GJØR DU</div>
+        <ol>
+          <li>Spill hull 1–9 fra hvitt tee, normal regler — ingen mulligans, putt alt ut.</li>
+          <li>Logg score per hull i tabellen under, eller la GolfBox-runde-loggen synkes inn automatisk.</li>
+          <li>Noter også antall fairways truffet og antall greens i regulering. Disse er valgfrie men hjelper baselinen vår.</li>
+        </ol>
+      </div>
+
+      <div class="score-big">
+        <div>
+          <div class="lbl">Total score · 9 hull</div>
+          <input value="42" type="number">
+        </div>
+        <div class="right">
+          <div class="l">Mål-baseline</div>
+          <div class="v">~ 41 strokes</div>
+        </div>
+      </div>
+
+      <div class="input-grid-3">
+        <div class="input-pair">
+          <div class="lbl">Putts totalt</div>
+          <div class="num-field"><input value="17" type="number"><span class="unit">putts</span></div>
+        </div>
+        <div class="input-pair">
+          <div class="lbl">Fairways truffet</div>
+          <div class="num-field"><input value="4" type="number"><span class="unit">/ 7</span></div>
+        </div>
+        <div class="input-pair">
+          <div class="lbl">Greens i regulering</div>
+          <div class="num-field"><input value="3" type="number"><span class="unit">/ 9</span></div>
+        </div>
+      </div>
+
+      <div class="test-actions">
+        <button class="phq-btn ghost sm"><i data-lucide="external-link"></i> Hent fra GolfBox</button>
+        <span class="bottom-meta" style="font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase;">SISTE LAGRING 1 MIN SIDEN</span>
+        <div class="right" style="display:flex; gap:8px;">
+          <button class="phq-btn ghost"><i data-lucide="x"></i> Hopp over</button>
+          <button class="phq-btn primary"><i data-lucide="check"></i> Fullfør test</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEST 3 — PENDING -->
+    <div class="test-card">
+      <div class="test-head">
+        <div class="test-num"><strong>3</strong>3-putt</div>
+        <div>
+          <div class="test-title">3-putt-test · 3 / 6 / 10 fot</div>
+          <div class="test-meta">10 PUTTS PER LENGDE · LOGG ANTALL INN · CA. 15 MIN</div>
+        </div>
+        <span class="phq-pill">VENTER</span>
+      </div>
+
+      <div class="instructions">
+        <div class="title">SLIK GJØR DU</div>
+        <ol>
+          <li>Marker tre avstander: 3 fot (1m), 6 fot (1,8m), 10 fot (3m) på en flat green.</li>
+          <li>Slå 10 putts fra hver avstand mot samme hull — logg antall som går inn under.</li>
+          <li>Bruk samme rutine du ville brukt på banen — pre-shot, sikt, slag. Dette er en realistisk baseline, ikke en perfekt-utførelse.</li>
+        </ol>
+      </div>
+
+      <div class="tally-grid">
+        <div class="tally-card">
+          <div class="l">3 fot · inn</div>
+          <div class="stepper"><button>−</button><div class="v">8</div><button>+</button></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.4); margin-top:4px;">/ 10</div>
+        </div>
+        <div class="tally-card">
+          <div class="l">6 fot · inn</div>
+          <div class="stepper"><button>−</button><div class="v">5</div><button>+</button></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.4); margin-top:4px;">/ 10</div>
+        </div>
+        <div class="tally-card">
+          <div class="l">10 fot · inn</div>
+          <div class="stepper"><button>−</button><div class="v">2</div><button>+</button></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.4); margin-top:4px;">/ 10</div>
+        </div>
+        <div class="tally-card" style="opacity:0.55;">
+          <div class="l">Avg første putt-distance</div>
+          <div class="stepper"><button>−</button><div class="v" style="font-size: 18px;">— ft</div><button>+</button></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.4); margin-top:4px;">VALGFRI</div>
+        </div>
+        <div class="tally-card" style="opacity:0.55;">
+          <div class="l">3-putt totalt på runden</div>
+          <div class="stepper"><button>−</button><div class="v">0</div><button>+</button></div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size: 9px; color: rgba(255,255,255,0.4); margin-top:4px;">VALGFRI</div>
+        </div>
+      </div>
+
+      <div class="test-actions">
+        <span class="bottom-meta" style="font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase;">IKKE STARTET</span>
+        <div class="right" style="display:flex; gap:8px;">
+          <button class="phq-btn ghost"><i data-lucide="x"></i> Hopp over</button>
+          <button class="phq-btn"><i data-lucide="play"></i> Start test 3</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- BOTTOM STATUS BAR -->
+<footer class="km-bottom">
+  <div class="km-progress">
+    <div class="label">1/3 <span class="t">tester fullført — fortsett med 9-hull-runden</span></div>
+    <div class="bar"><span></span></div>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase;">
+    DATA AUTO-LAGRES
+  </div>
+  <button class="phq-btn primary lg">Fullfør kartlegging <i data-lucide="arrow-right"></i></button>
+</footer>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.tally-card .stepper').forEach(s=>{
+  const v = s.querySelector('.v');
+  s.querySelectorAll('button').forEach((b,i)=>{
+    b.addEventListener('click', ()=>{
+      let n = parseInt(v.textContent) || 0;
+      n = i === 0 ? Math.max(0, n-1) : Math.min(10, n+1);
+      v.textContent = n;
+    });
+  });
+});
+</script>
+</body>
+</html>

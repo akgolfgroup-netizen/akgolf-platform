@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AK Golf Group — Forsiden</title>
+<meta name="description" content="Coaching, software og klubbutvikling. Vi gjør golf tilgjengelig, utviklende og relevant — for alle nivåer, hele livet.">
+<link rel="icon" href="../assets/favicon/favicon-32.png">
+<link rel="stylesheet" href="app.css">
+<style>
+  /* Page-local: hero composition */
+  .hero {
+    position: relative;
+    min-height: 760px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    overflow: hidden;
+    background: var(--ak-dark-bg);
+  }
+  .hero__photo {
+    position: absolute; inset: 0;
+    /* Banefoto placeholder — to be replaced with real 1920×1080 banefoto */
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 20%, rgba(209,248,67,0.18), transparent 60%),
+      radial-gradient(ellipse 80% 80% at 80% 90%, rgba(0,88,64,0.85), transparent 70%),
+      linear-gradient(135deg, #1a4a3a 0%, #102B1E 70%);
+  }
+  .hero__photo::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,0.025) 22px 23px),
+      linear-gradient(180deg, rgba(10,31,24,0) 40%, rgba(10,31,24,0.6) 100%);
+  }
+  .hero__placeholder-tag {
+    position: absolute; bottom: 24px; right: 24px;
+    padding: 8px 14px;
+    background: rgba(10,31,24,0.72);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.6);
+    z-index: 3;
+  }
+  .hero__inner {
+    position: relative; z-index: 2;
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-block: 96px 64px;
+  }
+  .hero__eyebrow {
+    color: var(--ak-accent);
+    margin-bottom: 24px;
+  }
+  .hero__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(44px, 7vw, 88px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin: 0 0 32px;
+    max-width: 980px;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .hero__title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ak-accent);
+  }
+  .hero__lede {
+    max-width: 580px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.78);
+    margin: 0 0 40px;
+  }
+  .hero__cta-row {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 56px;
+  }
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 720px;
+    padding: 24px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+  }
+  .hero__stat-num {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 4px;
+  }
+  .hero__stat-num span { color: var(--ak-accent); }
+  .hero__stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+  }
+  @media (min-width: 700px) { .hero__stats { grid-template-columns: repeat(4, 1fr); } }
+
+  /* Services */
+  .services {
+    background: var(--ak-surface);
+    padding-block: 96px;
+  }
+  .services__head {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 48px;
+    align-items: end;
+  }
+  .services__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--ak-ink);
+    max-width: 720px;
+    text-wrap: balance;
+  }
+  .services__title em { font-style: italic; font-weight: 500; color: var(--ak-primary); }
+  .services__sub { color: var(--ak-text); max-width: 560px; font-size: 16px; line-height: 1.6; margin: 0; }
+  @media (min-width: 900px) {
+    .services__head { grid-template-columns: 1fr 1fr; gap: 64px; }
+  }
+  .services__grid {
+    display: grid; gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px)  { .services__grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .service {
+    background: #fff;
+    border: 1px solid #e0e8e5;
+    border-radius: 16px;
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+  .service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    border-color: var(--ak-primary);
+  }
+  .service__thumb {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #d6e2dd 0%, #ECF0EF 100%);
+    margin-bottom: 4px;
+  }
+  .service__thumb-tag {
+    position: absolute; bottom: 10px; left: 10px;
+    padding: 4px 10px;
+    background: #fff;
+    border: 1px solid #d6e2dd;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ak-primary);
+  }
+  .service__icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--ak-accent);
+    color: var(--ak-ink);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .service__title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--ak-ink);
+  }
+  .service__copy { color: var(--ak-text); font-size: 15px; line-height: 1.6; margin: 0; flex: 1; }
+  .service__meta {
+    display: flex; gap: 14px; font-size: 12px; color: var(--ak-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    border-top: 1px solid #ECF0EF;
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+  .service__cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ak-primary);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .service__cta:hover { color: #00684c; }
+
+  /* Social proof */
+  .proof {
+    background: #fff;
+    padding-block: 96px;
+    border-top: 1px solid #e0e8e5;
+  }
+  .proof__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .proof__metric .ak-num {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ak-ink);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .proof__metric .ak-num span { color: var(--ak-primary); }
+  .proof__metric-label {
+    font-size: 14px;
+    color: var(--ak-text);
+    line-height: 1.5;
+    max-width: 220px;
+  }
+  @media (min-width: 760px) { .proof__row { grid-template-columns: repeat(4, 1fr); } }
+
+  .testimonials { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .testimonials { grid-template-columns: repeat(3, 1fr); } }
+  .testimonial {
+    background: var(--ak-surface);
+    border: 1px solid #e0e8e5;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .testimonial__quote {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ak-ink);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .testimonial__quote::before { content: "“"; color: var(--ak-primary); margin-right: 2px; }
+  .testimonial__quote::after  { content: "”"; color: var(--ak-primary); margin-left: 2px; }
+  .testimonial__attr {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: auto;
+  }
+  .testimonial__avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--ak-primary), var(--ak-accent));
+    color: var(--ak-ink);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .testimonial__name { font-weight: 600; font-size: 14px; color: var(--ak-ink); display: block; }
+  .testimonial__role { font-size: 12px; color: var(--ak-muted); }
+
+  /* Bottom CTA */
+  .cta {
+    background: var(--ak-dark-bg);
+    color: #fff;
+    padding-block: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(209,248,67,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 60% at 10% 100%, rgba(0,88,64,0.6), transparent 70%);
+    pointer-events: none;
+  }
+  .cta__inner {
+    position: relative; z-index: 2;
+    display: grid; gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .cta__inner { grid-template-columns: 1.4fr 1fr; align-items: center; gap: 64px; }
+  }
+  .cta__eyebrow { color: var(--ak-accent); margin-bottom: 16px; }
+  .cta__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 24px;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .cta__title em { font-style: italic; font-weight: 400; color: var(--ak-accent); }
+  .cta__copy { color: rgba(255,255,255,0.72); font-size: 17px; line-height: 1.6; max-width: 520px; margin: 0; }
+  .cta__buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .cta__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  .cta__list li { display: flex; gap: 12px; align-items: flex-start; color: rgba(255,255,255,0.85); font-size: 15px; }
+  .cta__list li span[data-icon] { color: var(--ak-accent); flex-shrink: 0; margin-top: 2px; }
+
+  /* Course strip — small banner block between sections */
+  .strip {
+    height: 280px;
+    background: linear-gradient(135deg, #1a4a3a 0%, #102B1E 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .strip::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(209,248,67,0.14), transparent 60%),
+      repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,0.025) 22px 23px);
+  }
+  .strip__tag {
+    position: absolute; bottom: 16px; right: 16px;
+    padding: 6px 12px;
+    background: rgba(10,31,24,0.72);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+</style>
+</head>
+<body>
+
+<!-- DUPLISERT FRA screens/_partials/nav.html — keep in sync -->
+<header class="ak-website-nav" data-partial="nav">
+  <div class="ak-container">
+    <div class="ak-website-nav__inner">
+      <a href="01-forsiden.html" class="ak-website-nav__logo-link" aria-label="AK Golf Group — forsiden">
+        <img src="../assets/logos/ak-golf-logo-primary-on-light.svg" alt="AK Golf Group" class="ak-website-nav__logo">
+      </a>
+      <nav class="ak-website-nav__links" aria-label="Hovednavigasjon">
+        <a href="02-academy.html">Academy</a>
+        <a href="05-junior-academy.html">Junior</a>
+        <a href="06-booking.html">Booking</a>
+        <a href="07-utvikling.html">Utvikling</a>
+        <a href="08-pricing.html">Priser</a>
+      </nav>
+      <div class="ak-website-nav__cta">
+        <a href="../portal-login.html" class="ak-btn ak-btn--ghost ak-btn--sm">Logg inn</a>
+        <a href="04-academy-booking.html" class="ak-btn ak-btn--primary ak-btn--sm">Bli medlem</a>
+        <button class="ak-website-nav__burger" aria-label="Åpne meny" data-menu-toggle>
+          <span data-icon="menu" data-size="22"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="ak-mobile-menu" data-mobile-menu aria-hidden="true">
+  <a href="02-academy.html">Academy</a>
+  <a href="05-junior-academy.html">Junior Academy</a>
+  <a href="06-booking.html">Booking</a>
+  <a href="07-utvikling.html">Utvikling</a>
+  <a href="08-pricing.html">Priser</a>
+  <a href="09-om-oss.html">Om oss</a>
+  <a href="10-kontakt.html">Kontakt</a>
+  <div style="margin-top: 24px; display: grid; gap: 8px;">
+    <a href="../portal-login.html" class="ak-btn ak-btn--ghost-dark">Logg inn</a>
+    <a href="04-academy-booking.html" class="ak-btn ak-btn--accent">Bli medlem</a>
+  </div>
+</div>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__photo" aria-hidden="true"></div>
+    <div class="hero__placeholder-tag">[Banefoto: Gamle Fredrikstad GK, høst, 16:9]</div>
+    <div class="ak-container hero__inner">
+      <div class="ak-eyebrow hero__eyebrow">Coaching · Software · Utvikling</div>
+      <h1 class="hero__title" id="hero-title">
+        Golf som <em>utvikler deg</em> — fra første slag til siste runde i livet.
+      </h1>
+      <p class="hero__lede">
+        Strukturert coaching, et premium spillerportal, og klubbutvikling for norske golfklubber.
+        Bygget av Anders og Markus i Fredrikstad.
+      </p>
+      <div class="hero__cta-row">
+        <a href="04-academy-booking.html" class="ak-btn ak-btn--accent ak-btn--lg">
+          Bli medlem
+          <span data-icon="arrow-right" data-size="18"></span>
+        </a>
+        <a href="06-booking.html" class="ak-btn ak-btn--ghost-dark ak-btn--lg">
+          Book en time
+        </a>
+      </div>
+      <dl class="hero__stats" aria-label="Nøkkeltall">
+        <div class="hero__stat">
+          <div class="hero__stat-num ak-num">240<span>+</span></div>
+          <div class="hero__stat-label">Aktive elever</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num ak-num">12 <span>år</span></div>
+          <div class="hero__stat-label">Siden 2014</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num ak-num">−<span>2,3</span></div>
+          <div class="hero__stat-label">Snitt HCP-fall · 12 mnd</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-num ak-num">4,9<span>/5</span></div>
+          <div class="hero__stat-label">Elev-score</div>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="services" aria-labelledby="services-title">
+    <div class="ak-container">
+      <header class="services__head">
+        <h2 class="services__title" id="services-title">
+          Tre rolige veier til <em>bedre golf</em>.
+        </h2>
+        <p class="services__sub">
+          Hver vei kan stå alene. Mange velger to. Et fåtall — de mest dedikerte —
+          velger alle tre, og det er da utviklingen virkelig løsner.
+        </p>
+      </header>
+      <div class="services__grid">
+
+        <article class="service">
+          <div class="service__thumb">
+            <span class="service__thumb-tag">[Banefoto: Performance Studio, 4:3]</span>
+          </div>
+          <div class="service__icon">
+            <span data-icon="graduation-cap" data-size="22"></span>
+          </div>
+          <h3 class="service__title">Academy</h3>
+          <p class="service__copy">
+            Strukturert coaching for ambisiøse golfere. TrackMan-basert teknikk,
+            mental forberedelse, og en plan som faktisk holder gjennom sesongen.
+          </p>
+          <div class="service__meta">
+            <span>Fra 900,–/mnd</span><span>·</span><span>Performance Pro 2 000,–</span>
+          </div>
+          <a href="02-academy.html" class="service__cta">
+            Se Academy <span data-icon="arrow-right" data-size="14"></span>
+          </a>
+        </article>
+
+        <article class="service">
+          <div class="service__thumb">
+            <span class="service__thumb-tag">[Banefoto: Junior-trening, 4:3]</span>
+          </div>
+          <div class="service__icon">
+            <span data-icon="users" data-size="22"></span>
+          </div>
+          <h3 class="service__title">Junior Academy</h3>
+          <p class="service__copy">
+            Aldersgrupper 6–9, 10–13 og 14–17. Vi bygger spillere som har
+            det gøy på golfbanen, ikke bare presterer der. Foreldre er invitert.
+          </p>
+          <div class="service__meta">
+            <span>3 aldersgrupper</span><span>·</span><span>Søknad åpen</span>
+          </div>
+          <a href="05-junior-academy.html" class="service__cta">
+            Se Junior Academy <span data-icon="arrow-right" data-size="14"></span>
+          </a>
+        </article>
+
+        <article class="service">
+          <div class="service__thumb">
+            <span class="service__thumb-tag">[Produktfoto: Spillerportalen, 4:3]</span>
+          </div>
+          <div class="service__icon">
+            <span data-icon="flag-triangle-right" data-size="22"></span>
+          </div>
+          <h3 class="service__title">Booking &amp; Portal</h3>
+          <p class="service__copy">
+            Book Anders eller Markus direkte. Få tilgang til Spillerportalen —
+            din digitale coach, treningsplan og statistikk samlet på ett sted.
+          </p>
+          <div class="service__meta">
+            <span>Direktebooking</span><span>·</span><span>Inkludert i Academy</span>
+          </div>
+          <a href="06-booking.html" class="service__cta">
+            Book en time <span data-icon="arrow-right" data-size="14"></span>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" aria-hidden="true">
+    <span class="strip__tag">[Banner: Gamle Fredrikstad GK, vid panorama, 8:3]</span>
+  </section>
+
+  <section class="proof" aria-labelledby="proof-title">
+    <div class="ak-container">
+      <header class="services__head" style="margin-bottom: 56px;">
+        <h2 class="services__title" id="proof-title">
+          Tall som <em>betyr noe</em> — fra ekte sesonger.
+        </h2>
+        <p class="services__sub">
+          Vi måler det som faktisk flytter spillere fremover. HCP, slag, putts.
+          Alt logget i Spillerportalen, alt fra norske golfklubber.
+        </p>
+      </header>
+      <dl class="proof__row">
+        <div class="proof__metric">
+          <span class="ak-num">−<span>2,3</span></span>
+          <span class="proof__metric-label">Snitt HCP-fall hos Academy-elever på 12 mnd</span>
+        </div>
+        <div class="proof__metric">
+          <span class="ak-num">1,72</span>
+          <span class="proof__metric-label">Putts per hull · ned fra 1,98</span>
+        </div>
+        <div class="proof__metric">
+          <span class="ak-num">240<span>+</span></span>
+          <span class="proof__metric-label">Aktive elever på tvers av Academy og Junior</span>
+        </div>
+        <div class="proof__metric">
+          <span class="ak-num">8<span>/10</span></span>
+          <span class="proof__metric-label">Elever som fornyer abonnementet hvert år</span>
+        </div>
+      </dl>
+      <div class="testimonials">
+        <article class="testimonial">
+          <p class="testimonial__quote">
+            Etter halvannet år hos Anders har jeg gått fra 22 til 14 i HCP. Men det
+            beste er at jeg endelig forstår hva jeg gjør på banen.
+          </p>
+          <div class="testimonial__attr">
+            <span class="testimonial__avatar">EM</span>
+            <div>
+              <span class="testimonial__name">Emilie M.</span>
+              <span class="testimonial__role">Performance Pro · 2. sesong</span>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial">
+          <p class="testimonial__quote">
+            Det rolige tempoet og den datadrevne tilbakemeldingen er forskjellen.
+            Markus ser ting ingen andre trenere har sett.
+          </p>
+          <div class="testimonial__attr">
+            <span class="testimonial__avatar">OR</span>
+            <div>
+              <span class="testimonial__name">Oliver R.</span>
+              <span class="testimonial__role">Performance · HCP 8,1</span>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial">
+          <p class="testimonial__quote">
+            Sønnen min har trent her i to år. Han har fått venner, en jevn kurve
+            i utvikling, og treningen passer i en travel skoleuke.
+          </p>
+          <div class="testimonial__attr">
+            <span class="testimonial__avatar">KS</span>
+            <div>
+              <span class="testimonial__name">Kari S.</span>
+              <span class="testimonial__role">Forelder · Junior 10–13</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-title">
+    <div class="ak-container cta__inner">
+      <div>
+        <div class="ak-eyebrow cta__eyebrow">Bli medlem</div>
+        <h2 class="cta__title" id="cta-title">
+          Begynn med en <em>kartleggingstime</em>. <br>Resten finner vi ut sammen.
+        </h2>
+        <p class="cta__copy">
+          90 minutter med Anders eller Markus. Vi måler hvor du står i dag,
+          og du får en plan å jobbe etter — uavhengig av om du blir medlem.
+        </p>
+        <div class="cta__buttons">
+          <a href="04-academy-booking.html" class="ak-btn ak-btn--accent ak-btn--lg">
+            Book kartlegging
+            <span data-icon="arrow-right" data-size="18"></span>
+          </a>
+          <a href="08-pricing.html" class="ak-btn ak-btn--ghost-dark ak-btn--lg">
+            Se priser
+          </a>
+        </div>
+      </div>
+      <ul class="cta__list" aria-label="Det inkluderer">
+        <li><span data-icon="check" data-size="20"></span> 90 minutter en-til-en, på bane eller i studio</li>
+        <li><span data-icon="check" data-size="20"></span> TrackMan-måling av kølle og slagdata</li>
+        <li><span data-icon="check" data-size="20"></span> Skriftlig sammendrag i Spillerportalen samme dag</li>
+        <li><span data-icon="check" data-size="20"></span> Forslag til 4-ukers plan, helt uforpliktende</li>
+        <li><span data-icon="check" data-size="20"></span> 1 200,– · Trekkes fra første abonnement hvis du blir medlem</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<!-- DUPLISERT FRA screens/_partials/footer.html — keep in sync -->
+<footer class="ak-footer" data-partial="footer">
+  <div class="ak-container">
+    <div class="ak-footer__grid">
+      <div class="ak-footer__brand">
+        <img src="../assets/logos/ak-golf-logo-primary-on-dark.svg" alt="AK Golf Group" class="ak-footer__logo">
+        <p class="ak-footer__tagline">
+          Vi gjør golf tilgjengelig, utviklende og relevant — for alle nivåer, hele livet.
+          Coaching, software og klubbutvikling fra Fredrikstad.
+        </p>
+        <div class="ak-footer__social" aria-label="Sosiale medier">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram" data-size="18"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook" data-size="18"></span></a>
+          <a href="#" aria-label="LinkedIn"><span data-icon="linkedin" data-size="18"></span></a>
+          <a href="#" aria-label="YouTube"><span data-icon="youtube" data-size="18"></span></a>
+        </div>
+      </div>
+      <div>
+        <h4>Coaching</h4>
+        <ul>
+          <li><a href="02-academy.html">Academy</a></li>
+          <li><a href="05-junior-academy.html">Junior Academy</a></li>
+          <li><a href="06-booking.html">Book trener</a></li>
+          <li><a href="08-pricing.html">Priser</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Selskap</h4>
+        <ul>
+          <li><a href="09-om-oss.html">Om oss</a></li>
+          <li><a href="07-utvikling.html">Utvikling</a></li>
+          <li><a href="10-kontakt.html">Kontakt</a></li>
+          <li><a href="11-personvern.html">Personvern</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li>Fredrikstad, Norge</li>
+          <li><a href="mailto:hei@akgolfgroup.no">hei@akgolfgroup.no</a></li>
+          <li><a href="tel:+4790000000">+47 900 00 000</a></li>
+          <li>Hverdager 09–17</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ak-footer__bottom">
+      <span>© 2026 AK Golf Group AS · Org.nr. 000 000 000</span>
+      <span>Bygget i Fredrikstad</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/lucide.js"></script>
+<script>
+  (function () {
+    var btn = document.querySelector('[data-menu-toggle]');
+    var menu = document.querySelector('[data-mobile-menu]');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+      var open = menu.getAttribute('data-open') === 'true';
+      menu.setAttribute('data-open', String(!open));
+      menu.setAttribute('aria-hidden', String(open));
+      btn.setAttribute('aria-label', open ? 'Åpne meny' : 'Lukk meny');
+    });
+  })();
+</script>
+</body>
+</html>

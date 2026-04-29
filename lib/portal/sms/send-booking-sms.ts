@@ -55,6 +55,42 @@ export async function sendBookingConfirmationSms(
 }
 
 /**
+ * Send SMS til kunde med Stripe Payment Link for manuell booking (Fase E).
+ * Brukes når en coach lager booking på en ny kunde uten lagret kort.
+ */
+export async function sendPaymentLinkSms(params: {
+  customerPhone: string;
+  customerName: string;
+  serviceName: string;
+  startTime: Date;
+  paymentUrl: string;
+}): Promise<{ sent: boolean }> {
+  const { customerPhone, customerName, serviceName, startTime, paymentUrl } = params;
+  if (!customerPhone) return { sent: false };
+
+  const client = getTwilioClient();
+  if (!client) {
+    logger.warn("[SMS] Twilio not configured, skipping payment-link SMS");
+    return { sent: false };
+  }
+
+  const formattedPhone = customerPhone.startsWith("+")
+    ? customerPhone
+    : `+47${customerPhone.replace(/\s/g, "")}`;
+
+  const dateStr = format(startTime, "EEEE d. MMMM 'kl.' HH:mm", { locale: nb });
+  const message = `Hei ${customerName}! Vi har reservert ${serviceName} ${dateStr}. Bekreft betaling her: ${paymentUrl} — Hilsen AK Golf`;
+
+  try {
+    const result = await client.sendSms(formattedPhone, message);
+    return { sent: result.success };
+  } catch (error) {
+    logger.error("[SMS] Payment-link SMS error:", error);
+    return { sent: false };
+  }
+}
+
+/**
  * Send SMS to instructor when a booking is cancelled.
  */
 export async function sendBookingCancellationSms(params: {

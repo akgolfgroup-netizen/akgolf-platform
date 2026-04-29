@@ -3,6 +3,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrainingLogs, getLoggedSessionIds, getLastSession } from "./actions";
 import { getActivePlan } from "@/app/portal/(dashboard)/treningsplan/actions";
 import { TrainingDiaryClient } from "./training-diary-client";
+import { DagbokV2Client } from "@/components/portal/dagbok/v2/dagbok-v2-client";
 import { isWithinInterval, endOfISOWeek, startOfISOWeek } from "date-fns";
 
 export const metadata: Metadata = {
@@ -26,8 +27,13 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function MinTreningPage() {
+interface MinTreningPageProps {
+  searchParams: Promise<{ v?: string }>;
+}
+
+export default async function MinTreningPage({ searchParams }: MinTreningPageProps) {
   await requirePortalUser();
+  const params = await searchParams;
 
   // eslint-disable-next-line react-hooks/purity
   const nowMs = Date.now();
@@ -108,6 +114,28 @@ export default async function MinTreningPage() {
   };
 
   const streakData = calculateStreak();
+
+  if (params.v === "2") {
+    return (
+      <DagbokV2Client
+        logs={logs.map((l) => ({
+          id: l.id,
+          date: l.date,
+          durationMinutes: l.durationMinutes,
+          focusArea: l.focusArea,
+          notes: l.notes,
+          rating: l.rating,
+        }))}
+        streakData={{
+          currentStreak: streakData.current,
+          longestStreak: streakData.longest,
+          lastTrainingDate: streakData.lastDate,
+          streakFreezesRemaining: streakData.freezes,
+        }}
+        planProgress={planProgress}
+      />
+    );
+  }
 
   return (
     <TrainingDiaryClient

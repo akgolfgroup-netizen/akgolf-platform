@@ -15,12 +15,6 @@ export const HERO = {
   trustItems: [
     { label: "TrackMan-analyse hver sesjon" },
     { label: "Personlig treningsplan" },
-    { label: "Maks 65 plasser" },
-  ],
-  stats: [
-    { value: "65", label: "Plasser totalt" },
-    { value: "20 min", label: "Fokuserte økter" },
-    { value: "Resultater", label: "Dokumentert" },
   ],
 } as const;
 
@@ -58,10 +52,10 @@ export const TEAM = [
     role: "Hovedcoach",
     division: "AK Golf Academy",
     image: "/images/team/anders-kristiansen.jpg",
-    bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
+    bio: "Hovedcoach i AK Golf Academy og utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
-      { name: "Performance", price: "1 400", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "2 500", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 200", unit: "kr/mnd", detail: "2x20 min" },
+      { name: "Performance Pro", price: "2 200", unit: "kr/mnd", detail: "4x20 min" },
       { name: "Enkeltsesjon 50 min", price: "1 500", unit: "kr" },
       { name: "Banecoaching 9 hull", price: "3 000", unit: "kr/spiller" },
     ],
@@ -74,8 +68,7 @@ export const TEAM = [
     image: null,
     bio: "College-golf fra USA. Ansvarlig for VTG-kurs, gruppetreninger og juniorer. Sikrer at du lærer riktige grunnprinsipper fra starten.",
     prices: [
-      { name: "Performance", price: "800", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "1 400", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 000", unit: "kr/mnd", detail: "2x20 min" },
       { name: "Enkeltsesjon 50 min", price: "800", unit: "kr" },
       { name: "Drop-in 20 min", price: "300", unit: "kr" },
       { name: "Korthullsbane-økt", price: "TBD", unit: "", detail: "4 spillere" },
@@ -134,7 +127,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Anders",
-    price: "1 400",
+    price: "1 200",
     period: "kr/mnd",
     tagline: "For deg som ønsker struktur og jevnlig oppfølging.",
     description: "2 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -158,7 +151,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance Pro",
     coach: "Anders",
-    price: "2 500",
+    price: "2 200",
     period: "kr/mnd",
     tagline: "For den ambisiøse som vil ha raskere fremgang.",
     description: "4 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -182,9 +175,9 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Markus",
-    price: "800",
+    price: "1 000",
     period: "kr/mnd",
-    tagline: "For deg som ønsker struktur med Markus.",
+    tagline: "Klubbcoaching med Markus.",
     description: "2 x 20 min 1-til-1 coaching per måned med Markus. Full portaltilgang og treningsplan.",
     whoIsItFor: "For deg som ønsker struktur med Markus.",
     features: [
@@ -702,24 +695,22 @@ export const FOUNDER = {
   name: "Anders Kristiansen",
   title: "Grunnlegger og hovedcoach",
   bio: [
-    "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour.",
-    "Utvikler av The Foundation Method – et system bygget for å gi spillere på alle nivåer et bunnsolid fundament og varig progresjon.",
+    "Anders er grunnlegger og hovedcoach i AK Golf Group. Han jobber med spillere fra nybegynnere til ambisiøse voksne, og bygger personlige planer som henger sammen mellom hver coaching-økt.",
+    "AK Golf-metoden er bygget for å gi spillere på alle nivåer et bunnsolid fundament og målbar fremgang over tid.",
   ],
 } as const;
 
 // ─── Testimonials ───
-// TODO: Innhent tillatelse for fullt navn og bilder fra kundene
-export const TESTIMONIALS = [
-  {
-    quote: "Anders har fullstendig transformert spillet mitt. Fra 18 til 11 i handicap på ett år — med en metode som føles naturlig og bærekraftig.",
-    name: "Thomas R.",
-    fullName: "Thomas Rasmussen", // Avventer samtykke
-    role: "Academy-elev",
-    club: "Gardermoen Golfklubb",
-    program: "academy-utvikling",
-    featured: true,
-  },
-] as const;
+// Ingen aktive testimonials for tiden — legges tilbake når vi har skriftlig samtykke fra kunder.
+export const TESTIMONIALS = [] as ReadonlyArray<{
+  quote: string;
+  name: string;
+  fullName: string;
+  role: string;
+  club: string;
+  program: string;
+  featured: boolean;
+}>;
 
 // ─── Target Profiles (Forside) ───
 export const TARGET_PROFILES = {
@@ -1951,58 +1942,148 @@ export const JUNIOR_CTA_V2 = {
   ctaSecondaryHref: "https://gfrg.no/junior",
 } as const;
 
-// ─── Utvikling Page v2 (dark hero, bento grid) ───
+// ─── Utvikling Page v2 (Brand Guide V2.0 — handoff g14) ───
 export const UTVIKLING_HERO_V2 = {
-  label: "UTVIKLING",
-  heading: "Vi bygger bedre\ngolfklubber.",
-  description: "Sportslige planer, driftssystemer og QR-skilt. Skreddersydd for norske golfklubber.",
-  ctaLabel: "Ta kontakt",
+  label: "UTVIKLINGSMODELLEN",
+  headingStart: "Slik bygger vi",
+  headingEm: "varig framgang.",
+  description:
+    "Vår utviklingsmodell bygger på fire pillarer som flytter golfere fremover. Du får en plan som tilpasser seg deg, ikke omvendt.",
+  bannerQuote: "«En god plan er en spillers største lojalitet.»",
+  bannerLab: "AK GOLF · UTVIKLINGSMODELL",
 } as const;
 
-export const UTVIKLING_SERVICES_V2 = {
-  label: "TJENESTER",
-  heading: "Alt klubben trenger.",
+export const UTVIKLING_PILLARS_V2 = {
+  label: "DE FIRE PILLARENE",
+  headingStart: "Fire områder.",
+  headingEm: "Alltid sammen.",
+  intro:
+    "De fleste jobber bare med teknikk. Vi har lært at det ikke holder. Mental, fysisk og strategi avgjør om teknikken faktisk overlever 18 hull i konkurranse.",
   items: [
     {
-      id: "sportsplan",
-      label: "SPORTSLIG PLAN",
-      title: "Komplett sportslig plan",
-      description: "Vi utarbeider en helhetlig sportslig plan tilpasset klubbens storrelse, ambisjoner og ressurser. Fra juniorutvikling til elitesatsing, med konkrete mal og handlingsplaner.",
-      expandedDescription: "Planen dekker alle niva i klubben: nybegynnerprogram, bredde, junior elite og voksenutvikling. Vi definerer treningsfilosofi, periodisering og konkrete mileparler for hver gruppe. Inkluderer ogsa trenerveiledning og evalueringsverktoy.",
-      span: "large" as const,
-      theme: "light" as const,
+      num: "01 / TEKNIKK",
+      titleStart: "Repeterbar",
+      titleEm: "bevegelse.",
+      description:
+        "TrackMan og video. Vi måler hver økt og bygger på data — ikke magefølelse.",
+      bullets: [
+        "Spin-axis, attack-angle, club-path",
+        "Videoanalyse av sving",
+        "Skreddersydde drills per spiller",
+      ],
     },
     {
-      id: "programvare",
-      label: "PROGRAMVARE",
-      title: "PlayersHQ",
-      description: "Booking, coaching-notater, treningsplaner og progresjonslogging i en plattform. Brukes av alle vare spillere i dag.",
-      expandedDescription: "Portalen gir spillere tilgang til treningshistorikk, Strokes Gained-analyse, AI-drevne anbefalinger og direkte kommunikasjon med coach. Trenere far oversikt over alle elever, kan lage periodiserte planer og folge opp progresjon.",
-      span: "small" as const,
-      theme: "light" as const,
+      num: "02 / FYSISK",
+      titleStart: "Kropp som",
+      titleEm: "tåler.",
+      description:
+        "Mobilitet og styrke som beskytter mot skader og åpner for mer hastighet.",
+      bullets: ["Bevegelsesscreening", "Personlig hjemme-program", "Skadefri-protokoll"],
     },
     {
-      id: "skilting",
-      label: "SKILTING",
-      title: "QR-skilt konsept",
-      description: "Digitale treningsskilt med QR-koder pa rangen. Spillerne scanner og far tilgang til ovelser og videoer direkte pa telefonen.",
-      expandedDescription: "Hvert skilt er knyttet til spesifikke ovelser med video og instruksjoner. Klubben kan tilpasse innholdet til egne treningsprogrammer. Installasjon og innholdsproduksjon er inkludert.",
-      span: "small" as const,
-      theme: "dark" as const,
+      num: "03 / MENTAL",
+      titleStart: "Hodet under",
+      titleEm: "press.",
+      description:
+        "Pre-shot-rutiner, recovery, og identitet utenfor scorekortet.",
+      bullets: [
+        "Rutiner som tåler 18 hull",
+        "Mental kartlegging",
+        "Tilgang ved behov",
+      ],
+    },
+    {
+      num: "04 / STRATEGI",
+      titleStart: "Smartere",
+      titleEm: "beslutninger.",
+      description:
+        "Strokes Gained-data og course management. Hvor sparer du slag uten å treffe ballen bedre? Mye, viser det seg.",
+      bullets: [
+        "Strokes Gained per økt",
+        "On-course coaching",
+        "Klare mål for hver spiller",
+      ],
     },
   ],
 } as const;
 
-export const UTVIKLING_REFERENCES_V2 = {
-  label: "SAMARBEID",
-  heading: "Klubber vi jobber med.",
-  clubs: ["Gamle Fredrikstad Golfklubb", "Miklagard Golfklubb"],
+export const UTVIKLING_STATS_V2: Array<{
+  label: string;
+  value: string;
+  valueEm: string;
+  sub: string;
+}> = [];
+
+export const UTVIKLING_READING_V2 = {
+  label: "",
+  headingStart: "",
+  headingEm: "",
+  headingEnd: "",
+  paragraphs: [] as string[],
+  pullquote: "",
+  v3Heading: "",
+  v3Intro: "",
+  v3Bullets: [] as string[],
+  forYouHeading: "",
+  forYouParagraphs: [] as string[],
+};
+
+export const UTVIKLING_COMPARE_V2 = {
+  label: "VS. TYPISK PRO-TIME",
+  headingStart: "Hva skiller oss fra",
+  headingEm: "en vanlig time?",
+  rows: [
+    {
+      row: "Plan",
+      them: "Ad-hoc · per økt",
+      us: "Plan med tydelige mål",
+      emphasized: false,
+    },
+    {
+      row: "Måling",
+      them: "Magefølelse + iPhone-video",
+      us: "TrackMan + videoanalyse",
+      emphasized: true,
+    },
+    {
+      row: "Mellom økter",
+      them: "Ingenting",
+      us: "Drills og oppfølging i app",
+      emphasized: false,
+    },
+    {
+      row: "Strokes Gained",
+      them: "Sjelden",
+      us: "Innebygd · etter hver runde",
+      emphasized: false,
+    },
+    {
+      row: "Coach-tilgang",
+      them: "Time-til-time",
+      us: "Direkte chat ved behov",
+      emphasized: false,
+    },
+  ],
 } as const;
 
+export const UTVIKLING_TESTIMONIALS_V2: Array<{
+  quoteStart: string;
+  quoteEm: string;
+  quoteEnd: string;
+  name: string;
+  meta: string;
+  avatar: "purple" | "green";
+}> = [];
+
 export const UTVIKLING_CTA_V2 = {
-  heading: "Trenger klubben din en sportslig plan?",
-  description: "Ta kontakt for en uforpliktende samtale om hvordan vi kan hjelpe klubben din.",
+  headingStart: "Klar for å bygge din egen",
+  headingEm: "plan?",
+  description:
+    "Ta kontakt for en uforpliktende prat. Vi diskuterer hvor du står, hvor du vil, og om akademiet er rett match.",
   ctaPrimary: "Ta kontakt",
+  ctaPrimaryHref: "/kontakt",
+  ctaSecondary: "Se priser",
+  ctaSecondaryHref: "/pricing",
 } as const;
 
 // ─── Spillerreisen (Structure) ───
@@ -2032,4 +2113,462 @@ export const PLAYER_JOURNEY_SECTION = {
   heading: "Spillerreisen: Veien til bedre golf.",
   description: "Vi har utviklet en systematisk sti fra dine aller første slag til avansert coaching. Finn ut hvor du er i dag, og se hva som kreves for å nå neste nivå.",
   ctaLabel: "Start reisen"
+} as const;
+
+// ─── Academy Abonnement (g6) — Brand Guide V2.0 ─────────────────────────────
+// Layout/copy fra mockup g6-academy-pricing.html, men priser fra Stripe (sannhetskilde).
+// Kilder: gotchas.md ("Anders-pakker"), pricing-page-client.tsx
+export const ACADEMY_PRICING_V2 = {
+  hero: {
+    eyebrow: "Academy · Medlemskap",
+    headingPrefix: "Coaching som",
+    headingItalic: "varer",
+    headingSuffix: "hele sesongen.",
+    lede:
+      "Tre veier inn i Academy. Start med Markus eller hopp rett på Anders — du kan oppgradere når som helst, ingen bindingstid.",
+    stats: [
+      { value: "32+", label: "Aktive Academy-spillere" },
+      { value: "−4,2", label: "Snitt HCP-reduksjon · år 1" },
+      { value: "94%", label: "Fornyer hvert år" },
+    ],
+  },
+  plansHead: {
+    headingPrefix: "Tre måter å være",
+    headingItalic: "Academy-spiller",
+    headingSuffix: ".",
+    description:
+      "Alle abonnement inkluderer PlayerHQ-app, treningsplan i app, TrackMan og videoanalyse. Forskjellen ligger i hvilken coach du møter og hvor mange økter per måned.",
+  },
+  plans: [
+    {
+      id: "performance-markus",
+      name: "Performance · Markus",
+      tagline: "Komme i gang med struktur",
+      description:
+        "Klubbcoaching med Markus to ganger i måneden. For deg som vil bygge fundament uten å forplikte deg til toppnivå.",
+      priceMonthly: "1 000",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Avbestill når som helst",
+      cta: "Velg Markus",
+      href: "/booking-v2?serviceTypeId=performance-markus",
+      features: [
+        { text: "2 × 20 min coaching / måned", heavy: true },
+        { text: "Klubbcoaching med Markus" },
+        { text: "Selvbooking 7 dager frem" },
+        { text: "PlayerHQ-app inkludert" },
+        { text: "Treningsplan i app" },
+        { text: "TrackMan + videoanalyse" },
+      ],
+      sectionTitle: "Inkludert",
+    },
+    {
+      id: "performance-anders",
+      name: "Performance · Anders",
+      tagline: "Strukturert utvikling med Anders",
+      description:
+        "Individuell coaching med Anders to ganger i måneden. For deg som vil ha hovedcoachen vår, men holder volumet moderat.",
+      priceMonthly: "1 200",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Avbestill når som helst",
+      cta: "Velg Anders",
+      href: "/booking-v2?serviceTypeId=performance-anders",
+      featured: true,
+      ribbon: "Mest valgte",
+      features: [
+        { text: "2 × 20 min coaching / måned", heavy: true },
+        { text: "1-til-1 med Anders", heavy: true },
+        { text: "TrackMan + videoanalyse" },
+        { text: "Selvbooking 7 dager frem" },
+        { text: "PlayerHQ-app inkludert" },
+        { text: "Treningsplan i app" },
+        { text: "Coach-notater etter hver økt" },
+      ],
+      sectionTitle: "Alt i Markus, pluss",
+    },
+    {
+      id: "performance-pro-anders",
+      name: "Performance Pro",
+      tagline: "Det Anders gjør med tour-spillere",
+      description:
+        "Fire økter i måneden med Anders. Prioritert booking, AI-assistent og høyeste utviklingstempo for ambisiøse amatører.",
+      priceMonthly: "2 200",
+      period: "/ mnd",
+      billed: "Ingen bindingstid · Prioritert booking",
+      cta: "Velg Performance Pro",
+      href: "/booking-v2?serviceTypeId=performance-pro-anders",
+      features: [
+        { text: "4 × 20 min coaching / måned", heavy: true },
+        { text: "1-til-1 med Anders", heavy: true },
+        { text: "Prioritert booking 14 dager frem" },
+        { text: "TrackMan + videoanalyse" },
+        { text: "PlayerHQ + AI-assistent" },
+        { text: "Personlig treningsplan i app" },
+        { text: "Coach-notater + ukentlig oppfølging" },
+      ],
+      sectionTitle: "Alt i Anders, pluss",
+    },
+  ],
+  compare: {
+    eyebrow: "Sammenlign nivåer",
+    headingPrefix: "Alt du får, side om",
+    headingItalic: "side.",
+    rows: [
+      { group: "Coaching" },
+      { feature: "Coaching-økter / måned", values: ["2", "2", "4"] },
+      { feature: "Coach", values: ["Markus", "Anders", "Anders"] },
+      { feature: "Sesjonslengde", values: ["20 min", "20 min", "20 min"] },
+      { feature: "TrackMan + videoanalyse", values: [true, true, true] },
+      { feature: "Coach-notater i app", values: [true, true, true] },
+      { group: "Booking & tilgang" },
+      { feature: "Selvbooking", values: ["7 dager frem", "7 dager frem", "14 dager frem"] },
+      { feature: "Prioritert booking", values: [false, false, true] },
+      { feature: "Avbestilling", values: ["Når som helst", "Når som helst", "Når som helst"] },
+      { group: "PlayerHQ-app" },
+      { feature: "Treningsplan i app", values: [true, true, true] },
+      { feature: "Øvelsesbank + statistikk", values: [true, true, true] },
+      { feature: "AI-assistent", values: [false, false, true] },
+    ],
+  },
+  included: {
+    eyebrow: "Alle abonnement inkluderer",
+    headingPrefix: "Et fundament",
+    headingItalic: "som følger deg",
+    headingSuffix: "hele året.",
+    cards: [
+      {
+        icon: "BarChart3",
+        title: "Strokes Gained-måling",
+        description:
+          "Vi måler hvor du taper og vinner slag mot ditt nivå. Du ser fremgangen i tall, ikke magefølelse.",
+      },
+      {
+        icon: "Smartphone",
+        title: "PlayerHQ i lomma",
+        description:
+          "Treningsplan, øvelsesbank og coach-notater. Bygd så du faktisk åpner den.",
+      },
+      {
+        icon: "Video",
+        title: "Videoanalyse",
+        description:
+          "Hver økt filmes. Du får tilbake klipp med markeringer og kommentarer fra coachen din.",
+      },
+      {
+        icon: "Snowflake",
+        title: "Året rundt",
+        description:
+          "Indoor TrackMan i vintermånedene, range og bane i sesong. Du mister ikke momentum.",
+      },
+      {
+        icon: "RotateCcw",
+        title: "Ingen bindingstid",
+        description:
+          "Avbestill når som helst. Vi vil at du blir fordi det funker — ikke fordi du er låst.",
+      },
+      {
+        icon: "ShieldCheck",
+        title: "Klar struktur",
+        description:
+          "Du vet alltid hva du skal trene på mellom sesjonene. Treningsplanen oppdateres etter hver økt.",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "FAQ",
+    headingPrefix: "De spørsmålene",
+    headingItalic: "folk faktisk",
+    headingSuffix: "stiller.",
+    description:
+      "Står ikke svaret her? Send melding på kontakt — vi svarer samme dag.",
+    items: [
+      {
+        q: "Hva er forskjellen på Markus og Anders?",
+        a: "Markus er klubbcoach og fokuserer på golfere som bygger fundament. Anders er hovedcoach og jobber med ambisiøse amatører og tour-spillere. Begge bruker samme metode og samme PlayerHQ — forskjellen er pris og volum.",
+      },
+      {
+        q: "Kan jeg pause abonnementet hvis jeg blir skadet?",
+        a: "Ja. Vi pauser uten kostnad hvis du blir skadet eller skal lengre reise. Bare gi beskjed i appen.",
+      },
+      {
+        q: "Hva skjer med ubrukte økter?",
+        a: "Inntil to ubrukte økter rulles automatisk over til neste måned. Mer enn det og du må booke dem inn — vi vil at du faktisk bruker dem.",
+      },
+      {
+        q: "Kan jeg oppgradere underveis?",
+        a: "Når som helst. Forskjellen i pris faktureres pro rata fra dagen du oppgraderer. Du kan også nedgradere — det er ingen bindingstid.",
+      },
+      {
+        q: "Er det en intro-time?",
+        a: "Nye spillere starter med en Flex 20-økt eller en kort prat med coachen. Vi vil at du skal vite hva du går til før du forplikter deg.",
+      },
+      {
+        q: "Hva med banecoaching?",
+        a: "Banecoaching (On-Course 9 og On-Course Par 3) bookes som engangsøkter ved siden av abonnementet. Det er ikke inkludert — fordi vi vil at du skal velge når du tar det med ut på banen.",
+      },
+    ],
+  },
+  cta: {
+    eyebrow: "Klar til å starte?",
+    headingPrefix: "Book en gratis",
+    headingItalic: "intro",
+    headingSuffix: "— så finner vi rett nivå sammen.",
+    description:
+      "20 minutter, ingen forpliktelser. Vi snakker om hvor du står, hvor du vil, og hvilket abonnement som faktisk passer.",
+    primaryCta: "Book gratis intro",
+    primaryHref: "/booking-v2?v=2",
+    secondaryCta: "Send spørsmål",
+    secondaryHref: "/kontakt?v=2",
+    quote:
+      "Etter åtte måneder på Performance Pro gikk jeg fra HCP 12 til 7. Det største var ikke timene — det var planen mellom timene.",
+    quoteAuthor: "Kristian B.",
+    quoteContext: "Performance Pro · 14 mnd",
+  },
+} as const;
+
+// ─── Junior Academy Page v3 (Brand Guide V2.0 — handoff 2026-04-27) ─────────
+// Mockup: public/design-reference/handoff-2026-04-27/screens/g3-junior-academy.html
+export const JUNIOR_HERO_V3 = {
+  eyebrow: "Junior Academy · 6–17 år",
+  headingLead: "Lekent,",
+  headingItalic: "strukturert",
+  headingTrail: ", og bygd for utvikling.",
+  description:
+    "Tre aldersgrupper med egne juniortrenere. Vi tar imot alle nivåer — fra første gang med kølle til ambisiøse tenåringer som vil konkurrere.",
+  ctaPrimary: "Se aldersgrupper",
+  ctaPrimaryHref: "#aldersgrupper",
+  ctaSecondary: "Ta kontakt",
+  ctaSecondaryHref: "/kontakt",
+  photoDescription:
+    "Gruppe juniorer 10–13 år i swing-positur, range, foreldrevennlig stemning",
+  photoSrc: "/images/branding/ak-golf-academy-22.jpg",
+  meta: [
+    { v: "3", l: "Aldersnivåer" },
+    { v: "6–17", l: "Aldersspenn" },
+    { v: "Egen", l: "Juniortrener" },
+  ] as Array<{ v: string; l: string }>,
+} as const;
+
+export const JUNIOR_AGE_GROUPS_V3 = {
+  eyebrow: "Tre aldersgrupper",
+  headingLead: "Lek, læring,",
+  headingItalic: "og turnering",
+  headingTrail: ".",
+  groups: [
+    {
+      ageRange: "6–9 år",
+      name: "Mini",
+      tagline: "Lekbasert intro",
+      description:
+        "Motorikk, koordinasjon og gledesfylt første møte med golf. Plast-køller, fargerike mål, og masse løping.",
+      features: [
+        "Mini-baner og lek-stasjoner",
+        "Foreldre kan delta gratis",
+        "Kort tilpasset (avskåret)",
+      ],
+      groupSize: "8 stk",
+      groupSizeLabel: "Pr. gruppe",
+      ctaLabel: "Mer om Mini",
+      ctaHref: "#apply",
+      photoVariant: "default" as const,
+      photoDescription: "Smilende 7-åring med plast-kølle, fargerik mini-bane",
+      photoSrc: "/images/branding/ak-golf-academy-08.jpg",
+    },
+    {
+      ageRange: "10–13 år",
+      name: "Basis/Utvikling",
+      tagline: "Teknikk + bane",
+      description:
+        "Strukturert teknikk-bygging og første møter med banespill i smågruppe.",
+      features: [
+        "Smågruppe-coaching",
+        "Banespill",
+        "Teknikk-fokus",
+      ],
+      groupSize: "6 stk",
+      groupSizeLabel: "Pr. gruppe",
+      ctaLabel: "Mer om Basis/Utvikling",
+      ctaHref: "#apply",
+      photoVariant: "lime" as const,
+      photoDescription:
+        "Junior 11 år i full sving, range, fokusert ansiktsuttrykk",
+      photoSrc: "/images/branding/ak-golf-academy-09.jpg",
+    },
+    {
+      ageRange: "14–17 år",
+      name: "Elite",
+      tagline: "Talent / turnering",
+      description:
+        "For ambisiøse tenåringer som vil utvikle seg mot turneringsspill. Personlig coach og treningsplan tilpasset spilleren.",
+      features: [
+        "Personlig coach",
+        "Treningsplan",
+        "Turnering-coaching",
+      ],
+      groupSize: "4 stk",
+      groupSizeLabel: "Pr. gruppe",
+      ctaLabel: "Mer om Elite",
+      ctaHref: "#apply",
+      photoVariant: "warm" as const,
+      photoDescription:
+        "Tenåring i ferdig follow-through på fairway, golden hour, fokus",
+      photoSrc: "/images/branding/ak-golf-academy-18.jpg",
+    },
+  ],
+} as const;
+
+export const JUNIOR_PARENT_V3 = {
+  eyebrow: "",
+  headingLead: "",
+  headingItalic: "",
+  headingTrail: "",
+  ctaLabel: "",
+  ctaHref: "",
+  benefits: [] as Array<{
+    icon: "bell" | "lineChart" | "users" | "shield" | "calendar" | "message";
+    title: string;
+    description: string;
+  }>,
+};
+
+export const JUNIOR_SEASON_V3 = {
+  eyebrow: "",
+  headingLead: "",
+  headingItalic: "",
+  headingTrail: "",
+  programs: [] as Array<{
+    label: string;
+    title: string;
+    description: string;
+    stats: Array<{ v: string; l: string }>;
+    ctaLabel: string;
+    ctaHref: string;
+    photoVariant: "lime" | "warm" | "default";
+    photoDescription: string;
+    photoSrc: string;
+  }>,
+};
+
+export const JUNIOR_COACH_V3 = {
+  eyebrow: "Hovedansvarlig junior",
+  headingLead: "Markus Røinås Pedersen — ",
+  headingItalic: "juniortrener.",
+  quote: "",
+  credits: [
+    { v: "Hovedcoach", l: "Junior Academy" },
+  ],
+  portraitDescription:
+    "Markus Røinås Pedersen (juniortrener) — portrettfoto kommer",
+  portraitSrc: undefined as string | undefined,
+};
+
+export const JUNIOR_PRICEBAND_V3 = {
+  title: "",
+  description: "",
+  prices: [] as Array<{ v: string; l: string }>,
+};
+
+export const JUNIOR_FAQ_V3 = {
+  eyebrow: "",
+  heading: "",
+  items: [] as Array<{ q: string; a: string }>,
+};
+
+export const JUNIOR_CTA_V3 = {
+  headingLead: "Vil dere",
+  headingItalic: "vite mer",
+  headingTrail: "?",
+  description:
+    "Ta kontakt for en uforpliktende prat. Vi forteller om aldersgruppene, hvordan en typisk uke ser ut, og hjelper dere finne riktig nivå for ungen.",
+  ctaPrimary: "Ta kontakt",
+  ctaPrimaryHref: "/kontakt",
+  ctaSecondary: "",
+  ctaSecondaryHref: "",
+} as const;
+
+// ─── Academy Page v3 (Brand Guide V2.0 — handoff 2026-04-27) ────────────────
+// Mockup: public/design-reference/handoff-2026-04-27/screens/g2-academy.html
+export const ACADEMY_HERO_V3 = {
+  eyebrow: "Academy · Voksne 18+",
+  headingLead: "Strukturert utvikling,",
+  headingItalic: "målbar fremgang.",
+  headingTrail: "",
+  description:
+    "AK Academy kobler coaching, treningsplan og oppfølging i samme system. Hver økt logges, hver plan oppdateres av din personlige coach.",
+  ctaPrimary: "Book time",
+  ctaPrimaryHref: "/booking",
+  ctaSecondary: "Send e-post",
+  ctaSecondaryHref: "mailto:post@akgolf.no",
+  stats: [] as { v: string; l: string }[],
+  photoDescription:
+    "Anders i range-økt med voksen spiller, golfklubb i hånd, varm overcast lighting",
+  photoSrc: undefined as string | undefined,
+} as const;
+
+export const ACADEMY_METHOD_V3 = {
+  eyebrow: "AK-metoden",
+  headingLead: "Fem nivåer,",
+  headingItalic: "én plan",
+  headingTrail: ".",
+  description:
+    "Hver Performance-spiller får en personlig fordeling per nivå. Vi måler hvor du står hver måned, og justerer planen — ikke gjettverk.",
+  ctaLabel: "Les hele metoden",
+  ctaHref: "/utvikling?v=2",
+  levels: [
+    { num: "L5", label: "Turnering & strategi" },
+    { num: "L4", label: "Spill og banehåndtering" },
+    { num: "L3", label: "Slagvalg & kortspill" },
+    { num: "L2", label: "Teknikk & sving" },
+    { num: "L1", label: "Fysikk & grunnform" },
+  ],
+} as const;
+
+export const ACADEMY_COACH_V3 = {
+  eyebrow: "Møt din hovedcoach",
+  headingLead: "Anders Kristiansen — ",
+  headingItalic: "din coach gjennom året.",
+  description:
+    "Anders er hovedcoach for voksne i Academy. Sesjonene foregår på Gamle Fredrikstad Golfklubb med TrackMan og videoanalyse, og han bygger en personlig plan som du jobber med mellom øktene.",
+  credits: [] as { v: string; l: string }[],
+  portraitDescription:
+    "Anders Kristiansen i naturlig coaching-positur, range-bakgrunn, mid-shot",
+  portraitSrc: undefined as string | undefined,
+} as const;
+
+export const ACADEMY_FAQ_V3 = {
+  eyebrow: "Vanlige spørsmål",
+  heading: "Det dere lurer på.",
+  items: [
+    {
+      q: "Hva om jeg ikke har spilt før?",
+      a: "Vi tar imot spillere på alle nivåer. Vi starter med en kartleggings-økt sammen med din coach, og bygger en plan fra ditt utgangspunkt.",
+    },
+    {
+      q: "Kan jeg bytte mellom pakker?",
+      a: "Ja — ta kontakt med oss på post@akgolf.no, så finner vi løsningen som passer.",
+    },
+    {
+      q: "Hvor foregår øktene?",
+      a: "Øktene foregår på Gamle Fredrikstad Golfklubb med TrackMan-bay, range og bane.",
+    },
+    {
+      q: "Hvor mye fremgang er realistisk?",
+      a: "Det varierer fra spiller til spiller. Vi måler underveis med TrackMan og runde-data, og justerer planen til det vi ser at faktisk gir deg fremgang.",
+    },
+    {
+      q: "Hvordan kommer jeg i gang?",
+      a: "Book en time direkte i booking-portalen, eller send oss en e-post på post@akgolf.no for å snakke om hva som passer for deg.",
+    },
+  ],
+} as const;
+
+export const ACADEMY_CTA_V3 = {
+  headingLead: "Klar for å bli",
+  headingItalic: "målbart bedre?",
+  headingTrail: "",
+  description:
+    "Book time direkte i booking-portalen, eller send oss en e-post for å snakke om hva som passer deg.",
+  ctaPrimary: "Book time",
+  ctaPrimaryHref: "/booking",
+  ctaSecondary: "Send e-post",
+  ctaSecondaryHref: "mailto:post@akgolf.no",
 } as const;

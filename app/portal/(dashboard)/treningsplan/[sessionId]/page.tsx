@@ -132,7 +132,7 @@ export default async function SessionPage({ params }: Props) {
       )
     `)
     .eq("id", sessionId)
-    .single();
+    .maybeSingle();
 
   if (!dbSession) notFound();
 

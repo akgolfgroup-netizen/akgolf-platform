@@ -1,351 +1,309 @@
 "use client";
 
-import { useState, useTransition, useCallback, useMemo } from "react";
+import { useMemo, useState, useTransition } from "react";
+import Link from "next/link";
 import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
   addDays,
+  endOfWeek,
+  format,
+  getISOWeek,
+  startOfWeek,
 } from "date-fns";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { useToast } from "@/components/portal/mission-control/ui";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
-import type { CalendarBooking, CalendarBlockedTime, CalendarAvailability } from "./actions";
+import { nb } from "date-fns/locale";
 import {
-  getBookingsForPeriod,
-  getBookingsForWeek,
-  getBlockedTimesForPeriod,
-  getInstructorAvailabilityPrisma,
-  markNoShow,
-  markBookingCompleted,
-  addAdminNote,
-  createBlockedTimePrisma,
-} from "./actions";
+  CalendarPlus,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  Printer,
+} from "lucide-react";
+import type { CalendarBooking, Instructor } from "./actions";
+import { getBookingsForPeriod } from "./actions";
+import {
+  buildCoachMap,
+  buildLegend,
+  computeWeekStats,
+} from "./kalender-week-data";
+import { KalenderWeekGrid } from "@/components/admin/kalender/kalender-week-grid";
 
-import KalenderControls from "./kalender-controls";
-import KalenderMonthView from "./kalender-month-view";
-import KalenderWeekView from "./kalender-week-view";
-import KalenderAvailabilityPanel from "./kalender-availability-panel";
-import KalenderSidebar from "./kalender-sidebar";
-import KalenderHeatmap from "./kalender-heatmap";
-import KalenderOverlays from "./kalender-overlays";
-
-type ViewMode = "month" | "week" | "availability";
-
-interface Instructor {
-  id: string;
-  user: { name: string | null; image: string | null };
-}
-
-interface KalenderClientProps {
+type Props = {
   initialBookings: CalendarBooking[];
   instructors: Instructor[];
-}
+  initialWeekStart: string;
+};
+
+const VIEWS = [
+  { id: "day", label: "DAG" },
+  { id: "week", label: "UKE" },
+  { id: "month", label: "MÅNED" },
+  { id: "agenda", label: "AGENDA" },
+] as const;
+
+type View = (typeof VIEWS)[number]["id"];
 
 export default function KalenderClient({
   initialBookings,
-  instructors,
-}: KalenderClientProps) {
-  const { toggle } = useMCSidebar();
-  const { toast } = useToast();
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState<ViewMode>("month");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  initialWeekStart,
+}: Props) {
+  const [weekStart, setWeekStart] = useState<Date>(new Date(initialWeekStart));
   const [bookings, setBookings] = useState<CalendarBooking[]>(initialBookings);
-  const [blockedTimes, setBlockedTimes] = useState<CalendarBlockedTime[]>([]);
-  const [availability, setAvailability] = useState<CalendarAvailability[]>([]);
-  const [selectedInstructorId, setSelectedInstructorId] = useState<string>("");
-  const [isPending, startTransition] = useTransition();
-  const [isNotePending, startNoteTransition] = useTransition();
-  const [isNoShowPending, startNoShowTransition] = useTransition();
-  const [isCompletePending, startCompleteTransition] = useTransition();
+  const [view, setView] = useState<View>("week");
+  const [, startTransition] = useTransition();
+  const [hiddenCoaches, setHiddenCoaches] = useState<Set<string>>(new Set());
 
-  // Overlays
-  const [drawerBooking, setDrawerBooking] = useState<CalendarBooking | null>(null);
-  const [newEventOpen, setNewEventOpen] = useState(false);
-  const [newEventForm, setNewEventForm] = useState({
-    title: "",
-    date: format(new Date(), "yyyy-MM-dd"),
-    startTime: "09:00",
-    endTime: "10:00",
-    note: "",
-  });
-  const [noteModalBookingId, setNoteModalBookingId] = useState<string | null>(null);
-  const [noteText, setNoteText] = useState("");
+  const now = new Date();
+  const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+  const weekNum = getISOWeek(weekStart);
+  const weekRange = `${format(weekStart, "d. MMM", { locale: nb })} – ${format(weekEnd, "d. MMM", { locale: nb })}`;
 
-  const fetchData = useCallback(
-    (date: Date, view: ViewMode, instructorId?: string) => {
-      startTransition(async () => {
-        const iid = instructorId || undefined;
-        let bookingResult: CalendarBooking[];
-        let start: Date;
-        let end: Date;
+  const coachMap = useMemo(() => buildCoachMap(bookings), [bookings]);
+  const legend = useMemo(() => buildLegend(bookings, coachMap), [bookings, coachMap]);
+  const stats = useMemo(() => computeWeekStats(bookings), [bookings]);
 
-        if (view === "week") {
-          start = startOfWeek(date, { weekStartsOn: 1 });
-          end = endOfWeek(date, { weekStartsOn: 1 });
-          bookingResult = await getBookingsForWeek(date.toISOString(), iid);
-        } else {
-          start = startOfMonth(date);
-          end = endOfMonth(date);
-          bookingResult = await getBookingsForPeriod(
-            start.toISOString(),
-            end.toISOString(),
-            iid
-          );
-        }
-
-        setBookings(bookingResult);
-
-        // Fetch blocked times and availability for week/month views
-        if (view !== "availability") {
-          const bt = await getBlockedTimesForPeriod(
-            start.toISOString(),
-            end.toISOString(),
-            iid
-          );
-          setBlockedTimes(bt);
-
-          if (iid) {
-            const av = await getInstructorAvailabilityPrisma(iid);
-            setAvailability(av);
-          } else {
-            setAvailability([]);
-          }
-        }
-      });
-    },
-    []
+  const visibleBookings = useMemo(
+    () => bookings.filter((b) => !hiddenCoaches.has(b.instructor.id)),
+    [bookings, hiddenCoaches],
   );
 
-  const handleNavigate = (newDate: Date) => {
-    setCurrentDate(newDate);
-    fetchData(newDate, viewMode, selectedInstructorId);
-  };
-
-  const handleViewChange = (newView: ViewMode) => {
-    setViewMode(newView);
-    fetchData(currentDate, newView, selectedInstructorId);
-  };
-
-  const handleInstructorFilter = (instructorId: string) => {
-    setSelectedInstructorId(instructorId);
-    fetchData(currentDate, viewMode, instructorId);
-  };
-
-  const handleMarkNoShow = (bookingId: string) => {
-    startNoShowTransition(async () => {
-      await markNoShow(bookingId);
-      toast({ variant: "warning", title: "Merket som ikke møtt", description: "Bookingen er oppdatert." });
-      fetchData(currentDate, viewMode, selectedInstructorId);
-    });
-  };
-
-  const handleMarkCompleted = (bookingId: string) => {
-    startCompleteTransition(async () => {
-      try {
-        await markBookingCompleted(bookingId);
-        toast({
-          variant: "success",
-          title: "Marker fullført",
-          description: "AI-pipeline starter automatisk hvis lyd er lastet opp.",
-        });
-        fetchData(currentDate, viewMode, selectedInstructorId);
-      } catch (err) {
-        toast({
-          variant: "error",
-          title: "Kunne ikke markere fullført",
-          description: err instanceof Error ? err.message : "Ukjent feil",
-        });
-      }
-    });
-  };
-
-  const handleAddNote = () => {
-    if (!noteModalBookingId || !noteText.trim()) return;
-    const id = noteModalBookingId;
-    startNoteTransition(async () => {
-      await addAdminNote(id, noteText.trim());
-      toast({ variant: "success", title: "Notat lagret" });
-      setNoteModalBookingId(null);
-      setNoteText("");
-      fetchData(currentDate, viewMode, selectedInstructorId);
-    });
-  };
-
-  const handleCreateNewEvent = () => {
-    if (!newEventForm.title.trim()) return;
+  function navigate(direction: "prev" | "today" | "next") {
+    const newStart =
+      direction === "today"
+        ? startOfWeek(new Date(), { weekStartsOn: 1 })
+        : addDays(weekStart, direction === "prev" ? -7 : 7);
+    setWeekStart(newStart);
+    const newEnd = endOfWeek(newStart, { weekStartsOn: 1 });
     startTransition(async () => {
-      try {
-        const start = new Date(`${newEventForm.date}T${newEventForm.startTime}:00`);
-        const end = new Date(`${newEventForm.date}T${newEventForm.endTime}:00`);
-        await createBlockedTimePrisma({
-          instructorId: selectedInstructorId || null,
-          startTime: start.toISOString(),
-          endTime: end.toISOString(),
-          reason: newEventForm.title + (newEventForm.note ? ` — ${newEventForm.note}` : ""),
-        });
-        toast({
-          variant: "success",
-          title: "Tid blokkert",
-          description: `${newEventForm.title} — ${newEventForm.date} ${newEventForm.startTime}`,
-        });
-        setNewEventOpen(false);
-        setNewEventForm({ title: "", date: format(new Date(), "yyyy-MM-dd"), startTime: "09:00", endTime: "10:00", note: "" });
-        fetchData(currentDate, viewMode, selectedInstructorId);
-      } catch {
-        toast({ variant: "error", title: "Feil", description: "Kunne ikke blokkere tid. Prøv igjen." });
-      }
+      const data = await getBookingsForPeriod(
+        newStart.toISOString(),
+        newEnd.toISOString(),
+      );
+      setBookings(data);
     });
-  };
+  }
 
-  // Calendar calculations for month view
-  const monthStart = startOfMonth(currentDate);
-  const monthEnd = endOfMonth(monthStart);
-  const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-  const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
-  const days: Date[] = useMemo(() => {
-    const d: Date[] = [];
-    let day = calendarStart;
-    while (day <= calendarEnd) {
-      d.push(day);
-      day = addDays(day, 1);
-    }
-    return d;
-  }, [calendarStart, calendarEnd]);
-
-  const handleAddNoteFromSidebar = (booking: CalendarBooking) => {
-    setNoteText(booking.adminNotes || "");
-    setNoteModalBookingId(booking.id);
-  };
-
-  const handleOpenNoteModal = (booking: CalendarBooking) => {
-    setNoteText(booking.adminNotes || "");
-    setDrawerBooking(null);
-    setNoteModalBookingId(booking.id);
-  };
+  function toggleCoach(id: string) {
+    setHiddenCoaches((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   return (
-    <>
-      <MCTopbar
-        title="Kalender"
-        subtitle="Full oversikt over alle bookinger og hendelser"
-        onMenuClick={toggle}
-      />
-
-      <div className="p-6 space-y-6 bg-surface min-h-screen">
-        {/* Heritage Grid Header */}
-        <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">
-            CoachHQ
-          </MonoLabel>
-          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
-            Kalender<span className="text-outline">.</span>
+    <div className="px-7 py-6 text-white" style={{ background: "#102B1E" }}>
+      {/* Header */}
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b border-white/5 pb-4">
+        <div>
+          <div
+            className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em]"
+            style={{ color: "#D1F843" }}
+          >
+            Plan · Kalender
+          </div>
+          <h1
+            className="mt-2 text-[28px] font-bold tracking-tight text-white"
+            style={{ fontFamily: "var(--font-inter-tight)" }}
+          >
+            Uke {weekNum} · {weekRange}
           </h1>
-          <p className="text-on-surface-variant">
-            Full oversikt over alle bookinger og hendelser
+          <p className="mt-1.5 max-w-2xl text-[13px] text-white/60">
+            Drag-drop for å flytte. Fargene er per coach. Klikk en blokk for handlinger.
           </p>
         </div>
-
-        <BentoGrid cols={3} gap="md">
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Måned</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{format(currentDate, "MMMM yyyy")}</p>
-          </BentoCard>
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Bookinger</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{bookings.length}</p>
-          </BentoCard>
-          <BentoCard variant="light" padding="md">
-            <MonoLabel size="xs" uppercase className="text-outline block">Instruktører</MonoLabel>
-            <p className="text-2xl font-bold text-on-surface mt-1">{instructors.length}</p>
-          </BentoCard>
-        </BentoGrid>
-
-        <KalenderControls
-          currentDate={currentDate}
-          viewMode={viewMode}
-          selectedInstructorId={selectedInstructorId}
-          instructors={instructors}
-          isPending={isPending}
-          onNavigate={handleNavigate}
-          onViewChange={handleViewChange}
-          onInstructorChange={handleInstructorFilter}
-          onNewEvent={() => setNewEventOpen(true)}
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3">
-            {viewMode === "month" && (
-              <KalenderMonthView
-                days={days}
-                currentDate={currentDate}
-                selectedDate={selectedDate}
-                bookings={bookings}
-                onSelectDate={setSelectedDate}
-                onBookingClick={setDrawerBooking}
-              />
-            )}
-            {viewMode === "week" && (
-              <KalenderWeekView
-                currentDate={currentDate}
-                bookings={bookings}
-                blockedTimes={blockedTimes}
-                availability={availability}
-                onBookingClick={setDrawerBooking}
-              />
-            )}
-            {viewMode === "availability" && (
-              <KalenderAvailabilityPanel
-                instructors={instructors}
-                selectedInstructorId={selectedInstructorId}
-              />
-            )}
-          </div>
-
-          {viewMode !== "availability" && (
-            <KalenderSidebar
-              selectedDate={selectedDate}
-              bookings={bookings}
-              onBookingClick={setDrawerBooking}
-              onAddNote={handleAddNoteFromSidebar}
-              onMarkNoShow={handleMarkNoShow}
-              onNewEvent={() => setNewEventOpen(true)}
-            />
-          )}
+        <div className="flex flex-wrap gap-2.5">
+          <GhostBtn onClick={() => setHiddenCoaches(new Set())}>
+            <Filter className="h-3.5 w-3.5" strokeWidth={1.8} /> Vis alle coacher
+          </GhostBtn>
+          <GhostBtn onClick={() => window.print()}>
+            <Printer className="h-3.5 w-3.5" strokeWidth={1.8} /> Print
+          </GhostBtn>
+          <Link
+            href="/admin/bookinger/ny"
+            className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-[12.5px] font-bold transition hover:opacity-90"
+            style={{ background: "#D1F843", color: "#0A1F18" }}
+          >
+            <CalendarPlus className="h-3.5 w-3.5" strokeWidth={2} /> Ny booking
+          </Link>
         </div>
-
-        {viewMode !== "availability" && (
-          <NightSurface variant="ambient" className="rounded-2xl p-6">
-            <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Aktivitetsheatmap</MonoLabel>
-            <KalenderHeatmap bookings={bookings} />
-          </NightSurface>
-        )}
       </div>
 
-      <KalenderOverlays
-        drawerBooking={drawerBooking}
-        onCloseDrawer={() => setDrawerBooking(null)}
-        noteModalBookingId={noteModalBookingId}
-        onCloseNoteModal={() => setNoteModalBookingId(null)}
-        noteText={noteText}
-        onNoteTextChange={setNoteText}
-        onSaveNote={handleAddNote}
-        isNotePending={isNotePending}
-        newEventOpen={newEventOpen}
-        onCloseNewEvent={() => setNewEventOpen(false)}
-        newEventForm={newEventForm}
-        onNewEventFormChange={setNewEventForm}
-        onCreateEvent={handleCreateNewEvent}
-        isPending={isPending}
-        isNoShowPending={isNoShowPending}
-        onMarkNoShow={handleMarkNoShow}
-        isCompletePending={isCompletePending}
-        onMarkCompleted={handleMarkCompleted}
-        onOpenNoteModal={handleOpenNoteModal}
-      />
-    </>
+      {/* Toolbar */}
+      <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
+        <div
+          className="inline-flex rounded-lg border bg-white/[0.04] p-0.5"
+          style={{ borderColor: "rgba(255,255,255,0.10)" }}
+        >
+          <button
+            type="button"
+            onClick={() => navigate("prev")}
+            className="grid place-items-center rounded-md p-1.5 text-white hover:bg-white/[0.06]"
+            title="Forrige"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" strokeWidth={1.8} />
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("today")}
+            className="rounded-md px-2.5 py-1 font-mono text-[11px] tracking-wider text-white hover:bg-white/[0.06]"
+          >
+            I DAG
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("next")}
+            className="grid place-items-center rounded-md p-1.5 text-white hover:bg-white/[0.06]"
+            title="Neste"
+          >
+            <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+          </button>
+        </div>
+
+        <div
+          className="text-[18px] font-semibold tracking-tight text-white"
+          style={{ fontFamily: "var(--font-inter-tight)" }}
+        >
+          Uke {weekNum} · {weekStart.getFullYear()}
+          <small className="mt-0.5 block font-mono text-[10px] font-normal tracking-wider text-white/50">
+            {format(weekStart, "dd MMM", { locale: nb }).toUpperCase()} –{" "}
+            {format(weekEnd, "dd MMM", { locale: nb }).toUpperCase()}
+          </small>
+        </div>
+
+        <div
+          className="inline-flex rounded-lg border bg-white/[0.04] p-0.5"
+          style={{ borderColor: "rgba(255,255,255,0.10)" }}
+        >
+          {VIEWS.map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => setView(v.id)}
+              className={
+                "rounded-md px-3 py-1.5 font-mono text-[12px] tracking-wider transition " +
+                (view === v.id
+                  ? "text-[#D1F843]"
+                  : "text-white/60 hover:bg-white/[0.06]")
+              }
+              style={view === v.id ? { background: "rgba(209,248,67,0.14)" } : undefined}
+            >
+              {v.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Coach legend */}
+        <div className="ml-auto flex flex-wrap items-center gap-2.5">
+          {legend.map((c) => {
+            const hidden = hiddenCoaches.has(c.id);
+            return (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => toggleCoach(c.id)}
+                className={
+                  "inline-flex items-center gap-1.5 rounded-full border bg-white/[0.04] px-2.5 py-1.5 text-[11px] text-white/85 transition " +
+                  (hidden ? "opacity-40" : "")
+                }
+                style={{ borderColor: "rgba(255,255,255,0.10)" }}
+              >
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ background: c.key === "coach-other" ? "#A5B2AD" : undefined }}
+                />
+                {c.name}
+                <span className="font-mono text-[10px] text-white/50">{c.count}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Grid */}
+      {view === "week" && (
+        <KalenderWeekGrid
+          weekStart={weekStart}
+          bookings={visibleBookings}
+          coachMap={coachMap}
+          now={now}
+        />
+      )}
+      {view !== "week" && (
+        <div
+          className="rounded-[14px] border bg-white/[0.04] px-6 py-12 text-center text-[13px] text-white/60"
+          style={{ borderColor: "rgba(255,255,255,0.10)" }}
+        >
+          {view.toUpperCase()}-visning kommer snart. Bruk UKE-visning for nå.
+        </div>
+      )}
+
+      {/* Footer stats */}
+      <div className="mt-3.5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <Stat label="Total økter" value={String(stats.total)} />
+        <Stat label="Utnyttelse" value={`${stats.utilization}%`} tone="accent" />
+        <Stat label="Pending" value={String(stats.pending)} tone="warning" />
+        <Stat label="Ledige timer" value={String(stats.freeHours)} />
+        <Stat
+          label="Inntekt uke"
+          value={`${stats.revenueKr.toLocaleString("nb-NO")}`}
+          unit="kr"
+          tone="success"
+        />
+      </div>
+    </div>
+  );
+}
+
+function GhostBtn({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12.5px] font-medium text-white/85 transition hover:bg-white/[0.06]"
+      style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  unit,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  unit?: string;
+  tone?: "default" | "accent" | "warning" | "success";
+}) {
+  const color =
+    tone === "accent"
+      ? "#D1F843"
+      : tone === "warning"
+        ? "#E8B967"
+        : tone === "success"
+          ? "#6FCBA1"
+          : "#fff";
+  return (
+    <div
+      className="rounded-[10px] border bg-white/[0.04] px-3.5 py-3"
+      style={{ borderColor: "rgba(255,255,255,0.10)" }}
+    >
+      <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/45">
+        {label}
+      </div>
+      <div className="mt-1 text-[22px] font-bold tracking-tight tabular-nums" style={{ color }}>
+        {value}
+        {unit && <span className="ml-1 text-[11px] font-medium text-white/50">{unit}</span>}
+      </div>
+    </div>
   );
 }

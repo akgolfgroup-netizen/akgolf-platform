@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>TrackMan Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #0b0d0c; color:#E6EAE8; }
+  .screen { background:#0b0d0c; }
+  .sidebar { background:#0A1F18; border-right:1px solid rgba(255,255,255,0.06); color:#E6EAE8; }
+  .sidebar-brand { border-bottom:1px solid rgba(255,255,255,0.06); }
+  .sidebar-logo { background:#D1F843; color:#0A1F18; }
+  .nav-item { color:#A5B2AD; }
+  .nav-item:hover { background:rgba(255,255,255,0.05); color:#fff; }
+  .nav-item.active { background:#D1F843; color:#0A1F18; }
+  .sidebar-user { background:rgba(255,255,255,0.05); }
+  .sidebar-user .name { color:#fff; }
+
+  .main { background:#0b0d0c; color:#E6EAE8; padding:24px 32px 60px; }
+  .lab-card { background:#121614; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:18px; }
+  .lab-card h3 { margin:0 0 4px; font-size:13px; font-weight:700; color:#F7FAF8; }
+  .lab-card .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; }
+
+  .mono { font-family:'JetBrains Mono',monospace; }
+  .grid-kpi { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:16px; }
+  .kpi-tile {
+    background:#121614; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px;
+  }
+  .kpi-tile .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase; }
+  .kpi-tile .v { font-size:22px; font-weight:700; color:#fff; letter-spacing:-0.01em; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .kpi-tile .d { font-size:11px; margin-top:2px; font-family:'JetBrains Mono',monospace; }
+  .kpi-tile .d.p { color:#D1F843; }
+  .kpi-tile .d.n { color:#E85D4E; }
+
+  .club-row {
+    display:grid; grid-template-columns: 50px 1fr 80px 80px 80px 70px; gap:10px; align-items:center;
+    padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:12px;
+  }
+  .club-row.h { color:#7A8C85; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .club-bar { height:6px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden; position:relative; }
+  .club-bar > div { height:100%; background:#D1F843; border-radius:2px; }
+  .club-bar .ref {
+    position:absolute; top:-3px; bottom:-3px; width:2px; background:#AF52DE;
+  }
+
+  .disp-plot { aspect-ratio:1/1; background:radial-gradient(circle at center, rgba(209,248,67,0.08), transparent 70%); border:1px solid rgba(255,255,255,0.06); border-radius:10px; position:relative; overflow:hidden; }
+  .disp-plot svg { width:100%; height:100%; }
+
+  .waveform { background:#0a0d0c; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; }
+  .waveform svg { width:100%; display:block; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title">AK Golf</div><div class="sub">Elite · LAB</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item"><i data-lucide="home" class="icon-md"></i> Oversikt</div>
+      <div class="nav-item">◱ Planlegg</div>
+      <div class="nav-item">◎ Tren</div>
+      <div class="nav-item"><i data-lucide="flag-triangle-right" class="icon-md"></i> Spill</div>
+      <div class="nav-item">△ Analyse</div>
+      <div style="height:14px;"></div>
+      <div class="nav-item">◈ AI Coach</div>
+      <div class="nav-item active">⊙ TrackMan</div>
+      <div class="nav-item">◉ Dagbok</div>
+      <div class="nav-item"><i data-lucide="menu" class="icon-md"></i> Bookinger</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div><div class="name">Marius A.</div><div class="tier" style="color:#D1F843;">◉ LIVE</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="row-between" style="margin-bottom:20px;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#D1F843;letter-spacing:0.14em;">◉ LIVE · SESJON #0418</div>
+        <h1 style="margin:4px 0 2px;font-size:26px;font-weight:700;letter-spacing:-0.03em;color:#F7FAF8;">TrackMan Lab</h1>
+        <div style="font-size:13px;color:#A5B2AD;">Oslo Golfsenter · Bay 3 · 162 slag logget · 54 min</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="pill dark"><span class="dot" style="background:#D1F843;"></span> Tilkoblet</div>
+        <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.2);background:transparent;">Last ned CSV</button>
+        <button class="btn btn-accent">Lagre sesjon</button>
+      </div>
+    </div>
+
+    <div class="grid-kpi">
+      <div class="kpi-tile"><div class="l">CLUB</div><div class="v">7J</div><div class="d" style="color:#A5B2AD;">MP-20</div></div>
+      <div class="kpi-tile"><div class="l">CARRY</div><div class="v">152.4</div><div class="d p">+2.1 m</div></div>
+      <div class="kpi-tile"><div class="l">BALL MPH</div><div class="v">128.6</div><div class="d p">+1.2</div></div>
+      <div class="kpi-tile"><div class="l">SPIN RPM</div><div class="v">6 820</div><div class="d n">−180</div></div>
+      <div class="kpi-tile"><div class="l">LAUNCH°</div><div class="v">17.2</div><div class="d p">+0.4</div></div>
+      <div class="kpi-tile"><div class="l">SMASH</div><div class="v">1.38</div><div class="d p">opt</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px;">
+      <div class="lab-card">
+        <div class="row-between">
+          <div><h3>Dispersion plot · 7-jern</h3><div class="sub">40 SLAG · SISTE SESJON · MÅL CARRY 152m</div></div>
+          <div style="display:flex;gap:4px;">
+            <button class="btn" style="background:rgba(255,255,255,0.05);color:#fff;padding:6px 12px;font-size:11px;">Heute</button>
+            <button class="btn" style="background:rgba(255,255,255,0.05);color:#A5B2AD;padding:6px 12px;font-size:11px;">30d</button>
+          </div>
+        </div>
+        <div class="disp-plot">
+          <svg viewBox="-100 0 200 180">
+            <!-- range rings -->
+            <g fill="none" stroke="rgba(255,255,255,0.08)" stroke-dasharray="2,2">
+              <ellipse cx="0" cy="170" rx="40" ry="90"/>
+              <ellipse cx="0" cy="170" rx="70" ry="140"/>
+              <ellipse cx="0" cy="170" rx="90" ry="160"/>
+            </g>
+            <!-- centerline -->
+            <line x1="0" y1="170" x2="0" y2="10" stroke="rgba(209,248,67,0.2)" stroke-dasharray="2,3"/>
+            <!-- target -->
+            <line x1="-10" y1="30" x2="10" y2="30" stroke="#D1F843" stroke-width="1.5"/>
+            <line x1="0" y1="20" x2="0" y2="40" stroke="#D1F843" stroke-width="1.5"/>
+            <text x="14" y="32" font-size="8" fill="#D1F843" font-family="JetBrains Mono">TARGET</text>
+            <!-- dispersion cloud -->
+            <ellipse cx="-2" cy="38" rx="12" ry="18" fill="rgba(209,248,67,0.15)" stroke="rgba(209,248,67,0.3)" stroke-dasharray="2,2"/>
+            <!-- shots -->
+            <g fill="#D1F843" opacity="0.9">
+              <circle cx="-4" cy="42" r="1.8"/><circle cx="2" cy="38" r="1.8"/><circle cx="-6" cy="44" r="1.8"/>
+              <circle cx="0" cy="35" r="1.8"/><circle cx="4" cy="40" r="1.8"/><circle cx="-8" cy="46" r="1.8"/>
+              <circle cx="3" cy="36" r="1.8"/><circle cx="-1" cy="40" r="1.8"/><circle cx="5" cy="43" r="1.8"/>
+              <circle cx="-3" cy="37" r="1.8"/><circle cx="1" cy="41" r="1.8"/><circle cx="-5" cy="39" r="1.8"/>
+              <circle cx="6" cy="38" r="1.8"/><circle cx="-7" cy="41" r="1.8"/><circle cx="2" cy="44" r="1.8"/>
+              <circle cx="-2" cy="36" r="1.8"/><circle cx="4" cy="45" r="1.8"/><circle cx="-4" cy="38" r="1.8"/>
+              <circle cx="0" cy="43" r="1.8"/><circle cx="3" cy="39" r="1.8"/>
+            </g>
+            <!-- outliers -->
+            <g fill="#E85D4E" opacity="0.8">
+              <circle cx="-18" cy="52" r="2"/><circle cx="14" cy="32" r="2"/><circle cx="-22" cy="48" r="2"/>
+            </g>
+            <!-- labels -->
+            <g font-family="JetBrains Mono" font-size="8" fill="#7A8C85">
+              <text x="-90" y="175" text-anchor="start">L</text>
+              <text x="90" y="175" text-anchor="end">R</text>
+              <text x="-90" y="60" text-anchor="start">160m</text>
+              <text x="-90" y="100" text-anchor="start">140m</text>
+              <text x="-90" y="140" text-anchor="start">120m</text>
+            </g>
+          </svg>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;">
+          <div><div class="mono" style="font-size:9px;color:#7A8C85;letter-spacing:0.14em;">MEDIAN</div><div style="font-size:15px;font-weight:700;">152.4m</div></div>
+          <div><div class="mono" style="font-size:9px;color:#7A8C85;letter-spacing:0.14em;">SPREAD</div><div style="font-size:15px;font-weight:700;">±4.2m</div></div>
+          <div><div class="mono" style="font-size:9px;color:#7A8C85;letter-spacing:0.14em;">SIDE BIAS</div><div style="font-size:15px;font-weight:700;color:#D1F843;">−0.8m</div></div>
+          <div><div class="mono" style="font-size:9px;color:#7A8C85;letter-spacing:0.14em;">OUTLIERS</div><div style="font-size:15px;font-weight:700;color:#E85D4E;">3 / 40</div></div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <h3>Siste slag · waveform</h3>
+        <div class="sub">SHOT #162 · 09:54:12</div>
+        <div class="waveform">
+          <svg viewBox="0 0 400 120">
+            <!-- grid -->
+            <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+              <line x1="0" y1="30" x2="400" y2="30"/>
+              <line x1="0" y1="60" x2="400" y2="60"/>
+              <line x1="0" y1="90" x2="400" y2="90"/>
+              <line x1="100" y1="0" x2="100" y2="120"/>
+              <line x1="200" y1="0" x2="200" y2="120"/>
+              <line x1="300" y1="0" x2="300" y2="120"/>
+            </g>
+            <!-- wave -->
+            <path d="M0,60 L20,60 L30,30 L40,90 L50,45 L60,75 L70,52 L80,68 L90,55 L100,65 L120,60 L140,62 L180,58 L220,60 L260,59 L300,61 L340,60 L400,60" fill="none" stroke="#D1F843" stroke-width="1.5"/>
+            <!-- impact zone -->
+            <rect x="28" y="0" width="14" height="120" fill="rgba(232,93,78,0.1)"/>
+            <text x="42" y="12" font-size="8" fill="#E85D4E" font-family="JetBrains Mono">IMPACT</text>
+            <!-- flight -->
+            <path d="M40,95 Q200,5 395,45" fill="none" stroke="#AF52DE" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.6"/>
+            <text x="200" y="16" font-size="9" text-anchor="middle" fill="#AF52DE" font-family="JetBrains Mono">APEX 28m</text>
+          </svg>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;">
+          <div class="kpi-tile" style="padding:10px;"><div class="l">ATTACK°</div><div class="v" style="font-size:18px;">−3.2</div></div>
+          <div class="kpi-tile" style="padding:10px;"><div class="l">FACE°</div><div class="v" style="font-size:18px;">0.4</div></div>
+          <div class="kpi-tile" style="padding:10px;"><div class="l">PATH°</div><div class="v" style="font-size:18px;">+1.8</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-card">
+      <div class="row-between">
+        <div><h3>Klubbesammenligning</h3><div class="sub">CARRY VS BENCHMARK (PGA TOUR) · 30d MEDIAN</div></div>
+        <div style="display:flex;gap:8px;align-items:center;font-size:11px;color:#A5B2AD;">
+          <span style="display:inline-block;width:18px;height:4px;background:#D1F843;border-radius:2px;"></span> Din carry
+          <span style="display:inline-block;width:2px;height:10px;background:#AF52DE;margin-left:8px;"></span> PGA-snitt
+        </div>
+      </div>
+      <div class="club-row h">
+        <div>Klubbe</div><div>Carry · m</div><div class="mono">Ball mph</div><div class="mono">Spin</div><div class="mono">Launch°</div><div>Slag 30d</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">DR</div>
+        <div class="club-bar"><div style="width:82%;"></div><div class="ref" style="left:88%;"></div></div>
+        <div class="mono">164.2</div><div class="mono">2 420</div><div class="mono">11.8</div><div>184</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">3W</div>
+        <div class="club-bar"><div style="width:74%;"></div><div class="ref" style="left:80%;"></div></div>
+        <div class="mono">158.8</div><div class="mono">3 180</div><div class="mono">13.2</div><div>92</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">5J</div>
+        <div class="club-bar"><div style="width:60%;"></div><div class="ref" style="left:62%;"></div></div>
+        <div class="mono">135.8</div><div class="mono">5 420</div><div class="mono">15.8</div><div>52</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">6J</div>
+        <div class="club-bar"><div style="width:54%;"></div><div class="ref" style="left:56%;"></div></div>
+        <div class="mono">144.2</div><div class="mono">6 140</div><div class="mono">16.4</div><div>68</div>
+      </div>
+      <div class="club-row" style="background:rgba(209,248,67,0.04);">
+        <div class="mono" style="color:#D1F843;font-weight:700;">7J</div>
+        <div class="club-bar"><div style="width:48%;"></div><div class="ref" style="left:50%;"></div></div>
+        <div class="mono">152.4</div><div class="mono">6 820</div><div class="mono">17.2</div><div style="color:#D1F843;">162 ●</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">8J</div>
+        <div class="club-bar"><div style="width:42%;"></div><div class="ref" style="left:44%;"></div></div>
+        <div class="mono">130.2</div><div class="mono">7 240</div><div class="mono">18.8</div><div>88</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">9J</div>
+        <div class="club-bar"><div style="width:36%;"></div><div class="ref" style="left:38%;"></div></div>
+        <div class="mono">118.4</div><div class="mono">7 860</div><div class="mono">20.2</div><div>102</div>
+      </div>
+      <div class="club-row">
+        <div class="mono" style="color:#D1F843;font-weight:700;">PW</div>
+        <div class="club-bar"><div style="width:30%;"></div><div class="ref" style="left:32%;"></div></div>
+        <div class="mono">104.8</div><div class="mono">8 420</div><div class="mono">22.1</div><div>144</div>
+      </div>
+      <div style="margin-top:16px; padding:14px; background:rgba(175,82,222,0.08); border-radius:10px; border:1px solid rgba(175,82,222,0.15);">
+        <div class="mono" style="font-size:10px;color:#AF52DE;letter-spacing:0.14em;">◈ AI-ANALYSE</div>
+        <div style="font-size:13px; color:#E6EAE8; margin-top:4px; line-height:1.5;">
+          Carry-tallene dine ligger 2–6m under PGA-benchmark, men spredning er <b style="color:#D1F843;">elite</b> (±4.2m på 7-jern). Fokus videre: øk ballhastighet på 8J/9J (+2 m/s) for å tette gap mot 130m-snitt. Sjekk lie-vinkel — smash på 6J-7J tyder på toe-kontakt.
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

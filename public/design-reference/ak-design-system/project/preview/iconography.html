@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Iconography</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;color:#324D45;font-family:Inter,sans-serif;padding:20px}
+  .row{margin-bottom:18px}
+  .title{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#A5B2AD;text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
+  .g{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .g i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:#ECF0EF;color:#005840}
+  .uni span{width:36px;height:36px;border-radius:10px;background:#ECF0EF;color:#324D45;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:500}
+  .ban{display:flex;align-items:center;gap:10px;background:#FCEAE8;border:1px solid #B84233;border-radius:12px;padding:10px 14px}
+  .ban .lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:700;color:#B84233;letter-spacing:.14em}
+  .ban .txt{font-size:12px;color:#324D45}
+  .sizes{display:flex;align-items:flex-end;gap:14px;color:#005840}
+  .sizes .s{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .sizes .lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:#A5B2AD;text-transform:uppercase;letter-spacing:.14em}
+</style></head><body>
+<div class="row">
+  <div class="title">Lucide — eneste tillatte ikon-sett · 2px stroke · round line-cap</div>
+  <div class="g">
+    <i data-icon="flag-triangle-right"></i>
+    <i data-icon="target"></i>
+    <i data-icon="timer"></i>
+    <i data-icon="map-pin"></i>
+    <i data-icon="heart-pulse"></i>
+    <i data-icon="thumbs-up"></i>
+    <i data-icon="zap"></i>
+    <i data-icon="moon"></i>
+    <i data-icon="sun"></i>
+    <i data-icon="bell"></i>
+    <i data-icon="search"></i>
+    <i data-icon="calendar"></i>
+    <i data-icon="settings"></i>
+  </div>
+</div>
+<div class="row">
+  <div class="title">Standardstørrelser</div>
+  <div class="sizes">
+    <div class="s"><i data-icon="target" data-size="14"></i><span class="lbl">14</span></div>
+    <div class="s"><i data-icon="target" data-size="16"></i><span class="lbl">16</span></div>
+    <div class="s"><i data-icon="target" data-size="18"></i><span class="lbl">18</span></div>
+    <div class="s"><i data-icon="target" data-size="20"></i><span class="lbl">20</span></div>
+    <div class="s"><i data-icon="target" data-size="24"></i><span class="lbl">24</span></div>
+  </div>
+</div>
+<div class="row">
+  <div class="title">Unicode-glyphs (godkjente affordances)</div>
+  <div class="g uni">
+    <span>▾</span><span>↗</span><span>⋯</span><span>✕</span><span>→</span><span>●</span><span>•</span>
+  </div>
+</div>
+<div class="row">
+  <div class="title">Emoji</div>
+  <div class="ban">
+    <span class="lbl">FORBUDT</span>
+    <span class="txt">Emoji skal ikke brukes i produkt, marketing eller dashboards. Bruk Lucide eller tekst.</span>
+  </div>
+</div>
+<script src="../assets/lucide.js"></script>
+</body></html>

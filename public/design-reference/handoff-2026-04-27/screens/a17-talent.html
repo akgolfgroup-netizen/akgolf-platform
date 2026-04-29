@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A17 — Talent-status · Anders Kristiansen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero with USI band */
+  .talent-hero {
+    background:
+      radial-gradient(circle at 80% 25%, rgba(209,248,67,0.12), transparent 55%),
+      var(--akgolf-card-dark);
+    border: 1.5px solid rgba(209,248,67,0.30);
+    box-shadow: 0 0 32px rgba(209,248,67,0.10);
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center;
+  }
+  .talent-hero .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700; margin-bottom: 10px;
+  }
+  .talent-hero h2 {
+    margin: 0; font-size: 30px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em; line-height: 1.15;
+  }
+  .talent-hero h2 em { font-style: normal; color: var(--akgolf-accent); }
+  .talent-hero .lede {
+    margin: 12px 0 0; font-size: 14px; color: rgba(255,255,255,0.7);
+    line-height: 1.6; max-width: 50ch;
+  }
+  .talent-hero .actions { margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Big band ribbon */
+  .band-ribbon {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 18px 18px 14px;
+  }
+  .band-ribbon .h {
+    display: flex; justify-content: space-between; align-items: end; margin-bottom: 14px;
+  }
+  .band-ribbon .h-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); font-weight: 700;
+  }
+  .band-ribbon .h-v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase;
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    padding: 3px 8px; border-radius: 5px;
+    font-weight: 700;
+  }
+  .band-track {
+    display: grid; grid-template-columns: repeat(11, 1fr);
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+  .band-cell {
+    height: 38px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.04);
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.45);
+    position: relative;
+  }
+  .band-cell.passed {
+    background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.65);
+  }
+  .band-cell.you {
+    background: var(--akgolf-accent); color: #0A1F18;
+    box-shadow: 0 0 16px rgba(209,248,67,0.40);
+    transform: scale(1.10);
+  }
+  .band-cell.you::after {
+    content: 'DU'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em;
+    color: var(--akgolf-accent); font-weight: 700;
+  }
+  .band-cell.target {
+    background: rgba(209,248,67,0.10);
+    border: 1.5px dashed rgba(209,248,67,0.40);
+    color: rgba(209,248,67,0.85);
+  }
+  .band-cell.target::after {
+    content: 'MÅL 12mnd'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; letter-spacing: 0.10em;
+    color: rgba(209,248,67,0.85); font-weight: 700;
+    white-space: nowrap;
+  }
+  .band-foot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .band-foot .it { font-size: 11px; color: rgba(255,255,255,0.55); }
+  .band-foot .it strong { display: block; color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 1px; }
+
+  /* Section headers */
+  .sec-h { display: flex; justify-content: space-between; align-items: end; margin: 28px 0 14px; }
+  .sec-h h3 { margin: 0; font-size: 18px; color:#fff; font-weight: 700; letter-spacing: -0.02em; }
+  .sec-h .sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+  /* 4-stat percentile grid */
+  .perc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .perc-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .perc-card .top { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; }
+  .perc-card .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight: 700;
+  }
+  .perc-card .name b { display: block; color: #fff; font-size: 13px; font-family: 'Inter', sans-serif; letter-spacing: -0.005em; margin-top: 3px; font-weight: 700; }
+  .perc-card .num {
+    font-size: 32px; font-weight: 800; color: #fff;
+    letter-spacing: -0.03em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .perc-card .num small { font-size: 14px; color: rgba(255,255,255,0.5); margin-left: 2px; }
+  .perc-card .p-bar {
+    margin-top: 12px;
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .perc-card .p-bar .fill { height: 100%; background: var(--akgolf-accent); border-radius: inherit; }
+  .perc-card .p-bar .fill.warn { background: #E8B967; }
+  .perc-card .p-bar .fill.bad { background: #F49283; }
+  .perc-card .p-bar .median {
+    position: absolute; top: -2px; bottom: -2px;
+    left: 50%; width: 1.5px;
+    background: rgba(255,255,255,0.50);
+  }
+  .perc-card .meta { margin-top: 10px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; }
+  .perc-card .meta b { color: var(--akgolf-accent); font-weight: 700; }
+  .perc-card .meta b.neg { color: #F49283; }
+
+  /* Forecast card */
+  .forecast {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .forecast .info h4 { margin: 0 0 6px; font-size: 17px; color: #fff; font-weight: 700; letter-spacing: -0.01em; }
+  .forecast .info p { margin: 0; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+  .forecast .conf-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 5px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .forecast .conf-tag [data-lucide] { width: 11px; height: 11px; }
+
+  /* Fan chart */
+  .fan-wrap { position: relative; height: 240px; }
+  .fan-y { position: absolute; left: 0; top: 0; bottom: 18px; width: 36px; }
+  .fan-y span {
+    position: absolute; left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: rgba(255,255,255,0.4);
+  }
+  .fan-x {
+    position: absolute; left: 36px; right: 0; bottom: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .fan-x span { text-align: center; }
+  .fan-svg { position: absolute; left: 36px; top: 0; right: 0; bottom: 18px; }
+
+  /* Recommended actions */
+  .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .action-card {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .action-card .top { display: flex; justify-content: space-between; align-items: start; }
+  .action-card .ic {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: rgba(209,248,67,0.15);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+  }
+  .action-card .ic [data-lucide] { width: 18px; height: 18px; }
+  .action-card .impact {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent); font-weight: 700;
+    background: rgba(209,248,67,0.15);
+    padding: 3px 7px; border-radius: 5px;
+  }
+  .action-card h5 { margin: 0; font-size: 15px; color: #fff; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+  .action-card .desc { font-size: 12.5px; color: rgba(255,255,255,0.65); line-height: 1.5; flex: 1; }
+  .action-card .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(255,255,255,0.5);
+  }
+  .action-card .foot .v { color: #fff; font-weight: 700; font-size: 13px; }
+  .action-card .foot button {
+    background: rgba(209,248,67,0.18);
+    color: var(--akgolf-accent);
+    border: none;
+    border-radius: 7px;
+    padding: 6px 11px;
+    font-size: 11px; font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .action-card .foot button [data-lucide] { width: 11px; height: 11px; }
+
+  @media (max-width: 1100px) {
+    .talent-hero { grid-template-columns: 1fr; }
+    .perc-grid { grid-template-columns: repeat(2, 1fr); }
+    .forecast { grid-template-columns: 1fr; }
+    .actions-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="activity"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="brain"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="award"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-section">Utvikling</div>
+    <div class="phq-nav-item"><i data-lucide="activity"></i> Tester</div>
+    <div class="phq-nav-item"><i data-lucide="brain"></i> Mentalt</div>
+    <div class="phq-nav-item active"><i data-lucide="award"></i> Talent-status</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Talent-status<span class="date">USI · 12-MÅNEDERS PROGNOSE · 4 ANBEFALTE TILTAK</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i utvikling…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">AK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head">
+      <div class="phq-eyebrow accent">/ TALENT · USI A–K</div>
+      <h1 class="phq-h1">Hvor langt kan du komme?</h1>
+      <p class="lede">USI (Universal Skill Index) gir deg en bånd-plassering A–K mot peer-gruppen. Nivå D er klubbelite, A er hovedtour. Prognosen er statistisk modellert med Sikkerhet 95 %.</p>
+    </div>
+
+    <!-- Hero with USI band -->
+    <section class="talent-hero">
+      <div>
+        <div class="lab">USI · nåværende bånd</div>
+        <h2>Du er <em>nivå E</em><br>på vei mot D innen 12 mnd.</h2>
+        <p class="lede">Kompetent klubbspiller med raskere progresjon enn 78 % av peer-gruppen siste 90d. Prognosemodellen flytter deg til nivå D (klubbelite) i februar 2026 hvis nåværende treningsvolum holdes.</p>
+        <div class="actions">
+          <button class="phq-btn primary"><i data-lucide="rocket"></i>Se utviklingsplan</button>
+          <button class="phq-btn"><i data-lucide="message-circle"></i>Diskuter med Erik</button>
+          <button class="phq-btn ghost"><i data-lucide="download"></i>Eksporter</button>
+        </div>
+      </div>
+
+      <div class="band-ribbon">
+        <div class="h">
+          <span class="h-l">USI-bånd · A til K</span>
+          <span class="h-v">47. PERCENTIL</span>
+        </div>
+        <div class="band-track">
+          <div class="band-cell">A</div>
+          <div class="band-cell">B</div>
+          <div class="band-cell">C</div>
+          <div class="band-cell target">D</div>
+          <div class="band-cell you">E</div>
+          <div class="band-cell passed">F</div>
+          <div class="band-cell passed">G</div>
+          <div class="band-cell passed">H</div>
+          <div class="band-cell passed">I</div>
+          <div class="band-cell passed">J</div>
+          <div class="band-cell passed">K</div>
+        </div>
+        <div class="band-foot">
+          <div class="it"><strong>HCP 8.4</strong>Nåværende</div>
+          <div class="it"><strong>HCP 7.0</strong>For nivå D</div>
+          <div class="it"><strong>−1.4</strong>Trend 90d</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 SG percentile cards -->
+    <div class="sec-h">
+      <h3>Strokes Gained · percentil mot peer (HCP 6–10)</h3>
+      <div class="sub"><span style="color:rgba(255,255,255,0.30);">|</span> = MEDIAN PEER</div>
+    </div>
+    <div class="perc-grid">
+      <div class="perc-card">
+        <div class="top">
+          <div class="name">SG<b>Off-the-tee</b></div>
+          <div class="num">23<small>p</small></div>
+        </div>
+        <div class="p-bar">
+          <div class="fill bad" style="width: 23%;"></div>
+          <div class="median"></div>
+        </div>
+        <div class="meta"><span>STROKES</span><b class="neg">−1.2</b></div>
+      </div>
+      <div class="perc-card">
+        <div class="top">
+          <div class="name">SG<b>Approach</b></div>
+          <div class="num">76<small>p</small></div>
+        </div>
+        <div class="p-bar">
+          <div class="fill" style="width: 76%;"></div>
+          <div class="median"></div>
+        </div>
+        <div class="meta"><span>STROKES</span><b>+0.9</b></div>
+      </div>
+      <div class="perc-card">
+        <div class="top">
+          <div class="name">SG<b>Around-green</b></div>
+          <div class="num">52<small>p</small></div>
+        </div>
+        <div class="p-bar">
+          <div class="fill warn" style="width: 52%;"></div>
+          <div class="median"></div>
+        </div>
+        <div class="meta"><span>STROKES</span><b>+0.1</b></div>
+      </div>
+      <div class="perc-card">
+        <div class="top">
+          <div class="name">SG<b>Putting</b></div>
+          <div class="num">68<small>p</small></div>
+        </div>
+        <div class="p-bar">
+          <div class="fill" style="width: 68%;"></div>
+          <div class="median"></div>
+        </div>
+        <div class="meta"><span>STROKES</span><b>+0.6</b></div>
+      </div>
+    </div>
+
+    <!-- Forecast -->
+    <div class="sec-h">
+      <h3>HCP-prognose · 12 måneder</h3>
+      <div class="sub">MONTE CARLO N=10 000 · DAGLIG OPPDATERING</div>
+    </div>
+    <section class="forecast">
+      <div class="info">
+        <div class="conf-tag"><i data-lucide="target"></i>Sikkerhet 95 %</div>
+        <h4>Forventet HCP om 12 mnd: 6.2 ± 1.4</h4>
+        <p style="margin-bottom: 14px;">Modellen tar inn alder, treningsvolum, runder spilt, swing-progresjon og siste 24 mnd HCP-trend. Prognosen oppdateres hver natt basert på nye data.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px;">Beste 5 % utfall</div>
+            <div style="font-size: 18px; font-weight: 800; color: var(--akgolf-accent); letter-spacing: -0.02em;">HCP 4.8</div>
+          </div>
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px;">Verste 5 % utfall</div>
+            <div style="font-size: 18px; font-weight: 800; color: rgba(255,255,255,0.85); letter-spacing: -0.02em;">HCP 7.6</div>
+          </div>
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px;">Sannsynlighet nivå D</div>
+            <div style="font-size: 18px; font-weight: 800; color: var(--akgolf-accent); letter-spacing: -0.02em;">73 %</div>
+          </div>
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px;">Treningsvolum krevd</div>
+            <div style="font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em;">10 t / uke</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fan-wrap">
+        <div class="fan-y">
+          <span style="top: 8px;">10.0</span>
+          <span style="top: 56px;">8.0</span>
+          <span style="top: 110px;">6.0</span>
+          <span style="top: 165px;">4.0</span>
+          <span style="bottom: 26px;">2.0</span>
+        </div>
+        <svg class="fan-svg" viewBox="0 0 600 240" preserveAspectRatio="none">
+          <!-- Grid -->
+          <line x1="0" y1="40" x2="600" y2="40" stroke="rgba(255,255,255,0.04)" stroke-dasharray="3,4"/>
+          <line x1="0" y1="100" x2="600" y2="100" stroke="rgba(255,255,255,0.04)" stroke-dasharray="3,4"/>
+          <line x1="0" y1="160" x2="600" y2="160" stroke="rgba(255,255,255,0.04)" stroke-dasharray="3,4"/>
+          <line x1="0" y1="220" x2="600" y2="220" stroke="rgba(255,255,255,0.04)" stroke-dasharray="3,4"/>
+
+          <!-- 95% confidence band (fan) -->
+          <path d="M 0 80 L 60 90 L 150 92 L 240 78 L 330 60 L 420 50 L 510 36 L 600 28
+                   L 600 130 L 510 140 L 420 142 L 330 134 L 240 116 L 150 110 L 60 96 L 0 90 Z"
+                fill="rgba(209,248,67,0.10)" stroke="none"/>
+          <!-- 50% band -->
+          <path d="M 0 84 L 60 92 L 150 96 L 240 84 L 330 68 L 420 60 L 510 50 L 600 46
+                   L 600 110 L 510 124 L 420 130 L 330 122 L 240 110 L 150 102 L 60 94 L 0 86 Z"
+                fill="rgba(209,248,67,0.18)" stroke="none"/>
+          <!-- Median line -->
+          <path d="M 0 85 C 80 92, 200 100, 300 88 C 400 76, 500 60, 600 54"
+                stroke="#D1F843" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Past actuals -->
+          <path d="M 0 110 L 30 102 L 60 96 L 90 88 L 120 92 L 150 86 L 180 90 L 200 84"
+                stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="0"/>
+          <!-- Today marker -->
+          <line x1="200" y1="15" x2="200" y2="225" stroke="rgba(255,255,255,0.40)" stroke-dasharray="3,3" stroke-width="1"/>
+          <circle cx="200" cy="84" r="5" fill="#fff" stroke="#0A1F18" stroke-width="2"/>
+          <text x="200" y="14" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="1">I DAG · 8.4</text>
+          <!-- Target -->
+          <circle cx="600" cy="54" r="5" fill="#D1F843"/>
+          <text x="585" y="42" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#D1F843" letter-spacing="1">12mnd · 6.2</text>
+        </svg>
+        <div class="fan-x">
+          <span>Apr 25</span><span>Jul 25</span><span>Okt 25</span><span>Jan 26</span><span>Apr 26</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended actions -->
+    <div class="sec-h">
+      <h3>Anbefalte tiltak · prioritert etter forventet effekt</h3>
+      <div class="sub">AUTO-FORSLAG · GENERERT 28. APR</div>
+    </div>
+    <div class="actions-grid">
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="zap"></i></div>
+          <span class="impact">+0.6 HCP</span>
+        </div>
+        <h5>Driver alignment-program</h5>
+        <p class="desc">12 ukers fokus på SG Off-the-tee. 3 økter / uke med Trackman + Erik. Reduserer høyre miss fra 12 yds til 4 yds.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">12 uker</span></span>
+          <button>Start <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="circle-dot"></i></div>
+          <span class="impact">+0.4 HCP</span>
+        </div>
+        <h5>Putting · 6m+ make-rate</h5>
+        <p class="desc">Quintic-stroke clinic + lag-putting-drills 4 dager / uke. Mål: hev 6m+ make-rate fra 11 % til 18 %.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">8 uker</span></span>
+          <button>Start <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="user-cog"></i></div>
+          <span class="impact">+0.3 HCP</span>
+        </div>
+        <h5>Hofte-mobilitet</h5>
+        <p class="desc">TPI flagget LQR + 90/90. Daglig 15-min program i 6 uker, deretter re-test. Frigjør 4–6° rotasjon i sving.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">6 uker</span></span>
+          <button>Start <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="trophy"></i></div>
+          <span class="impact">+0.2 HCP</span>
+        </div>
+        <h5>Turneringseksponering</h5>
+        <p class="desc">Spill 6 turneringer / sesong (mot dagens 2). Stress-trening senker SG-variansen din i kamp med ~30 %.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">Sesong</span></span>
+          <button>Se kalender <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="brain"></i></div>
+          <span class="impact">+0.1 HCP</span>
+        </div>
+        <h5>Pre-shot routine-treff</h5>
+        <p class="desc">Hev rutinetreff fra 84 % til 95 % på alle press-shots. Mental-coach Hege 2× / mnd.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">Vedvarende</span></span>
+          <button>Konfigurer <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="top">
+          <div class="ic"><i data-lucide="moon"></i></div>
+          <span class="impact">+0.1 HCP</span>
+        </div>
+        <h5>Søvn 7+ t per natt</h5>
+        <p class="desc">Snitt 6:48 nå. Hver halvtime ekstra korrelerer med +0.04 SG / runde i din historikk. Sett soveritual.</p>
+        <div class="foot">
+          <span>VARIGHET<span class="v">Vedvarende</span></span>
+          <button>Hjelpeguide <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

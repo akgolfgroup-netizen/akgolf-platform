@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="track-light" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#8a2922" stop-opacity="1"></stop>
+      <stop offset="60%" stop-color="#4a120e" stop-opacity="1"></stop>
+      <stop offset="100%" stop-color="#1a0604" stop-opacity="1"></stop>
+    </radialGradient>
+    <linearGradient id="lane" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6a1c17" stop-opacity="0.7"></stop>
+      <stop offset="100%" stop-color="#3a0e0a" stop-opacity="0.9"></stop>
+    </linearGradient>
+    <linearGradient id="body" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#1a0604"></stop>
+      <stop offset="100%" stop-color="#3a1208"></stop>
+    </linearGradient>
+    <linearGradient id="cap" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f2d441"></stop>
+      <stop offset="100%" stop-color="#c9a82a"></stop>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#track-light)"></rect>
+  
+  <g opacity="0.45">
+    <path d="M-50,180 L850,420" stroke="#8a2922" stroke-width="2"></path>
+    <path d="M-50,220 L850,460" stroke="#a13028" stroke-width="3"></path>
+    <path d="M-50,260 L850,500" stroke="#6a1c17" stroke-width="2"></path>
+    <path d="M-50,140 L850,380" stroke="#6a1c17" stroke-width="1.5"></path>
+  </g>
+  
+  <g opacity="0.3">
+    <ellipse cx="150" cy="280" rx="220" ry="8" fill="#c94a3d"></ellipse>
+    <ellipse cx="650" cy="240" rx="180" ry="6" fill="#c94a3d"></ellipse>
+  </g>
+  
+  <g transform="translate(390,150)">
+    
+    <path d="M10,80 Q0,120 15,180 Q25,220 50,250 L80,270 L90,290 Q70,305 50,295 L20,275 Q-5,240 -15,200 Q-20,140 -5,100 Z" fill="url(#body)"></path>
+    
+    <path d="M-10,90 Q-25,130 -15,170 L20,180 Q15,140 20,100 Z" fill="#2a0a06" opacity="0.8"></path>
+    
+    <path d="M-10,30 Q20,5 60,15 Q80,25 75,55 L65,65 Q40,55 0,60 Z" fill="url(#cap)"></path>
+    <path d="M-10,30 Q20,5 60,15 L55,30 Q30,20 0,40 Z" fill="#f2d441" opacity="0.7"></path>
+    
+    <path d="M0,60 Q20,80 40,75 L50,90 Q30,100 10,90 Z" fill="#2a0a06"></path>
+    
+    <path d="M-15,95 Q-40,75 -55,45 Q-60,30 -45,25 Q-30,35 -20,60 Z" fill="url(#body)"></path>
+  </g>
+  
+  <rect width="800" height="500" fill="#1a0604" opacity="0.15"></rect>
+  
+  <radialGradient id="vig" cx="50%" cy="50%" r="75%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"></stop>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.5"></stop>
+  </radialGradient>
+  <rect width="800" height="500" fill="url(#vig)"></rect>
+</svg>

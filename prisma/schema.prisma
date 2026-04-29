@@ -583,6 +583,10 @@ model Instructor {
   title                      String?
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime
+  calendarWebhookChannelId   String?
+  calendarWebhookResourceId  String?
+  calendarWebhookExpiration  DateTime?
+  calendarWebhookCalendarId  String?
   Booking                    Booking[]
   CoachingSession            CoachingSession[]
   CommunicationLog           CommunicationLog[]
@@ -590,8 +594,12 @@ model Instructor {
   InstructorAvailability     InstructorAvailability[]
   InstructorDateAvailability InstructorDateAvailability[]
   InstructorFacilityDefault  InstructorFacilityDefault[]
+  InstructorLocation         InstructorLocation[]
+  InstructorLocationService  InstructorLocationService[]
   CoachingPackage            CoachingPackage[]
   ServiceType                ServiceType[]                @relation("InstructorToServiceType")
+
+  @@index([calendarWebhookExpiration])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -630,7 +638,38 @@ model Location {
   Booking                    Booking[]
   Facility                   Facility[]
   InstructorDateAvailability InstructorDateAvailability[]
+  InstructorLocation         InstructorLocation[]
+  InstructorLocationService  InstructorLocationService[]
+  GroupSession               GroupSession[]               @relation("GroupSessionLocation")
+  GroupSessionOccurrence     GroupSessionOccurrence[]     @relation("GroupOccurrenceLocation")
   Resource                   Resource[]
+}
+
+model InstructorLocation {
+  id           String   @id
+  instructorId String
+  locationId   String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location     Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, locationId])
+  @@index([locationId])
+}
+
+model InstructorLocationService {
+  id            String      @id
+  instructorId  String
+  locationId    String
+  serviceTypeId String
+  createdAt     DateTime    @default(now())
+  Instructor    Instructor  @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location      Location    @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  ServiceType   ServiceType @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, locationId, serviceTypeId])
+  @@index([locationId, serviceTypeId])
 }
 
 model Message {
@@ -897,10 +936,15 @@ model ServiceType {
   allowStripe               Boolean                     @default(true)
   allowVipps                Boolean                     @default(true)
   allowInvoice              Boolean                     @default(false)
+  stripeProductId           String?
+  stripePriceId             String?
+  isRecurring               Boolean                     @default(false)
+  recurringInterval         String?
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime
   Booking                   Booking[]
   InstructorFacilityDefault InstructorFacilityDefault[]
+  InstructorLocationService InstructorLocationService[]
   Instructor                Instructor[]                @relation("InstructorToServiceType")
 }
 
@@ -1308,9 +1352,18 @@ model MentalProfile {
   pr4Performance Float?
   pr5Performance Float?
 
+  preferredLearningStyle LearningStyle?
+
   updatedAt DateTime @updatedAt
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum LearningStyle {
+  VISUAL
+  AUDITORY
+  KINESTHETIC
+  READING
 }
 
 /// Course notes and prep-round data
@@ -1420,9 +1473,56 @@ model UnifiedSkillIndex {
   vsTourAvgPct Float
   dataGolfDgId Int?
 
+  // HCP forecast (24/36 mnd) med 95% konfidensintervall
+  hcp24mExpected Float?
+  hcp24mCi95Lo   Float?
+  hcp24mCi95Hi   Float?
+  hcp36mExpected Float?
+  hcp36mCi95Lo   Float?
+  hcp36mCi95Hi   Float?
+
   updatedAt DateTime               @updatedAt
   User      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   snapshots UnifiedSkillSnapshot[]
+}
+
+model Sponsor {
+  id              String                  @id @default(cuid())
+  name            String
+  contactName     String?
+  contactEmail    String?
+  contactPhone    String?
+  logoUrl         String?
+  websiteUrl      String?
+  tier            String                  @default("STANDARD")
+  annualValueNok  Int?
+  contractStart   DateTime?
+  contractEnd     DateTime?
+  notes           String?
+  isActive        Boolean                 @default(true)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  players         SponsorPlayerRelation[]
+
+  @@index([isActive])
+}
+
+model SponsorPlayerRelation {
+  id              String   @id @default(cuid())
+  sponsorId       String
+  userId          String
+  startedAt       DateTime @default(now())
+  endedAt         DateTime?
+  monthlyValueNok Int?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  Sponsor         Sponsor  @relation(fields: [sponsorId], references: [id], onDelete: Cascade)
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sponsorId, userId])
+  @@index([userId])
+  @@index([sponsorId])
 }
 
 /// Historical USI snapshots for trend analysis
@@ -1755,6 +1855,12 @@ model TrainingPlan {
   coachFeedback                       String?
   coachFeedbackAt                     DateTime?
   coachFeedbackById                   String?
+  /// Spiller-kommentar på plan-nivå. Vises i samtaletråd ved siden av coach-feedback.
+  playerComment                       String?
+  playerCommentAt                     DateTime?
+  /// Plan-spesifikk pyramide-fordeling (FYS/TEK/SLAG/SPILL/TURN i prosent, sum 100).
+  /// Overstyrer kategori-default fra category-engine når satt.
+  pyramidDistribution                 Json?
   User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
   User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
   User_TrainingPlan_coachFeedbackById User?                @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
@@ -1762,11 +1868,41 @@ model TrainingPlan {
   TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
   DismissedAdjustment                 DismissedAdjustment[]
+  PlanSuggestion                      PlanSuggestion[]
 
   @@index([studentId])
   @@index([periodizationPeriodId])
   @@index([groupId])
   @@index([coachFeedbackById])
+}
+
+/// Forslag fra coach om endring på en plan/uke/økt.
+/// Spilleren godkjenner eller avslår forslaget. Sprint 2 — forslags-modus.
+model PlanSuggestion {
+  id              String    @id
+  planId          String
+  proposedById    String
+  /// "session" | "week" | "plan" | "distribution"
+  targetType      String
+  /// SessionId / weekId / planId. Null for "plan"/"distribution".
+  targetId        String?
+  /// { before: {...}, after: {...} } — fri JSON, men typet i kode.
+  diffJson        Json
+  /// Valgfri begrunnelse fra coachen.
+  rationale       String?
+  /// PENDING | ACCEPTED | REJECTED
+  status          String    @default("PENDING")
+  createdAt       DateTime  @default(now())
+  resolvedAt      DateTime?
+  resolvedById    String?
+  rejectionReason String?
+
+  TrainingPlan        TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  User_proposedBy     User         @relation("PlanSuggestion_proposedBy", fields: [proposedById], references: [id], onDelete: Cascade)
+  User_resolvedBy     User?        @relation("PlanSuggestion_resolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  @@index([planId, status])
+  @@index([proposedById])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1781,8 +1917,76 @@ model TrainingGroup {
   Coach       User              @relation("TrainingGroupCoach", fields: [coachId], references: [id], onDelete: Cascade)
   members     GroupMembership[]
   plans       TrainingPlan[]
+  sessions    GroupSession[]
 
   @@index([coachId])
+}
+
+model GroupSession {
+  id              String                    @id
+  groupId         String
+  title           String
+  description     String?
+  locationId      String?
+  startTime       DateTime
+  endTime         DateTime
+  recurrenceRule  String?
+  recurrenceUntil DateTime?
+  isActive        Boolean                   @default(true)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @default(now()) @updatedAt
+  Group           TrainingGroup             @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  Location        Location?                 @relation("GroupSessionLocation", fields: [locationId], references: [id], onDelete: SetNull)
+  occurrences     GroupSessionOccurrence[]
+  rsvps           GroupSessionRSVP[]
+
+  @@index([groupId])
+  @@index([startTime])
+}
+
+model GroupSessionRSVP {
+  id              String       @id
+  sessionId       String
+  userId          String
+  occurrenceDate  DateTime     @db.Date
+  status          String       @default("GOING")
+  respondedAt     DateTime     @default(now())
+  note            String?
+  GroupSession    GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, userId, occurrenceDate])
+  @@index([userId])
+}
+
+model ParentChildRelation {
+  id           String   @id
+  parentId     String
+  childId      String
+  relationType String   @default("PARENT")
+  createdAt    DateTime @default(now())
+  Parent       User     @relation("ParentRelations", fields: [parentId], references: [id], onDelete: Cascade)
+  Child        User     @relation("ChildRelations", fields: [childId], references: [id], onDelete: Cascade)
+
+  @@unique([parentId, childId])
+  @@index([childId])
+  @@index([parentId])
+}
+
+model GroupSessionOccurrence {
+  id                  String       @id
+  sessionId           String
+  originalDate        DateTime     @db.Date
+  isCancelled         Boolean      @default(false)
+  overrideStartTime   DateTime?
+  overrideEndTime     DateTime?
+  overrideLocationId  String?
+  note                String?
+  createdAt           DateTime     @default(now())
+  GroupSession        GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  OverrideLocation    Location?    @relation("GroupOccurrenceLocation", fields: [overrideLocationId], references: [id], onDelete: SetNull)
+
+  @@unique([sessionId, originalDate])
 }
 
 model GroupMembership {
@@ -1807,7 +2011,12 @@ model TrainingPlanSession {
   title            String
   description      String?
   durationMinutes  Int?
+  /// Pyramide (FYS/TEK/SLAG/SPILL/TURN) — historisk navn, beholdt for kompatibilitet.
   focusArea        String?
+  /// Treningsområde fra TRENINGSOMRADER (PUTT, CHIP, IRON_50_100, etc.)
+  area             String?
+  /// Total reps for hele økten (valgfri). Reps per øvelse ligger i exercises-JSON.
+  repsTotal        Int?
   exercises        Json             @default("[]")
   sortOrder        Int              @default(0)
   createdAt        DateTime         @default(now())
@@ -1949,6 +2158,7 @@ model User {
   lastCheckoutSessionId                       String?
   latestAiInsight                             Json?
   unitPreference                              UnitSystem                 @default(METRIC)
+  birthDate                                   DateTime?
   AILearning                                  AILearning[]
   ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
   Account                                     Account[]
@@ -1962,6 +2172,9 @@ model User {
   CustomerPaymentPreference                   CustomerPaymentPreference?
   DegradationTracking                         DegradationTracking[]
   ExerciseDefinition                          ExerciseDefinition[]
+  LibraryItemApprovedBy                       LibraryItem[]              @relation("LibraryItemApprovedBy")
+  LibraryItemRejectedBy                       LibraryItem[]              @relation("LibraryItemRejectedBy")
+  LibraryItemCreatedBy                        LibraryItem[]              @relation("LibraryItemCreatedBy")
   FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
   FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
   Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
@@ -1976,6 +2189,7 @@ model User {
   PeriodizationPeriod                         PeriodizationPeriod[]
   PlayerAchievement                           PlayerAchievement[]
   PlayerBag                                   PlayerBag?
+  ClubInBag                                   ClubInBag[]
   PlayerTournamentPlan                        PlayerTournamentPlan[]
   Round                                       Round[]
   RoundStats                                  RoundStats[]
@@ -1986,6 +2200,7 @@ model User {
   TestResult                                  TestResult[]
   Tournament                                  Tournament[]
   TournamentPrep                              TournamentPrep[]
+  SponsorPlayerRelation                       SponsorPlayerRelation[]
   TrackmanSession                             TrackmanSession[]
   TrackManImport                              TrackManImport[]
   TrackManShotData                            TrackManShotData[]
@@ -2006,6 +2221,8 @@ model User {
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingPlan_TrainingPlan_coachFeedbackById TrainingPlan[]             @relation("TrainingPlan_coachFeedbackById")
+  PlanSuggestion_proposedBy                   PlanSuggestion[]           @relation("PlanSuggestion_proposedBy")
+  PlanSuggestion_resolvedBy                   PlanSuggestion[]           @relation("PlanSuggestion_resolvedBy")
   DismissedAdjustment                         DismissedAdjustment[]
   TrainingPlanTemplate                        TrainingPlanTemplate[]
   TrainingSubscription                        TrainingSubscription?
@@ -2023,8 +2240,12 @@ model User {
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
   TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
   GroupMemberships                            GroupMembership[]
+  GroupSessionRSVP                            GroupSessionRSVP[]
+  ParentRelations                             ParentChildRelation[]      @relation("ParentRelations")
+  ChildRelations                              ParentChildRelation[]      @relation("ChildRelations")
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
+  TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
 }
 
 model UserCapability {
@@ -2399,9 +2620,10 @@ model Round {
   updatedAt       DateTime
   gameSessionId   String?
   HoleResult      HoleResult[]
-  Course          Course       @relation(fields: [courseId], references: [id])
-  GameSession     GameSession? @relation(fields: [gameSessionId], references: [id])
-  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Course          Course          @relation(fields: [courseId], references: [id])
+  GameSession     GameSession?    @relation(fields: [gameSessionId], references: [id])
+  User            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  RoundLiveState  RoundLiveState?
 
   @@index([userId, date])
   @@index([courseId])
@@ -2491,11 +2713,57 @@ model Shot {
   preRoutineCompleted Boolean?
   confidenceLevel     Int?
   trackmanShotId      String?    @unique
+  // Round/UpGame Pro Sprint A — GPS-koordinater + tidsstempel for live shot-logging
+  fromLat             Float?
+  fromLng             Float?
+  toLat               Float?
+  toLng               Float?
+  elevationDelta      Int?
+  loggedAt            DateTime?
+  fromLieDetail       String?
+  toLieDetail         String?
   Hole                Hole       @relation(fields: [holeId], references: [id])
   HoleResult          HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
 
   @@index([holeResultId])
   @@index([sgCategory])
+  @@index([loggedAt])
+}
+
+model ClubInBag {
+  id              String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId          String
+  club            String
+  loft            Float?
+  shaft           String?
+  avgCarryMeters  Float?
+  avgTotalMeters  Float?
+  isInActiveBag   Boolean  @default(true)
+  position        Int      @default(0)
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, club])
+  @@index([userId])
+  @@index([userId, isInActiveBag])
+}
+
+model RoundLiveState {
+  id                String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  roundId           String   @unique
+  currentHoleNumber Int      @default(1)
+  currentShotNumber Int      @default(0)
+  isPaused          Boolean  @default(false)
+  pausedAt          DateTime?
+  lastActivityAt    DateTime @default(now())
+  deviceId          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  Round             Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@index([roundId])
 }
 
 model PlayerBag {
@@ -2681,6 +2949,9 @@ enum NotificationType {
   BOOKING_REMINDER
   PLAN_GENERATED
   AI_INSIGHT
+  TRAINING_PLAN_PLAYER_COMMENT
+  TRAINING_PLAN_SUGGESTION
+  TRAINING_PLAN_SUGGESTION_RESOLVED
 }
 
 enum FocusArea {
@@ -2768,6 +3039,7 @@ enum UserRole {
   INSTRUCTOR
   STUDENT
   INVITED
+  PARENT
 }
 
 enum CapabilityChangeAction {
@@ -2835,6 +3107,91 @@ enum Capability {
   SYSTEM_SETTINGS
   SYSTEM_VIEW_LOGS
   SYSTEM_RUN_CRON
+
+  // Innholds-bibliotek (drills, exercises, tests, activities, competition prep)
+  LIBRARY_VIEW
+  LIBRARY_GENERATE
+  LIBRARY_APPROVE
+
+  // Talent-dashboardet (scouting av norske/nordiske turneringsdata)
+  TALENT_DASHBOARD_VIEW
+}
+
+enum LibraryItemType {
+  DRILL
+  EXERCISE
+  TEST
+  ACTIVITY
+  COMPETITION_PREP
+}
+
+enum LibraryItemStatus {
+  DRAFT
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum LibraryItemSource {
+  AK_METHODOLOGY
+  WEB_INSPIRED
+  MANUAL
+}
+
+model LibraryItem {
+  id      String            @id
+  type    LibraryItemType
+  status  LibraryItemStatus @default(DRAFT)
+  source  LibraryItemSource @default(AK_METHODOLOGY)
+
+  title   String
+  summary String
+
+  // Taksonomi (speiler lib/portal/training/ak-taxonomy.ts)
+  pyramid      String
+  area         String
+  subArea      String?
+  lPhase       String?
+  playerLevels String[] @default([])
+
+  difficulty         Int      @default(2)
+  minDurationMinutes Int      @default(5)
+  maxDurationMinutes Int      @default(30)
+  equipment          String[] @default([])
+
+  setup        String?
+  execution    String?
+  scoring      String?
+  variations   String?
+  coachingCues String?
+
+  generatedBy     String?
+  generatedPrompt String?
+  sourceUrl       String?
+  generatedAt     DateTime?
+
+  approvedById    String?
+  approvedAt      DateTime?
+  rejectedById    String?
+  rejectedAt      DateTime?
+  rejectionReason String?
+  createdById     String?
+
+  usageCount Int      @default(0)
+  rating     Float?
+  tags       String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ApprovedBy User? @relation("LibraryItemApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+  RejectedBy User? @relation("LibraryItemRejectedBy", fields: [rejectedById], references: [id], onDelete: SetNull)
+  CreatedBy  User? @relation("LibraryItemCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([status, type])
+  @@index([type, pyramid, area])
+  @@index([status])
+  @@index([area])
 }
 
 enum UnitSystem {
@@ -2930,4 +3287,167 @@ enum AdminPriority {
   URGENT
   IMPORTANT
   NORMAL
+}
+
+// ── Facility Booking (CoachHQ — fasilitets-bookingkart GFGK) ──────────────────
+
+model FacilityBooking {
+  id        String   @id @default(cuid())
+  facility  String
+  person    String
+  type      String
+  date      DateTime
+  startTime String
+  endTime   String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([facility])
+  @@index([date])
+  @@index([userId])
+}
+
+// ── Talent Dashboard ──────────────────────────────────────────────────────────
+//
+// Aggregerer turneringsdata fra OLYO Juniortour, Srixon Tour, Titleist
+// Østlandstour, Garmin Norges Cup og DataGolf for scouting og talent-utvikling.
+// Frittstående fra coaching-systemets `User`-tabell — disse er nordiske
+// junior-/proff-spillere som ikke nødvendigvis er AK Golf-kunder. Bro til
+// `User` via `linkedUser` når en spiller også er kunde i plattformen.
+
+enum TalentSource {
+  OLYO
+  SRIXON
+  OSTLANDSTOUR
+  NORGESCUP
+  DATAGOLF
+  WAGR
+  COLLEGE_NCAA
+}
+
+enum BirthYearSource {
+  MANUAL
+  ESTIMATED
+  SCRAPED
+}
+
+// NGF-kompatible aldersgrupper. Spillerens alder = aaret de fyller (ikke
+// faktisk dato). Standard runde for alle klasser er 18 hull.
+enum TalentAgeGroup {
+  G12
+  G15
+  G19
+  J12
+  J15
+  J19
+  HERR
+  DAME
+  // Legacy-verdier (ikke i bruk i ny ingest, beholdes for skjemakompatibilitet):
+  M5
+  M8
+  M10
+  M12
+  HERR_SENIOR
+  DAME_SENIOR
+  MIX
+  UKJENT
+}
+
+model TalentPlayer {
+  id                  String                   @id @default(cuid())
+  ngfId               String?                  @unique
+  firstName           String
+  lastName            String
+  gender              NorwegianGender?
+  birthYear           Int?
+  birthYearSource     BirthYearSource          @default(SCRAPED)
+  birthYearConfidence Float?
+  club                String?
+  region              NorwegianRegion?
+  wagrId              Int?
+  wagrRank            Int?
+  collegeId           String?
+  collegeRank         Int?
+  coach               String?
+  photoUrl            String?
+  notes               String?
+  lastActiveAt        DateTime?
+  linkedUserId        String?                  @unique
+  linkedUser          User?                    @relation("TalentPlayerLinkedUser", fields: [linkedUserId], references: [id])
+  results             TalentTournamentResult[]
+  stats               TalentPlayerStats[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+
+  @@index([lastName, firstName])
+  @@index([club])
+  @@index([region])
+  @@index([birthYear])
+}
+
+model TalentTournamentResult {
+  id                 String       @id @default(cuid())
+  playerId           String
+  player             TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  source             TalentSource
+  tournamentName     String
+  tournamentDate     DateTime
+  classCode          String         // raadata-klassekode for sporbarhet
+  ageGroup           TalentAgeGroup @default(UKJENT)
+  holes              Int            // 9 eller 18 — kritisk for å unngå mix
+  par                Int
+  position           Int?
+  totalScore         Int?
+  toPar              Int?
+  rounds             Int[]
+  region             String?
+  rawSourceId        String?
+  scoreReconstructed Boolean      @default(false)
+  excludeFromUi      Boolean      @default(false)
+  createdAt          DateTime     @default(now())
+
+  @@unique([playerId, source, tournamentDate, tournamentName, classCode], name: "uniq_result")
+  @@index([source, tournamentDate])
+  @@index([playerId, tournamentDate])
+}
+
+model TalentPlayerStats {
+  id                  String       @id @default(cuid())
+  playerId            String
+  player              TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  year                Int
+  holesSegment        Int          // 9 eller 18 — aldri bland
+  totalResults        Int
+  totalRounds         Int
+  avgRound            Float?       // null hvis totalRounds < 3
+  bestRound           Int?
+  worstRound          Int?
+  top3Count           Int          @default(0)
+  top10Count          Int          @default(0)
+  cutsMade            Int          @default(0)
+  improvementPerYear  Float?
+  dataConfidenceScore Float        // 0-1
+  computedAt          DateTime     @default(now())
+
+  @@unique([playerId, year, holesSegment], name: "uniq_stats")
+  @@index([year, holesSegment])
+}
+
+// Booking V2 — generell venteliste uten kobling til en spesifikk Booking.
+// Brukere som ikke finner ledig tid i wizard-flyten registrerer interesse her;
+// admin følger opp manuelt eller via varsling når slot åpner seg.
+model BookingV2WaitlistSignup {
+  id            String    @id @default(cuid())
+  email         String
+  phone         String?
+  preferredDay  String?   // any | weekday | weekend
+  preferredTime String?   // any | morning | afternoon | evening
+  serviceTypeId String?
+  trainerId     String?
+  status        String    @default("WAITING") // WAITING | NOTIFIED | CONVERTED | EXPIRED
+  notifiedAt    DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([status, createdAt])
+  @@index([email])
 }

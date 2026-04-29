@@ -1,45 +1,22 @@
-import { requirePortalUser } from "@/lib/portal/auth";
-import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getFacilities, getTodaySchedule, getTodayBookingCounts } from "./actions";
+import { requirePortalUser } from "@/lib/portal/auth";
+import { canAccessMissionControl } from "@/lib/portal/rbac";
 import FasiliteterClient from "./fasiliteter-client";
+import { getWeekBookings, getLiveStatus } from "./actions";
+
+export const dynamic = "force-dynamic";
+export const metadata = { title: "Fasiliteter — CoachHQ" };
 
 export default async function FasiliteterPage() {
   const user = await requirePortalUser();
-  if (!isStaff(user.role)) {
-    redirect("/portal");
+  if (!canAccessMissionControl(user.role)) {
+    redirect("/admin/login");
   }
 
-  const [facilities, todaySchedule, bookingCounts] = await Promise.all([
-    getFacilities(),
-    getTodaySchedule(),
-    getTodayBookingCounts(),
+  const [bookings, liveStatus] = await Promise.all([
+    getWeekBookings(),
+    getLiveStatus(),
   ]);
 
-  // Serialiser datoer for klientkomponent
-  const serializedSchedule = todaySchedule.map((item) => ({
-    id: item.id,
-    facilityId: item.facilityId,
-    title: item.title,
-    description: item.description,
-    activityType: item.activityType,
-    startTime: item.startTime.toISOString(),
-    endTime: item.endTime.toISOString(),
-    status: item.status,
-    color: item.color,
-    Facility: { id: item.Facility.id, name: item.Facility.name },
-    CreatedBy: {
-      id: item.CreatedBy.id,
-      name: item.CreatedBy.name,
-      email: item.CreatedBy.email,
-    },
-  }));
-
-  return (
-    <FasiliteterClient
-      facilities={facilities}
-      todaySchedule={serializedSchedule}
-      bookingCounts={bookingCounts}
-    />
-  );
+  return <FasiliteterClient bookings={bookings} initialLive={liveStatus} />;
 }

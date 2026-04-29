@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D15 — Grupper · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  .grp-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+  .grp-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:12px; }
+  .grp-card .top { display:flex; justify-content:space-between; align-items:center; }
+  .grp-card .name { font-size:15px; color:#fff; font-weight:700; letter-spacing:-0.01em; }
+  .grp-card .lvl { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; padding:3px 7px; border-radius:5px; font-weight:700; }
+  .grp-card .lvl.elite { background:rgba(209,248,67,0.18); color:var(--akgolf-accent); }
+  .grp-card .lvl.junior { background:rgba(107,177,255,0.18); color:#6BB1FF; }
+  .grp-card .lvl.dame { background:rgba(175,82,222,0.20); color:#C99CF3; }
+  .grp-card .lvl.kids { background:rgba(232,185,103,0.20); color:#E8B967; }
+  .grp-card .desc { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.55; }
+  .grp-card .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06); }
+  .grp-card .s { font-family:'JetBrains Mono',monospace; }
+  .grp-card .s .l { font-size:9px; letter-spacing:0.10em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .grp-card .s .v { font-size:16px; color:#fff; font-weight:700; margin-top:2px; }
+  .grp-card .roster { display:flex; gap:0; }
+  .grp-card .roster .av { width:26px; height:26px; border-radius:50%; border:2px solid var(--akgolf-card-dark); margin-left:-6px; display:grid; place-items:center; font-size:9px; font-weight:700; color:#0A1F18; }
+  .grp-card .roster .av:first-child { margin-left:0; }
+  .grp-card .roster .more { background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); }
+  .grp-card .next { display:flex; align-items:center; gap:8px; padding:10px 12px; background:rgba(0,0,0,0.20); border-radius:8px; font-size:12px; color:rgba(255,255,255,0.85); }
+  .grp-card .next [data-lucide] { width:14px; height:14px; color:var(--akgolf-accent); }
+  .grp-card .actions { display:flex; gap:6px; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="user-plus"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Dag</div>
+    <div class="chq-nav-item"><i data-lucide="layout-dashboard"></i>Dagens fokus</div>
+    <div class="chq-nav-section">Mennesker</div>
+    <div class="chq-nav-item"><i data-lucide="users"></i>Spillere<span class="badge muted">42</span></div>
+    <div class="chq-nav-item active"><i data-lucide="user-plus"></i>Grupper<span class="badge">8</span></div>
+    <div class="chq-nav-item"><i data-lucide="briefcase"></i>Team</div>
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+    <div class="chq-nav-item"><i data-lucide="calendar"></i>Kalender</div>
+    <div class="chq-nav-item"><i data-lucide="package"></i>Tjenester</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Grupper</div>
+    <div class="chq-top-meta">8 AKTIVE · 96 SPILLERE TOTALT · 12 ØKTER PER UKE</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk gruppe…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ MENNESKER · GRUPPER</div>
+        <h1 class="chq-h1">Treningsgrupper og kohorter.</h1>
+        <p>8 aktive grupper fordelt på Bogstad og Skullerud. Kohorter løper i 12-ukers sykluser fra mai. Filtrer på nivå, lokasjon og dag.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="filter"></i>Filter</button>
+        <button class="chq-btn primary"><i data-lucide="plus"></i>Ny gruppe</button>
+      </div>
+    </div>
+
+    <div class="chq-kpis" style="margin-bottom:24px;">
+      <div class="chq-kpi"><div class="l">Aktive grupper</div><div class="v">8</div></div>
+      <div class="chq-kpi"><div class="l">Spillere på roster</div><div class="v">96</div></div>
+      <div class="chq-kpi"><div class="l">Økter per uke</div><div class="v">12</div></div>
+      <div class="chq-kpi"><div class="l">Belegg snitt</div><div class="v">87%</div></div>
+      <div class="chq-kpi alert"><div class="l">Underbooket</div><div class="v">2 <small class="down">grupper</small></div></div>
+    </div>
+
+    <div class="grp-grid">
+      <div class="grp-card">
+        <div class="top"><div class="name">Junior Elite Oslo</div><span class="lvl elite">ELITE</span></div>
+        <div class="desc">Junior 14–18 år · HCP &lt; 12. Kohort 2025-vår. Fellesøkter mandag og torsdag, individuell coaching torsdag formiddag.</div>
+        <div class="roster">
+          <div class="av" style="background:#6BB1FF;">MN</div>
+          <div class="av" style="background:#C99CF3;">SA</div>
+          <div class="av" style="background:#E8B967;">JT</div>
+          <div class="av" style="background:#6FCBA1;">HJ</div>
+          <div class="av" style="background:var(--akgolf-accent);">AK</div>
+          <div class="av more">+9</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Neste · Tor 2. mai 16:00 · Bogstad bay 4–8</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">14</div></div>
+          <div class="s"><div class="l">HCP snitt</div><div class="v">8.2</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">93%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card">
+        <div class="top"><div class="name">Junior Mid 12–14 år</div><span class="lvl junior">JUNIOR</span></div>
+        <div class="desc">12-ukers utviklingsprogram. Fokus: full swing-fundament, kort spill, baneetikette. Innsjekk hver torsdag.</div>
+        <div class="roster">
+          <div class="av" style="background:#6BB1FF;">EH</div>
+          <div class="av" style="background:#C99CF3;">LO</div>
+          <div class="av" style="background:#E8B967;">PR</div>
+          <div class="av" style="background:#6FCBA1;">TM</div>
+          <div class="av more">+8</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Neste · Tor 2. mai 14:00 · Skullerud studio</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">12</div></div>
+          <div class="s"><div class="l">HCP snitt</div><div class="v">22.4</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">100%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card">
+        <div class="top"><div class="name">Damegruppe Bogstad</div><span class="lvl dame">DAME</span></div>
+        <div class="desc">Onsdager 18:00. Mix av nybegynnere og erfarne. Fokus på fellesskap og baneferdigheter, lett konkurransepreg.</div>
+        <div class="roster">
+          <div class="av" style="background:#C99CF3;">IM</div>
+          <div class="av" style="background:#E8B967;">AS</div>
+          <div class="av" style="background:#6FCBA1;">VO</div>
+          <div class="av" style="background:#6BB1FF;">KR</div>
+          <div class="av more">+12</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Neste · Ons 1. mai 18:00 · Bogstad range</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">16</div></div>
+          <div class="s"><div class="l">HCP snitt</div><div class="v">28.7</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">88%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card">
+        <div class="top"><div class="name">Kids Academy 8–11 år</div><span class="lvl kids">KIDS</span></div>
+        <div class="desc">Lørdager. Spillorientert: små baner, korte avstander, lekøkter. Foreldreinfo sendes hver søndag kveld.</div>
+        <div class="roster">
+          <div class="av" style="background:#E8B967;">OB</div>
+          <div class="av" style="background:#6BB1FF;">MA</div>
+          <div class="av" style="background:#C99CF3;">EL</div>
+          <div class="av more">+15</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Neste · Lør 4. mai 10:00 · Skullerud short course</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">18</div></div>
+          <div class="s"><div class="l">Alder</div><div class="v">8–11</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">95%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card">
+        <div class="top"><div class="name">Senior Bogstad</div><span class="lvl junior" style="background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.75);">SENIOR</span></div>
+        <div class="desc">Over 60 år. Tirsdager formiddag. Fokus på rytme, balanse og uten-press-treningsrunder.</div>
+        <div class="roster">
+          <div class="av" style="background:#6FCBA1;">RH</div>
+          <div class="av" style="background:#E8B967;">JF</div>
+          <div class="av" style="background:#C99CF3;">UH</div>
+          <div class="av more">+7</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Neste · Tir 30. apr 11:00 · Bogstad bay 1–4</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">10</div></div>
+          <div class="s"><div class="l">HCP snitt</div><div class="v">19.8</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v">82%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card" style="opacity:0.7;">
+        <div class="top"><div class="name">Beginner-pakken Skullerud</div><span class="lvl junior" style="background:rgba(184,66,51,0.20); color:#F49283;">UNDER</span></div>
+        <div class="desc">Nybegynnerpakke 6 uker. Tirsdag kveld. <strong style="color:#F49283;">Bare 4 av 8 påmeldt</strong> — vurder ekstra markedsføring eller flytt til onsdag.</div>
+        <div class="roster">
+          <div class="av" style="background:#6BB1FF;">NF</div>
+          <div class="av" style="background:#E8B967;">SS</div>
+          <div class="av" style="background:#C99CF3;">DA</div>
+          <div class="av" style="background:#6FCBA1;">EW</div>
+        </div>
+        <div class="next"><i data-lucide="alert-triangle"></i>Tir 30. apr 19:00 · 4/8 påmeldt</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">4/8</div></div>
+          <div class="s"><div class="l">Status</div><div class="v" style="color:#F49283;">UNDER</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v" style="color:#F49283;">50%</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card">
+        <div class="top"><div class="name">Tour Camp Sommer</div><span class="lvl elite">CAMP</span></div>
+        <div class="desc">3-dagers intensiv juni 12–14. Tour-spillere &amp; sub-5 HCP. Inkluderer Trackman, on-course coaching, mental.</div>
+        <div class="roster">
+          <div class="av" style="background:var(--akgolf-accent);">AK</div>
+          <div class="av" style="background:#6BB1FF;">MN</div>
+          <div class="av" style="background:#C99CF3;">SA</div>
+          <div class="av more">+5</div>
+        </div>
+        <div class="next"><i data-lucide="calendar"></i>Camp · 12.–14. juni · Bogstad &amp; Holtsmark</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">8</div></div>
+          <div class="s"><div class="l">Plasser</div><div class="v">8/8</div></div>
+          <div class="s"><div class="l">Status</div><div class="v" style="color:#6FCBA1;">FULL</div></div>
+        </div>
+      </div>
+
+      <div class="grp-card" style="opacity:0.7;">
+        <div class="top"><div class="name">Klubbcamp Holtsmark</div><span class="lvl junior" style="background:rgba(184,66,51,0.20); color:#F49283;">UNDER</span></div>
+        <div class="desc">2-dagers helgekamp ved Holtsmark Open i juli. <strong style="color:#F49283;">Bare 5 av 12 påmeldt</strong> — push markedsføring uke 18.</div>
+        <div class="roster">
+          <div class="av" style="background:#6FCBA1;">RH</div>
+          <div class="av" style="background:#E8B967;">JF</div>
+          <div class="av more">+3</div>
+        </div>
+        <div class="next"><i data-lucide="alert-triangle"></i>13.–14. juli · 5/12 påmeldt</div>
+        <div class="stats">
+          <div class="s"><div class="l">Roster</div><div class="v">5/12</div></div>
+          <div class="s"><div class="l">Status</div><div class="v" style="color:#F49283;">UNDER</div></div>
+          <div class="s"><div class="l">Belegg</div><div class="v" style="color:#F49283;">42%</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,12 +1,14 @@
 import { requirePortalUser } from "@/lib/portal/auth";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { PortalBookingWizard } from "./portal-booking-wizard";
 
 export default async function NyBookingPage() {
   const user = await requirePortalUser();
   if (!user?.id) return null;
 
-  const supabase = await createServerSupabase();
+  // Bruk service-role-klient for a unnga RLS-blokkering pa ServiceType.
+  // Innloggede STUDENT-brukere kan ikke lese tabellen direkte via egen session.
+  const supabase = createServiceClient();
 
   const { data: serviceTypes } = await supabase
     .from("ServiceType")

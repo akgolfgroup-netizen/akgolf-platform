@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { generateSlots } from "@/lib/portal/slots";
+import {
+  generateSlots,
+  generateSmartSlotsForWindow,
+  type ServiceDuration,
+  type SlotStrategy,
+} from "@/lib/portal/slots";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
 
@@ -20,6 +25,7 @@ export async function GET(req: NextRequest) {
   const serviceTypeId = searchParams.get("serviceTypeId");
   const instructorId = searchParams.get("instructorId");
   const dateStr = searchParams.get("date"); // YYYY-MM-DD
+  const strategy: SlotStrategy = searchParams.get("strategy") === "compact" ? "compact" : "all";
 
   if (!serviceTypeId || !instructorId || !dateStr) {
     return NextResponse.json(
@@ -42,6 +48,7 @@ export async function GET(req: NextRequest) {
       availabilityWindowsResult,
       existingBookingsResult,
       blockedTimesResult,
+      allServiceTypesResult,
     ] = await Promise.all([
       supabase
         .from("ServiceType")
@@ -55,7 +62,7 @@ export async function GET(req: NextRequest) {
         .eq("dayOfWeek", dayOfWeek),
       supabase
         .from("Booking")
-        .select("startTime, endTime")
+        .select("startTime, endTime, serviceTypeId")
         .eq("instructorId", instructorId)
         .gte("startTime", date.toISOString())
         .lt("startTime", nextDay.toISOString())
@@ -66,12 +73,19 @@ export async function GET(req: NextRequest) {
         .or(`instructorId.eq.${instructorId},instructorId.is.null`)
         .lt("startTime", nextDay.toISOString())
         .gt("endTime", date.toISOString()),
+      strategy === "compact"
+        ? supabase.from("ServiceType").select("duration, bufferAfter").eq("isActive", true)
+        : Promise.resolve({ data: [] as { duration: number; bufferAfter: number }[] }),
     ]);
 
     const serviceType = serviceTypeResult.data;
     const availabilityWindows = availabilityWindowsResult.data ?? [];
-    const existingBookings = existingBookingsResult.data ?? [];
-    const blockedTimes = blockedTimesResult.data ?? [];
+    const existingBookingsRaw = existingBookingsResult.data ?? [];
+    const blockedTimesRaw = blockedTimesResult.data ?? [];
+    const allDurations: ServiceDuration[] = (allServiceTypesResult.data ?? []).map((d) => ({
+      duration: d.duration as number,
+      bufferAfter: d.bufferAfter as number,
+    }));
 
     if (!serviceType) {
       return NextResponse.json([]);
@@ -93,20 +107,49 @@ export async function GET(req: NextRequest) {
       return NextResponse.json([]);
     }
 
+    const existingBookings = existingBookingsRaw.map((b) => ({
+      startTime: new Date(b.startTime as string),
+      endTime: new Date(b.endTime as string),
+      serviceTypeId: (b as { serviceTypeId?: string | null }).serviceTypeId ?? null,
+    }));
+    const blockedTimes = blockedTimesRaw.map((b) => ({
+      startTime: new Date(b.startTime as string),
+      endTime: new Date(b.endTime as string),
+    }));
+
     const allSlots: string[] = [];
     for (const window of availabilityWindows) {
-      const windowSlots = generateSlots({
-        availStart: window.startTime,
-        availEnd: window.endTime,
-        duration: serviceType.duration,
-        bufferAfter: serviceType.bufferAfter,
-        bufferBefore: serviceType.bufferBefore,
-        date,
-        existingBookings,
-        blockedTimes,
-        minNoticeHours: serviceType.minNoticeHours,
-      });
-      allSlots.push(...windowSlots);
+      if (strategy === "compact") {
+        const windowSlots = generateSmartSlotsForWindow({
+          availStart: window.startTime,
+          availEnd: window.endTime,
+          date,
+          request: {
+            duration: serviceType.duration,
+            bufferBefore: serviceType.bufferBefore,
+            bufferAfter: serviceType.bufferAfter,
+            serviceTypeId,
+          },
+          existingBookings,
+          blockedTimes,
+          minNoticeHours: serviceType.minNoticeHours,
+          allDurations,
+        });
+        allSlots.push(...windowSlots);
+      } else {
+        const windowSlots = generateSlots({
+          availStart: window.startTime,
+          availEnd: window.endTime,
+          duration: serviceType.duration,
+          bufferAfter: serviceType.bufferAfter,
+          bufferBefore: serviceType.bufferBefore,
+          date,
+          existingBookings,
+          blockedTimes,
+          minNoticeHours: serviceType.minNoticeHours,
+        });
+        allSlots.push(...windowSlots);
+      }
     }
 
     allSlots.sort();

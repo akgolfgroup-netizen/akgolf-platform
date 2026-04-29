@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Kontakt</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  .kn-hero { padding: 180px 0 30px; }
+  .kn-hero h1 { font-size: clamp(56px, 6.6vw, 92px); line-height: 0.96; letter-spacing: -0.04em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 22px; max-width: 18ch; text-wrap: balance; }
+  .kn-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.025em; }
+  .kn-hero p.lede { font-size: 19px; line-height: 1.6; color: var(--akgolf-text); max-width: 56ch; margin: 0; }
+
+  /* Quick contact tiles */
+  .quick-section { padding: 50px 0 30px; }
+  .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .quick-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 22px; padding: 26px 28px 28px; transition: all 0.2s; cursor: pointer; display: flex; flex-direction: column; gap: 10px; }
+  .quick-card:hover { transform: translateY(-3px); border-color: var(--akgolf-primary); box-shadow: 0 18px 40px rgba(10,31,24,0.06); }
+  .quick-card .ic { width: 44px; height: 44px; border-radius: 12px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); display: grid; place-items: center; margin-bottom: 4px; }
+  .quick-card .ic [data-lucide] { width: 20px; height: 20px; }
+  .quick-card h4 { font-size: 16px; font-weight: 700; color: var(--akgolf-ink); margin: 0; letter-spacing: -0.01em; }
+  .quick-card .v { font-size: 15px; color: var(--akgolf-primary); font-weight: 700; margin-top: 4px; }
+  .quick-card .meta { font-size: 12px; color: var(--akgolf-muted); line-height: 1.5; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--akgolf-line-light); }
+
+  /* Form + sidebar */
+  .form-section { padding: 60px 0 90px; }
+  .form-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: start; }
+
+  .form-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 28px; padding: 44px 48px 36px; }
+  .form-card h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0 0 8px; }
+  .form-card h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .form-card .form-sub { font-size: 14px; color: var(--akgolf-muted); margin: 0 0 32px; line-height: 1.55; }
+
+  .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--akgolf-ink); }
+  .field input[type=text],
+  .field input[type=email],
+  .field input[type=tel],
+  .field select,
+  .field textarea {
+    border: 1.5px solid var(--akgolf-line-light);
+    background: var(--akgolf-surface);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-family: inherit; font-size: 15px;
+    color: var(--akgolf-ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--akgolf-primary); background: #fff; }
+  .field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+
+  .topic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .topic-grid label { padding: 14px 14px; border: 1.5px solid var(--akgolf-line-light); background: var(--akgolf-surface); border-radius: 14px; cursor: pointer; display: flex; gap: 10px; align-items: center; transition: all 0.15s; }
+  .topic-grid input { display: none; }
+  .topic-grid label:hover { border-color: var(--akgolf-primary); }
+  .topic-grid label.active { background: var(--akgolf-ink); color: #fff; border-color: var(--akgolf-ink); }
+  .topic-grid label .ic { width: 28px; height: 28px; border-radius: 8px; background: rgba(0,88,64,0.10); color: var(--akgolf-primary); display: grid; place-items: center; flex-shrink: 0; }
+  .topic-grid label.active .ic { background: rgba(255,255,255,0.10); color: var(--akgolf-accent); }
+  .topic-grid label .ic [data-lucide] { width: 14px; height: 14px; }
+  .topic-grid label .t { font-size: 13px; font-weight: 600; }
+
+  .submit-row { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 28px; border-top: 1px solid var(--akgolf-line-light); }
+  .submit-row .terms { font-size: 12px; color: var(--akgolf-muted); max-width: 50ch; line-height: 1.55; }
+  .submit-row .terms a { color: var(--akgolf-primary); text-decoration: underline; }
+
+  /* Sidebar */
+  .side-card { background: var(--akgolf-ink); color: #fff; border-radius: 28px; padding: 36px 36px 32px; margin-bottom: 18px; position: relative; overflow: hidden; }
+  .side-card .web-eyebrow { color: var(--akgolf-accent); margin-bottom: 12px; }
+  .side-card h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; line-height: 1.15; }
+  .side-card h3 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-accent); }
+  .side-card p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; margin: 0 0 20px; }
+  .side-card .web-btn.primary { background: var(--akgolf-accent); color: #0A1F18; }
+  .side-card .blob { position: absolute; bottom: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(123,255,107,0.08); }
+
+  .info-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 22px; padding: 28px 30px; }
+  .info-card .ic-row { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--akgolf-line-light); align-items: flex-start; }
+  .info-card .ic-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-card .ic-row:first-child { padding-top: 0; }
+  .info-card .ic-row .ic { width: 36px; height: 36px; border-radius: 10px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); display: grid; place-items: center; flex-shrink: 0; }
+  .info-card .ic-row .ic [data-lucide] { width: 16px; height: 16px; }
+  .info-card .ic-row h5 { font-size: 13px; font-weight: 700; color: var(--akgolf-ink); margin: 0 0 4px; letter-spacing: -0.005em; }
+  .info-card .ic-row p { font-size: 13px; color: var(--akgolf-text); margin: 0; line-height: 1.55; }
+  .info-card .ic-row p a { color: var(--akgolf-primary); }
+
+  /* Locations */
+  .loc-section { padding: 90px 0; background: #fff; }
+  .loc-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 40px; }
+  .loc-head h2 { font-size: clamp(36px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0; line-height: 1.05; }
+  .loc-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .loc-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 22px; }
+  .loc-map { background: var(--akgolf-surface); border: 1.5px solid var(--akgolf-line-light); border-radius: 24px; padding: 0; overflow: hidden; aspect-ratio: 4/5; position: relative; display: grid; place-items: center; color: var(--akgolf-muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .loc-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .loc-pin { position: absolute; width: 36px; height: 36px; border-radius: 50%; background: var(--akgolf-primary); border: 3px solid #fff; box-shadow: 0 8px 16px rgba(10,31,24,0.20); display: grid; place-items: center; color: #fff; cursor: pointer; }
+  .loc-pin.active { background: var(--akgolf-accent); color: #0A1F18; transform: scale(1.15); }
+  .loc-pin [data-lucide] { width: 16px; height: 16px; }
+  .loc-pin-lab { position: absolute; background: #fff; border: 1px solid var(--akgolf-line-light); border-radius: 8px; padding: 4px 10px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--akgolf-ink); letter-spacing: 0; text-transform: none; white-space: nowrap; }
+
+  .loc-card { background: var(--akgolf-surface); border: 1.5px solid var(--akgolf-line-light); border-radius: 24px; padding: 30px 32px 32px; display: flex; flex-direction: column; }
+  .loc-card .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 12px; }
+  .loc-card h4 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--akgolf-ink); margin: 0 0 14px; }
+  .loc-card .addr { font-size: 14px; color: var(--akgolf-text); line-height: 1.6; margin-bottom: 22px; }
+  .loc-card .addr strong { color: var(--akgolf-ink); }
+  .loc-card .hours { display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-top: 1px solid var(--akgolf-line-light); border-bottom: 1px solid var(--akgolf-line-light); margin-bottom: 22px; }
+  .loc-card .hours .row { display: flex; justify-content: space-between; font-size: 12px; }
+  .loc-card .hours .row .day { color: var(--akgolf-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; font-size: 10px; }
+  .loc-card .hours .row .h { color: var(--akgolf-ink); font-weight: 600; }
+  .loc-card .hours .row.closed .h { color: var(--akgolf-muted); }
+  .loc-card .ctas { display: flex; gap: 8px; margin-top: auto; }
+  .loc-card .ctas .web-btn { flex: 1; padding: 10px 14px; font-size: 12px; }
+
+  /* FAQ */
+  .faq2-section { padding: 90px 0 110px; }
+  .faq2-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
+  .faq2-grid > div:first-child h2 { font-size: clamp(36px, 4vw, 50px); font-weight: 800; letter-spacing: -0.03em; color: var(--akgolf-ink); margin: 0 0 16px; line-height: 1.05; }
+  .faq2-grid > div:first-child h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .faq2-grid > div:first-child p { font-size: 15px; color: var(--akgolf-text); line-height: 1.6; }
+  .faq2-list { display: flex; flex-direction: column; }
+  .faq2-it { padding: 22px 0; border-top: 1px solid var(--akgolf-line-light); }
+  .faq2-it:last-child { border-bottom: 1px solid var(--akgolf-line-light); }
+  .faq2-q { display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 24px; }
+  .faq2-q span { font-size: 17px; font-weight: 700; color: var(--akgolf-ink); letter-spacing: -0.01em; }
+  .faq2-q .ic { width: 30px; height: 30px; border-radius: 50%; background: var(--akgolf-surface); color: var(--akgolf-primary); display: grid; place-items: center; flex-shrink: 0; transition: transform 0.2s; }
+  .faq2-it.open .faq2-q .ic { transform: rotate(45deg); }
+  .faq2-a { font-size: 14px; color: var(--akgolf-text); line-height: 1.65; padding-top: 12px; max-width: 65ch; display: none; }
+  .faq2-it.open .faq2-a { display: block; }
+
+  @media (max-width: 1100px) {
+    .quick-grid { grid-template-columns: 1fr 1fr; }
+    .form-grid, .loc-grid, .faq2-grid { grid-template-columns: 1fr; gap: 30px; }
+    .topic-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html">Utvikling</a>
+    <a href="g9-om-oss.html">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<!-- Hero -->
+<section class="kn-hero">
+  <div class="web-container">
+    <div class="web-eyebrow">Kontakt</div>
+    <h1>Vi svarer <em>samme dag.</em></h1>
+    <p class="lede">Skriv til oss på e-post, ring direkte, eller fyll ut skjemaet under. Vi har ingen call-center — det er folk fra teamet som leser hver melding personlig.</p>
+  </div>
+</section>
+
+<!-- Quick contact -->
+<section class="quick-section">
+  <div class="web-container">
+    <div class="quick-grid">
+      <div class="quick-card">
+        <div class="ic"><i data-lucide="mail"></i></div>
+        <h4>E-post</h4>
+        <div class="v">hei@akgolf.no</div>
+        <div class="meta">Vi svarer innen 4 timer i åpningstid</div>
+      </div>
+      <div class="quick-card">
+        <div class="ic"><i data-lucide="phone"></i></div>
+        <h4>Telefon</h4>
+        <div class="v">+47 67 12 34 56</div>
+        <div class="meta">Mandag–lørdag · 09:00–17:00</div>
+      </div>
+      <div class="quick-card">
+        <div class="ic"><i data-lucide="message-circle"></i></div>
+        <h4>Live chat</h4>
+        <div class="v">Åpne chatten →</div>
+        <div class="meta">Hverdager · 09:00–16:00</div>
+      </div>
+      <div class="quick-card">
+        <div class="ic"><i data-lucide="instagram"></i></div>
+        <h4>Sosialt</h4>
+        <div class="v">@akgolf.no</div>
+        <div class="meta">DM på Instagram · svarer raskt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form + sidebar -->
+<section class="form-section">
+  <div class="web-container">
+    <div class="form-grid">
+      <!-- Form -->
+      <div class="form-card">
+        <h2>Skriv til <em>oss.</em></h2>
+        <p class="form-sub">Velg hva det gjelder, så ruter vi til riktig person. Alle felter merket * må fylles ut.</p>
+
+        <div class="field">
+          <label>Hva gjelder det? *</label>
+          <div class="topic-grid">
+            <label class="active">
+              <input type="radio" name="topic" checked>
+              <div class="ic"><i data-lucide="user-plus"></i></div>
+              <div class="t">Bli medlem</div>
+            </label>
+            <label>
+              <input type="radio" name="topic">
+              <div class="ic"><i data-lucide="users-round"></i></div>
+              <div class="t">Junior</div>
+            </label>
+            <label>
+              <input type="radio" name="topic">
+              <div class="ic"><i data-lucide="calendar"></i></div>
+              <div class="t">Booking</div>
+            </label>
+            <label>
+              <input type="radio" name="topic">
+              <div class="ic"><i data-lucide="briefcase"></i></div>
+              <div class="t">Bedrift / event</div>
+            </label>
+            <label>
+              <input type="radio" name="topic">
+              <div class="ic"><i data-lucide="newspaper"></i></div>
+              <div class="t">Presse</div>
+            </label>
+            <label>
+              <input type="radio" name="topic">
+              <div class="ic"><i data-lucide="help-circle"></i></div>
+              <div class="t">Annet</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field"><label>Fornavn *</label><input type="text" placeholder="Anders"></div>
+          <div class="field"><label>Etternavn *</label><input type="text" placeholder="Krohn"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>E-post *</label><input type="email" placeholder="navn@eksempel.no"></div>
+          <div class="field"><label>Telefon</label><input type="tel" placeholder="+47 ..."></div>
+        </div>
+
+        <div class="field">
+          <label>Foretrukket lokasjon</label>
+          <select>
+            <option>Bærum (Hamang)</option>
+            <option>Holtsmark GK</option>
+            <option>Pinx Resort</option>
+            <option>Spiller ingen rolle</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Melding *</label>
+          <textarea placeholder="Fortell oss kort hva du vil — så følger vi opp samme dag."></textarea>
+        </div>
+
+        <div class="field">
+          <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 500; font-size: 13px; color: var(--akgolf-text); line-height: 1.55;">
+            <input type="checkbox" style="margin-top: 3px; accent-color: var(--akgolf-primary); width: 16px; height: 16px;">
+            <span>Send meg gjerne nyhetsbrev hver måned med tips og tilbud. Du kan melde deg av når som helst.</span>
+          </label>
+        </div>
+
+        <div class="submit-row">
+          <div class="terms">Vi behandler personopplysninger i tråd med <a href="g11-personvern.html">personvernerklæringen</a>.</div>
+          <button class="web-btn primary">Send melding <i data-lucide="send"></i></button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside>
+        <div class="side-card">
+          <div class="web-eyebrow">Klar for et intro-møte?</div>
+          <h3>Book et 30-min <em>uforpliktende</em> møte direkte i kalenderen.</h3>
+          <p>Snakk med Anders eller Markus om mål, nivå og om Academy passer deg. Fysisk eller digitalt.</p>
+          <a href="g7-academy-booking.html" class="web-btn primary">Book intro-møte <i data-lucide="arrow-right"></i></a>
+          <div class="blob"></div>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-row">
+            <div class="ic"><i data-lucide="building-2"></i></div>
+            <div>
+              <h5>AK Golf Group AS</h5>
+              <p>Org. nr. 925 884 102<br>Hamangsletta 4 · 1336 Sandvika</p>
+            </div>
+          </div>
+          <div class="ic-row">
+            <div class="ic"><i data-lucide="user"></i></div>
+            <div>
+              <h5>Daglig leder</h5>
+              <p>Eline Hauge<br><a href="mailto:eline@akgolf.no">eline@akgolf.no</a></p>
+            </div>
+          </div>
+          <div class="ic-row">
+            <div class="ic"><i data-lucide="newspaper"></i></div>
+            <div>
+              <h5>Presseforespørsler</h5>
+              <p>Vilde Kristiansen<br><a href="mailto:presse@akgolf.no">presse@akgolf.no</a></p>
+            </div>
+          </div>
+          <div class="ic-row">
+            <div class="ic"><i data-lucide="briefcase"></i></div>
+            <div>
+              <h5>Bedrift &amp; partnerskap</h5>
+              <p>Anders Krohn<br><a href="mailto:partner@akgolf.no">partner@akgolf.no</a></p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Locations -->
+<section class="loc-section">
+  <div class="web-container">
+    <div class="loc-head">
+      <div>
+        <div class="web-eyebrow">Finn oss</div>
+        <h2>Tre lokasjoner. <em>Tett sammen.</em></h2>
+      </div>
+      <a href="#" class="web-btn ghost">Åpne i Google Maps <i data-lucide="external-link"></i></a>
+    </div>
+
+    <div class="loc-grid">
+      <!-- Map -->
+      <div class="loc-map">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="none">
+          <!-- soft grid -->
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(10,31,24,0.05)" stroke-width="1"/>
+            </pattern>
+            <pattern id="grid2" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M 200 0 L 0 0 0 200" fill="none" stroke="rgba(10,31,24,0.08)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="500" fill="url(#grid)"/>
+          <rect width="400" height="500" fill="url(#grid2)"/>
+          <!-- water blob -->
+          <path d="M -20 320 Q 80 280 180 310 Q 280 340 380 320 L 420 540 L -20 540 Z" fill="rgba(0,88,64,0.06)"/>
+          <!-- land contours -->
+          <path d="M 60 100 Q 180 140 320 110" fill="none" stroke="rgba(0,88,64,0.15)" stroke-width="1.5" stroke-dasharray="3,4"/>
+          <path d="M 80 220 Q 200 180 340 230" fill="none" stroke="rgba(0,88,64,0.12)" stroke-width="1"/>
+          <!-- roads -->
+          <path d="M 40 380 Q 200 340 380 390" fill="none" stroke="rgba(10,31,24,0.10)" stroke-width="2"/>
+          <path d="M 200 50 L 200 460" fill="none" stroke="rgba(10,31,24,0.08)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        </svg>
+        <!-- Pins -->
+        <div class="loc-pin active" style="top: 28%; left: 42%;"><i data-lucide="flag"></i></div>
+        <div class="loc-pin-lab" style="top: 24%; left: 50%;">Bærum · Hamang</div>
+        <div class="loc-pin" style="top: 56%; left: 64%;"><i data-lucide="map-pin"></i></div>
+        <div class="loc-pin-lab" style="top: 60%; left: 72%;">Holtsmark</div>
+        <div class="loc-pin" style="top: 78%; left: 28%;"><i data-lucide="palmtree"></i></div>
+        <div class="loc-pin-lab" style="top: 82%; left: 36%;">Pinx</div>
+        <div style="position: absolute; bottom: 16px; left: 16px; background: rgba(255,255,255,0.95); padding: 10px 14px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--akgolf-muted); font-weight: 700;">Skjematisk · ikke målestokk</div>
+      </div>
+
+      <!-- Bærum -->
+      <div class="loc-card">
+        <div class="role">Hovedkontor</div>
+        <h4>Bærum · Hamang</h4>
+        <div class="addr">
+          <strong>Hamangsletta 4</strong><br>
+          1336 Sandvika<br>
+          Bærum kommune<br><br>
+          <i data-lucide="phone" style="width:13px;height:13px;color:var(--akgolf-primary);vertical-align:-1px;margin-right:4px;"></i>+47 67 12 34 56
+        </div>
+        <div class="hours">
+          <div class="row"><span class="day">Man–fre</span><span class="h">06–22</span></div>
+          <div class="row"><span class="day">Lør</span><span class="h">08–20</span></div>
+          <div class="row closed"><span class="day">Søn</span><span class="h">Stengt</span></div>
+        </div>
+        <div class="ctas">
+          <a href="#" class="web-btn primary">Veibeskrivelse</a>
+          <a href="g5-booking.html" class="web-btn ghost">Book time</a>
+        </div>
+      </div>
+
+      <!-- Holtsmark -->
+      <div class="loc-card">
+        <div class="role">Bane-samarbeid</div>
+        <h4>Holtsmark GK</h4>
+        <div class="addr">
+          <strong>Holtsmarkveien 12</strong><br>
+          3410 Sylling<br>
+          Lier kommune<br><br>
+          <i data-lucide="calendar" style="width:13px;height:13px;color:var(--akgolf-primary);vertical-align:-1px;margin-right:4px;"></i>Kun apr–oktober
+        </div>
+        <div class="hours">
+          <div class="row"><span class="day">Man–søn</span><span class="h">06–21</span></div>
+          <div class="row"><span class="day">Sesong</span><span class="h">Apr–okt</span></div>
+          <div class="row closed"><span class="day">Vinter</span><span class="h">Stengt</span></div>
+        </div>
+        <div class="ctas">
+          <a href="#" class="web-btn primary">Veibeskrivelse</a>
+          <a href="g5-booking.html" class="web-btn ghost">Banecoach</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq2-section">
+  <div class="web-container">
+    <div class="faq2-grid">
+      <div>
+        <div class="web-eyebrow">FAQ</div>
+        <h2>Vanlige <em>spørsmål.</em></h2>
+        <p>Du finner mer på de andre sidene — eller bare skriv til oss. Vi liker spørsmål.</p>
+      </div>
+      <div class="faq2-list">
+        <div class="faq2-it open">
+          <div class="faq2-q"><span>Hvor raskt svarer dere?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq2-a">På e-post: 4 timer i åpningstid (man–lør 09–17). Live chat: umiddelbart i åpningstid. Skjemaet ruter direkte til riktig person — ingen call-center, ingen ticket-køer.</div>
+        </div>
+        <div class="faq2-it">
+          <div class="faq2-q"><span>Kan jeg komme innom uten avtale?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq2-a">Bærum-anlegget har drop-in for fitting og rådgivning hver tirsdag og torsdag 14–17. Coaching krever booking — vi vil at coachen skal være forberedt.</div>
+        </div>
+        <div class="faq2-it">
+          <div class="faq2-q"><span>Hvor er nærmeste parkering?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq2-a">Bærum-anlegget har 60 gratis plasser rett utenfor. Holtsmark har stor parkering ved klubbhuset. Pinx-camps inkluderer flytransport-koordinering.</div>
+        </div>
+        <div class="faq2-it">
+          <div class="faq2-q"><span>Tilbyr dere bedriftsavtaler?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq2-a">Ja. Vi har faste avtaler med 14 bedrifter i Oslo/Bærum — alt fra firma-event til lederpersonlig coaching. Send forespørsel via skjemaet og velg "Bedrift / event", så ringer Anders deg.</div>
+        </div>
+        <div class="faq2-it">
+          <div class="faq2-q"><span>Driver dere med presse-intervjuer?</span><div class="ic"><i data-lucide="plus"></i></div></div>
+          <div class="faq2-a">Ja, både Anders og Markus stiller gjerne. Send oss tema og vinkling på presse@akgolf.no — vi svarer innen 24t med tider som passer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li><li><a href="g8-utvikling.html">Utvikling</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g10-kontakt.html">Kontakt</a></li><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2026 AK Golf Group AS · ORG 925 884 102</span>
+      <div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.topic-grid label').forEach(l => {
+  l.addEventListener('click', () => {
+    document.querySelectorAll('.topic-grid label').forEach(x => x.classList.remove('active'));
+    l.classList.add('active');
+  });
+});
+document.querySelectorAll('.faq2-it').forEach(it => {
+  it.querySelector('.faq2-q').addEventListener('click', () => it.classList.toggle('open'));
+});
+</script>
+</body>
+</html>

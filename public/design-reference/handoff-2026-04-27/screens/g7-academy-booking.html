@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AK Golf — Søk Academy-plass</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_website.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: var(--akgolf-surface); }
+
+  .ax-hero { padding: 160px 0 50px; }
+  .ax-hero h1 { font-size: clamp(48px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.035em; color: var(--akgolf-ink); font-weight: 800; margin: 0 0 18px; max-width: 18ch; text-wrap: balance; }
+  .ax-hero h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); letter-spacing: -0.025em; }
+  .ax-hero p { font-size: 18px; line-height: 1.6; color: var(--akgolf-text); max-width: 56ch; margin: 0 0 30px; }
+
+  .stepper { display: flex; gap: 0; background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 999px; padding: 5px; max-width: 720px; }
+  .stepper .stp { flex: 1; padding: 12px 18px; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; border-radius: 999px; }
+  .stepper .stp.active { background: var(--akgolf-ink); color: #fff; }
+  .stepper .stp.done { color: var(--akgolf-primary); }
+  .stepper .stp .n { width: 22px; height: 22px; border-radius: 50%; background: var(--akgolf-line-light); display: grid; place-items: center; font-weight: 700; color: var(--akgolf-text); }
+  .stepper .stp.active .n { background: var(--akgolf-accent); color: #0A1F18; }
+  .stepper .stp.done .n { background: var(--akgolf-primary); color: #fff; }
+
+  /* Application form */
+  .form-section { padding: 40px 0 100px; }
+  .form-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: start; }
+
+  .form-card { background: #fff; border: 1.5px solid var(--akgolf-line-light); border-radius: 28px; padding: 42px 44px 36px; }
+  .form-card h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.025em; color: var(--akgolf-ink); margin: 0 0 8px; }
+  .form-card h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--akgolf-primary); }
+  .form-card .form-sub { font-size: 14px; color: var(--akgolf-muted); margin: 0 0 32px; line-height: 1.55; }
+
+  .form-section-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; padding-top: 28px; margin: 36px 0 18px; border-top: 1px solid var(--akgolf-line-light); }
+  .form-section-title:first-child { padding-top: 0; border-top: none; margin-top: 0; }
+
+  .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--akgolf-ink); display: flex; justify-content: space-between; align-items: center; }
+  .field label .opt { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 600; }
+  .field input[type=text],
+  .field input[type=email],
+  .field input[type=tel],
+  .field input[type=number],
+  .field select,
+  .field textarea {
+    border: 1.5px solid var(--akgolf-line-light);
+    background: var(--akgolf-surface);
+    border-radius: 14px;
+    padding: 13px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--akgolf-ink);
+    transition: border 0.15s, background 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--akgolf-primary); background: #fff; }
+  .field textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+  .field .help { font-size: 12px; color: var(--akgolf-muted); line-height: 1.5; }
+
+  /* Pill choices */
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choices label {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border: 1.5px solid var(--akgolf-line-light);
+    background: var(--akgolf-surface);
+    border-radius: 999px;
+    font-size: 13px; color: var(--akgolf-text); font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .choices input { display: none; }
+  .choices label:hover { border-color: var(--akgolf-primary); color: var(--akgolf-primary); }
+  .choices label.active,
+  .choices input:checked + span { background: var(--akgolf-ink); color: #fff; border-color: var(--akgolf-ink); }
+
+  /* Plan picker */
+  .plan-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .plan-pick {
+    border: 1.5px solid var(--akgolf-line-light);
+    background: var(--akgolf-surface);
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    text-align: left;
+  }
+  .plan-pick.active { background: #fff; border-color: var(--akgolf-primary); box-shadow: 0 0 0 3px rgba(0,88,64,0.10); }
+  .plan-pick .pp-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-primary); font-weight: 700; margin-bottom: 8px; }
+  .plan-pick .pp-price { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 28px; color: var(--akgolf-ink); letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
+  .plan-pick .pp-period { font-size: 11px; color: var(--akgolf-muted); margin-bottom: 12px; }
+  .plan-pick .pp-line { font-size: 12px; color: var(--akgolf-text); line-height: 1.4; }
+  .plan-pick .pp-check { position: absolute; top: 14px; right: 14px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--akgolf-line); background: #fff; display: grid; place-items: center; }
+  .plan-pick.active .pp-check { background: var(--akgolf-primary); border-color: var(--akgolf-primary); color: #fff; }
+  .plan-pick.active .pp-check [data-lucide] { display: block; }
+  .plan-pick .pp-check [data-lucide] { width: 12px; height: 12px; stroke-width: 3; display: none; }
+
+  /* Slot picker */
+  .slot-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .slot-picker button {
+    padding: 12px 8px;
+    border: 1.5px solid var(--akgolf-line-light);
+    background: var(--akgolf-surface);
+    border-radius: 12px;
+    font-family: inherit; font-size: 13px; color: var(--akgolf-ink); font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; flex-direction: column; gap: 2px; align-items: center;
+  }
+  .slot-picker button .day { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; }
+  .slot-picker button.active { background: var(--akgolf-ink); color: #fff; border-color: var(--akgolf-ink); }
+  .slot-picker button.active .day { color: var(--akgolf-accent); }
+
+  /* Checkbox list */
+  .check-list { display: flex; flex-direction: column; gap: 12px; }
+  .check-list label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; padding: 14px 16px; border: 1.5px solid var(--akgolf-line-light); background: var(--akgolf-surface); border-radius: 14px; transition: all 0.15s; }
+  .check-list label:hover { border-color: var(--akgolf-primary); }
+  .check-list input { margin-top: 3px; accent-color: var(--akgolf-primary); width: 18px; height: 18px; flex-shrink: 0; }
+  .check-list .ttl { font-size: 14px; font-weight: 600; color: var(--akgolf-ink); }
+  .check-list .sub { font-size: 12px; color: var(--akgolf-muted); margin-top: 2px; line-height: 1.5; }
+
+  /* Submit row */
+  .submit-row { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--akgolf-line-light); }
+  .submit-row .terms { font-size: 12px; color: var(--akgolf-muted); max-width: 50ch; line-height: 1.55; }
+  .submit-row .terms a { color: var(--akgolf-primary); text-decoration: underline; }
+
+  /* Sidebar summary */
+  .summary {
+    position: sticky; top: 100px;
+    background: #fff;
+    border: 1.5px solid var(--akgolf-line-light);
+    border-radius: 24px;
+    padding: 32px 32px 28px;
+  }
+  .summary h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; color: var(--akgolf-ink); margin: 0 0 4px; }
+  .summary .sub { font-size: 13px; color: var(--akgolf-muted); margin: 0 0 24px; }
+
+  .sum-block { padding: 18px 0; border-top: 1px solid var(--akgolf-line-light); }
+  .sum-block:first-of-type { border-top: none; padding-top: 0; }
+  .sum-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; margin-bottom: 8px; }
+  .sum-value { font-size: 15px; color: var(--akgolf-ink); font-weight: 600; line-height: 1.4; }
+  .sum-meta { font-size: 12px; color: var(--akgolf-muted); margin-top: 4px; line-height: 1.45; }
+  .sum-empty { font-size: 13px; color: var(--akgolf-muted); font-style: italic; }
+
+  .sum-total { padding: 22px 0 18px; border-top: 1.5px solid var(--akgolf-line); border-bottom: 1.5px solid var(--akgolf-line); margin: 12px 0; display: flex; justify-content: space-between; align-items: baseline; }
+  .sum-total .lab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-muted); font-weight: 700; }
+  .sum-total .val { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 32px; color: var(--akgolf-ink); letter-spacing: -0.02em; }
+  .sum-foot-note { font-size: 11px; color: var(--akgolf-muted); line-height: 1.5; margin-top: 14px; display: flex; gap: 8px; align-items: flex-start; }
+  .sum-foot-note [data-lucide] { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; color: var(--akgolf-primary); }
+
+  /* Trust strip */
+  .trust2 { padding: 50px 0 100px; background: #fff; }
+  .trust2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .trust2-it { display: flex; gap: 14px; }
+  .trust2-it .ic { width: 38px; height: 38px; border-radius: 10px; background: rgba(0,88,64,0.08); color: var(--akgolf-primary); display: grid; place-items: center; flex-shrink: 0; }
+  .trust2-it h4 { font-size: 14px; font-weight: 700; color: var(--akgolf-ink); margin: 0 0 4px; }
+  .trust2-it p { font-size: 13px; color: var(--akgolf-text); margin: 0; line-height: 1.55; }
+
+  @media (max-width: 1100px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .summary { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="web-nav solid" id="nav">
+  <a href="g1-forsiden.html" class="web-logo"><span class="mark">AK</span> AK Golf</a>
+  <div class="web-nav-links">
+    <a href="g1-forsiden.html">Hjem</a>
+    <a href="g2-academy.html" class="active">Academy</a>
+    <a href="g3-junior-academy.html">Junior</a>
+    <a href="g4-pricing.html">Priser</a>
+    <a href="g8-utvikling.html">Utvikling</a>
+    <a href="g9-om-oss.html">Om oss</a>
+  </div>
+  <a href="#" class="web-nav-login">Logg inn</a>
+  <a href="g5-booking.html" class="web-nav-cta">Book time <i data-lucide="arrow-right"></i></a>
+</nav>
+
+<section class="ax-hero">
+  <div class="web-container">
+    <div class="web-eyebrow">Academy · Søknad</div>
+    <h1>Søk om plass <em>i Academy.</em></h1>
+    <p>Tre minutter. Vi kontakter deg innen 24 timer for å avtale et 30-min intro-møte. Søknaden er ikke bindende.</p>
+
+    <div class="stepper">
+      <div class="stp done"><div class="n"><i data-lucide="check" style="width:11px;height:11px;stroke-width:3;"></i></div><span>Velg plan</span></div>
+      <div class="stp active"><div class="n">2</div><span>Søknad</span></div>
+      <div class="stp"><div class="n">3</div><span>Intro-møte</span></div>
+      <div class="stp"><div class="n">4</div><span>Bekreft</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section">
+  <div class="web-container">
+    <div class="form-grid">
+      <!-- Form -->
+      <div class="form-card">
+        <h2>Fortell oss litt om <em>deg</em>.</h2>
+        <p class="form-sub">Anders leser hver søknad personlig. Hjelper hvis du er ærlig om hvor du står og hva du vil oppnå.</p>
+
+        <!-- Plan -->
+        <div class="form-section-title">Hvilken plan</div>
+        <div class="plan-picker" id="plan-picker">
+          <div class="plan-pick" data-plan="essentials" data-price="2 990">
+            <div class="pp-check"><i data-lucide="check"></i></div>
+            <div class="pp-name">Essentials</div>
+            <div class="pp-price">2 990</div>
+            <div class="pp-period">kr / mnd · 6 mnd</div>
+            <div class="pp-line">2 lessons · SG · app</div>
+          </div>
+          <div class="plan-pick active" data-plan="performance" data-price="5 490">
+            <div class="pp-check"><i data-lucide="check"></i></div>
+            <div class="pp-name">Performance ★</div>
+            <div class="pp-price">5 490</div>
+            <div class="pp-period">kr / mnd · 12 mnd</div>
+            <div class="pp-line">4 lessons · banecoach · camps</div>
+          </div>
+          <div class="plan-pick" data-plan="elite" data-price="9 990">
+            <div class="pp-check"><i data-lucide="check"></i></div>
+            <div class="pp-name">Elite 1:1</div>
+            <div class="pp-price">9 990</div>
+            <div class="pp-period">kr / mnd · søknad</div>
+            <div class="pp-line">Ubegrenset · personlig plan</div>
+          </div>
+        </div>
+
+        <!-- Personalia -->
+        <div class="form-section-title">Om deg</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Fornavn</label>
+            <input type="text" placeholder="Anders">
+          </div>
+          <div class="field">
+            <label>Etternavn</label>
+            <input type="text" placeholder="Krohn">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>E-post</label>
+            <input type="email" placeholder="navn@eksempel.no">
+          </div>
+          <div class="field">
+            <label>Telefon</label>
+            <input type="tel" placeholder="+47 ...">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Alder</label>
+            <input type="number" placeholder="38">
+          </div>
+          <div class="field">
+            <label>Hjemklubb <span class="opt">Valgfritt</span></label>
+            <input type="text" placeholder="Bærum GK">
+          </div>
+        </div>
+
+        <!-- Golf-bakgrunn -->
+        <div class="form-section-title">Golf-bakgrunn</div>
+        <div class="field">
+          <label>Nåværende handicap</label>
+          <div class="choices">
+            <label><input type="radio" name="hcp" hidden><span>Nybegynner</span></label>
+            <label><input type="radio" name="hcp" hidden><span>54–36</span></label>
+            <label><input type="radio" name="hcp" hidden><span>36–18</span></label>
+            <label class="active"><input type="radio" name="hcp" hidden checked><span>18–10</span></label>
+            <label><input type="radio" name="hcp" hidden><span>10–4</span></label>
+            <label><input type="radio" name="hcp" hidden><span>+4 og under</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Hvor lenge har du spilt?</label>
+          <div class="choices">
+            <label><input type="radio" name="years" hidden><span>&lt; 1 år</span></label>
+            <label><input type="radio" name="years" hidden><span>1–3 år</span></label>
+            <label class="active"><input type="radio" name="years" hidden checked><span>3–7 år</span></label>
+            <label><input type="radio" name="years" hidden><span>7–15 år</span></label>
+            <label><input type="radio" name="years" hidden><span>15+ år</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Hvor mange runder spiller du i sesongen?</label>
+          <div class="choices">
+            <label><input type="radio" name="rounds" hidden><span>&lt; 10</span></label>
+            <label><input type="radio" name="rounds" hidden><span>10–25</span></label>
+            <label class="active"><input type="radio" name="rounds" hidden checked><span>25–50</span></label>
+            <label><input type="radio" name="rounds" hidden><span>50–100</span></label>
+            <label><input type="radio" name="rounds" hidden><span>100+</span></label>
+          </div>
+        </div>
+
+        <!-- Goals -->
+        <div class="form-section-title">Mål for de neste 12 månedene</div>
+        <div class="field">
+          <label>Hva vil du oppnå?</label>
+          <div class="choices">
+            <label class="active"><input type="checkbox" hidden checked><span>Lavere HCP</span></label>
+            <label class="active"><input type="checkbox" hidden checked><span>Mer konsistent</span></label>
+            <label><input type="checkbox" hidden><span>Spille turneringer</span></label>
+            <label><input type="checkbox" hidden><span>Bedre kortspill</span></label>
+            <label><input type="checkbox" hidden><span>Lengre slag</span></label>
+            <label><input type="checkbox" hidden><span>Mental ro</span></label>
+            <label><input type="checkbox" hidden><span>Spille mer med venner</span></label>
+            <label><input type="checkbox" hidden><span>Forberede tour</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Fortell mer i egne ord <span class="opt">Valgfritt</span></label>
+          <textarea placeholder="F.eks: «Jeg er HCP 14, slår putteren bra men taper slag fra 80–100m. Vil ned til single-digit i løpet av 12 mnd. Spiller mest helger og noen turneringer i klubben min.»"></textarea>
+          <span class="help">Jo mer konkret, jo bedre kan vi forberede intro-møtet.</span>
+        </div>
+
+        <!-- Schedule -->
+        <div class="form-section-title">Når kan du trene?</div>
+        <div class="field">
+          <label>Foretrukne dager</label>
+          <div class="choices">
+            <label><input type="checkbox" hidden><span>Mandag</span></label>
+            <label class="active"><input type="checkbox" hidden checked><span>Tirsdag</span></label>
+            <label><input type="checkbox" hidden><span>Onsdag</span></label>
+            <label class="active"><input type="checkbox" hidden checked><span>Torsdag</span></label>
+            <label><input type="checkbox" hidden><span>Fredag</span></label>
+            <label><input type="checkbox" hidden><span>Lørdag</span></label>
+            <label><input type="checkbox" hidden><span>Søndag</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Foretrukket tid på dagen</label>
+          <div class="choices">
+            <label><input type="radio" name="time" hidden><span>Morgen 07–10</span></label>
+            <label><input type="radio" name="time" hidden><span>Formiddag 10–13</span></label>
+            <label><input type="radio" name="time" hidden><span>Lunsj 11–13</span></label>
+            <label class="active"><input type="radio" name="time" hidden checked><span>Ettermiddag 16–19</span></label>
+            <label><input type="radio" name="time" hidden><span>Kveld 18–21</span></label>
+            <label><input type="radio" name="time" hidden><span>Fleksibel</span></label>
+          </div>
+        </div>
+
+        <!-- Intro-meeting slot -->
+        <div class="form-section-title">Velg tid for intro-møte</div>
+        <p style="font-size: 13px; color: var(--akgolf-muted); margin: -8px 0 16px; line-height: 1.55;">30-min uforpliktende. Fysisk på Bærum, eller på Teams.</p>
+        <div class="slot-picker">
+          <button><span class="day">Tir</span><span>15. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">10:00</span></button>
+          <button class="active"><span class="day">Tir</span><span>15. apr</span><span style="font-size:11px;color:var(--akgolf-accent);">14:00</span></button>
+          <button><span class="day">Ons</span><span>16. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">09:00</span></button>
+          <button><span class="day">Tor</span><span>17. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">17:00</span></button>
+          <button><span class="day">Tor</span><span>17. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">18:00</span></button>
+          <button><span class="day">Fre</span><span>18. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">11:00</span></button>
+          <button><span class="day">Man</span><span>21. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">15:00</span></button>
+          <button><span class="day">Tir</span><span>22. apr</span><span style="font-size:11px;color:var(--akgolf-muted);">10:00</span></button>
+        </div>
+        <div class="field" style="margin-top: 18px;">
+          <label>Format på intro-møte</label>
+          <div class="choices">
+            <label class="active"><input type="radio" name="format" hidden checked><span>Fysisk · Bærum</span></label>
+            <label><input type="radio" name="format" hidden><span>Teams</span></label>
+            <label><input type="radio" name="format" hidden><span>Telefon</span></label>
+          </div>
+        </div>
+
+        <!-- Add-ons -->
+        <div class="form-section-title">Tillegg <span style="color:var(--akgolf-muted);font-weight:600;text-transform:none;letter-spacing:0;">(valgfritt — kan legges til senere)</span></div>
+        <div class="check-list">
+          <label>
+            <input type="checkbox">
+            <div>
+              <div class="ttl">Onboarding-pakke (engang) — 1 490 kr</div>
+              <div class="sub">3-timers oppstart: full SG-måling, swing-baseline og 12-mnd plan med Anders.</div>
+            </div>
+          </label>
+          <label>
+            <input type="checkbox" checked>
+            <div>
+              <div class="ttl">Trackman-leie hjemme · 12 mnd — 690 kr/mnd</div>
+              <div class="sub">Gjør hjemme-trening målbar mellom timene. Kan returneres når som helst.</div>
+            </div>
+          </label>
+          <label>
+            <input type="checkbox">
+            <div>
+              <div class="ttl">Pinx-opphold · høst 2026 — 12 900 kr</div>
+              <div class="sub">3 dager med 2 banecoacing-runder og full pension. 6 plasser.</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Submit row -->
+        <div class="submit-row">
+          <div class="terms">Ved å sende inn bekrefter du at du har lest <a href="g11-personvern.html">personvernerklæringen</a>. Søknaden er ikke bindende — bekreftelse skjer etter intro-møte.</div>
+          <button class="web-btn primary">Send søknad <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Summary sidebar -->
+      <aside>
+        <div class="summary">
+          <h3>Oppsummering</h3>
+          <p class="sub">Endringer oppdateres her i sanntid.</p>
+
+          <div class="sum-block">
+            <div class="sum-label">Plan</div>
+            <div class="sum-value" id="sum-plan">Performance · 12 mnd</div>
+            <div class="sum-meta" id="sum-plan-meta">4 lessons/mnd, 2 banecoacing/sesong, alle camps inkludert</div>
+          </div>
+
+          <div class="sum-block">
+            <div class="sum-label">Tillegg</div>
+            <div class="sum-value">Trackman-leie · 12 mnd</div>
+            <div class="sum-meta">+690 kr/mnd</div>
+          </div>
+
+          <div class="sum-block">
+            <div class="sum-label">Intro-møte</div>
+            <div class="sum-value">Tirsdag 15. april · 14:00</div>
+            <div class="sum-meta">Fysisk · Bærum · 30 minutter · uforpliktende</div>
+          </div>
+
+          <div class="sum-block">
+            <div class="sum-label">Coach</div>
+            <div class="sum-value">Anders Krohn</div>
+            <div class="sum-meta">Hovedcoach Academy</div>
+          </div>
+
+          <div class="sum-total">
+            <div class="lab">Mnd. kostnad</div>
+            <div class="val" id="sum-total">6 180 kr</div>
+          </div>
+
+          <div class="sum-foot-note"><i data-lucide="info"></i><span>Du faktureres først etter intro-møte og bekreftet plass. Ingen forhåndsbetaling.</span></div>
+          <div class="sum-foot-note"><i data-lucide="rotate-ccw"></i><span>1 mnd avbestillingsvarsel. Pause inntil 2 mnd/år inkludert.</span></div>
+          <div class="sum-foot-note"><i data-lucide="shield-check"></i><span>Resultatgaranti etter 6 mnd — gratis ekstra mnd hvis ikke fremgang.</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="trust2">
+  <div class="web-container">
+    <div class="trust2-grid">
+      <div class="trust2-it">
+        <div class="ic"><i data-lucide="user-check"></i></div>
+        <div><h4>Personlig svar innen 24t</h4><p>Anders leser hver søknad. Du får ikke et standardsvar.</p></div>
+      </div>
+      <div class="trust2-it">
+        <div class="ic"><i data-lucide="message-circle"></i></div>
+        <div><h4>Avklar før du forplikter</h4><p>Intro-møtet er for at vi skal finne ut sammen om Academy passer deg.</p></div>
+      </div>
+      <div class="trust2-it">
+        <div class="ic"><i data-lucide="lock"></i></div>
+        <div><h4>Søknaden er konfidensiell</h4><p>Bare Anders ser den. Vi deler ikke informasjon med tredjeparter.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="web-footer">
+  <div class="web-container">
+    <div class="web-footer-grid">
+      <div class="web-footer-brand">
+        <a href="g1-forsiden.html" class="web-logo" style="color: #fff;"><span class="mark">AK</span> AK Golf</a>
+        <p class="desc">Coaching, akademi og bane. Bærum · Holtsmark · Pinx.</p>
+      </div>
+      <div><h4>Tjenester</h4><ul><li><a href="g2-academy.html">Academy</a></li><li><a href="g3-junior-academy.html">Junior</a></li><li><a href="g4-pricing.html">Priser</a></li><li><a href="g8-utvikling.html">Utvikling</a></li></ul></div>
+      <div><h4>Selskapet</h4><ul><li><a href="g9-om-oss.html">Om oss</a></li><li><a href="g10-kontakt.html">Kontakt</a></li></ul></div>
+      <div><h4>Hjelp</h4><ul><li><a href="g10-kontakt.html">Kontakt</a></li><li><a href="g11-personvern.html">Personvern</a></li></ul></div>
+    </div>
+    <div class="web-footer-bottom">
+      <span>© 2026 AK Golf Group AS · ORG 925 884 102</span>
+      <div class="socials"><a href="#"><i data-lucide="instagram"></i></a><a href="#"><i data-lucide="facebook"></i></a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+lucide.createIcons();
+
+// Pill toggles
+document.querySelectorAll('.choices').forEach(group => {
+  group.querySelectorAll('label').forEach(l => {
+    l.addEventListener('click', e => {
+      e.preventDefault();
+      const input = l.querySelector('input');
+      if (input.type === 'radio') {
+        group.querySelectorAll('label').forEach(x => x.classList.remove('active'));
+        l.classList.add('active');
+      } else {
+        l.classList.toggle('active');
+      }
+    });
+  });
+});
+
+// Slot picker
+document.querySelectorAll('.slot-picker button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.slot-picker button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+
+// Plan picker
+const planMeta = {
+  essentials: { name: 'Essentials · 6 mnd', meta: '2 lessons/mnd, fri range, app, vinter-program', price: 2990 },
+  performance: { name: 'Performance · 12 mnd', meta: '4 lessons/mnd, 2 banecoacing/sesong, alle camps inkludert', price: 5490 },
+  elite: { name: 'Elite 1:1 · 12 mnd', meta: 'Ubegrenset 1:1, personlig 12-mnd plan, WhatsApp-tilgang', price: 9990 }
+};
+const fmt = n => n.toLocaleString('no-NO').replace(/,/g, ' ');
+function recalc() {
+  const active = document.querySelector('.plan-pick.active');
+  const plan = planMeta[active.dataset.plan];
+  document.getElementById('sum-plan').textContent = plan.name;
+  document.getElementById('sum-plan-meta').textContent = plan.meta;
+  // Trackman addon checked?
+  const tcheck = document.querySelector('.check-list input[type=checkbox]:nth-of-type(1)');
+  const tracker = document.querySelectorAll('.check-list label')[1].querySelector('input').checked ? 690 : 0;
+  document.getElementById('sum-total').textContent = fmt(plan.price + tracker) + ' kr';
+}
+document.querySelectorAll('.plan-pick').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.plan-pick').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    recalc();
+  });
+});
+document.querySelectorAll('.check-list input').forEach(i => i.addEventListener('change', recalc));
+</script>
+</body>
+</html>

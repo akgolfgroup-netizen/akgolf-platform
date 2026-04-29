@@ -1,7 +1,7 @@
 // Skill: vurder-opprykk
 // Bygger på MCP check_promotion + AI-anbefaling i naturlig språk
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 import { checkPromotion } from "@/lib/mcp-client";
 
 const SYSTEM_PROMPT = `

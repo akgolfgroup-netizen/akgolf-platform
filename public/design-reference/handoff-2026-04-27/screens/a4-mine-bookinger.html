@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A4 — Mine bookinger · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 4px;
+    border-bottom: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    margin-bottom: 22px;
+  }
+  .tab-btn {
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tab-btn .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    padding: 1px 6px; border-radius: 9px;
+    font-weight: 700;
+  }
+  .tab-btn.active {
+    color: var(--akgolf-accent);
+    border-bottom-color: var(--akgolf-accent);
+  }
+  .tab-btn.active .count { background: var(--akgolf-accent); color: #0A1F18; }
+
+  /* Hero next booking */
+  .next-booking {
+    background:
+      radial-gradient(circle at 90% 30%, rgba(209,248,67,0.16), transparent 50%),
+      linear-gradient(135deg, rgba(13,46,35,0.95), rgba(10,31,24,1));
+    border: 1.5px solid rgba(209,248,67,0.30);
+    border-radius: 18px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 28px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-date {
+    text-align: center;
+    background: rgba(209,248,67,0.10);
+    border: 1px solid rgba(209,248,67,0.25);
+    border-radius: 14px;
+    padding: 14px 8px;
+  }
+  .next-date .day {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 10px; letter-spacing: 0.14em;
+    color: var(--akgolf-accent); text-transform: uppercase;
+  }
+  .next-date .num {
+    font-family: 'Inter', sans-serif;
+    font-size: 38px; font-weight: 800;
+    color: #fff; letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 4px 0 2px;
+  }
+  .next-date .mo {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55); text-transform: uppercase;
+  }
+  .next-content .eyebrow {
+    font-family:'JetBrains Mono',monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--akgolf-accent);
+  }
+  .next-content h2 {
+    margin: 6px 0 6px; font-size: 26px; font-weight: 800;
+    color: #fff; letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  .next-content .meta {
+    display: flex; gap: 18px; align-items: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .next-content .meta strong { color: #fff; font-weight: 700; }
+  .next-content .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+  .next-actions { display: flex; gap: 8px; flex-direction: column; }
+
+  /* Booking list rows */
+  .booking-row {
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    border-radius: 14px;
+    padding: 16px 22px;
+    display: grid;
+    grid-template-columns: 88px 1fr auto auto;
+    gap: 22px;
+    align-items: center;
+    margin-bottom: 10px;
+    transition: all 0.12s ease;
+  }
+  .booking-row:hover { border-color: rgba(255,255,255,0.15); }
+  .br-date {
+    text-align: center;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 10px 6px;
+  }
+  .br-date .day { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .br-date .num { font-family:'Inter',sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin: 2px 0; }
+  .br-date .mo { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+  .br-body .top {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .br-body .title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .br-body .meta {
+    display: flex; gap: 14px;
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .br-body .meta [data-lucide] { width: 12px; height: 12px; }
+  .br-body .meta .item { display: inline-flex; align-items: center; gap: 5px; }
+
+  .br-coach {
+    display: flex; align-items: center; gap: 9px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+  .br-coach .av {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: #0A1F18; font-weight: 700; font-size: 11px;
+  }
+
+  .br-actions { display: flex; gap: 6px; }
+
+  /* Empty / past */
+  .booking-row.past { opacity: 0.7; }
+  .booking-row.past .br-date { background: rgba(255,255,255,0.02); }
+  .booking-row.cancelled { background: rgba(244,146,131,0.04); border-color: rgba(244,146,131,0.20); }
+  .booking-row.cancelled .br-body .title { text-decoration: line-through; color: rgba(255,255,255,0.5); }
+
+  /* Day separator */
+  .day-sep {
+    display: flex; align-items: center; gap: 14px;
+    margin: 22px 0 12px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .day-sep::before, .day-sep::after {
+    content: ''; flex: 1; height: 1px; background: var(--akgolf-line-dark);
+  }
+
+  /* CTA cards (suggested) */
+  .suggest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .suggest {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .suggest:hover {
+    border-color: rgba(209,248,67,0.30);
+    background: rgba(209,248,67,0.04);
+  }
+  .suggest .ico {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: rgba(209,248,67,0.15);
+    color: var(--akgolf-accent);
+    display: grid; place-items: center;
+    margin-bottom: 10px;
+  }
+  .suggest .ico [data-lucide] { width: 16px; height: 16px; }
+  .suggest .h { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .suggest .d { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+  @media (max-width: 900px) {
+    .next-booking { grid-template-columns: 1fr; }
+    .booking-row { grid-template-columns: 70px 1fr; gap: 12px; }
+    .booking-row .br-coach, .booking-row .br-actions { grid-column: 1 / -1; }
+    .suggest-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item active"><i data-lucide="calendar-check"></i> Bookinger <span class="badge">2</span></div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Mine bookinger<span class="date">2 KOMMENDE · 17 GJENNOMFØRT</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk i bookinger…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <div class="phq-page-head" style="display:flex; justify-content:space-between; align-items:end;">
+      <div>
+        <div class="phq-eyebrow accent">Kalender · Bookinger</div>
+        <h1 class="phq-h1">Bookinger</h1>
+      </div>
+      <button class="phq-btn primary lg"><i data-lucide="calendar-plus"></i> Book økt</button>
+    </div>
+
+    <!-- NEXT -->
+    <section class="next-booking">
+      <div class="next-date">
+        <div class="day">Onsdag</div>
+        <div class="num">30</div>
+        <div class="mo">Apr</div>
+      </div>
+      <div class="next-content">
+        <div class="eyebrow">Neste · om 2 dager · 17:30</div>
+        <h2>Iron-økt 100m · Trackman 4</h2>
+        <div class="meta">
+          <span class="item"><i data-lucide="user"></i> Med <strong>Anders K.</strong></span>
+          <span class="dot"></span>
+          <span class="item"><i data-lucide="map-pin"></i> Bærum Range · Bay 3</span>
+          <span class="dot"></span>
+          <span class="item"><i data-lucide="clock"></i> 60 min</span>
+          <span class="dot"></span>
+          <span class="phq-pill lime">1-til-1</span>
+        </div>
+      </div>
+      <div class="next-actions">
+        <button class="phq-btn primary"><i data-lucide="map"></i> Veibeskrivelse</button>
+        <button class="phq-btn"><i data-lucide="message-circle"></i> Send melding</button>
+        <button class="phq-btn ghost sm" style="color:#F49283;"><i data-lucide="x"></i> Avbestill</button>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active">Kommende <span class="count">2</span></button>
+      <button class="tab-btn">Gjennomførte <span class="count">17</span></button>
+      <button class="tab-btn">Avlyste <span class="count">2</span></button>
+      <button class="tab-btn">Venteliste <span class="count">1</span></button>
+    </div>
+
+    <!-- DAY: ONS 30 APR -->
+    <div class="day-sep">Ons 30. apr · 1 booking</div>
+    <div class="booking-row">
+      <div class="br-date"><div class="day">Ons</div><div class="num">30</div><div class="mo">Apr</div></div>
+      <div class="br-body">
+        <div class="top">
+          <span class="phq-pill lime">1-til-1</span>
+          <div class="title">Iron-økt 100m · Trackman 4</div>
+        </div>
+        <div class="meta">
+          <span class="item"><i data-lucide="clock"></i> 17:30 – 18:30</span>
+          <span class="item"><i data-lucide="map-pin"></i> Bærum Range · Bay 3</span>
+          <span class="item"><i data-lucide="target"></i> Iron 100–150m</span>
+        </div>
+      </div>
+      <div class="br-coach">
+        <div class="av" style="background:#D1F843;">AK</div>
+        <span>Anders K.</span>
+      </div>
+      <div class="br-actions">
+        <button class="phq-btn ghost sm"><i data-lucide="external-link"></i></button>
+        <button class="phq-btn ghost sm"><i data-lucide="message-circle"></i></button>
+        <button class="phq-btn sm"><i data-lucide="more-horizontal"></i></button>
+      </div>
+    </div>
+
+    <!-- DAY: LØR 03 MAI -->
+    <div class="day-sep">Lør 3. mai · 1 booking</div>
+    <div class="booking-row">
+      <div class="br-date"><div class="day">Lør</div><div class="num">03</div><div class="mo">Mai</div></div>
+      <div class="br-body">
+        <div class="top">
+          <span class="phq-pill" style="background:rgba(118,193,156,0.18); color:#6FCBA1;">Gruppe</span>
+          <div class="title">Putt-clinic 6 spillere</div>
+        </div>
+        <div class="meta">
+          <span class="item"><i data-lucide="clock"></i> 11:00 – 12:30</span>
+          <span class="item"><i data-lucide="map-pin"></i> Bærum Putting Green</span>
+          <span class="item"><i data-lucide="users"></i> 4 av 6 påmeldte</span>
+        </div>
+      </div>
+      <div class="br-coach">
+        <div class="av" style="background:#C896E8;">MT</div>
+        <span>Maria T.</span>
+      </div>
+      <div class="br-actions">
+        <button class="phq-btn ghost sm"><i data-lucide="external-link"></i></button>
+        <button class="phq-btn ghost sm"><i data-lucide="message-circle"></i></button>
+        <button class="phq-btn sm"><i data-lucide="more-horizontal"></i></button>
+      </div>
+    </div>
+
+    <!-- DAY: TIR 06 MAI · ventliste -->
+    <div class="day-sep">Tir 6. mai · venteliste</div>
+    <div class="booking-row">
+      <div class="br-date" style="background:rgba(232,185,103,0.10); border:1px solid rgba(232,185,103,0.25);"><div class="day" style="color:#E8B967;">Tir</div><div class="num">06</div><div class="mo">Mai</div></div>
+      <div class="br-body">
+        <div class="top">
+          <span class="phq-pill warn">Venteliste #2</span>
+          <div class="title">Sving-analyse Trackman</div>
+        </div>
+        <div class="meta">
+          <span class="item"><i data-lucide="clock"></i> 09:00 – 10:00</span>
+          <span class="item"><i data-lucide="map-pin"></i> Bærum Range · Bay 1</span>
+          <span class="item" style="color:#E8B967;"><i data-lucide="hourglass"></i> Vi varsler om plass åpner</span>
+        </div>
+      </div>
+      <div class="br-coach">
+        <div class="av" style="background:#D1F843;">AK</div>
+        <span>Anders K.</span>
+      </div>
+      <div class="br-actions">
+        <button class="phq-btn ghost sm" style="color:#F49283;"><i data-lucide="x"></i> Forlat kø</button>
+      </div>
+    </div>
+
+    <!-- SUGGESTED -->
+    <h2 style="margin:36px 0 14px; font-size:18px; font-weight:700; color:#fff;">Foreslått neste uke</h2>
+    <p style="color:rgba(255,255,255,0.6); margin: 0 0 18px;">Basert på planen din og ledige tider hos Anders.</p>
+    <div class="suggest-grid">
+      <div class="suggest">
+        <div class="ico"><i data-lucide="circle-dot"></i></div>
+        <div class="h">Putt-økt 60 min</div>
+        <div class="d">Man 6. mai · 09:00 · Bærum PG · 3 ledige tider</div>
+      </div>
+      <div class="suggest">
+        <div class="ico"><i data-lucide="target"></i></div>
+        <div class="h">Iron-økt 90 min</div>
+        <div class="d">Ons 8. mai · 17:30 · Bay 2 · 2 ledige tider</div>
+      </div>
+      <div class="suggest">
+        <div class="ico"><i data-lucide="users"></i></div>
+        <div class="h">Lørdags-clinic</div>
+        <div class="d">Lør 11. mai · 10:00 · 6 personer · Maria T.</div>
+      </div>
+    </div>
+
+    <!-- COMPLETED PEEK -->
+    <div class="day-sep">Tidligere · sist gjennomført</div>
+    <div class="booking-row past">
+      <div class="br-date"><div class="day">Lør</div><div class="num">26</div><div class="mo">Apr</div></div>
+      <div class="br-body">
+        <div class="top">
+          <span class="phq-pill success">✓ Gjennomført</span>
+          <div class="title">Putt-clinic · 6 spillere</div>
+        </div>
+        <div class="meta">
+          <span class="item"><i data-lucide="clock"></i> 11:00 – 12:30</span>
+          <span class="item"><i data-lucide="map-pin"></i> Bærum PG</span>
+          <span class="item"><i data-lucide="video"></i> 1 video-feedback</span>
+        </div>
+      </div>
+      <div class="br-coach">
+        <div class="av" style="background:#C896E8;">MT</div>
+        <span>Maria T.</span>
+      </div>
+      <div class="br-actions">
+        <button class="phq-btn ghost sm"><i data-lucide="play"></i> Se video</button>
+        <button class="phq-btn ghost sm"><i data-lucide="repeat"></i> Book igjen</button>
+      </div>
+    </div>
+    <div class="booking-row past cancelled">
+      <div class="br-date"><div class="day">Tor</div><div class="num">24</div><div class="mo">Apr</div></div>
+      <div class="br-body">
+        <div class="top">
+          <span class="phq-pill" style="background:rgba(244,146,131,0.20); color:#F49283;">Avlyst av deg</span>
+          <div class="title">Iron-økt 100m</div>
+        </div>
+        <div class="meta">
+          <span class="item"><i data-lucide="clock"></i> 17:30 – 18:30</span>
+          <span class="item">Avlyst 23. apr · 14:22</span>
+        </div>
+      </div>
+      <div class="br-coach">
+        <div class="av" style="background:#D1F843;">AK</div>
+        <span>Anders K.</span>
+      </div>
+      <div class="br-actions">
+        <button class="phq-btn ghost sm"><i data-lucide="repeat"></i> Book igjen</button>
+      </div>
+    </div>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab active"><i data-lucide="calendar-check"></i>Booking</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

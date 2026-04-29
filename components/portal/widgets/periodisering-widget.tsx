@@ -1,46 +1,57 @@
 "use client";
 
 import { cn } from "@/lib/portal/utils/cn";
+import { getPeriodSummary } from "@/lib/portal/widgets/actions";
+import { useWidgetData } from "./use-widget-data";
 
 /**
- * PeriodiseringWidget — viser nåværende treningsfase og periodisering.
+ * PeriodiseringWidget — viser navaerende treningsfase og periodisering.
  *
- * Data-kilde: PeriodizationPeriod + TrainingPhase
- * Brukes på: P2 (Planlegger), AB08 (Kapasitet), AB14 (Treningsplan), N19
+ * Data-kilde: PeriodizationPeriod via getPeriodSummary()
+ * Brukes pa: P2 (Planlegger), AB08 (Kapasitet), AB14 (Treningsplan), N19
  */
 export function PeriodiseringWidget() {
-  // TODO: Koble til reelle data via server action
-  const phases = [
-    { name: "Grunnlag", weeks: 8, completed: 8, active: false },
-    { name: "Spesialisering", weeks: 6, completed: 4, active: true },
-    { name: "Konkurranse", weeks: 10, completed: 0, active: false },
-    { name: "Overgang", weeks: 4, completed: 0, active: false },
-    { name: "Restitusjon", weeks: 4, completed: 0, active: false },
-  ];
+  const { data: phases, loading } = useWidgetData(getPeriodSummary, []);
+
+  if (loading) {
+    return (
+      <div className="space-y-3">
+        <div className="h-16 bg-surface-container animate-pulse rounded-xl" />
+        <div className="h-2 bg-surface-container animate-pulse rounded-full" />
+      </div>
+    );
+  }
+
+  if (phases.length === 0) {
+    return (
+      <p className="text-xs text-muted py-4 text-center">
+        Ingen periodiseringsplan registrert.
+      </p>
+    );
+  }
 
   const currentPhase = phases.find((p) => p.active);
   const totalWeeks = phases.reduce((sum, p) => sum + p.weeks, 0);
-  const completedWeeks = phases.reduce((sum, p) => sum + p.completed, 0);
-  const overallProgress = Math.round((completedWeeks / totalWeeks) * 100);
+  const completedWeeks = phases
+    .filter((p) => p.completed)
+    .reduce((sum, p) => sum + p.weeks, 0);
+  const overallProgress =
+    totalWeeks > 0 ? Math.round((completedWeeks / totalWeeks) * 100) : 0;
 
   return (
     <div className="space-y-4">
-      {/* Nåværende fase */}
-      {currentPhase && (
+      {currentPhase ? (
         <div className="rounded-xl bg-primary-soft p-3">
           <p className="text-[10px] text-primary font-medium uppercase tracking-wide">
-            Nåværende fase
+            Navaerende fase
           </p>
           <p className="text-sm font-semibold text-text mt-0.5">
             {currentPhase.name}
           </p>
-          <p className="text-xs text-muted">
-            Uke {currentPhase.completed + 1} av {currentPhase.weeks}
-          </p>
+          <p className="text-xs text-muted">{currentPhase.weeks} uker</p>
         </div>
-      )}
+      ) : null}
 
-      {/* Progress-bar */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between text-xs">
           <span className="text-muted">Sesong-progress</span>
@@ -54,32 +65,32 @@ export function PeriodiseringWidget() {
         </div>
       </div>
 
-      {/* Fase-liste */}
       <div className="space-y-1.5">
-        {phases.map((phase) => {
-          const phaseProgress = phase.weeks > 0 ? Math.round((phase.completed / phase.weeks) * 100) : 0;
-          return (
-            <div key={phase.name} className="flex items-center gap-2">
-              <div
-                className={cn(
-                  "w-1.5 h-1.5 rounded-full shrink-0",
-                  phase.active ? "bg-primary" : phaseProgress === 100 ? "bg-success" : "bg-surface-variant"
-                )}
-              />
-              <span
-                className={cn(
-                  "text-xs flex-1",
-                  phase.active ? "font-medium text-text" : "text-muted"
-                )}
-              >
-                {phase.name}
-              </span>
-              <span className="text-[10px] text-muted">
-                {phase.completed}/{phase.weeks} uker
-              </span>
-            </div>
-          );
-        })}
+        {phases.map((phase) => (
+          <div key={phase.name} className="flex items-center gap-2">
+            <div
+              className={cn(
+                "w-1.5 h-1.5 rounded-full shrink-0",
+                phase.active
+                  ? "bg-primary"
+                  : phase.completed
+                    ? "bg-success"
+                    : "bg-surface-variant",
+              )}
+            />
+            <span
+              className={cn(
+                "text-xs flex-1",
+                phase.active ? "font-medium text-text" : "text-muted",
+              )}
+            >
+              {phase.name}
+            </span>
+            <span className="text-[10px] text-muted">
+              {phase.weeks} uker
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

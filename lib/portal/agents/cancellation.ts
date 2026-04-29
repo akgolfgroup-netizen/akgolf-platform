@@ -4,20 +4,21 @@
  * Trigger: Booking.status endret til CANCELLED.
  * Handling:
  *   1. Beregn refundering per Standardvalg #1
- *   2. Hvis refund > 0 → kall Stripe paymentIntents.refund (eller invoiceCredit)
+ *   2. Hvis refund > 0 -> kall Stripe paymentIntents.refund (eller invoiceCredit)
  *   3. Frigi slot (kalender oppdaterer automatisk)
  *   4. Varsle eventuell venteliste-kandidat
  *
- * Logger til AgentLog.
+ * Logger til AgentLog via logAgentRun (sikrer riktig agentId-FK).
  */
 
-import { nanoid } from "nanoid";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
 import { stripe } from "@/lib/portal/stripe";
 import { calculateRefund } from "@/lib/portal/booking/refund-policy";
+import { logAgentRun } from "./log";
 
 const AGENT_NAME = "cancellation";
+const MODEL = "stripe-api";
 
 export async function runCancellation(bookingId: string): Promise<{
   ran: boolean;
@@ -60,7 +61,7 @@ export async function runCancellation(bookingId: string): Promise<{
     });
 
     if (decision.refundPct === 0 || decision.refundAmountKr === 0) {
-      await logSuccess(bookingId, `no-refund · ${decision.reason}`, 0, started);
+      await logSuccess(bookingId, `no-refund - ${decision.reason}`, started);
       return { ran: true, refundedKr: 0 };
     }
 
@@ -74,7 +75,7 @@ export async function runCancellation(bookingId: string): Promise<{
       // Refund PaymentIntent
       const refund = await stripe.refunds.create({
         payment_intent: tx.providerRef,
-        amount: decision.refundAmountKr * 100, // øre
+        amount: decision.refundAmountKr * 100, // ore
         metadata: {
           bookingId,
           refundPct: String(decision.refundPct),
@@ -100,8 +101,7 @@ export async function runCancellation(bookingId: string): Promise<{
 
       await logSuccess(
         bookingId,
-        `refunded ${decision.refundAmountKr} kr (${decision.refundPct}%) — refund.id ${refund.id}`,
-        decision.refundAmountKr,
+        `refunded ${decision.refundAmountKr} kr (${decision.refundPct}%) - refund.id ${refund.id}`,
         started,
       );
       return { ran: true, refundedKr: decision.refundAmountKr };
@@ -128,7 +128,6 @@ export async function runCancellation(bookingId: string): Promise<{
       await logSuccess(
         bookingId,
         `credit-note ${creditNote.id} for ${decision.refundAmountKr} kr`,
-        decision.refundAmountKr,
         started,
       );
       return { ran: true, refundedKr: decision.refundAmountKr };
@@ -143,49 +142,34 @@ export async function runCancellation(bookingId: string): Promise<{
   }
 }
 
-async function logSuccess(bookingId: string, output: string, _refundedKr: number, started: number) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "success",
-        duration: Date.now() - started,
-        input: bookingId,
-        output,
-      },
-    })
-    .catch(() => {});
+async function logSuccess(bookingId: string, output: string, started: number) {
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "success",
+    duration: Date.now() - started,
+    input: bookingId,
+    output,
+  });
 }
 
 async function logSkip(bookingId: string, reason: string) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "skipped",
-        input: bookingId,
-        output: reason,
-      },
-    })
-    .catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "skipped",
+    input: bookingId,
+    output: reason,
+  });
 }
 
 async function logError(bookingId: string, err: unknown, started: number) {
-  await prisma.agentLog
-    .create({
-      data: {
-        id: nanoid(),
-        agentType: AGENT_NAME,
-        model: "stripe-api",
-        status: "error",
-        duration: Date.now() - started,
-        input: bookingId,
-        error: err instanceof Error ? err.message : String(err),
-      },
-    })
-    .catch(() => {});
+  await logAgentRun({
+    name: AGENT_NAME,
+    model: MODEL,
+    status: "error",
+    duration: Date.now() - started,
+    input: bookingId,
+    error: err instanceof Error ? err.message : String(err),
+  });
 }

@@ -29,6 +29,7 @@ import { TestRegister } from "@/components/portal/mission-control/test-register"
 import { NextSessionPlanner } from "@/components/portal/mission-control/next-session-planner";
 import { AdminTrackManView } from "@/components/portal/trackman/admin-trackman-view";
 import type { getStudentProfile } from "./actions";
+import { ParentLinkPanel } from "@/components/admin/elever/parent-link-panel";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -155,6 +156,7 @@ export function StudentDetailClient({ profile }: Props) {
     { id: "neste", label: "Planlegg neste" },
     { id: "forecast", label: "Forecast" },
     { id: "notes", label: "Notater og data" },
+    { id: "foreldre", label: "Foreldre" },
   ];
 
   return (
@@ -663,6 +665,16 @@ export function StudentDetailClient({ profile }: Props) {
             studentId={profile.id}
             studentName={profile.name ?? "Elev"}
           />
+        )}
+
+        {/* Tab: Foreldre / foresatte (Fase I) */}
+        {activeTab === "foreldre" && (
+          <div className="rounded-xl border border-outline-variant/30 p-5 bg-surface">
+            <ParentLinkPanel
+              childId={profile.id}
+              childName={profile.name ?? "Elev"}
+            />
+          </div>
         )}
       </div>
     </>

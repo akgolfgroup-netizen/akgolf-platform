@@ -1,13 +1,10 @@
 "use client";
 
-
-import { Icon } from "@/components/ui/icon";
+import { useMemo } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-
 import { motion } from "framer-motion";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { cn } from "@/lib/utils";
+import { CalendarDays, Loader2 } from "lucide-react";
 
 interface TimeSlotsProps {
   date: Date | null;
@@ -18,66 +15,74 @@ interface TimeSlotsProps {
 }
 
 export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: TimeSlotsProps) {
+  // Pre-formater HH:mm pa hver slot — unngar new Date() per render i map.
+  const formattedSlots = useMemo(
+    () => slots.map((slot) => ({ slot, timeStr: format(new Date(slot), "HH:mm") })),
+    [slots],
+  );
   if (!date) {
     return (
-      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
-        <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mb-3" />
-        <p className="text-sm text-on-surface-variant">
-          Velg en dato i kalenderen for å se ledige tider
+      <div className="bg-card border border-line rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[220px]">
+        <CalendarDays className="w-9 h-9 text-ink-subtle mb-3" strokeWidth={1.5} />
+        <p className="text-[13px] text-ink-muted leading-relaxed">
+          Velg en dato i kalenderen for a se ledige tider.
         </p>
-      </PremiumCard>
+      </div>
     );
   }
 
   if (loading) {
     return (
-      <PremiumCard className="flex items-center justify-center gap-2 py-12" padding="lg" hover="none">
-        <Icon name="progress_activity" className="w-4 h-4 animate-spin text-on-surface-variant" />
-        <span className="text-sm text-on-surface-variant">Henter tider...</span>
-      </PremiumCard>
+      <div className="bg-card border border-line rounded-2xl p-6 flex items-center justify-center gap-2.5 min-h-[220px]">
+        <Loader2 className="w-4 h-4 animate-spin text-ink-muted" />
+        <span className="text-[13px] text-ink-muted">Henter tider...</span>
+      </div>
     );
   }
 
   if (slots.length === 0) {
     return (
-      <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
-        <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mb-3" />
-        <p className="text-sm text-on-surface-variant">Ingen ledige tider denne dagen</p>
-        <p className="text-xs text-on-surface-variant mt-1">Prøv en annen dato</p>
-      </PremiumCard>
+      <div className="bg-card border border-line rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[220px]">
+        <CalendarDays className="w-9 h-9 text-ink-subtle mb-3" strokeWidth={1.5} />
+        <p className="text-[13px] text-ink-muted">Ingen ledige tider denne dagen.</p>
+        <p className="text-[12px] text-ink-subtle mt-1">Prov en annen dato.</p>
+      </div>
     );
   }
 
   return (
-    <PremiumCard hover="none">
-      <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
+    <div
+      className="bg-card border border-line rounded-2xl p-4"
+      role="region"
+      aria-live="polite"
+      aria-label={`${slots.length} ledige tider for ${format(date, "EEEE d. MMMM", { locale: nb })}`}
+    >
+      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-primary mb-3">
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>
       <div className="grid grid-cols-2 gap-2">
-        {slots.map((slot, index) => {
-          const slotDate = new Date(slot);
-          const timeStr = format(slotDate, "HH:mm");
+        {formattedSlots.map(({ slot, timeStr }, index) => {
           const isSelected = selectedSlot === slot;
 
           return (
             <motion.button
               key={slot}
+              type="button"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03, duration: 0.25 }}
               onClick={() => onSelect(slot)}
-              className={cn(
-                "py-3 px-4 rounded-full text-sm font-medium transition-all duration-200 border",
+              className={`py-2.5 px-3 rounded-full text-[13px] font-semibold tabular-nums transition-all duration-200 border ${
                 isSelected
-                  ? "bg-on-surface text-surface border-black shadow-sm"
-                  : "bg-surface-container-lowest text-on-surface border-outline-variant/30 hover:border-outline-variant/50"
-              )}
+                  ? "bg-ink text-card border-ink shadow-card"
+                  : "bg-card text-ink border-line hover:border-ink/30 hover:bg-surface-soft"
+              }`}
             >
               {timeStr}
             </motion.button>
           );
         })}
       </div>
-    </PremiumCard>
+    </div>
   );
 }

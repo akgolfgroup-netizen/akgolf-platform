@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard · Course Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_course-hero.css">
+<style>
+  /* Hero foto fills top 58%, bento cards sit below and overlap */
+  .dash-hero {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .dash-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,15,12,0.55) 0%, rgba(10,15,12,0.15) 28%, rgba(10,15,12,0.35) 60%, rgba(10,15,12,0.95) 100%),
+      linear-gradient(90deg, rgba(10,15,12,0.35) 0%, rgba(10,15,12,0) 45%);
+    pointer-events: none;
+  }
+
+  /* Greeting row floats in upper area */
+  .greeting {
+    position: absolute;
+    top: 80px; left: 36px; right: 36px;
+    z-index: 3;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .greeting-text .ch-eyebrow { margin-bottom: 12px; }
+  .greeting-text h1 {
+    margin: 0;
+    font-size: 56px; font-weight: 700; letter-spacing: -0.04em;
+    color: #fff;
+    line-height: 1.0;
+  }
+  .greeting-text h1 .accent { color: #D1F843; }
+  .greeting-text .meta {
+    margin-top: 14px;
+    font-size: 14px; color: rgba(255,255,255,0.7);
+    display: flex; gap: 20px;
+  }
+  .greeting-text .meta .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); align-self: center; }
+
+  .greeting-ring {
+    display: flex; align-items: center; gap: 18px;
+  }
+
+  /* Bento grid — bottom half */
+  .dash-bento-wrap {
+    position: absolute;
+    left: 36px; right: 36px; bottom: 28px;
+    z-index: 4;
+  }
+  .dash-bento-row1 {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 0.9fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .dash-bento-row2 {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Big score card (first) */
+  .card-score .ch-eyebrow { margin-bottom: 14px; }
+  .card-score .big {
+    font-size: 72px; font-weight: 700; letter-spacing: -0.045em;
+    line-height: 1; color: #fff;
+  }
+  .card-score .big .unit {
+    font-size: 22px; color: rgba(255,255,255,0.5);
+    margin-left: 6px; font-weight: 500;
+  }
+  .card-score .delta {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 10px;
+    padding: 4px 10px;
+    background: rgba(209, 248, 67, 0.18);
+    color: #D1F843;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+  }
+
+  /* Small pill kpi cards (2-4) */
+  .card-pill {
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .card-pill .icon-wrap {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .card-pill.accent .icon-wrap { background: rgba(10,31,24,0.12); color: #0A1F18; border-color: rgba(10,31,24,0.15); }
+
+  .card-pill .num-big {
+    font-size: 34px; font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1;
+    margin-top: 14px;
+  }
+  .card-pill .label-small {
+    font-size: 11px; margin-top: 6px;
+    color: rgba(255,255,255,0.55);
+  }
+  .card-pill.accent .label-small { color: rgba(10,31,24,0.55); }
+
+  /* Plan card */
+  .card-plan { padding: 0; overflow: hidden; }
+  .plan-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px 14px;
+  }
+  .plan-header h5 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .plan-list {
+    padding: 4px 10px 14px;
+  }
+  .plan-item {
+    display: grid;
+    grid-template-columns: 46px 1fr auto;
+    gap: 12px; align-items: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+  .plan-item:hover { background: rgba(255,255,255,0.04); }
+  .plan-time {
+    font-family: ui-monospace, monospace;
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    font-weight: 500;
+  }
+  .plan-title { font-size: 13px; font-weight: 500; }
+  .plan-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .plan-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #D1F843;
+  }
+  .plan-dot.amber { background: #F5C542; }
+  .plan-dot.sage { background: #4a9d7f; }
+
+  /* Coach CTA card */
+  .card-coach {
+    display: flex; flex-direction: column; gap: 10px;
+    justify-content: space-between;
+  }
+  .card-coach .hdr {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600;
+  }
+  .card-coach .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #005840, #0A1F18);
+    color: #D1F843; font-size: 11px; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  .card-coach .message {
+    font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.45;
+  }
+  .card-coach .message strong { color: #fff; font-weight: 600; }
+
+  /* Ring svg */
+  .big-ring { width: 110px; height: 110px; }
+  .ring-meta { display: flex; flex-direction: column; gap: 2px; }
+  .ring-meta .lbl { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+  .ring-meta .val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+
+  /* Practice streak mini viz */
+  .streak-bars {
+    display: flex; align-items: flex-end; gap: 4px;
+    height: 42px;
+    margin-top: 10px;
+  }
+  .streak-bars .b {
+    flex: 1;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    min-height: 4px;
+  }
+  .streak-bars .b.active { background: #D1F843; }
+</style>
+</head>
+<body class="course-hero">
+
+<div class="ch-screen">
+  <!-- Slim rail -->
+  <aside class="ch-rail">
+    <div class="ch-rail-logo"><img src="../assets/ak-logo.png" alt="AK"></div>
+    <button class="ch-rail-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1V9.5z"/></svg>
+    </button>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22V2M12 6l8-3v10l-8 3"/></svg>
+    </button>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 20V10M9 20V4M15 20v-8M21 20v-4"/></svg>
+    </button>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+      <span class="badge-dot">3</span>
+    </button>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M9 4v16"/></svg>
+    </button>
+    <div class="ch-rail-spacer"></div>
+    <button class="ch-rail-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+    </button>
+    <div class="ch-rail-avatar" style="margin-top: 6px;">MB</div>
+  </aside>
+
+  <!-- Main -->
+  <main class="ch-main">
+    <div class="dash-hero">
+      <img src="../assets/hero-golf-divot.jpg" alt="Golf green with divot spray" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
+    </div>
+
+    <!-- Topbar (search + avatar) -->
+    <div class="ch-topbar">
+      <div class="ch-crumbs">
+        <strong>Hjem</strong>
+        <span class="dot"></span>
+        <span>Uke 17 · Apr 2026</span>
+      </div>
+      <div class="ch-actions">
+        <button class="ch-btn ch-btn-glass">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          Søk
+        </button>
+        <button class="ch-btn ch-btn-glass ch-btn-icon">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+        </button>
+        <button class="ch-btn ch-btn-lime">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Logg runde
+        </button>
+      </div>
+    </div>
+
+    <!-- Greeting -->
+    <div class="greeting">
+      <div class="greeting-text">
+        <div class="ch-eyebrow"><span class="dot"></span> GOD MORGEN · 07:42</div>
+        <h1>Hei, Martin.<br><span class="accent">3 dager til turnering.</span></h1>
+        <div class="meta">
+          <span>HCP <strong style="color: #fff;">3.4</strong></span>
+          <span class="dot"></span>
+          <span>Siste runde <strong style="color: #fff;">72</strong> · +1</span>
+          <span class="dot"></span>
+          <span>Oslo GK</span>
+        </div>
+      </div>
+
+      <div class="greeting-ring">
+        <div class="ring-meta" style="text-align: right;">
+          <div class="lbl">Ukesmål</div>
+          <div class="val">64%</div>
+          <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;">7 av 11 øvelser</div>
+        </div>
+        <svg class="big-ring" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.1)" stroke-width="10" fill="none"/>
+          <circle cx="60" cy="60" r="50" stroke="#D1F843" stroke-width="10" fill="none"
+                  stroke-dasharray="314" stroke-dashoffset="113"
+                  transform="rotate(-90 60 60)" stroke-linecap="round"/>
+          <circle cx="60" cy="60" r="36" stroke="rgba(255,255,255,0.06)" stroke-width="6" fill="none"/>
+          <circle cx="60" cy="60" r="36" stroke="#4a9d7f" stroke-width="6" fill="none"
+                  stroke-dasharray="226" stroke-dashoffset="68"
+                  transform="rotate(-90 60 60)" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Bento -->
+    <div class="dash-bento-wrap">
+      <div class="dash-bento-row1">
+        <!-- Score card -->
+        <div class="ch-bento-card card-score">
+          <div class="ch-eyebrow"><span class="dot"></span> STROKES GAINED · 30D</div>
+          <div class="big">+2.4<span class="unit">sg/runde</span></div>
+          <div style="display: flex; gap: 8px; margin-top: 12px; align-items: center;">
+            <span class="delta">↑ 0.8 vs. forrige</span>
+            <span style="color: rgba(255,255,255,0.45); font-size: 12px;">· Topp 12% elite</span>
+          </div>
+        </div>
+
+        <!-- Fairways -->
+        <div class="ch-bento-card card-pill">
+          <div class="icon-wrap">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 20c5-10 15-10 20 0"/><circle cx="12" cy="8" r="2"/></svg>
+          </div>
+          <div>
+            <div class="num-big">71<span style="font-size: 16px; opacity: 0.55;">%</span></div>
+            <div class="label-small">Fairway-treff · 14 runder</div>
+          </div>
+        </div>
+
+        <!-- GIR -->
+        <div class="ch-bento-card card-pill accent">
+          <div class="icon-wrap">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <div>
+            <div class="num-big" style="color: #0A1F18;">58<span style="font-size: 16px; opacity: 0.55;">%</span></div>
+            <div class="label-small">Greens in regulation</div>
+          </div>
+        </div>
+
+        <!-- Puts -->
+        <div class="ch-bento-card card-pill">
+          <div class="icon-wrap">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2 2"/></svg>
+          </div>
+          <div>
+            <div class="num-big">1.72</div>
+            <div class="label-small">Putts per GIR</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-bento-row2">
+        <!-- Today plan -->
+        <div class="ch-bento-card card-plan" style="padding: 0;">
+          <div class="plan-header">
+            <div>
+              <div class="ch-eyebrow"><span class="dot"></span> I DAG · 3 PLANLAGTE</div>
+              <h5 style="margin-top: 6px;">Treningsplan</h5>
+            </div>
+            <button class="ch-btn ch-btn-glass" style="padding: 6px 12px; font-size: 11px;">Se alle</button>
+          </div>
+          <div class="plan-list">
+            <div class="plan-item">
+              <div class="plan-time">08:30</div>
+              <div>
+                <div class="plan-title">Range · Jern-kalibrering</div>
+                <div class="plan-meta">TEK · 45 min · Oslo GK</div>
+              </div>
+              <div class="plan-dot"></div>
+            </div>
+            <div class="plan-item">
+              <div class="plan-time">13:00</div>
+              <div>
+                <div class="plan-title">Short game · Wedge-touch</div>
+                <div class="plan-meta">SLAG · 30 min · Oslo GK</div>
+              </div>
+              <div class="plan-dot amber"></div>
+            </div>
+            <div class="plan-item">
+              <div class="plan-time">18:15</div>
+              <div>
+                <div class="plan-title">FYS · Mobilitet hofte</div>
+                <div class="plan-meta">FYS · 25 min · Hjemme</div>
+              </div>
+              <div class="plan-dot sage"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice streak -->
+        <div class="ch-bento-card">
+          <div class="ch-eyebrow"><span class="dot"></span> STREAK · 14 DAGER</div>
+          <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 14px;">
+            <span style="font-size: 36px; font-weight: 700; letter-spacing: -0.03em;">14</span>
+            <span style="font-size: 13px; color: rgba(255,255,255,0.55);">dager på rad</span>
+          </div>
+          <div class="streak-bars">
+            <div class="b active" style="height: 35%;"></div>
+            <div class="b active" style="height: 55%;"></div>
+            <div class="b active" style="height: 40%;"></div>
+            <div class="b active" style="height: 70%;"></div>
+            <div class="b active" style="height: 60%;"></div>
+            <div class="b active" style="height: 85%;"></div>
+            <div class="b active" style="height: 50%;"></div>
+            <div class="b active" style="height: 75%;"></div>
+            <div class="b active" style="height: 65%;"></div>
+            <div class="b active" style="height: 90%;"></div>
+            <div class="b active" style="height: 55%;"></div>
+            <div class="b active" style="height: 80%;"></div>
+            <div class="b active" style="height: 70%;"></div>
+            <div class="b active" style="height: 60%;"></div>
+          </div>
+        </div>
+
+        <!-- Coach -->
+        <div class="ch-bento-card card-coach">
+          <div class="hdr">
+            <div class="avatar">TH</div>
+            <div>
+              <div>Coach Thomas</div>
+              <div style="font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase;">COACH · sendt 06:30</div>
+            </div>
+          </div>
+          <div class="message">
+            "Fokuser <strong>jernbane 6–8</strong> i dag. Siste runde viste −0.4 SG fra 140–170m. Jeg har lagt inn en kort drill."
+          </div>
+          <button class="ch-btn ch-btn-lime" style="align-self: flex-start;">
+            Åpne melding
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'ak-tweaks') {
+      const s = e.data.state;
+      document.body.classList.toggle('d-compact', s.density === 'compact');
+      document.body.classList.toggle('d-spacious', s.density === 'spacious');
+    }
+  });
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

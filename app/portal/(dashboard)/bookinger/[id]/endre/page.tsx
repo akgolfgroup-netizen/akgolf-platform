@@ -27,7 +27,7 @@ export default async function ReschedulePage({ params }: Props) {
       )
     `)
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (!booking || booking.studentId !== user.id) {
     notFound();

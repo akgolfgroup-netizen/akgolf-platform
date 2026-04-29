@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Runde — Aktiv</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #F5F8F7; }
+  .main { padding: 0; overflow: hidden; background: #F5F8F7; }
+  .r-h { background:#0A1F18; color:#fff; padding:16px 28px; display:flex; justify-content:space-between; align-items:center; }
+  .r-h .ttl { font-size:18px; font-weight:700; letter-spacing:-0.02em; }
+  .r-h .sub { font-family:'JetBrains Mono',monospace; font-size:11px; color:#D1F843; letter-spacing:0.1em; margin-top:2px; }
+  .r-h .stats { display:flex; gap:24px; font-family:'JetBrains Mono',monospace; }
+  .r-h .stats .s .l { font-size:9px; color:#A5B2AD; letter-spacing:0.14em; text-transform:uppercase; }
+  .r-h .stats .s .v { font-size:22px; font-weight:700; color:#D1F843; letter-spacing:-0.01em; }
+
+  .r-body { display:grid; grid-template-columns: 1fr 360px; gap:16px; padding:16px 24px; }
+  .card { background:#fff; border:1px solid #ECF0EF; border-radius:12px; padding:16px; }
+  .card h3 { margin:0 0 4px; font-size:14px; font-weight:700; }
+  .card .c-sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; }
+
+  /* Hole map */
+  .hole-map { padding: 16px; background: linear-gradient(140deg, #E8F5EF, #F5F8F7); border-radius:12px; position:relative; aspect-ratio:16/8; overflow:hidden; }
+  .hole-map svg { width:100%; height:100%; }
+
+  /* Scorecard */
+  .score-tbl { width:100%; border-collapse:collapse; font-size:12px; }
+  .score-tbl th, .score-tbl td { padding:6px 4px; text-align:center; border:1px solid #ECF0EF; font-family:'JetBrains Mono',monospace; }
+  .score-tbl th { background:#F5F8F7; font-size:10px; letter-spacing:0.08em; color:#5A6E66; }
+  .score-tbl td.hole { background:#F5F8F7; font-weight:700; color:#0A1F18; }
+  .score-tbl .active td { background:#FAF5FF; }
+  .score-tbl .done td { color:#324D45; }
+  .score-tbl .score { font-weight:700; font-size:13px; }
+  .score-tbl .eagle { background:rgba(175,82,222,0.2); color:#6B21A8; border-radius:50%; }
+  .score-tbl .birdie { color:#2A7D5A; }
+  .score-tbl .bogey { color:#C48A32; }
+  .score-tbl .doublebogey { color:#B84233; }
+
+  .sg-live { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .sg-live .row { display:grid; grid-template-columns: 80px 1fr 50px; gap:8px; align-items:center; font-size:11px; }
+  .sg-live .cat { font-weight:600; }
+  .sg-live .trk { height:6px; background:#ECF0EF; border-radius:2px; position:relative; }
+  .sg-live .zr { position:absolute; left:50%; top:-2px; bottom:-2px; width:1px; background:#0A1F18; }
+  .sg-live .f { position:absolute; top:0; bottom:0; }
+  .sg-live .f.p { background:#2A7D5A; }
+  .sg-live .f.n { background:#E85D4E; }
+
+  .preshot { background:#0A1F18; color:#fff; padding:14px; border-radius:12px; }
+  .preshot h3 { color:#D1F843; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; margin:0 0 10px; }
+  .decade { display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-top:10px; }
+  .decade .d { padding:10px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid rgba(255,255,255,0.08); font-size:11px; }
+  .decade .d .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase; }
+  .decade .d .v { font-size:18px; font-weight:700; margin-top:2px; color:#D1F843; letter-spacing:-0.01em; }
+  .decade .d .v small { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; }
+
+  .hole-nav { display:flex; gap:3px; flex-wrap:wrap; margin-top:14px; }
+  .hole-nav div {
+    width:26px; height:26px; border-radius:6px;
+    display:grid; place-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
+    background:#F5F8F7; color:#7A8C85; cursor:pointer;
+  }
+  .hole-nav div.done { background:#2A7D5A; color:#fff; }
+  .hole-nav div.birdie { background:#D1F843; color:#0A1F18; }
+  .hole-nav div.bogey { background:#C48A32; color:#fff; }
+  .hole-nav div.active { background:#0A1F18; color:#D1F843; box-shadow:0 0 0 2px #D1F843; }
+</style>
+</head>
+<body>
+<div class="screen no-sidebar">
+  <main class="main">
+    <div class="r-h">
+      <div>
+        <div class="ttl">◉ Aktiv runde · Oslo GK</div>
+        <div class="sub">GUL · PAR 72 · HULL 8 · STARTET 09:14</div>
+      </div>
+      <div class="stats">
+        <div class="s"><div class="l">HULL</div><div class="v">8 / 18</div></div>
+        <div class="s"><div class="l">SCORE</div><div class="v">+1</div></div>
+        <div class="s"><div class="l">PUTTS</div><div class="v">14</div></div>
+        <div class="s"><div class="l">GIR</div><div class="v">4/7</div></div>
+        <div class="s"><div class="l">SG EST.</div><div class="v">+1.2</div></div>
+      </div>
+    </div>
+
+    <div class="r-body">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card">
+          <h3>Hull 8 · Par 4 · 382 m</h3>
+          <div class="c-sub">HANDIKAP 6 · DOGLEG HØYRE · FW OVER BUNKER</div>
+          <div class="hole-map">
+            <svg viewBox="0 0 640 280">
+              <!-- fairway -->
+              <path d="M40,200 Q180,160 320,150 Q480,145 580,80" fill="none" stroke="#B8D9BF" stroke-width="60" stroke-linecap="round"/>
+              <path d="M40,200 Q180,160 320,150 Q480,145 580,80" fill="none" stroke="#7FB88F" stroke-width="52" stroke-linecap="round" stroke-dasharray="4,3"/>
+              <!-- tee -->
+              <rect x="32" y="194" width="20" height="12" fill="#0A1F18"/>
+              <text x="42" y="188" text-anchor="middle" font-size="9" font-family="JetBrains Mono" fill="#0A1F18" font-weight="700">TEE</text>
+              <!-- bunkers -->
+              <ellipse cx="230" cy="175" rx="28" ry="14" fill="#F4E4B8"/>
+              <ellipse cx="500" cy="100" rx="24" ry="12" fill="#F4E4B8"/>
+              <!-- water -->
+              <path d="M350,200 Q380,180 420,195 Q400,220 370,215 Z" fill="#93C5FD"/>
+              <text x="385" y="207" font-size="9" fill="#1E40AF" font-family="JetBrains Mono" font-weight="700">H₂O</text>
+              <!-- green -->
+              <ellipse cx="580" cy="80" rx="30" ry="18" fill="#4F9E6C"/>
+              <circle cx="580" cy="80" r="3" fill="#fff"/>
+              <line x1="580" y1="80" x2="583" y2="60" stroke="#fff" stroke-width="1.5"/>
+              <text x="580" y="54" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#0A1F18" font-weight="700">GREEN</text>
+              <!-- ball position -->
+              <circle cx="340" cy="148" r="7" fill="#D1F843" stroke="#0A1F18" stroke-width="2"/>
+              <text x="340" y="136" text-anchor="middle" font-size="9" fill="#0A1F18" font-weight="700" font-family="JetBrains Mono">DIN BALL</text>
+              <!-- distance -->
+              <line x1="340" y1="148" x2="580" y2="80" stroke="#0A1F18" stroke-dasharray="4,3" stroke-width="1.5"/>
+              <rect x="440" y="108" width="50" height="18" fill="#0A1F18" rx="4"/>
+              <text x="465" y="121" text-anchor="middle" font-size="10" fill="#D1F843" font-weight="700" font-family="JetBrains Mono">148 M</text>
+            </svg>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-top:14px;">
+            <div style="padding:10px; background:#F5F8F7; border-radius:8px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#7A8C85;letter-spacing:0.14em;">WIND</div>
+              <div style="font-size:16px;font-weight:700;color:#0A1F18;margin-top:2px;">4 m/s ↖</div>
+            </div>
+            <div style="padding:10px; background:#F5F8F7; border-radius:8px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#7A8C85;letter-spacing:0.14em;">ELEV</div>
+              <div style="font-size:16px;font-weight:700;color:#0A1F18;margin-top:2px;">+3 m</div>
+            </div>
+            <div style="padding:10px; background:#F5F8F7; border-radius:8px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#7A8C85;letter-spacing:0.14em;">LIE</div>
+              <div style="font-size:16px;font-weight:700;color:#0A1F18;margin-top:2px;">Fairway</div>
+            </div>
+            <div style="padding:10px; background:#F5F8F7; border-radius:8px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#7A8C85;letter-spacing:0.14em;">HAZARD</div>
+              <div style="font-size:16px;font-weight:700;color:#0A1F18;margin-top:2px;">H₂O 32m</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Scorecard · front 9</h3>
+          <div class="c-sub">HULL 1–9</div>
+          <table class="score-tbl">
+            <thead>
+              <tr><th>Hull</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>UT</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="hole">Par</td><td>4</td><td>5</td><td>3</td><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><td>36</td></tr>
+              <tr><td class="hole">HI</td><td>8</td><td>14</td><td>16</td><td>4</td><td>10</td><td>18</td><td>2</td><td>6</td><td>12</td><td></td></tr>
+              <tr class="done"><td class="hole">Score</td><td class="score birdie">3</td><td class="score">5</td><td class="score">3</td><td class="score bogey">5</td><td class="score">4</td><td class="score">3</td><td class="score birdie">3</td><td class="score active">—</td><td>—</td><td class="score">26</td></tr>
+              <tr class="done"><td class="hole">Putts</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>—</td><td>—</td><td>12</td></tr>
+              <tr class="done"><td class="hole">FW</td><td>✓</td><td>✓</td><td>—</td><td>✗</td><td>✓</td><td>—</td><td>✓</td><td>✓</td><td>—</td><td>4/5</td></tr>
+              <tr class="done"><td class="hole">GIR</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>5/7</td></tr>
+            </tbody>
+          </table>
+          <div class="hole-nav">
+            <div class="birdie">1</div>
+            <div class="done">2</div>
+            <div class="done">3</div>
+            <div class="bogey">4</div>
+            <div class="done">5</div>
+            <div class="done">6</div>
+            <div class="birdie">7</div>
+            <div class="active">8</div>
+            <div>9</div>
+            <div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="preshot">
+          <h3>◈ PRE-SHOT · STRATEGI</h3>
+          <div style="font-size:15px;font-weight:700;color:#fff;">148 m til flagg</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#A5B2AD;margin-top:4px;letter-spacing:0.08em;">EFFEKTIV 152 M · SPEED-ADJ 150 M</div>
+          <div class="decade">
+            <div class="d"><div class="l">Klubbe</div><div class="v">7-jern</div></div>
+            <div class="d"><div class="l">Carry</div><div class="v">152 <small>m</small></div></div>
+            <div class="d"><div class="l">Siktelinje</div><div class="v">Midt grønn</div></div>
+            <div class="d"><div class="l">Landing</div><div class="v">Fet side</div></div>
+          </div>
+          <div style="padding:12px; margin-top:10px; background:rgba(209,248,67,0.08); border-radius:8px; border:1px solid rgba(209,248,67,0.15);">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#D1F843; letter-spacing:0.1em; margin-bottom:4px;">◎ AI-SIKTE-ANBEFALING</div>
+            <div style="font-size:12px; color:#E6EAE8; line-height:1.5;">Du gjør chip-feil fra 10–25m. <b style="color:#D1F843;">Sikt 4m høyre for flagg</b> — fet side av grønn. Bom-kost: chip fra foran grønn (+0.3 SG vs bakre).</div>
+          </div>
+          <button class="btn btn-accent" style="width:100%; margin-top:12px;">Logg slag →</button>
+        </div>
+
+        <div class="card">
+          <h3>SG · live estimat</h3>
+          <div class="c-sub">BASERT PÅ HULL 1–7</div>
+          <div class="sg-live">
+            <div class="row"><span class="cat">Off-tee</span><div class="trk"><div class="zr"></div><div class="f p" style="left:50%;width:18%;"></div></div><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#2A7D5A;">+0.4</span></div>
+            <div class="row"><span class="cat">Approach</span><div class="trk"><div class="zr"></div><div class="f p" style="left:50%;width:32%;"></div></div><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#2A7D5A;">+0.8</span></div>
+            <div class="row"><span class="cat">Chip</span><div class="trk"><div class="zr"></div><div class="f n" style="right:50%;width:8%;"></div></div><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#B84233;">−0.2</span></div>
+            <div class="row"><span class="cat">Putt</span><div class="trk"><div class="zr"></div><div class="f p" style="left:50%;width:6%;"></div></div><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#2A7D5A;">+0.1</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>◉ Logg slag · hull 8</h3>
+          <div class="c-sub">SHOT 2 · INNSPILL</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;">
+            <button class="btn btn-outline" style="font-size:11px;padding:8px;">5j</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:8px;">6j</button>
+            <button class="btn btn-primary" style="font-size:11px;padding:8px;">7j</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:8px;">8j</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:8px;">9j</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:8px;">PW</button>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5A6E66;letter-spacing:0.14em;margin-top:12px;">RESULTAT</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:6px;">
+            <button class="btn btn-outline" style="font-size:11px;padding:6px;">Green</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:6px;">Foran</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:6px;">Høyre</button>
+            <button class="btn btn-outline" style="font-size:11px;padding:6px;">Bunker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{if(window.lucide)lucide.createIcons();});</script>
+</body>
+</html>

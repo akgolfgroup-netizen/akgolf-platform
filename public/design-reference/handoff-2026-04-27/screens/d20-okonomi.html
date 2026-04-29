@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>D20 — Økonomi · CoachHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_coachhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Hero */
+  .ek-hero { background:var(--akgolf-card-dark); border:1.5px solid rgba(209,248,67,0.30); border-radius:18px; padding:24px 28px; margin-bottom:22px; display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:center; }
+  .ek-hero h2 { margin:0; font-size:30px; font-weight:800; color:#fff; letter-spacing:-0.025em; line-height:1.05; }
+  .ek-hero h2 em { color:var(--akgolf-accent); font-style:normal; }
+  .ek-hero .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.16em; color:var(--akgolf-accent); text-transform:uppercase; margin-bottom:6px; font-weight:700; }
+  .ek-hero .lede { margin:10px 0 0; font-size:13.5px; color:rgba(255,255,255,0.7); line-height:1.6; max-width:55ch; }
+  .ek-hero .actions { margin-top:16px; display:flex; gap:8px; }
+  .hero-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .hs { background:rgba(0,0,0,0.20); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px 14px; }
+  .hs .l { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+  .hs .v { font-size:20px; font-weight:800; color:#fff; line-height:1; margin-top:4px; }
+  .hs .v small { font-size:11px; font-weight:500; margin-left:3px; color:rgba(255,255,255,0.5); }
+  .hs .delta { font-family:'JetBrains Mono',monospace; font-size:10px; color:#6FCBA1; margin-top:3px; font-weight:700; }
+  .hs .delta.down { color:#F49283; }
+
+  /* Chart */
+  .chart-card { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:22px 24px; margin-bottom:22px; }
+  .chart-h { display:flex; justify-content:space-between; align-items:end; margin-bottom:18px; }
+  .chart-h h3 { margin:0; font-size:15px; color:#fff; font-weight:700; }
+  .chart-h .legend { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.55); }
+  .chart-h .legend span { margin-left:14px; }
+  .chart-h .dot { display:inline-block; width:8px; height:8px; border-radius:2px; vertical-align:middle; margin-right:5px; }
+  .chart {
+    height: 220px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding-bottom: 28px;
+  }
+  .chart::before {
+    content: ''; position: absolute; left:0; right:0; top:0; bottom:28px;
+    background-image:
+      linear-gradient(to top, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 100% 25%;
+  }
+  .bar-col {
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    height: 100%;
+    position: relative;
+    justify-content: flex-end;
+  }
+  .bar-col .stack { width: 100%; max-width: 36px; display:flex; flex-direction:column; gap:2px; align-items:stretch; }
+  .bar-col .seg { border-radius: 3px; }
+  .bar-col .seg.s1 { background: var(--akgolf-accent); }
+  .bar-col .seg.s2 { background: #6BB1FF; }
+  .bar-col .seg.s3 { background: #C99CF3; }
+  .bar-col .seg.s4 { background: #E8B967; }
+  .bar-col .lab { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.06em; color:rgba(255,255,255,0.5); position:absolute; bottom:0; }
+  .bar-col.this { outline: 1px solid rgba(209,248,67,0.30); outline-offset: 4px; border-radius: 4px; }
+
+  /* Two col bottom */
+  .bot-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap:18px; }
+  .panel { background:var(--akgolf-card-dark); border:1px solid var(--akgolf-line-dark); border-radius:14px; padding:18px 22px; }
+  .panel h3 { margin:0 0 14px; font-size:14px; color:#fff; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .panel h3 .more { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.5); font-weight:700; }
+
+  .pay-row { display:grid; grid-template-columns: 36px 1fr 90px 80px 80px; gap:12px; align-items:center; padding:10px 0; border-top:1px solid rgba(255,255,255,0.04); font-size:12.5px; }
+  .pay-row:first-of-type { border-top:none; }
+  .pay-row .av { width:36px; height:36px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:11px; color:#0A1F18; }
+  .pay-row .nm { color:#fff; font-weight:600; }
+  .pay-row .nm small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.55); margin-top:2px; }
+  .pay-row .when { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.65); }
+  .pay-row .amt { font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; text-align:right; font-variant-numeric:tabular-nums; font-size:12.5px; }
+  .pay-row .stat { font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:2px 6px; border-radius:5px; font-weight:700; text-align:center; letter-spacing:0.08em; text-transform:uppercase; }
+  .pay-row .stat.paid { background:rgba(42,125,90,0.25); color:#6FCBA1; }
+  .pay-row .stat.pending { background:rgba(232,185,103,0.20); color:#E8B967; }
+  .pay-row .stat.refund { background:rgba(184,66,51,0.18); color:#F49283; }
+
+  .breakdown-row { display:grid; grid-template-columns: 1fr 60px 60px; gap:12px; align-items:center; padding:8px 0; }
+  .breakdown-row .lab { font-size:12.5px; color:#fff; font-weight:600; }
+  .breakdown-row .lab small { display:block; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,0.5); margin-top:2px; letter-spacing:0.04em; }
+  .breakdown-row .pct { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.7); text-align:right; font-weight:700; }
+  .breakdown-row .amt { font-family:'JetBrains Mono',monospace; font-size:11px; color:#fff; font-weight:700; text-align:right; }
+  .br-bar { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; margin-top:4px; }
+  .br-bar .fill { height:100%; border-radius:3px; }
+
+  .payout-card { background: linear-gradient(160deg, rgba(209,248,67,0.10), rgba(13,46,35,0.0)), var(--akgolf-card-dark); border:1px solid rgba(209,248,67,0.20); border-radius:14px; padding:20px 24px; margin-bottom:18px; }
+  .payout-card .lab { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; color:var(--akgolf-accent); text-transform:uppercase; font-weight:700; }
+  .payout-card .v { font-size:32px; font-weight:800; color:#fff; letter-spacing:-0.025em; margin:6px 0 4px; }
+  .payout-card .when { font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.7); }
+  .payout-card .br { display:flex; gap:14px; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(255,255,255,0.65); }
+  .payout-card .br span strong { color:#fff; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="chq-shell">
+  <aside class="chq-rail">
+    <div class="chq-rail-logo">AK</div>
+    <button class="chq-rail-btn"><i data-lucide="layout-dashboard"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="users"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="package"></i></button>
+    <button class="chq-rail-btn active"><i data-lucide="credit-card"></i></button>
+    <button class="chq-rail-btn"><i data-lucide="bar-chart-3"></i></button>
+    <div class="chq-rail-spacer"></div>
+    <button class="chq-rail-btn"><i data-lucide="settings"></i></button>
+  </aside>
+  <nav class="chq-nav">
+    <div class="chq-nav-section">Drift</div>
+    <div class="chq-nav-item"><i data-lucide="map-pin"></i>Lokasjoner</div>
+    <div class="chq-nav-item"><i data-lucide="package"></i>Tjenester</div>
+    <div class="chq-nav-section">Økonomi</div>
+    <div class="chq-nav-item active"><i data-lucide="credit-card"></i>Økonomi</div>
+    <div class="chq-nav-item"><i data-lucide="bar-chart-3"></i>Rapporter</div>
+    <div class="chq-nav-item"><i data-lucide="receipt"></i>Fakturaer</div>
+    <div class="chq-nav-item"><i data-lucide="rotate-ccw"></i>Refusjoner</div>
+  </nav>
+  <header class="chq-top">
+    <div class="chq-top-title">Økonomi</div>
+    <div class="chq-top-meta">APRIL 2025 · UTBETALING 3. MAI · STRIPE-INTEGRERT</div>
+    <div class="chq-search"><i data-lucide="search"></i><span>Søk transaksjon…</span><span class="kbd">Cmd K</span></div>
+    <button class="chq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="chq-top-avatar">ES</div>
+  </header>
+  <main class="chq-main">
+    <div class="chq-page-head">
+      <div class="titles">
+        <div class="chq-eyebrow accent">/ ØKONOMI · OVERSIKT</div>
+        <h1 class="chq-h1">Inntekter, utbetalinger, refusjoner.</h1>
+        <p>Live data fra Stripe. Utbetaling skjer 1. og 15. hver måned. Refusjoner og endringer godkjennes manuelt fra Godkjenninger-panelet.</p>
+      </div>
+      <div class="actions">
+        <button class="chq-btn"><i data-lucide="download"></i>Eksporter</button>
+        <button class="chq-btn primary"><i data-lucide="external-link"></i>Åpne Stripe</button>
+      </div>
+    </div>
+
+    <section class="ek-hero">
+      <div>
+        <div class="lab">April 2025 · måned-til-dato</div>
+        <h2>184 600 kr <em>· +18 % YoY.</em></h2>
+        <p class="lede">Sterk april drevet av Tour Camp-pre-salg, økt junior-pakke og stabilt flow på 1:1-coaching. Premium 360° topper margin-ranking — 3 solgt denne måneden.</p>
+        <div class="actions">
+          <button class="chq-btn accent"><i data-lucide="trending-up"></i>Drill-down</button>
+          <button class="chq-btn"><i data-lucide="receipt"></i>Faktura-arkiv</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><div class="l">Brutto · april</div><div class="v">184 600 <small>kr</small></div><div class="delta">+18 % YoY</div></div>
+        <div class="hs"><div class="l">Netto etter fee</div><div class="v">175 800 <small>kr</small></div><div class="delta">−4.8 % platform</div></div>
+        <div class="hs"><div class="l">Refusjoner</div><div class="v">2 400 <small>kr</small></div><div class="delta down">2 saker</div></div>
+        <div class="hs"><div class="l">Utestående</div><div class="v">14 800 <small>kr</small></div><div class="delta">3 fakturaer</div></div>
+      </div>
+    </section>
+
+    <section class="payout-card">
+      <div class="lab">Neste utbetaling · Stripe → DNB</div>
+      <div class="v">88 200 kr</div>
+      <div class="when">FREDAG 3. MAI · 09:00 · 14 TRANSAKSJONER</div>
+      <div class="br">
+        <span>Brutto: <strong>92 400 kr</strong></span>
+        <span>Stripe-fee: <strong>−2 100 kr</strong></span>
+        <span>Refusjoner: <strong>−2 100 kr</strong></span>
+        <span>Status: <strong style="color:#6FCBA1;">SCHEDULED</strong></span>
+      </div>
+    </section>
+
+    <section class="chart-card">
+      <div class="chart-h">
+        <h3>Inntekt · siste 12 måneder</h3>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--akgolf-accent);"></span>1:1 coach</span>
+          <span><span class="dot" style="background:#6BB1FF;"></span>Pakker</span>
+          <span><span class="dot" style="background:#C99CF3;"></span>Test &amp; data</span>
+          <span><span class="dot" style="background:#E8B967;"></span>Camp / gruppe</span>
+        </div>
+      </div>
+      <div class="chart">
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:38px;"></div><div class="seg s2" style="height:18px;"></div><div class="seg s3" style="height:10px;"></div><div class="seg s4" style="height:8px;"></div></div><div class="lab">MAI</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:46px;"></div><div class="seg s2" style="height:22px;"></div><div class="seg s3" style="height:12px;"></div><div class="seg s4" style="height:14px;"></div></div><div class="lab">JUN</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:56px;"></div><div class="seg s2" style="height:24px;"></div><div class="seg s3" style="height:14px;"></div><div class="seg s4" style="height:30px;"></div></div><div class="lab">JUL</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:42px;"></div><div class="seg s2" style="height:20px;"></div><div class="seg s3" style="height:10px;"></div><div class="seg s4" style="height:24px;"></div></div><div class="lab">AUG</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:36px;"></div><div class="seg s2" style="height:16px;"></div><div class="seg s3" style="height:10px;"></div><div class="seg s4" style="height:6px;"></div></div><div class="lab">SEP</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:32px;"></div><div class="seg s2" style="height:14px;"></div><div class="seg s3" style="height:18px;"></div><div class="seg s4" style="height:4px;"></div></div><div class="lab">OKT</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:28px;"></div><div class="seg s2" style="height:10px;"></div><div class="seg s3" style="height:22px;"></div><div class="seg s4" style="height:0;"></div></div><div class="lab">NOV</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:34px;"></div><div class="seg s2" style="height:14px;"></div><div class="seg s3" style="height:24px;"></div><div class="seg s4" style="height:0;"></div></div><div class="lab">DES</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:36px;"></div><div class="seg s2" style="height:18px;"></div><div class="seg s3" style="height:18px;"></div><div class="seg s4" style="height:0;"></div></div><div class="lab">JAN</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:42px;"></div><div class="seg s2" style="height:22px;"></div><div class="seg s3" style="height:14px;"></div><div class="seg s4" style="height:6px;"></div></div><div class="lab">FEB</div></div>
+        <div class="bar-col"><div class="stack"><div class="seg s1" style="height:48px;"></div><div class="seg s2" style="height:28px;"></div><div class="seg s3" style="height:14px;"></div><div class="seg s4" style="height:14px;"></div></div><div class="lab">MAR</div></div>
+        <div class="bar-col this"><div class="stack"><div class="seg s1" style="height:58px;"></div><div class="seg s2" style="height:36px;"></div><div class="seg s3" style="height:18px;"></div><div class="seg s4" style="height:24px;"></div></div><div class="lab" style="color:var(--akgolf-accent);">APR</div></div>
+      </div>
+    </section>
+
+    <div class="bot-grid">
+      <section class="panel">
+        <h3>Siste transaksjoner<span class="more">SE ALLE 87</span></h3>
+        <div class="pay-row"><div class="av" style="background:#6BB1FF;">MN</div><div class="nm">Markus Nordby<small>SESONGPAKKE 10X</small></div><div class="when">28. APR</div><div class="amt">10 800</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:#C99CF3;">SA</div><div class="nm">Sofie Aas<small>VIDEO-ANALYSE</small></div><div class="when">28. APR</div><div class="amt">1 350</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:#E8B967;">JT</div><div class="nm">Jonas Tvedt<small>TRACKMAN-TEST</small></div><div class="when">27. APR</div><div class="amt">1 950</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:#6FCBA1;">HJ</div><div class="nm">Hannah Johansen<small>SWING 1:1</small></div><div class="when">26. APR</div><div class="amt">1 200</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:var(--akgolf-accent);">AK</div><div class="nm">Anders Kristiansen<small>JUNIOR-PAKKE VÅR</small></div><div class="when">25. APR</div><div class="amt">8 900</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:#6BB1FF;">PR</div><div class="nm">Per Rasmussen<small>BANEØKT — AVLYST</small></div><div class="when">25. APR</div><div class="amt" style="color:#F49283;">−1 200</div><div class="stat refund">REFUND</div></div>
+        <div class="pay-row"><div class="av" style="background:#C99CF3;">LK</div><div class="nm">Lars Kvam<small>SESONGPAKKE 10X</small></div><div class="when">24. APR</div><div class="amt">10 800</div><div class="stat pending">VENT.</div></div>
+        <div class="pay-row"><div class="av" style="background:#E8B967;">SS</div><div class="nm">Stine Sand<small>DAMEGRUPPE · 4X</small></div><div class="when">22. APR</div><div class="amt">1 800</div><div class="stat paid">PAID</div></div>
+        <div class="pay-row"><div class="av" style="background:#6FCBA1;">EH</div><div class="nm">Erik Hansen<small>JUNIOR-PAKKE VÅR</small></div><div class="when">20. APR</div><div class="amt">8 900</div><div class="stat paid">PAID</div></div>
+      </section>
+
+      <aside class="panel">
+        <h3>Inntekt per kategori<span class="more">APR 2025</span></h3>
+        <div class="breakdown-row">
+          <div class="lab">1:1 Coaching<small>56 BOOKINGER · SWING/PUTT/MENTAL</small></div>
+          <div class="pct">52%</div>
+          <div class="amt">96k</div>
+        </div>
+        <div class="br-bar"><div class="fill" style="width:52%; background:var(--akgolf-accent);"></div></div>
+
+        <div class="breakdown-row" style="margin-top:8px;">
+          <div class="lab">Pakker<small>9 SESONGPAKKER + 14 JUNIOR</small></div>
+          <div class="pct">28%</div>
+          <div class="amt">52k</div>
+        </div>
+        <div class="br-bar"><div class="fill" style="width:28%; background:#6BB1FF;"></div></div>
+
+        <div class="breakdown-row" style="margin-top:8px;">
+          <div class="lab">Test &amp; data<small>13 ØKTER</small></div>
+          <div class="pct">11%</div>
+          <div class="amt">21k</div>
+        </div>
+        <div class="br-bar"><div class="fill" style="width:11%; background:#C99CF3;"></div></div>
+
+        <div class="breakdown-row" style="margin-top:8px;">
+          <div class="lab">Camp + gruppe<small>TOUR CAMP PRE-SALG</small></div>
+          <div class="pct">9%</div>
+          <div class="amt">16k</div>
+        </div>
+        <div class="br-bar"><div class="fill" style="width:9%; background:#E8B967;"></div></div>
+
+        <div style="margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.6); letter-spacing:0.10em; text-transform:uppercase; font-weight:700;">SUM</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:18px; color:#fff; font-weight:800;">184 600 kr</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

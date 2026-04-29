@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A6 — Treningsplan detalj · PlayerHQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_playerhq.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* Plan hero */
+  .plan-detail-hero {
+    background:
+      radial-gradient(circle at 88% 18%, rgba(209,248,67,0.18), transparent 50%),
+      linear-gradient(135deg, rgba(13,46,35,0.96), rgba(10,31,24,1));
+    border: 1.5px solid rgba(209,248,67,0.30);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 14px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--akgolf-accent); }
+  .breadcrumb [data-lucide] { width: 11px; height: 11px; }
+  .plan-detail-hero h1 {
+    margin: 0; font-size: 36px; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em; line-height: 1.1;
+    max-width: 24ch;
+  }
+  .plan-detail-hero .lede {
+    color: rgba(255,255,255,0.7); margin: 10px 0 22px;
+    font-size: 14px; max-width: 56ch;
+  }
+  .plan-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 28px;
+    align-items: center;
+  }
+  .pmg .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .pmg .v { font-family:'Inter',sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .pmg .v.lime { color: var(--akgolf-accent); }
+
+  /* Progress ring */
+  .progress-ring {
+    position: relative;
+    width: 84px; height: 84px;
+  }
+  .progress-ring svg { transform: rotate(-90deg); }
+  .progress-ring .label {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--akgolf-accent);
+    letter-spacing: -0.02em;
+  }
+
+  /* Pyramide tags */
+  .ak-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .ak-tag.tech { background: rgba(126,158,255,0.18); color: #8AA8FF; }
+  .ak-tag.skill { background: rgba(118,193,156,0.18); color: #6FCBA1; }
+  .ak-tag.score { background: rgba(232,185,103,0.18); color: #E8B967; }
+  .ak-tag.mental { background: rgba(200,150,232,0.18); color: #C896E8; }
+  .ak-tag.fysisk { background: rgba(244,146,131,0.18); color: #F49283; }
+
+  /* Week tabs */
+  .week-tabs {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 22px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .wt {
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: var(--akgolf-card-dark, #0D2E23);
+    border: 1px solid var(--akgolf-line-dark, #1a4a3a);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    min-width: 110px;
+    text-align: left;
+  }
+  .wt:hover { border-color: rgba(255,255,255,0.18); }
+  .wt .num { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .wt .h { font-size: 13px; font-weight: 700; color: #fff; margin: 2px 0 4px; }
+  .wt .pct { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .wt.active { border-color: var(--akgolf-accent); background: rgba(209,248,67,0.08); }
+  .wt.active .pct, .wt.active .h { color: var(--akgolf-accent); }
+  .wt.future { opacity: 0.55; }
+  .wt.done .pct { color: #6FCBA1; }
+
+  /* Day card */
+  .day-block {
+    background: var(--akgolf-card-dark);
+    border: 1px solid var(--akgolf-line-dark);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+  .day-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--akgolf-line-dark);
+  }
+  .day-head .left { display:flex; align-items:center; gap: 14px; }
+  .day-head .day-num {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    text-align: center;
+  }
+  .day-head .day-num .dow { font-family:'JetBrains Mono',monospace; font-size: 8px; letter-spacing: 0.12em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+  .day-head .day-num .num { font-family:'Inter',sans-serif; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .day-head .h { font-size: 16px; font-weight: 700; color: #fff; }
+  .day-head .meta { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 3px; }
+  .day-head .right {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.55);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .day-block.rest .day-num { background: transparent; border: 1px dashed rgba(255,255,255,0.12); }
+  .day-block.rest .h { color: rgba(255,255,255,0.5); }
+
+  /* Exercise row */
+  .ex-row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    margin-bottom: 6px;
+    transition: all 0.12s ease;
+    cursor: pointer;
+  }
+  .ex-row:hover { background: rgba(255,255,255,0.06); }
+  .ex-check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.20);
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .ex-check [data-lucide] { width: 12px; height: 12px; color: transparent; stroke-width: 3; }
+  .ex-check.done {
+    border-color: var(--akgolf-accent);
+    background: var(--akgolf-accent);
+  }
+  .ex-check.done [data-lucide] { color: #0A1F18; }
+  .ex-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .ex-meta {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    margin-top: 4px;
+    font-size: 12px; color: rgba(255,255,255,0.55);
+  }
+  .ex-row.done .ex-name { color: rgba(255,255,255,0.5); text-decoration: line-through; }
+  .ex-dur { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.65); letter-spacing: 0.06em; text-transform: uppercase; }
+  .ex-action { color: rgba(255,255,255,0.5); }
+  .ex-action [data-lucide] { width: 16px; height: 16px; }
+
+  /* Coach note per week */
+  .week-note {
+    background:
+      linear-gradient(180deg, rgba(209,248,67,0.05), transparent),
+      var(--akgolf-card-dark);
+    border: 1px solid rgba(209,248,67,0.20);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 14px;
+    align-items: start;
+  }
+  .week-note .av {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--akgolf-accent);
+    color: #0A1F18;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 13px;
+  }
+  .week-note .body .l { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--akgolf-accent); }
+  .week-note .body .name { font-size: 14px; font-weight: 700; color: #fff; margin: 2px 0 8px; }
+  .week-note .body p { margin: 0; font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.55; }
+  .week-note .time { font-family:'JetBrains Mono',monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .sec-h {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 20px 0 14px;
+  }
+  .sec-h h2 { margin:0; font-size: 20px; font-weight: 800; letter-spacing: -0.025em; color: #fff; }
+  .sec-h .sub { font-family:'JetBrains Mono',monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 1100px) {
+    .plan-meta-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phq-shell">
+  <aside class="phq-rail">
+    <div class="phq-rail-logo">AK</div>
+    <button class="phq-rail-btn"><i data-lucide="home"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="target"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar"></i></button>
+    <button class="phq-rail-btn active"><i data-lucide="clipboard-list"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="calendar-check"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="user"></i></button>
+    <button class="phq-rail-btn"><i data-lucide="sparkles"></i></button>
+    <div class="phq-rail-spacer"></div>
+    <button class="phq-rail-btn"><i data-lucide="log-out"></i></button>
+  </aside>
+
+  <nav class="phq-nav">
+    <div class="phq-nav-section">Spill</div>
+    <div class="phq-nav-item"><i data-lucide="home"></i> Hjem</div>
+    <div class="phq-nav-item"><i data-lucide="target"></i> Min plan</div>
+    <div class="phq-nav-item"><i data-lucide="calendar"></i> Treningsplanlegger</div>
+    <div class="phq-nav-item active"><i data-lucide="clipboard-list"></i> Treningsplan</div>
+    <div class="phq-nav-section">Kalender</div>
+    <div class="phq-nav-item"><i data-lucide="calendar-check"></i> Bookinger</div>
+    <div class="phq-nav-section">Min side</div>
+    <div class="phq-nav-item"><i data-lucide="user"></i> Profil</div>
+    <div class="phq-nav-item"><i data-lucide="sparkles"></i> AI Coach</div>
+  </nav>
+
+  <header class="phq-top">
+    <div class="phq-greeting">Putt + Iron 100m<span class="date">PLAN-ID PL-024 · 4 UKER</span></div>
+    <div class="phq-search"><i data-lucide="search"></i><span>Søk…</span><span class="kbd">Cmd K</span></div>
+    <button class="phq-top-btn"><i data-lucide="bell"></i></button>
+    <div class="phq-top-avatar">EK</div>
+  </header>
+
+  <main class="phq-main">
+    <!-- HERO -->
+    <section class="plan-detail-hero">
+      <div class="breadcrumb">
+        <a href="a3-min-plan.html">Min plan</a>
+        <i data-lucide="chevron-right"></i>
+        <span>Q2 · Putt + Iron 100m</span>
+      </div>
+      <h1>Putt-base og iron 100m — 4 uker</h1>
+      <p class="lede">Mikro-syklus innenfor Q2-blokken. Bygger 3-fot-statistikken til 88%+ og senker iron-spredning fra 8.2m til 6.0m. Tildelt av Anders K. 14. apr.</p>
+
+      <div class="plan-meta-grid">
+        <div class="pmg">
+          <div class="l">Periode</div>
+          <div class="v">14 apr – 11 mai</div>
+        </div>
+        <div class="pmg">
+          <div class="l">Fokus</div>
+          <div class="v" style="font-size:15px; line-height: 1.3;">Putting · Iron 100m</div>
+        </div>
+        <div class="pmg">
+          <div class="l">Volum / uke</div>
+          <div class="v">8t</div>
+        </div>
+        <div class="pmg">
+          <div class="l">Coach</div>
+          <div class="v" style="font-size:15px;">Anders K.</div>
+        </div>
+        <div class="progress-ring">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle cx="42" cy="42" r="36" stroke="rgba(255,255,255,0.10)" stroke-width="8" fill="none"/>
+            <circle cx="42" cy="42" r="36" stroke="#D1F843" stroke-width="8" fill="none"
+                    stroke-dasharray="226" stroke-dashoffset="93" stroke-linecap="round"/>
+          </svg>
+          <div class="label">59%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEEK TABS -->
+    <div class="sec-h">
+      <h2>Uke-for-uke</h2>
+      <div class="sub">UKE 16 ✓ · UKE 17 ✓ · UKE 18 PÅGÅR</div>
+    </div>
+    <div class="week-tabs">
+      <button class="wt done">
+        <div class="num">UKE 16</div>
+        <div class="h">14–20 apr</div>
+        <div class="pct">100%</div>
+      </button>
+      <button class="wt done">
+        <div class="num">UKE 17</div>
+        <div class="h">21–27 apr</div>
+        <div class="pct">100%</div>
+      </button>
+      <button class="wt active">
+        <div class="num">UKE 18 · NÅ</div>
+        <div class="h">28 apr – 4 mai</div>
+        <div class="pct">42%</div>
+      </button>
+      <button class="wt future">
+        <div class="num">UKE 19</div>
+        <div class="h">5–11 mai</div>
+        <div class="pct">0%</div>
+      </button>
+    </div>
+
+    <!-- DAYS UKE 18 -->
+    <!-- DAY: MON -->
+    <div class="day-block">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Man</div><div class="num">28</div></div>
+          <div>
+            <div class="h">Putt-base + range warm-up</div>
+            <div class="meta">90 MIN · BÆRUM PG + RANGE</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag skill">Skill</span>
+          <span>3 / 3 ferdig</span>
+          <span class="phq-pill success">✓ Logget</span>
+        </div>
+      </div>
+      <div class="ex-row done">
+        <div class="ex-check done"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">100-baller fra 3 fot</div>
+          <div class="ex-meta">
+            <span class="ak-tag skill">Skill</span>
+            <span>91% inn (mål 88%)</span>
+            <span style="color:#6FCBA1;">+3pp</span>
+          </div>
+        </div>
+        <div class="ex-dur">25 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row done">
+        <div class="ex-check done"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Tempo-drill 6 fot · metronom 80bpm</div>
+          <div class="ex-meta">
+            <span class="ak-tag skill">Skill</span>
+            <span>72% inn (mål 70%)</span>
+            <span><i data-lucide="video" style="width:11px;height:11px;color:var(--akgolf-accent);"></i> Anders 32s notat</span>
+          </div>
+        </div>
+        <div class="ex-dur">20 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row done">
+        <div class="ex-check done"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Range warm-up · 9-jern halv-svinger</div>
+          <div class="ex-meta">
+            <span class="ak-tag tech">Teknikk</span>
+            <span>30 baller · tempo</span>
+          </div>
+        </div>
+        <div class="ex-dur">30 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+    </div>
+
+    <!-- DAY: TUE rest -->
+    <div class="day-block rest">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Tir</div><div class="num">29</div></div>
+          <div>
+            <div class="h">Hviledag</div>
+            <div class="meta">AKTIV RESTITUSJON · 30 MIN GANGE</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag fysisk">Fysisk</span>
+          <span>Anbefalt</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY: WED -->
+    <div class="day-block">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num" style="background:rgba(209,248,67,0.10); border:1px solid rgba(209,248,67,0.25);">
+            <div class="dow" style="color:var(--akgolf-accent);">Ons</div>
+            <div class="num" style="color:var(--akgolf-accent);">30</div>
+          </div>
+          <div>
+            <div class="h">Iron 100m + coach-økt 1-til-1</div>
+            <div class="meta">60 MIN · TRACKMAN BAY 3 · 17:30</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag tech">Teknikk</span>
+          <span>0 / 2 ferdig</span>
+          <button class="phq-btn primary sm"><i data-lucide="play"></i> Start</button>
+        </div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">7-jern · tempo + lave hender ved impakt</div>
+          <div class="ex-meta">
+            <span class="ak-tag tech">Teknikk</span>
+            <span>3 sett × 8 baller · Trackman-data</span>
+            <span><i data-lucide="video" style="width:11px;height:11px;color:var(--akgolf-accent);"></i> 2:14 demo-video</span>
+          </div>
+        </div>
+        <div class="ex-dur">35 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Spredningstest 100m · 20 baller</div>
+          <div class="ex-meta">
+            <span class="ak-tag score">Score</span>
+            <span>Mål: avg-spredning ≤ 7m</span>
+          </div>
+        </div>
+        <div class="ex-dur">25 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+    </div>
+
+    <!-- DAY: THU rest -->
+    <div class="day-block rest">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Tor</div><div class="num">01</div></div>
+          <div>
+            <div class="h">Hviledag</div>
+            <div class="meta">VALGFRITT MOBILITET · 15 MIN</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag fysisk">Fysisk</span>
+          <span>Valgfri</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY: FRI -->
+    <div class="day-block">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Fre</div><div class="num">02</div></div>
+          <div>
+            <div class="h">Short game 30–60m</div>
+            <div class="meta">45 MIN · BÆRUM SHORT-GAME</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag skill">Skill</span>
+          <span>0 / 2 ferdig</span>
+        </div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Lie-tilpasning fra rough · 3 lies × 4 lengder</div>
+          <div class="ex-meta">
+            <span class="ak-tag skill">Skill</span>
+            <span>Loft-kontroll i fokus</span>
+          </div>
+        </div>
+        <div class="ex-dur">30 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">9-baller-test · scoring fra fairway</div>
+          <div class="ex-meta">
+            <span class="ak-tag score">Score</span>
+            <span>Mål: 7 av 9 innen 3m</span>
+          </div>
+        </div>
+        <div class="ex-dur">15 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+    </div>
+
+    <!-- DAY: SAT -->
+    <div class="day-block">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Lør</div><div class="num">03</div></div>
+          <div>
+            <div class="h">Putt-clinic + driver speed</div>
+            <div class="meta">120 MIN · BÆRUM PG + RANGE</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag skill">Skill</span>
+          <span class="ak-tag fysisk">Fysisk</span>
+          <span>0 / 3 ferdig</span>
+        </div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Putt-clinic gruppe 6 · Maria T.</div>
+          <div class="ex-meta">
+            <span class="ak-tag skill">Skill</span>
+            <span>11:00 – 12:30</span>
+            <span class="phq-pill" style="background:rgba(118,193,156,0.18); color:#6FCBA1;">Booket</span>
+          </div>
+        </div>
+        <div class="ex-dur">90 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Speed-trening · overspeed Stack & Tilt</div>
+          <div class="ex-meta">
+            <span class="ak-tag fysisk">Fysisk</span>
+            <span>3 sett × 8 svinger</span>
+          </div>
+        </div>
+        <div class="ex-dur">25 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Pre-shot-rutine · 4 trinn</div>
+          <div class="ex-meta">
+            <span class="ak-tag mental">Mental</span>
+            <span>Audio-guide</span>
+          </div>
+        </div>
+        <div class="ex-dur">10 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+    </div>
+
+    <!-- DAY: SUN -->
+    <div class="day-block">
+      <div class="day-head">
+        <div class="left">
+          <div class="day-num"><div class="dow">Søn</div><div class="num">04</div></div>
+          <div>
+            <div class="h">Runde 18 hull · Bærum</div>
+            <div class="meta">4–5T · TEE 09:00 · GOLFBOX-LOGG AUTO</div>
+          </div>
+        </div>
+        <div class="right">
+          <span class="ak-tag score">Score</span>
+          <span>Test-runde</span>
+        </div>
+      </div>
+      <div class="ex-row">
+        <div class="ex-check"><i data-lucide="check"></i></div>
+        <div>
+          <div class="ex-name">Spille runde · fokus = pre-shot + 3-fot-rutine</div>
+          <div class="ex-meta">
+            <span class="ak-tag score">Score</span>
+            <span>Logg SG · ant. 3-putt</span>
+            <span>Mål: ≤ 2 stk 3-putt</span>
+          </div>
+        </div>
+        <div class="ex-dur">270 min</div>
+        <div class="ex-action"><i data-lucide="external-link"></i></div>
+      </div>
+    </div>
+
+    <!-- WEEK NOTE -->
+    <div class="week-note">
+      <div class="av">AK</div>
+      <div class="body">
+        <div class="l">Coach-notat · uke 18</div>
+        <div class="name">Anders K.</div>
+        <p>Sterk start på uka — putt-statistikken er over måltall, og du tok ned tempo-drillen på første forsøk. Onsdag fokuserer vi på iron-spredning på Trackman; ta med deg tempo-følelsen fra mandag inn i 7-jernet. Søndagens runde er en testrunde, ikke en konkurranse — bruk den til å observere pre-shot-rutinen.</p>
+      </div>
+      <div class="time">2T SIDEN</div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div style="margin-top:24px; display:flex; gap:8px;">
+      <button class="phq-btn primary"><i data-lucide="message-circle"></i> Spør Anders om uka</button>
+      <button class="phq-btn"><i data-lucide="calendar-plus"></i> Eksporter til kalender</button>
+      <button class="phq-btn ghost"><i data-lucide="history"></i> Se uke 16 + 17</button>
+    </div>
+  </main>
+
+  <nav class="phq-mobile-tab">
+    <button class="tab"><i data-lucide="home"></i>Hjem</button>
+    <button class="tab"><i data-lucide="target"></i>Min plan</button>
+    <button class="tab active"><i data-lucide="clipboard-list"></i>Plan</button>
+    <button class="tab"><i data-lucide="bar-chart-3"></i>Stats</button>
+    <button class="tab"><i data-lucide="user"></i>Profil</button>
+  </nav>
+</div>
+
+<script>
+lucide.createIcons();
+document.querySelectorAll('.ex-check').forEach(c=>{
+  c.addEventListener('click', e=>{
+    e.stopPropagation();
+    c.classList.toggle('done');
+    c.closest('.ex-row').classList.toggle('done');
+    lucide.createIcons();
+  });
+});
+</script>
+</body>
+</html>
