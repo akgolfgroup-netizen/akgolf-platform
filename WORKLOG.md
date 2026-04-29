@@ -8,6 +8,42 @@
 
 ---
 
+## 2026-04-29 (formiddag) — /simplify code review: 10 hoy-impact-fikser
+
+3-agent parallell review (Code Reuse, Code Quality, Efficiency) av 25 commits/51 filer fra forrige natts auto-sprint. Aggregerte funn → fikset hoyest impact i én commit (`7916e45`).
+
+**Statistikk-siden (live, paavirker reelle brukere):**
+- Eliminer duplikat Prisma-query (`getFilteredRoundStats` + `getFilteredAggregates` hentet samme data 2 ganger).
+- Legg til `take: 200` + `select` pa RoundStats — slipper 50+ kolonner inkl. JSON-blobs.
+- 8 v2-komponenter: drop `"use client"` (var pure render uten state) — ~30 KB mindre client JS.
+- Bytt Prisma `RoundStats`-import til lokal `RoundStatsRow`-type i `stats-v2-helpers.ts` — Prisma-typer hor ikke i client bundle.
+
+**Cron-rutiner (real prod-risiko):**
+- Calendar-renewal: seriell → `Promise.allSettled` (15s+ → ~1.5s ved 10 instruktorer).
+- DataGolf-sync: 200 sekvensielle upserts → batch a 25 parallelt (~30s → ~12s).
+- DataGolf-sync: bytt inline upsert til `setCachedPlayerStats()` (DRY).
+- DataGolf-sync: bytt handrullet auth til `verifyCronAuth()` (konsistens).
+
+**Booking:**
+- AbortController pa slot-fetch i `use-booking-wizard.ts` — fjerner race der eldre response lander sist og overskriver nyere state.
+
+**Cleanup:**
+- Fjern emojier fra `scripts/compress-images.ts` (CLAUDE.md global regel).
+- Fjern ubrukt `WebhookNotification`-interface i `webhook.ts`.
+
+**Verifikasjon:**
+- `npx tsc --noEmit`: 0 errors
+- `npx eslint`: 0 errors
+- 27/27 unit-tester (booking + agents) passerer
+
+**Skipped (lavere prioritet, scheduled for senere sprints):**
+- `lib/portal/widgets/actions.ts` (653 linjer dead code) — Sprint 4 wirer dem til UI som planlagt
+- TRAINING_CATEGORIES vs PYRAMIDE-duplisering — gjenbruk i Sprint 4-refactor
+- ICON_MAP eager imports — verifiser i build-analyzer forst
+- Stale `.claude/worktrees/stoic-zhukovsky-5ec1c4/` (forurenser test-runs) — separat opprydning
+
+---
+
 ## 2026-04-29 (natt) — Auto-mode parallell-sprint: 7+ sprints fullfort
 
 **Vedlikeholdsmodus aktivert i prod** (NEXT_PUBLIC_MAINTENANCE_MODE=true) — `/portal` og `/admin` rewrites til /maintenance med Acuity-CTAer (Anders + Markus). Forsiden + booking apent.
