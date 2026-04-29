@@ -5,7 +5,7 @@ export interface ActivityItem {
   icon: ReactNode;
   iconBg: string;
   iconColor: string;
-  title: string;
+  title: ReactNode;
   body: string;
   when: string;
 }

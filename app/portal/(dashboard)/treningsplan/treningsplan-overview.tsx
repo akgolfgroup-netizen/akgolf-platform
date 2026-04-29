@@ -1,15 +1,5 @@
 "use client";
 
-/**
- * Treningsplan-oversikt (Brand Guide V2.0 — dark cockpit)
- *
- * Spillervennlig lese-modus av treningsplanen. Matcher
- * `public/design-reference/handoff-2026-04-27/screens/a5-treningsplan.html`.
- *
- * All editor-funksjonalitet (drag/drop, plan-creator, modaler) ligger
- * fortsatt i `treningsplan-planner.tsx` og åpnes via `?modus=editor`.
- */
-
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { addWeeks, format, startOfWeek } from "date-fns";
@@ -32,19 +22,12 @@ interface OverviewProps {
   weekOffset: number;
   hasPlan: boolean;
   events: V2EventLite[];
-  /** Sum minutter denne uka */
   totalMinutes: number;
-  /** Måltimer per uke (volum-mål) */
   weeklyVolumeTargetMinutes: number;
-  /** Antall økter denne uka */
   sessionCount: number;
-  /** Måltall økter per uke */
   weeklySessionTarget: number;
-  /** Avhukede økter / total */
   doneCount: number;
-  /** Coach-display-navn */
   coachName: string | null;
-  /** Bibliotek-elementer (fra eksisterende exercises) */
   library: LibraryItem[];
 }
 
@@ -93,32 +76,10 @@ export function TreningsplanOverview({
   const adherencePct = sessionCount > 0 ? Math.round((doneCount / sessionCount) * 100) : 0;
 
   const stats: MiniStat[] = [
-    {
-      label: "Volum denne uka",
-      value: `${totalHours}t`,
-      suffix: `/ ${targetHours}t`,
-      pct: volumePct,
-    },
-    {
-      label: "Økter",
-      value: `${sessionCount}`,
-      suffix: `/ ${weeklySessionTarget} plan`,
-      pct: sessionPct,
-      barColor: "#6FCBA1",
-    },
-    {
-      label: "Fullført",
-      value: `${adherencePct}%`,
-      suffix: `${doneCount}/${sessionCount}`,
-      pct: adherencePct,
-    },
-    {
-      label: "Plan-status",
-      value: hasPlan ? "Aktiv" : "—",
-      suffix: hasPlan ? "" : "Ingen plan",
-      pct: hasPlan ? 100 : 0,
-      barColor: "#E8B967",
-    },
+    { label: "Volum denne uka", value: `${totalHours}t`, suffix: `/ ${targetHours}t`, pct: volumePct },
+    { label: "Økter", value: `${sessionCount}`, suffix: `/ ${weeklySessionTarget} plan`, pct: sessionPct, barColor: "var(--color-success)" },
+    { label: "Fullført", value: `${adherencePct}%`, suffix: `${doneCount}/${sessionCount}`, pct: adherencePct },
+    { label: "Plan-status", value: hasPlan ? "Aktiv" : "—", suffix: hasPlan ? "" : "Ingen plan", pct: hasPlan ? 100 : 0, barColor: "var(--color-warning)" },
   ];
 
   function changeWeek(delta: number) {
@@ -136,22 +97,11 @@ export function TreningsplanOverview({
   function todayCardData() {
     if (!todayEvent) return null;
     const exercises = todayEvent.exercises.map((ex) => {
-      const meta = [
-        ex.area && areaLabel(ex.area),
-        ex.lPhase,
-      ]
-        .filter(Boolean)
-        .join(" · ");
+      const meta = [ex.area && areaLabel(ex.area), ex.lPhase].filter(Boolean).join(" · ");
       const perExerciseDur = todayEvent.exercises.length > 0
         ? Math.round(todayEvent.dur / todayEvent.exercises.length)
         : todayEvent.dur;
-      return {
-        id: ex.id,
-        name: ex.name,
-        meta: meta || undefined,
-        durationMinutes: perExerciseDur,
-        done: false,
-      };
+      return { id: ex.id, name: ex.name, meta: meta || undefined, durationMinutes: perExerciseDur, done: false };
     });
     return { event: todayEvent, exercises };
   }
@@ -160,18 +110,13 @@ export function TreningsplanOverview({
   const detailHref = `/portal/treningsplan/uke/${weekOffset}`;
 
   return (
-    <div
-      className={cn(
-        "-m-4 -mt-4 min-h-screen p-6 lg:-m-8 lg:-mt-8 lg:p-8",
-        "bg-[#102B1E] text-white",
-      )}
-    >
+    <div className={cn("-m-4 -mt-4 min-h-screen p-6 lg:-m-8 lg:-mt-8 lg:p-8", "bg-sidebar text-white")}>
       <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--akgolf-accent,#D1F843)]">
+          <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">
             Spill · Treningsplan
           </div>
-          <h1 className="m-0 mt-1 text-[36px] font-extrabold leading-[1.05] tracking-[-0.03em] text-white">
+          <h1 className="m-0 mt-1 text-[36px] font-extrabold leading-[1.05] tracking-[-0.03em] text-white font-[family-name:var(--font-inter-tight)]">
             Uke {weekNumber}
           </h1>
           <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.08em] text-white/55">
@@ -179,59 +124,29 @@ export function TreningsplanOverview({
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => changeWeek(-1)}
-            aria-label="Forrige uke"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white/85 hover:bg-white/[0.08]"
-          >
+          <button type="button" onClick={() => changeWeek(-1)} aria-label="Forrige uke" className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white/85 hover:bg-white/[0.08] transition-colors">
             <ChevronLeft className="h-4 w-4" />
           </button>
-          <button
-            type="button"
-            onClick={jumpToToday}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08]"
-          >
+          <button type="button" onClick={jumpToToday} className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08] transition-colors">
             <Calendar className="h-4 w-4" /> I dag
           </button>
-          <button
-            type="button"
-            onClick={() => changeWeek(1)}
-            aria-label="Neste uke"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white/85 hover:bg-white/[0.08]"
-          >
+          <button type="button" onClick={() => changeWeek(1)} aria-label="Neste uke" className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white/85 hover:bg-white/[0.08] transition-colors">
             <ChevronRight className="h-4 w-4" />
           </button>
-          <Link
-            href="/portal/treningsplan?modus=editor"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08]"
-          >
+          <Link href="/portal/treningsplan?modus=editor" className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08] transition-colors">
             <Settings2 className="h-4 w-4" /> Editor
           </Link>
         </div>
       </header>
 
-      <WeekStrip
-        weekDates={weekDates}
-        events={events}
-        weekOffset={weekOffset}
-        todayIso={todayIso}
-      />
+      <WeekStrip weekDates={weekDates} events={events} weekOffset={weekOffset} todayIso={todayIso} />
 
       <MiniStats stats={stats} />
 
       {tdc ? (
         <>
-          <SectionHeading
-            title="Dagens økt"
-            sub={`${format(today, "EEE d. MMM", { locale: nb }).toUpperCase()} · ${tdc.event.dur} MIN`}
-          />
-          <TodayCard
-            event={tdc.event}
-            exercises={tdc.exercises}
-            coachName={coachName ?? undefined}
-            weekDetailHref={detailHref}
-          />
+          <SectionHeading title="Dagens økt" sub={`${format(today, "EEE d. MMM", { locale: nb }).toUpperCase()} · ${tdc.event.dur} MIN`} />
+          <TodayCard event={tdc.event} exercises={tdc.exercises} coachName={coachName ?? undefined} weekDetailHref={detailHref} />
         </>
       ) : (
         <NoTodayCard hasPlan={hasPlan} />
@@ -239,26 +154,28 @@ export function TreningsplanOverview({
 
       <SectionHeading
         title="Øvelses-bibliotek"
-        sub={
-          coachName
-            ? `TILDELT AV ${coachName.toUpperCase()} · ${library.length} ØVELSER`
-            : `${library.length} ØVELSER`
-        }
+        sub={coachName ? `TILDELT AV ${coachName.toUpperCase()} · ${library.length} ØVELSER` : `${library.length} ØVELSER`}
       />
       {library.length > 0 ? (
         <ExerciseLibrary items={library} />
       ) : (
-        <div className="rounded-2xl border border-[var(--akgolf-line-dark,#1a4a3a)] bg-[var(--akgolf-card-dark,#0D2E23)] p-8 text-center text-[14px] text-white/60">
+        <div className="rounded-2xl border border-sidebar-divider bg-sidebar-hover p-8 text-center text-[14px] text-white/60">
           Ingen øvelser tildelt enda. Coachen din legger til øvelser etter hvert.
         </div>
       )}
 
       <div className="mt-6 text-center">
-        <Link
-          href={detailHref}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08]"
-        >
+        <Link href={detailHref} className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-white/85 hover:bg-white/[0.08] transition-colors">
           <Plus className="h-4 w-4" /> Se hele uka i detalj
+        </Link>
+      </div>
+
+      <div className="mt-6 text-center">
+        <Link
+          href="/portal/treningsplan/analyse"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-accent hover:bg-accent/20 transition-colors"
+        >
+          Analysér progresjon →
         </Link>
       </div>
     </div>
@@ -267,7 +184,7 @@ export function TreningsplanOverview({
 
 function NoTodayCard({ hasPlan }: { hasPlan: boolean }) {
   return (
-    <div className="my-5 rounded-2xl border border-[var(--akgolf-line-dark,#1a4a3a)] bg-[var(--akgolf-card-dark,#0D2E23)] p-7 text-center">
+    <div className="my-5 rounded-2xl border border-sidebar-divider bg-sidebar-hover p-7 text-center">
       <p className="text-[14px] text-white/70">
         {hasPlan
           ? "Ingen økt planlagt i dag — bra mulighet for hvile eller spontan trening."
@@ -278,7 +195,6 @@ function NoTodayCard({ hasPlan }: { hasPlan: boolean }) {
 }
 
 function areaLabel(code: string): string {
-  // Kort, lesbar etikett for area-kode i metadata-felt.
   const map: Record<string, string> = {
     TEE: "Tee",
     INN200: "Innspill 200+m",
@@ -300,5 +216,4 @@ function areaLabel(code: string): string {
   return map[code] ?? code;
 }
 
-// Forhindre lint-warning hvis areaToPillKind importeres uten bruk
 void areaToPillKind;

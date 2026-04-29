@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   getWeekEvents,
   getActivePlan,
@@ -31,6 +32,11 @@ import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 import { TreningsplanOverview } from "./treningsplan-overview";
 import { buildLibraryItems, computeWeeklyTargets, getActiveCoachName } from "./overview-helpers";
+
+export const metadata: Metadata = {
+  title: "Treningsplan | AK Golf",
+  description: "Din personlige treningsplan hos AK Golf.",
+};
 
 // ---------------------------------------------------------------------
 // Server component

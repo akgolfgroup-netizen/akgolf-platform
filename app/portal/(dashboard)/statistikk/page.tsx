@@ -92,7 +92,7 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     safe(getHcpForecast(), "getHcpForecast", emptyHcpForecast),
   ]);
 
-  const aggregates = computeAggregates(rounds);
+  const aggregates = await computeAggregates(rounds);
 
   return (
     <StatsV2Client

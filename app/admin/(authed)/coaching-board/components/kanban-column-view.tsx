@@ -34,7 +34,7 @@ export function KanbanColumnView({
       className="p-3 min-h-[600px]"
       style={{
         background: "rgba(255,255,255,0.025)",
-        border: "1px solid #1a4a3a",
+        border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 14,
       }}
     >

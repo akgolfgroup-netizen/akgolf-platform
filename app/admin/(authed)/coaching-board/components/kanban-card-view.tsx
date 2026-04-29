@@ -59,16 +59,16 @@ export function KanbanCardView({ card, onClick }: KanbanCardViewProps) {
       onClick={onClick}
       className="p-3 cursor-pointer transition-all text-left w-full"
       style={{
-        background: "#0D2E23",
+        background: "rgba(255,255,255,0.03)",
         border: isLive
-          ? "1px solid rgba(209,248,67,0.4)"
-          : "1px solid #1a4a3a",
+          ? "1px solid rgba(209,248,67,0.35)"
+          : "1px solid rgba(255,255,255,0.06)",
         borderLeft: isUrgent ? "3px solid #B84233" : undefined,
         borderRadius: 10,
         opacity: isFaded ? 0.7 : 1,
         boxShadow: isLive
-          ? "0 0 0 3px rgba(209,248,67,0.10), 0 4px 12px rgba(255,255,255,0.06)"
-          : "0 1px 2px rgba(255,255,255,0.04)",
+          ? "0 0 0 3px rgba(209,248,67,0.08), 0 4px 12px rgba(255,255,255,0.04)"
+          : "0 1px 2px rgba(255,255,255,0.03)",
       }}
     >
       <div className="flex items-center justify-between mb-2">

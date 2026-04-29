@@ -23,7 +23,7 @@ import {
   McPill,
   McButton,
 } from "@/components/admin/mc-v2";
-import type { McActivityItem } from "@/components/admin/mc-v2/McActivityItem";
+import type { ActivityItem } from "@/components/admin/mc-v2/McActivityItem";
 import { McActivityItem as ActivityRow } from "@/components/admin/mc-v2/McActivityItem";
 import type {
   HubStats,
@@ -146,7 +146,7 @@ function QuickActions() {
 /* ─── Activity Panel ─── */
 
 function ActivityPanel({ items }: { items: HubActivityItem[] }) {
-  const mapped: McActivityItem[] = items.map((item) => ({
+  const mapped: ActivityItem[] = items.map((item) => ({
     id: item.id,
     icon: <Bell className="w-3.5 h-3.5" />,
     iconBg: toneToBg(item.tone),

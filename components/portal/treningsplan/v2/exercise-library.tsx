@@ -16,9 +16,7 @@ export interface LibraryItem {
   id: string;
   name: string;
   description: string;
-  /** UI category — styres via filter-chips */
   category: "putting" | "iron" | "short" | "driver" | "mental";
-  /** Vist på badge — kan inkludere "video" osv. */
   badgeText?: string;
   durationLabel: string;
   coachName?: string;
@@ -39,33 +37,28 @@ const CATEGORY_STYLE: Record<
   { thumb: string; badge: string; icon: LucideIcon }
 > = {
   putting: {
-    thumb:
-      "bg-[linear-gradient(135deg,rgba(118,193,156,0.18),rgba(13,46,35,0.6))]",
-    badge: "bg-[rgba(118,193,156,0.30)] text-[#6FCBA1]",
+    thumb: "bg-[linear-gradient(135deg,rgba(42,125,90,0.18),rgba(15,31,24,0.6))]",
+    badge: "bg-success/30 text-success",
     icon: CircleDot,
   },
   iron: {
-    thumb:
-      "bg-[linear-gradient(135deg,rgba(126,158,255,0.20),rgba(13,46,35,0.6))]",
-    badge: "bg-[rgba(126,158,255,0.30)] text-[#8AA8FF]",
+    thumb: "bg-[linear-gradient(135deg,rgba(0,122,255,0.20),rgba(15,31,24,0.6))]",
+    badge: "bg-info/30 text-info",
     icon: PlayCircle,
   },
   short: {
-    thumb:
-      "bg-[linear-gradient(135deg,rgba(232,185,103,0.20),rgba(13,46,35,0.6))]",
-    badge: "bg-[rgba(232,185,103,0.30)] text-[#E8B967]",
+    thumb: "bg-[linear-gradient(135deg,rgba(196,138,50,0.20),rgba(15,31,24,0.6))]",
+    badge: "bg-warning/30 text-warning",
     icon: FlagTriangleRight,
   },
   driver: {
-    thumb:
-      "bg-[linear-gradient(135deg,rgba(244,146,131,0.20),rgba(13,46,35,0.6))]",
-    badge: "bg-[rgba(244,146,131,0.30)] text-[#F49283]",
+    thumb: "bg-[linear-gradient(135deg,rgba(184,66,51,0.20),rgba(15,31,24,0.6))]",
+    badge: "bg-error/30 text-error",
     icon: Zap,
   },
   mental: {
-    thumb:
-      "bg-[linear-gradient(135deg,rgba(200,150,232,0.20),rgba(13,46,35,0.6))]",
-    badge: "bg-[rgba(200,150,232,0.30)] text-[#C896E8]",
+    thumb: "bg-[linear-gradient(135deg,rgba(175,82,222,0.20),rgba(15,31,24,0.6))]",
+    badge: "bg-ai/30 text-ai",
     icon: Brain,
   },
 };
@@ -102,7 +95,7 @@ export function ExerciseLibrary({ items }: { items: LibraryItem[] }) {
             className={cn(
               "rounded-full border px-3 py-1.5 text-[12px] font-medium transition",
               filter === f.key
-                ? "border-[rgba(209,248,67,0.30)] bg-[rgba(209,248,67,0.12)] text-[var(--akgolf-accent,#D1F843)]"
+                ? "border-accent/30 bg-accent/10 text-accent"
                 : "border-white/10 bg-white/[0.04] text-white/70 hover:text-white",
             )}
           >
@@ -119,17 +112,12 @@ export function ExerciseLibrary({ items }: { items: LibraryItem[] }) {
             <div
               key={item.id}
               className={cn(
-                "overflow-hidden rounded-[14px] border bg-[var(--akgolf-card-dark,#0D2E23)]",
-                "border-[var(--akgolf-line-dark,#1a4a3a)] transition",
+                "overflow-hidden rounded-[14px] border bg-sidebar-hover",
+                "border-sidebar-divider transition",
                 "hover:-translate-y-0.5 hover:border-white/20",
               )}
             >
-              <div
-                className={cn(
-                  "relative grid aspect-video place-items-center",
-                  style.thumb,
-                )}
-              >
+              <div className={cn("relative grid aspect-video place-items-center", style.thumb)}>
                 <Icon className="h-9 w-9 text-white/60" />
                 <span
                   className={cn(
@@ -150,16 +138,9 @@ export function ExerciseLibrary({ items }: { items: LibraryItem[] }) {
                 <div className="text-[12px] leading-[1.5] text-white/60">
                   {item.description}
                 </div>
-                <div
-                  className={cn(
-                    "mt-3 flex items-center justify-between border-t border-dashed pt-3",
-                    "border-[var(--akgolf-line-dark,#1a4a3a)]",
-                    "font-mono text-[10px] uppercase tracking-[0.06em] text-white/55",
-                  )}
-                >
+                <div className="mt-3 flex items-center justify-between border-t border-dashed border-sidebar-divider pt-3 font-mono text-[10px] uppercase tracking-[0.06em] text-white/55">
                   <span className="inline-flex items-center gap-1">
-                    <User className="h-3 w-3" />{" "}
-                    {(item.coachName ?? "Coach").toUpperCase()}
+                    <User className="h-3 w-3" />{(item.coachName ?? "Coach").toUpperCase()}
                   </span>
                   {item.footerLabel && <span>{item.footerLabel}</span>}
                 </div>

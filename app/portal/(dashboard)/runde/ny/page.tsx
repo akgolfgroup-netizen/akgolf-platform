@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { StartRoundClient } from "./start-round-client";
+
+export const metadata: Metadata = {
+  title: "Ny runde | AK Golf",
+  description: "Start registrering av ny golfrunde.",
+};
 
 export const dynamic = "force-dynamic";
 
@@ -36,16 +42,16 @@ export default async function NyRundePage() {
   }
 
   return (
-    <div className="max-w-lg mx-auto space-y-6">
+    <div className="max-w-lg mx-auto space-y-6 p-4 lg:p-0">
       <div>
-        <h1 className="text-2xl font-bold text-on-surface">
+        <h1 className="text-2xl font-bold text-ink font-[family-name:var(--font-inter-tight)]">
           Ny runde
         </h1>
-        <p className="text-on-surface-variant mt-1">
+        <p className="text-ink-muted mt-1">
           Velg bane og start registrering
         </p>
         {courses.length === 0 && !dbError && (
-          <p className="text-sm text-on-surface-variant/80 mt-2">
+          <p className="text-sm text-ink-subtle mt-2">
             Ingen baner registrert ennå. Kontakt trener for å få lagt til
             din hjemmebane.
           </p>

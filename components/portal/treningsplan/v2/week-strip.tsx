@@ -1,19 +1,15 @@
 import Link from "next/link";
 import { cn } from "@/lib/portal/utils/cn";
-import {
-  areaToPillKind,
-  type SessionPillKind,
-  type V2EventLite,
-} from "./types";
+import { areaToPillKind, type SessionPillKind, type V2EventLite } from "./types";
 
 const DOWS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 
 const PILL_STYLES: Record<SessionPillKind, string> = {
-  putt: "bg-[rgba(118,193,156,0.20)] text-[#6FCBA1]",
-  iron: "bg-[rgba(126,158,255,0.22)] text-[#8AA8FF]",
-  short: "bg-[rgba(232,185,103,0.20)] text-[#E8B967]",
-  driver: "bg-[rgba(244,146,131,0.20)] text-[#F49283]",
-  round: "bg-[rgba(209,248,67,0.18)] text-[var(--akgolf-accent,#D1F843)]",
+  putt: "bg-success/20 text-success",
+  iron: "bg-info/20 text-info",
+  short: "bg-warning/20 text-warning",
+  driver: "bg-error/20 text-error",
+  round: "bg-accent/18 text-accent",
 };
 
 interface DayPill {
@@ -44,7 +40,6 @@ export function WeekStrip({
   events: V2EventLite[];
   weekOffset: number;
   todayIso: string;
-  /** Generate detail link per day, optional */
   detailHref?: (offset: number) => string;
 }) {
   const byDay = new Map<string, V2EventLite[]>();
@@ -70,7 +65,7 @@ export function WeekStrip({
             <div
               className={cn(
                 "my-1 text-[24px] font-extrabold leading-none tracking-[-0.03em]",
-                isToday && "text-[var(--akgolf-accent,#D1F843)]",
+                isToday && "text-accent",
                 !isToday && !isRest && "text-white",
                 isRest && "text-white/30",
               )}
@@ -103,8 +98,8 @@ export function WeekStrip({
         const baseCls = cn(
           "relative min-h-[110px] rounded-xl border p-3 text-center transition-all",
           "hover:border-white/[0.18]",
-          "border-[var(--akgolf-line-dark,#1a4a3a)] bg-[var(--akgolf-card-dark,#0D2E23)]",
-          isToday && "border-[var(--akgolf-accent,#D1F843)] bg-[rgba(209,248,67,0.06)]",
+          "border-sidebar-divider bg-sidebar-hover",
+          isToday && "border-accent bg-accent/5",
         );
 
         if (detailHref) {

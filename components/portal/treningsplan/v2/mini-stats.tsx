@@ -4,9 +4,7 @@ export interface MiniStat {
   label: string;
   value: string;
   suffix?: string;
-  /** 0–100 */
   pct: number;
-  /** Bar-farge i hex eller token. Default lime accent. */
   barColor?: string;
 }
 
@@ -16,7 +14,7 @@ export function MiniStats({ stats }: { stats: MiniStat[] }) {
       {stats.map((s, i) => (
         <div
           key={i}
-          className="rounded-xl border border-[var(--akgolf-line-dark,#1a4a3a)] bg-[var(--akgolf-card-dark,#0D2E23)] p-4"
+          className="rounded-xl border border-sidebar-divider bg-sidebar-hover p-4"
         >
           <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/50">
             {s.label}
@@ -32,7 +30,7 @@ export function MiniStats({ stats }: { stats: MiniStat[] }) {
               className={cn("block h-full rounded-full")}
               style={{
                 width: `${Math.max(0, Math.min(100, s.pct))}%`,
-                background: s.barColor ?? "var(--akgolf-accent, #D1F843)",
+                background: s.barColor ?? "var(--color-accent)",
               }}
             />
           </div>

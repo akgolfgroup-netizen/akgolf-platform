@@ -1,12 +1,9 @@
 "use client";
 
-
-import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Cloud, Wind } from "lucide-react";
+import { Cloud, Wind, MapPin, Search, Play, ChevronLeft, Sun } from "lucide-react";
 import { startRound } from "../actions";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface Course {
   id: string;
@@ -35,7 +32,6 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
   function handleStart() {
     if (!selectedCourse) return;
     setError("");
-
     startTransition(async () => {
       try {
         const result = await startRound(selectedCourse.id, teeColor, weather || undefined);
@@ -49,24 +45,23 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
   const teeColors = [
     { value: "yellow", label: "Gul", color: "#EAB308" },
     { value: "white", label: "Hvit", color: "#FFFFFF" },
-    { value: "blue", label: "Bla", color: "#3B82F6" },
-    { value: "red", label: "Rod", color: "#EF4444" },
+    { value: "blue", label: "Blå", color: "#3B82F6" },
+    { value: "red", label: "Rød", color: "#EF4444" },
   ];
 
   return (
-    <PremiumCard>
+    <div className="bg-card border border-line rounded-2xl p-5 lg:p-6 shadow-card">
       <div className="space-y-6">
-        {/* Bane-valg */}
         {!selectedCourse ? (
           <div className="space-y-3">
             <div className="relative">
-              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-ink-subtle" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Sok etter bane..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                placeholder="Søk etter bane..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-line bg-surface text-ink placeholder:text-ink-subtle focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm"
                 autoFocus
               />
             </div>
@@ -76,15 +71,13 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 <button
                   key={course.id}
                   onClick={() => setSelectedCourse(course)}
-                  className="w-full text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest hover:border-primary hover:bg-surface transition-all"
+                  className="w-full text-left p-4 rounded-xl border border-line bg-surface hover:border-primary hover:bg-surface-soft transition-all min-h-[44px]"
                 >
                   <div className="flex items-start gap-3">
-                    <Icon name="location_on" className="h-5 w-5 text-on-surface mt-0.5 shrink-0" />
+                    <MapPin className="h-5 w-5 text-ink mt-0.5 shrink-0" />
                     <div>
-                      <div className="font-semibold text-on-surface">
-                        {course.name}
-                      </div>
-                      <div className="text-sm text-on-surface-variant tabular-nums">
+                      <div className="font-semibold text-ink">{course.name}</div>
+                      <div className="text-sm text-ink-muted tabular-nums">
                         {course.location} — Par <span className="tabular-nums">{course.par}</span>
                         {course.courseRating && ` — CR ${course.courseRating}`}
                         {course.slopeRating && ` / Slope ${course.slopeRating}`}
@@ -94,73 +87,59 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 </button>
               ))}
               {filtered.length === 0 && (
-                <p className="text-center text-on-surface-variant py-8">
-                  Ingen baner funnet
-                </p>
+                <p className="text-center text-ink-subtle py-8">Ingen baner funnet</p>
               )}
             </div>
           </div>
         ) : (
           <>
-            {/* Valgt bane */}
-            <div className="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Icon name="location_on" className="h-5 w-5 text-on-surface" />
-                  <div>
-                    <div className="font-semibold text-on-surface">
-                      {selectedCourse.name}
-                    </div>
-                    <div className="text-sm text-on-surface-variant tabular-nums">
-                      Par <span className="tabular-nums">{selectedCourse.par}</span> — {selectedCourse.location}
-                    </div>
+            <button
+              onClick={() => setSelectedCourse(null)}
+              className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-ink transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" /> Tilbake til baner
+            </button>
+
+            <div className="p-4 rounded-xl border border-line bg-surface">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-ink" />
+                <div>
+                  <div className="font-semibold text-ink">{selectedCourse.name}</div>
+                  <div className="text-sm text-ink-muted tabular-nums">
+                    Par <span className="tabular-nums">{selectedCourse.par}</span> — {selectedCourse.location}
                   </div>
                 </div>
-                <button
-                  onClick={() => setSelectedCourse(null)}
-                  className="text-sm text-on-surface hover:underline"
-                >
-                  Endre
-                </button>
               </div>
             </div>
 
-            {/* Tee-valg */}
             <div>
-              <label className="text-sm font-medium text-on-surface mb-2 block">
-                Tee
-              </label>
-              <div className="flex gap-2">
+              <label className="text-sm font-medium text-ink mb-2 block">Tee</label>
+              <div className="flex flex-wrap gap-2">
                 {teeColors.map((tee) => (
                   <button
                     key={tee.value}
                     onClick={() => setTeeColor(tee.value)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all min-h-[44px] ${
                       teeColor === tee.value
-                        ? "border-on-surface bg-surface ring-1 ring-on-surface"
-                        : "border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant/30"
+                        ? "border-ink bg-card ring-1 ring-ink"
+                        : "border-line bg-surface hover:border-line-soft"
                     }`}
                   >
                     <div
-                      className="h-4 w-4 rounded-full border border-outline-variant/30"
+                      className="h-4 w-4 rounded-full border border-line"
                       style={{ backgroundColor: tee.color }}
                     />
-                    <span className="text-sm font-medium text-on-surface">
-                      {tee.label}
-                    </span>
+                    <span className="text-sm font-medium text-ink">{tee.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Vaer */}
             <div>
-              <label className="text-sm font-medium text-on-surface mb-2 block">
-                Vaer (valgfritt)
-              </label>
+              <label className="text-sm font-medium text-ink mb-2 block">Vær (valgfritt)</label>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { value: "sol", icon: Cloud, label: "Sol" },
+                  { value: "sol", icon: Sun, label: "Sol" },
                   { value: "overskyet", icon: Cloud, label: "Overskyet" },
                   { value: "regn", icon: Cloud, label: "Regn" },
                   { value: "vind", icon: Wind, label: "Vind" },
@@ -168,37 +147,36 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                   <button
                     key={w.value}
                     onClick={() => setWeather(weather === w.value ? "" : w.value)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all min-h-[44px] ${
                       weather === w.value
-                        ? "border-on-surface bg-surface"
-                        : "border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant/30"
+                        ? "border-ink bg-card"
+                        : "border-line bg-surface hover:border-line-soft"
                     }`}
                   >
-                    <w.icon className="h-4 w-4 text-on-surface-variant" />
-                    <span className="text-sm text-on-surface">{w.label}</span>
+                    <w.icon className="h-4 w-4 text-ink-subtle" />
+                    <span className="text-sm text-ink">{w.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {error && (
-              <div className="text-sm text-on-surface bg-secondary-fixed/10 rounded-xl p-3">
+              <div className="text-sm text-error bg-error-light rounded-xl p-3">
                 {error}
               </div>
             )}
 
-            {/* Start */}
             <button
               onClick={handleStart}
               disabled={isPending}
-              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-secondary-fixed text-on-surface font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-accent text-ink font-semibold text-lg hover:bg-accent-deep active:scale-[0.98] transition-all duration-300 disabled:opacity-50 min-h-[44px]"
             >
-              <Icon name="play_arrow" className="h-5 w-5" />
+              <Play className="h-5 w-5" />
               {isPending ? "Starter..." : "Start runde"}
             </button>
           </>
         )}
       </div>
-    </PremiumCard>
+    </div>
   );
 }

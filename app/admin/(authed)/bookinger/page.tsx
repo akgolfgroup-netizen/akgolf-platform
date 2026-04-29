@@ -1,15 +1,12 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { format, getISOWeek, startOfWeek, endOfWeek } from "date-fns";
+import { getISOWeek, startOfWeek, endOfWeek } from "date-fns";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { BookingerClient } from "@/components/admin/bookinger/bookinger-client";
+import { CoachHQDarkShell } from "@/components/admin/coachhq-dark";
+import { BookingerClientV2 } from "./bookinger-client-v2";
+import { groupBookingsByDay, computeStats, coachFilters } from "./bookinger-data";
 import type { BookingStat } from "@/components/admin/bookinger/booking-types";
-import {
-  groupBookingsByDay,
-  computeStats,
-  coachFilters,
-} from "./bookinger-data";
 import type { AdminBooking } from "./actions";
 
 export const metadata = {
@@ -36,10 +33,7 @@ async function loadBookings(): Promise<AdminBooking[]> {
 
 export default async function AdminBookingerPage() {
   const user = await requirePortalUser();
-
-  if (!isStaff(user.role)) {
-    redirect("/portal");
-  }
+  if (!isStaff(user.role)) redirect("/portal");
 
   const bookings = await loadBookings();
   const now = new Date();
@@ -54,9 +48,7 @@ export default async function AdminBookingerPage() {
   const groups = groupBookingsByDay(weekBookings, now);
   const computed = computeStats(bookings, now);
   const coaches = coachFilters(weekBookings);
-  const todayCount = groups
-    .filter((g) => g.label.startsWith("I DAG"))
-    .reduce((s, g) => s + g.count, 0);
+  const todayCount = groups.filter((g) => g.label.startsWith("I DAG")).reduce((s, g) => s + g.count, 0);
   const totalCount = weekBookings.filter((b) => b.status !== "CANCELLED").length;
 
   const stats: BookingStat[] = [
@@ -67,18 +59,21 @@ export default async function AdminBookingerPage() {
     { label: "No-show 30d", value: String(computed.noShowLast30), tone: "danger" },
   ];
 
-  const weekLabel = `Uke ${getISOWeek(now)}`;
-  void format;
-
   return (
-    <BookingerClient
-      groups={groups}
-      stats={stats}
-      coaches={coaches}
-      totalCount={totalCount}
-      todayCount={todayCount}
-      pendingCount={computed.pendingCount}
-      weekLabel={weekLabel}
-    />
+    <CoachHQDarkShell
+      user={{ id: user.id, name: user.name, email: user.email, role: user.role, image: user.image }}
+      title="Bookinger"
+      meta={`Uke ${getISOWeek(now)} · ${totalCount} bekreftet`}
+    >
+      <BookingerClientV2
+        groups={groups}
+        stats={stats}
+        coaches={coaches}
+        totalCount={totalCount}
+        todayCount={todayCount}
+        pendingCount={computed.pendingCount}
+        weekLabel={`Uke ${getISOWeek(now)}`}
+      />
+    </CoachHQDarkShell>
   );
 }
