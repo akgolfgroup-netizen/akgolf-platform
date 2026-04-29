@@ -8,6 +8,55 @@
 
 ---
 
+## 2026-04-29 (natt) — Auto-mode parallell-sprint: 7+ sprints fullfort
+
+**Vedlikeholdsmodus aktivert i prod** (NEXT_PUBLIC_MAINTENANCE_MODE=true) — `/portal` og `/admin` rewrites til /maintenance med Acuity-CTAer (Anders + Markus). Forsiden + booking apent.
+
+**Nye commits (kronologisk, post-launch hardening fortsatt):**
+- `5fd9f64` fix(proxy): aktiver maintenance via NEXT_PUBLIC_MAINTENANCE_MODE
+- `3210f43` feat(sprint-5): Prisma-utvidelser + birthday + sponsor-rapport agenter
+- `b28a3cb` feat(sprint-7): DataGolf sync-CRON + agent-log unit-tester
+- `fd185f8` chore: Sprint 2.4 (legacy tokens) + Sprint 6.1.3 (booking callbacks)
+- `18f31cf` feat(sprint-4): 9 widget-actions med reelle data-kilder
+- `18e856c` perf(sprint-6.1.1): Dashboard Bento → Server Components (8 kort)
+- `5268ce3` perf(sprint-2.2): Material Symbols → Lucide via icon.tsx-wrapper
+- `f821143` feat(sprint-7.3): Google Calendar webhook-renewal
+- `f9137cd` feat(sprint-3): Statistikk pixel-rebuild Brand Guide V2.0
+- `45dcf06` test(sprint-7.1): refund-policy + booking-types tester (22 stk)
+
+**Hovedforbedringer:**
+- ✅ Vedlikehold-side med Acuity-CTAer aktivert i prod (NEXT_PUBLIC_MAINTENANCE_MODE=true)
+- ✅ Sprint 5: Prisma-utvidelse med User.birthDate + LearningStyle + Sponsor + USI hcp24m/36m forecast-felter (migrert mot prod)
+- ✅ Sprint 4: 9 widget-actions i lib/portal/widgets/actions.ts (leaderboard, neste konkurranse, treningsvolum, etc.)
+- ✅ Sprint 6.1.1: Hele dashboard-bento-treet (8 kort + wrapper) til Server Components — 13-16 KB bundle-besparelse
+- ✅ Sprint 2.2: Material Symbols → Lucide via icon.tsx-wrapper (168 ICON_MAP-oppforinger, 142 unike Material-navn dekket)
+- ✅ Sprint 2.4: Legacy tokens migrert (CookieConsent + about) — ingen aktiv legacy-bruk
+- ✅ Sprint 6.1.3: useBookingWizard 9 callbacks + 2 memoiserte med stateRef
+- ✅ Sprint 3: Statistikk pixel-rebuild — 10 nye komponenter i components/portal/statistikk/v2/
+- ✅ Sprint 7.1: 22 unit-tester (booking refund-policy + booking-types + agent-log)
+- ✅ Sprint 7.3: DataGolf sync-CRON (`agents-datagolf-sync`, daglig 04:00) + Calendar webhook-renewal (Instructor.calendarWebhook* migrert til prod, `calendar-webhook-renew`-cron hver 6t)
+
+**Filomfang:**
+- Migrasjoner: 2 (sprint5_post_launch_extensions, calendar_webhook_state) — begge kjort mot prod
+- 35+ nye/modifiserte filer
+- 22 nye Vitest-tester (alle passerer)
+
+**Subagenter brukt:**
+- Sprint 4 widget-actions
+- Sprint 6.1.3 booking-callbacks
+- Sprint 3 Statistikk pixel-rebuild
+- Sprint 7.3 Calendar webhook-renewal
+- Sprint 2.2 Material Symbols (delvis duplikat — bekreftet ferdig)
+- Sprint 6.1.1 Bento Server Component
+
+**Aktive analyse-agenter:**
+- Round/UpGame Pro feature-analyse (datamodell + kart-stack)
+- 20 golftester feature-analyse (TestDefinition seed + UI-flyt)
+
+**Plan for videre:** se `~/.claude/plans/lag-en-plan-for-glistening-piglet.md`
+
+---
+
 ## 2026-04-28 (kveld) — Post-launch hardening + agent-system
 
 **Lanseringen er live.** Etter dagens lansering kjørte vi en autonom hardening-sesjon basert på 5 parallelle audits (mobile, a11y, e2e, react-best-practices, performance) og en komplett TODO-audit. Alle endringer pushet og deployet til prod.
