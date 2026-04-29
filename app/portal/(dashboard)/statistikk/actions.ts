@@ -176,10 +176,9 @@ export async function computeAggregates(rounds: RoundStatsRow[]) {
 }
 
 // Bakoverkompatibel wrapper — laster rounds én gang og deriverer aggregater.
-// Brukes når en kaller fortsatt vil ha begge i samme kall.
 export async function getFilteredAggregates(period: PeriodKey = "30d") {
   const rounds = await getFilteredRoundStats(period);
-  return computeAggregates(rounds);
+  return await computeAggregates(rounds);
 }
 
 export interface WeeklyTrainingData {
