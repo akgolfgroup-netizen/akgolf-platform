@@ -32,6 +32,13 @@ const ALWAYS_ALLOWED_PATHS = [
   "/maintenance",
   "/api/maintenance",
   "/api/health",
+  // Cron-endpoints ma fortsette a kjore selv i vedlikeholdsmodus —
+  // alle er beskyttet av CRON_SECRET-Bearer-header (sjekkes per-route).
+  "/api/portal/cron",
+  "/api/cron",
+  // Stripe + andre webhooks ma akseptere POST fra eksterne tjenester
+  "/api/portal/webhooks",
+  "/api/webhooks",
   "/booking",
   "/_next",
   "/static",
