@@ -1,6 +1,6 @@
 "use server";
 
-import { UserRole, Capability } from "@prisma/client";
+import { UserRole, Capability, BookingStatus } from "@prisma/client";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { hasCapability } from "@/lib/portal/capabilities/check";
 import { prisma } from "@/lib/portal/prisma";
@@ -8,6 +8,10 @@ import { computeCoachingSignalsForUsers } from "@/lib/portal/coaching-signals";
 import { getMyPlayers } from "@/lib/portal/kartlegging";
 import { getTrainingIndex } from "@/lib/portal/kartlegging/training-index";
 import type { CoachingSignal } from "@/lib/portal/coaching-signals";
+import type {
+  KanbanCard,
+  ColumnTone,
+} from "./components/kanban-types";
 
 export interface CoachingBoardPlayerRow {
   userId: string;
@@ -292,4 +296,357 @@ function computeGroupHealth(
     missingTestsCount: missingTests,
     distributionAvg: distAvg,
   };
+}
+
+/* ============================================================
+ * Coaching Board Kanban — bookings + sessions mappet til 4 faser
+ *
+ *   preparation → kommende bookinger (PENDING/CONFIRMED, startTime > nå)
+ *   active      → bookinger som pågår nå (CONFIRMED, start <= nå <= end)
+ *   followup    → fullførte sessions uten followUpSent
+ *   done        → fullførte sessions med followUpSent=true (kappet til 4)
+ *
+ * Vinduet er ±10 dager fra nå, slik at både ferdige og fremtidige økter
+ * tas med uten å overgrave kolonnene.
+ * ========================================================== */
+
+export interface KanbanBoardData {
+  columns: Record<ColumnTone, KanbanCard[]>;
+  totalsByColumn: Record<ColumnTone, number>;
+  weekSessionCount: number;
+  doneOverflow: number;
+}
+
+const AVATAR_PALETTE = [
+  "#6FCBA1",
+  "#6FB3FF",
+  "#E8B967",
+  "#C896E8",
+  "#F49283",
+  "#D1F843",
+];
+
+function avatarColorFor(seed: string): string {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+  return AVATAR_PALETTE[hash % AVATAR_PALETTE.length];
+}
+
+function initialsFor(name: string | null | undefined): string {
+  if (!name) return "??";
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "??";
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+const NO_DAY_SHORT = ["SØN", "MAN", "TIR", "ONS", "TOR", "FRE", "LØR"];
+
+function formatWhen(date: Date, now: Date): string {
+  const sameWeek =
+    Math.abs(date.getTime() - now.getTime()) < 1000 * 60 * 60 * 24 * 7;
+  const day = NO_DAY_SHORT[date.getDay()];
+  const hh = date.getHours().toString().padStart(2, "0");
+  const mm = date.getMinutes().toString().padStart(2, "0");
+  if (sameWeek) {
+    return `${day} ${hh}:${mm}`;
+  }
+  const dd = date.getDate().toString().padStart(2, "0");
+  const monthShort = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "mai",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "okt",
+    "nov",
+    "des",
+  ][date.getMonth()];
+  return `${day} ${dd} ${monthShort}`;
+}
+
+function formatLiveWhen(start: Date, end: Date, now: Date): string {
+  const minutesLeft = Math.max(
+    0,
+    Math.round((end.getTime() - now.getTime()) / 60000)
+  );
+  const hh = start.getHours().toString().padStart(2, "0");
+  const mm = start.getMinutes().toString().padStart(2, "0");
+  return minutesLeft > 0 ? `${hh}:${mm} NÅ` : `${hh}:${mm} NÅ`;
+}
+
+export async function fetchKanbanBoardData(): Promise<KanbanBoardData> {
+  const user = await requirePortalUser();
+
+  const hasOwn =
+    user.role === UserRole.ADMIN ||
+    (await hasCapability(user.id, Capability.MB_VIEW_OWN_PLAYERS));
+  const hasAll =
+    user.role === UserRole.ADMIN ||
+    (await hasCapability(user.id, Capability.MB_VIEW_ALL_PLAYERS));
+
+  if (!hasOwn && !hasAll) {
+    return {
+      columns: {
+        preparation: [],
+        active: [],
+        followup: [],
+        done: [],
+      },
+      totalsByColumn: { preparation: 0, active: 0, followup: 0, done: 0 },
+      weekSessionCount: 0,
+      doneOverflow: 0,
+    };
+  }
+
+  const now = new Date();
+  const windowStart = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 10);
+  const windowEnd = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 10);
+
+  // Hvis brukeren er coach (ikke admin) og kun har OWN-tilgang, filtrer på instructorId via Instructor-relasjonen.
+  const myInstructor = await prisma.instructor
+    .findUnique({ where: { userId: user.id }, select: { id: true } })
+    .catch(() => null);
+
+  const instructorFilter =
+    !hasAll && myInstructor ? { instructorId: myInstructor.id } : {};
+
+  const bookings = await prisma.booking.findMany({
+    where: {
+      ...instructorFilter,
+      startTime: { gte: windowStart, lte: windowEnd },
+      status: {
+        in: [
+          BookingStatus.PENDING,
+          BookingStatus.CONFIRMED,
+          BookingStatus.COMPLETED,
+        ],
+      },
+    },
+    select: {
+      id: true,
+      startTime: true,
+      endTime: true,
+      status: true,
+      isGroupBooking: true,
+      adminNotes: true,
+      studentNotes: true,
+      User: {
+        select: { id: true, name: true, email: true },
+      },
+      ServiceType: {
+        select: { name: true, category: true },
+      },
+      CoachingSession: {
+        select: {
+          id: true,
+          primaryFocus: true,
+          secondaryFocus: true,
+          followUpSent: true,
+          aiSummary: true,
+        },
+      },
+    },
+    orderBy: { startTime: "asc" },
+    take: 200,
+  });
+
+  const startOfWeek = new Date(now);
+  const dayOfWeek = (startOfWeek.getDay() + 6) % 7; // mon=0
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 7);
+
+  const weekSessionCount = bookings.filter(
+    (b) => b.startTime >= startOfWeek && b.startTime < endOfWeek
+  ).length;
+
+  const columns: Record<ColumnTone, KanbanCard[]> = {
+    preparation: [],
+    active: [],
+    followup: [],
+    done: [],
+  };
+
+  for (const booking of bookings) {
+    const student = booking.User;
+    const name = booking.isGroupBooking
+      ? booking.ServiceType?.name ?? "Gruppe-økt"
+      : student?.name ?? student?.email ?? "Ukjent spiller";
+    const initials = booking.isGroupBooking
+      ? "GR"
+      : initialsFor(student?.name ?? student?.email ?? "??");
+    const avatarColor = avatarColorFor(student?.id ?? booking.id);
+    const focusText =
+      booking.CoachingSession?.primaryFocus ??
+      booking.adminNotes ??
+      booking.ServiceType?.name ??
+      "Coaching-økt";
+
+    const isLive =
+      booking.startTime <= now &&
+      booking.endTime >= now &&
+      booking.status === BookingStatus.CONFIRMED;
+    const isFuture = booking.startTime > now;
+    const isPast = booking.endTime < now;
+
+    if (isLive) {
+      columns.active.push({
+        id: booking.id,
+        initials,
+        avatarColor: "#D1F843",
+        name,
+        when: formatLiveWhen(booking.startTime, booking.endTime, now),
+        focus: focusText,
+        progress: clamp01(
+          (now.getTime() - booking.startTime.getTime()) /
+            Math.max(
+              1,
+              booking.endTime.getTime() - booking.startTime.getTime()
+            )
+        ),
+        footerLeft: "Live",
+        iconRight: [{ name: "circle-dot" }],
+        variant: "live",
+        href: `/admin/bookinger?id=${booking.id}`,
+      });
+      continue;
+    }
+
+    if (isFuture) {
+      const minutesUntil =
+        (booking.startTime.getTime() - now.getTime()) / 60000;
+      const isUrgent = minutesUntil < 60 && !booking.CoachingSession;
+      // Placeholder: prep-progress beregnes ut fra om coachingsession-rad finnes
+      // og om primaryFocus + adminNotes er satt. Dette er en tilnærming —
+      // ekte prep-tracking kommer i Sprint 2 (TODO: prep-checklist på CoachingSession).
+      const hasFocus = !!booking.CoachingSession?.primaryFocus;
+      const hasNotes = !!booking.adminNotes;
+      const prepProgress = (hasFocus ? 0.6 : 0.2) + (hasNotes ? 0.2 : 0);
+
+      columns.preparation.push({
+        id: booking.id,
+        initials,
+        avatarColor,
+        name,
+        when: formatWhen(booking.startTime, now),
+        focus: focusText,
+        progress: clamp01(prepProgress),
+        footerLeft: isUrgent
+          ? `Forfaller ${booking.startTime.getHours()}:${booking.startTime
+              .getMinutes()
+              .toString()
+              .padStart(2, "0")}`
+          : `${Math.round(prepProgress * 5)}/5 steg`,
+        iconRight: isUrgent
+          ? [{ name: "alert" }]
+          : [{ name: "paperclip", count: hasFocus ? 1 : 0 }],
+        variant: isUrgent ? "urgent" : "default",
+        href: `/admin/bookinger?id=${booking.id}`,
+      });
+      continue;
+    }
+
+    if (isPast) {
+      const followUpSent = booking.CoachingSession?.followUpSent ?? false;
+      if (booking.status === BookingStatus.COMPLETED && followUpSent) {
+        columns.done.push({
+          id: booking.id,
+          initials,
+          avatarColor,
+          name,
+          when: formatWhen(booking.startTime, now).replace(
+            /\s\d{2}:\d{2}$/,
+            ""
+          ),
+          focus: focusText,
+          footerLeft: `Lukket ${formatWhen(booking.startTime, now).toLowerCase()}`,
+          iconRight: [{ name: "check" }],
+          variant: "faded",
+          href: `/admin/elever/${student?.id ?? ""}`,
+        });
+      } else {
+        // Etterarbeid: økt er over, men oppfølging mangler
+        const hasSummary = !!booking.CoachingSession?.aiSummary;
+        const tasksDone = (hasSummary ? 1 : 0) + (followUpSent ? 1 : 0);
+        const totalTasks = 4;
+        columns.followup.push({
+          id: booking.id,
+          initials,
+          avatarColor,
+          name,
+          when: formatWhen(booking.startTime, now),
+          focus: focusText,
+          progress: tasksDone / totalTasks,
+          footerLeft: `${tasksDone}/${totalTasks} oppgaver`,
+          iconRight: [
+            { name: hasSummary ? "sparkles" : "file" },
+          ],
+          href: `/admin/elever/${student?.id ?? ""}`,
+        });
+      }
+    }
+  }
+
+  // Sortering — kommende først kronologisk, etterarbeid eldst først, ferdig nyeste først
+  columns.preparation.sort((a, b) => a.when.localeCompare(b.when));
+  columns.followup.sort((a, b) => a.when.localeCompare(b.when));
+  columns.done.sort((a, b) => b.when.localeCompare(a.when));
+
+  // Vis maks 3 ferdig-kort + en "+N flere lukket"-rad hvis det er flere
+  const doneVisible = columns.done.slice(0, 3);
+  const doneOverflow = columns.done.length - doneVisible.length;
+  if (doneOverflow > 0) {
+    doneVisible.push({
+      id: "done-overflow",
+      initials: `+${doneOverflow}`,
+      avatarColor: "#7A8C85",
+      name: `${doneOverflow} flere lukket`,
+      when: `UKE ${getISOWeek(now)}`,
+      focus: "Vis arkiv →",
+      footerLeft: "Vis arkiv →",
+      iconRight: [{ name: "archive" }],
+      variant: "faded",
+      href: "/admin/bookinger?status=completed",
+    });
+  }
+  columns.done = doneVisible;
+
+  return {
+    columns,
+    totalsByColumn: {
+      preparation: columns.preparation.length,
+      active: columns.active.length,
+      followup: columns.followup.length,
+      done: columns.done.length + Math.max(0, doneOverflow),
+    },
+    weekSessionCount,
+    doneOverflow,
+  };
+}
+
+function clamp01(n: number): number {
+  if (Number.isNaN(n)) return 0;
+  if (n < 0) return 0;
+  if (n > 1) return 1;
+  return n;
+}
+
+function getISOWeek(date: Date): number {
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }

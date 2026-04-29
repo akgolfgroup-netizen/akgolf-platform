@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { UserRole, Capability } from "@prisma/client";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { hasCapability } from "@/lib/portal/capabilities/check";
-import { fetchCoachingBoardData } from "./actions";
+import { fetchKanbanBoardData } from "./actions";
 import { CoachingBoardDarkClient } from "./coaching-board-dark-client";
 
 export const metadata = {
@@ -22,12 +22,14 @@ export default async function CoachingBoardPage() {
     redirect("/admin");
   }
 
-  const data = await fetchCoachingBoardData();
+  const board = await fetchKanbanBoardData();
 
   return (
     <CoachingBoardDarkClient
       user={user}
-      weekSessionCount={data.players.length}
+      weekSessionCount={board.weekSessionCount}
+      cardsByColumn={board.columns}
+      totalsByColumn={board.totalsByColumn}
     />
   );
 }

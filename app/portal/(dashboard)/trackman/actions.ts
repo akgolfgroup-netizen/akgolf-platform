@@ -262,6 +262,141 @@ export async function getTrackManOverview(): Promise<TrackManOverview> {
   };
 }
 
+// ── V2 — pixel-rebuild data ──────────────────────────────
+
+export type TrackManShotV2 = {
+  id: string;
+  shotNumber: number;
+  club: string;
+  carry: number | null;
+  ballSpeed: number | null;
+  smash: number | null;
+  spin: number | null;
+  launch: number | null;
+  offline: number | null;
+  date: string;
+  sessionId: string;
+};
+
+export type TrackManV2Data = {
+  // KPI-rad
+  carry: { value: number | null; deltaPct: number | null };
+  ballSpeed: { value: number | null; deltaPct: number | null };
+  smash: { value: number | null; deltaPct: number | null };
+  dispersion: { value: number | null; deltaPct: number | null };
+  // Filter-data
+  availableClubs: string[];
+  availableSessions: { id: string; label: string }[];
+  // Tabell-data
+  shots: TrackManShotV2[];
+  // Overview reuse
+  overview: TrackManOverview;
+};
+
+/**
+ * Hent TrackMan V2 data — aggregerte KPI + raw shots for tabell.
+ * Periode: siste 90 dager. KPI deltas: 90d vs forrige 90d.
+ */
+export async function getTrackManV2Data(): Promise<TrackManV2Data> {
+  const user = await requirePortalUser();
+
+  const now = new Date();
+  const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+  const previousNinetyStart = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+
+  const [recentShots, previousShots, overview] = await Promise.all([
+    prisma.trackManShotData.findMany({
+      where: { userId: user.id, createdAt: { gte: ninetyDaysAgo } },
+      orderBy: { createdAt: "desc" },
+      take: 500,
+    }),
+    prisma.trackManShotData.findMany({
+      where: {
+        userId: user.id,
+        createdAt: { gte: previousNinetyStart, lt: ninetyDaysAgo },
+      },
+      take: 500,
+    }),
+    getTrackManOverview(),
+  ]);
+
+  const carryNow = avgOf(recentShots.map((s) => s.carryDistance));
+  const carryPrev = avgOf(previousShots.map((s) => s.carryDistance));
+  const ballNow = avgOf(recentShots.map((s) => s.ballSpeed));
+  const ballPrev = avgOf(previousShots.map((s) => s.ballSpeed));
+  const smashNow = avgOf(recentShots.map((s) => s.smashFactor));
+  const smashPrev = avgOf(previousShots.map((s) => s.smashFactor));
+  const dispNow = stdDevOf(recentShots.map((s) => s.offlineDistance));
+  const dispPrev = stdDevOf(previousShots.map((s) => s.offlineDistance));
+
+  const clubs = Array.from(new Set(recentShots.map((s) => s.club))).sort();
+
+  const sessionMap = new Map<string, Date>();
+  for (const s of recentShots) {
+    const existing = sessionMap.get(s.sessionId);
+    if (!existing || s.createdAt > existing) {
+      sessionMap.set(s.sessionId, s.createdAt);
+    }
+  }
+  const availableSessions = Array.from(sessionMap.entries())
+    .sort((a, b) => b[1].getTime() - a[1].getTime())
+    .slice(0, 30)
+    .map(([id, date]) => ({
+      id,
+      label: date.toLocaleDateString("nb-NO", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }),
+    }));
+
+  const shots: TrackManShotV2[] = recentShots.map((s) => ({
+    id: s.id,
+    shotNumber: s.shotNumber,
+    club: s.club,
+    carry: s.carryDistance,
+    ballSpeed: s.ballSpeed,
+    smash: s.smashFactor,
+    spin: s.spinRate,
+    launch: s.launchAngle,
+    offline: s.offlineDistance,
+    date: s.createdAt.toISOString(),
+    sessionId: s.sessionId,
+  }));
+
+  return {
+    carry: { value: carryNow, deltaPct: pctDelta(carryNow, carryPrev) },
+    ballSpeed: { value: ballNow, deltaPct: pctDelta(ballNow, ballPrev) },
+    smash: { value: smashNow, deltaPct: pctDelta(smashNow, smashPrev) },
+    dispersion: { value: dispNow, deltaPct: pctDelta(dispNow, dispPrev) },
+    availableClubs: clubs,
+    availableSessions,
+    shots,
+    overview,
+  };
+}
+
+function avgOf(arr: (number | null)[]): number | null {
+  const valid = arr.filter((v): v is number => v != null && Number.isFinite(v));
+  if (valid.length === 0) return null;
+  const sum = valid.reduce((a, b) => a + b, 0);
+  return Math.round((sum / valid.length) * 100) / 100;
+}
+
+function stdDevOf(arr: (number | null)[]): number | null {
+  const valid = arr.filter((v): v is number => v != null && Number.isFinite(v));
+  if (valid.length === 0) return null;
+  const mean = valid.reduce((a, b) => a + b, 0) / valid.length;
+  const variance =
+    valid.reduce((acc, v) => acc + (v - mean) ** 2, 0) / valid.length;
+  return Math.round(Math.sqrt(variance) * 100) / 100;
+}
+
+function pctDelta(now: number | null, prev: number | null): number | null {
+  if (now == null || prev == null || prev === 0) return null;
+  return Math.round(((now - prev) / Math.abs(prev)) * 1000) / 10;
+}
+
 // ── AI-genererte innsikter ───────────────────────────────
 
 export { type TrackManInsightResult };
