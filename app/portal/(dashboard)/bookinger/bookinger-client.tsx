@@ -85,8 +85,47 @@ export function BookingerClient({
   }
 
   return (
-    <BookingShell>
-      <PageHeader upcomingCount={upcomingCount} pastCount={past.length} />
+<BookingShell>
+      {/* ═══ HERO ═══ */}
+      <div className="space-y-3">
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Mine bookinger</MonoLabel>
+        <h1 className="text-2xl font-bold text-on-surface">
+          Dine{" "}
+          <span className="font-serif italic text-on-surface font-normal">
+            bookinger
+          </span>
+          <span className="text-secondary-fixed">.</span>
+        </h1>
+        <p className="text-[13px] text-on-surface-variant max-w-xl">
+          <span className="font-semibold text-on-surface tabular-nums">
+            {upcomingCount}
+          </span>{" "}
+          kommende og{" "}
+          <span className="font-semibold text-on-surface tabular-nums">
+            {pastCount}
+          </span>{" "}
+          tidligere økter.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+            <Link
+              href="/portal/bookinger/ny"
+              className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
+            >
+              <Icon name="add" className="w-3.5 h-3.5 relative z-10" />
+              <span className="relative z-10">Ny booking</span>
+            </Link>
+          </motion.div>
+          <Link
+            href="/portal/bookinger/venteliste"
+            className="h-11 px-5 rounded-full border border-outline-variant/40 text-on-surface text-[12px] font-medium inline-flex items-center gap-2 transition-colors hover:bg-surface-variant"
+          >
+            <Icon name="hourglass_empty" className="w-3.5 h-3.5" />
+            <span>Venteliste</span>
+          </Link>
+        </div>
+      </div>
+
 
       {nextBooking && (
         <NextBookingHero booking={nextBooking} onCancel={handleCancel} />
