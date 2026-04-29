@@ -1,5 +1,3 @@
-"use client";
-
 interface PyramidLevel {
   level: string;
   name: string;

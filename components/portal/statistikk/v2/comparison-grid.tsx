@@ -1,5 +1,3 @@
-"use client";
-
 import { CompareCard } from "./compare-card";
 import {
   PEER_BENCHMARK,

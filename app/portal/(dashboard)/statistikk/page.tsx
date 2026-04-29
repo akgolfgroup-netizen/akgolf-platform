@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getFilteredRoundStats,
-  getFilteredAggregates,
+  computeAggregates,
   getLatestHandicap,
   getGolfProfileSummary,
   getHcpForecast,
@@ -80,9 +80,9 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     trendSlopePerWeek: 0,
   };
 
-  const [rounds, aggregates, handicap, profile, usiData, hcpForecast] = await Promise.all([
+  // Aggregater deriveres fra samme rounds-fetch — ingen duplikat DB-query.
+  const [rounds, handicap, profile, usiData, hcpForecast] = await Promise.all([
     safe(getFilteredRoundStats(period), "getFilteredRoundStats", []),
-    safe(getFilteredAggregates(period), "getFilteredAggregates", null),
     safe(getLatestHandicap(), "getLatestHandicap", null),
     safe(getGolfProfileSummary(), "getGolfProfileSummary", emptyProfile),
     // getPlayerUSI(true, true) skriver til DB. Hvis brukeren ikke har data
@@ -91,6 +91,8 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     safe(getPlayerUSI(false, false), "getPlayerUSI", null),
     safe(getHcpForecast(), "getHcpForecast", emptyHcpForecast),
   ]);
+
+  const aggregates = computeAggregates(rounds);
 
   return (
     <StatsV2Client

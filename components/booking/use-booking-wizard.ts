@@ -43,6 +43,13 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     onBookingCompleteRef.current = onBookingComplete;
   }, [onBookingComplete]);
 
+  // Aborter in-flight slot-fetch nar bruker bytter dato raskt — uten denne
+  // kan en sen response overskrive en nyere state og vise feil tider.
+  const slotFetchAbortRef = useRef<AbortController | null>(null);
+  useEffect(() => {
+    return () => slotFetchAbortRef.current?.abort();
+  }, []);
+
   const visibleSteps = useMemo(() => getVisibleSteps(mode), [mode]);
 
   const setStep = useCallback((step: BookingStep) => {
@@ -81,6 +88,12 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     const { selectedService, selectedInstructor } = stateRef.current;
     if (!selectedService || !selectedInstructor) return;
 
+    // Avbryt forrige request — beskytter mot race der eldre response lander
+    // sist og overskriver tider for ny dato.
+    slotFetchAbortRef.current?.abort();
+    const controller = new AbortController();
+    slotFetchAbortRef.current = controller;
+
     setState((prev) => ({
       ...prev,
       selectedDate: date,
@@ -92,15 +105,20 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     try {
       const dateStr = format(date, "yyyy-MM-dd");
       const res = await fetch(
-        `/api/portal/public/slots?serviceTypeId=${selectedService.id}&instructorId=${selectedInstructor.id}&date=${dateStr}`
+        `/api/portal/public/slots?serviceTypeId=${selectedService.id}&instructorId=${selectedInstructor.id}&date=${dateStr}`,
+        { signal: controller.signal },
       );
       const slots = await res.json();
+      // Bruk .aborted for a unnga at en sent landet "vinner" race
+      if (controller.signal.aborted) return;
       setState((prev) => ({
         ...prev,
         availableSlots: Array.isArray(slots) ? slots : [],
         loadingSlots: false,
       }));
-    } catch {
+    } catch (err) {
+      // Ignorer abort — det er forventet ved rask dato-bytting
+      if (err instanceof Error && err.name === "AbortError") return;
       setState((prev) => ({ ...prev, availableSlots: [], loadingSlots: false }));
     }
   }, []);

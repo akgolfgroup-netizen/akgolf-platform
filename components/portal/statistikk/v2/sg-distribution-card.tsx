@@ -1,5 +1,3 @@
-"use client";
-
 interface SgDistributionCardProps {
   offTheTee: number | null;
   approach: number | null;

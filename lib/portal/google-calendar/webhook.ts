@@ -21,15 +21,6 @@ const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
 // så 24 timer gir oss god buffer hvis cron eller fornyelsen feiler én gang.
 const RENEWAL_WINDOW_MS = 24 * 60 * 60 * 1000;
 
- 
-interface WebhookNotification {
-  kind: "api#channel";
-  id: string;
-  resourceId: string;
-  resourceUri: string;
-  token?: string;
-}
-
 /**
  * Start watching en kalender for endringer
  * Dette registrerer en webhook hos Google
@@ -257,66 +248,78 @@ export async function renewExpiringWebhooks(): Promise<{
     `[Google Calendar Webhook] Renewal check: ${expiring.length} webhooks må fornyes`
   );
 
-  let renewed = 0;
-  let failed = 0;
+  // Kjor parallelt — hver fornyelse er 2-3 Google-kall a ~500ms. Med 10 instruktorer
+  // er seriell ~15s+ (risiko for cron-timeout) mot ~1.5s parallelt.
+  // allSettled sikrer at en feilet fornyelse ikke stopper de andre.
+  const results = await Promise.allSettled(
+    expiring.map((instructor) => renewSingleWebhook(instructor))
+  );
 
-  for (const instructor of expiring) {
-    try {
-      // Hent gyldig access token (refresh hvis nødvendig)
-      const accessToken = await getValidAccessToken(instructor.userId);
-      if (!accessToken) {
-        logger.error(
-          `[Google Calendar Webhook] Mangler access token for instructor ${instructor.id} — kan ikke fornye`
-        );
-        failed += 1;
-        continue;
-      }
-
-      // Stopp gammel webhook (best effort — ikke abort hvis dette feiler,
-      // for Google fjerner gamle kanaler automatisk ved utløp uansett).
-      if (
-        instructor.calendarWebhookChannelId &&
-        instructor.calendarWebhookResourceId
-      ) {
-        await stopWatchingCalendar(
-          instructor.calendarWebhookChannelId,
-          instructor.calendarWebhookResourceId,
-          accessToken
-        );
-      }
-
-      // Start ny watch — bruk samme calendarId som før, fall tilbake til "primary"
-      const calendarId = instructor.calendarWebhookCalendarId ?? "primary";
-      const result = await startWatchingCalendar(
-        instructor.id,
-        accessToken,
-        calendarId
-      );
-
-      if (!result) {
-        logger.error(
-          `[Google Calendar Webhook] Fornyelse feilet for instructor ${instructor.id}`
-        );
-        failed += 1;
-        continue;
-      }
-
-      renewed += 1;
-      logger.info(
-        `[Google Calendar Webhook] Fornyet webhook for instructor ${instructor.id} (ny utløp: ${result.expiration.toISOString()})`
-      );
-    } catch (error) {
-      failed += 1;
-      logger.error(
-        `[Google Calendar Webhook] Uventet feil ved fornyelse for instructor ${instructor.id}:`,
-        error
-      );
-    }
-  }
+  const renewed = results.filter((r) => r.status === "fulfilled" && r.value).length;
+  const failed = results.length - renewed;
 
   logger.info(
     `[Google Calendar Webhook] Renewal ferdig: ${renewed} fornyet, ${failed} feilet`
   );
 
   return { renewed, failed };
+}
+
+/**
+ * Fornyer én enkelt webhook. Returnerer true ved suksess, false ved feil
+ * (med error-logg). Kastes aldri — kalleren bruker Promise.allSettled.
+ */
+async function renewSingleWebhook(instructor: {
+  id: string;
+  userId: string;
+  calendarWebhookChannelId: string | null;
+  calendarWebhookResourceId: string | null;
+  calendarWebhookCalendarId: string | null;
+}): Promise<boolean> {
+  try {
+    const accessToken = await getValidAccessToken(instructor.userId);
+    if (!accessToken) {
+      logger.error(
+        `[Google Calendar Webhook] Mangler access token for instructor ${instructor.id} — kan ikke fornye`
+      );
+      return false;
+    }
+
+    // Stopp gammel webhook best-effort — Google fjerner uansett ved utlop
+    if (
+      instructor.calendarWebhookChannelId &&
+      instructor.calendarWebhookResourceId
+    ) {
+      await stopWatchingCalendar(
+        instructor.calendarWebhookChannelId,
+        instructor.calendarWebhookResourceId,
+        accessToken
+      );
+    }
+
+    const calendarId = instructor.calendarWebhookCalendarId ?? "primary";
+    const result = await startWatchingCalendar(
+      instructor.id,
+      accessToken,
+      calendarId
+    );
+
+    if (!result) {
+      logger.error(
+        `[Google Calendar Webhook] Fornyelse feilet for instructor ${instructor.id}`
+      );
+      return false;
+    }
+
+    logger.info(
+      `[Google Calendar Webhook] Fornyet webhook for instructor ${instructor.id} (ny utlop: ${result.expiration.toISOString()})`
+    );
+    return true;
+  } catch (error) {
+    logger.error(
+      `[Google Calendar Webhook] Uventet feil ved fornyelse for instructor ${instructor.id}:`,
+      error
+    );
+    return false;
+  }
 }

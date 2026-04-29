@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
-import { prisma } from "@/lib/portal/prisma";
+import { verifyCronAuth } from "@/lib/cron-auth";
+import { setCachedPlayerStats } from "@/lib/portal/datagolf/cache";
 import { getDGRankings, getSkillDecompositions } from "@/lib/portal/datagolf/client";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300; // 5 minutter — DataGolf-API kan vaere treg
+
+const UPSERT_BATCH_SIZE = 25;
 
 /**
  * CRON: DataGolf-sync.
@@ -21,8 +24,7 @@ export const maxDuration = 300; // 5 minutter — DataGolf-API kan vaere treg
  * Krever: DATAGOLF_API_KEY satt i Vercel-env.
  */
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!verifyCronAuth(request)) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
@@ -55,14 +57,15 @@ export async function GET(request: Request) {
       skillByDgId.set(s.dg_id, s);
     }
 
-    // 4. Upsert hver topp-200-spiller i DataGolfCache
-    for (const r of top200) {
-      const skill = skillByDgId.get(r.dg_id);
-
-      try {
-        await prisma.dataGolfCache.upsert({
-          where: { dgId: r.dg_id },
-          create: {
+    // 4. Upsert i batcher (parallelt innen batch, sekvensielt mellom batcher).
+    //    200 sekvensielle upserts over Supabase pooler er ~30s+ — batch a 25
+    //    gir ~12s totalt og holder pool fra a sprenges.
+    for (let i = 0; i < top200.length; i += UPSERT_BATCH_SIZE) {
+      const batch = top200.slice(i, i + UPSERT_BATCH_SIZE);
+      const results = await Promise.allSettled(
+        batch.map((r) => {
+          const skill = skillByDgId.get(r.dg_id);
+          return setCachedPlayerStats({
             dgId: r.dg_id,
             playerName: r.player_name,
             sgTotal: skill?.sg_total ?? 0,
@@ -72,24 +75,20 @@ export async function GET(request: Request) {
             sgPutt: skill?.sg_putt ?? 0,
             dgRank: r.dg_rank,
             owgrRank: r.owgr_rank,
-            updatedAt: new Date(),
-          },
-          update: {
-            playerName: r.player_name,
-            sgTotal: skill?.sg_total ?? undefined,
-            sgOtt: skill?.sg_ott ?? undefined,
-            sgApp: skill?.sg_app ?? undefined,
-            sgArg: skill?.sg_arg ?? undefined,
-            sgPutt: skill?.sg_putt ?? undefined,
-            dgRank: r.dg_rank,
-            owgrRank: r.owgr_rank,
-            updatedAt: new Date(),
-          },
-        });
-        upserted += 1;
-      } catch (err) {
-        errors.push(`${r.player_name} (${r.dg_id}): ${err instanceof Error ? err.message : String(err)}`);
-      }
+          });
+        }),
+      );
+
+      results.forEach((res, idx) => {
+        if (res.status === "fulfilled") {
+          upserted += 1;
+        } else {
+          const r = batch[idx];
+          errors.push(
+            `${r.player_name} (${r.dg_id}): ${res.reason instanceof Error ? res.reason.message : String(res.reason)}`,
+          );
+        }
+      });
     }
 
     const duration = Date.now() - started;

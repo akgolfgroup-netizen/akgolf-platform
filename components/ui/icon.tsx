@@ -420,7 +420,6 @@ export function Icon({
       !SUPPRESSED_NAMES.has(name)
     ) {
       warnedNames.add(name);
-      // eslint-disable-next-line no-console
       console.warn(
         `[Icon] Ukjent ikon-navn "${name}" — render fallback (HelpCircle). Legg til mapping i components/ui/icon.tsx.`,
       );

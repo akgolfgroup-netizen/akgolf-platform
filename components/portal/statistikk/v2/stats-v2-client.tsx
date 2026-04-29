@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import type { RoundStats } from "@prisma/client";
 import type {
   PeriodKey,
   HcpForecastData,
@@ -24,11 +21,12 @@ import {
   describeLevel,
   hcpToNextLevel,
   pickBiggestOpportunity,
+  type RoundStatsRow,
   type StatsAggregates,
 } from "./stats-v2-helpers";
 
 interface StatsV2ClientProps {
-  rounds: RoundStats[];
+  rounds: RoundStatsRow[];
   aggregates: StatsAggregates | null;
   handicap: number | null;
   currentPeriod: PeriodKey;

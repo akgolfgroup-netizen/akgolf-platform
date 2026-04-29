@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import type { RoundStats } from "@prisma/client";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import type { RoundStatsRow } from "./stats-v2-helpers";
 
 interface RoundsTableProps {
-  rounds: RoundStats[];
+  rounds: RoundStatsRow[];
 }
 
 function formatPct(value: number | null, decimals = 0): string {

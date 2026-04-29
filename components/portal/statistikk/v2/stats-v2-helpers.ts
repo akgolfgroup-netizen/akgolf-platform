@@ -1,3 +1,24 @@
+// Smal kopi av RoundStats — kun feltene UI-en faktisk leser. Holder Prisma-genererte
+// typer ute av client bundle og gjør server/client-kontrakt eksplisitt.
+export type RoundStatsRow = {
+  id: string;
+  date: Date;
+  courseName: string | null;
+  totalScore: number | null;
+  scoreToPar: number | null;
+  sgTotal: number | null;
+  sgOffTheTee: number | null;
+  sgApproach: number | null;
+  sgAroundTheGreen: number | null;
+  sgPutting: number | null;
+  drivingDistance: number | null;
+  fairwaysHit: number | null;
+  fairwaysTotal: number | null;
+  gir: number | null;
+  girTotal: number | null;
+  totalPutts: number | null;
+};
+
 export type StatsAggregates = {
   roundCount: number;
   avgScore: number | null;

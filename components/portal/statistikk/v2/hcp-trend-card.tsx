@@ -1,5 +1,3 @@
-"use client";
-
 interface HcpTrendCardProps {
   current: number | null;
   trendPerWeek: number;

@@ -1,5 +1,3 @@
-"use client";
-
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 interface BarValue {

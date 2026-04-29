@@ -28,33 +28,64 @@ function getDateFromPeriod(period: PeriodKey): Date {
   }
 }
 
-export async function getFilteredRoundStats(period: PeriodKey = "30d") {
+// Kun feltene siden + aggregat trenger — RoundStats har 50+ kolonner
+// (inkl. JSON-blobs) som vi ikke leser i UI/aggregat. Holder payload smal.
+const ROUND_STATS_SELECT = {
+  id: true,
+  date: true,
+  courseName: true,
+  totalScore: true,
+  scoreToPar: true,
+  sgTotal: true,
+  sgOffTheTee: true,
+  sgApproach: true,
+  sgAroundTheGreen: true,
+  sgPutting: true,
+  drivingDistance: true,
+  fairwaysHit: true,
+  fairwaysTotal: true,
+  gir: true,
+  girTotal: true,
+  totalPutts: true,
+} as const;
+
+const ROUND_STATS_TAKE = 200;
+
+export type RoundStatsRow = {
+  id: string;
+  date: Date;
+  courseName: string | null;
+  totalScore: number | null;
+  scoreToPar: number | null;
+  sgTotal: number | null;
+  sgOffTheTee: number | null;
+  sgApproach: number | null;
+  sgAroundTheGreen: number | null;
+  sgPutting: number | null;
+  drivingDistance: number | null;
+  fairwaysHit: number | null;
+  fairwaysTotal: number | null;
+  gir: number | null;
+  girTotal: number | null;
+  totalPutts: number | null;
+};
+
+export async function getFilteredRoundStats(period: PeriodKey = "30d"): Promise<RoundStatsRow[]> {
   const user = await requirePortalUser();
   const since = getDateFromPeriod(period);
 
-  const rounds = await prisma.roundStats.findMany({
+  return prisma.roundStats.findMany({
     where: {
       userId: user.id,
       date: { gte: since },
     },
     orderBy: { date: "desc" },
+    take: ROUND_STATS_TAKE,
+    select: ROUND_STATS_SELECT,
   });
-
-  return rounds;
 }
 
-export async function getFilteredAggregates(period: PeriodKey = "30d") {
-  const user = await requirePortalUser();
-  const since = getDateFromPeriod(period);
-
-  const rounds = await prisma.roundStats.findMany({
-    where: {
-      userId: user.id,
-      date: { gte: since },
-    },
-    orderBy: { date: "desc" },
-  });
-
+export function computeAggregates(rounds: RoundStatsRow[]) {
   if (rounds.length === 0) {
     return null;
   }
@@ -142,6 +173,13 @@ export async function getFilteredAggregates(period: PeriodKey = "30d") {
     scoreTrend,
     sgTrend,
   };
+}
+
+// Bakoverkompatibel wrapper — laster rounds én gang og deriverer aggregater.
+// Brukes når en kaller fortsatt vil ha begge i samme kall.
+export async function getFilteredAggregates(period: PeriodKey = "30d") {
+  const rounds = await getFilteredRoundStats(period);
+  return computeAggregates(rounds);
 }
 
 export interface WeeklyTrainingData {

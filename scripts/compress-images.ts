@@ -99,7 +99,7 @@ async function compressOne(file: string): Promise<Result> {
 }
 
 async function main() {
-  console.log(`\n${DRY_RUN ? "🔍 DRY-RUN" : "⚙️  APPLY"} — komprimerer >${SIZE_THRESHOLD_KB} KB-bilder med kvalitet ${QUALITY}\n`);
+  console.log(`\n${DRY_RUN ? "[DRY-RUN]" : "[APPLY]"} — komprimerer >${SIZE_THRESHOLD_KB} KB-bilder med kvalitet ${QUALITY}\n`);
 
   const files = await findLargeImages(IMAGES_DIR);
   console.log(`Fant ${files.length} bilder >${SIZE_THRESHOLD_KB} KB.\n`);
@@ -110,10 +110,10 @@ async function main() {
       const r = await compressOne(f);
       results.push(r);
       const rel = path.relative(IMAGES_DIR, r.file);
-      const action = r.applied ? "✅" : "⊘";
-      console.log(`  ${action}  ${rel.padEnd(50)} ${r.origKB} → ${r.newKB} KB (-${r.reductionPct}%)${r.reason ? ` · ${r.reason}` : ""}`);
+      const action = r.applied ? "[ok]" : "[skip]";
+      console.log(`  ${action}  ${rel.padEnd(50)} ${r.origKB} -> ${r.newKB} KB (-${r.reductionPct}%)${r.reason ? ` · ${r.reason}` : ""}`);
     } catch (err) {
-      console.error(`  ❌  ${f} — ${err instanceof Error ? err.message : err}`);
+      console.error(`  [fail]  ${f} — ${err instanceof Error ? err.message : err}`);
     }
   }
 
