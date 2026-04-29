@@ -27,6 +27,7 @@ import { StudentSummaryTab } from "@/components/portal/mission-control/student-s
 import { DrillStudio } from "@/components/portal/mission-control/drill-studio";
 import { TestRegister } from "@/components/portal/mission-control/test-register";
 import { NextSessionPlanner } from "@/components/portal/mission-control/next-session-planner";
+import { AdminTrackManView } from "@/components/portal/trackman/admin-trackman-view";
 import type { getStudentProfile } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -147,6 +148,7 @@ export function StudentDetailClient({ profile }: Props) {
   const tabs = [
     { id: "overview", label: "Oversikt" },
     { id: "training", label: "Trening" },
+    { id: "trackman", label: "TrackMan" },
     { id: "sammendrag", label: "Sammendrag" },
     { id: "drills", label: "Drills" },
     { id: "tests", label: "Tester" },
@@ -484,6 +486,14 @@ export function StudentDetailClient({ profile }: Props) {
                 <AdminTimeline items={activityTimeline} />
               </div>
             )}
+          </div>
+        )}
+
+        {/* Tab: TrackMan */}
+        {activeTab === "trackman" && (
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
+            <h3 className="text-lg font-semibold text-on-surface mb-4">TrackMan-data</h3>
+            <AdminTrackManView userId={profile.id} />
           </div>
         )}
 
