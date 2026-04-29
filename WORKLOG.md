@@ -8,6 +8,52 @@
 
 ---
 
+## 2026-04-29 (ettermiddag) — /simplify runde 2: alle gjenstaende funn fikset (`bcb0010`)
+
+Fikset alle "Skipped"-funn fra forrige runde. 14 filer endret, 612 +, 601 -.
+
+**Code reuse (en sannhetskilde for delt domene-data):**
+- Migrer PYRAMIDE-farger i `lib/portal/training/ak-taxonomy.ts` til Brand Guide V2.0.
+- `widget-actions.ts` bruker PYRAMIDE direkte i stedet for duplisert TRAINING_CATEGORIES (5-rad copy-paste med diverging colors fjernet).
+- `describeLevel` + `hcpToNextLevel` bruker `SKILL_LEVELS.tournamentContext` og `getNextLevel()` — slipper hardkodet A-K-tabeller.
+- `PEER_BENCHMARK` + `PYRAMID_BENCHMARK` + `percentile()` flyttet fra components/ til `lib/portal/golf/benchmarks.ts` (riktig hjem for domene-konstanter).
+- `buildAreaPath` ekstrahert til `components/portal/charts/svg-path-utils.ts` med `invertY`-flag — gjenbrukt av trend-card og hcp-trend-card.
+
+**Code quality:**
+- `comparison-grid.tsx`: 240-linje copy-paste (6x CompareCard) → `COMPARE_CONFIGS`-array + `.map()`. Krymper fra 263 til 244 linjer; nytt kort = en config-entry (ikke 30 JSX-linjer).
+- KpiCard parameter sprawl gruppert i `KpiChange`-objekt (`changeText`/`Direction`/`IsGood` → `change.text`/`direction`/`isGood`). Kallere oppdatert i dashboard-bento-client og stats-v2-client.
+- `ARROW_META` lookup-tabell erstatter to nested ternary-chains i KpiCard.
+- `withWidgetGuard<T>`-helper i widget-actions.ts kutter ~120 linjer av 9 identiske try/catch-wrappers.
+- Stringly-typed kategorier: bytt til PYRAMIDE.code-match (ikke fuzzy substring includes).
+- Migrer `app/maintenance/page.tsx` fra `--akgolf-*` til `--color-*`-tokens.
+
+**Efficiency:**
+- `getPlanProgress`: bytt nestet TrainingPlan→Week→Session→Log-fetch til to lette `_count`-queries (~50 nostete rader → 2 tall).
+- `getLeaderboard`: legg til `take: 500` pa user-fetch + reduser HandicapEntry til `take: 12`.
+- `calculateStreak`: legg til `take: 365` pa TrainingLog-fetch — uten cap kunne power-users laste tusenvis av rader.
+- Webhook: bytt fire-and-forget `syncGoogleCalendar` til Next.js `after()`-primitiv — sikrer at sync ikke mistes nar serverless-instans fryses.
+
+**Bonus cleanup:**
+- Slettet stale `.claude/worktrees/stoic-zhukovsky-5ec1c4/` (forurenset vitest-runs med 46 ekstra failures fra gammel kode).
+
+**Filer endret (14):**
+- `lib/portal/training/ak-taxonomy.ts` (PYRAMIDE-farger)
+- `lib/portal/widgets/actions.ts` (withWidgetGuard, queries, PYRAMIDE-bruk)
+- `lib/portal/golf/benchmarks.ts` (NY)
+- `lib/portal/google-calendar/webhook.ts` (after())
+- `components/portal/charts/svg-path-utils.ts` (NY)
+- `components/portal/dashboard-bento/{kpi-card, trend-card}.tsx`
+- `components/portal/statistikk/v2/{comparison-grid, hcp-trend-card, stats-v2-client, stats-v2-helpers}.tsx/.ts`
+- `app/maintenance/page.tsx`
+- `app/portal/(dashboard)/{dashboard-bento-client.tsx, statistikk/actions.ts}`
+
+**Verifikasjon:**
+- `npx tsc --noEmit`: 0 errors
+- `npx eslint`: 0 errors i mine filer (5 pre-eksisterende errors i admin-klienter ikke beront)
+- 27/27 unit-tester (booking + agents) passerer
+
+---
+
 ## 2026-04-29 (formiddag) — /simplify code review: 10 hoy-impact-fikser
 
 3-agent parallell review (Code Reuse, Code Quality, Efficiency) av 25 commits/51 filer fra forrige natts auto-sprint. Aggregerte funn → fikset hoyest impact i én commit (`7916e45`).
