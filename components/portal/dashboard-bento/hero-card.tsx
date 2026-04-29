@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — ren presentasjon, ingen interaktivitet.
 interface HeroStat {
   label: string;
   value: string;

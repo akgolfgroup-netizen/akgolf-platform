@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — handicap-trend SVG, statisk rendering.
 interface TrendCardProps {
   current: number | null;
   trend: number | null;

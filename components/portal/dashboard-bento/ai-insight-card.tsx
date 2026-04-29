@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — AI-anbefalingskort, ingen interaktivitet.
 import type { AiInsight } from "@/app/portal/(dashboard)/dashboard-types";
 
 interface AiInsightCardProps {

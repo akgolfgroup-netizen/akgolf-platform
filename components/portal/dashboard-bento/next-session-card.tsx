@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — kun next/link og statisk rendering.
 import Link from "next/link";
 
 interface NextSessionCardProps {

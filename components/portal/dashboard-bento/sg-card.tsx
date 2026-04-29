@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — Strokes Gained-barer rendres rent som markup.
 import type { SgSummary } from "@/app/portal/(dashboard)/dashboard-types";
 
 interface SgCardProps {

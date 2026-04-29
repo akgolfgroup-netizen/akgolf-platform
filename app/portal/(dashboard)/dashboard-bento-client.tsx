@@ -1,5 +1,5 @@
-"use client";
-
+// Server Component — ingen client-state, kun derivasjon og child-rendering.
+// Children rendres som Server Components der det er mulig.
 import type { DashboardV3Props } from "./dashboard-types";
 import { HeroCard } from "@/components/portal/dashboard-bento/hero-card";
 import { NextSessionCard } from "@/components/portal/dashboard-bento/next-session-card";

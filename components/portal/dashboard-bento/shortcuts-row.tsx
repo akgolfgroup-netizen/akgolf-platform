@@ -1,5 +1,5 @@
-"use client";
-
+// Server Component — statisk navigasjonsrad. Lucide-ikoner og next/link
+// fungerer fint i Server Components.
 import Link from "next/link";
 import {
   FlagTriangleRight,

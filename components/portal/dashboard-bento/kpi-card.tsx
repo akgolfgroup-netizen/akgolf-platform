@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — KPI-kort med statisk SVG-sparkline, ingen interaktivitet.
 interface KpiCardProps {
   label: string;
   value: string;

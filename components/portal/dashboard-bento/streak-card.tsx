@@ -1,5 +1,4 @@
-"use client";
-
+// Server Component — streak-visualisering, kun markup.
 interface StreakCardProps {
   currentDays: number;
   personalBest?: number | null;
