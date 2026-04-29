@@ -79,6 +79,7 @@ export function RoundMapMode({
     setToPos(null);
     setSelectedClub("");
     setJustLogged(false);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, [currentIdx, hole]);
 
   const handleMapClick = useCallback((lat: number, lng: number) => {
