@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowLeftToLine } from "lucide-react";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { getInputRange } from "@/lib/portal/tests/validation";
@@ -16,11 +16,13 @@ export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ testNumber: string }>;
+  searchParams: Promise<{ fromPlan?: string }>;
 }
 
-export default async function UtforTestPage({ params }: PageProps) {
+export default async function UtforTestPage({ params, searchParams }: PageProps) {
   await requirePortalUser();
   const { testNumber } = await params;
+  const { fromPlan } = await searchParams;
   const num = parseInt(testNumber, 10);
   if (Number.isNaN(num)) notFound();
 
@@ -38,14 +40,25 @@ export default async function UtforTestPage({ params }: PageProps) {
       style={{ background: "var(--color-surface, #F4F6F4)" }}
     >
       <div className="max-w-[640px] mx-auto space-y-6">
-        <Link
-          href="/portal/tester"
-          className="inline-flex items-center gap-2 text-sm font-semibold"
-          style={{ color: "var(--color-primary, #005840)" }}
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Tilbake til tester
-        </Link>
+        {fromPlan ? (
+          <Link
+            href="/portal/treningsplan"
+            className="inline-flex items-center gap-2 text-sm font-semibold"
+            style={{ color: "var(--color-primary, #005840)" }}
+          >
+            <ArrowLeftToLine className="w-4 h-4" />
+            Tilbake til treningsplan
+          </Link>
+        ) : (
+          <Link
+            href="/portal/tester"
+            className="inline-flex items-center gap-2 text-sm font-semibold"
+            style={{ color: "var(--color-primary, #005840)" }}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Tilbake til tester
+          </Link>
+        )}
 
         <header
           className="rounded-2xl p-6 bg-white border"
@@ -95,7 +108,8 @@ export default async function UtforTestPage({ params }: PageProps) {
               if (Number.isNaN(num)) return;
               rawInputs.push(num);
             }
-            await submitTestResult(test.testNumber, rawInputs);
+            const redirectTo = fromPlan ? "/portal/treningsplan" : undefined;
+            await submitTestResult(test.testNumber, rawInputs, redirectTo);
           }}
           className="rounded-2xl p-6 bg-white border space-y-4"
           style={{ borderColor: "var(--color-line, #E4EAE6)" }}

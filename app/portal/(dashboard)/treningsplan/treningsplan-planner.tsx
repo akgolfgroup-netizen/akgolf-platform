@@ -10,7 +10,7 @@
  * Data-kobling i B-1.2, drag-drop i B-1.4.
  */
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { addWeeks, format, startOfWeek } from "date-fns";
@@ -29,6 +29,14 @@ import {
   toggleFavoriteExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
+import {
+  searchTestsAsExercises,
+  type TestAsExercise,
+} from "./actions";
+import {
+  getTestCategoryLabel,
+  getTestGroup,
+} from "@/lib/portal/tests/test-battery";
 import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
@@ -53,7 +61,7 @@ import type { PlanSuggestionView } from "@/lib/portal/training/plan-suggestion-t
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
-type SidebarTab = "exercises" | "templates" | "history";
+type SidebarTab = "exercises" | "templates" | "history" | "tests";
 
 interface V2Event {
   id: string;
@@ -164,17 +172,18 @@ interface TreningsplanPlannerProps {
   onAddExerciseToSession: (
     sessionId: string,
     exercise: {
-      id: string;
+      id?: string;
       name: string;
       description?: string;
-      pyramid: string;
-      area: string;
+      pyramid?: string;
+      area?: string;
       lPhase?: string;
       durationMinutes?: number;
       repsWithBall?: number;
       repsWithoutBall?: number;
       focus?: string;
       notes?: string;
+      testNumber?: number;
     }
   ) => Promise<{ success: boolean }>;
   onUpdateSession: (
@@ -865,6 +874,17 @@ function WeekGrid({
                             }
                             // Default: åpne konfigurasjons-popover for øvelsen
                             // slik at spilleren kan sette tid + reps før lagring.
+                            // Test droppet: lagre direkte med test-spesifikke verdier
+                            if (payload?.kind === "test" && payload?.testNumber) {
+                              const testPayload = {
+                                kind: "test",
+                                testNumber: payload.testNumber,
+                                name: payload.name,
+                              };
+                              await onAddExerciseToSession(ev.id, testPayload);
+                              window.location.reload();
+                              return;
+                            }
                             if (onRequestExerciseConfig && payload?.id && payload?.name) {
                               onRequestExerciseConfig(ev.id, {
                                 id: payload.id,
@@ -1725,6 +1745,7 @@ function PlannerSidebar({
     { id: "exercises", label: "Øvelser", icon: "sports_golf" },
     { id: "templates", label: "Maler", icon: "dashboard_customize" },
     { id: "history", label: "Historikk", icon: "history" },
+    { id: "tests", label: "Tester", icon: "science" },
   ];
 
   return (
@@ -1758,6 +1779,7 @@ function PlannerSidebar({
           />
         )}
         {activeTab === "history" && <HistoryList events={historyEvents} />}
+        {activeTab === "tests" && <TestsPlaceholder />}
       </div>
     </div>
   );
@@ -2199,6 +2221,181 @@ function ExercisesPlaceholder() {
           </button>
         </form>
       )}
+    </div>
+  );
+}
+
+/* ── TestsPlaceholder ── */
+
+function TestsPlaceholder() {
+  const [sok, setSok] = useState("");
+  const [sourceFilter, setSourceFilter] = useState<"all" | "ak-standard" | "team-norway">("all");
+  const [results, setResults] = useState<TestAsExercise[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const doSearch = async () => {
+    setLoading(true);
+    try {
+      const data = await searchTestsAsExercises(
+        sok || undefined,
+        sourceFilter === "all" ? undefined : sourceFilter
+      );
+      setResults(data);
+    } catch {
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await searchTestsAsExercises(
+          sok || undefined,
+          sourceFilter === "all" ? undefined : sourceFilter
+        );
+        if (!cancelled) setResults(data);
+      } catch {
+        if (!cancelled) setResults([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [sok, sourceFilter]);
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, TestAsExercise[]>();
+    for (const t of results) {
+      const key = getTestCategoryLabel(t.testNumber);
+      const arr = map.get(key) ?? [];
+      arr.push(t);
+      map.set(key, arr);
+    }
+    return Array.from(map.entries());
+  }, [results]);
+
+  return (
+    <div className="space-y-3">
+      {/* Søk */}
+      <div className="relative">
+        <Icon
+          name="search"
+          size={14}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant"
+        />
+        <input
+          type="text"
+          placeholder="Søk tester..."
+          value={sok}
+          onChange={(e) => setSok(e.target.value)}
+          className="w-full rounded-lg border border-outline-variant/30 bg-surface-container py-2 pl-8 pr-3 text-xs text-primary placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+        />
+      </div>
+
+      {/* Kilde-filter */}
+      <div className="flex gap-1">
+        {(["all", "ak-standard", "team-norway"] as const).map((src) => (
+          <button
+            key={src}
+            onClick={() => setSourceFilter(src)}
+            className={cn(
+              "flex-1 rounded-md px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
+              sourceFilter === src
+                ? "bg-primary text-white"
+                : "bg-surface-container text-on-surface-variant hover:text-primary"
+            )}
+          >
+            {src === "all" ? "Alle" : src === "ak-standard" ? "AK" : "TN"}
+          </button>
+        ))}
+      </div>
+
+      {/* Resultater */}
+      {loading && (
+        <div className="py-4 text-center">
+          <Icon name="progress_activity" size={18} className="animate-spin text-primary/30" />
+        </div>
+      )}
+
+      {!loading && results.length === 0 && (
+        <p className="py-4 text-center text-[11px] text-on-surface-variant">
+          Ingen tester funnet
+        </p>
+      )}
+
+      {!loading &&
+        grouped.map(([category, list]) => (
+          <div key={category}>
+            <p className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+              {category}
+            </p>
+            <div className="space-y-1.5">
+              {list.map((test) => (
+                <div
+                  key={test.testNumber}
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData(
+                      "application/json",
+                      JSON.stringify({
+                        kind: "test",
+                        testNumber: test.testNumber,
+                        name: test.name,
+                        isTest: true,
+                      })
+                    );
+                    e.dataTransfer.effectAllowed = "copy";
+                  }}
+                  className="group cursor-grab rounded-lg border border-outline-variant/20 bg-surface p-2.5 transition-all hover:border-primary/30 hover:bg-surface-container active:cursor-grabbing"
+                >
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={cn(
+                        "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
+                        test.source === "team-norway"
+                          ? "bg-accent/20"
+                          : "bg-primary/10"
+                      )}
+                    >
+                      <Icon
+                        name="science"
+                        size={13}
+                        className={cn(
+                          test.source === "team-norway"
+                            ? "text-accent-deep"
+                            : "text-primary"
+                        )}
+                      />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-xs font-bold text-primary">
+                        {test.name}
+                      </p>
+                      <p className="text-[10px] text-on-surface-variant">
+                        {test.inputCount} slag ·{" "}
+                        {test.comparison === "higher_is_better"
+                          ? "høyere er bedre"
+                          : "lavere er bedre"}
+                      </p>
+                    </div>
+                    {test.source === "team-norway" && (
+                      <span className="shrink-0 rounded-full bg-accent px-1.5 py-0.5 font-mono text-[8px] font-bold text-on-accent">
+                        TN
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

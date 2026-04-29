@@ -20,6 +20,7 @@ import { getSkillLevelByCode } from "@/lib/portal/golf/skill-levels";
 export async function submitTestResult(
   testNumber: number,
   rawInputs: number[],
+  redirectTo?: string,
 ): Promise<void> {
   const user = await requirePortalUser();
 
@@ -68,5 +69,10 @@ export async function submitTestResult(
   });
 
   revalidatePath("/portal/tester");
+
+  // Redirect til treningsplan hvis test ble startet derfra
+  if (redirectTo) {
+    redirect(redirectTo);
+  }
   redirect(`/portal/tester/${testNumber}/resultat`);
 }

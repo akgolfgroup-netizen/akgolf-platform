@@ -37,6 +37,44 @@ const RANGES: Record<number, InputRange> = {
   18: { min: 0, max: 300, step: 1, hint: "Sekunder" },
   19: { min: 0, max: 4, step: 0.01, hint: "Meter (typisk 1.5-3.0)" },
   20: { min: 0, max: 100, step: 1, hint: "Poeng av 100" },
+
+  // ═══════════════════════════════════════════════════════════
+  //  TEAM NORWAY — GOLFSLAG-TESTER (21-28)
+  // ═══════════════════════════════════════════════════════════
+
+  21: { min: 0, max: 15, step: 0.1, hint: "Restavstand i meter (Chip 10m)" },
+  22: { min: 0, max: 25, step: 0.1, hint: "Restavstand i meter (Chip 30m)" },
+  23: { min: 0, max: 20, step: 0.1, hint: "Restavstand i meter (Wedge 20m)" },
+  24: { min: 0, max: 30, step: 0.1, hint: "Restavstand i meter (Wedge 40m)" },
+  25: { min: 0, max: 18, step: 0.1, hint: "Restavstand i meter (Lobb 15m)" },
+  26: { min: 0, max: 25, step: 0.1, hint: "Restavstand i meter (Lobb 25m)" },
+  27: { min: 0, max: 20, step: 0.1, hint: "Restavstand i meter (Bunker 10m)" },
+  28: { min: 0, max: 30, step: 0.1, hint: "Restavstand i meter (Bunker 20m)" },
+
+  // ═══════════════════════════════════════════════════════════
+  //  TEAM NORWAY — PEI-TESTER (29-31)
+  // ═══════════════════════════════════════════════════════════
+
+  29: { min: 0, max: 2.0, step: 0.001, hint: "PEI = restavstand / malavstand" },
+  30: { min: 0, max: 2.0, step: 0.001, hint: "PEI = restavstand / malavstand" },
+  31: { min: 0, max: 2.0, step: 0.001, hint: "PEI = restavstand / malavstand" },
+
+  // ═══════════════════════════════════════════════════════════
+  //  TEAM NORWAY — TEKNIKK-TESTER (32-37)
+  // ═══════════════════════════════════════════════════════════
+
+  32: { min: 50, max: 350, step: 1, hint: "Carry i meter" },
+  33: { min: 0, max: 100, step: 0.1, hint: "Sideavvik i meter" },
+  34: { min: 30, max: 200, step: 1, hint: "Carry i meter" },
+  35: { min: 0, max: 80, step: 0.1, hint: "Sideavvik i meter" },
+  36: { min: 0, max: 1, step: 1, hint: "1 = innenfor sone, 0 = utenfor" },
+  37: { min: 0, max: 1, step: 1, hint: "1 = innenfor sone, 0 = utenfor" },
+
+  // ═══════════════════════════════════════════════════════════
+  //  TEAM NORWAY — BESLUTNINGSprotokoll (38)
+  // ═══════════════════════════════════════════════════════════
+
+  38: { min: -100, max: 100, step: 1, hint: "Carry-feil i meter (neg = kort, pos = lang)" },
 };
 
 export function getInputRange(testNumber: number): InputRange {

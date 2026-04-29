@@ -51,8 +51,13 @@ export function TestRegister({ studentId }: TestRegisterProps) {
     );
   }
 
-  const dueTests = tests.filter((t) => t.retestDue || t.latest === null);
-  const completedTests = tests.filter((t) => t.latest !== null && !t.retestDue);
+  const akTests = tests.filter((t) => t.testNumber <= 20);
+  const tnTests = tests.filter((t) => t.testNumber >= 21);
+
+  const dueAK = akTests.filter((t) => t.retestDue || t.latest === null);
+  const completedAK = akTests.filter((t) => t.latest !== null && !t.retestDue);
+  const dueTN = tnTests.filter((t) => t.retestDue || t.latest === null);
+  const completedTN = tnTests.filter((t) => t.latest !== null && !t.retestDue);
 
   return (
     <div className="space-y-4">
@@ -66,29 +71,68 @@ export function TestRegister({ studentId }: TestRegisterProps) {
           </div>
           <div className="flex gap-4 text-xs text-on-surface-variant">
             <div>
-              <span className="font-bold text-on-surface">{completedTests.length}</span> utført
+              <span className="font-bold text-on-surface">{completedAK.length + completedTN.length}</span>{" "}
+              utført
             </div>
             <div>
-              <span className="font-bold text-error">{dueTests.length}</span> skyldig
+              <span className="font-bold text-error">{dueAK.length + dueTN.length}</span> skyldig
             </div>
           </div>
         </div>
 
-        {dueTests.length > 0 && (
-          <Section label="Skyldig / mangler" color="error">
-            {dueTests.map((t) => (
-              <TestRow key={t.testNumber} test={t} />
-            ))}
-          </Section>
-        )}
+        {/* AK Standard */}
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-primary" />
+            <h4 className="text-xs font-bold uppercase tracking-wider text-primary">
+              AK Standard (1–20)
+            </h4>
+            <span className="text-[10px] text-on-surface-variant">
+              {completedAK.length}/{akTests.length} utført
+            </span>
+          </div>
+          {dueAK.length > 0 && (
+            <Section label="Skyldig" color="error">
+              {dueAK.map((t) => (
+                <TestRow key={t.testNumber} test={t} />
+              ))}
+            </Section>
+          )}
+          {completedAK.length > 0 && (
+            <Section label="Fullført" color="primary">
+              {completedAK.map((t) => (
+                <TestRow key={t.testNumber} test={t} />
+              ))}
+            </Section>
+          )}
+        </div>
 
-        {completedTests.length > 0 && (
-          <Section label="Fullført" color="primary">
-            {completedTests.map((t) => (
-              <TestRow key={t.testNumber} test={t} />
-            ))}
-          </Section>
-        )}
+        {/* Team Norway */}
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-accent" />
+            <h4 className="text-xs font-bold uppercase tracking-wider text-accent">
+              Team Norway (21–38)
+            </h4>
+            <span className="text-[10px] text-on-surface-variant">
+              {completedTN.length}/{tnTests.length} utført
+            </span>
+          </div>
+          {dueTN.length > 0 && (
+            <Section label="Skyldig" color="error">
+              {dueTN.map((t) => (
+                <TestRow key={t.testNumber} test={t} />
+              ))}
+            </Section>
+          )}
+          {completedTN.length > 0 && (
+            <Section label="Fullført" color="primary">
+              {completedTN.map((t) => (
+                <TestRow key={t.testNumber} test={t} />
+              ))}
+            </Section>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -118,11 +162,19 @@ function Section({
 }
 
 function TestRow({ test }: { test: TestRow }) {
+  const isTeamNorway = test.testNumber >= 21;
   return (
     <div className="flex items-center justify-between gap-3 rounded-xl bg-surface-container-low px-4 py-3">
       <div className="min-w-0 flex-1">
-        <div className="font-semibold text-sm text-on-surface truncate">
-          T{test.testNumber}. {test.name}
+        <div className="flex items-center gap-2">
+          <div className="font-semibold text-sm text-on-surface truncate">
+            T{test.testNumber}. {test.name}
+          </div>
+          {isTeamNorway && (
+            <span className="shrink-0 rounded-full bg-accent px-1.5 py-0.5 font-mono text-[8px] font-bold text-on-accent">
+              TN
+            </span>
+          )}
         </div>
         <div className="text-xs text-on-surface-variant truncate">
           {test.category} · {test.formula}

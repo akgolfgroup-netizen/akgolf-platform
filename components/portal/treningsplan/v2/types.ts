@@ -11,6 +11,8 @@ export interface V2Exercise {
   lPhase: string | null;
   baller?: number;
   bevegelser?: number;
+  /** Referanse til TestDefinition hvis dette er en test-øvelse. */
+  testNumber?: number | null;
 }
 
 export interface V2EventLite {

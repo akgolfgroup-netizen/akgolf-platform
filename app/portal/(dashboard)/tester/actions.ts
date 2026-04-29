@@ -11,6 +11,7 @@ export interface TestOverviewData {
   unit: string;
   higherIsBetter: boolean;
   description: string;
+  group: string;
   userBest: { value: number; passed: boolean; date: string } | null;
 }
 
@@ -71,12 +72,16 @@ export async function getTestsOverview(): Promise<TestOverviewData[]> {
       };
     }
 
+    // Team Norway-tester (21-38) vs AK Standard (1-20)
+    const group = def.testNumber >= 21 ? "Team Norway" : "AK Standard";
+
     return {
       testNumber: def.testNumber,
       name: def.name,
       unit: def.unit,
       higherIsBetter: def.comparison === "higher",
       description: def.category ?? "",
+      group,
       userBest,
     };
   });

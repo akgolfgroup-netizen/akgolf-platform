@@ -157,6 +157,11 @@ function ExerciseRow({ ex }: { ex: DayBlockExercise }) {
               Coach video-notat
             </span>
           )}
+          {ex.testNumber && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-accent/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent">
+              🔬 Test
+            </span>
+          )}
         </div>
       </div>
       <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-white/65">

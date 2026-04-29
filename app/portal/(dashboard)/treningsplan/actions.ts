@@ -147,11 +147,11 @@ export async function saveSessionProgress(
 export async function addExerciseToSession(
   sessionId: string,
   exercise: {
-    id: string;
+    id?: string;
     name: string;
     description?: string;
-    pyramid: string;
-    area: string;
+    pyramid?: string;
+    area?: string;
     lPhase?: string;
     /** Tid avsatt i minutter (per-økt SessionExercise). */
     durationMinutes?: number;
@@ -163,6 +163,8 @@ export async function addExerciseToSession(
     focus?: string;
     /** Fri kommentar. */
     notes?: string;
+    /** Referanse til TestDefinition (hvis dette er en test-øvelse). */
+    testNumber?: number;
   }
 ) {
   const user = await requirePortalUser();
@@ -185,10 +187,10 @@ export async function addExerciseToSession(
 
   const newExerciseEntry: Record<string, unknown> = {
     id: nanoid(),
-    exerciseDefinitionId: exercise.id,
+    exerciseDefinitionId: exercise.id ?? null,
     name: exercise.name,
-    pyramid: exercise.pyramid,
-    area: exercise.area,
+    pyramid: exercise.pyramid ?? null,
+    area: exercise.area ?? null,
     lPhase: exercise.lPhase ?? null,
     description: exercise.description ?? null,
     durationMinutes: exercise.durationMinutes ?? null,
@@ -196,6 +198,7 @@ export async function addExerciseToSession(
     repsWithoutBall: exercise.repsWithoutBall ?? null,
     focus: exercise.focus ?? null,
     notes: exercise.notes ?? null,
+    testNumber: exercise.testNumber ?? null,
     addedAt: new Date().toISOString(),
   };
 
@@ -908,6 +911,8 @@ interface V2ExerciseData {
   slagFocus: string[];
   baller: number;
   bevegelser: number;
+  /** Referanse til TestDefinition hvis dette er en test-øvelse. */
+  testNumber?: number | null;
 }
 
 export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
@@ -1023,6 +1028,7 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
           slagFocus: Array.isArray(ex.slagFocus) ? (ex.slagFocus as string[]) : [],
           baller: 0,
           bevegelser: 0,
+          testNumber: (ex.testNumber as number) || null,
         });
       }
     }
@@ -2239,6 +2245,52 @@ export async function setPlanPlayerComment(
   revalidatePath("/portal/treningsplan");
   revalidatePath("/admin/treningsplan");
   return { success: true };
+}
+
+// -------------------------------------------------------------------
+// Test search for planner sidebar
+// -------------------------------------------------------------------
+
+export interface TestAsExercise {
+  testNumber: number;
+  name: string;
+  category: string;
+  unit: string;
+  inputCount: number;
+  comparison: string;
+  source: "ak-standard" | "team-norway";
+}
+
+export async function getTestsAsExercises(): Promise<TestAsExercise[]> {
+  const defs = await prisma.testDefinition.findMany({
+    orderBy: { testNumber: "asc" },
+    select: {
+      testNumber: true,
+      name: true,
+      category: true,
+      unit: true,
+      inputCount: true,
+      comparison: true,
+    },
+  });
+
+  return defs.map((d) => ({
+    ...d,
+    source: d.testNumber >= 21 ? "team-norway" : "ak-standard",
+  }));
+}
+
+export async function searchTestsAsExercises(
+  query?: string,
+  source?: "ak-standard" | "team-norway"
+): Promise<TestAsExercise[]> {
+  const all = await getTestsAsExercises();
+
+  return all.filter((t) => {
+    const matchQuery = !query || t.name.toLowerCase().includes(query.toLowerCase());
+    const matchSource = !source || t.source === source;
+    return matchQuery && matchSource;
+  });
 }
 
 // -------------------------------------------------------------------

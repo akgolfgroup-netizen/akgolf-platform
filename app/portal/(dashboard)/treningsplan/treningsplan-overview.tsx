@@ -104,7 +104,7 @@ export function TreningsplanOverview({
       const perExerciseDur = todayEvent.exercises.length > 0
         ? Math.round(todayEvent.dur / todayEvent.exercises.length)
         : todayEvent.dur;
-      return { id: ex.id, name: ex.name, meta: meta || undefined, durationMinutes: perExerciseDur, done: false };
+      return { id: ex.id, name: ex.name, meta: meta || undefined, durationMinutes: perExerciseDur, done: false, testNumber: ex.testNumber };
     });
     return { event: todayEvent, exercises };
   }

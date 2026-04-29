@@ -82,6 +82,14 @@ export interface SessionExercise {
 
   /** Coach-tilbakemelding (valgfri, kan legges til etter økten). */
   coachFeedback?: string;
+
+  // ── Test-kobling (Team Norway / AK Golf testbatteri) ──
+
+  /** Referanse til TestDefinition.testNumber hvis øvelsen er en test. */
+  testNumber?: number;
+
+  /** Målverdi for testen (f.eks. target PEI, target proximity). */
+  testTarget?: number;
 }
 
 /**

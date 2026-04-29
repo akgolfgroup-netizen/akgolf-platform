@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle, XCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle, FlaskConical, XCircle } from "lucide-react";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
+import {
+  getAchievedCategory,
+  type TestComparison,
+} from "@/lib/portal/tests/category-requirements";
 
 export const metadata: Metadata = {
   title: "Test-resultat | PlayerHQ",
@@ -41,6 +45,17 @@ export default async function TestResultatPage({ params }: PageProps) {
   ]);
 
   if (!test) notFound();
+
+  // A-K-kategori oppnådd på denne testen
+  const achievedCat = getAchievedCategory(
+    num,
+    latestResult?.value ?? 0,
+    (test.comparison ?? "higher_is_better") as TestComparison
+  );
+
+  const isTeamNorway = num >= 21;
+  const isPEITest = num >= 29 && num <= 31;
+
   if (!latestResult) {
     return (
       <div className="min-h-screen p-10" style={{ background: "#F4F6F4" }}>
@@ -87,6 +102,20 @@ export default async function TestResultatPage({ params }: PageProps) {
             }}
           >
             / Test #{test.testNumber} · Resultat
+            {isTeamNorway && (
+              <span
+                className="ml-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5"
+                style={{
+                  background: "#D1F843",
+                  color: "#0A1F18",
+                  fontSize: "9px",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                <FlaskConical className="h-3 w-3" />
+                Team Norway
+              </span>
+            )}
           </div>
           <h1
             className="mt-3 text-[20px] font-semibold"
@@ -94,6 +123,30 @@ export default async function TestResultatPage({ params }: PageProps) {
           >
             {test.name}
           </h1>
+
+          {achievedCat && (
+            <p className="mt-2 text-sm" style={{ color: "var(--color-ink-subtle, #8A958E)" }}>
+              Du presterer som en{" "}
+              <strong style={{ color: "var(--color-primary, #005840)" }}>
+                {achievedCat}-spiller
+              </strong>{" "}
+              på denne testen
+            </p>
+          )}
+
+          {isPEITest && (
+            <div
+              className="mt-3 rounded-lg px-3 py-2 text-xs"
+              style={{
+                background: "var(--color-surface-soft, #EDF1EE)",
+                color: "var(--color-ink-muted, #5C6B62)",
+              }}
+            >
+              <strong>PEI-forklaring:</strong> Proximity Error Index = restavstand ÷
+              target-avstand. Lavere er bedre. PEI 0.15 betyr at ballen i snitt
+              havnet 15% av target-avstanden fra hullet.
+            </div>
+          )}
           <div
             className="mt-6 text-[64px] font-bold leading-none"
             style={{

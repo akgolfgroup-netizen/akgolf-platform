@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, CheckCircle2, MessageCircle, Play, X } from "lucide-react";
+import { Check, CheckCircle2, FlaskConical, MessageCircle, Play, X } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import type { V2EventLite } from "./types";
 
@@ -9,6 +9,8 @@ interface TodayExercise {
   meta?: string;
   durationMinutes: number;
   done: boolean;
+  /** Referanse til TestDefinition hvis dette er en test-øvelse. */
+  testNumber?: number | null;
 }
 
 export function TodayCard({
@@ -114,7 +116,15 @@ function ExerciseRow({ ex, index }: { ex: TodayExercise; index: number }) {
       <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-white/70">
         {ex.durationMinutes} min
       </div>
-      {ex.done ? (
+      {ex.testNumber && !ex.done ? (
+        <Link
+          href={`/portal/tester/${ex.testNumber}?fromPlan=1`}
+          className="inline-flex items-center gap-1 rounded-full bg-accent/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-accent hover:bg-accent/30 transition"
+        >
+          <FlaskConical className="h-3 w-3" />
+          Gjør test
+        </Link>
+      ) : ex.done ? (
         <CheckCircle2 className="h-4 w-4 text-success" />
       ) : (
         <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-accent">

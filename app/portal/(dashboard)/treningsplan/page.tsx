@@ -117,17 +117,18 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   async function handleAddExerciseToSession(
     sessionId: string,
     exercise: {
-      id: string;
+      id?: string;
       name: string;
       description?: string;
-      pyramid: string;
-      area: string;
+      pyramid?: string;
+      area?: string;
       lPhase?: string;
       durationMinutes?: number;
       repsWithBall?: number;
       repsWithoutBall?: number;
       focus?: string;
       notes?: string;
+      testNumber?: number;
     }
   ) {
     "use server";

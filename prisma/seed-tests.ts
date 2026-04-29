@@ -208,6 +208,200 @@ const TESTS: TestSeed[] = [
     inputCount: 1,
     comparison: "higher_is_better",
   },
+
+  // ═════════════════════════════════════════════════════════
+  //  TEAM NORWAY — GOLFSLAG-TESTER (Scorekort GolfslagTester)
+  // ═════════════════════════════════════════════════════════
+
+  // ── SHORT GAME: Chip ────────────────────────────────────
+  {
+    testNumber: 21,
+    name: "Chip 10m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 22,
+    name: "Chip 30m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+
+  // ── SHORT GAME: Wedge ───────────────────────────────────
+  {
+    testNumber: 23,
+    name: "Wedge 20m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 24,
+    name: "Wedge 40m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+
+  // ── SHORT GAME: Lobb ────────────────────────────────────
+  {
+    testNumber: 25,
+    name: "Lobb 15m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 26,
+    name: "Lobb 25m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+
+  // ── SHORT GAME: Bunker ──────────────────────────────────
+  {
+    testNumber: 27,
+    name: "Bunker 10m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 28,
+    name: "Bunker 20m",
+    category: "SHORT_GAME",
+    unit: "meter",
+    formula: "avg(proximity_to_pin)",
+    inputCount: 24,
+    comparison: "lower_is_better",
+  },
+
+  // ═════════════════════════════════════════════════════════
+  //  TEAM NORWAY — PEI-TESTER
+  // ═════════════════════════════════════════════════════════
+
+  {
+    testNumber: 29,
+    name: "PEI Slagtest 27",
+    category: "SHORT_GAME",
+    unit: "PEI",
+    formula: "avg(pei) where pei = result_distance / target_distance",
+    inputCount: 27,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 30,
+    name: "PEI Wedgetest",
+    category: "SHORT_GAME",
+    unit: "PEI",
+    formula: "avg(pei) where pei = result_distance / target_distance",
+    inputCount: 9,
+    comparison: "lower_is_better",
+  },
+  {
+    testNumber: 31,
+    name: "PEI Test Bane",
+    category: "SHORT_GAME",
+    unit: "PEI",
+    formula: "avg(pei) where pei = result_distance / target_distance",
+    inputCount: 18,
+    comparison: "lower_is_better",
+  },
+
+  // ═════════════════════════════════════════════════════════
+  //  TEAM NORWAY — TEKNIKK-TESTER
+  // ═════════════════════════════════════════════════════════
+
+  // ── TRACKMAN: Teknikktest Utslag ────────────────────────
+  {
+    testNumber: 32,
+    name: "Teknikktest Utslag — Carry",
+    category: "TRACKMAN",
+    unit: "meter",
+    formula: "median(carry)",
+    inputCount: 5,
+    comparison: "higher_is_better",
+  },
+  {
+    testNumber: 33,
+    name: "Teknikktest Utslag — Spredning",
+    category: "TRACKMAN",
+    unit: "meter",
+    formula: "stddev(lateral_deviation)",
+    inputCount: 5,
+    comparison: "lower_is_better",
+  },
+
+  // ── TRACKMAN: Teknikktest Inspill ───────────────────────
+  {
+    testNumber: 34,
+    name: "Teknikktest Inspill — Carry",
+    category: "TRACKMAN",
+    unit: "meter",
+    formula: "median(carry)",
+    inputCount: 10,
+    comparison: "higher_is_better",
+  },
+  {
+    testNumber: 35,
+    name: "Teknikktest Inspill — Spredning",
+    category: "TRACKMAN",
+    unit: "meter",
+    formula: "stddev(lateral_deviation)",
+    inputCount: 10,
+    comparison: "lower_is_better",
+  },
+
+  // ── SHORT GAME: Gate-tester ─────────────────────────────
+  {
+    testNumber: 36,
+    name: "Nærspill Gate",
+    category: "SHORT_GAME",
+    unit: "poeng/9",
+    formula: "count(landing_in_zone)",
+    inputCount: 9,
+    comparison: "higher_is_better",
+  },
+  {
+    testNumber: 37,
+    name: "VISA Express",
+    category: "SHORT_GAME",
+    unit: "poeng/9",
+    formula: "count(landing_in_zone)",
+    inputCount: 9,
+    comparison: "higher_is_better",
+  },
+
+  // ═════════════════════════════════════════════════════════
+  //  TEAM NORWAY — BESLUTNINGSprotokoll
+  // ═════════════════════════════════════════════════════════
+
+  {
+    testNumber: 38,
+    name: "Beslutningsprotokoll",
+    category: "MENTAL",
+    unit: "meter",
+    formula: "avg(|carry_target - actual_carry|)",
+    inputCount: 18,
+    comparison: "lower_is_better",
+  },
 ];
 
 async function main() {

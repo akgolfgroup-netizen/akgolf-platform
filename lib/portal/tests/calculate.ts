@@ -33,6 +33,15 @@ function maxOf(values: number[]): number {
   return Math.max(...values);
 }
 
+function median(values: number[]): number {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 !== 0
+    ? sorted[mid]
+    : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
 /**
  * Hovedberegning. Returnerer `value` som lagres i TestResult.value.
  *
@@ -99,6 +108,48 @@ export function calculateValue(testNumber: number, rawInput: number[]): number {
     case 20: // Kognitivt under press — poeng (single input)
       return roundTo(rawInput[0] ?? 0, 0);
 
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — GOLFSLAG-TESTER (21-28)
+    // ═════════════════════════════════════════════════════════
+    case 21: // Chip 10m — avg proximity
+    case 22: // Chip 30m — avg proximity
+    case 23: // Wedge 20m — avg proximity
+    case 24: // Wedge 40m — avg proximity
+    case 25: // Lobb 15m — avg proximity
+    case 26: // Lobb 25m — avg proximity
+    case 27: // Bunker 10m — avg proximity
+    case 28: // Bunker 20m — avg proximity
+      return roundTo(avg(rawInput), 1);
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — PEI-TESTER (29-31)
+    // ═════════════════════════════════════════════════════════
+    case 29: // PEI Slagtest 27
+    case 30: // PEI Wedgetest
+    case 31: // PEI Test Bane
+      return roundTo(avg(rawInput), 3);
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — TEKNIKK-TESTER (32-37)
+    // ═════════════════════════════════════════════════════════
+    case 32: // Teknikktest Utslag — Carry (median)
+    case 34: // Teknikktest Inspill — Carry (median)
+      return roundTo(median(rawInput), 1);
+
+    case 33: // Teknikktest Utslag — Spredning (stddev)
+    case 35: // Teknikktest Inspill — Spredning (stddev)
+      return roundTo(stdDev(rawInput), 1);
+
+    case 36: // Nærspill Gate — count innenfor sone
+    case 37: // VISA Express — count innenfor sone
+      return roundTo(sum(rawInput), 0);
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — BESLUTNINGSprotokoll (38)
+    // ═════════════════════════════════════════════════════════
+    case 38: // Beslutningsprotokoll — avg carry-feil
+      return roundTo(avg(rawInput.map((v) => Math.abs(v))), 1);
+
     default:
       return 0;
   }
@@ -153,6 +204,59 @@ export function getInputLabel(testNumber: number, index: number): string {
       return `Forsok ${index + 1} (meter)`;
     case 20:
       return `Score (av 100)`;
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — GOLFSLAG-TESTER (21-28)
+    // ═════════════════════════════════════════════════════════
+    case 21:
+      return `Chip ${index + 1} — restavstand (m)`;
+    case 22:
+      return `Chip ${index + 1} — restavstand (m)`;
+    case 23:
+      return `Wedge ${index + 1} — restavstand (m)`;
+    case 24:
+      return `Wedge ${index + 1} — restavstand (m)`;
+    case 25:
+      return `Lobb ${index + 1} — restavstand (m)`;
+    case 26:
+      return `Lobb ${index + 1} — restavstand (m)`;
+    case 27:
+      return `Bunker ${index + 1} — restavstand (m)`;
+    case 28:
+      return `Bunker ${index + 1} — restavstand (m)`;
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — PEI-TESTER (29-31)
+    // ═════════════════════════════════════════════════════════
+    case 29:
+      return `Slag ${index + 1} — PEI (restavstand / malavstand)`;
+    case 30:
+      return `Slag ${index + 1} — PEI (restavstand / malavstand)`;
+    case 31:
+      return `Hull ${index + 1} — PEI (restavstand / malavstand)`;
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — TEKNIKK-TESTER (32-37)
+    // ═════════════════════════════════════════════════════════
+    case 32:
+      return `Slag ${index + 1} — carry (m)`;
+    case 33:
+      return `Slag ${index + 1} — sideavvik (m)`;
+    case 34:
+      return `Slag ${index + 1} — carry (m)`;
+    case 35:
+      return `Slag ${index + 1} — sideavvik (m)`;
+    case 36:
+      return `Slag ${index + 1} (1 = innenfor sone, 0 = utenfor)`;
+    case 37:
+      return `Slag ${index + 1} (1 = innenfor sone, 0 = utenfor)`;
+
+    // ═════════════════════════════════════════════════════════
+    //  TEAM NORWAY — BESLUTNINGSprotokoll (38)
+    // ═════════════════════════════════════════════════════════
+    case 38:
+      return `Hull ${index + 1} — carry-feil (m, neg = kort, pos = lang)`;
+
     default:
       return `Verdi ${index + 1}`;
   }
