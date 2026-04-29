@@ -88,3 +88,6 @@ supabase/.temp/
 
 # Vercel env-pulled per-environment (kan inneholde secrets)
 .env.production
+
+# Agent/swarm metadata (auto-generated)
+.claude-flow/
