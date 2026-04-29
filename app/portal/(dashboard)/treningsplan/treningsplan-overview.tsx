@@ -8,6 +8,7 @@ import { Calendar, ChevronLeft, ChevronRight, Plus, Settings2 } from "lucide-rea
 import {
   ExerciseLibrary,
   MiniStats,
+  PyramidActuals,
   SectionHeading,
   TodayCard,
   WeekStrip,
@@ -29,6 +30,7 @@ interface OverviewProps {
   doneCount: number;
   coachName: string | null;
   library: LibraryItem[];
+  pyramidDistribution?: Record<string, number> | null;
 }
 
 export function TreningsplanOverview({
@@ -42,6 +44,7 @@ export function TreningsplanOverview({
   doneCount,
   coachName,
   library,
+  pyramidDistribution,
 }: OverviewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -142,6 +145,8 @@ export function TreningsplanOverview({
       <WeekStrip weekDates={weekDates} events={events} weekOffset={weekOffset} todayIso={todayIso} />
 
       <MiniStats stats={stats} />
+
+      <PyramidActuals planned={pyramidDistribution} events={events} />
 
       {tdc ? (
         <>

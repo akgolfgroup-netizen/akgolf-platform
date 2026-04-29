@@ -234,6 +234,9 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     const targets = computeWeeklyTargets(periodization);
     const library = buildLibraryItems(events);
     const coachName = await getActiveCoachName();
+    const pyramidDist = plan?.pyramidDistribution
+      ? (plan.pyramidDistribution as Record<string, number>)
+      : null;
     return (
       <TreningsplanOverview
         weekOffset={weekOffset}
@@ -246,6 +249,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         doneCount={doneCount}
         coachName={coachName}
         library={library}
+        pyramidDistribution={pyramidDist}
       />
     );
   }

@@ -8,6 +8,7 @@ export { PlanDetailHero, type PlanDetailMeta } from "./plan-detail-hero";
 export { WeekTabs, type WeekTab } from "./week-tabs";
 export { DayBlock, type DayBlockData, type DayBlockExercise } from "./day-block";
 export { WeekNote } from "./week-note";
+export { PyramidActuals } from "./pyramid-actuals";
 export {
   pyramidLabel,
   pyramidToAkTag,
