@@ -1,6 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { DagensFokusClient } from "./dagens-fokus-client";
+import {
+  getDagensFokusSignals,
+  getDagensFokusKpis,
+  getDagensFokusTasks,
+} from "@/lib/portal/admin/dagens-fokus-actions";
 
 export const metadata = {
   title: "Dagens fokus — AK Golf CoachHQ",
@@ -125,7 +130,28 @@ async function getDashboardData() {
 
 export default async function AdminDashboardPage() {
   const user = await requirePortalUser();
-  const data = await getDashboardData();
 
-  return <DagensFokusClient data={data} user={user} />;
+  // Tom-state fallbacks — siden skal aldri 500'e selv om en datakilde feiler
+  const safe = <T,>(p: Promise<T>, label: string, fallback: T): Promise<T> =>
+    p.catch((err) => {
+      console.error(`[admin-dashboard] ${label} failed:`, err);
+      return fallback;
+    });
+
+  const [data, signals, kpis, tasks] = await Promise.all([
+    getDashboardData(),
+    safe(getDagensFokusSignals(), "signals", []),
+    safe(getDagensFokusKpis(), "kpis", []),
+    safe(getDagensFokusTasks(), "tasks", []),
+  ]);
+
+  return (
+    <DagensFokusClient
+      data={data}
+      user={user}
+      signals={signals}
+      kpis={kpis}
+      tasks={tasks}
+    />
+  );
 }

@@ -18,6 +18,11 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
+import type {
+  DagensFokusSignal,
+  DagensFokusKpi,
+  DagensFokusTask,
+} from "@/lib/portal/admin/dagens-fokus-actions";
 
 interface Session {
   id: string;
@@ -56,12 +61,9 @@ interface DagensFokusClientProps {
     role?: string;
     image?: string | null;
   };
-}
-
-function formatRevenueShort(amount: number): string {
-  if (amount >= 1_000_000) return `${(amount / 1_000_000).toFixed(1)}M`;
-  if (amount >= 1000) return `${Math.round(amount / 1000)}k`;
-  return `${amount}`;
+  signals: DagensFokusSignal[];
+  kpis: DagensFokusKpi[];
+  tasks: DagensFokusTask[];
 }
 
 function formatDateMeta(): { eyebrow: string; topbarMeta: string } {
@@ -90,7 +92,13 @@ const QUICK_ACTIONS: { label: string; sub: string; icon: LucideIcon; href: strin
   { label: "AI-sammendrag", sub: "Dagens runder", icon: Sparkles, href: "/admin/ai-assistent" },
 ];
 
-export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
+export function DagensFokusClient({
+  data,
+  user,
+  signals,
+  kpis,
+  tasks,
+}: DagensFokusClientProps) {
   const router = useRouter();
   const { eyebrow, topbarMeta } = formatDateMeta();
   const coachName = user.name?.split(" ")[0] ?? "Coach";
@@ -118,8 +126,8 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
         }))
       : DEMO_TIMELINE;
 
-  const tasksDone = 3;
-  const tasksTotal = 6;
+  const tasksDone = tasks.filter((t) => t.done).length;
+  const tasksTotal = tasks.length;
 
   return (
     <CoachHQDarkShell
@@ -157,110 +165,35 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
         }
       />
 
-      {/* Signals */}
-      <div className="grid grid-cols-3 gap-3.5 mb-[18px]">
-        <SignalCard
-          tone="urgent"
-          corner="Krever handling"
-          iconName="alert-triangle"
-          num="2"
-          numSuffix="spillere"
-          description={
-            <>
-              <strong style={{ color: "#fff" }}>Emma Lien</strong> og{" "}
-              <strong style={{ color: "#fff" }}>Henrik Vold</strong> har ikke
-              logget runder på 14+ dager. Vurder retention-touch.
-            </>
-          }
-          actions={
-            <>
-              <Button
-                size="sm"
-                icon={<MessageCircle className="w-3 h-3" />}
-                onClick={() => router.push("/admin/meldinger")}
-              >
-                Send melding
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => router.push("/admin/elever")}
-              >
-                Se profiler →
-              </Button>
-            </>
-          }
-        />
+      {/* Signals — fra real data */}
+      {signals.length > 0 ? (
+        <div className="grid grid-cols-3 gap-3.5 mb-[18px]">
+          {signals.map((signal, idx) => (
+            <SignalCardFromData
+              key={`${signal.tone}-${idx}`}
+              signal={signal}
+              router={router}
+            />
+          ))}
+        </div>
+      ) : null}
 
-        <SignalCard
-          tone="attention"
-          corner="Trender ned"
-          iconName="trending-down"
-          num="3"
-          numSuffix="spillere"
-          description="SG Putting har falt >0.4 siste 4 uker. Anbefaler short-game-fokus i neste plan."
-          actions={
-            <>
-              <Button
-                size="sm"
-                icon={<Layers className="w-3 h-3" />}
-                onClick={() => router.push("/admin/treningsplan")}
-              >
-                Bygg plan
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => router.push("/admin/analytics")}
-              >
-                Se data →
-              </Button>
-            </>
-          }
-        />
-
-        <SignalCard
-          tone="opportunity"
-          corner="Mulighet"
-          iconName="award"
-          num="1"
-          numSuffix="spiller"
-          description={
-            <>
-              <strong style={{ color: "#fff" }}>Sofie Holm</strong> har slått PR
-              3 ganger denne måneden. Foreslå turneringsmål.
-            </>
-          }
-          actions={
-            <>
-              <Button
-                size="sm"
-                variant="primary"
-                icon={<Trophy className="w-3 h-3" />}
-                onClick={() => router.push("/admin/turneringer")}
-              >
-                Sett mål
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => router.push("/admin/elever")}
-              >
-                Profil →
-              </Button>
-            </>
-          }
-        />
-      </div>
-
-      {/* KPI Strip */}
-      <div className="grid grid-cols-5 gap-3 mb-[18px]">
-        <KPI label="Aktive spillere" value={data.kpis.activeStudents} delta="+3" />
-        <KPI label="Denne uken" value={data.kpis.weeklySessions} small="økter" />
-        <KPI label="Snitt SG" value="+0.42" delta="+0.08" />
-        <KPI label="MRR" value={`${formatRevenueShort(data.kpis.mtdRevenue)}`} delta="+5%" />
-        <KPI label="Forfalte fakturaer" value="2" deltaTone="down" alert />
-      </div>
+      {/* KPI Strip — fra real data */}
+      {kpis.length > 0 ? (
+        <div className="grid grid-cols-5 gap-3 mb-[18px]">
+          {kpis.map((kpi, idx) => (
+            <KPI
+              key={`${kpi.label}-${idx}`}
+              label={kpi.label}
+              value={kpi.value}
+              small={kpi.small}
+              delta={kpi.delta}
+              deltaTone={kpi.deltaTone}
+              alert={kpi.alert}
+            />
+          ))}
+        </div>
+      ) : null}
 
       {/* Main grid */}
       <div
@@ -276,9 +209,16 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
           <Card>
             <CardHeader title="Dagens oppgaver" sub={`${tasksDone}/${tasksTotal}`} />
             <div className="flex flex-col gap-2">
-              {DEMO_TASKS.map((task, idx) => (
-                <Task key={idx} {...task} />
-              ))}
+              {tasks.length > 0 ? (
+                tasks.map((task, idx) => <Task key={idx} {...task} />)
+              ) : (
+                <p
+                  className="px-3 py-4 text-center text-[13px]"
+                  style={{ color: "rgba(255,255,255,0.55)" }}
+                >
+                  Ingen ventende oppgaver. Bra jobbet!
+                </p>
+              )}
             </div>
           </Card>
 
@@ -329,6 +269,94 @@ export function DagensFokusClient({ data, user }: DagensFokusClientProps) {
         </div>
       </div>
     </CoachHQDarkShell>
+  );
+}
+
+/* ============================================================
+ * SignalCardFromData — wrapper rundt SignalCard som tar typed data
+ * ========================================================== */
+
+function SignalCardFromData({
+  signal,
+  router,
+}: {
+  signal: DagensFokusSignal;
+  router: ReturnType<typeof useRouter>;
+}) {
+  // Bygg description med highlights wrappet i <strong>
+  const description = signal.highlights.length === 0
+    ? signal.description
+    : (() => {
+        let result: React.ReactNode = signal.description;
+        for (const hl of signal.highlights) {
+          const text = result as string;
+          const idx = text.indexOf(hl);
+          if (idx === -1) continue;
+          // Gjor det enkelt: bare wrappe forste forekomst i description
+          const before = text.slice(0, idx);
+          const after = text.slice(idx + hl.length);
+          result = (
+            <>
+              {before}
+              <strong style={{ color: "#fff" }}>{hl}</strong>
+              {after}
+            </>
+          );
+          break;
+        }
+        return result;
+      })();
+
+  // Velg primary-knapp tekst basert pa tone
+  const primaryButtonContent =
+    signal.tone === "urgent" ? (
+      <>
+        <MessageCircle className="w-3 h-3" />
+        Send melding
+      </>
+    ) : signal.tone === "attention" ? (
+      <>
+        <Layers className="w-3 h-3" />
+        Bygg plan
+      </>
+    ) : (
+      <>
+        <Trophy className="w-3 h-3" />
+        Sett mal
+      </>
+    );
+
+  return (
+    <SignalCard
+      tone={signal.tone}
+      corner={signal.corner}
+      iconName={signal.iconName}
+      num={signal.num}
+      numSuffix={signal.numSuffix}
+      description={description}
+      actions={
+        <>
+          <Button
+            size="sm"
+            variant={signal.tone === "opportunity" ? "primary" : undefined}
+            onClick={() => router.push(signal.primaryHref)}
+          >
+            {primaryButtonContent}
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => router.push(signal.secondaryHref)}
+          >
+            {signal.tone === "urgent"
+              ? "Se profiler →"
+              : signal.tone === "attention"
+                ? "Se data →"
+                : "Profil →"}
+          </Button>
+        </>
+      }
+    />
   );
 }
 
@@ -408,13 +436,7 @@ function Task({
   who,
   pill,
   pillTone,
-}: {
-  done?: boolean;
-  label: string;
-  who: string;
-  pill: string;
-  pillTone: "default" | "success" | "warn";
-}) {
+}: DagensFokusTask) {
   return (
     <div
       className="grid items-start gap-2.5 px-3 py-2.5 rounded-lg"
@@ -535,44 +557,3 @@ const DEMO_TIMELINE: TimelineRow[] = [
   },
 ];
 
-const DEMO_TASKS = [
-  {
-    done: true,
-    label: "Send treningsplan til Sofie",
-    who: "CRM · 08:14",
-    pill: "Done",
-    pillTone: "success" as const,
-  },
-  {
-    done: true,
-    label: "Bekreft junior-gruppe påmelding",
-    who: "Booking",
-    pill: "Done",
-    pillTone: "success" as const,
-  },
-  {
-    done: true,
-    label: "Faktura-utsendelse mai (8 stk)",
-    who: "Stripe",
-    pill: "Done",
-    pillTone: "success" as const,
-  },
-  {
-    label: "Forberede Emma kl 17 — fullswing-eval",
-    who: "Forfaller 16:30",
-    pill: "2t",
-    pillTone: "warn" as const,
-  },
-  {
-    label: "Skriv opp-summering Erik (kveldsplan)",
-    who: "Coaching",
-    pill: "I dag",
-    pillTone: "default" as const,
-  },
-  {
-    label: "Godkjenne Markus' nye plan-mal",
-    who: "Team · venter",
-    pill: "3 d",
-    pillTone: "warn" as const,
-  },
-];
