@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowRight, Check, Target, Calendar, BarChart3, Users, Sparkles } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
-import { ACADEMY_HERO, ACADEMY_FEATURES, ACADEMY_FAQ, FINAL_CTA } from "@/lib/website-constants";
+import { ACADEMY_HERO, FINAL_CTA } from "@/lib/website-constants";
 
 export const metadata: Metadata = {
   title: "Academy",

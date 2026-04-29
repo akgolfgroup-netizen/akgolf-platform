@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight, Check, Crown, TrendingUp, Users, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Crown, TrendingUp, Users } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { COACHING_PACKAGES } from "@/lib/website-constants";
 
