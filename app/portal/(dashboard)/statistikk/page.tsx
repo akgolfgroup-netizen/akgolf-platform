@@ -3,15 +3,13 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getFilteredRoundStats,
   getFilteredAggregates,
-  getWeeklyTrainingVolume,
   getLatestHandicap,
   getGolfProfileSummary,
   getHcpForecast,
 } from "./actions";
-import { StatistikkClient } from "./statistikk-client";
 import { StatsV2Client } from "@/components/portal/statistikk/v2/stats-v2-client";
 import type { PeriodKey } from "./actions";
-import { getPlayerUSI, getLatestTrainingPrescription } from "@/lib/portal/usi/actions";
+import { getPlayerUSI } from "@/lib/portal/usi/actions";
 
 export const metadata: Metadata = {
   title: "Statistikk | PlayersHQ",
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 const VALID_PERIODS: PeriodKey[] = ["30d", "90d", "season", "1y"];
 
 interface StatistikkPageProps {
-  searchParams: Promise<{ period?: string; v?: string }>;
+  searchParams: Promise<{ period?: string }>;
 }
 
 export default async function StatistikkPage({ searchParams }: StatistikkPageProps) {
@@ -82,41 +80,28 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     trendSlopePerWeek: 0,
   };
 
-  const [rounds, aggregates, weeklyTraining, handicap, profile, usiData, prescription, hcpForecast] = await Promise.all([
+  const [rounds, aggregates, handicap, profile, usiData, hcpForecast] = await Promise.all([
     safe(getFilteredRoundStats(period), "getFilteredRoundStats", []),
     safe(getFilteredAggregates(period), "getFilteredAggregates", null),
-    safe(getWeeklyTrainingVolume(period), "getWeeklyTrainingVolume", []),
     safe(getLatestHandicap(), "getLatestHandicap", null),
     safe(getGolfProfileSummary(), "getGolfProfileSummary", emptyProfile),
     // getPlayerUSI(true, true) skriver til DB. Hvis brukeren ikke har data
     // (sgDims.sampleSize === 0) returnerer compute null — men selve write kan
     // krasje. Bruk read-only varianten her — persist gjøres i bakgrunnsjobb.
     safe(getPlayerUSI(false, false), "getPlayerUSI", null),
-    safe(getLatestTrainingPrescription(), "getLatestTrainingPrescription", null),
     safe(getHcpForecast(), "getHcpForecast", emptyHcpForecast),
   ]);
 
-  if (params.v === "2") {
-    return (
-      <StatsV2Client
-        rounds={rounds}
-        aggregates={aggregates}
-        handicap={handicap?.handicapIndex ?? null}
-      />
-    );
-  }
-
   return (
-    <StatistikkClient
+    <StatsV2Client
       rounds={rounds}
       aggregates={aggregates}
-      weeklyTraining={weeklyTraining}
       handicap={handicap?.handicapIndex ?? null}
       currentPeriod={period}
-      profile={profile}
-      usi={usiData?.usi ?? null}
-      prescription={prescription}
       hcpForecast={hcpForecast}
+      usi={usiData?.usi ?? null}
+      trainingSessions30d={profile.trainingSessions30d}
+      streak={profile.streak}
     />
   );
 }

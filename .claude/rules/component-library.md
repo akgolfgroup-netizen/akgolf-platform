@@ -84,6 +84,21 @@ Aktiveres via `?dashboard=bento` eller cookie `dashboard=bento`. Default fortsat
 |---|---|---|
 | UpgradeOptions | components/portal/subscription/upgrade-options.tsx | Oppgraderingskort med planer |
 
+## Portal Statistikk V2 (Brand Guide V2.0 — pixel-rebuild 2026-04-28)
+Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens/stats-v2.html`,
+`a13-sammenligning.html` og `a14-strategi.html`. Default visning av `/portal/statistikk`.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| StatsV2Client | components/portal/statistikk/v2/stats-v2-client.tsx | Orchestrator: 12-kolonne grid med page header, hero benchmark, KPI-rad, fokus-callout, SG-fordeling, HCP-trend, sammenligning, AK-pyramide og rundetabell |
+| PeriodTabs | components/portal/statistikk/v2/period-tabs.tsx | Periodevelger pill-gruppe (30d/90d/sesong/1y) som skifter `?period=`-query |
+| StatsHeroBenchmark | components/portal/statistikk/v2/stats-hero-benchmark.tsx | Mork gradient-kort med animert percentil-dial og lede-tekst |
+| FocusCallout | components/portal/statistikk/v2/focus-callout.tsx | Fokus-callout med lime ikon-block + "Lag plan"-CTA |
+| SgDistributionCard | components/portal/statistikk/v2/sg-distribution-card.tsx | Strokes Gained-fordeling med +/- barer rundt 0-linje |
+| HcpTrendCard | components/portal/statistikk/v2/hcp-trend-card.tsx | Handicap-historikk SVG med gradient-fill, lime accent-prikk + 30/90d prognose |
+| CompareCard | components/portal/statistikk/v2/compare-card.tsx | Sammenligningskort med tre stablete barer (Du / Peer / Pyramide) + percentil-chip + delta |
+| AkPyramidCard | components/portal/statistikk/v2/ak-pyramid-card.tsx | A-K talentutviklingsmodell med uthevet "din rad" + 4 stat-bokser |
+| RoundsTable | components/portal/statistikk/v2/rounds-table.tsx | Runde-for-runde tabell (10 siste) med dato, score, FIR/GIR/putts/SG total |
+
 ## Admin Fasiliteter-komponenter (CoachHQ — GFGK fasilitets-bookingkart)
 | Komponent | Fil | Bruk |
 |---|---|---|
