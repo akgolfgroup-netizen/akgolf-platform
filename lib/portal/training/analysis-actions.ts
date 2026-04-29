@@ -124,6 +124,14 @@ export async function analyzeTraining(
   filter: TrainingFilter
 ): Promise<TrainingAnalysisResult> {
   const user = await requirePortalUser();
+
+  // Enkel autorisasjon: kun ADMIN/INSTRUCTOR kan se andres data
+  if (filter.userId && filter.userId !== user.id) {
+    if (user.role !== "ADMIN" && user.role !== "INSTRUCTOR") {
+      throw new Error("Du har ikke tilgang til å se denne spillerens data");
+    }
+  }
+
   const userId = filter.userId ?? user.id;
 
   const toDate = filter.toDate ?? new Date();
