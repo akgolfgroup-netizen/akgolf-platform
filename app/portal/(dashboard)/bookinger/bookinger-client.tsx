@@ -105,7 +105,7 @@ export function BookingerClient({
           </span>{" "}
           kommende og{" "}
           <span className="font-semibold text-on-surface tabular-nums">
-            {pastCount}
+            {past.length}
           </span>{" "}
           tidligere økter.
         </p>

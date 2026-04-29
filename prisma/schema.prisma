@@ -2557,6 +2557,9 @@ model Course {
   latitude     Float?
   longitude    Float?
   gpsData      Json?
+  geojson      Json?
+  boundsLat    Json?         // { min: number, max: number }
+  boundsLng    Json?         // { min: number, max: number }
   createdAt    DateTime      @default(now())
   updatedAt    DateTime
   GameSession  GameSession[]
@@ -2568,21 +2571,22 @@ model Course {
 }
 
 model Hole {
-  id          String       @id
-  courseId    String
-  holeNumber  Int
-  par         Int
-  handicap    Int?
-  lengthMeter Int
-  teeColor    String       @default("yellow")
-  latitude    Float?
-  longitude   Float?
-  greenLat    Float?
-  greenLon    Float?
-  strategy    Json?
-  Course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  HoleResult  HoleResult[]
-  Shot        Shot[]
+  id              String       @id
+  courseId        String
+  holeNumber      Int
+  par             Int
+  handicap        Int?
+  lengthMeter     Int
+  teeColor        String       @default("yellow")
+  latitude        Float?
+  longitude       Float?
+  greenLat        Float?
+  greenLon        Float?
+  strategy        Json?
+  strategyOverlay Json?        // fairway/rough/bunker/green polygoner
+  Course          Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  HoleResult      HoleResult[]
+  Shot            Shot[]
 
   @@unique([courseId, holeNumber, teeColor])
   @@index([courseId])

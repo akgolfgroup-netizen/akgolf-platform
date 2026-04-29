@@ -129,6 +129,11 @@ export default function RootLayout({
         {/* Preconnect — sparer 100-300ms TTFB pa font-stylesheet */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* Mapbox GL CSS — kreves for kart-render */}
+        <link
+          rel="stylesheet"
+          href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css"
+        />
         {/* Material Symbols stylesheet fjernet i Sprint 2.2 — Icon-wrapperen rendrer Lucide internt. */}
       </head>
       <body className={`${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} ${fraunces.variable} ${dmSans.variable} font-sans h-full`}>

@@ -1477,13 +1477,17 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
       }
     }
 
+    // Hent aktiv periodisering
+    const currentPeriod = await getCurrentPeriodization(user.id);
+    const periodType = currentPeriod?.periodType ?? "grunnperiode";
+
     // Kall AI
     let aiResult;
     try {
       aiResult = await generateTrainingPlan(
         {
           goals: goalsText,
-          periodType: "grunnperiode",
+          periodType,
           durationWeeks: input.durationWeeks,
           startDate: startDate.toISOString().slice(0, 10),
           pyramidDistribution: pyramid,
