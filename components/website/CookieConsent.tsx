@@ -32,7 +32,7 @@ export function CookieConsent() {
       <div className="flex items-center gap-3">
         <button 
           onClick={handleAccept} 
-          className="bg-forest text-surface px-5 py-2 rounded-full text-sm font-medium hover:bg-on-surface transition-colors"
+          className="bg-primary text-card px-5 py-2 rounded-full text-sm font-medium hover:bg-primary-hover transition-colors"
         >
           Godta
         </button>

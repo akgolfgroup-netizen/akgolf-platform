@@ -155,7 +155,7 @@ export default function LandingAboutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg font-bold text-on-surface mb-1">Gamle Fredrikstad GK</h3>
-                  <p className="text-lime-dark text-sm font-medium mb-3">Hovedlokasjon</p>
+                  <p className="text-primary text-sm font-medium mb-3">Hovedlokasjon</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
                       <span className="truncate">Kongleveien 142, 1615 Fredrikstad</span>
@@ -181,7 +181,7 @@ export default function LandingAboutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg font-bold text-on-surface mb-1">Miklagard Golfklubb</h3>
-                  <p className="text-lime-dark text-sm font-medium mb-3">Samarbeidslokasjon</p>
+                  <p className="text-primary text-sm font-medium mb-3">Samarbeidslokasjon</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
                       <span className="truncate">Svingen 120, 2114 Disenå</span>
@@ -259,7 +259,7 @@ export default function LandingAboutPage() {
                 </div>
               </div>
               <div className="relative">
-                <div className="aspect-square rounded-[40px] overflow-hidden bg-forest-alt">
+                <div className="aspect-square rounded-[40px] overflow-hidden bg-primary">
                   <Image
                     src="/images/academy/AK-Golf-Academy-30.jpg"
                     alt="TrackMan analyse"
