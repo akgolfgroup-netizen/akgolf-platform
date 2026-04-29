@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getClubAggregates, type ClubAggregate } from "@/lib/portal/trackman/aggregate";
-import { DispersionPlot } from "./dispersion-plot";
 import { Target, Gauge, RotateCw, Wind } from "lucide-react";
 
 interface AdminTrackManViewProps {

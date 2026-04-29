@@ -4,6 +4,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { DispersionPlot } from "@/components/portal/trackman/dispersion-plot";
 import { ClubTrendChart } from "@/components/portal/trackman/club-trend-chart";
+import Link from "next/link";
 import { ArrowLeft, Target, Gauge, RotateCw, Wind } from "lucide-react";
 
 interface ClubPageProps {
@@ -119,12 +120,12 @@ export default async function ClubDetailPage({ params }: ClubPageProps) {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <a
+        <Link
           href="/portal/trackman"
           className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-line hover:bg-surface transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-ink-muted" />
-        </a>
+        </Link>
         <div>
           <h1 className="text-2xl font-bold text-ink">{clubName}</h1>
           <p className="text-sm text-ink-muted">Siste 90 dager · {shots.length} slag</p>

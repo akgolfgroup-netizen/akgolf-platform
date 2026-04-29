@@ -6,13 +6,9 @@ import {
   Bot,
   Calendar,
   Check,
-  Clock,
   Layers,
   Play,
-  Sparkles,
-  Star,
   Target,
-  Users,
 } from "lucide-react";
 import { WebNav } from "./web-nav";
 import { WebFooter } from "./web-footer";

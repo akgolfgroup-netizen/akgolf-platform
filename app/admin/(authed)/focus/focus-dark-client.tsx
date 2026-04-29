@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   CoachHQDarkShell,
-  PageHead,
   Button,
 } from "@/components/admin/coachhq-dark";
 import {

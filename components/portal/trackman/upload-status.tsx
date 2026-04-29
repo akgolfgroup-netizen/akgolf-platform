@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { AlertCircle, CheckCircle2, ArrowRight } from "lucide-react";
 
 interface UploadStatusProps {
@@ -37,12 +38,12 @@ export function UploadStatus({ error, success, isImage }: UploadStatusProps) {
               Konfidens: {Math.round(success.confidence * 100)}%
             </p>
           )}
-          <a
+          <Link
             href="/portal/trackman"
             className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
           >
             Se TrackMan-data <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       </div>
     );

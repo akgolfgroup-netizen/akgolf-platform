@@ -1,12 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Icon } from "@/components/ui/icon";
+import { MonoLabel } from "@/components/portal/patterns/mono-label";
 import * as React from "react";
 import type {
   BookingViewModel,
   CancellationRule,
 } from "@/components/portal/booking/booking-types";
 import { BookingShell } from "@/components/portal/bookinger/v2/booking-shell";
-import { PageHeader } from "@/components/portal/bookinger/v2/page-header";
 import { NextBookingHero } from "@/components/portal/bookinger/v2/next-booking-hero";
 import {
   BookingTabs,
