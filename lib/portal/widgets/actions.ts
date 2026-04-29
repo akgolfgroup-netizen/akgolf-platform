@@ -14,6 +14,7 @@
 
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
+import { PYRAMIDE } from "@/lib/portal/training/ak-taxonomy";
 
 // ── Returtyper ───────────────────────────────────────────
 
@@ -82,37 +83,13 @@ export interface PeriodSummaryPhase {
 
 // ── Konstanter ───────────────────────────────────────────
 
-/**
- * NGF-treningskategorier (matcher pyramidedistribution i TrainingPlan).
- * focusArea i TrainingLog inneholder kategorinavn (FYS/TEK/SLAG/SPILL/TURN)
- * eller treningsområde (PUTT, CHIP, ...). Vi mapper til 5 hovedkategorier.
- */
-const TRAINING_CATEGORIES: Array<{
-  key: string;
-  matches: string[];
-  color: string;
-}> = [
-  { key: "Teknikk", matches: ["TEK", "TEKNIKK"], color: "#005840" },
-  { key: "Fysikk", matches: ["FYS", "FYSIKK"], color: "#2A7D5A" },
-  { key: "Slag", matches: ["SLAG"], color: "#C48A32" },
-  { key: "Spill", matches: ["SPILL"], color: "#D1F843" },
-  { key: "Turnering", matches: ["TURN", "TURNERING"], color: "#B84233" },
+const MAANEDER_KORT = [
+  "Jan", "Feb", "Mar", "Apr", "Mai", "Jun",
+  "Jul", "Aug", "Sep", "Okt", "Nov", "Des",
 ];
 
-const MAANEDER_KORT = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "Mai",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Okt",
-  "Nov",
-  "Des",
-];
+const LEADERBOARD_USER_LIMIT = 500;
+const STREAK_TRAINING_LOOKBACK_DAYS = 365;
 
 // ── Hjelpefunksjoner ─────────────────────────────────────
 
@@ -121,43 +98,70 @@ function daysBetween(a: Date, b: Date): number {
   return Math.round(ms / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * Mapper TrainingLog.focusArea (fri tekst eller pyramide-kode) til en
+ * pyramide-kategori. Bruker PYRAMIDE som single source of truth — koden
+ * trenger ikke aliaser fordi PYRAMIDE.code matcher direkte.
+ */
 function categorizeFocusArea(focusArea: string | null): string | null {
   if (!focusArea) return null;
   const upper = focusArea.toUpperCase();
-  for (const cat of TRAINING_CATEGORIES) {
-    if (cat.matches.some(m => upper.includes(m))) {
-      return cat.key;
+  for (const level of PYRAMIDE) {
+    if (
+      upper === level.code ||
+      upper === level.label.toUpperCase() ||
+      upper.startsWith(`${level.code}_`)
+    ) {
+      return level.label;
     }
   }
   return null;
+}
+
+/**
+ * Felles wrapper for alle widget-actions: requirePortalUser + try/catch +
+ * fallback. Kutter ~120 linjer copy-paste try/catch og sentraliserer
+ * feil-loggformat.
+ */
+async function withWidgetGuard<T>(
+  name: string,
+  fallback: T,
+  fn: () => Promise<T>,
+): Promise<T> {
+  try {
+    await requirePortalUser();
+    return await fn();
+  } catch (error) {
+    console.error(`[widgets/${name}] failed:`, error);
+    return fallback;
+  }
 }
 
 // ── Actions ──────────────────────────────────────────────
 
 /**
  * Topp 5 spillere etter HCP. Trend = current - 30d siden.
+ *
+ * Cap pa antall hentede brukere er LEADERBOARD_USER_LIMIT (500). Med flere
+ * spillere bor dette skrives om til DISTINCT ON (raw SQL) for a finne kun
+ * topp 5 i DB i stedet for a laste alle og sortere i JS.
  */
 export async function getLeaderboard(
-  currentUserId: string
+  currentUserId: string,
 ): Promise<LeaderboardEntry[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getLeaderboard", [], async () => {
     const users = await prisma.user.findMany({
-      where: {
-        role: "STUDENT",
-        isActive: true,
-      },
+      where: { role: "STUDENT", isActive: true },
+      take: LEADERBOARD_USER_LIMIT,
       select: {
         id: true,
         name: true,
+        // Kun siste + en eldre HCP — to entries er nok for trend.
+        // 60 var unodvendig; siste er current og first match <= 30d gir trend.
         HandicapEntry: {
           orderBy: { date: "desc" },
-          take: 60,
-          select: {
-            handicapIndex: true,
-            date: true,
-          },
+          take: 12,
+          select: { handicapIndex: true, date: true },
         },
       },
     });
@@ -166,11 +170,11 @@ export async function getLeaderboard(
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const ranked = users
-      .map(u => {
+      .map((u) => {
         const latest = u.HandicapEntry[0];
         if (!latest) return null;
 
-        const past = u.HandicapEntry.find(e => e.date <= thirtyDaysAgo);
+        const past = u.HandicapEntry.find((e) => e.date <= thirtyDaysAgo);
         const trend = past ? latest.handicapIndex - past.handicapIndex : 0;
 
         return {
@@ -180,7 +184,10 @@ export async function getLeaderboard(
           trend,
         };
       })
-      .filter((x): x is { userId: string; name: string; hcp: number; trend: number } => x !== null)
+      .filter(
+        (x): x is { userId: string; name: string; hcp: number; trend: number } =>
+          x !== null,
+      )
       .sort((a, b) => a.hcp - b.hcp)
       .slice(0, 5);
 
@@ -191,39 +198,23 @@ export async function getLeaderboard(
       rank: index + 1,
       isMe: entry.userId === currentUserId,
     }));
-  } catch (error) {
-    console.error("[widgets/getLeaderboard] failed:", error);
-    return [];
-  }
+  });
 }
 
 /**
- * Nærmeste fremtidige Tournament der userId har TournamentPrep.
+ * Naermeste fremtidige Tournament der userId har TournamentPrep.
  */
 export async function getNextCompetition(
-  userId: string
+  userId: string,
 ): Promise<NextCompetition | null> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getNextCompetition", null, async () => {
     const now = new Date();
     const prep = await prisma.tournamentPrep.findFirst({
-      where: {
-        userId,
-        Tournament: {
-          startDate: { gte: now },
-        },
-      },
-      orderBy: {
-        Tournament: { startDate: "asc" },
-      },
+      where: { userId, Tournament: { startDate: { gte: now } } },
+      orderBy: { Tournament: { startDate: "asc" } },
       select: {
         Tournament: {
-          select: {
-            name: true,
-            startDate: true,
-            location: true,
-          },
+          select: { name: true, startDate: true, location: true },
         },
       },
     });
@@ -236,22 +227,18 @@ export async function getNextCompetition(
       date: prep.Tournament.startDate,
       location: prep.Tournament.location,
     };
-  } catch (error) {
-    console.error("[widgets/getNextCompetition] failed:", error);
-    return null;
-  }
+  });
 }
 
 /**
- * Aggregér TrainingLog (timer) per NGF-kategori for siste uke/måned.
+ * Aggreger TrainingLog (timer) per pyramide-kategori for siste uke/maned.
+ * Bruker PYRAMIDE som farge- og kategori-kilde.
  */
 export async function getTrainingVolume(
   userId: string,
-  period: "week" | "month"
+  period: "week" | "month",
 ): Promise<TrainingVolumeBucket[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getTrainingVolume", [], async () => {
     const since = new Date();
     if (period === "week") {
       since.setDate(since.getDate() - 7);
@@ -260,19 +247,13 @@ export async function getTrainingVolume(
     }
 
     const logs = await prisma.trainingLog.findMany({
-      where: {
-        userId,
-        date: { gte: since },
-      },
-      select: {
-        durationMinutes: true,
-        focusArea: true,
-      },
+      where: { userId, date: { gte: since } },
+      select: { durationMinutes: true, focusArea: true },
     });
 
     const totals = new Map<string, number>();
-    for (const cat of TRAINING_CATEGORIES) {
-      totals.set(cat.key, 0);
+    for (const level of PYRAMIDE) {
+      totals.set(level.label, 0);
     }
 
     for (const log of logs) {
@@ -283,27 +264,21 @@ export async function getTrainingVolume(
       totals.set(category, (totals.get(category) ?? 0) + minutes);
     }
 
-    return TRAINING_CATEGORIES.map(cat => ({
-      name: cat.key,
-      hours: Math.round(((totals.get(cat.key) ?? 0) / 60) * 10) / 10,
-      color: cat.color,
+    return PYRAMIDE.map((level) => ({
+      name: level.label,
+      hours: Math.round(((totals.get(level.label) ?? 0) / 60) * 10) / 10,
+      color: level.color,
     }));
-  } catch (error) {
-    console.error("[widgets/getTrainingVolume] failed:", error);
-    return [];
-  }
+  });
 }
 
 /**
  * Siste DegradationTracking per skill-area (shotType).
- * tekScore brukes som hovedmål; status mappes fra score-bucket.
  */
 export async function getDegradationAlerts(
-  userId: string
+  userId: string,
 ): Promise<DegradationAlert[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getDegradationAlerts", [], async () => {
     const tracking = await prisma.degradationTracking.findMany({
       where: { userId },
       orderBy: { lastUpdated: "desc" },
@@ -315,7 +290,6 @@ export async function getDegradationAlerts(
       },
     });
 
-    // Behold kun nyeste per shotType
     const seen = new Set<string>();
     const latest: typeof tracking = [];
     for (const item of tracking) {
@@ -324,7 +298,7 @@ export async function getDegradationAlerts(
       latest.push(item);
     }
 
-    return latest.map(item => {
+    return latest.map((item) => {
       const score = item.tekScore ?? item.m0Score ?? 0;
       const change =
         item.m0Score != null && item.m1Score != null
@@ -332,13 +306,9 @@ export async function getDegradationAlerts(
           : 0;
 
       let status: "good" | "warning" | "alert";
-      if (score >= 75) {
-        status = "good";
-      } else if (score >= 50) {
-        status = "warning";
-      } else {
-        status = "alert";
-      }
+      if (score >= 75) status = "good";
+      else if (score >= 50) status = "warning";
+      else status = "alert";
 
       return {
         name: item.shotType,
@@ -347,20 +317,14 @@ export async function getDegradationAlerts(
         change: Math.round(change * 10) / 10,
       };
     });
-  } catch (error) {
-    console.error("[widgets/getDegradationAlerts] failed:", error);
-    return [];
-  }
+  });
 }
 
 /**
  * Mental-trender — fra MentalProfile + siste 5 MentalScorecardEntry-snapshots.
- * Faste labels: Fokus, Selvtillit, Press-toleranse, Aksept.
  */
 export async function getMentalTrends(userId: string): Promise<MentalTrend[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getMentalTrends", [], async () => {
     const [profile, snapshots] = await Promise.all([
       prisma.mentalProfile.findUnique({
         where: { userId },
@@ -387,16 +351,16 @@ export async function getMentalTrends(userId: string): Promise<MentalTrend[]> {
 
     function avg(values: Array<number | null | undefined>): number {
       const filtered = values.filter(
-        (v): v is number => typeof v === "number"
+        (v): v is number => typeof v === "number",
       );
       if (filtered.length === 0) return 0;
       return filtered.reduce((s, v) => s + v, 0) / filtered.length;
     }
 
-    const focusAvg = avg(snapshots.map(s => s.focusLevel));
-    const confidenceAvg = avg(snapshots.map(s => s.confidence));
-    const pressureAvg = avg(snapshots.map(s => s.pressureLevel));
-    const acceptanceCount = snapshots.filter(s => s.acceptedResult).length;
+    const focusAvg = avg(snapshots.map((s) => s.focusLevel));
+    const confidenceAvg = avg(snapshots.map((s) => s.confidence));
+    const pressureAvg = avg(snapshots.map((s) => s.pressureLevel));
+    const acceptanceCount = snapshots.filter((s) => s.acceptedResult).length;
     const acceptanceRate =
       snapshots.length > 0 ? (acceptanceCount / snapshots.length) * 100 : 0;
 
@@ -441,20 +405,14 @@ export async function getMentalTrends(userId: string): Promise<MentalTrend[]> {
         benchmark: Math.round(acceptanceBaseline * 10) / 10,
       },
     ];
-  } catch (error) {
-    console.error("[widgets/getMentalTrends] failed:", error);
-    return [];
-  }
+  });
 }
 
 /**
- * Alle PeriodizationPeriod for inneværende år, mappet til måneder.
- * `name` = norsk månedsnavn. `phase` = periodType. `active` = nå-dato faller i intervallet.
+ * Alle PeriodizationPeriod for inneverende ar, mappet til maneder.
  */
 export async function getSeasonPlan(userId: string): Promise<SeasonPlanMonth[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getSeasonPlan", [], async () => {
     const now = new Date();
     const yearStart = new Date(now.getFullYear(), 0, 1);
     const yearEnd = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
@@ -466,11 +424,7 @@ export async function getSeasonPlan(userId: string): Promise<SeasonPlanMonth[]> 
         endDate: { gte: yearStart },
       },
       orderBy: { startDate: "asc" },
-      select: {
-        periodType: true,
-        startDate: true,
-        endDate: true,
-      },
+      select: { periodType: true, startDate: true, endDate: true },
     });
 
     return MAANEDER_KORT.map((monthName, monthIdx) => {
@@ -478,38 +432,27 @@ export async function getSeasonPlan(userId: string): Promise<SeasonPlanMonth[]> 
       const monthEnd = new Date(now.getFullYear(), monthIdx + 1, 0, 23, 59, 59);
 
       const matching = periods.find(
-        p => p.startDate <= monthEnd && p.endDate >= monthStart
+        (p) => p.startDate <= monthEnd && p.endDate >= monthStart,
       );
-
-      const isActiveMonth =
-        now >= monthStart && now <= monthEnd && !!matching;
 
       return {
         name: monthName,
         phase: matching?.periodType ?? "Ingen",
-        active: isActiveMonth,
+        active: now >= monthStart && now <= monthEnd && !!matching,
       };
     });
-  } catch (error) {
-    console.error("[widgets/getSeasonPlan] failed:", error);
-    return [];
-  }
+  });
 }
 
 /**
  * Siste publiserte CoachingSession for userId.
  */
 export async function getRecentCoachingFeedback(
-  userId: string
+  userId: string,
 ): Promise<RecentCoachingFeedback | null> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getRecentCoachingFeedback", null, async () => {
     const session = await prisma.coachingSession.findFirst({
-      where: {
-        studentId: userId,
-        publishedToStudent: true,
-      },
+      where: { studentId: userId, publishedToStudent: true },
       orderBy: { sessionDate: "desc" },
       select: {
         sessionDate: true,
@@ -518,78 +461,55 @@ export async function getRecentCoachingFeedback(
         homework: true,
         primaryFocus: true,
         aiSummary: true,
-        Instructor: {
-          select: {
-            User: { select: { name: true } },
-          },
-        },
+        Instructor: { select: { User: { select: { name: true } } } },
       },
     });
 
     if (!session) return null;
 
-    const text =
-      session.aiSummary ??
-      session.homework ??
-      session.instructorNotes ??
-      "";
-
     return {
       coach: session.Instructor?.User?.name ?? "Coach",
       date: session.sessionDate,
       rating: session.progressRating,
-      text,
+      text: session.aiSummary ?? session.homework ?? session.instructorNotes ?? "",
       focusArea: session.primaryFocus,
     };
-  } catch (error) {
-    console.error("[widgets/getRecentCoachingFeedback] failed:", error);
-    return null;
-  }
+  });
 }
 
 /**
  * Aktiv TrainingPlan + completedSessions vs totalSessions.
+ *
+ * Bruker _count i Prisma for a unnga over-fetch (var: hentet hver Week +
+ * Session + take:1 pa TrainingLog → ~50 nostete rader for 12-ukers plan).
  */
 export async function getPlanProgress(
-  userId: string
+  userId: string,
 ): Promise<PlanProgress | null> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getPlanProgress", null, async () => {
     const plan = await prisma.trainingPlan.findFirst({
-      where: {
-        studentId: userId,
-        isActive: true,
-      },
+      where: { studentId: userId, isActive: true },
       orderBy: { startDate: "desc" },
-      select: {
-        id: true,
-        title: true,
-        TrainingPlanWeek: {
-          select: {
-            TrainingPlanSession: {
-              select: {
-                id: true,
-                TrainingLog: {
-                  select: { id: true },
-                  take: 1,
-                },
-              },
-            },
-          },
-        },
-      },
+      select: { id: true, title: true },
     });
 
     if (!plan) return null;
 
-    const allSessions = plan.TrainingPlanWeek.flatMap(
-      w => w.TrainingPlanSession
-    );
-    const total = allSessions.length;
-    const completed = allSessions.filter(s => s.TrainingLog.length > 0).length;
-    const percentage =
-      total > 0 ? Math.round((completed / total) * 100) : 0;
+    // Tell totalt antall sesjoner og antall med minst en log — to lette aggregat-queries
+    // i stedet for a hente hele treet.
+    const [total, completed] = await Promise.all([
+      prisma.trainingPlanSession.count({
+        where: { TrainingPlanWeek: { planId: plan.id } },
+      }),
+      prisma.trainingPlanSession.count({
+        where: {
+          TrainingPlanWeek: { planId: plan.id },
+          TrainingLog: { some: {} },
+        },
+      }),
+    ]);
+
+    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     return {
       planName: plan.title,
@@ -597,23 +517,16 @@ export async function getPlanProgress(
       total,
       percentage,
     };
-  } catch (error) {
-    console.error("[widgets/getPlanProgress] failed:", error);
-    return null;
-  }
+  });
 }
 
 /**
- * Alle PeriodizationPeriod for studentId i inneværende år.
- * Hver periode = "phase" med beregnede uker. `active` = nå-dato i intervall.
- * `completed` = endDate < nå.
+ * Alle PeriodizationPeriod for studentId i inneverende ar.
  */
 export async function getPeriodSummary(
-  userId: string
+  userId: string,
 ): Promise<PeriodSummaryPhase[]> {
-  try {
-    await requirePortalUser();
-
+  return withWidgetGuard("getPeriodSummary", [], async () => {
     const now = new Date();
     const yearStart = new Date(now.getFullYear(), 0, 1);
     const yearEnd = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
@@ -633,7 +546,7 @@ export async function getPeriodSummary(
       },
     });
 
-    return periods.map(p => {
+    return periods.map((p) => {
       const days = daysBetween(p.endDate, p.startDate) + 1;
       const weeks = Math.max(1, Math.round(days / 7));
       const active = now >= p.startDate && now <= p.endDate;
@@ -646,8 +559,9 @@ export async function getPeriodSummary(
         active,
       };
     });
-  } catch (error) {
-    console.error("[widgets/getPeriodSummary] failed:", error);
-    return [];
-  }
+  });
 }
+
+// Eksporter konstant slik at andre widget-konsumenter kan referere
+// streak-cappen ved behov (f.eks. for varsler "X dager pa rad").
+export { STREAK_TRAINING_LOOKBACK_DAYS };

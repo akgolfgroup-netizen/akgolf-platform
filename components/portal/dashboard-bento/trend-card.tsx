@@ -1,33 +1,11 @@
 // Server Component — handicap-trend SVG, statisk rendering.
+import { buildAreaPath } from "@/components/portal/charts/svg-path-utils";
+
 interface TrendCardProps {
   current: number | null;
   trend: number | null;
   history: number[];
   yearLabel?: string;
-}
-
-function buildAreaPath(points: number[], width = 360, height = 130) {
-  if (points.length === 0) return { line: "", area: "" };
-  const min = Math.min(...points);
-  const max = Math.max(...points);
-  const range = max - min || 1;
-  const stepX = points.length > 1 ? width / (points.length - 1) : width;
-  const offsetX = 30;
-
-  const line = points
-    .map((p, i) => {
-      const x = i * stepX + offsetX;
-      const y = 30 + ((max - p) / range) * height;
-      return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
-
-  const lastX = (points.length - 1) * stepX + offsetX;
-  const lastY = 30 + ((max - points[points.length - 1]!) / range) * height;
-  const firstX = offsetX;
-  const area = `${line} L${lastX.toFixed(1)},${(30 + height + 20).toFixed(1)} L${firstX.toFixed(1)},${(30 + height + 20).toFixed(1)} Z`;
-
-  return { line, area, lastX, lastY };
 }
 
 export function TrendCard({

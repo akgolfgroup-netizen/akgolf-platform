@@ -15,15 +15,17 @@ export interface PyramideNivaa {
   code: "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
   label: string;
   description: string;
-  color: string; // Heritage-token-farge for visualisering
+  // Brand Guide V2.0 — gradient fra dyp skogsgrønn (basis: FYS) til lime (topp: TURN).
+  // Følger pyramide-metafor visuelt: tyngst nederst, lettest på toppen.
+  color: string;
 }
 
 export const PYRAMIDE: readonly PyramideNivaa[] = [
-  { code: "FYS", label: "Fysisk", description: "Styrke, power, mobilitet, stabilitet", color: "#154212" },
-  { code: "TEK", label: "Teknikk", description: "Bevegelsesmønster, posisjoner, sekvens", color: "#2d5a27" },
-  { code: "SLAG", label: "Golfslag", description: "Slagkvalitet, avstand, nøyaktighet", color: "#bcf0ae" },
-  { code: "SPILL", label: "Spill", description: "Strategi, banehåndtering, scoring", color: "#a1d494" },
-  { code: "TURN", label: "Turnering", description: "Mental prestasjon, konkurransefokus", color: "#d2f000" },
+  { code: "FYS", label: "Fysisk", description: "Styrke, power, mobilitet, stabilitet", color: "#003B2A" },
+  { code: "TEK", label: "Teknikk", description: "Bevegelsesmønster, posisjoner, sekvens", color: "#005840" },
+  { code: "SLAG", label: "Golfslag", description: "Slagkvalitet, avstand, nøyaktighet", color: "#2A7D5A" },
+  { code: "SPILL", label: "Spill", description: "Strategi, banehåndtering, scoring", color: "#B7C97D" },
+  { code: "TURN", label: "Turnering", description: "Mental prestasjon, konkurransefokus", color: "#D1F843" },
 ] as const;
 
 export type PyramideCode = (typeof PYRAMIDE)[number]["code"];

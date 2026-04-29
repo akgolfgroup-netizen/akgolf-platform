@@ -160,19 +160,15 @@ export function StatsV2Client({
           <KpiCard
             label="HCP aktiv"
             value={handicap !== null ? handicap.toFixed(1) : "—"}
-            changeText={
-              hcpForecast.trendSlopePerWeek !== 0
-                ? `${Math.abs(hcpForecast.trendSlopePerWeek).toFixed(2)}/uke`
-                : undefined
-            }
-            changeDirection={
+            change={
               hcpForecast.trendSlopePerWeek === 0
-                ? "flat"
-                : hcpForecast.trendSlopePerWeek < 0
-                  ? "down"
-                  : "up"
+                ? undefined
+                : {
+                    text: `${Math.abs(hcpForecast.trendSlopePerWeek).toFixed(2)}/uke`,
+                    direction: hcpForecast.trendSlopePerWeek < 0 ? "down" : "up",
+                    isGood: hcpForecast.trendSlopePerWeek < 0,
+                  }
             }
-            changeIsGood={hcpForecast.trendSlopePerWeek < 0}
             contextLabel={`siste ${periodLabel}`}
             sparkline={
               handicapHistory.length > 1

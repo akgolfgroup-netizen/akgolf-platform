@@ -155,17 +155,21 @@ export function DashboardBentoClient(props: DashboardV3Props) {
         <KpiCard
           label="Handicap"
           value={handicapValue}
-          changeText={handicapTrendText}
-          changeDirection={
-            handicapTrend === null
-              ? undefined
-              : handicapTrend < 0
-                ? "down"
-                : handicapTrend > 0
-                  ? "up"
-                  : "flat"
+          change={
+            handicapTrend !== null && handicapTrendText
+              ? {
+                  text: handicapTrendText,
+                  direction:
+                    handicapTrend < 0
+                      ? "down"
+                      : handicapTrend > 0
+                        ? "up"
+                        : "flat",
+                  // Lavere HCP er bedre — fallende trend = framgang
+                  isGood: handicapTrend < 0,
+                }
+              : undefined
           }
-          changeIsGood={handicapTrend !== null ? handicapTrend < 0 : undefined}
           contextLabel="siste 30d"
           sparkline={
             handicapHistory.length > 0

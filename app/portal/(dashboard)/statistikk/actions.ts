@@ -489,13 +489,18 @@ export type GolfProfileSummary = {
   combinedInsights: string[];
 };
 
+// Maks antall TrainingLog-rader hentet for streak-beregning. 365 dager dekker
+// realistisk streak-rekord; uten cap kan power-users laste tusenvis av rader.
+const STREAK_FETCH_LIMIT = 365;
+
 async function calculateStreak(userId: string): Promise<number> {
   const supabase = await createServerSupabase();
   const { data: logs } = await supabase
     .from("TrainingLog")
     .select("date")
     .eq("userId", userId)
-    .order("date", { ascending: false });
+    .order("date", { ascending: false })
+    .limit(STREAK_FETCH_LIMIT);
 
   if (!logs || logs.length === 0) return 0;
 

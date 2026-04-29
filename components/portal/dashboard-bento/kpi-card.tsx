@@ -1,17 +1,30 @@
 // Server Component — KPI-kort med statisk SVG-sparkline, ingen interaktivitet.
+
+export interface KpiChange {
+  text: string;
+  direction: "up" | "down" | "flat";
+  /** true = framgang (gront tekst), false = tilbakegang (rod), undefined = noytral */
+  isGood?: boolean;
+}
+
 interface KpiCardProps {
   label: string;
   value: string;
   unit?: string;
-  changeText?: string;
-  changeDirection?: "up" | "down" | "flat";
-  changeIsGood?: boolean;
+  /**
+   * Endring sammenlignet med forrige periode. Grupper alle endringsfelt-prop
+   * i ett objekt for a unnga "parameter sprawl" og holde KpiCard-API lett.
+   */
+  change?: KpiChange;
   contextLabel?: string;
   sparkline?: { points: number[]; type?: "line" | "bars" };
   accent?: boolean;
 }
 
-function buildLinePath(points: number[], width = 160, height = 40) {
+// Sparkline-bygger spesialisert for KPI: y-padding 3px topp/bunn for at
+// linjen ikke skal klippes mot kantene. Ulik nok fra svg-path-utils til at
+// lokal definisjon er enklere enn config.
+function buildKpiLinePath(points: number[], width = 160, height = 40) {
   if (points.length === 0) return "";
   const min = Math.min(...points);
   const max = Math.max(...points);
@@ -26,40 +39,29 @@ function buildLinePath(points: number[], width = 160, height = 40) {
     .join(" ");
 }
 
+const ARROW_META = {
+  up: { glyph: "▲", label: "opp" },
+  down: { glyph: "▼", label: "ned" },
+  flat: { glyph: "—", label: "uendret" },
+} as const;
+
 export function KpiCard({
   label,
   value,
   unit,
-  changeText,
-  changeDirection,
-  changeIsGood,
+  change,
   contextLabel,
   sparkline,
   accent,
 }: KpiCardProps) {
-  const arrow =
-    changeDirection === "up"
-      ? "▲"
-      : changeDirection === "down"
-        ? "▼"
-        : changeDirection === "flat"
-          ? "—"
-          : null;
+  const arrowMeta = change ? ARROW_META[change.direction] : null;
 
-  const arrowLabel =
-    changeDirection === "up"
-      ? "opp"
-      : changeDirection === "down"
-        ? "ned"
-        : changeDirection === "flat"
-          ? "uendret"
-          : null;
-
-  const changeColor = changeIsGood
-    ? "var(--ak-success, #2A7D5A)"
-    : changeIsGood === false
-      ? "var(--ak-error, #B84233)"
-      : "var(--ak-g-500, #5A6E66)";
+  const changeColor =
+    change?.isGood === true
+      ? "var(--ak-success, #2A7D5A)"
+      : change?.isGood === false
+        ? "var(--ak-error, #B84233)"
+        : "var(--ak-g-500, #5A6E66)";
 
   const cardBg = accent
     ? { background: "linear-gradient(160deg, #D1F843, #c4e83a)" }
@@ -103,7 +105,7 @@ export function KpiCard({
           </span>
         ) : null}
       </div>
-      {changeText ? (
+      {change ? (
         <div className="flex items-center gap-1.5 text-[11px] font-medium">
           <span
             className="rounded px-1.5 py-0.5 font-semibold"
@@ -116,10 +118,10 @@ export function KpiCard({
                 : { color: changeColor }
             }
           >
-            {arrow ? (
-              <span aria-label={arrowLabel ?? undefined}>{arrow} </span>
+            {arrowMeta ? (
+              <span aria-label={arrowMeta.label}>{arrowMeta.glyph} </span>
             ) : null}
-            {changeText}
+            {change.text}
           </span>
           {contextLabel ? (
             <span style={{ color: muted }}>{contextLabel}</span>
@@ -153,7 +155,7 @@ export function KpiCard({
               </g>
             ) : (
               <path
-                d={buildLinePath(sparkline.points)}
+                d={buildKpiLinePath(sparkline.points)}
                 fill="none"
                 stroke={accent ? "#0A1F18" : "var(--ak-primary, #005840)"}
                 strokeWidth={accent ? 2.5 : 2}

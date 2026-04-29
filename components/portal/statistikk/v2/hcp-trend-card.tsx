@@ -1,35 +1,11 @@
+import { buildAreaPath } from "@/components/portal/charts/svg-path-utils";
+
 interface HcpTrendCardProps {
   current: number | null;
   trendPerWeek: number;
   history: number[];
   forecast30d: number | null;
   forecast90d: number | null;
-}
-
-function buildAreaPath(points: number[], width = 360, height = 130) {
-  if (points.length === 0) return { line: "", area: "", lastX: 0, lastY: 0 };
-  const min = Math.min(...points);
-  const max = Math.max(...points);
-  const range = max - min || 1;
-  const stepX = points.length > 1 ? width / (points.length - 1) : width;
-  const offsetX = 30;
-
-  const line = points
-    .map((p, i) => {
-      const x = i * stepX + offsetX;
-      // Reversert: lavere HCP = høyere på y-aksen
-      const y = 30 + ((p - min) / range) * height;
-      return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
-
-  const lastIdx = points.length - 1;
-  const lastX = lastIdx * stepX + offsetX;
-  const lastY = 30 + ((points[lastIdx]! - min) / range) * height;
-  const firstX = offsetX;
-  const area = `${line} L${lastX.toFixed(1)},${(30 + height + 20).toFixed(1)} L${firstX.toFixed(1)},${(30 + height + 20).toFixed(1)} Z`;
-
-  return { line, area, lastX, lastY };
 }
 
 /**
@@ -44,8 +20,9 @@ export function HcpTrendCard({
   forecast90d,
 }: HcpTrendCardProps) {
   const hasHistory = history.length >= 2;
+  // invertY: false — for HCP er lavere bedre, så min-verdi skal være øverst
   const { line, area, lastX, lastY } = hasHistory
-    ? buildAreaPath(history)
+    ? buildAreaPath(history, { invertY: false })
     : { line: "", area: "", lastX: 0, lastY: 0 };
 
   const trendIsGood = trendPerWeek < 0;

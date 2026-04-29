@@ -13,6 +13,7 @@
 import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
+import { after } from "next/server";
 import { syncGoogleCalendar, getValidAccessToken } from "./sync";
 
 const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
@@ -185,12 +186,19 @@ export async function handleWebhookNotification(
     `[Google Calendar Webhook] Change detected for instructor ${instructorId}, triggering sync`
   );
 
-  // Kjør sync i bakgrunnen (ikke await for raskere respons)
-  syncGoogleCalendar(instructorId).catch((error) => {
-    logger.error(
-      `[Google Calendar Webhook] Background sync failed for ${instructorId}:`,
-      error
-    );
+  // Kjør sync i bakgrunn etter at responsen er sendt. `after()` er Next.js'
+  // anbefalte primitiv for serverless — funksjonen lever til etter sync, men
+  // klienten venter ikke. Erstatter tidligere fire-and-forget som kunne miste
+  // jobben når Vercel-instansen ble fryset.
+  after(async () => {
+    try {
+      await syncGoogleCalendar(instructorId);
+    } catch (error) {
+      logger.error(
+        `[Google Calendar Webhook] Background sync failed for ${instructorId}:`,
+        error,
+      );
+    }
   });
 
   return {

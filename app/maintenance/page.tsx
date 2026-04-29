@@ -17,7 +17,7 @@ export default function MaintenancePage() {
     <div
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden p-6 text-white"
       style={{
-        background: "var(--akgolf-ink, #0A1F18)",
+        background: "var(--color-ink, #0A1F18)",
         fontFamily: "var(--font-inter), Inter, sans-serif",
       }}
     >
@@ -45,7 +45,7 @@ export default function MaintenancePage() {
           <span
             className="grid h-9 w-9 place-items-center rounded-lg text-[14px] font-extrabold tracking-[-0.04em]"
             style={{
-              background: "var(--akgolf-accent, #D1F843)",
+              background: "var(--color-accent, #D1F843)",
               color: "#0A1F18",
             }}
           >
@@ -58,7 +58,7 @@ export default function MaintenancePage() {
           className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-2xl backdrop-blur-md"
           style={{
             background: "rgba(209,248,67,0.18)",
-            color: "var(--akgolf-accent, #D1F843)",
+            color: "var(--color-accent, #D1F843)",
           }}
         >
           <Wrench className="h-7 w-7" />
@@ -68,7 +68,7 @@ export default function MaintenancePage() {
           className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{
             fontFamily: "var(--font-jetbrains-mono), monospace",
-            color: "var(--akgolf-accent, #D1F843)",
+            color: "var(--color-accent, #D1F843)",
           }}
         >
           / VEDLIKEHOLD PAGAR
@@ -84,7 +84,7 @@ export default function MaintenancePage() {
             style={{
               fontFamily: "var(--font-fraunces), Georgia, serif",
               fontStyle: "italic",
-              color: "var(--akgolf-accent, #D1F843)",
+              color: "var(--color-accent, #D1F843)",
             }}
           >
             time direkte
@@ -167,7 +167,7 @@ function BookingCard({
       rel="noopener noreferrer"
       className={`group relative block overflow-hidden rounded-2xl p-5 transition-all hover:-translate-y-0.5 backdrop-blur-md ${
         primary
-          ? "border-2 border-[var(--akgolf-accent,#D1F843)] bg-white/10"
+          ? "border-2 border-[var(--color-accent,#D1F843)] bg-white/10"
           : "border border-white/15 bg-white/5 hover:border-white/30"
       }`}
     >
@@ -176,13 +176,13 @@ function BookingCard({
           className="grid h-10 w-10 place-items-center rounded-xl"
           style={{
             background: "rgba(209,248,67,0.20)",
-            color: "var(--akgolf-accent, #D1F843)",
+            color: "var(--color-accent, #D1F843)",
           }}
         >
           <CalendarCheck className="h-4.5 w-4.5" strokeWidth={2} />
         </div>
         <ArrowRight
-          className="mt-1 h-4 w-4 text-white/55 transition-all group-hover:translate-x-0.5 group-hover:text-[var(--akgolf-accent,#D1F843)]"
+          className="mt-1 h-4 w-4 text-white/55 transition-all group-hover:translate-x-0.5 group-hover:text-[var(--color-accent,#D1F843)]"
           strokeWidth={2}
         />
       </div>
@@ -190,7 +190,7 @@ function BookingCard({
         className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]"
         style={{
           fontFamily: "var(--font-jetbrains-mono), monospace",
-          color: "var(--akgolf-accent, #D1F843)",
+          color: "var(--color-accent, #D1F843)",
         }}
       >
         {eyebrow}

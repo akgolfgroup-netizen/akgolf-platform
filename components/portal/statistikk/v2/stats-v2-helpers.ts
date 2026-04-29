@@ -1,3 +1,10 @@
+import { getSkillLevelByCode, getNextLevel } from "@/lib/portal/golf/skill-levels";
+export {
+  PEER_BENCHMARK,
+  PYRAMID_BENCHMARK,
+  percentile,
+} from "@/lib/portal/golf/benchmarks";
+
 // Smal kopi av RoundStats — kun feltene UI-en faktisk leser. Holder Prisma-genererte
 // typer ute av client bundle og gjør server/client-kontrakt eksplisitt.
 export type RoundStatsRow = {
@@ -46,38 +53,8 @@ export const PERIOD_LABEL: Record<PeriodKey, string> = {
   "1y": "siste år",
 };
 
-// Faste peer-benchmarks for HCP 6–10 (kilde: AK pyramide-snitt).
-// Dette er placeholder-verdier til vi får ekte peer-tall fra databasen.
-export const PEER_BENCHMARK = {
-  drivingDistance: 215, // m, snitt for HCP 6–10
-  sgOffTheTee: 0.3,
-  girPct: 52,
-  puttsPerRound: 31.4,
-  scramblingPct: 51,
-  approachProx: 9.1, // m
-};
-
-export const PYRAMID_BENCHMARK = {
-  drivingDistance: 200,
-  sgOffTheTee: 0,
-  girPct: 48,
-  puttsPerRound: 32.1,
-  scramblingPct: 46,
-  approachProx: 10.2,
-};
-
-export function percentile(
-  value: number,
-  peer: number,
-  lowerIsBetter = false,
-): number {
-  // Enkel heuristikk: 50. percentil = peer-snitt, ±0.5*peer = ±50 percentiler.
-  // Bare for å vise plassering i UI til vi har riktig peer-pool.
-  if (peer === 0) return 50;
-  const ratio = value / peer;
-  const adjusted = lowerIsBetter ? 2 - ratio : ratio;
-  return Math.max(0, Math.min(100, Math.round(50 + (adjusted - 1) * 80)));
-}
+// PEER_BENCHMARK + PYRAMID_BENCHMARK + percentile er flyttet til
+// lib/portal/golf/benchmarks.ts og re-eksporteres ovenfor.
 
 export function buildHeroLede(aggregates: StatsAggregates | null): string {
   if (!aggregates) {
@@ -160,36 +137,26 @@ export function pickBiggestOpportunity(
   };
 }
 
+/**
+ * Avstand i HCP til neste niva (positiv = du ma ga NED i hcp).
+ * Bruker SKILL_LEVELS som single source of truth for handicapRange.
+ */
 export function hcpToNextLevel(hcp: number, level: string): number | null {
-  // Approksimering: hver kategori er ~3-4 hcp bred. Returner avstand til
-  // neste niva (positiv = du må gå NED i hcp).
-  const NEXT_TARGET: Record<string, number> = {
-    A: -5,
-    B: 0,
-    C: 4.0,
-    D: 7.5,
-    E: 11.0,
-    F: 15.0,
-    G: 20.0,
-  };
-  const target = NEXT_TARGET[level];
-  if (target === undefined) return null;
+  const next = getNextLevel(level);
+  if (!next) return null;
+  // Mal er den hoyeste hcp som regnes som neste niva (handicapRange[1])
+  // — dvs. hcp ma vaere lavere eller lik dette for a kvalifisere.
+  const target = next.handicapRange[1];
   return hcp - target;
 }
 
+/**
+ * Norsk beskrivelse av kategori — lest fra SKILL_LEVELS.tournamentContext +
+ * description (description er primaert technical, tournamentContext mer
+ * leservennlig).
+ */
 export function describeLevel(level: string): string {
-  const DESC: Record<string, string> = {
-    A: "Tour-spiller. Hovedtour eller proff på topp 0,1 %-nivå.",
-    B: "Challenge-tour-nivå. Scratch-spillere som konkurrerer regelmessig på elite-nivå.",
-    C: "Elite amatør. Topp 5 % av alle norske golfere — nasjonalt nivå.",
-    D: "Klubbelite. Topp klubb-amatører og turneringsspillere på regionalt nivå.",
-    E: "Kompetent klubbspiller. Hovedtyngden av aktive turneringsspillere.",
-    F: "Erfaren spiller med jevn utvikling. Aktiv klubbspiller med solid grunnspill.",
-    G: "Bogey-spiller. God hverdagsspiller med stabilt fundament.",
-    H: "Aktiv klubbspiller. Trener jevnlig og konkurrerer i klubbturneringer.",
-    I: "Rekrutt — i god utvikling fra nybegynner-stadiet.",
-    J: "Nybegynner. Trygg på grunnferdighetene, klar for å bygge struktur.",
-    K: "Nybegynner. Lærer fundamentet — alle gode golfere starter her.",
-  };
-  return DESC[level] ?? "Aktiv golfer i utvikling.";
+  const skill = getSkillLevelByCode(level);
+  if (!skill) return "Aktiv golfer i utvikling.";
+  return skill.tournamentContext;
 }
