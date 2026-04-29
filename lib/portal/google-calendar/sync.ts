@@ -86,7 +86,7 @@ async function refreshAccessToken(
 /**
  * Hent gyldig access token, refresh om nødvendig
  */
-async function getValidAccessToken(
+export async function getValidAccessToken(
   userId: string
 ): Promise<string | null> {
   const supabase = createServiceClient();

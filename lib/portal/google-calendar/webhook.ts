@@ -12,9 +12,14 @@
 
 import { createServiceClient } from "@/lib/supabase/server";
 import { logger } from "@/lib/logger";
-import { syncGoogleCalendar } from "./sync";
+import { prisma } from "@/lib/portal/prisma";
+import { syncGoogleCalendar, getValidAccessToken } from "./sync";
 
 const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
+
+// Vindu (ms) for å fornye webhook FØR utløp. Google maks-utløp = 7 dager,
+// så 24 timer gir oss god buffer hvis cron eller fornyelsen feiler én gang.
+const RENEWAL_WINDOW_MS = 24 * 60 * 60 * 1000;
 
  
 interface WebhookNotification {
@@ -64,15 +69,28 @@ export async function startWatchingCalendar(
     }
 
     const data = await res.json();
+    const expiration = new Date(parseInt(data.expiration));
+
+    // Persistér webhook-state så `renewExpiringWebhooks()` kan finne
+    // og fornye dem før Google trekker dem (max 7 dager hos Google).
+    await prisma.instructor.update({
+      where: { id: instructorId },
+      data: {
+        calendarWebhookChannelId: data.id,
+        calendarWebhookResourceId: data.resourceId,
+        calendarWebhookExpiration: expiration,
+        calendarWebhookCalendarId: calendarId,
+      },
+    });
 
     logger.info(
-      `[Google Calendar Webhook] Started watching calendar for instructor ${instructorId}`
+      `[Google Calendar Webhook] Started watching calendar for instructor ${instructorId} (expires ${expiration.toISOString()})`
     );
 
     return {
       channelId: data.id,
       resourceId: data.resourceId,
-      expiration: new Date(parseInt(data.expiration)),
+      expiration,
     };
   } catch (error) {
     logger.error(
@@ -192,18 +210,113 @@ export async function handleWebhookNotification(
 }
 
 /**
- * Forny webhook-watch før det utløper
- * Kjøres via cron job
+ * Forny webhook-watch før det utløper.
+ * Kjøres via cron job (hver 6t — se `vercel.json`).
+ *
+ * Strategi:
+ *   1. Finn alle Instructor med webhook som utløper innen RENEWAL_WINDOW_MS
+ *      (men ikke allerede er utgått — utgåtte håndteres ved neste connect).
+ *   2. For hver instruktør: hent gyldig access token via User-relasjonen,
+ *      stopp gammel webhook, start ny.
+ *   3. `startWatchingCalendar()` persisterer ny state automatisk.
  */
 export async function renewExpiringWebhooks(): Promise<{
   renewed: number;
   failed: number;
 }> {
-  // TODO: Implementer webhook fornyelse når vi har en måte å lagre
-  // webhook-informasjon på (f.eks. en InstructorSetting eller lignende)
+  const now = new Date();
+  const renewalDeadline = new Date(now.getTime() + RENEWAL_WINDOW_MS);
+
+  // Finn instruktører hvor webhook utløper snart, men ikke allerede er utgått.
+  const expiring = await prisma.instructor.findMany({
+    where: {
+      calendarWebhookExpiration: {
+        lt: renewalDeadline,
+        gt: now,
+      },
+      calendarWebhookChannelId: { not: null },
+      calendarWebhookResourceId: { not: null },
+    },
+    select: {
+      id: true,
+      userId: true,
+      calendarWebhookChannelId: true,
+      calendarWebhookResourceId: true,
+      calendarWebhookCalendarId: true,
+    },
+  });
+
+  if (expiring.length === 0) {
+    logger.info(
+      `[Google Calendar Webhook] Renewal check: ingen webhooks utløper innen 24t`
+    );
+    return { renewed: 0, failed: 0 };
+  }
+
   logger.info(
-    `[Google Calendar Webhook] Webhook renewal check - not implemented yet`
+    `[Google Calendar Webhook] Renewal check: ${expiring.length} webhooks må fornyes`
   );
 
-  return { renewed: 0, failed: 0 };
+  let renewed = 0;
+  let failed = 0;
+
+  for (const instructor of expiring) {
+    try {
+      // Hent gyldig access token (refresh hvis nødvendig)
+      const accessToken = await getValidAccessToken(instructor.userId);
+      if (!accessToken) {
+        logger.error(
+          `[Google Calendar Webhook] Mangler access token for instructor ${instructor.id} — kan ikke fornye`
+        );
+        failed += 1;
+        continue;
+      }
+
+      // Stopp gammel webhook (best effort — ikke abort hvis dette feiler,
+      // for Google fjerner gamle kanaler automatisk ved utløp uansett).
+      if (
+        instructor.calendarWebhookChannelId &&
+        instructor.calendarWebhookResourceId
+      ) {
+        await stopWatchingCalendar(
+          instructor.calendarWebhookChannelId,
+          instructor.calendarWebhookResourceId,
+          accessToken
+        );
+      }
+
+      // Start ny watch — bruk samme calendarId som før, fall tilbake til "primary"
+      const calendarId = instructor.calendarWebhookCalendarId ?? "primary";
+      const result = await startWatchingCalendar(
+        instructor.id,
+        accessToken,
+        calendarId
+      );
+
+      if (!result) {
+        logger.error(
+          `[Google Calendar Webhook] Fornyelse feilet for instructor ${instructor.id}`
+        );
+        failed += 1;
+        continue;
+      }
+
+      renewed += 1;
+      logger.info(
+        `[Google Calendar Webhook] Fornyet webhook for instructor ${instructor.id} (ny utløp: ${result.expiration.toISOString()})`
+      );
+    } catch (error) {
+      failed += 1;
+      logger.error(
+        `[Google Calendar Webhook] Uventet feil ved fornyelse for instructor ${instructor.id}:`,
+        error
+      );
+    }
+  }
+
+  logger.info(
+    `[Google Calendar Webhook] Renewal ferdig: ${renewed} fornyet, ${failed} feilet`
+  );
+
+  return { renewed, failed };
 }

@@ -583,6 +583,10 @@ model Instructor {
   title                      String?
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime
+  calendarWebhookChannelId   String?
+  calendarWebhookResourceId  String?
+  calendarWebhookExpiration  DateTime?
+  calendarWebhookCalendarId  String?
   Booking                    Booking[]
   CoachingSession            CoachingSession[]
   CommunicationLog           CommunicationLog[]
@@ -594,6 +598,8 @@ model Instructor {
   InstructorLocationService  InstructorLocationService[]
   CoachingPackage            CoachingPackage[]
   ServiceType                ServiceType[]                @relation("InstructorToServiceType")
+
+  @@index([calendarWebhookExpiration])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
