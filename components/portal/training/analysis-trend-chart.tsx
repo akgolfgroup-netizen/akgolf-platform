@@ -91,8 +91,8 @@ export function AnalysisTrendChart({ data }: AnalysisTrendChartProps) {
     }
 
     // Sorter pyramider i standard rekkefølge
-    const orderedPyramids = PYRAMIDE.map((p) => p.code).filter((c) =>
-      allPyramids.has(c)
+    const orderedPyramids: string[] = PYRAMIDE.map((p) => p.code).filter(
+      (c) => allPyramids.has(c),
     );
     // Legg til eventuelle ukjente/pyramider utenfor standard
     allPyramids.forEach((k) => {

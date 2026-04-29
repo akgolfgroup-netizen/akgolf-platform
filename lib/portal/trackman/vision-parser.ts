@@ -101,16 +101,17 @@ export async function parseVisionResponse(imageBase64: string): Promise<VisionRe
     ],
   });
 
-  const textBlock = response.content.find((b): b is { type: "text"; text: string } => b.type === "text");
-  if (!textBlock) {
+  const textBlock = response.content.find((b) => b.type === "text");
+  if (!textBlock || textBlock.type !== "text") {
     throw new Error("Ingen tekstrespons fra Vision API");
   }
+  const responseText = textBlock.text;
 
   let parsed: VisionResult;
   try {
-    parsed = JSON.parse(textBlock.text);
+    parsed = JSON.parse(responseText);
   } catch {
-    const jsonMatch = textBlock.text.match(/\{[\s\S]*\}/);
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       throw new Error("Kunne ikke finne JSON i AI-responsen");
     }
