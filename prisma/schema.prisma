@@ -2238,6 +2238,7 @@ model User {
   UserCapability                              UserCapability[]
   CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
+
   TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
   GroupMemberships                            GroupMembership[]
   GroupSessionRSVP                            GroupSessionRSVP[]
@@ -3455,3 +3456,4 @@ model BookingV2WaitlistSignup {
   @@index([status, createdAt])
   @@index([email])
 }
+

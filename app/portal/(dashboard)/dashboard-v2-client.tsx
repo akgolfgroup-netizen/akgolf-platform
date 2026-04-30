@@ -9,6 +9,7 @@ import { TrendCard } from "@/components/portal/dashboard-bento/trend-card";
 import { AiInsightCard } from "@/components/portal/dashboard-bento/ai-insight-card";
 import { StreakCard } from "@/components/portal/dashboard-bento/streak-card";
 import { ShortcutsRow } from "@/components/portal/dashboard-bento/shortcuts-row";
+import { PlanHealthAutoCard } from "@/components/portal/technical-plan";
 
 const MONTHS = [
   "januar",
@@ -149,6 +150,7 @@ export function DashboardV2Client(props: DashboardV3Props) {
         <TrendCard current={handicap.current} trend={handicap.trend} history={handicapHistory} />
         <AiInsightCard insight={aiInsight} />
         <StreakCard currentDays={socialData?.streak ?? 0} personalBest={null} />
+        <PlanHealthAutoCard />
         <ShortcutsRow />
       </div>
     </div>

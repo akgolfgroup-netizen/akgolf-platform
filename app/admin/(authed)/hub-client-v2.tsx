@@ -14,7 +14,9 @@ import {
   Settings,
   Bell,
   ChevronRight,
+  Brain,
 } from "lucide-react";
+import { CoachMyelinOverview } from "@/components/portal/technical-plan";
 import {
   McPageHead,
   McKpiCard,
@@ -103,6 +105,7 @@ export function HubClientV2({ userName, stats, counts, activity }: Props) {
       <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
         <div className="space-y-4">
           <QuickActions />
+          <CoachMyelinOverview maxPlayers={5} />
           <ActivityPanel items={activity} />
         </div>
         <ModulePanel counts={counts} />
@@ -117,6 +120,7 @@ function QuickActions() {
   const actions = [
     { icon: <Plus className="w-4 h-4" />, label: "Ny booking", href: "/admin/bookinger/ny" },
     { icon: <MessageSquare className="w-4 h-4" />, label: "Send melding", href: "/admin/meldinger" },
+    { icon: <Brain className="w-4 h-4" />, label: "Teknisk plan", href: "/admin/teknisk-plan" },
     { icon: <Target className="w-4 h-4" />, label: "Treningsplan", href: "/admin/treningsplan" },
     { icon: <BarChart3 className="w-4 h-4" />, label: "Rapporter", href: "/admin/rapporter" },
     { icon: <CreditCard className="w-4 h-4" />, label: "Økonomi", href: "/admin/okonomi" },
