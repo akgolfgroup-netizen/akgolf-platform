@@ -149,8 +149,8 @@ function SidebarBody({
             onClick={onNavClick}
             className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
           >
-            <Icon name="help_outline" size={20} />
-            <span>Support</span>
+            <Icon name="person" size={20} />
+            <span>Profil</span>
           </Link>
           <button
             onClick={() => {
