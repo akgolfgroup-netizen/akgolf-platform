@@ -11,7 +11,14 @@ Innhold flyttet hit fra `docs/` rot og gamle archive-mapper.
 - `plan-b1-b2-b6-d-2026-04-29.md` — utdatert plan
 - `tekst-revisjon-2026-04-29.md` — revisjonslogg
 
-## design/ — (reservert)
+## design/
+
+8 utgåtte design-bundles fra `public/design-reference/`:
+- `ak-design-system/`, `claude-design/`, `golf-talent-dashboard/`
+- `landing-v2/`, `markedsside/`, `playerhq-bundle/`
+- `sales-deck/`, `treningsplanlegger/`
+
+Beholdt aktivt i `public/design-reference/`: `handoff-2026-04-27/`, `booking-v2/` og 5 standalone HTML-mockups.
 
 ## specs/ — (reservert)
 
