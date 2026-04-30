@@ -95,3 +95,21 @@ supabase/.temp/
 
 # Agent/swarm metadata (auto-generated)
 .claude-flow/
+
+# Python / ML
+ml/.venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+
+# ML modeller (store filer)
+*.onnx
+*.pb
+*.pt
+*.pth
+*.h5
+*.ckpt
