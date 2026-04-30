@@ -32,50 +32,28 @@ interface NavItem {
   matchPaths?: string[];
 }
 
+// Lansering 2026-04-30: kun 3 hovedmenypunkter aktive.
+// Spillerprofil-info vises pa dashboard. WIP-ruter (timeplan, dagbok, runde,
+// statistikk, talent, etc.) er fortsatt aktive paa URL men skjult fra navigasjon
+// til de er klare for lansering.
 const NAV_ITEMS: NavItem[] = [
   { href: "/portal", label: "Dashboard", iconName: "dashboard" },
   {
     href: "/portal/treningsplan",
-    label: "Planlegg",
+    label: "Treningsplan",
     iconName: "assignment",
-    matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering", "/portal/timeplan"],
+    matchPaths: ["/portal/treningsplan/uke", "/portal/treningsplan/analyse"],
   },
   {
-    href: "/portal/timeplan",
-    label: "Timeplan",
+    href: "/portal/teknisk-plan",
+    label: "Teknisk Plan",
+    iconName: "target",
+  },
+  {
+    href: "/portal/bookinger",
+    label: "Bookinger",
     iconName: "calendar_month",
-    matchPaths: [],
-  },
-  {
-    href: "/portal/dagbok",
-    label: "Tren",
-    iconName: "fitness_center",
-    matchPaths: ["/portal/trening", "/portal/tester"],
-  },
-  {
-    href: "/portal/runde",
-    label: "Spill",
-    iconName: "flag",
-    matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan", "/portal/bag"],
-  },
-  {
-    href: "/portal/statistikk",
-    label: "Analyser",
-    iconName: "query_stats",
-    matchPaths: [
-      "/portal/analyse",
-      "/portal/benchmark",
-      "/portal/trackman",
-      "/portal/sammenligning",
-      "/portal/ai-coach",
-      "/portal/coaching-historikk",
-      "/portal/kartlegging",
-    ],
-  },
-  {
-    href: "/portal/talent",
-    label: "Talenter",
-    iconName: "auto_awesome",
+    matchPaths: ["/portal/bookinger/ny", "/portal/bookinger/venteliste"],
   },
 ];
 

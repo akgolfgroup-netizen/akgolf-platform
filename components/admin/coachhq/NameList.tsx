@@ -72,18 +72,22 @@ export function NameList({ liveSessions }: NameListProps) {
           <NameListLink key={item.href} item={item} pathname={pathname} />
         ))}
 
-        {/* Verktøy */}
-        <div className="px-2.5 pt-4 pb-1">
-          <span
-            className="text-[10px] font-mono uppercase tracking-[0.16em]"
-            style={{ color: "var(--color-sidebar-muted)" }}
-          >
-            Verktøy
-          </span>
-        </div>
-        {COACHHQ_TOOLS_NAV.map((item) => (
-          <NameListLink key={item.href} item={item} pathname={pathname} compact />
-        ))}
+        {COACHHQ_TOOLS_NAV.length > 0 && (
+          <>
+            {/* Verktøy */}
+            <div className="px-2.5 pt-4 pb-1">
+              <span
+                className="text-[10px] font-mono uppercase tracking-[0.16em]"
+                style={{ color: "var(--color-sidebar-muted)" }}
+              >
+                Verktøy
+              </span>
+            </div>
+            {COACHHQ_TOOLS_NAV.map((item) => (
+              <NameListLink key={item.href} item={item} pathname={pathname} compact />
+            ))}
+          </>
+        )}
       </nav>
 
       {/* Live status — alltid nederst */}
