@@ -420,9 +420,9 @@ function SgRow({ cat, value }: { cat: string; value: number }) {
 // ---------------------------------------------------------------------------
 
 function OversiktTab({ profile }: { profile: Profile }) {
-  // KPI-strip
-  const sgPerRound = 0.42; // mock — vi har ikke beregnet ennå
-  const streak = 14;
+  // KPI-strip — SG/runde og streak beregnes ikke ennå, viser '—' inntil videre
+  const sgPerRound: number | null = null;
+  const streak: number | null = null;
 
   // Goals
   const activeGoals = profile.Goal.filter((g) => g.status === "ACTIVE").slice(0, 3);
@@ -458,14 +458,10 @@ function OversiktTab({ profile }: { profile: Profile }) {
         <StatBlock
           label="HCP"
           value={profile.handicap !== null ? profile.handicap.toFixed(1) : "—"}
-          sub="↘ −0.6"
-          subTone="up"
         />
         <StatBlock
           label="SG / runde"
-          value={`+${sgPerRound.toFixed(2)}`}
-          sub="↗"
-          subTone="up"
+          value={sgPerRound !== null ? `+${(sgPerRound as number).toFixed(2)}` : "—"}
           valueColor={DARK_TOKENS.success}
         />
         <StatBlock
@@ -476,7 +472,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
         />
         <StatBlock
           label="Streak"
-          value={`${streak}d`}
+          value={streak !== null ? `${streak}d` : "—"}
           valueColor={DARK_TOKENS.accent}
         />
       </div>

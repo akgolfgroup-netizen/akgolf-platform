@@ -21,6 +21,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@/components/ui/icon";
+import { AKLogo } from "@/components/website/AKLogo";
 import { cn } from "@/lib/portal/utils/cn";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
@@ -107,12 +108,16 @@ function SidebarBody({
         <Link
           href="/portal"
           onClick={onNavClick}
-          className="flex flex-col"
+          className="flex items-center gap-3"
+          aria-label="AK Golf — Hjem"
         >
-          <h1 className="text-surface font-bold text-lg tracking-tight">AK Golf</h1>
-          <p className="uppercase text-[11px] font-medium tracking-widest text-[#d2f000]">
-            Precision Performance
-          </p>
+          <AKLogo variant="inverted" size={28} />
+          <div className="flex flex-col">
+            <h1 className="text-surface font-bold text-lg tracking-tight leading-none">AK Golf</h1>
+            <p className="uppercase text-[10px] font-medium tracking-widest text-[#d2f000] mt-0.5">
+              Precision Performance
+            </p>
+          </div>
         </Link>
       </div>
 

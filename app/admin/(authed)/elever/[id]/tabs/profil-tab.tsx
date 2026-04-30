@@ -9,8 +9,9 @@ import type { getStudentProfile } from "../actions";
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
 
 export function ProfilTab({ profile }: { profile: Profile }) {
-  const sgPerRound = 0.42; // mock
-  const streak = 14; // mock
+  // SG/runde og streak beregnes ikke enda — viser '—' til ekte data er koblet
+  const sgPerRound: number | null = null;
+  const streak: number | null = null;
 
   const activities = [
     ...profile.Booking.slice(0, 4).map((b) => ({
@@ -43,10 +44,10 @@ export function ProfilTab({ profile }: { profile: Profile }) {
     <div className="pt-5 space-y-5">
       {/* KPI strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatBlock label="HCP" value={profile.handicap !== null ? profile.handicap.toFixed(1) : "—"} sub="↘ −0.6" subTone="up" />
-        <StatBlock label="SG / runde" value={`+${sgPerRound.toFixed(2)}`} valueColor="#6FCBA1" />
+        <StatBlock label="HCP" value={profile.handicap !== null ? profile.handicap.toFixed(1) : "—"} />
+        <StatBlock label="SG / runde" value={sgPerRound !== null ? `+${(sgPerRound as number).toFixed(2)}` : "—"} valueColor="#6FCBA1" />
         <StatBlock label="Aktivitet 30d" value={`${profile.sessionsThisMonth}`} sub="økter" />
-        <StatBlock label="Streak" value={`${streak}d`} valueColor="#D1F843" />
+        <StatBlock label="Streak" value={streak !== null ? `${streak}d` : "—"} valueColor="#D1F843" />
       </div>
 
       {/* HCP + Mål */}
