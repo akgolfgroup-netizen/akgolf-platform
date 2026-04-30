@@ -1,16 +1,25 @@
-# Arkiv 2026-04-30 — Initial rydding
+# Arkiv 2026-04-30 — Initial rydding & konsolidering
 
-Datert arkiv for filer som ikke lenger er aktive, men som kan være nyttige som referanse.
+Innhold flyttet hit fra `docs/` rot og gamle archive-mapper.
 
-## Underkategorier
+## documents/
 
-- `documents/` — gamle dokumenter, notater, planer
-- `design/` — utgåtte design-mockups, eldre brand-iterasjoner
-- `specs/` — superseded spesifikasjoner og kravdokumenter
-- `references/` — eksterne referansematerialer
-- `ml-experimental/` — eksperimentell ML-kode flyttet ut av aktiv utvikling
+- `archive-2026-04-21/` — gamle specs (datert 21. april)
+- `archive-2026-04-24/` — gamle specs (datert 24. april)
+- `kimi-code-prompt-2026-04-29.md` — midlertidig prompt
+- `kimi-code-prompt-v2-2026-04-29.md` — midlertidig prompt
+- `plan-b1-b2-b6-d-2026-04-29.md` — utdatert plan
+- `tekst-revisjon-2026-04-29.md` — revisjonslogg
 
-## Regel
+## design/ — (reservert)
 
-Filer flyttes hit kun når de ikke lenger trengs i aktiv kodebase.
-Slettes aldri automatisk — manuell vurdering ved senere rydding.
+## specs/ — (reservert)
+
+## references/ — (reservert)
+
+## ml-experimental/ — (reservert)
+
+---
+
+Arkivert av: Claude Code
+Dato: 2026-04-30
