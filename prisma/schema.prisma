@@ -504,6 +504,10 @@ model ExerciseDefinition {
   isSystemDrill      Boolean            @default(false)
   createdById        String?
   tags               String[]
+  csTargetMin        Int?               // 60 = 60% av spillerens ClubSpeed
+  csTargetMax        Int?               // 70 = 70%
+  clubKey            String?            // "driver", "7iron", "pw", etc.
+  distanceBucket     String?            // "50-100", "100-150", "150-200", "200+", "tee", "putting"
   createdAt          DateTime           @default(now())
   updatedAt          DateTime
   User               User?              @relation(fields: [createdById], references: [id])
@@ -1995,6 +1999,7 @@ model GroupMembership {
   userId        String
   role          String        @default("PLAYER")
   joinedAt      DateTime      @default(now())
+  active        Boolean       @default(true)
   TrainingGroup TrainingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
   User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -2249,7 +2254,25 @@ model User {
   ChildRelations                              ParentChildRelation[]      @relation("ChildRelations")
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
+  averageScore                                Float?
+  ageYears                                    Int?
+  weeklyTrainingHours                         Float?
+  homeCourseId                                String?
+  playerType                                  PlayerType                 @default(HOBBY)
   TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
+
+  // Nye relasjoner (adaptiv treningsmotor)
+  homeCourse              HomeCourse?
+  clubSpeedProfile        ClubSpeedProfile?
+  allocations             PlayerAllocation[]
+  consentGrants           ConsentGrant[]
+  dataAccessLogs          DataAccessLog[]
+  calendarEvents          CalendarEvent[]
+  tournamentRegistrations TournamentRegistration[]
+  coachAssignmentsAsStudent CoachAssignment[] @relation("CoachAssignmentUser")
+  coachAssignmentsAsCoach   CoachAssignment[] @relation("CoachAssignmentCoach")
+  agentSessionsAsCoach     CoachAgentSession[] @relation("CoachAgentSessionCoach")
+  agentSessionsAsStudent   CoachAgentSession[] @relation("CoachAgentSessionStudent")
 }
 
 model UserCapability {
@@ -2303,6 +2326,151 @@ model CapabilityChangeLog {
   @@index([userId, performedAt])
   @@index([performedBy])
 }
+
+// ── Adaptiv Treningsmotor: Nye modeller ──
+
+model HomeCourse {
+  id                      String   @id @default(cuid())
+  userId                  String   @unique
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseName              String
+  golfboxId               String?
+  totalLengthMeters       Int
+  par                     Int
+  holes                   Json     // [{ hole: 1, par: 4, lengthMeters: 380 }, ...]
+  dominantApproachBuckets Json     // beregnet, cached: { "50-100": 0.25, "100-150": 0.40, ... }
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model ClubSpeedProfile {
+  id           String          @id @default(cuid())
+  userId       String          @unique
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source       ClubSpeedSource
+  measuredAt   DateTime        @default(now())
+  testResultId String?
+  clubs        Json            // { driver: { fullCS: 153, carry: 245 }, "7iron": { fullCS: 113, carry: 160 }, ... }
+  validUntil   DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([userId])
+}
+
+model CoachAssignment {
+  id        String                  @id @default(cuid())
+  userId    String
+  user      User                    @relation("CoachAssignmentUser", fields: [userId], references: [id], onDelete: Cascade)
+  coachId   String
+  coach     User                    @relation("CoachAssignmentCoach", fields: [coachId], references: [id], onDelete: Cascade)
+  status    CoachAssignmentStatus   @default(ACTIVE)
+  scope     CoachAssignmentScope    @default(FULL)
+  createdBy CoachAssignmentSource
+  startedAt DateTime                @default(now())
+  endedAt   DateTime?
+  notes     String?
+
+  @@index([userId, status])
+  @@index([coachId, status])
+}
+
+model ConsentGrant {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier          ConsentTier
+  granted       Boolean
+  grantedAt     DateTime      @default(now())
+  revokedAt     DateTime?
+  policyVersion String        @default("1.0")
+  source        ConsentSource
+  ipAddress     String?
+
+  @@index([userId, tier])
+}
+
+model DataAccessLog {
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessedBy   AccessorType
+  accessedById String?
+  purpose      String
+  fields       String[]
+  occurredAt   DateTime     @default(now())
+
+  @@index([userId, occurredAt])
+}
+
+model PlayerAllocation {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  generatedAt     DateTime         @default(now())
+  validFrom       DateTime
+  validTo         DateTime
+  weeklyHours     Float
+  weeks           Json             // WeeklyAllocation[]
+  rationale       String[]         // bullet-liste
+  source          AllocationSource
+  inputSnapshot   Json             // hele input-objektet for sporbarhet
+  rationaleAi     String?          // AI-justeringskommentar (Tier 3 hybrid)
+
+  @@index([userId, generatedAt])
+}
+
+model CalendarEvent {
+  id        String              @id @default(cuid())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source    CalendarEventSource
+  sourceId  String              // FK-id til original entity
+  title     String
+  startsAt  DateTime
+  endsAt    DateTime
+  location  String?
+  notes     String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@index([userId, startsAt])
+  @@unique([userId, source, sourceId])
+}
+
+model TournamentRegistration {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  startsAt   DateTime
+  endsAt     DateTime?
+  course     String?
+  importance Int      // 1-5 (NM=5, klubbmesterskap=3, vanlig=2)
+  notes      String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, startsAt])
+}
+
+model CoachAgentSession {
+  id            String   @id @default(cuid())
+  coachId       String
+  coach         User     @relation("CoachAgentSessionCoach", fields: [coachId], references: [id])
+  studentId     String
+  student       User     @relation("CoachAgentSessionStudent", fields: [studentId], references: [id])
+  prompt        String
+  response      String
+  appliedPlanId String?  // FK til generated plan (TrainingPlan)
+  createdAt     DateTime @default(now())
+
+  @@index([coachId, createdAt])
+  @@index([studentId])
+}
+
+// ── Slutt nye modeller ──
 
 model UserPreferences {
   id                    String   @id @default(cuid())
@@ -3458,5 +3626,73 @@ model BookingV2WaitlistSignup {
 
   @@index([status, createdAt])
   @@index([email])
+}
+
+// ── Adaptiv Treningsmotor: Nye enums ──
+
+enum PlayerType {
+  HOBBY
+  SCORE_REDUCTION
+  TOURNAMENT
+  FITNESS
+}
+
+enum ClubSpeedSource {
+  BASELINE_TEST
+  MANUAL
+  HCP_AVERAGE
+}
+
+enum CoachAssignmentStatus {
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+enum CoachAssignmentScope {
+  FULL
+  READ_ONLY
+  PLAN_ONLY
+}
+
+enum CoachAssignmentSource {
+  BOOKING
+  SUBSCRIPTION
+  MANUAL_GRANT
+}
+
+enum ConsentTier {
+  TIER_1_SERVICE
+  TIER_2_IMPROVEMENT
+  TIER_3_AI_RESEARCH
+  TIER_4_COMMERCIAL
+}
+
+enum ConsentSource {
+  ONBOARDING
+  PROFILE_PAGE
+  PARENTAL_CONSENT
+  API
+}
+
+enum AccessorType {
+  COACH
+  ADMIN
+  AI_PIPELINE
+  SYSTEM
+  USER
+}
+
+enum AllocationSource {
+  SELF_RATED
+  HCP_BASELINE
+  IMPORTED
+}
+
+enum CalendarEventSource {
+  TRAINING_SESSION_INDIVIDUAL
+  TRAINING_SESSION_GROUP
+  TOURNAMENT
+  BOOKING
 }
 
