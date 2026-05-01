@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import { startOfISOWeek, addWeeks, format } from "date-fns";
 import type { ViewId } from "@/lib/portal/views/registry";
+import { initializeDefaultConsents } from "@/lib/portal/consent/service";
 
 export interface OnboardingGoals {
   goals: string[];
@@ -59,6 +60,13 @@ export async function saveOnboardingData(data: OnboardingGoals) {
         },
       });
     }
+  }
+
+  // Initialize default GDPR consents
+  try {
+    await initializeDefaultConsents(user.id, "ONBOARDING");
+  } catch (e) {
+    console.error("Failed to initialize consents:", e);
   }
 
   revalidatePath("/portal");
@@ -192,6 +200,13 @@ export async function quickOnboardAndGeneratePlan(
         sortOrder: idx,
       }))
     );
+
+    // Initialize default GDPR consents
+    try {
+      await initializeDefaultConsents(user.id, "ONBOARDING");
+    } catch (e) {
+      console.error("Failed to initialize consents:", e);
+    }
 
     revalidatePath("/portal");
     revalidatePath("/portal/treningsplan");
