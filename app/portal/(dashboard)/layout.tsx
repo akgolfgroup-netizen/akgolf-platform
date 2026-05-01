@@ -7,6 +7,7 @@ import { PlayerHQTrialBanner } from "@/components/portal/playerhq-trial-banner";
 import { DashboardProviders } from "@/components/portal/layout/dashboard-providers";
 import { LenisProvider } from "@/components/portal/layout/lenis-provider";
 import { ServiceWorkerRegistration } from "@/components/portal/layout/service-worker-registration";
+import { PageTabs } from "@/components/portal/layout/page-tabs";
 import { getPlayerHQAccess } from "@/lib/portal/playerhq-access";
 import type { SubscriptionTier, SubscriptionStatus } from "@prisma/client";
 
@@ -41,6 +42,7 @@ export default async function DashboardLayout({
                 subscriptionTier={user.subscriptionTier as SubscriptionTier}
                 trialEndsAt={user.subscriptionExpiresAt}
               />
+              <PageTabs />
               {children}
             </main>
           </div>
