@@ -16,6 +16,8 @@ export type PortalUser = {
   subscriptionStatus: string | null;
   subscriptionExpiresAt: Date | null;
   portalMonthlyLogCount: number;
+  playerhqAccessUntil: Date | null;
+  playerhqStripeSubscriptionId: string | null;
 };
 
 const DEMO_USER: PortalUser = {
@@ -29,6 +31,8 @@ const DEMO_USER: PortalUser = {
   subscriptionStatus: "ACTIVE",
   subscriptionExpiresAt: new Date("2030-01-01"),
   portalMonthlyLogCount: 0,
+  playerhqAccessUntil: new Date("2030-01-01"),
+  playerhqStripeSubscriptionId: null,
 };
 
 export async function getPortalUser(): Promise<PortalUser | null> {
@@ -93,6 +97,8 @@ export async function getPortalUser(): Promise<PortalUser | null> {
         role: "STUDENT",
         isActive: true,
         subscriptionTier: "VISITOR",
+        // PlayerHQ: gratis trial frem til 1. juni 2026 for alle som registrerer seg i mai
+        playerhqAccessUntil: "2026-06-01T00:00:00.000Z",
       })
       .select()
       .single();
@@ -119,6 +125,8 @@ export async function getPortalUser(): Promise<PortalUser | null> {
       subscriptionStatus: null,
       subscriptionExpiresAt: null,
       portalMonthlyLogCount: newUser.portalMonthlyLogCount || 0,
+      playerhqAccessUntil: newUser.playerhqAccessUntil ? new Date(newUser.playerhqAccessUntil) : null,
+      playerhqStripeSubscriptionId: newUser.playerhqStripeSubscriptionId ?? null,
     };
   }
 
@@ -144,6 +152,8 @@ export async function getPortalUser(): Promise<PortalUser | null> {
     subscriptionStatus: subscription?.status || null,
     subscriptionExpiresAt: subscription?.billingPeriodEnd ? new Date(subscription.billingPeriodEnd) : null,
     portalMonthlyLogCount: user.portalMonthlyLogCount || 0,
+    playerhqAccessUntil: user.playerhqAccessUntil ? new Date(user.playerhqAccessUntil) : null,
+    playerhqStripeSubscriptionId: user.playerhqStripeSubscriptionId ?? null,
   };
 }
 

@@ -622,6 +622,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+    /* Globale safety-net: forhindrer horisontal scroll selv om en
+       komponent uventet bryter ut av viewport (oversize-image, lang
+       streng, sticky element). Mobil-kritisk. */
+    overflow-x: hidden;
   }
 
   body {
@@ -630,6 +634,9 @@
     font-family: var(--font-body);
     --spacing-section: 7.5rem;
     --spacing-section-lg: 10rem;
+    /* Samme safety-net pa body for browsere som ignorerer html-overflow */
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   .material-symbols-outlined {

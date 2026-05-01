@@ -13,3 +13,6 @@ export { UploadForm } from "./upload-form";
 export { UploadMetadataFields } from "./upload-metadata-fields";
 export { UploadStatus } from "./upload-status";
 export { AdminTrackManView } from "./admin-trackman-view";
+export { QualityBadge } from "./quality-badge";
+export { SessionMatcher } from "./session-matcher";
+export { ImportMatchModal } from "./import-match-modal";

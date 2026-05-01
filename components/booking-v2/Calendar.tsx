@@ -208,16 +208,18 @@ export function Calendar({ selectedDate, maxAdvanceDays }: CalendarProps) {
           </div>
         ))}
         {grid.map((cell, i) => {
-          const cls = ["day"];
+          const cls = ["cal-day"];
           if (cell.muted) cls.push("muted");
+          if (cell.disabled && !cell.muted) cls.push("disabled");
           if (cell.today) cls.push("today");
-          if (cell.selected) cls.push("selected");
+          if (cell.selected) cls.push("is-selected");
           return (
             <button
               key={i}
               className={cls.join(" ")}
               disabled={cell.disabled}
               type="button"
+              aria-pressed={cell.selected ? "true" : undefined}
               onClick={() => {
                 if (cell.disabled || !cell.iso) return;
                 selectDate(cell.iso);

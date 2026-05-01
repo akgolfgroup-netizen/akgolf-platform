@@ -21,6 +21,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@/components/ui/icon";
+import { AKLogo } from "@/components/website/AKLogo";
 import { cn } from "@/lib/portal/utils/cn";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
@@ -32,50 +33,28 @@ interface NavItem {
   matchPaths?: string[];
 }
 
+// Lansering 2026-04-30: kun 3 hovedmenypunkter aktive.
+// Spillerprofil-info vises pa dashboard. WIP-ruter (timeplan, dagbok, runde,
+// statistikk, talent, etc.) er fortsatt aktive paa URL men skjult fra navigasjon
+// til de er klare for lansering.
 const NAV_ITEMS: NavItem[] = [
   { href: "/portal", label: "Dashboard", iconName: "dashboard" },
   {
     href: "/portal/treningsplan",
-    label: "Planlegg",
+    label: "Treningsplan",
     iconName: "assignment",
-    matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering", "/portal/timeplan"],
+    matchPaths: ["/portal/treningsplan/uke", "/portal/treningsplan/analyse"],
   },
   {
-    href: "/portal/timeplan",
-    label: "Timeplan",
+    href: "/portal/teknisk-plan",
+    label: "Teknisk Plan",
+    iconName: "target",
+  },
+  {
+    href: "/portal/bookinger",
+    label: "Bookinger",
     iconName: "calendar_month",
-    matchPaths: [],
-  },
-  {
-    href: "/portal/dagbok",
-    label: "Tren",
-    iconName: "fitness_center",
-    matchPaths: ["/portal/trening", "/portal/tester"],
-  },
-  {
-    href: "/portal/runde",
-    label: "Spill",
-    iconName: "flag",
-    matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan", "/portal/bag"],
-  },
-  {
-    href: "/portal/statistikk",
-    label: "Analyser",
-    iconName: "query_stats",
-    matchPaths: [
-      "/portal/analyse",
-      "/portal/benchmark",
-      "/portal/trackman",
-      "/portal/sammenligning",
-      "/portal/ai-coach",
-      "/portal/coaching-historikk",
-      "/portal/kartlegging",
-    ],
-  },
-  {
-    href: "/portal/talent",
-    label: "Talenter",
-    iconName: "auto_awesome",
+    matchPaths: ["/portal/bookinger/ny", "/portal/bookinger/venteliste"],
   },
 ];
 
@@ -129,12 +108,16 @@ function SidebarBody({
         <Link
           href="/portal"
           onClick={onNavClick}
-          className="flex flex-col"
+          className="flex items-center gap-3"
+          aria-label="AK Golf — Hjem"
         >
-          <h1 className="text-surface font-bold text-lg tracking-tight">AK Golf</h1>
-          <p className="uppercase text-[11px] font-medium tracking-widest text-[#d2f000]">
-            Precision Performance
-          </p>
+          <AKLogo variant="inverted" size={28} />
+          <div className="flex flex-col">
+            <h1 className="text-surface font-bold text-lg tracking-tight leading-none">AK Golf</h1>
+            <p className="uppercase text-[10px] font-medium tracking-widest text-[#d2f000] mt-0.5">
+              Precision Performance
+            </p>
+          </div>
         </Link>
       </div>
 
@@ -171,8 +154,8 @@ function SidebarBody({
             onClick={onNavClick}
             className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
           >
-            <Icon name="help_outline" size={20} />
-            <span>Support</span>
+            <Icon name="person" size={20} />
+            <span>Profil</span>
           </Link>
           <button
             onClick={() => {

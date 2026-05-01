@@ -21,6 +21,7 @@ import {
   Trophy,
   ClipboardCheck,
   NotebookPen,
+  Dumbbell,
   type LucideIcon,
 } from "lucide-react";
 
@@ -59,6 +60,7 @@ export const MC_ICON_MAP: Record<string, LucideIcon> = {
   "layout-dashboard": LayoutDashboard,
   "building-2": Building2,
   trophy: Trophy,
+  dumbbell: Dumbbell,
 };
 
 export const MC_NAV_CONFIG: NavGroup[] = [
@@ -90,6 +92,7 @@ export const MC_NAV_CONFIG: NavGroup[] = [
       { href: "/admin/grupper", label: "Treningsgrupper", iconName: "users" },
       { href: "/admin/okter", label: "Coaching-notater", iconName: "file-text" },
       { href: "/admin/treningsplan", label: "Treningsplaner", iconName: "notebook-pen" },
+      { href: "/admin/teknisk-plan", label: "Teknisk Plan", iconName: "dumbbell" },
       { href: "/admin/turneringer", label: "Turneringer", iconName: "trophy" },
     ],
   },

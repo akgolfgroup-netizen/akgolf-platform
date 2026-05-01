@@ -137,6 +137,10 @@
     {
       "path": "/api/portal/cron/calendar-webhook-renew",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/portal/cron/agents-test-retest-reminder",
+      "schedule": "0 6 * * *"
     }
   ],
   "redirects": [

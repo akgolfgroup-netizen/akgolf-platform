@@ -8,6 +8,7 @@ import {
   type CoachHQNavItem,
 } from "./coachhq-nav-config";
 import { LiveStatusFooter } from "./LiveStatusFooter";
+import { AKLogo } from "@/components/website/AKLogo";
 
 interface NameListProps {
   liveSessions?: number;
@@ -37,11 +38,14 @@ export function NameList({ liveSessions }: NameListProps) {
     >
       {/* Header */}
       <div className="px-4 mb-4">
-        <div
-          className="text-[10px] font-mono uppercase tracking-[0.18em] mb-0.5"
-          style={{ color: "var(--color-sidebar-muted)" }}
-        >
-          AK Golf
+        <div className="flex items-center gap-2 mb-1">
+          <AKLogo variant="inverted" size={18} />
+          <div
+            className="text-[10px] font-mono uppercase tracking-[0.18em]"
+            style={{ color: "var(--color-sidebar-muted)" }}
+          >
+            AK Golf
+          </div>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="text-sm font-display font-semibold">CoachHQ</div>
@@ -72,18 +76,22 @@ export function NameList({ liveSessions }: NameListProps) {
           <NameListLink key={item.href} item={item} pathname={pathname} />
         ))}
 
-        {/* Verktøy */}
-        <div className="px-2.5 pt-4 pb-1">
-          <span
-            className="text-[10px] font-mono uppercase tracking-[0.16em]"
-            style={{ color: "var(--color-sidebar-muted)" }}
-          >
-            Verktøy
-          </span>
-        </div>
-        {COACHHQ_TOOLS_NAV.map((item) => (
-          <NameListLink key={item.href} item={item} pathname={pathname} compact />
-        ))}
+        {COACHHQ_TOOLS_NAV.length > 0 && (
+          <>
+            {/* Verktøy */}
+            <div className="px-2.5 pt-4 pb-1">
+              <span
+                className="text-[10px] font-mono uppercase tracking-[0.16em]"
+                style={{ color: "var(--color-sidebar-muted)" }}
+              >
+                Verktøy
+              </span>
+            </div>
+            {COACHHQ_TOOLS_NAV.map((item) => (
+              <NameListLink key={item.href} item={item} pathname={pathname} compact />
+            ))}
+          </>
+        )}
       </nav>
 
       {/* Live status — alltid nederst */}

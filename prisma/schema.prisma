@@ -2137,6 +2137,9 @@ model User {
   subscriptionExpiresAt                       DateTime?
   subscriptionSource                          SubscriptionSource?
   subscriptionTier                            SubscriptionTier           @default(VISITOR)
+  playerhqAccessUntil                         DateTime?
+  playerhqStripeSubscriptionId                String?
+  playerhqStripePriceId                       String?
   isActive                                    Boolean                    @default(true)
   videoStorageLimit                           BigInt                     @default(2147483648)
   videoStorageUsed                            BigInt                     @default(0)
@@ -2238,6 +2241,7 @@ model User {
   UserCapability                              UserCapability[]
   CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
+
   TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
   GroupMemberships                            GroupMembership[]
   GroupSessionRSVP                            GroupSessionRSVP[]
@@ -3455,3 +3459,4 @@ model BookingV2WaitlistSignup {
   @@index([status, createdAt])
   @@index([email])
 }
+
