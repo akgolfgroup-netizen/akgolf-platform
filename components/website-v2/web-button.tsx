@@ -30,7 +30,7 @@ const VARIANT_CLASS: Record<Variant, string> = {
     "bg-[var(--akgolf-accent,#D1F843)] text-[#0A1F18] hover:-translate-y-px hover:shadow-[0_12px_28px_rgba(209,248,67,0.35)]",
   dark: "bg-[var(--akgolf-ink,#0A1F18)] text-white hover:-translate-y-px hover:bg-[#112e22]",
   ghost:
-    "bg-white/10 text-white border-white/30 backdrop-blur-md hover:bg-white/20",
+    "bg-white/20 text-white border-white/55 backdrop-blur-md hover:bg-white/30 md:bg-white/10 md:border-white/30 md:hover:bg-white/20",
   line: "bg-transparent text-[var(--akgolf-ink,#0A1F18)] border-[rgba(10,31,24,0.20)] hover:bg-[var(--akgolf-ink,#0A1F18)] hover:text-white",
 };
 

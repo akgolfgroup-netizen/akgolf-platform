@@ -11,7 +11,7 @@ interface BookingShellProps {
 export function BookingShell({ children }: BookingShellProps) {
   return (
     <div
-      className="min-h-screen"
+      className="booking-v2-root min-h-screen"
       style={{
         background: "var(--color-surface)",
         color: "var(--color-ink)",

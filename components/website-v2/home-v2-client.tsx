@@ -114,8 +114,16 @@ export function HomeV2Client() {
           quality={78}
           className="object-cover object-[center_30%] -z-10"
         />
+        {/* Mobil: tyngre overlay slik at hvit hero-tekst forblir lesbar pa lyse partier av bildet */}
         <div
-          className="absolute inset-0 -z-[5] pointer-events-none"
+          className="absolute inset-0 -z-[5] pointer-events-none md:hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,31,24,0.65) 0%, rgba(10,31,24,0.55) 30%, rgba(10,31,24,0.65) 60%, rgba(10,31,24,0.92) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 -z-[5] pointer-events-none hidden md:block"
           style={{
             background:
               "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%)",
@@ -158,12 +166,12 @@ export function HomeV2Client() {
                 </em>
               </h1>
               <p
-                className="mb-7 max-w-[60ch] text-[19px] leading-[1.55] font-normal text-white/[0.92]"
-                style={{ textShadow: "0 2px 14px rgba(0,0,0,0.35)" }}
+                className="mb-7 max-w-[60ch] text-[19px] leading-[1.55] font-normal text-white md:text-white/[0.92]"
+                style={{ textShadow: "0 2px 14px rgba(0,0,0,0.45)" }}
               >
                 {HERO.subheading}
               </p>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85 backdrop-blur-md">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-md md:border-white/20 md:bg-white/10 md:text-white/85">
                 <span
                   className="inline-block h-1.5 w-1.5 rounded-full"
                   style={{
