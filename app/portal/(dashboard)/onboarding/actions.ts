@@ -15,6 +15,10 @@ export interface OnboardingGoals {
   handicapGoal?: number;
   currentHandicap?: number;
   defaultView?: ViewId;
+  age?: number;
+  weeklyHours?: number;
+  homeCourseName?: string;
+  coldStartWeakness?: string;
 }
 
 export async function saveOnboardingData(data: OnboardingGoals) {
@@ -28,6 +32,9 @@ export async function saveOnboardingData(data: OnboardingGoals) {
     .update({
       onboardingGoals: JSON.parse(JSON.stringify(data)),
       onboardingCompletedAt: new Date().toISOString(),
+      handicap: data.currentHandicap ?? null,
+      ageYears: data.age ?? null,
+      weeklyTrainingHours: data.weeklyHours ?? null,
     })
     .eq("id", user.id);
 
@@ -64,7 +71,7 @@ export async function saveOnboardingData(data: OnboardingGoals) {
 
   // Initialize default GDPR consents
   try {
-    await initializeDefaultConsents(user.id, "ONBOARDING");
+    await initializeDefaultConsents(user.id);
   } catch (e) {
     console.error("Failed to initialize consents:", e);
   }
@@ -203,7 +210,7 @@ export async function quickOnboardAndGeneratePlan(
 
     // Initialize default GDPR consents
     try {
-      await initializeDefaultConsents(user.id, "ONBOARDING");
+      await initializeDefaultConsents(user.id);
     } catch (e) {
       console.error("Failed to initialize consents:", e);
     }

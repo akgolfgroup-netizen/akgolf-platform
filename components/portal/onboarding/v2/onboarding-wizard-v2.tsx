@@ -4,9 +4,12 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import type { ViewId } from "@/lib/portal/views/registry";
 import { OnboardingProgressSidebar } from "./progress-sidebar";
+import { StepProfile } from "./step-profile";
 import { StepGoals } from "./step-goals";
 import { StepFrequency } from "./step-frequency";
+import { StepHomeCourse } from "./step-home-course";
 import { StepView } from "./step-view";
+import { StepColdStart } from "./step-cold-start";
 import { StepReady } from "./step-ready";
 import type { OnboardingV2Data } from "./types";
 
@@ -16,11 +19,16 @@ interface OnboardingWizardV2Props {
 }
 
 export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Props) {
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState(1);
+  const [handicap, setHandicap] = useState<number | null>(null);
+  const [age, setAge] = useState<number | null>(null);
+  const [weeklyHours, setWeeklyHours] = useState<number | null>(null);
   const [goals, setGoals] = useState<string[]>([]);
   const [playerType, setPlayerType] = useState<"performance" | "leisure" | null>(null);
   const [frequency, setFrequency] = useState<string>("");
+  const [homeCourseName, setHomeCourseName] = useState<string | null>(null);
   const [defaultView, setDefaultView] = useState<ViewId | null>(null);
+  const [coldStartWeakness, setColdStartWeakness] = useState<string | null>(null);
 
   const toggleGoal = (id: string) => {
     setGoals((prev) =>
@@ -33,27 +41,35 @@ export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Pro
   };
 
   const canAdvance =
-    (step === 1 && goals.length > 0 && playerType !== null) ||
-    (step === 2 && frequency !== "") ||
-    (step === 3 && defaultView !== null) ||
-    step === 4;
+    (step === 1 && handicap != null && age != null && weeklyHours != null) ||
+    (step === 2 && goals.length > 0 && playerType !== null) ||
+    (step === 3 && frequency !== "") ||
+    (step === 4 && homeCourseName != null && homeCourseName.trim() !== "") ||
+    (step === 5 && defaultView !== null) ||
+    (step === 6 && coldStartWeakness !== null) ||
+    step === 7;
 
   const onNext = () => {
     if (!canAdvance) return;
-    if (step === 4) {
+    if (step === 7) {
       onComplete({
         goals: playerType ? [...goals, playerType] : goals,
         trainingFrequency: frequency,
         defaultView: (defaultView ?? "opt1") as ViewId,
+        handicap: handicap ?? undefined,
+        age: age ?? undefined,
+        weeklyHours: weeklyHours ?? undefined,
+        homeCourseName: homeCourseName ?? undefined,
+        coldStartWeakness: coldStartWeakness ?? undefined,
       });
       return;
     }
-    setStep((s) => (s + 1) as 1 | 2 | 3 | 4);
+    setStep((s) => s + 1);
   };
 
   const onBack = () => {
     if (step === 1) return;
-    setStep((s) => (s - 1) as 1 | 2 | 3 | 4);
+    setStep((s) => s - 1);
   };
 
   return (
@@ -104,6 +120,18 @@ export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Pro
           style={{ padding: "56px 64px" }}
         >
           {step === 1 && (
+            <StepProfile
+              handicap={handicap}
+              age={age}
+              weeklyHours={weeklyHours}
+              onChange={(field, value) => {
+                if (field === "handicap") setHandicap(value);
+                if (field === "age") setAge(value);
+                if (field === "weeklyHours") setWeeklyHours(value);
+              }}
+            />
+          )}
+          {step === 2 && (
             <StepGoals
               selectedGoals={goals}
               onToggleGoal={toggleGoal}
@@ -111,9 +139,18 @@ export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Pro
               onSetPlayerType={setPlayerType}
             />
           )}
-          {step === 2 && <StepFrequency frequency={frequency} onSelect={setFrequency} />}
-          {step === 3 && <StepView defaultView={defaultView} onSelect={setDefaultView} />}
-          {step === 4 && <StepReady />}
+          {step === 3 && <StepFrequency frequency={frequency} onSelect={setFrequency} />}
+          {step === 4 && (
+            <StepHomeCourse courseName={homeCourseName} onChange={setHomeCourseName} />
+          )}
+          {step === 5 && <StepView defaultView={defaultView} onSelect={setDefaultView} />}
+          {step === 6 && (
+            <StepColdStart
+              selectedWeakness={coldStartWeakness}
+              onSelect={setColdStartWeakness}
+            />
+          )}
+          {step === 7 && <StepReady />}
         </main>
       </div>
 
@@ -148,7 +185,7 @@ export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Pro
             fontFamily: "var(--font-jetbrains-mono)",
           }}
         >
-          STEG {step} / 4 · TRYKK ENTER FOR NESTE
+          STEG {step} / 7 · TRYKK ENTER FOR NESTE
         </div>
 
         <button
@@ -163,7 +200,7 @@ export function OnboardingWizardV2({ onComplete, onSkip }: OnboardingWizardV2Pro
             cursor: canAdvance ? "pointer" : "not-allowed",
           }}
         >
-          {step === 4 ? (
+          {step === 7 ? (
             <>
               <Check className="w-4 h-4" />
               Fullfør

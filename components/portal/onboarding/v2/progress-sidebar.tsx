@@ -128,7 +128,7 @@ export function OnboardingProgressSidebar({ currentStep }: ProgressSidebarProps)
           fontFamily: "var(--font-jetbrains-mono)",
         }}
       >
-        EST. {Math.max(1, (5 - currentStep) * 1)} MIN IGJEN
+        EST. {Math.max(1, (8 - currentStep) * 1)} MIN IGJEN
       </div>
     </aside>
   );

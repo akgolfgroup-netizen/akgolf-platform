@@ -16,6 +16,11 @@ export function OnboardingPageClient() {
         goals: data.goals,
         trainingFrequency: data.trainingFrequency,
         defaultView: data.defaultView,
+        currentHandicap: data.handicap,
+        age: data.age,
+        weeklyHours: data.weeklyHours,
+        homeCourseName: data.homeCourseName,
+        coldStartWeakness: data.coldStartWeakness,
       });
       router.push("/portal/dagbok");
     });
