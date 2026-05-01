@@ -121,7 +121,7 @@ export function HomeV2Client() {
               "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%)",
           }}
         />
-        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-10">
+        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div className="grid items-end gap-15 md:grid-cols-[1.4fr_1fr]">
             <div>
               <div
@@ -205,7 +205,7 @@ export function HomeV2Client() {
       {/* SERVICES */}
       <section
         id="services"
-        className="px-10 py-[120px_80px]"
+        className="px-4 sm:px-6 lg:px-10 py-[80px_40px] md:py-[120px_80px]"
         style={{ background: "var(--akgolf-surface, #ECF0EF)" }}
       >
         <div className="mx-auto max-w-[1280px]">
@@ -303,7 +303,7 @@ export function HomeV2Client() {
       </section>
 
       {/* WHY US */}
-      <section className="bg-white px-10 py-[100px]">
+      <section className="bg-white px-4 sm:px-6 lg:px-10 py-[60px] md:py-[100px]">
         <div className="mx-auto max-w-[1280px]">
           <div className="grid items-center gap-20 md:grid-cols-2">
             <WebPhoto
@@ -391,7 +391,7 @@ export function HomeV2Client() {
 
       {/* BIG CTA */}
       <section
-        className="relative overflow-hidden px-10 py-[120px]"
+        className="relative overflow-hidden px-4 sm:px-6 lg:px-10 py-[80px] md:py-[120px]"
         style={{ background: "var(--akgolf-ink, #0A1F18)" }}
       >
         <div

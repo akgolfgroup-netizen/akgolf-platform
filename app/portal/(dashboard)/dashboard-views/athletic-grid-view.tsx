@@ -342,7 +342,7 @@ function SgRadarHero({ summary }: { summary: SgSummary }) {
               <text x="10" y="52" fill="primary" fontSize="3" fontWeight="bold" textAnchor="start">PUTTING</text>
             </svg>
           </div>
-          <div className="mt-6 grid grid-cols-4 gap-4">
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               { label: "Drive", value: summary.offTheTee },
               { label: "Innspill", value: summary.approach },

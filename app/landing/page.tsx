@@ -1,13 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
+import { ArrowRight, BarChart3, Calendar, Globe, MapPin, Menu, Target, TrendingUp, X } from "lucide-react";
 
 export default function LandingHomepage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30">
-        <div className="max-w-[1440px] mx-auto px-8 py-5 flex justify-between items-center">
-          <div className="text-2xl font-bold tracking-tight text-on-surface">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex justify-between items-center">
+          <div className="text-xl sm:text-2xl font-bold tracking-tight text-on-surface">
             AK Golf Academy
           </div>
           <div className="hidden md:flex items-center gap-8">
@@ -16,7 +20,7 @@ export default function LandingHomepage() {
             <a className="font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface transition-colors" href="/landing/about">Om oss</a>
             <a className="font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface transition-colors" href="/landing/contact">Kontakt</a>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-6">
             <a href="/portal/login" className="font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface transition-colors">Logg inn</a>
             <a
               href="/portal"
@@ -25,13 +29,34 @@ export default function LandingHomepage() {
               PlayersHQ
             </a>
           </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-on-surface hover:bg-on-surface/5 transition-colors min-h-11 min-w-11 flex items-center justify-center"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-outline-variant/30 bg-surface px-4 py-4 space-y-3">
+            <a href="#" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium uppercase tracking-wider text-sm text-on-surface border-l-2 border-secondary-fixed pl-3">Hjem</a>
+            <a href="/booking" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface">Book nå</a>
+            <a href="/landing/about" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface">Om oss</a>
+            <a href="/landing/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface">Kontakt</a>
+            <div className="pt-3 border-t border-outline-variant/30 space-y-3">
+              <a href="/portal/login" onClick={() => setMobileMenuOpen(false)} className="block py-2 font-medium uppercase tracking-wider text-sm text-on-surface/70">Logg inn</a>
+              <a href="/portal" onClick={() => setMobileMenuOpen(false)} className="block w-full text-center bg-secondary-fixed text-on-secondary-fixed px-6 py-3 rounded-lg font-bold uppercase tracking-wider text-sm">PlayersHQ</a>
+            </div>
+          </div>
+        )}
       </nav>
 
-      <main className="pt-24">
+      <main className="pt-20 md:pt-24">
         {/* Hero Section */}
         <section className="relative bg-surface overflow-hidden min-h-[870px] flex items-center">
-          <div className="max-w-[1440px] mx-auto px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="z-10 py-12">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-lowest rounded-full mb-8 border border-outline-variant/30">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface font-bold">Systematisk golf coaching</span>
@@ -50,7 +75,7 @@ export default function LandingHomepage() {
                   className="bg-secondary-fixed text-on-secondary-fixed px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm inline-flex items-center gap-2 shadow-accent-glow hover:scale-[1.02] active:scale-[0.98] transition-all"
                 >
                   Book nå
-                  <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                  <ArrowRight className="w-5 h-5" strokeWidth={2.4} />
                 </a>
                 <a
                   href="/landing/about"
@@ -73,12 +98,12 @@ export default function LandingHomepage() {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[200px] text-on-surface/10">sports_golf</span>
+                  <Target className="w-[200px] h-[200px] text-on-surface/10" strokeWidth={1} />
                 </div>
               </div>
               <div className="absolute -bottom-8 -left-8 bg-surface-container-lowest p-6 rounded-3xl shadow-card-hover flex items-center gap-5 border border-outline-variant/40">
                 <div className="w-14 h-14 rounded-2xl bg-on-surface flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-secondary-fixed text-[28px]">insights</span>
+                  <BarChart3 className="text-secondary-fixed w-7 h-7" strokeWidth={2} />
                 </div>
                 <div>
                   <p className="font-mono text-[10px] uppercase text-on-surface/50 tracking-widest mb-1">Spillere coachet</p>
@@ -90,7 +115,7 @@ export default function LandingHomepage() {
         </section>
 
         {/* Slik fungerer det — Bento-hierarki */}
-        <section className="py-32 px-8 max-w-[1440px] mx-auto">
+        <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div className="max-w-2xl">
               <div className="font-mono text-xs uppercase tracking-widest text-on-surface/60 flex items-center gap-4 mb-6">
@@ -108,7 +133,7 @@ export default function LandingHomepage() {
             <div className="relative bg-primary-container text-on-primary p-10 rounded-[32px] overflow-hidden hover:-translate-y-1 transition-transform shadow-card">
               <div className="absolute top-0 left-0 right-0 h-1 bg-secondary-fixed"></div>
               <div className="w-14 h-14 bg-secondary-fixed rounded-2xl flex items-center justify-center mb-8 shadow-accent-glow">
-                <span className="material-symbols-outlined text-on-secondary-fixed text-3xl">calendar_today</span>
+                <Calendar className="text-on-secondary-fixed w-8 h-8" strokeWidth={2} />
               </div>
               <div className="font-mono text-xs uppercase tracking-widest text-on-primary-container mb-2">Steg 1</div>
               <h3 className="text-2xl font-bold text-on-primary mb-4 tracking-tight">Book selv</h3>
@@ -118,7 +143,7 @@ export default function LandingHomepage() {
             {/* Card 2 — Secondary */}
             <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-outline-variant/30 hover:-translate-y-1 hover:shadow-card transition-all">
               <div className="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center mb-8">
-                <span className="material-symbols-outlined text-on-surface text-3xl">sports_golf</span>
+                <Target className="text-on-surface w-8 h-8" strokeWidth={2} />
               </div>
               <div className="font-mono text-xs uppercase tracking-widest text-on-surface/40 mb-2">Steg 2</div>
               <h3 className="text-2xl font-bold text-on-surface mb-4 tracking-tight">20 minutter med fokus</h3>
@@ -128,7 +153,7 @@ export default function LandingHomepage() {
             {/* Card 3 — Secondary */}
             <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-outline-variant/30 hover:-translate-y-1 hover:shadow-card transition-all">
               <div className="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center mb-8">
-                <span className="material-symbols-outlined text-on-surface text-3xl">trending_up</span>
+                <TrendingUp className="text-on-surface w-8 h-8" strokeWidth={2} />
               </div>
               <div className="font-mono text-xs uppercase tracking-widest text-on-surface/40 mb-2">Steg 3</div>
               <h3 className="text-2xl font-bold text-on-surface mb-4 tracking-tight">Tren mellom sesjonene</h3>
@@ -138,8 +163,8 @@ export default function LandingHomepage() {
         </section>
 
         {/* Om oss */}
-        <section className="py-32 bg-surface-container-low overflow-hidden">
-          <div className="max-w-[1440px] mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <section className="py-20 md:py-32 bg-surface-container-low overflow-hidden">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             <div className="lg:col-span-7">
               <div className="mb-8 font-mono text-xs uppercase tracking-widest text-on-surface/60 flex items-center gap-4">
                 <div className="h-px w-12 bg-on-surface/20"></div>
@@ -157,7 +182,7 @@ export default function LandingHomepage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
                 <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 shadow-card">
                   <div className="w-10 h-10 rounded-lg bg-on-surface flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-secondary-fixed text-xl">location_on</span>
+                    <MapPin className="text-secondary-fixed w-5 h-5" strokeWidth={2} />
                   </div>
                   <div>
                     <h4 className="font-bold text-on-surface text-sm">Gamle Fredrikstad GK</h4>
@@ -166,7 +191,7 @@ export default function LandingHomepage() {
                 </div>
                 <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 shadow-card">
                   <div className="w-10 h-10 rounded-lg bg-on-surface flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-secondary-fixed text-xl">location_on</span>
+                    <MapPin className="text-secondary-fixed w-5 h-5" strokeWidth={2} />
                   </div>
                   <div>
                     <h4 className="font-bold text-on-surface text-sm">Miklagard Golfklubb</h4>
@@ -193,8 +218,8 @@ export default function LandingHomepage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-on-surface overflow-hidden relative">
-          <div className="max-w-[1440px] mx-auto px-8 text-center">
+        <section className="py-20 md:py-24 bg-on-surface overflow-hidden relative">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-surface tracking-[-0.02em] mb-6">
               Klar for å ta golfen til neste nivå?
             </h2>
@@ -207,7 +232,7 @@ export default function LandingHomepage() {
                 className="bg-secondary-fixed text-on-secondary-fixed px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm inline-flex items-center gap-2 shadow-accent-glow hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 Book nå
-                <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                <ArrowRight className="w-5 h-5" strokeWidth={2.4} />
               </a>
               <a
                 href="/landing/contact"
@@ -220,7 +245,7 @@ export default function LandingHomepage() {
         </section>
       </main>
 
-      <footer className="w-full border-t border-outline-variant/30 bg-surface flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+      <footer className="w-full border-t border-outline-variant/30 bg-surface flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 lg:px-12 py-12 md:py-16 gap-6 md:gap-8">
         <div className="flex flex-col gap-4">
           <div className="font-bold text-on-surface text-xl tracking-tight">AK Golf Academy</div>
           <p className="text-sm text-on-surface/60">© 2024 AK Golf Group AS. Alle rettigheter reservert.</p>
@@ -236,7 +261,7 @@ export default function LandingHomepage() {
             className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors"
             aria-label="Nettsted"
           >
-            <span className="material-symbols-outlined text-on-surface text-xl">public</span>
+            <Globe className="text-on-surface w-5 h-5" strokeWidth={2} />
           </a>
         </div>
       </footer>
