@@ -37,8 +37,6 @@ export async function resolveCSTarget(
     select: { clubs: true, source: true },
   });
 
-  const benchmark: ClubSpeedBenchmark;
-
   if (profile?.clubs && typeof profile.clubs === "object") {
     const clubs = profile.clubs as Record<string, { carry: number; total: number }>;
     const clubData = clubs[exercise.clubKey ?? "driver"];
@@ -54,7 +52,7 @@ export async function resolveCSTarget(
   }
 
   // 2. Fallback til HCP-benchmark
-  benchmark = getBenchmarkByHcp(userHcp);
+  const benchmark = getBenchmarkByHcp(userHcp);
   const key = exercise.clubKey as keyof ClubSpeedBenchmark | undefined;
   const clubBench = key && key in benchmark ? benchmark[key] : benchmark.driver;
 
