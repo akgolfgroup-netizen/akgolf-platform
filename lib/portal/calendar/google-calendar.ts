@@ -79,7 +79,7 @@ async function refreshAccessToken(
   };
 }
 
-async function getValidTokens(userId: string): Promise<GoogleTokens> {
+export async function getValidTokens(userId: string): Promise<GoogleTokens> {
   const supabase = createServiceClient();
   
   const { data: user, error } = await supabase
