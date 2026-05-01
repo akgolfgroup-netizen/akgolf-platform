@@ -28,6 +28,11 @@ const BOOKING_V2_ENABLED = process.env.BOOKING_V2_ENABLED === "true";
 const BOOKING_V2_COOKIE = "ak_bookingv2";
 
 // Ruter som ALLTID er tilgjengelige (selv i vedlikeholdsmodus)
+//
+// /booking er bevisst FJERNET — under maintenance skal kun Acuity-CTAer
+// pa /maintenance-siden vaere tilgjengelig. Egen booking-flow blokkeres
+// for a unnga at brukere prover begge kanalene parallelt. Acuity er
+// derfor "kun-bookingsystem" sa lenge MAINTENANCE_MODE=true.
 const ALWAYS_ALLOWED_PATHS = [
   "/maintenance",
   "/api/maintenance",
@@ -39,7 +44,6 @@ const ALWAYS_ALLOWED_PATHS = [
   // Stripe + andre webhooks ma akseptere POST fra eksterne tjenester
   "/api/portal/webhooks",
   "/api/webhooks",
-  "/booking",
   "/_next",
   "/static",
   "/favicon",
