@@ -8,7 +8,67 @@
 
 ---
 
-<<<<<<< HEAD
+## 2026-05-01 — Mobil-fix booking-v2 + Adaptiv treningsmotor masterplan
+
+**Jobbet med:** To leveranser. Først hurtig-fix av booking-v2 mobile-rendering. Deretter en 3-timers brainstorming-økt som endte i en komplett masterplan for adaptiv treningsmotor klar for autonom Kimi YOLO-kjøring i kveld.
+
+### Mobil-fix (commit `4ed4f97e`)
+- **Rot-årsak:** `app/booking-v2/booking-v2.css` ble aldri importert. Hele booking-v2-flyten rendret som ustylet HTML — kalender-grid kollapset, ukedager stablet vertikalt, datoer ble én streng.
+- **Fix 1:** La til `import "./booking-v2.css"` i `app/booking-v2/layout.tsx` + `booking-v2-root`-klasse på `BookingShell.tsx` for font-tokens.
+- **Fix 2:** Calendar.tsx brukte klassen `day` mens CSS hadde `.cal-day`. Byttet til `cal-day` + `is-selected` (a11y-vennlig erstatning for `aria-selected` på `<button>`).
+- **Fix 3:** Hero på markedsside (`home-v2-client.tsx`) hadde for lett gradient-overlay på mobil. Splittet i tyngre mobil-variant (rgba 0.55–0.92) og bevart desktop med `md:`-prefix. Ghost-knapp (`web-button.tsx`) fikk sterkere mobil-kontrast.
+
+### Adaptiv treningsmotor masterplan
+Skrevet til `docs/superpowers/specs/2026-05-01-adaptiv-treningsmotor-masterplan.md` (862 linjer). Dekker:
+- **Allokerings-motor (hybrid)** — regelmotor + AI-margin-justering. Input: HCP, mål, timer/uke, hjemmebane, ClubSpeed-profil, turneringer. Output: WeeklyAllocation[] for plan-horisonten.
+- **Cold-start hybrid** — HCP-baseline + ett svakhets-spørsmål + valgfri import (GolfBox CSV / scorecard-foto / Arccos).
+- **Periodisering med turneringsoverride** — sesong-default, taper-fase 4 uker før turneringer.
+- **Hjemmebane distance-vekting** — kort hjemmebane → mer wedger (formalisert i `computeDominantBuckets()`).
+- **ClubSpeed-profil** — baseline-test ("slå gjennom baggen") gir % av CS automatisk i øvelser. Cold-start: HCP-snitt-tabell.
+- **Privacy-modell** — `CoachAssignment` styrer synlighet i CoachHQ. Remote brukere er usynlige inntil de booker eller eksplisitt deler.
+- **GDPR 4-tier samtykke** — Tier 1 nødvendig, Tier 2 default-på anonymisert, Tier 3+4 opt-in. `ConsentGrant` + `DataAccessLog`-modeller.
+- **Replanlegging** — søndagskjøring + event-drevet (test, runde, mål-endring, turnering).
+- **Coach-agent** — `lib/portal/agents/coach-plan-agent.ts` — coach beskriver i fri tekst, AI foreslår plan-diff, coach godkjenner.
+- **Kalender-aggregator** — samlet `CalendarEvent`-tabell, 4 kilder (individuell trening, gruppetrening, turneringer, bookinger).
+- **Sidebar-konsolidering** — felles 5-seksjons grunnstruktur (Dashboard, Kalender, Plan, Statistikk, Innstillinger) for PlayerHQ + CoachHQ.
+
+### Datamodell-endringer (Prisma)
+12 nye/utvidede modeller: `HomeCourse`, `ClubSpeedProfile`, `CoachAssignment`, `ConsentGrant`, `DataAccessLog`, `PlayerAllocation`, `CalendarEvent`, `TrainingGroup`, `TrainingGroupMembership`, `TournamentRegistration`, `CoachAgentSession`, utvidet `User` + `ExerciseDefinition`.
+
+### 10 implementasjons-faser for Kimi YOLO
+1. Datamodell + migrasjon (1-2t)
+2. Privacy/Consent (2-3t)
+3. Onboarding-utvidelse til 6 steg (3-4t)
+4. Allokerings-motor regelbasert (3-4t)
+5. Plan-generator (3-4t)
+6. Kalender-aggregator + UI (4-5t)
+7. Coach-agent (3-4t)
+8. Replanlegging-CRON (2-3t)
+9. Sidebar-konsolidering (2-3t)
+10. AI-laget hybrid-margin (2-3t)
+
+Total estimert: ~30 timer autonomt arbeid. Spec instruerer Kimi til commit-per-fase, lint+tsc etter hver, og `// VERIFY:`-kommentar ved tvil.
+
+### Out of scope (egne specs senere)
+- Øvelse-pipeline (scrape via Firecrawl + AI-generering)
+- Multi-AI orchestration (Manus, Kimi, OpenAI, Notion-koordinering)
+- TrackMan API (manuell upload v1)
+- Remote-bruker betalingsmodell (Pro selvbetjent)
+
+**Neste steg:**
+- Anders justerer AK-formel-placeholders i Del 3 av spec'en (HCP-baseline-vekter, periodisering-multiplikatorer, taper-vekter)
+- Start Kimi YOLO i kveld med spec som kontekst
+- Etter Kimi: review commits og kjør manuell QA-checklist fra Del 8.3
+
+**Filer:**
+- `docs/superpowers/specs/2026-05-01-adaptiv-treningsmotor-masterplan.md` (862 linjer)
+- `app/booking-v2/layout.tsx`, `app/booking-v2/booking-v2.css` (CSS-import)
+- `components/booking-v2/Calendar.tsx`, `components/booking-v2/BookingShell.tsx`
+- `components/website-v2/home-v2-client.tsx`, `components/website-v2/web-button.tsx`
+
+---
+
+
 <<<<<<< HEAD
 ## 2026-04-25 — Booking-systemet: P2, P3, waitlist-UI og reconcile-CRON
 
