@@ -18,7 +18,7 @@ const NAV_ITEMS: { key: NonNullable<WebNavProps["active"]>; label: string; href:
 
 export function WebNav({ active = "home" }: WebNavProps) {
   const [solid, setSolid] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 80);
@@ -27,21 +27,31 @@ export function WebNav({ active = "home" }: WebNavProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lukk meny ved navigasjon (route change)
+  useEffect(() => {
+    if (!menuOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
-    <nav
-      className={`fixed inset-x-0 top-0 z-[100] transition-all duration-300 ${
-        solid
-          ? "bg-white/90 shadow-[0_1px_0_rgba(10,31,24,0.06)] backdrop-blur-xl"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="flex items-center gap-9 px-4 sm:px-6 lg:px-10 py-3 lg:py-[18px]">
+    <>
+      <nav
+        className={`fixed inset-x-0 top-0 z-[100] flex items-center gap-4 md:gap-9 transition-all duration-300 ${
+          solid
+            ? "bg-white/90 px-4 sm:px-6 md:px-10 py-3 shadow-[0_1px_0_rgba(10,31,24,0.06)] backdrop-blur-xl"
+            : "bg-transparent px-4 sm:px-6 md:px-10 py-[18px]"
+        }`}
+      >
         <Link
           href="/?v=2"
           className={`flex items-center gap-2.5 text-[18px] font-extrabold tracking-[-0.02em] ${
             solid ? "text-[var(--akgolf-ink,#0A1F18)]" : "text-white"
           }`}
           style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          onClick={() => setMenuOpen(false)}
         >
           <span
             className="grid h-8 w-8 place-items-center rounded-lg text-[13px] font-extrabold tracking-[-0.04em]"
@@ -55,6 +65,7 @@ export function WebNav({ active = "home" }: WebNavProps) {
           AK Golf
         </Link>
 
+        {/* Desktop nav */}
         <div className="ml-auto hidden items-center gap-7 md:flex">
           {NAV_ITEMS.map((item) => {
             const isActive = item.key === active;
@@ -79,6 +90,7 @@ export function WebNav({ active = "home" }: WebNavProps) {
           })}
         </div>
 
+        {/* Logg inn-link (desktop) */}
         <Link
           href="/portal/login"
           className={`hidden text-[13px] font-medium md:inline-flex ${
@@ -88,74 +100,91 @@ export function WebNav({ active = "home" }: WebNavProps) {
           Logg inn
         </Link>
 
+        {/* CTA "Bli medlem" — bade desktop og mobil */}
         <Link
           href="/booking-v2?v=2"
-          className="hidden md:inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[13px] font-bold tracking-[-0.005em] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)]"
+          className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-[12px] sm:text-[13px] font-bold tracking-[-0.005em] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)] md:ml-0"
           style={{ background: "var(--akgolf-accent, #D1F843)", color: "#0A1F18" }}
         >
           Bli medlem
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.4} />
         </Link>
 
-        {/* Mobile Menu Button */}
+        {/* Hamburger-knapp — kun mobil */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`md:hidden ml-auto p-2 rounded-lg transition-colors min-h-11 min-w-11 flex items-center justify-center ${
+          type="button"
+          aria-label={menuOpen ? "Lukk meny" : "Apne meny"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+          className={`md:hidden inline-flex items-center justify-center rounded-lg p-2 transition-colors ${
             solid ? "text-[var(--akgolf-ink,#0A1F18)] hover:bg-black/5" : "text-white hover:bg-white/10"
           }`}
-          aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {menuOpen ? (
+            <X className="h-6 w-6" strokeWidth={2.2} />
+          ) : (
+            <Menu className="h-6 w-6" strokeWidth={2.2} />
+          )}
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className={`md:hidden border-t px-4 py-4 space-y-3 ${
-          solid ? "bg-white border-black/5" : "bg-[#0A1F18]/95 border-white/10 backdrop-blur-xl"
-        }`}>
-          {NAV_ITEMS.map((item) => {
-            const isActive = item.key === active;
-            return (
+      {/* Mobil-drawer-overlay */}
+      {menuOpen ? (
+        <div className="fixed inset-0 z-[99] md:hidden">
+          {/* Backdrop */}
+          <button
+            type="button"
+            aria-label="Lukk meny"
+            onClick={() => setMenuOpen(false)}
+            className="absolute inset-0"
+            style={{ background: "rgba(10,31,24,0.92)", backdropFilter: "blur(8px)" }}
+          />
+          {/* Innhold */}
+          <div
+            className="relative flex h-full flex-col items-center justify-center gap-6 px-6 pt-24 pb-12"
+            style={{ color: "white" }}
+          >
+            <ul className="flex flex-col items-center gap-5">
+              {NAV_ITEMS.map((item) => {
+                const isActive = item.key === active;
+                return (
+                  <li key={item.key}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`block text-[28px] font-bold tracking-[-0.02em] transition-colors ${
+                        isActive ? "text-[var(--akgolf-accent,#D1F843)]" : "text-white hover:text-[var(--akgolf-accent,#D1F843)]"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="mt-8 flex w-full max-w-[280px] flex-col items-stretch gap-3">
               <Link
-                key={item.key}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block py-2 text-sm font-medium ${
-                  isActive
-                    ? solid
-                      ? "font-bold text-[var(--akgolf-ink,#0A1F18)] border-l-2 border-[var(--akgolf-accent,#D1F843)] pl-3"
-                      : "font-semibold text-white border-l-2 border-[var(--akgolf-accent,#D1F843)] pl-3"
-                    : solid
-                      ? "text-[var(--akgolf-text,#324D45)] hover:text-[var(--akgolf-ink,#0A1F18)]"
-                      : "text-white/70 hover:text-white"
-                }`}
+                href="/portal/login"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-[14px] font-semibold text-white transition-colors hover:border-white hover:bg-white/5"
               >
-                {item.label}
+                Logg inn
               </Link>
-            );
-          })}
-          <div className={`pt-3 space-y-3 ${solid ? "border-t border-black/10" : "border-t border-white/10"}`}>
-            <Link
-              href="/portal/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block py-2 text-sm font-medium ${
-                solid ? "text-[var(--akgolf-text,#324D45)]" : "text-white/70"
-              }`}
-            >
-              Logg inn
-            </Link>
-            <Link
-              href="/booking-v2?v=2"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block w-full text-center rounded-full px-4 py-3 text-[13px] font-bold"
-              style={{ background: "var(--akgolf-accent, #D1F843)", color: "#0A1F18" }}
-            >
-              Bli medlem
-            </Link>
+              <Link
+                href="/booking-v2?v=2"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-[14px] font-bold tracking-[-0.005em]"
+                style={{ background: "var(--akgolf-accent, #D1F843)", color: "#0A1F18" }}
+              >
+                Bli medlem
+                <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
+              </Link>
+            </div>
           </div>
         </div>
-      )}
-    </nav>
+      ) : null}
+    </>
   );
 }
