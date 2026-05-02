@@ -1,7 +1,67 @@
 # Ryddeplan — components/ (2026-05-02)
 
-> Bygger på import-audit. Ingen filer er flyttet eller slettet ennå.
+> Bygger på import-audit. Tier 1 utført 2026-05-02 (commit `4167e8b`).
+> Tier 2 re-auditert med transitive sibling-deps (2026-05-02).
 > Hver tier krever eksplisitt godkjenning før utførelse.
+
+## Re-audit 2026-05-02 — korrigert metode (utført)
+
+Den opprinnelige Tier 2-tabellen telte kun **eksterne** importer per fil, ikke **transitive** sibling-avhengigheter. Korrigert metode (forsøk 1) fanget kun 1-hopps deps. Endelig metode: full BFS-traversal av `./relative` import-grafen fra hver entry-point, gjennom alle hopp.
+
+**Endelig resultat Tier 2:** kun **6 filer** ble reelt slettet (ikke ~30, ikke 11).
+
+| Fil | Status | Kommentar |
+|---|---|---|
+| `portal/playerhq/IconRail.tsx` | ✅ Slettet 2026-05-02 | Reelt død, ingen importerer |
+| `portal/booking/booking-hover-card.tsx` | ✅ Slettet 2026-05-02 | Erstattet av `bookinger/v2/` |
+| `portal/booking/next-booking-hero.tsx` | ✅ Slettet 2026-05-02 | Erstattet av `bookinger/v2/` |
+| `portal/booking/upcoming-booking-card.tsx` | ✅ Slettet 2026-05-02 | Erstattet av `bookinger/v2/` |
+| `portal/booking/past-booking-list.tsx` | ✅ Slettet 2026-05-02 | Erstattet av `bookinger/v2/` |
+| `portal/booking/cancellation-rules-card.tsx` | ✅ Slettet 2026-05-02 | Erstattet av `bookinger/v2/` |
+
+**Component-library.md:** 5 booking-oppføringer fjernet samtidig (linje 71-75).
+
+### Tier 2-kandidater som vise seg å være I BRUK (ikke slettet)
+
+Følgende filer ble i tidligere audit feilaktig markert som døde, men er **transitivt i bruk** via 2+ hopps sibling-import-kjeder:
+
+| Fil | Bruks-kjede |
+|---|---|
+| `treningsplan-v2/session-pill.tsx` | `week-strip` (entry) → `day-card` → `session-pill` |
+| `trening/v2/drill-card.tsx` | `training-client` (entry) → `category-section` → `drill-card` |
+| `trening/v2/category-section.tsx` | `training-client` (entry) → `category-section` |
+| `playerhq/playerhq-nav-config.ts` | `PlayerHQSidebar` (entry) → `NameList` → `playerhq-nav-config` |
+| `training/analysis-filter-types.ts` | `analysis-filter-bar` (entry) → `analysis-filter-controls` → `analysis-filter-types` |
+| `trackman-v2/{kpi-row,filter-bar,shots-table}.tsx` | `trackman-v2-client` (entry) → alle 3 søsken |
+| `treningsplan-v2/{day-card,types}.ts(x)` | `week-strip` (entry) → `day-card`/`types` |
+| `round/{hole-map,club-suggester,map-overlay-layers}.tsx` | `round-map-mode` (entry) → `hole-map` → `map-overlay-layers`; `round-map-mode` → `club-suggester` |
+| `training/{analysis-filter-controls,analysis-results,analysis-trend-chart}.tsx` | I bruk via entry-points |
+| `trening/v2/{training-hero,category-tabs,log-session-bar}.tsx` | `training-client` (entry) → alle 3 |
+| `playerhq/{NameList,hero,row-one,row-two}.tsx` | Entries `PlayerHQSidebar` og `player-hq-dashboard` → alle 4 |
+
+### Audit-metode fremover
+
+For all senere ryddearbeid: **bruk `madge` eller full BFS-traversal** av import-grafen, ikke 1-hopps grep-baserte sjekker. Eksempel:
+
+```bash
+npx madge --circular --extensions ts,tsx components/
+npx madge --image graph.svg --extensions ts,tsx app/portal/
+```
+
+Dette ville fanget alle transitive deps i én operasjon og spart oss for re-audit-iterasjonene over.
+
+| Mappe | Filer | I bruk (transitivt) | Trygt å slette | Bemerkning |
+|---|---|---|---|---|
+| `trackman-v2/` | 4 | 4 | 0 | `trackman-v2-client` bruker alle 3 søsken |
+| `treningsplan-v2/` | 4 | 3 | 1 | `session-pill.tsx` |
+| `round/` | 4 | 4 | 0 | `round-map-mode` → `hole-map` → `map-overlay-layers`; `round-map-mode` → `club-suggester` |
+| `training/` | 5 | 4 | 1 (verifiser) | `analysis-filter-types.ts` — sjekk barrel-export |
+| `trening/` | 6 | 4 | 2 | `drill-card.tsx`, `category-section.tsx` |
+| `playerhq/` | 8 | 6 | 2 | `IconRail.tsx`, `playerhq-nav-config.ts` |
+| `booking/` | 9 | 4 | 5 (verifiser) | 5 filer er dokumentert i `component-library.md` men ikke importert — krever manuell beslutning |
+| `min-plan/` | 10 | 10 | 0 | Bekreftet helt i bruk (transitive deps inni `v2/`) |
+
+**Endring fra opprinnelig plan:** Tidligere lå `min-plan/` i Tier 2 som "9 av 10 dødt". Det var feil — entry-fil importerer 9 søsken transitivt. Mappen er nå merket helt i bruk.
 
 ---
 

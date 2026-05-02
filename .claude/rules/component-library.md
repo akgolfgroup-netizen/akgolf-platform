@@ -68,11 +68,6 @@ Aktiveres via `?dashboard=bento` eller cookie `dashboard=bento`. Default fortsat
 | Komponent | Fil | Bruk |
 |---|---|---|
 | BookingStatusBadge | components/portal/booking/booking-status-badge.tsx | Status-badges semantisk |
-| BookingHoverCard | components/portal/booking/booking-hover-card.tsx | Aceternity-inspirert glow |
-| NextBookingHero | components/portal/booking/next-booking-hero.tsx | Neste booking uthevet |
-| UpcomingBookingCard | components/portal/booking/upcoming-booking-card.tsx | Kommende booking-kort |
-| PastBookingList | components/portal/booking/past-booking-list.tsx | Tidligere bookinger |
-| CancellationRulesCard | components/portal/booking/cancellation-rules-card.tsx | Avbestillingsregler |
 | WaitlistCard | app/portal/(dashboard)/bookinger/venteliste/waitlist-card.tsx | Waitlist-entry kort med posisjon, NOTIFIED-state og meld-av-knapp |
 
 ## Portal Layout-komponenter
