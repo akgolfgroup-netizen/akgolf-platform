@@ -12,6 +12,10 @@ interface Heatmap90dProps {
 }
 
 const DAY_LABELS = ["MAN", "TIR", "ONS", "TOR", "FRE", "LØR", "SØN"];
+const MONTH_LABELS = [
+  "JAN", "FEB", "MAR", "APR", "MAI", "JUN",
+  "JUL", "AUG", "SEP", "OKT", "NOV", "DES",
+];
 
 function levelClass(minutes: number): string {
   if (minutes <= 0) return "bg-surface-soft";
@@ -21,8 +25,13 @@ function levelClass(minutes: number): string {
   return "bg-success";
 }
 
+interface HeatmapCells {
+  rows: { date: Date; minutes: number }[][];
+  weekDates: Date[];
+}
+
 export function Heatmap90d({ entries }: Heatmap90dProps) {
-  const cells = useMemo(() => {
+  const { rows, weekDates }: HeatmapCells = useMemo(() => {
     const map = new Map<string, number>();
     for (const e of entries) {
       map.set(e.date, (map.get(e.date) ?? 0) + e.minutes);
@@ -38,17 +47,32 @@ export function Heatmap90d({ entries }: Heatmap90dProps) {
     const dayOfWeek = (start.getDay() + 6) % 7;
     start.setTime(start.getTime() - dayOfWeek * dayMs);
 
-    const rows: { date: Date; minutes: number }[][] = Array.from({ length: 7 }, () => []);
+    const dayRows: { date: Date; minutes: number }[][] = Array.from({ length: 7 }, () => []);
+    const weekStarts: Date[] = [];
 
     for (let w = 0; w < weeks; w++) {
+      const weekStart = new Date(start.getTime() + w * 7 * dayMs);
+      weekStarts.push(weekStart);
       for (let d = 0; d < 7; d++) {
         const date = new Date(start.getTime() + (w * 7 + d) * dayMs);
         const key = date.toISOString().slice(0, 10);
-        rows[d].push({ date, minutes: map.get(key) ?? 0 });
+        dayRows[d].push({ date, minutes: map.get(key) ?? 0 });
       }
     }
-    return rows;
+    return { rows: dayRows, weekDates: weekStarts };
   }, [entries]);
+
+  const monthMarkers = useMemo(() => {
+    const markers: { weekIndex: number; label: string }[] = [];
+    let lastMonth = -1;
+    weekDates.forEach((d, i) => {
+      if (d.getMonth() !== lastMonth) {
+        markers.push({ weekIndex: i, label: MONTH_LABELS[d.getMonth()] });
+        lastMonth = d.getMonth();
+      }
+    });
+    return markers;
+  }, [weekDates]);
 
   return (
     <div className="bg-card border border-line rounded-2xl p-5">
@@ -68,25 +92,48 @@ export function Heatmap90d({ entries }: Heatmap90dProps) {
         </div>
       </div>
       <div className="flex gap-2">
-        <div className="flex flex-col gap-0.5 font-mono text-[9px] text-ink-subtle">
+        <div className="flex flex-col gap-0.5 font-mono text-[9px] text-ink-subtle pt-[18px]">
           {DAY_LABELS.map((d) => (
             <div key={d} className="h-3 leading-3">
               {d}
             </div>
           ))}
         </div>
-        <div className="flex flex-col gap-0.5">
-          {cells.map((row, di) => (
-            <div key={di} className="flex gap-0.5">
-              {row.map((cell, wi) => (
-                <div
-                  key={wi}
-                  title={`${cell.date.toLocaleDateString("nb-NO")} · ${cell.minutes} min`}
-                  className={`w-3 h-3 rounded-sm ${levelClass(cell.minutes)}`}
-                />
-              ))}
-            </div>
-          ))}
+        <div>
+          <div
+            className="relative h-[14px] font-mono text-[9px] text-ink-muted tracking-wider mb-1"
+            style={{ width: 14 * 14 }}
+          >
+            {monthMarkers.map((m) => (
+              <span
+                key={m.weekIndex}
+                className="absolute top-0 uppercase"
+                style={{ left: m.weekIndex * 14 }}
+              >
+                {m.label}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-col gap-0.5">
+            {rows.map((row, di) => (
+              <div key={di} className="flex gap-0.5">
+                {row.map((cell, wi) => {
+                  const isRest = di === 6 && cell.minutes === 0;
+                  return (
+                    <div
+                      key={wi}
+                      title={`${cell.date.toLocaleDateString("nb-NO")} · ${cell.minutes} min`}
+                      className={
+                        isRest
+                          ? "w-3 h-3 rounded-sm border border-dashed border-line bg-surface"
+                          : `w-3 h-3 rounded-sm ${levelClass(cell.minutes)}`
+                      }
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
