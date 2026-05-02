@@ -2,6 +2,7 @@
 
 interface VolumeCardsProps {
   pyramid: { name: string; pct: number; color: string }[];
+  pyramidAiTip?: string;
   weekly: { week: string; hours: number }[];
   weeklyAvg: number;
   typeDistribution: { name: string; pct: number; color: string }[];
@@ -10,6 +11,7 @@ interface VolumeCardsProps {
 
 export function VolumeCards({
   pyramid,
+  pyramidAiTip,
   weekly,
   weeklyAvg,
   typeDistribution,
@@ -43,6 +45,14 @@ export function VolumeCards({
             </div>
           ))}
         </div>
+        {pyramidAiTip && (
+          <div
+            className="mt-3.5 rounded-lg px-2.5 py-2.5 text-xs"
+            style={{ background: "#FAF5FF", color: "#6B21A8" }}
+          >
+            <strong>AI:</strong> {pyramidAiTip}
+          </div>
+        )}
       </div>
 
       <div className="bg-card border border-line rounded-2xl p-4">
@@ -81,14 +91,51 @@ export function VolumeCards({
           treningstyper
         </div>
 
-        <div className="text-center my-2">
-          <div className="text-[28px] font-bold tracking-tight text-ink">
+        <svg viewBox="0 0 200 200" style={{ width: 160, margin: "0 auto", display: "block" }}>
+          {(() => {
+            const C = 440;
+            let acc = 0;
+            return typeDistribution.map((t) => {
+              const len = (t.pct / 100) * C;
+              const offset = -((acc / 100) * C);
+              acc += t.pct;
+              return (
+                <circle
+                  key={t.name}
+                  cx="100"
+                  cy="100"
+                  r="70"
+                  fill="none"
+                  stroke={t.color}
+                  strokeWidth="28"
+                  strokeDasharray={`${len} ${C}`}
+                  strokeDashoffset={offset}
+                  transform="rotate(-90 100 100)"
+                />
+              );
+            });
+          })()}
+          <text
+            x="100"
+            y="95"
+            textAnchor="middle"
+            fontSize="24"
+            fontWeight="700"
+            fill="var(--color-ink)"
+          >
             {totalSessions}
-          </div>
-          <div className="font-mono text-[10px] text-ink-muted tracking-wider uppercase">
-            økter
-          </div>
-        </div>
+          </text>
+          <text
+            x="100"
+            y="112"
+            textAnchor="middle"
+            fontSize="10"
+            fill="var(--color-ink-muted)"
+            fontFamily="JetBrains Mono, monospace"
+          >
+            ØKTER
+          </text>
+        </svg>
 
         <div className="grid grid-cols-2 gap-1 text-[11px] mt-2">
           {typeDistribution.map((t) => (

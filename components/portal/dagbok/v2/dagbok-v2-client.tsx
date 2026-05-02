@@ -84,11 +84,11 @@ export function DagbokV2Client({
     }
     const total = Object.values(buckets).reduce((a, b) => a + b, 0) || 1;
     const colors: Record<string, string> = {
-      Turnering: "var(--color-ink)",
-      Spill: "var(--color-primary)",
-      Slag: "var(--color-success)",
-      Teknikk: "var(--color-data-sage-light)",
-      Fysisk: "var(--color-line-soft)",
+      Turnering: "#0A1F18",
+      Spill: "#005840",
+      Slag: "#2A7D5A",
+      Teknikk: "#7FB88F",
+      Fysisk: "#B8D9BF",
     };
     return Object.entries(buckets).map(([name, mins]) => ({
       name,
@@ -96,6 +96,17 @@ export function DagbokV2Client({
       color: colors[name],
     }));
   }, [within]);
+
+  const pyramidAiTip = useMemo(() => {
+    const trainable = pyramid.filter((p) =>
+      ["Slag", "Teknikk", "Fysisk"].includes(p.name)
+    );
+    if (trainable.length === 0 || trainable.every((p) => p.pct === 0)) {
+      return "Logg flere økter for personlige AI-anbefalinger.";
+    }
+    const lowest = trainable.reduce((min, p) => (p.pct < min.pct ? p : min));
+    return `Øk ${lowest.name} med +5% for bedre balanse.`;
+  }, [pyramid]);
 
   const weekly = useMemo(() => {
     const weeks = 8;
@@ -118,14 +129,53 @@ export function DagbokV2Client({
   const weeklyAvg = weekly.reduce((s, w) => s + w.hours, 0) / Math.max(1, weekly.length);
 
   const typeDistribution = useMemo(() => {
-    const colors = ["var(--color-ink)", "var(--color-success)", "var(--color-accent)", "var(--color-ai)", "var(--color-line-soft)"];
-    const total = pyramid.reduce((s, p) => s + p.pct, 0) || 1;
-    return pyramid.map((p, i) => ({
-      name: p.name,
-      pct: Math.round((p.pct / total) * 100),
-      color: colors[i] ?? "var(--color-line-soft)",
+    const buckets = { Range: 0, Short: 0, Spill: 0, Fys: 0, Annet: 0 };
+    for (const l of within) {
+      const fa = (l.focusArea ?? "").toUpperCase();
+      const notes = (l.notes ?? "").toLowerCase();
+      if (
+        fa.includes("DRIVING") ||
+        fa.includes("TEE_TOTAL") ||
+        fa.includes("IRON_PLAY")
+      ) {
+        buckets.Range += 1;
+      } else if (
+        fa.includes("SHORT_GAME") ||
+        fa.includes("CHIPPING") ||
+        fa.includes("PITCHING") ||
+        fa.includes("BUNKER") ||
+        fa.includes("PUTTING")
+      ) {
+        buckets.Short += 1;
+      } else if (
+        fa.includes("COURSE_MANAGEMENT") ||
+        fa.includes("ROUND") ||
+        fa.includes("RUNDE") ||
+        fa.includes("SPILL") ||
+        notes.includes("runde") ||
+        notes.includes("spill")
+      ) {
+        buckets.Spill += 1;
+      } else if (fa.includes("FITNESS") || fa.includes("MENTAL")) {
+        buckets.Fys += 1;
+      } else {
+        buckets.Annet += 1;
+      }
+    }
+    const total = Object.values(buckets).reduce((a, b) => a + b, 0) || 1;
+    const colors: Record<keyof typeof buckets, string> = {
+      Range: "#0A1F18",
+      Short: "#2A7D5A",
+      Spill: "#D1F843",
+      Fys: "#AF52DE",
+      Annet: "#ECF0EF",
+    };
+    return (Object.keys(buckets) as (keyof typeof buckets)[]).map((name) => ({
+      name,
+      pct: Math.round((buckets[name] / total) * 100),
+      color: colors[name],
     }));
-  }, [pyramid]);
+  }, [within]);
 
   const timeline: TimelineEntry[] = useMemo(() => {
     return logs.slice(0, 5).map((l) => {
@@ -208,6 +258,7 @@ export function DagbokV2Client({
       <div className="mt-4">
         <VolumeCards
           pyramid={pyramid}
+          pyramidAiTip={pyramidAiTip}
           weekly={weekly.map((w) => ({ week: w.week, hours: w.hours }))}
           weeklyAvg={weeklyAvg}
           typeDistribution={typeDistribution}
