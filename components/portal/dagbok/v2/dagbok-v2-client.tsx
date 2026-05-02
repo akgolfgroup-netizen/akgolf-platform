@@ -161,6 +161,23 @@ export function DagbokV2Client({
 
   const weeklyAvg = weekly.reduce((s, w) => s + w.hours, 0) / Math.max(1, weekly.length);
 
+  const weeklyPeak = useMemo(() => {
+    if (weekly.length === 0) return null;
+    const peak = weekly.reduce((max, w) => (w.hours > max.hours ? w : max));
+    if (peak.hours <= 0) return null;
+    return peak.week;
+  }, [weekly]);
+
+  const weeklyQoq = useMemo(() => {
+    if (weekly.length < 8) return null;
+    const recent = weekly.slice(-4).reduce((s, w) => s + w.hours, 0);
+    const older = weekly.slice(0, 4).reduce((s, w) => s + w.hours, 0);
+    if (older <= 0) return null;
+    const pct = Math.round(((recent - older) / older) * 100);
+    if (pct === 0) return null;
+    return `${pct > 0 ? "+" : ""}${pct}% QoQ`;
+  }, [weekly]);
+
   const typeDistribution = useMemo(() => {
     const buckets = { Range: 0, Short: 0, Spill: 0, Fys: 0, Annet: 0 };
     for (const l of within) {
@@ -311,6 +328,8 @@ export function DagbokV2Client({
           pyramidAiTip={pyramidAiTip}
           weekly={weekly.map((w) => ({ week: w.week, hours: w.hours }))}
           weeklyAvg={weeklyAvg}
+          weeklyPeak={weeklyPeak}
+          weeklyQoq={weeklyQoq}
           typeDistribution={typeDistribution}
           totalSessions={sessions90d}
         />

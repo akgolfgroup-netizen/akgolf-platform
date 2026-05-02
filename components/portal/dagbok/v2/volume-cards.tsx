@@ -5,19 +5,26 @@ interface VolumeCardsProps {
   pyramidAiTip?: string;
   weekly: { week: string; hours: number }[];
   weeklyAvg: number;
+  weeklyPeak?: string | null;
+  weeklyQoq?: string | null;
   typeDistribution: { name: string; pct: number; color: string }[];
   totalSessions: number;
 }
+
+const WEEKLY_GOAL = 10;
 
 export function VolumeCards({
   pyramid,
   pyramidAiTip,
   weekly,
   weeklyAvg,
+  weeklyPeak,
+  weeklyQoq,
   typeDistribution,
   totalSessions,
 }: VolumeCardsProps) {
-  const maxHours = Math.max(10, ...weekly.map((w) => w.hours));
+  const maxHours = Math.max(WEEKLY_GOAL * 1.5, ...weekly.map((w) => w.hours));
+  const peakHours = weekly.reduce((m, w) => Math.max(m, w.hours), 0);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -58,30 +65,90 @@ export function VolumeCards({
       <div className="bg-card border border-line rounded-2xl p-4">
         <h3 className="m-0 mb-2.5 text-[13px] font-bold text-ink">Ukentlig timer</h3>
         <div className="font-mono text-[9px] text-ink-subtle tracking-[0.14em] mb-3.5 uppercase">
-          Mål 10t · siste {weekly.length} uker
+          Mål {WEEKLY_GOAL}t · siste {weekly.length} uker
         </div>
-        <div className="flex items-end gap-1.5 h-28">
-          {weekly.map((w) => {
-            const h = Math.max(8, (w.hours / maxHours) * 100);
-            const above = w.hours >= 10;
+        <svg viewBox="0 0 300 140" style={{ width: "100%" }}>
+          {(() => {
+            const baseY = 120;
+            const topY = 10;
+            const range = baseY - topY;
+            const goalY = baseY - (WEEKLY_GOAL / maxHours) * range;
+            const colWidth = 290 / Math.max(1, weekly.length);
+            const barWidth = Math.min(20, colWidth * 0.55);
             return (
-              <div key={w.week} className="flex-1 flex flex-col items-center gap-1">
-                <div
-                  title={`${w.week}: ${w.hours.toFixed(1)}t`}
-                  className="w-full rounded-t-sm"
-                  style={{
-                    height: `${h}%`,
-                    background: above ? "var(--color-success)" : "var(--color-data-sage-light)",
-                  }}
+              <>
+                <line
+                  x1="0"
+                  y1={goalY}
+                  x2="300"
+                  y2={goalY}
+                  stroke="#D1F843"
+                  strokeDasharray="3,3"
+                  strokeWidth="1"
                 />
-                <div className="font-mono text-[9px] text-ink-subtle">{w.week}</div>
-              </div>
+                <text
+                  x="295"
+                  y={goalY - 4}
+                  textAnchor="end"
+                  fontSize="9"
+                  fill="var(--color-ink-muted)"
+                  fontFamily="JetBrains Mono, monospace"
+                >
+                  MÅL {WEEKLY_GOAL}t
+                </text>
+                {weekly.map((w, i) => {
+                  const x = 10 + i * colWidth;
+                  const h = (w.hours / maxHours) * range;
+                  const y = baseY - h;
+                  const isPeak = w.hours > 0 && w.hours === peakHours;
+                  const aboveGoal = w.hours >= WEEKLY_GOAL;
+                  const fill = isPeak
+                    ? "#2A7D5A"
+                    : aboveGoal
+                      ? "#7FB88F"
+                      : "#B8D9BF";
+                  return (
+                    <g key={w.week}>
+                      <rect
+                        x={x}
+                        y={y}
+                        width={barWidth}
+                        height={Math.max(2, h)}
+                        fill={fill}
+                        rx="2"
+                      >
+                        <title>{`${w.week}: ${w.hours.toFixed(1)}t`}</title>
+                      </rect>
+                      <text
+                        x={x + barWidth / 2}
+                        y="135"
+                        textAnchor="middle"
+                        fontSize="9"
+                        fill="var(--color-ink-subtle)"
+                        fontFamily="JetBrains Mono, monospace"
+                      >
+                        {w.week}
+                      </text>
+                    </g>
+                  );
+                })}
+              </>
             );
-          })}
-        </div>
-        <div className="text-xs text-ink-muted mt-2.5">
+          })()}
+        </svg>
+        <div className="text-xs text-ink-muted mt-1.5">
           Snitt:{" "}
           <strong className="text-ink">{weeklyAvg.toFixed(1)} t/uke</strong>
+          {weeklyPeak ? <> · peak {weeklyPeak}</> : null}
+          {weeklyQoq ? (
+            <>
+              {" "}
+              ·{" "}
+              <span style={{ color: weeklyQoq.startsWith("-") ? "#B84233" : "#2A7D5A" }}>
+                {weeklyQoq}
+              </span>
+            </>
+          ) : null}
         </div>
       </div>
 
