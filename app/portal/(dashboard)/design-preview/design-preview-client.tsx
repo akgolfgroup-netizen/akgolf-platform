@@ -75,11 +75,10 @@ export function DesignPreviewClient() {
         </div>
       </PatternSection>
 
-      {/* P-03 Night Surface */}
       <PatternSection
         code="P-03"
         title="Night Surface"
-        description="Mørk variant for data-first-skjermer (TrackMan, CoachHQ)."
+        description="Mørk variant for data-first-skjermer (TrackMan, Mission Control)."
       >
         <NightSurface
           variant="ambient"

@@ -1,98 +1,98 @@
-import type { Metadata } from "next";
 import {
   getWeekEvents,
   getActivePlan,
   getCurrentPeriodization,
+  updateSessionTime,
   moveSessionToDay,
+  deleteSession,
+  logLiveSession,
   createSessionForWeek,
   addExerciseToSession,
   updateSession,
   analyzePlanDeviation,
   adjustPlanVolume,
-  listAvailableFacilities,
-  listMyPlans,
-  archivePlan,
-  activatePlan,
-  deletePlan,
-  duplicateOwnPlan,
-  duplicateSession,
-  reorderSessionsInDay,
-  toggleRestDay,
-  dismissPlanAdjustment,
-  checkSessionConflicts,
-  getPlanGoalsProgress,
-  setPlanPlayerComment,
-  listMyPendingSuggestions,
-  acceptSuggestion,
-  rejectSuggestion,
-  listStandardTemplates,
   applyTemplateToWeek,
+  listStandardTemplates,
 } from "./actions";
 import type { TemplateId } from "@/lib/portal/training/standard-templates";
+import { TrainingPlannerV3 } from "./treningsplan-v3-client";
+import { TrainingPlanViewer } from "./training-plan-viewer";
 import { TreningsplanPlanner } from "./treningsplan-planner";
-import { TreningsplanOverview } from "./treningsplan-overview";
-import { buildLibraryItems, computeWeeklyTargets, getActiveCoachName } from "./overview-helpers";
-
-export const metadata: Metadata = {
-  title: "Treningsplan | AK Golf",
-  description: "Din personlige treningsplan hos AK Golf.",
-};
 
 // ---------------------------------------------------------------------
 // Server component
 // ---------------------------------------------------------------------
 
 interface TreningsplanPageProps {
-  searchParams: Promise<{ week?: string; modus?: string }>;
+  searchParams: Promise<{ week?: string; view?: string }>;
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
-  const { week, modus } = await searchParams;
+  const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
-  const isEditor = modus === "editor";
+  const activeView = view ?? "planner";
 
-  // Parallel fetch all independent data sources (Vercel best practice: async-parallel)
-  const [plan, periodization, events, historyEvents, facilities, myPlans, goalsSummary] =
-    await Promise.all([
-      getActivePlan(),
-      getCurrentPeriodization(),
-      getWeekEvents(weekOffset),
-      getWeekEvents(weekOffset - 1),
-      listAvailableFacilities(),
-      listMyPlans(),
-      getPlanGoalsProgress(),
-    ]);
-
-  const planId = plan?.id ?? null;
-
-  const coachFeedback = plan?.coachFeedback
-    ? {
-        text: plan.coachFeedback as string,
-        at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
-      }
-    : null;
-
-  const playerComment = plan?.playerComment
-    ? {
-        text: plan.playerComment as string,
-        at: plan.playerCommentAt ? new Date(plan.playerCommentAt).toISOString() : null,
-      }
-    : null;
-
-  const [pendingSuggestions, templates, adjustmentSuggestion, coachName] = await Promise.all([
-    listMyPendingSuggestions(),
-    listStandardTemplates(),
-    analyzePlanDeviation(),
-    getActiveCoachName(),
-  ]);
+  const plan = await getActivePlan();
+  const periodization = await getCurrentPeriodization();
+  const events = await getWeekEvents(weekOffset);
+  const historyEvents = await getWeekEvents(weekOffset - 1);
 
   // Server action wrappers bound to the user context
+  async function handleSaveEvent(event: {
+    id: string;
+    date: string;
+    startH: number;
+    startM: number;
+    dur: number;
+    title: string;
+    focus: string;
+    exercises: unknown[];
+    done: boolean;
+  }) {
+    "use server";
+    await updateSessionTime(event.id, event.startH, event.startM, event.dur);
+  }
+
+  async function handleDeleteEvent(eventId: string) {
+    "use server";
+    await deleteSession(eventId);
+  }
+
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
     "use server";
     const d = new Date(date);
     const day = d.getDay();
     const dayOfWeek = day === 0 ? 7 : day;
     await moveSessionToDay(eventId, dayOfWeek, startH, startM);
+  }
+
+  async function handleResizeEvent(eventId: string, durationMinutes: number) {
+    "use server";
+    const ev = events.find((e) => e.id === eventId);
+    await updateSessionTime(eventId, ev?.startH ?? 9, ev?.startM ?? 0, durationMinutes);
+  }
+
+  async function handleSaveLiveSession(data: {
+    durationMinutes: number;
+    focusArea: string | null;
+    exercises: {
+      id: string;
+      name: string;
+      pyramid: string;
+      area: string;
+      lPhase: string | null;
+      cs: string | null;
+      m: string | null;
+      pr: string | null;
+      pFrom: string | null;
+      pTo: string | null;
+      slagFocus: string[];
+      baller: number;
+      bevegelser: number;
+    }[];
+  }) {
+    "use server";
+    await logLiveSession(data);
   }
 
   async function handleCreateSession(data: {
@@ -102,13 +102,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
-    area?: string;
-    repsTotal?: number;
     startH?: number;
     startM?: number;
-    facilityId?: string;
-    lPhases?: string[];
-    lifeFocus?: string[];
   }) {
     "use server";
     return createSessionForWeek(data);
@@ -117,18 +112,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   async function handleAddExerciseToSession(
     sessionId: string,
     exercise: {
-      id?: string;
+      id: string;
       name: string;
       description?: string;
-      pyramid?: string;
-      area?: string;
+      pyramid: string;
+      area: string;
       lPhase?: string;
-      durationMinutes?: number;
-      repsWithBall?: number;
-      repsWithoutBall?: number;
-      focus?: string;
-      notes?: string;
-      testNumber?: number;
     }
   ) {
     "use server";
@@ -142,9 +131,6 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
-      area?: string | null;
-      repsTotal?: number | null;
-      facilityId?: string | null;
     }
   ) {
     "use server";
@@ -156,147 +142,74 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return adjustPlanVolume(factor);
   }
 
-  async function handleArchivePlan(planId: string) {
+  async function handleApplyTemplate(templateId: TemplateId, woffset: number) {
     "use server";
-    return archivePlan(planId);
+    return applyTemplateToWeek(woffset, templateId);
   }
 
-  async function handleActivatePlan(planId: string) {
-    "use server";
-    return activatePlan(planId);
-  }
+  const standardTemplates = await listStandardTemplates();
 
-  async function handleDeletePlan(planId: string) {
-    "use server";
-    return deletePlan(planId);
-  }
-
-  async function handleDuplicatePlan(planId: string) {
-    "use server";
-    return duplicateOwnPlan(planId);
-  }
-
-  async function handleDuplicateSession(sessionId: string) {
-    "use server";
-    return duplicateSession(sessionId);
-  }
-
-  async function handleReorderSessions(
-    weekId: string,
-    dayOfWeek: number,
-    sessionIds: string[]
-  ) {
-    "use server";
-    return reorderSessionsInDay(weekId, dayOfWeek, sessionIds);
-  }
-
-  async function handleToggleRestDay(weekId: string, dayOfWeek: number) {
-    "use server";
-    return toggleRestDay(weekId, dayOfWeek);
-  }
-
-  async function handleDismissAdjustment(planId: string) {
-    "use server";
-    return dismissPlanAdjustment(planId);
-  }
-
-  async function handleCheckConflicts(input: {
-    date: string;
-    startH: number;
-    startM: number;
-    durationMinutes: number;
-    excludeSessionId?: string;
-  }) {
-    "use server";
-    return checkSessionConflicts(input);
-  }
-
-  async function handleSavePlayerComment(text: string | null) {
-    "use server";
-    if (!planId) return { success: false, error: "Ingen aktiv plan" };
-    return setPlanPlayerComment(planId, text);
-  }
-
-  async function handleAcceptSuggestion(suggestionId: string) {
-    "use server";
-    return acceptSuggestion(suggestionId);
-  }
-
-  async function handleRejectSuggestion(suggestionId: string, reason?: string) {
-    "use server";
-    return rejectSuggestion(suggestionId, reason);
-  }
-
-  async function handleApplyTemplate(templateId: string, offset: number) {
-    "use server";
-    return applyTemplateToWeek(offset, templateId as TemplateId);
-  }
+  const templates = [
+    { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
+    { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
+    { id: "t3", title: "Driving range", dur: 45, focus: "SLAG", exercises: [] },
+    { id: "t4", title: "Styrke-okt", dur: 50, focus: "FYS", exercises: [] },
+    { id: "t5", title: "Spill 9 hull", dur: 120, focus: "SPILL", exercises: [] },
+    { id: "t6", title: "Svinganalyse", dur: 40, focus: "TEK", exercises: [] },
+  ];
 
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
   const doneCount = events.filter((e) => e.done).length;
   const adherencePct = sessionCount > 0 ? Math.round((doneCount / sessionCount) * 100) : 0;
 
-  // ─── Default: ny lese-modus (Brand Guide V2.0) ────────────────────
-  if (!isEditor) {
-    const targets = computeWeeklyTargets(periodization);
-    const library = buildLibraryItems(events);
-    const pyramidDist = plan?.pyramidDistribution
-      ? (plan.pyramidDistribution as Record<string, number>)
-      : null;
+  const adjustmentSuggestion = await analyzePlanDeviation();
+
+  if (activeView === "planner") {
     return (
-      <TreningsplanOverview
+      <TreningsplanPlanner
         weekOffset={weekOffset}
-        hasPlan={!!planId}
-        events={events}
-        totalMinutes={totalMinutes}
-        weeklyVolumeTargetMinutes={targets.volumeMinutes}
+        planId={plan?.id ?? null}
         sessionCount={sessionCount}
-        weeklySessionTarget={targets.sessions}
-        doneCount={doneCount}
-        coachName={coachName}
-        library={library}
-        pyramidDistribution={pyramidDist}
+        totalMinutes={totalMinutes}
+        adherencePct={adherencePct}
+        periodization={periodization}
+        events={events}
+        historyEvents={historyEvents}
+        onCreateSession={handleCreateSession}
+        onAddExerciseToSession={handleAddExerciseToSession}
+        onUpdateSession={handleUpdateSession}
+        onMoveEvent={handleMoveEvent}
+        onResizeEvent={handleResizeEvent}
+        adjustmentSuggestion={adjustmentSuggestion}
+        onAdjustPlan={handleAdjustPlan}
+        templates={standardTemplates}
+        onApplyTemplate={handleApplyTemplate}
       />
     );
   }
 
-  // ─── Editor (?modus=editor) ───────────────────────────────────────
   return (
-    <TreningsplanPlanner
-      weekOffset={weekOffset}
-      planId={planId}
-      sessionCount={sessionCount}
-      totalMinutes={totalMinutes}
-      adherencePct={adherencePct}
-      periodization={periodization}
-      events={events}
-      historyEvents={historyEvents}
-      facilities={facilities}
-      myPlans={myPlans}
-      goalsSummary={goalsSummary}
-      coachFeedback={coachFeedback}
-      playerComment={playerComment}
-      onSavePlayerComment={handleSavePlayerComment}
-      pendingSuggestions={pendingSuggestions}
-      onAcceptSuggestion={handleAcceptSuggestion}
-      onRejectSuggestion={handleRejectSuggestion}
-      templates={templates}
-      onApplyTemplate={handleApplyTemplate}
-      onCreateSession={handleCreateSession}
-      onAddExerciseToSession={handleAddExerciseToSession}
-      onUpdateSession={handleUpdateSession}
-      adjustmentSuggestion={adjustmentSuggestion}
-      onAdjustPlan={handleAdjustPlan}
-      onArchivePlan={handleArchivePlan}
-      onActivatePlan={handleActivatePlan}
-      onDeletePlan={handleDeletePlan}
-      onDuplicatePlan={handleDuplicatePlan}
-      onDuplicateSession={handleDuplicateSession}
-      onReorderSessions={handleReorderSessions}
-      onToggleRestDay={handleToggleRestDay}
-      onDismissAdjustment={handleDismissAdjustment}
-      onCheckConflicts={handleCheckConflicts}
-    />
+    <div className="space-y-6">
+      {activeView === "calendar" ? (
+        <TrainingPlannerV3
+          events={events}
+          templates={templates}
+          planId={plan?.id ?? null}
+          weekOffset={weekOffset}
+          onSaveEvent={handleSaveEvent}
+          onDeleteEvent={handleDeleteEvent}
+          onMoveEvent={handleMoveEvent}
+          onResizeEvent={handleResizeEvent}
+          onSaveLiveSession={handleSaveLiveSession}
+        />
+      ) : (
+        <TrainingPlanViewer
+          events={events}
+          weekOffset={weekOffset}
+          planId={plan?.id ?? null}
+        />
+      )}
+    </div>
   );
 }

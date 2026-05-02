@@ -17,8 +17,6 @@ import {
   type SyncResult,
 } from "./actions";
 import { SyncSection } from "./sync-section";
-import { GroupSessionsPanel } from "@/components/admin/grupper/group-sessions-panel";
-import { GroupPlanPanel } from "@/components/admin/grupper/group-plan-panel";
 
 const PERIOD_LABELS: Record<string, string> = {
   grunnperiode: "Grunnperiode",
@@ -27,9 +25,9 @@ const PERIOD_LABELS: Record<string, string> = {
 };
 
 const PERIOD_COLORS: Record<string, string> = {
-  grunnperiode: "bg-[rgba(107,177,255,0.18)] text-[#6BB1FF]",
-  spesialiseringsperiode: "bg-[rgba(232,185,103,0.20)] text-[#E8B967]",
-  turneringsperiode: "bg-[rgba(184,66,51,0.20)] text-[#F49283]",
+  grunnperiode: "bg-info/10 text-info",
+  spesialiseringsperiode: "bg-warning/10 text-warning",
+  turneringsperiode: "bg-error/10 text-error",
 };
 
 interface GroupDetailModalProps {
@@ -97,24 +95,21 @@ export function GroupDetailModal({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+      <div className="absolute inset-0 bg-on-surface/50" onClick={onClose} />
       <motion.div
-        className="relative bg-[#0D2E23] border border-[#1a4a3a] rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 text-white"
+        className="relative bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-card-hover p-6"
         initial={{ scale: 0.95, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.95, y: 20 }}
       >
-        <div className="flex items-start justify-between border-b border-[#1a4a3a] pb-4 mb-4">
+        <div className="flex items-start justify-between">
           <div>
-            <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-accent">
-              / GRUPPER · DETALJ
-            </div>
-            <h2 className="font-inter-tight text-[24px] font-bold leading-tight tracking-tight text-white mt-1">
+            <h2 className="font-headline text-lg font-semibold text-on-surface">
               {group.name}
             </h2>
             <Badge
               className={cn(
-                "mt-2 text-[9px] uppercase font-mono tracking-[0.14em] font-bold",
+                "mt-1 text-[10px] uppercase",
                 PERIOD_COLORS[group.periodType],
               )}
             >
@@ -123,7 +118,7 @@ export function GroupDetailModal({
           </div>
           <button
             onClick={() => onDelete(group.id)}
-            className="p-2 rounded-lg hover:bg-[rgba(184,66,51,0.20)] text-[#F49283] transition-colors"
+            className="p-2 rounded-lg hover:bg-error/10 text-error transition-colors"
             title="Slett gruppe"
           >
             <Icon name="delete" size={16} />
@@ -131,20 +126,20 @@ export function GroupDetailModal({
         </div>
 
         {group.description && (
-          <p className="text-[13px] text-white/70 leading-[1.55] mb-4">
+          <p className="text-sm text-on-surface-variant mt-3">
             {group.description}
           </p>
         )}
 
         <div className="mt-6">
-          <h3 className="text-[14px] font-bold text-white mb-3">
+          <h3 className="text-sm font-semibold text-on-surface mb-2">
             Legg til spiller
           </h3>
           <div className="flex gap-2">
             <select
               value={selectedPlayerId}
               onChange={(e) => setSelectedPlayerId(e.target.value)}
-              className="flex-1 px-3 py-2 rounded-lg bg-black/30 border border-white/10 text-sm text-white focus:outline-none focus:border-accent"
+              className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">Velg spiller...</option>
               {availablePlayers.map((p) => (
@@ -157,7 +152,6 @@ export function GroupDetailModal({
               size="sm"
               onClick={handleAddMember}
               disabled={!selectedPlayerId || isPending}
-              className="bg-primary hover:bg-[#00422F] text-white border-primary"
             >
               <Icon name="person_add" size={16} className="mr-1" />
               Legg til
@@ -166,53 +160,39 @@ export function GroupDetailModal({
         </div>
 
         <div className="mt-6">
-          <h3 className="text-[14px] font-bold text-white mb-3 flex items-center justify-between">
-            <span>Roster</span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/50">
-              {members.length} SPILLERE
-            </span>
+          <h3 className="text-sm font-semibold text-on-surface mb-2">
+            Medlemmer ({members.length})
           </h3>
-          <div className="space-y-1.5">
-            {members.map((m) => {
-              const initials =
-                (m.name ?? m.email ?? "??")
-                  .split(/\s+/)
-                  .slice(0, 2)
-                  .map((w) => w[0]?.toUpperCase() ?? "")
-                  .join("") || "??";
-              return (
-                <div
-                  key={m.id}
-                  className="flex items-center justify-between rounded-lg bg-black/20 px-3 py-2.5"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="grid h-8 w-8 place-items-center rounded-full text-[11px] font-bold text-[#0A1F18]"
-                      style={{ background: "#6FCBA1" }}
-                    >
-                      {initials}
-                    </div>
-                    <div>
-                      <div className="text-[13px] font-semibold text-white">
-                        {m.name ?? m.email ?? m.userId}
-                      </div>
-                      <div className="font-mono text-[9px] uppercase tracking-[0.10em] text-white/50">
-                        {m.role}
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleRemoveMember(m.userId)}
-                    className="p-1.5 rounded-md hover:bg-[rgba(184,66,51,0.20)] text-[#F49283] transition-colors"
-                  >
-                    <Icon name="close" size={16} />
-                  </button>
+          <div className="space-y-2">
+            {members.map((m) => (
+              <div
+                key={m.id}
+                className="flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2"
+              >
+                <div className="flex items-center gap-2">
+                  <Icon
+                    name="person"
+                    size={16}
+                    className="text-on-surface-variant"
+                  />
+                  <span className="text-sm text-on-surface">
+                    {m.name ?? m.email ?? m.userId}
+                  </span>
+                  <span className="text-[10px] uppercase px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">
+                    {m.role}
+                  </span>
                 </div>
-              );
-            })}
+                <button
+                  onClick={() => handleRemoveMember(m.userId)}
+                  className="p-1.5 rounded-md hover:bg-error/10 text-error transition-colors"
+                >
+                  <Icon name="close" size={16} />
+                </button>
+              </div>
+            ))}
           </div>
           {members.length === 0 && (
-            <p className="text-[13px] text-white/55">
+            <p className="text-sm text-on-surface-variant">
               Ingen medlemmer ennå.
             </p>
           )}
@@ -231,24 +211,8 @@ export function GroupDetailModal({
           />
         )}
 
-        <div className="mt-6 pt-6 border-t border-[#1a4a3a]">
-          <GroupPlanPanel
-            groupId={group.id}
-            hasActivePlan={!!groupPlan}
-            onPlanCreated={onMembersChanged}
-          />
-        </div>
-
-        <div className="mt-6 pt-6 border-t border-[#1a4a3a]">
-          <GroupSessionsPanel groupId={group.id} />
-        </div>
-
         <div className="mt-6">
-          <Button
-            variant="secondary"
-            className="w-full bg-white/5 border-white/10 text-white hover:bg-white/10"
-            onClick={onClose}
-          >
+          <Button variant="secondary" className="w-full" onClick={onClose}>
             Lukk
           </Button>
         </div>

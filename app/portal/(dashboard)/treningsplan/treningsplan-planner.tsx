@@ -10,12 +10,12 @@
  * Data-kobling i B-1.2, drag-drop i B-1.4.
  */
 
-import { useState, useEffect, useTransition, useMemo } from "react";
+import { useState, useEffect, useTransition } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { addWeeks, format, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
-import { cn } from "@/lib/portal/utils/cn";
 import {
   PYRAMIDE,
   TRENINGSOMRADER,
@@ -26,42 +26,21 @@ import {
 import {
   searchExercises,
   createUserExercise,
-  toggleFavoriteExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
-import {
-  searchTestsAsExercises,
-  type TestAsExercise,
-} from "./actions";
-import {
-  getTestCategoryLabel,
-  getTestGroup,
-} from "@/lib/portal/tests/test-battery";
+import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
 } from "./components/plan-adjustment-banner";
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
-import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
-import { PlanSuggestionInbox } from "@/components/portal/treningsplan/plan-suggestion-inbox";
-import {
-  ExerciseConfigPopover,
-  type ExerciseConfigDraft,
-  type ExerciseConfigResult,
-} from "@/components/portal/treningsplan/exercise-config-popover";
-import {
-  SessionContextMenu,
-  type SessionContextMenuItem,
-} from "@/components/portal/treningsplan/session-context-menu";
 import { EmptyState } from "@/components/ui/empty-state";
-import { PlanGoalsCard } from "./components/plan-goals-card";
-import type { PlanGoalsSummary } from "./actions";
-import type { PlanSuggestionView } from "@/lib/portal/training/plan-suggestion-types";
+import { cn } from "@/lib/portal/utils/cn";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
-type SidebarTab = "exercises" | "templates" | "history" | "tests";
+type SidebarTab = "exercises" | "templates" | "history";
 
 interface V2Event {
   id: string;
@@ -70,14 +49,7 @@ interface V2Event {
   startM: number;
   dur: number;
   title: string;
-  /** Pyramide-kode (FYS/TEK/SLAG/SPILL/TURN) */
   focus: string;
-  /** Treningsområde (PUTT, CHIP, IRON_50_100, ...) */
-  area?: string | null;
-  /** Total reps for økten */
-  repsTotal?: number | null;
-  description?: string | null;
-  facilityId?: string | null;
   exercises: unknown[];
   done: boolean;
   isGroupSession?: boolean;
@@ -92,31 +64,8 @@ interface PeriodizationInfo {
   focusAllocation: Record<string, number> | null;
 }
 
-export interface FacilityOption {
-  id: string;
-  name: string;
-  slug: string;
-  locationName: string | null;
-}
-
-export interface MyPlanSummary {
-  id: string;
-  title: string;
-  isActive: boolean;
-  aiGenerated: boolean;
-  startDate: string;
-  endDate: string;
-  weekCount: number;
-}
-
-export interface ConflictDetailUI {
-  kind: "BOOKING" | "TRAINING_SESSION";
-  title: string;
-  message: string;
-}
-
-export interface TemplateSummary {
-  id: string;
+interface TemplateSummary {
+  id: TemplateId;
   title: string;
   description: string;
   iconName: string;
@@ -127,33 +76,12 @@ export interface TemplateSummary {
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
-  templates?: TemplateSummary[];
-  onApplyTemplate?: (
-    templateId: string,
-    weekOffset: number
-  ) => Promise<{ success: boolean; createdCount?: number; error?: string }>;
   sessionCount?: number;
   totalMinutes?: number;
   adherencePct?: number;
   periodization?: PeriodizationInfo | null;
   events: V2Event[];
   historyEvents: V2Event[];
-  facilities?: FacilityOption[];
-  myPlans?: MyPlanSummary[];
-  goalsSummary?: PlanGoalsSummary | null;
-  coachFeedback?: { text: string; at: string | null } | null;
-  playerComment?: { text: string; at: string | null } | null;
-  onSavePlayerComment?: (
-    text: string | null
-  ) => Promise<{ success: boolean; error?: string }>;
-  pendingSuggestions?: PlanSuggestionView[];
-  onAcceptSuggestion?: (
-    suggestionId: string
-  ) => Promise<{ success: boolean; error?: string }>;
-  onRejectSuggestion?: (
-    suggestionId: string,
-    reason?: string
-  ) => Promise<{ success: boolean; error?: string }>;
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -161,29 +89,18 @@ interface TreningsplanPlannerProps {
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
-    area?: string;
-    repsTotal?: number;
     startH?: number;
     startM?: number;
-    facilityId?: string;
-    lPhases?: string[];
-    lifeFocus?: string[];
   }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
   onAddExerciseToSession: (
     sessionId: string,
     exercise: {
-      id?: string;
+      id: string;
       name: string;
       description?: string;
-      pyramid?: string;
-      area?: string;
+      pyramid: string;
+      area: string;
       lPhase?: string;
-      durationMinutes?: number;
-      repsWithBall?: number;
-      repsWithoutBall?: number;
-      focus?: string;
-      notes?: string;
-      testNumber?: number;
     }
   ) => Promise<{ success: boolean }>;
   onUpdateSession: (
@@ -193,9 +110,6 @@ interface TreningsplanPlannerProps {
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
-      area?: string | null;
-      repsTotal?: number | null;
-      facilityId?: string | null;
     }
   ) => Promise<{ success: boolean }>;
   onMoveEvent?: (
@@ -207,59 +121,31 @@ interface TreningsplanPlannerProps {
   onResizeEvent?: (eventId: string, durationMinutes: number) => Promise<void>;
   adjustmentSuggestion?: AdjustmentSuggestion | null;
   onAdjustPlan?: (factor: number) => Promise<{ success: boolean; adjustedCount?: number; error?: string }>;
-  onArchivePlan?: (planId: string) => Promise<{ success: boolean }>;
-  onActivatePlan?: (planId: string) => Promise<{ success: boolean }>;
-  onDeletePlan?: (planId: string) => Promise<{ success: boolean }>;
-  onDuplicatePlan?: (planId: string) => Promise<{ success: boolean; planId?: string }>;
-  onDuplicateSession?: (sessionId: string) => Promise<{ success: boolean; sessionId?: string }>;
-  onReorderSessions?: (
-    weekId: string,
-    dayOfWeek: number,
-    sessionIds: string[]
-  ) => Promise<{ success: boolean }>;
-  onToggleRestDay?: (weekId: string, dayOfWeek: number) => Promise<{ success: boolean; isRest: boolean }>;
-  onDismissAdjustment?: (planId: string) => Promise<{ success: boolean; expiresAt?: string }>;
-  onCheckConflicts?: (input: {
-    date: string;
-    startH: number;
-    startM: number;
-    durationMinutes: number;
-    excludeSessionId?: string;
-  }) => Promise<{ hasConflict: boolean; conflicts: ConflictDetailUI[] }>;
+  templates?: TemplateSummary[];
+  onApplyTemplate?: (
+    templateId: TemplateId,
+    weekOffset: number,
+  ) => Promise<{ success: boolean; createdCount: number; error?: string }>;
 }
 
 export function TreningsplanPlanner({
   weekOffset,
   planId,
-  templates = [],
-  onApplyTemplate,
   sessionCount = 0,
   totalMinutes = 0,
   adherencePct = 0,
   periodization,
   events,
   historyEvents,
-  facilities = [],
-  myPlans = [],
-  goalsSummary,
-  coachFeedback,
-  playerComment,
-  onSavePlayerComment,
-  pendingSuggestions = [],
-  onAcceptSuggestion,
-  onRejectSuggestion,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
+  onMoveEvent,
+  onResizeEvent,
   adjustmentSuggestion,
   onAdjustPlan,
-  onArchivePlan,
-  onActivatePlan,
-  onDeletePlan,
-  onDuplicatePlan,
-  onDuplicateSession,
-  onDismissAdjustment,
-  onCheckConflicts,
+  templates = [],
+  onApplyTemplate,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -273,70 +159,6 @@ export function TreningsplanPlanner({
   const [editEvent, setEditEvent] = useState<V2Event | null>(null);
   const [adjustModalOpen, setAdjustModalOpen] = useState(false);
   const [planCreatorOpen, setPlanCreatorOpen] = useState(false);
-
-  // Drag-drop popover for konfigurasjon av nye øvelser på en økt
-  const [exerciseConfig, setExerciseConfig] = useState<{
-    sessionId: string;
-    draft: ExerciseConfigDraft;
-  } | null>(null);
-
-  // Høyreklikk-meny på en eksisterende økt
-  const [contextMenu, setContextMenu] = useState<{
-    x: number;
-    y: number;
-    event: V2Event;
-  } | null>(null);
-
-  const handleEventContextMenu = (
-    e: React.MouseEvent,
-    event: V2Event,
-  ) => {
-    if (event.isGroupSession) {
-      // Gruppeøkter kan ikke dupliseres — la nettleserens egen meny åpne
-      return;
-    }
-    e.preventDefault();
-    e.stopPropagation();
-    setContextMenu({ x: e.clientX, y: e.clientY, event });
-  };
-
-  const buildContextMenuItems = (event: V2Event): SessionContextMenuItem[] => {
-    const items: SessionContextMenuItem[] = [];
-    if (onDuplicateSession) {
-      items.push({
-        id: "duplicate",
-        label: "Dupliser",
-        iconName: "content_copy",
-        onSelect: async () => {
-          const result = await onDuplicateSession(event.id);
-          if (result.success) {
-            router.refresh();
-          }
-        },
-      });
-    }
-    return items;
-  };
-
-  const handleConfirmExerciseConfig = async (config: ExerciseConfigResult) => {
-    if (!exerciseConfig) return;
-    const { sessionId, draft } = exerciseConfig;
-    await onAddExerciseToSession(sessionId, {
-      id: draft.id,
-      name: draft.name,
-      description: draft.description,
-      pyramid: draft.pyramid,
-      area: draft.area,
-      lPhase: draft.lPhase,
-      durationMinutes: config.durationMinutes,
-      repsWithBall: config.repsWithBall,
-      repsWithoutBall: config.repsWithoutBall,
-      focus: config.focus,
-      notes: config.notes,
-    });
-    setExerciseConfig(null);
-    window.location.reload();
-  };
 
   const showEmptyState = !planId;
 
@@ -465,25 +287,6 @@ export function TreningsplanPlanner({
             <Icon name="auto_awesome" size={14} />
             Ny plan
           </button>
-          {planId && (
-            <a
-              href={`/api/portal/training/export-pdf/${planId}`}
-              className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-colors"
-              title="Last ned PDF"
-            >
-              <Icon name="picture_as_pdf" size={14} />
-              PDF
-            </a>
-          )}
-          {myPlans.length > 0 && (
-            <PlansMenu
-              plans={myPlans}
-              onArchive={onArchivePlan}
-              onActivate={onActivatePlan}
-              onDelete={onDeletePlan}
-              onDuplicate={onDuplicatePlan}
-            />
-          )}
         </div>
       </header>
 
@@ -491,9 +294,9 @@ export function TreningsplanPlanner({
         <EmptyState
           iconName="event_note"
           title="Du har ingen aktiv treningsplan"
-          description="Velg en standardmal eller bygg planen din helt selv."
+          description="Velg hvordan du vil starte: la AI lage en plan basert på din profil, velg en standardmal, eller bygg helt selv."
           actionLabel="Lag treningsplan"
-          actionIconName="add"
+          actionIconName="auto_awesome"
           onAction={() => setPlanCreatorOpen(true)}
         />
       )}
@@ -502,11 +305,7 @@ export function TreningsplanPlanner({
       {adjustmentSuggestion && adjustmentSuggestion.recommendation !== "none" && (
         <PlanAdjustmentBanner
           suggestion={adjustmentSuggestion}
-          onDismiss={async () => {
-            if (planId && onDismissAdjustment) {
-              await onDismissAdjustment(planId);
-            }
-          }}
+          onDismiss={() => {}}
           onAdjust={() => setAdjustModalOpen(true)}
         />
       )}
@@ -529,82 +328,32 @@ export function TreningsplanPlanner({
         }}
       />
 
-      {/* Samtale: coach-feedback + spiller-kommentar (Sprint 1) */}
-      {!showEmptyState && (
-        <PlanConversationCard
-          coachFeedback={coachFeedback}
-          playerComment={playerComment}
-          canEdit={Boolean(planId && onSavePlayerComment)}
-          onSavePlayerComment={onSavePlayerComment}
-        />
-      )}
-
-      {/* Forslag fra coach (Sprint 2) */}
-      {!showEmptyState &&
-        pendingSuggestions.length > 0 &&
-        onAcceptSuggestion &&
-        onRejectSuggestion && (
-          <PlanSuggestionInbox
-            suggestions={pendingSuggestions}
-            onAccept={onAcceptSuggestion}
-            onReject={onRejectSuggestion}
-          />
-        )}
-
-      {/* Plan-mål med progress (Epic 7) */}
-      {!showEmptyState && goalsSummary && goalsSummary.totalCount > 0 && (
-        <PlanGoalsCard summary={goalsSummary} />
-      )}
-
       {/* Hovedgrid: ukes-scheduler + sidebar (skjult ved tom-tilstand) */}
       {!showEmptyState && (
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-0 lg:col-span-9">
-          {/* Desktop-grid (md og opp) */}
-          <div className="hidden md:block">
-            <WeekGrid
-              weekDates={weekDates}
-              events={events}
-              weekOffset={weekOffset}
-              onCellClick={(dayIndex, hour) => {
-                setModalDay(dayIndex);
-                setModalHour(hour);
-                setModalOpen(true);
-              }}
-              onEventClick={(ev) => {
-                if (ev.isGroupSession) {
-                  return;
-                }
-                setEditEvent(ev);
-                setEditModalOpen(true);
-              }}
-              onEventContextMenu={handleEventContextMenu}
-              onAddExerciseToSession={onAddExerciseToSession}
-              onRequestExerciseConfig={(sessionId, draft) =>
-                setExerciseConfig({ sessionId, draft })
+          <WeekGrid
+            weekDates={weekDates}
+            events={events}
+            weekOffset={weekOffset}
+            onCellClick={(dayIndex, hour) => {
+              setModalDay(dayIndex);
+              setModalHour(hour);
+              setModalOpen(true);
+            }}
+            onEventClick={(ev) => {
+              if (ev.isGroupSession) {
+                // Group sessions are read-only for players
+                return;
               }
-            />
-          </div>
-          {/* Mobil-liste (under md) */}
-          <div className="md:hidden">
-            <MobileWeekView
-              weekDates={weekDates}
-              events={events}
-              onAddSession={(dayIndex) => {
-                setModalDay(dayIndex);
-                setModalHour(9);
-                setModalOpen(true);
-              }}
-              onEventClick={(ev) => {
-                if (ev.isGroupSession) {
-                  return;
-                }
-                setEditEvent(ev);
-                setEditModalOpen(true);
-              }}
-              onEventContextMenu={handleEventContextMenu}
-            />
-          </div>
+              setEditEvent(ev);
+              setEditModalOpen(true);
+            }}
+            onAddExerciseToSession={onAddExerciseToSession}
+            onMoveEvent={onMoveEvent}
+            onResizeEvent={onResizeEvent}
+            onApplyTemplate={onApplyTemplate}
+          />
         </div>
         <div className="col-span-12 lg:col-span-3">
           <PlannerSidebar
@@ -632,10 +381,8 @@ export function TreningsplanPlanner({
           dayIndex={modalDay}
           startHour={modalHour}
           weekDates={weekDates}
-          facilities={facilities}
           onClose={() => setModalOpen(false)}
           onCreate={onCreateSession}
-          onCheckConflicts={onCheckConflicts}
           isPending={isPending}
         />
       )}
@@ -644,32 +391,12 @@ export function TreningsplanPlanner({
       {editModalOpen && editEvent && (
         <EditSessionModal
           event={editEvent}
-          facilities={facilities}
           onClose={() => {
             setEditModalOpen(false);
             setEditEvent(null);
           }}
           onUpdate={onUpdateSession}
-          onDuplicate={onDuplicateSession}
           isPending={isPending}
-        />
-      )}
-
-      {/* Popover: konfigurer øvelse ved drag-drop */}
-      <ExerciseConfigPopover
-        open={exerciseConfig !== null}
-        draft={exerciseConfig?.draft ?? null}
-        onConfirm={handleConfirmExerciseConfig}
-        onCancel={() => setExerciseConfig(null)}
-      />
-
-      {/* Høyreklikk-meny på en eksisterende økt */}
-      {contextMenu && (
-        <SessionContextMenu
-          x={contextMenu.x}
-          y={contextMenu.y}
-          items={buildContextMenuItems(contextMenu.event)}
-          onClose={() => setContextMenu(null)}
         />
       )}
 
@@ -691,7 +418,14 @@ export function TreningsplanPlanner({
           />
         </div>
         <div className="flex items-center gap-3">
-          {!planId && (
+          {planId ? (
+            <Link
+              href={`/portal/treningsplan?view=viewer&week=${weekOffset}`}
+              className="font-mono text-[11px] uppercase tracking-widest text-primary/60 hover:text-primary"
+            >
+              Vis som liste →
+            </Link>
+          ) : (
             <span className="font-mono text-[11px] uppercase tracking-widest text-primary/40">
               Ingen aktiv plan
             </span>
@@ -710,9 +444,7 @@ function WeekGrid({
   weekOffset,
   onCellClick,
   onEventClick,
-  onEventContextMenu,
   onAddExerciseToSession,
-  onRequestExerciseConfig,
   onMoveEvent,
   onResizeEvent,
   onApplyTemplate,
@@ -722,11 +454,7 @@ function WeekGrid({
   weekOffset: number;
   onCellClick: (dayIndex: number, hour: number) => void;
   onEventClick: (event: V2Event) => void;
-  /** Høyreklikk på en økt — åpner kontekstmeny ved cursor. */
-  onEventContextMenu?: (e: React.MouseEvent, event: V2Event) => void;
   onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
-  /** Åpner popover for å konfigurere reps/tid før øvelsen lagres på økten. */
-  onRequestExerciseConfig?: (sessionId: string, draft: ExerciseConfigDraft) => void;
   onMoveEvent?: TreningsplanPlannerProps["onMoveEvent"];
   onResizeEvent?: TreningsplanPlannerProps["onResizeEvent"];
   onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
@@ -851,9 +579,6 @@ function WeekGrid({
                           e.stopPropagation();
                           onEventClick(ev);
                         }}
-                        onContextMenu={(e) => {
-                          if (onEventContextMenu) onEventContextMenu(e, ev);
-                        }}
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={async (e) => {
                           e.preventDefault();
@@ -872,32 +597,7 @@ function WeekGrid({
                               window.location.reload();
                               return;
                             }
-                            // Default: åpne konfigurasjons-popover for øvelsen
-                            // slik at spilleren kan sette tid + reps før lagring.
-                            // Test droppet: lagre direkte med test-spesifikke verdier
-                            if (payload?.kind === "test" && payload?.testNumber) {
-                              const testPayload = {
-                                kind: "test",
-                                testNumber: payload.testNumber,
-                                name: payload.name,
-                              };
-                              await onAddExerciseToSession(ev.id, testPayload);
-                              window.location.reload();
-                              return;
-                            }
-                            if (onRequestExerciseConfig && payload?.id && payload?.name) {
-                              onRequestExerciseConfig(ev.id, {
-                                id: payload.id,
-                                name: payload.name,
-                                description: payload.description,
-                                pyramid: payload.pyramid,
-                                area: payload.area,
-                                lPhase: payload.lPhase,
-                                defaultDurationMinutes: payload.defaultDurationMinutes,
-                              });
-                              return;
-                            }
-                            // Fallback (legacy): lagre direkte uten config
+                            // Default: behandle som øvelse (legacy + nytt format)
                             await onAddExerciseToSession(ev.id, payload);
                             window.location.reload();
                           } catch {
@@ -925,8 +625,12 @@ function WeekGrid({
                             <span className="ml-1 text-info">· {ev.groupName}</span>
                           )}
                         </span>
-                        {/* TODO: ResizeHandle-komponent ikke implementert enda. onResizeEvent-prop er klar når UI bygges. */}
-                        {!ev.isGroupSession && onResizeEvent && null}
+                        {!ev.isGroupSession && onResizeEvent && (
+                          <ResizeHandle
+                            currentDuration={ev.dur}
+                            onResize={(newDur) => onResizeEvent(ev.id, newDur)}
+                          />
+                        )}
                       </div>
                     ))}
                   </div>
@@ -974,65 +678,27 @@ function CreateSessionModal({
   dayIndex,
   startHour,
   weekDates,
-  facilities,
   onClose,
   onCreate,
-  onCheckConflicts,
   isPending,
 }: {
   weekOffset: number;
   dayIndex: number;
   startHour: number;
   weekDates: Date[];
-  facilities: FacilityOption[];
   onClose: () => void;
   onCreate: TreningsplanPlannerProps["onCreateSession"];
-  onCheckConflicts?: TreningsplanPlannerProps["onCheckConflicts"];
   isPending: boolean;
 }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(60);
-  const [reps, setReps] = useState<string>("");
   const [focus, setFocus] = useState<string>("TEK");
-  const [area, setArea] = useState<string>("");
-  /** Hva øver du på — én av de 4 hovedgruppene (tee/innspill/narspill/putting). */
-  const [areaGroup, setAreaGroup] = useState<string>("");
-  /** BEVEGELSE — multiselect L-faser (KROPP/ARM/KØLLE/BALL/AUTO). */
-  const [lPhases, setLPhases] = useState<string[]>([]);
-  /** LIFE — multiselect (SELV/SOS/EMO/KAR/RES). */
-  const [lifeFocus, setLifeFocus] = useState<string[]>([]);
-  const [startH, setStartH] = useState(startHour);
-  const [startM, setStartM] = useState(0);
   const [notes, setNotes] = useState("");
-  const [facilityId, setFacilityId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [conflicts, setConflicts] = useState<ConflictDetailUI[]>([]);
-  const [conflictsAcknowledged, setConflictsAcknowledged] = useState(false);
 
   const date = weekDates[dayIndex];
   const dayOfWeek = dayIndex + 1; // 1 = Man, 7 = Søn
-  const dateStr = format(date, "yyyy-MM-dd");
-
-  // Sjekk konflikter når relevant felt endres
-  useEffect(() => {
-    if (!onCheckConflicts) return;
-    let cancelled = false;
-    onCheckConflicts({
-      date: dateStr,
-      startH,
-      startM,
-      durationMinutes: duration,
-    }).then((result) => {
-      if (!cancelled) {
-        setConflicts(result.conflicts ?? []);
-        setConflictsAcknowledged(false);
-      }
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [onCheckConflicts, dateStr, startH, startM, duration]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1041,12 +707,6 @@ function CreateSessionModal({
       setError("Tittel er påkrevd");
       return;
     }
-    if (conflicts.length > 0 && !conflictsAcknowledged) {
-      setConflictsAcknowledged(true);
-      return;
-    }
-
-    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : undefined;
 
     const result = await onCreate({
       weekOffset,
@@ -1055,13 +715,8 @@ function CreateSessionModal({
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
-      area: area || undefined,
-      repsTotal: Number.isFinite(repsTotal) ? repsTotal : undefined,
-      startH,
-      startM,
-      facilityId: facilityId || undefined,
-      lPhases: lPhases.length > 0 ? lPhases : undefined,
-      lifeFocus: lifeFocus.length > 0 ? lifeFocus : undefined,
+      startH: startHour,
+      startM: 0,
     });
 
     if (result && "error" in result) {
@@ -1092,7 +747,8 @@ function CreateSessionModal({
         </div>
 
         <p className="mt-1 font-mono text-[11px] text-on-surface-variant">
-          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })}
+          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })} · kl{" "}
+          {String(startHour).padStart(2, "0")}:00
         </p>
 
         {error && (
@@ -1117,86 +773,35 @@ function CreateSessionModal({
             />
           </div>
 
-          {/* Tidspunkt (15-min intervaller) */}
+          {/* Varighet */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Tidspunkt
+              Varighet
             </label>
-            <div className="mt-1 flex items-center gap-2">
-              <select
-                value={startH}
-                onChange={(e) => setStartH(parseInt(e.target.value, 10))}
-                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-              >
-                {Array.from({ length: 17 }, (_, i) => i + 6).map((h) => (
-                  <option key={h} value={h}>
-                    {String(h).padStart(2, "0")}
-                  </option>
-                ))}
-              </select>
-              <span className="text-sm text-on-surface-variant">:</span>
-              <select
-                value={startM}
-                onChange={(e) => setStartM(parseInt(e.target.value, 10))}
-                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-              >
-                {[0, 15, 30, 45].map((m) => (
-                  <option key={m} value={m}>
-                    {String(m).padStart(2, "0")}
-                  </option>
-                ))}
-              </select>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {[15, 30, 45, 60, 90, 120].map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setDuration(m)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    duration === m
+                      ? "bg-primary text-surface"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                >
+                  {m}m
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Varighet og Reps */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Varighet
-              </label>
-              <div className="mt-1 flex flex-wrap gap-1.5">
-                {[15, 30, 45, 60, 90, 120].map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    onClick={() => setDuration(m)}
-                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
-                      duration === m
-                        ? "bg-primary text-surface"
-                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                    }`}
-                  >
-                    {m}m
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Reps (valgfri)
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                value={reps}
-                onChange={(e) => setReps(e.target.value)}
-                placeholder="f.eks. 50"
-                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Type trening (Pyramide) */}
+          {/* Pyramide-fokus */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Type trening
+              Fokus
             </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              Hva slags økt er dette? Velg én hovedtype.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-1 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -1215,159 +820,6 @@ function CreateSessionModal({
             </div>
           </div>
 
-          {/* Hva øver du på (Treningsområde — gruppe-pills + sub-area-pills) */}
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Hva øver du på (valgfri)
-            </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              Velg hovedområde — du kan finjustere etter at gruppen er valgt.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {OMRADE_GRUPPER.map((g) => {
-                const active = areaGroup === g.code;
-                return (
-                  <button
-                    key={g.code}
-                    type="button"
-                    onClick={() => {
-                      if (active) {
-                        setAreaGroup("");
-                        setArea("");
-                      } else {
-                        setAreaGroup(g.code);
-                        setArea("");
-                      }
-                    }}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
-                      active
-                        ? "bg-primary text-surface"
-                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                    }`}
-                  >
-                    {g.label}
-                  </button>
-                );
-              })}
-            </div>
-            {areaGroup && (
-              <div className="mt-2 flex flex-wrap gap-1.5 rounded-lg bg-surface-container/50 p-2">
-                {TRENINGSOMRADER.filter((o) => o.gruppe === areaGroup).map((o) => {
-                  const active = area === o.code;
-                  return (
-                    <button
-                      key={o.code}
-                      type="button"
-                      onClick={() => setArea(active ? "" : o.code)}
-                      className={`rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors ${
-                        active
-                          ? "bg-primary text-surface"
-                          : "border border-outline-variant/20 bg-surface text-on-surface-variant hover:bg-surface-container"
-                      }`}
-                    >
-                      {o.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* BEVEGELSE (L-faser — multiselect) */}
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Bevegelse (valgfri)
-            </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              Hvilke L-faser skal denne økten dekke? Velg én eller flere.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {L_FASER.map((l) => {
-                const active = lPhases.includes(l.code);
-                return (
-                  <button
-                    key={l.code}
-                    type="button"
-                    onClick={() =>
-                      setLPhases((prev) =>
-                        prev.includes(l.code)
-                          ? prev.filter((x) => x !== l.code)
-                          : [...prev, l.code],
-                      )
-                    }
-                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
-                      active
-                        ? "bg-primary text-surface"
-                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                    }`}
-                    title={l.description}
-                  >
-                    {l.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* LIFE (multiselect) */}
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Life (valgfri)
-            </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              Mental/livsstil-dimensjoner som økten støtter.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {LIFE_KODER.map((l) => {
-                const active = lifeFocus.includes(l.code);
-                const shortLabel = l.code.replace("LIFE-", "");
-                return (
-                  <button
-                    key={l.code}
-                    type="button"
-                    onClick={() =>
-                      setLifeFocus((prev) =>
-                        prev.includes(l.code)
-                          ? prev.filter((x) => x !== l.code)
-                          : [...prev, l.code],
-                      )
-                    }
-                    className={`rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
-                      active
-                        ? "bg-primary text-surface"
-                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                    }`}
-                    title={`${l.label} — ${l.description}`}
-                  >
-                    {shortLabel}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Fasilitet */}
-          {facilities.length > 0 && (
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Fasilitet (valgfri)
-              </label>
-              <select
-                value={facilityId}
-                onChange={(e) => setFacilityId(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-              >
-                <option value="">Ingen valgt</option>
-                {facilities.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                    {f.locationName ? ` · ${f.locationName}` : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
           {/* Notater */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
@@ -1381,25 +833,6 @@ function CreateSessionModal({
               className="mt-1 w-full resize-none rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
             />
           </div>
-
-          {/* Konfliktadvarsel */}
-          {conflicts.length > 0 && (
-            <div className="rounded-lg border border-warning/30 bg-warning/5 p-3">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-warning">
-                {conflictsAcknowledged ? "Bekreft for å lagre" : "Konflikt"}
-              </p>
-              <ul className="mt-1 space-y-1 text-xs text-on-surface">
-                {conflicts.map((c, i) => (
-                  <li key={i}>• {c.message}</li>
-                ))}
-              </ul>
-              {!conflictsAcknowledged && (
-                <p className="mt-2 text-[11px] text-on-surface-variant">
-                  Trykk «Opprett økt» igjen for å lagre uansett.
-                </p>
-              )}
-            </div>
-          )}
 
           {/* Knapper */}
           <div className="flex items-center justify-end gap-3 pt-2">
@@ -1427,9 +860,7 @@ function CreateSessionModal({
               ) : (
                 <>
                   <Icon name="add" size={14} />
-                  {conflicts.length > 0 && conflictsAcknowledged
-                    ? "Lagre likevel"
-                    : "Opprett økt"}
+                  Opprett økt
                 </>
               )}
             </button>
@@ -1444,31 +875,21 @@ function CreateSessionModal({
 
 function EditSessionModal({
   event,
-  facilities,
   onClose,
   onUpdate,
-  onDuplicate,
   isPending,
 }: {
   event: V2Event;
-  facilities: FacilityOption[];
   onClose: () => void;
   onUpdate: TreningsplanPlannerProps["onUpdateSession"];
-  onDuplicate?: TreningsplanPlannerProps["onDuplicateSession"];
   isPending: boolean;
 }) {
   const router = useRouter();
   const [title, setTitle] = useState(event.title);
   const [duration, setDuration] = useState(event.dur);
-  const [reps, setReps] = useState<string>(
-    event.repsTotal != null ? String(event.repsTotal) : ""
-  );
   const [focus, setFocus] = useState<string>(event.focus);
-  const [area, setArea] = useState<string>(event.area ?? "");
-  const [notes, setNotes] = useState(event.description ?? "");
-  const [facilityId, setFacilityId] = useState<string>(event.facilityId ?? "");
+  const [notes, setNotes] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [duplicating, setDuplicating] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1478,16 +899,11 @@ function EditSessionModal({
       return;
     }
 
-    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : null;
-
     const result = await onUpdate(event.id, {
       title: title.trim(),
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
-      area: area || null,
-      repsTotal: Number.isFinite(repsTotal) ? repsTotal : null,
-      facilityId: facilityId || null,
     });
 
     if (result && "error" in result && typeof result.error === "string") {
@@ -1542,52 +958,33 @@ function EditSessionModal({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Varighet
-              </label>
-              <div className="mt-1 flex flex-wrap gap-1.5">
-                {[15, 30, 45, 60, 90, 120].map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    onClick={() => setDuration(m)}
-                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
-                      duration === m
-                        ? "bg-primary text-surface"
-                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                    }`}
-                  >
-                    {m}m
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Reps (valgfri)
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                value={reps}
-                onChange={(e) => setReps(e.target.value)}
-                placeholder="f.eks. 50"
-                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
-              />
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Varighet
+            </label>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {[15, 30, 45, 60, 90, 120].map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setDuration(m)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    duration === m
+                      ? "bg-primary text-surface"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                >
+                  {m}m
+                </button>
+              ))}
             </div>
           </div>
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Type trening
+              Fokus
             </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              Hva slags økt er dette? Velg én hovedtype.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-1 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -1608,52 +1005,6 @@ function EditSessionModal({
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Hva øver du på (valgfri)
-            </label>
-            <p className="mt-1 text-[11px] text-on-surface-variant">
-              F.eks. innspill 50–100 m, chip eller putt 5–10 ft.
-            </p>
-            <select
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-            >
-              <option value="">Ingen valgt</option>
-              {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.label}>
-                  {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
-                    <option key={o.code} value={o.code}>
-                      {o.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-          </div>
-
-          {facilities.length > 0 && (
-            <div>
-              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-                Fasilitet (valgfri)
-              </label>
-              <select
-                value={facilityId}
-                onChange={(e) => setFacilityId(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
-              >
-                <option value="">Ingen valgt</option>
-                {facilities.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                    {f.locationName ? ` · ${f.locationName}` : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
               Notater
             </label>
             <textarea
@@ -1665,58 +1016,31 @@ function EditSessionModal({
             />
           </div>
 
-          <div className="flex items-center justify-between gap-3 pt-2">
-            {onDuplicate ? (
-              <button
-                type="button"
-                disabled={duplicating || isPending}
-                onClick={async () => {
-                  setDuplicating(true);
-                  const result = await onDuplicate(event.id);
-                  setDuplicating(false);
-                  if (result.success) {
-                    router.refresh();
-                    onClose();
-                  }
-                }}
-                className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container disabled:opacity-50"
-              >
-                {duplicating ? (
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
+            >
+              Avbryt
+            </button>
+            <button
+              type="submit"
+              disabled={isPending || !title.trim()}
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
+            >
+              {isPending ? (
+                <>
                   <Icon name="progress_activity" size={14} className="animate-spin" />
-                ) : (
-                  <Icon name="content_copy" size={14} />
-                )}
-                Dupliser
-              </button>
-            ) : (
-              <span />
-            )}
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
-              >
-                Avbryt
-              </button>
-              <button
-                type="submit"
-                disabled={isPending || !title.trim()}
-                className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
-              >
-                {isPending ? (
-                  <>
-                    <Icon name="progress_activity" size={14} className="animate-spin" />
-                    Lagrer…
-                  </>
-                ) : (
-                  <>
-                    <Icon name="save" size={14} />
-                    Oppdater
-                  </>
-                )}
-              </button>
-            </div>
+                  Lagrer…
+                </>
+              ) : (
+                <>
+                  <Icon name="save" size={14} />
+                  Oppdater
+                </>
+              )}
+            </button>
           </div>
         </form>
       </div>
@@ -1745,7 +1069,6 @@ function PlannerSidebar({
     { id: "exercises", label: "Øvelser", icon: "sports_golf" },
     { id: "templates", label: "Maler", icon: "dashboard_customize" },
     { id: "history", label: "Historikk", icon: "history" },
-    { id: "tests", label: "Tester", icon: "science" },
   ];
 
   return (
@@ -1779,7 +1102,6 @@ function PlannerSidebar({
           />
         )}
         {activeTab === "history" && <HistoryList events={historyEvents} />}
-        {activeTab === "tests" && <TestsPlaceholder />}
       </div>
     </div>
   );
@@ -1792,7 +1114,6 @@ function ExercisesPlaceholder() {
   const [lFase, setLFase] = useState<string | null>(null);
   const [life, setLife] = useState<string | null>(null);
   const [sok, setSok] = useState("");
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [results, setResults] = useState<ExerciseSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -1817,30 +1138,10 @@ function ExercisesPlaceholder() {
     setLFase(null);
     setLife(null);
     setSok("");
-    setFavoritesOnly(false);
   };
 
   const hasFilters =
-    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok || favoritesOnly;
-
-  const handleToggleFavorite = async (exerciseId: string) => {
-    // Optimistisk oppdatering
-    setResults((prev) =>
-      prev.map((r) =>
-        r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
-      )
-    );
-    try {
-      await toggleFavoriteExercise(exerciseId);
-    } catch {
-      // Rull tilbake hvis serveren feiler
-      setResults((prev) =>
-        prev.map((r) =>
-          r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
-        )
-      );
-    }
-  };
+    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
 
   const doSearch = async () => {
     setLoading(true);
@@ -1851,7 +1152,6 @@ function ExercisesPlaceholder() {
         area: omraadeCode ?? undefined,
         lPhase: lFase ?? undefined,
         lifeCode: life ?? undefined,
-        onlyFavorites: favoritesOnly || undefined,
         limit: 30,
       });
       setResults(data);
@@ -1874,7 +1174,6 @@ function ExercisesPlaceholder() {
           area: omraadeCode ?? undefined,
           lPhase: lFase ?? undefined,
           lifeCode: life ?? undefined,
-          onlyFavorites: favoritesOnly || undefined,
           limit: 30,
         });
         if (!cancelled) setResults(data);
@@ -1888,7 +1187,7 @@ function ExercisesPlaceholder() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [sok, pyramide, omraadeCode, lFase, life, favoritesOnly]);
+  }, [sok, pyramide, omraadeCode, lFase, life]);
 
   const handleCreateExercise = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1939,34 +1238,8 @@ function ExercisesPlaceholder() {
         )}
       </div>
 
-      {/* Favoritt-filter — vis kun lagrede favoritter */}
-      <button
-        type="button"
-        onClick={() => setFavoritesOnly((v) => !v)}
-        className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 transition-colors ${
-          favoritesOnly
-            ? "border-secondary-fixed bg-secondary-fixed/15 text-primary"
-            : "border-outline-variant/30 bg-surface text-on-surface-variant hover:bg-surface-container"
-        }`}
-      >
-        <span className="flex items-center gap-2">
-          <Icon
-            name="star"
-            filled={favoritesOnly}
-            size={14}
-            className={favoritesOnly ? "text-secondary-fixed-dim" : "text-on-surface-variant"}
-          />
-          <span className="text-[11px] font-bold uppercase tracking-wide">
-            Mine favoritter
-          </span>
-        </span>
-        <span className="font-mono text-[10px] text-on-surface-variant">
-          {favoritesOnly ? "Vises" : "Skjult"}
-        </span>
-      </button>
-
-      {/* Type trening (Pyramide) */}
-      <FilterSection label="Type">
+      {/* Pyramide */}
+      <FilterSection label="Pyramide">
         <div className="flex flex-wrap gap-1">
           {PYRAMIDE.map((p) => {
             const active = pyramide === p.code;
@@ -1974,22 +1247,22 @@ function ExercisesPlaceholder() {
               <button
                 key={p.code}
                 onClick={() => setPyramide(active ? null : p.code)}
-                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
                 title={p.description}
               >
-                {p.label}
+                {p.code}
               </button>
             );
           })}
         </div>
       </FilterSection>
 
-      {/* Hva øver du på (Treningsområde) */}
-      <FilterSection label="Hva øver du på">
+      {/* Område */}
+      <FilterSection label="Område">
         <div className="flex flex-wrap gap-1">
           {OMRADE_GRUPPER.map((g) => {
             const active = omraadeGruppe === g.code;
@@ -2005,7 +1278,7 @@ function ExercisesPlaceholder() {
                     setOmraadeCode(null);
                   }
                 }}
-                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
@@ -2024,14 +1297,14 @@ function ExercisesPlaceholder() {
                 <button
                   key={o.code}
                   onClick={() => setOmraadeCode(active ? null : o.code)}
-                  className={`rounded px-2 py-0.5 text-[10px] tracking-tight transition-colors ${
+                  className={`rounded px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight transition-colors ${
                     active
                       ? "bg-secondary-fixed text-primary"
                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container"
                   }`}
                   title={o.label}
                 >
-                  {o.label}
+                  {o.code}
                 </button>
               );
             })}
@@ -2039,8 +1312,8 @@ function ExercisesPlaceholder() {
         )}
       </FilterSection>
 
-      {/* Bevegelse (L-fase, fagord — beholdt for treneres behov) */}
-      <FilterSection label="Bevegelse">
+      {/* L-fase */}
+      <FilterSection label="L-fase">
         <div className="flex flex-wrap gap-1">
           {L_FASER.map((f) => {
             const active = lFase === f.code;
@@ -2087,12 +1360,7 @@ function ExercisesPlaceholder() {
       </FilterSection>
 
       {/* Resultater */}
-      <ExerciseList
-        results={results}
-        loading={loading}
-        hasFilters={Boolean(hasFilters)}
-        onToggleFavorite={handleToggleFavorite}
-      />
+      <ExerciseList results={results} loading={loading} hasFilters={Boolean(hasFilters)} />
 
       {/* X-6: Opprett egen øvelse */}
       {!showCreateForm ? (
@@ -2225,191 +1493,14 @@ function ExercisesPlaceholder() {
   );
 }
 
-/* ── TestsPlaceholder ── */
-
-function TestsPlaceholder() {
-  const [sok, setSok] = useState("");
-  const [sourceFilter, setSourceFilter] = useState<"all" | "ak-standard" | "team-norway">("all");
-  const [results, setResults] = useState<TestAsExercise[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const doSearch = async () => {
-    setLoading(true);
-    try {
-      const data = await searchTestsAsExercises(
-        sok || undefined,
-        sourceFilter === "all" ? undefined : sourceFilter
-      );
-      setResults(data);
-    } catch {
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    let cancelled = false;
-    const timer = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const data = await searchTestsAsExercises(
-          sok || undefined,
-          sourceFilter === "all" ? undefined : sourceFilter
-        );
-        if (!cancelled) setResults(data);
-      } catch {
-        if (!cancelled) setResults([]);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }, 250);
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-    };
-  }, [sok, sourceFilter]);
-
-  const grouped = useMemo(() => {
-    const map = new Map<string, TestAsExercise[]>();
-    for (const t of results) {
-      const key = getTestCategoryLabel(t.testNumber);
-      const arr = map.get(key) ?? [];
-      arr.push(t);
-      map.set(key, arr);
-    }
-    return Array.from(map.entries());
-  }, [results]);
-
-  return (
-    <div className="space-y-3">
-      {/* Søk */}
-      <div className="relative">
-        <Icon
-          name="search"
-          size={14}
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant"
-        />
-        <input
-          type="text"
-          placeholder="Søk tester..."
-          value={sok}
-          onChange={(e) => setSok(e.target.value)}
-          className="w-full rounded-lg border border-outline-variant/30 bg-surface-container py-2 pl-8 pr-3 text-xs text-primary placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
-        />
-      </div>
-
-      {/* Kilde-filter */}
-      <div className="flex gap-1">
-        {(["all", "ak-standard", "team-norway"] as const).map((src) => (
-          <button
-            key={src}
-            onClick={() => setSourceFilter(src)}
-            className={cn(
-              "flex-1 rounded-md px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-colors",
-              sourceFilter === src
-                ? "bg-primary text-white"
-                : "bg-surface-container text-on-surface-variant hover:text-primary"
-            )}
-          >
-            {src === "all" ? "Alle" : src === "ak-standard" ? "AK" : "TN"}
-          </button>
-        ))}
-      </div>
-
-      {/* Resultater */}
-      {loading && (
-        <div className="py-4 text-center">
-          <Icon name="progress_activity" size={18} className="animate-spin text-primary/30" />
-        </div>
-      )}
-
-      {!loading && results.length === 0 && (
-        <p className="py-4 text-center text-[11px] text-on-surface-variant">
-          Ingen tester funnet
-        </p>
-      )}
-
-      {!loading &&
-        grouped.map(([category, list]) => (
-          <div key={category}>
-            <p className="mb-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
-              {category}
-            </p>
-            <div className="space-y-1.5">
-              {list.map((test) => (
-                <div
-                  key={test.testNumber}
-                  draggable
-                  onDragStart={(e) => {
-                    e.dataTransfer.setData(
-                      "application/json",
-                      JSON.stringify({
-                        kind: "test",
-                        testNumber: test.testNumber,
-                        name: test.name,
-                        isTest: true,
-                      })
-                    );
-                    e.dataTransfer.effectAllowed = "copy";
-                  }}
-                  className="group cursor-grab rounded-lg border border-outline-variant/20 bg-surface p-2.5 transition-all hover:border-primary/30 hover:bg-surface-container active:cursor-grabbing"
-                >
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={cn(
-                        "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
-                        test.source === "team-norway"
-                          ? "bg-accent/20"
-                          : "bg-primary/10"
-                      )}
-                    >
-                      <Icon
-                        name="science"
-                        size={13}
-                        className={cn(
-                          test.source === "team-norway"
-                            ? "text-accent-deep"
-                            : "text-primary"
-                        )}
-                      />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-bold text-primary">
-                        {test.name}
-                      </p>
-                      <p className="text-[10px] text-on-surface-variant">
-                        {test.inputCount} slag ·{" "}
-                        {test.comparison === "higher_is_better"
-                          ? "høyere er bedre"
-                          : "lavere er bedre"}
-                      </p>
-                    </div>
-                    {test.source === "team-norway" && (
-                      <span className="shrink-0 rounded-full bg-accent px-1.5 py-0.5 font-mono text-[8px] font-bold text-on-accent">
-                        TN
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-    </div>
-  );
-}
-
 function ExerciseList({
   results,
   loading,
   hasFilters,
-  onToggleFavorite,
 }: {
   results: ExerciseSearchResult[];
   loading: boolean;
   hasFilters: boolean;
-  onToggleFavorite?: (exerciseId: string) => void;
 }) {
   if (loading) {
     return (
@@ -2450,23 +1541,13 @@ function ExerciseList({
         {results.length} treff
       </p>
       {results.map((r) => (
-        <ExerciseCard
-          key={r.id}
-          exercise={r}
-          onToggleFavorite={onToggleFavorite}
-        />
+        <ExerciseCard key={r.id} exercise={r} />
       ))}
     </div>
   );
 }
 
-function ExerciseCard({
-  exercise,
-  onToggleFavorite,
-}: {
-  exercise: ExerciseSearchResult;
-  onToggleFavorite?: (exerciseId: string) => void;
-}) {
+function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
   const durationLabel =
     exercise.minDurationMinutes === exercise.maxDurationMinutes
       ? `${exercise.minDurationMinutes}m`
@@ -2484,7 +1565,6 @@ function ExerciseCard({
             pyramid: exercise.pyramid,
             area: exercise.area,
             lPhase: exercise.lPhase ?? undefined,
-            defaultDurationMinutes: exercise.minDurationMinutes,
           })
         );
         e.dataTransfer.effectAllowed = "copy";
@@ -2496,27 +1576,9 @@ function ExerciseCard({
         <p className="flex-1 text-xs font-bold text-primary leading-tight">
           {exercise.name}
         </p>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            onToggleFavorite?.(exercise.id);
-          }}
-          className="flex-shrink-0 rounded p-0.5 transition-colors hover:bg-secondary-fixed/20"
-          title={exercise.isFavorite ? "Fjern fra favoritter" : "Lagre som favoritt"}
-        >
-          <Icon
-            name="star"
-            filled={exercise.isFavorite}
-            size={14}
-            className={
-              exercise.isFavorite
-                ? "text-secondary-fixed-dim"
-                : "text-on-surface-variant/40 hover:text-secondary-fixed-dim"
-            }
-          />
-        </button>
+        {exercise.isFavorite && (
+          <Icon name="star" filled size={12} className="text-secondary-fixed-dim flex-shrink-0" />
+        )}
       </div>
       <div className="mt-1.5 flex flex-wrap items-center gap-1">
         <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight text-primary">
@@ -2733,115 +1795,49 @@ function HistoryList({ events }: { events: V2Event[] }) {
   );
 }
 
-/* ── Mobile week view (Epic 12) ── */
+/* ── Resize handle for økt-pille (P1.3) ── */
 
-function MobileWeekView({
-  weekDates,
-  events,
-  onAddSession,
-  onEventClick,
-  onEventContextMenu,
+function ResizeHandle({
+  currentDuration,
+  onResize,
 }: {
-  weekDates: Date[];
-  events: V2Event[];
-  onAddSession: (dayIndex: number) => void;
-  onEventClick: (ev: V2Event) => void;
-  onEventContextMenu?: (e: React.MouseEvent, ev: V2Event) => void;
+  currentDuration: number;
+  onResize: (newDuration: number) => Promise<void> | void;
 }) {
-  const today = new Date();
-  const todayISO = format(today, "yyyy-MM-dd");
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const startY = e.clientY;
+    const startDur = currentDuration;
+    let liveDur = startDur;
 
-  const eventsByDay = new Map<number, V2Event[]>();
-  for (const ev of events) {
-    const idx = weekDates.findIndex((d) => format(d, "yyyy-MM-dd") === ev.date);
-    if (idx === -1) continue;
-    const list = eventsByDay.get(idx) ?? [];
-    list.push(ev);
-    eventsByDay.set(idx, list);
-  }
+    const onMove = (ev: PointerEvent) => {
+      const deltaY = ev.clientY - startY;
+      const minutesDelta = Math.round(deltaY / 4) * 15; // ~4px per minute, snap til 15
+      liveDur = Math.max(15, Math.min(240, startDur + minutesDelta));
+    };
+
+    const onUp = async () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      if (liveDur !== startDur) {
+        await onResize(liveDur);
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
 
   return (
-    <div className="divide-y divide-outline-variant/10">
-      {weekDates.map((date, idx) => {
-        const dateISO = format(date, "yyyy-MM-dd");
-        const isToday = dateISO === todayISO;
-        const dayEvents = (eventsByDay.get(idx) ?? []).sort(
-          (a, b) => a.startH * 60 + a.startM - (b.startH * 60 + b.startM)
-        );
-
-        return (
-          <div
-            key={idx}
-            className={`p-4 ${isToday ? "bg-secondary-fixed/10" : ""}`}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
-                  {DAYS[idx]}
-                </p>
-                <p
-                  className={`text-lg font-bold ${isToday ? "text-primary" : "text-on-surface"}`}
-                >
-                  {format(date, "d. MMM", { locale: nb })}
-                </p>
-              </div>
-              <button
-                onClick={() => onAddSession(idx)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-primary hover:bg-surface-container active:scale-95"
-                aria-label="Legg til økt"
-              >
-                <Icon name="add" size={18} />
-              </button>
-            </div>
-
-            {dayEvents.length === 0 ? (
-              <p className="mt-2 text-xs text-on-surface-variant/70">Ingen økter</p>
-            ) : (
-              <div className="mt-3 space-y-2">
-                {dayEvents.map((ev) => (
-                  <button
-                    key={ev.id}
-                    onClick={() => onEventClick(ev)}
-                    onContextMenu={(e) => {
-                      if (onEventContextMenu) onEventContextMenu(e, ev);
-                    }}
-                    className={`w-full rounded-xl px-3 py-2.5 text-left transition-colors ${
-                      ev.done
-                        ? "bg-primary/15 text-primary line-through"
-                        : eventColorClass(ev.focus)
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-sm font-bold">
-                        {ev.isGroupSession && (
-                          <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-info align-middle" />
-                        )}
-                        {ev.title}
-                      </span>
-                      <span className="font-mono text-[10px] tabular-nums">
-                        {String(ev.startH).padStart(2, "0")}:
-                        {String(ev.startM).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <div className="mt-1 flex items-center gap-2 text-[10px] opacity-80">
-                      <span>{ev.dur} min</span>
-                      <span>·</span>
-                      <span>{ev.focus}</span>
-                      {ev.isGroupSession && ev.groupName && (
-                        <>
-                          <span>·</span>
-                          <span>{ev.groupName}</span>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+    <div
+      draggable={false}
+      onMouseDown={handleMouseDown}
+      onClick={(e) => e.stopPropagation()}
+      className="absolute inset-x-0 bottom-0 h-1.5 cursor-ns-resize bg-primary/0 hover:bg-primary/30"
+      title="Dra for å endre varighet"
+    />
   );
 }
 
@@ -2864,151 +1860,6 @@ function Stat({
       <p className={`text-sm font-bold ${colorClass ?? "text-primary"}`}>
         {value}
       </p>
-    </div>
-  );
-}
-
-/* ── Mine planer-meny ── */
-
-function PlansMenu({
-  plans,
-  onArchive,
-  onActivate,
-  onDelete,
-  onDuplicate,
-}: {
-  plans: MyPlanSummary[];
-  onArchive?: (planId: string) => Promise<{ success: boolean }>;
-  onActivate?: (planId: string) => Promise<{ success: boolean }>;
-  onDelete?: (planId: string) => Promise<{ success: boolean }>;
-  onDuplicate?: (planId: string) => Promise<{ success: boolean; planId?: string }>;
-}) {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [busy, setBusy] = useState<string | null>(null);
-
-  const run = async (
-    label: string,
-    action?: (planId: string) => Promise<{ success: boolean }>,
-    planId?: string,
-    confirmMsg?: string
-  ) => {
-    if (!action || !planId) return;
-    if (confirmMsg && !window.confirm(confirmMsg)) return;
-    setBusy(`${label}-${planId}`);
-    try {
-      const result = await action(planId);
-      if (result.success) {
-        setOpen(false);
-        router.refresh();
-      }
-    } catch (err) {
-      window.alert(err instanceof Error ? err.message : "Handling feilet");
-    } finally {
-      setBusy(null);
-    }
-  };
-
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-colors"
-      >
-        <Icon name="folder" size={14} />
-        Mine planer
-        <Icon name={open ? "expand_less" : "expand_more"} size={14} />
-      </button>
-      {open && (
-        <div
-          className="absolute right-0 top-full z-30 mt-2 w-80 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-card-hover"
-          onMouseLeave={() => setOpen(false)}
-        >
-          {plans.length === 0 && (
-            <p className="px-3 py-2 text-xs text-on-surface-variant">Ingen planer</p>
-          )}
-          {plans.map((p) => (
-            <div
-              key={p.id}
-              className="flex flex-col gap-1 rounded-lg p-2 hover:bg-surface-container"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="truncate text-sm font-semibold text-on-surface">
-                  {p.title}
-                </span>
-                {p.isActive ? (
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-success">
-                    AKTIV
-                  </span>
-                ) : (
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-on-surface-variant">
-                    ARKIV
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 text-[10px] text-on-surface-variant">
-                <span>{p.weekCount} uker</span>
-                <span>·</span>
-                <span>{p.startDate}</span>
-                {p.aiGenerated && (
-                  <>
-                    <span>·</span>
-                    <span className="text-primary">AI</span>
-                  </>
-                )}
-              </div>
-              <div className="mt-1 flex items-center gap-2">
-                {p.isActive ? (
-                  <button
-                    type="button"
-                    disabled={busy === `archive-${p.id}`}
-                    onClick={() =>
-                      run("archive", onArchive, p.id, "Arkiver planen?")
-                    }
-                    className="rounded-md border border-outline-variant px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface disabled:opacity-50"
-                  >
-                    Arkiver
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    disabled={busy === `activate-${p.id}`}
-                    onClick={() => run("activate", onActivate, p.id)}
-                    className="rounded-md border border-primary bg-primary px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-primary hover:bg-primary-container disabled:opacity-50"
-                  >
-                    Aktiver
-                  </button>
-                )}
-                <button
-                  type="button"
-                  disabled={busy === `duplicate-${p.id}`}
-                  onClick={() => run("duplicate", onDuplicate, p.id)}
-                  className="rounded-md border border-outline-variant px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface disabled:opacity-50"
-                >
-                  Dupliser
-                </button>
-                {!p.isActive && (
-                  <button
-                    type="button"
-                    disabled={busy === `delete-${p.id}`}
-                    onClick={() =>
-                      run(
-                        "delete",
-                        onDelete,
-                        p.id,
-                        "Slette planen permanent? Dette kan ikke angres."
-                      )
-                    }
-                    className="ml-auto rounded-md border border-error px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-error hover:bg-error-container disabled:opacity-50"
-                  >
-                    Slett
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
