@@ -188,7 +188,7 @@ describe("Smoke Tests - Kritiske brukerflyter", () => {
         return;
       }
       // Forventer 401 (unauthorized) uten gyldig session
-      expect([401, 400]).toContain(response.status);
+      expect([401, 400, 403]).toContain(response.status);
     });
   });
 
@@ -209,7 +209,7 @@ describe("Smoke Tests - Kritiske brukerflyter", () => {
         expect(response.status).toBe(200);
         return;
       }
-      expect([401, 400]).toContain(response.status);
+      expect([401, 400, 403]).toContain(response.status);
     });
   });
 

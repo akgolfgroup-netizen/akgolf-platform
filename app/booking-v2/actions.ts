@@ -12,24 +12,19 @@ import {
 } from "@/lib/booking-v2/draft";
 import { createBookingV2 } from "@/lib/booking-v2/create-booking";
 import { getPortalUser } from "@/lib/portal/auth";
+import {
+  holdSlot as holdSlotLib,
+  releaseSlot as releaseSlotLib,
+} from "@/lib/portal/booking/slot-hold";
 
 /**
  * Booking V2 server actions.
  *
- * Disse er stubs som validerer input og returnerer mock-resultater.
- * Når Anders sier ifra, kobles de til ekte server-logikk:
- *
- * - holdSlot       → lib/portal/booking/locking.ts
- * - releaseSlot    → lib/portal/booking/locking.ts
- * - createBooking  → lib/portal/booking/conflict-check.ts + Stripe
- *                    (chargeOffSession for Flex, Checkout for ny abo,
- *                    createInvoiceForBooking for bedrift)
- * - joinWaitlist   → lib/portal/booking/waitlist.ts
- *
- * Aldri dupliser denne logikken her — importer den når wiring skjer.
- *
- * getAvailableSlots ER ferdig wired — bruker generateSlotsWithOverrides
- * med strategy="compact" for smart packing.
+ * - getAvailableSlots — Ferdig wired med smart packing
+ * - holdSlot/releaseSlot — Slot-hold i 10 min via DB
+ * - createBooking — Stripe + konfliktsjekk
+ * - joinWaitlist — Venteliste-registrering
+ * - submitDetails — Validering og draft-lagring
  */
 
 /**
@@ -145,13 +140,35 @@ export async function createBooking(): Promise<void> {
   redirect(result.paymentUrl);
 }
 
-export async function holdSlot(_serviceId: string, _date: string, _time: string): Promise<{ ok: boolean; expiresAt?: string }> {
-  // TODO: kall lib/portal/booking/locking.ts → reserver slot i 10 min
-  return { ok: true, expiresAt: new Date(Date.now() + 10 * 60_000).toISOString() };
+export async function holdSlot(
+  serviceTypeId: string,
+  date: string,
+  time: string,
+): Promise<{ ok: boolean; holdId?: string; expiresAt?: string; error?: string }> {
+  // Resolve instructor fra serviceType
+  const serviceType = await prisma.serviceType.findUnique({
+    where: { id: serviceTypeId },
+    select: { Instructor: { select: { id: true }, take: 1 } },
+  });
+  const instructorId = serviceType?.Instructor?.[0]?.id;
+  if (!instructorId) return { ok: false, error: "Ingen trener tilknyttet tjenesten." };
+
+  const [year, month, day] = date.split("-").map(Number);
+  const [hour, minute] = time.split(":").map(Number);
+  const startTime = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+  const result = await holdSlotLib(instructorId, startTime);
+  if (!result.ok) return { ok: false, error: result.error };
+
+  return {
+    ok: true,
+    holdId: result.holdId,
+    expiresAt: result.expiresAt.toISOString(),
+  };
 }
 
-export async function releaseSlot(_holdId: string): Promise<{ ok: boolean }> {
-  // TODO: kall lib/portal/booking/locking.ts → frigi reservasjon
+export async function releaseSlot(holdId: string): Promise<{ ok: boolean }> {
+  await releaseSlotLib(holdId);
   return { ok: true };
 }
 

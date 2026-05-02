@@ -66,7 +66,7 @@ const reportTypes: ReportType[] = [
     icon: Calendar,
     iconBgClass: "bg-primary/10",
     iconColorClass: "text-primary",
-    lastGenerated: "1. april 2024",
+    lastGenerated: "Aldri",
   },
   {
     id: "students",
@@ -84,7 +84,7 @@ const reportTypes: ReportType[] = [
     icon: DollarSign,
     iconBgClass: "bg-secondary-fixed/20",
     iconColorClass: "text-secondary-fixed",
-    lastGenerated: "1. april 2024",
+    lastGenerated: "Aldri",
   },
   {
     id: "capacity",
