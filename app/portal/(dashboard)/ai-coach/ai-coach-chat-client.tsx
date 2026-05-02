@@ -12,36 +12,15 @@ interface AiCoachChatClientProps {
   quickInsight: string;
 }
 
-// Mock chat history - in production this would come from the database
-const MOCK_CHAT_HISTORY: ChatSession[] = [
-  {
-    id: "1",
-    title: "Tips for driving",
-    lastMessage: "Prøv å fokusere på tempo i overgangen...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 min ago
-    messageCount: 8,
-  },
-  {
-    id: "2",
-    title: "Treningsplan for uke 15",
-    lastMessage: "Basert på din HCP og mål...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    messageCount: 12,
-  },
-  {
-    id: "3",
-    title: "Analyse av siste runde",
-    lastMessage: "Din putting trenger oppmerksomhet...",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48), // 2 days ago
-    messageCount: 6,
-  },
-];
+// Chat-historikk: tom liste til vi implementerer database-persistens.
+// Naar ny chat-sesjon lagres til DB, populer fra getChatHistory()-action.
+const INITIAL_CHAT_HISTORY: ChatSession[] = [];
 
 export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientProps) {
   const [showHistory, setShowHistory] = useState(true);
   const [showContext, setShowContext] = useState(true);
   const [activeSessionId, setActiveSessionId] = useState<string | undefined>();
-  const [chatHistory, setChatHistory] = useState<ChatSession[]>(MOCK_CHAT_HISTORY);
+  const [chatHistory, setChatHistory] = useState<ChatSession[]>(INITIAL_CHAT_HISTORY);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handleNewChat = useCallback(() => {

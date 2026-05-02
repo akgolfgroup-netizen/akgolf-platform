@@ -26,11 +26,29 @@ import { accent, monoFont } from "./styles";
 interface Props {
   friends: SosialtFriend[];
   leaderboard: SosialtLeaderboardEntry[];
+  leaderboardImprovement?: SosialtLeaderboardEntry[];
+  leaderboardStreak?: SosialtLeaderboardEntry[];
   pendingRequests: PendingRequest[];
 }
 
-export function SosialtClientV2({ friends, leaderboard, pendingRequests }: Props) {
+export function SosialtClientV2({
+  friends,
+  leaderboard,
+  leaderboardImprovement,
+  leaderboardStreak,
+  pendingRequests,
+}: Props) {
   const [showAddFriend, setShowAddFriend] = useState(false);
+  const [leaderboardMode, setLeaderboardMode] = useState<
+    "handicap" | "improvement" | "streak"
+  >("handicap");
+
+  const activeLeaderboard =
+    leaderboardMode === "improvement"
+      ? (leaderboardImprovement ?? [])
+      : leaderboardMode === "streak"
+        ? (leaderboardStreak ?? [])
+        : leaderboard;
 
   return (
     <div
@@ -86,7 +104,11 @@ export function SosialtClientV2({ friends, leaderboard, pendingRequests }: Props
         </div>
 
         <aside className="flex flex-col gap-[18px]">
-          <LeaderboardCard entries={leaderboard} />
+          <LeaderboardCard
+            entries={activeLeaderboard}
+            mode={leaderboardMode}
+            onModeChange={setLeaderboardMode}
+          />
           <FriendsCard friends={friends} />
         </aside>
       </div>
