@@ -1,6 +1,10 @@
 "use client";
 
-import { format } from "date-fns";
+// E — Timeline polish: today-markering + hover-state.
+// Scroll-to-today og tom-dag-indikator passer ikke session-list-formatet
+// (listen viser nyeste 5 økter, ikke dag-rutenett) og er nedprioritert.
+
+import { format, isSameDay } from "date-fns";
 import { nb } from "date-fns/locale";
 
 export interface TimelineEntry {
@@ -23,6 +27,7 @@ const dotColor: Record<string, string> = {
 };
 
 export function TimelineList({ entries }: TimelineListProps) {
+  const today = new Date();
   if (entries.length === 0) {
     return (
       <div className="bg-card border border-line rounded-2xl p-5">
@@ -48,10 +53,11 @@ export function TimelineList({ entries }: TimelineListProps) {
           const isLast = idx === entries.length - 1;
           const dn = format(e.date, "d.MM", { locale: nb });
           const dnDay = format(e.date, "EEE", { locale: nb }).toUpperCase();
+          const isToday = isSameDay(e.date, today);
           return (
             <div
               key={e.id}
-              className="grid gap-3 py-3 relative"
+              className="grid gap-3 py-3 relative group transition-colors duration-200 hover:bg-surface-soft/60 rounded-lg"
               style={{ gridTemplateColumns: "80px 14px 1fr" }}
             >
               {!isLast ? (
@@ -67,9 +73,18 @@ export function TimelineList({ entries }: TimelineListProps) {
               </div>
               <div
                 className="w-3.5 h-3.5 rounded-full bg-card mt-1.5 relative z-[2]"
-                style={{ border: `3px solid ${dotColor[variant]}` }}
+                style={{
+                  border: `3px solid ${isToday ? "#D1F843" : dotColor[variant]}`,
+                  boxShadow: isToday ? "0 0 0 4px rgba(209,248,67,0.18)" : undefined,
+                }}
               />
-              <div className="bg-surface-soft rounded-xl px-3.5 py-3">
+              <div
+                className="rounded-xl px-3.5 py-3"
+                style={{
+                  background: isToday ? "rgba(209,248,67,0.10)" : "var(--color-surface-soft)",
+                  borderLeft: isToday ? "3px solid #D1F843" : undefined,
+                }}
+              >
                 <div className="text-[13px] font-semibold text-ink">{e.title}</div>
                 <div className="text-xs text-ink-muted mt-0.5">{e.meta}</div>
                 {e.tags.length > 0 ? (
