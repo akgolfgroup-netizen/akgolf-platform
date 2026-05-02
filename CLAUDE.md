@@ -1,5 +1,9 @@
 # AK Golf Platform
 
+## Prosjektmål
+
+Abonnementsbasert coaching-plattform for AK Golf Academy. Selger coaching-abonnement, coaching-timer og spillerutviklingsverktøy til spillere i AK Golf Academy og andre norske golfere. Ikke lansert ennå — målgruppe for testlansering er ~20–25 spillere fra AK Junior Academy.
+
 ## Parallell-arbeidsregler (Cherny-style)
 
 > **VIKTIG:** Denne Claude-økten kjører i EN git worktree. Aldri les/skriv filer utenfor `$PWD`.
@@ -34,7 +38,7 @@ Premium golfcoaching-plattform med markedsside, spillerportal og admin (Mission 
 
 | Kategori | Teknologi |
 |----------|-----------|
-| Framework | Next.js 16 (App Router, Turbopack), React 19, TypeScript strict |
+| Framework | Next.js 16.2 (App Router, Turbopack), React 19, TypeScript strict |
 | Styling | Tailwind CSS v4, Framer Motion 12 |
 | Database | Prisma + PostgreSQL (Supabase) |
 | Auth | Supabase Auth |
@@ -59,7 +63,7 @@ npm run lint     # ESLint
 | Admin | `/portal/(dashboard)/admin/*` | `canAccessMissionControl()` |
 | API | `/api/*` | Public: `/api/portal/public/*` |
 
-Auth: Supabase → `requirePortalUser()` i server components. `proxy.ts` for edge-redirects. Ingen middleware.ts.
+Auth: Supabase Auth (ikke Prisma for auth). Database: Prisma ORM mot Supabase PostgreSQL. `requirePortalUser()` i server components. `proxy.ts` for edge-redirects. Ingen middleware.ts.
 
 ## Regler
 
@@ -75,6 +79,16 @@ All detaljert regelinformasjon ligger i `.claude/rules/`:
 | `component-library.md` | Eksisterende komponenter — sjekk før du lager nye |
 
 **Ufravikelig:** Nye feil → legg til i `gotchas.md` umiddelbart.
+
+## Kjent teknisk gjeld
+
+Prosjektet har vært utviklet med både Claude Code og Kimi Code over lang tid. Dette har resultert i filer på feil sted, duplikater og irrelevant innhold i kodebasen. Vær skeptisk til filer som ikke er referert fra noe sted. Spør fremfor å anta.
+
+## Mapper som skal ignoreres
+
+- `archive/` — gammelt innhold, ignorer helt
+- `wireframe/` — kun design-mockups, ikke produksjonskode, importer aldri herfra
+- `docs/archive-2026-04-24/` og `docs/archive-2026-04-21/` — arkivert, bruk aldri
 
 > ⚠️ **VIKTIG:** Alle tidligere design-docs (`docs/DESIGN_SYSTEM.md`, `docs/design-system-v3.1.md`, `docs/DESIGN_REDIGN_PLAN_2026.md`, `docs/BRANDING-BOOKING.md`, `.claude/rules/ui-patterns.md`, `.claude/rules/premium-design-patterns.md`) er **arkivert** under `docs/archive-2026-04-24/` og `docs/archive-2026-04-21/`. Bruk KUN `.claude/rules/design-system.md` (Heritage).
 

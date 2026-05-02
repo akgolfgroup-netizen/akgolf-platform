@@ -60,6 +60,9 @@ __pycache__/
 .agents/
 # .claude/ — nå sporet i git
 
+# Archived code (rydding 2026-04-30)
+archive/
+
 # Design assets (removed from repo)
 stitch/
 stitch-assets/
