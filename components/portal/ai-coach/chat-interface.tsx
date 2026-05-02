@@ -3,6 +3,7 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { Sparkles } from "lucide-react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageBubble } from "./message-bubble";
@@ -228,15 +229,35 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
               className="flex flex-col items-center justify-center h-full pb-8 pt-8"
             >
               {/* AI Avatar */}
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-ai-light to-white flex items-center justify-center mb-6 shadow-sm">
-                <Icon name="smart_toy" className="w-10 h-10 text-ai" />
+              <div
+                className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6"
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--color-primary, #005840) 0%, var(--color-primary-deep, #003B2A) 100%)",
+                  boxShadow: "0 8px 24px rgba(0,88,64,0.18)",
+                }}
+              >
+                <Sparkles
+                  className="w-9 h-9"
+                  style={{ color: "var(--color-accent, #D1F843)" }}
+                  strokeWidth={1.8}
+                />
               </div>
-              
-              <h2 className="text-xl font-semibold mb-2 text-on-surface">
+
+              <h2
+                className="text-2xl font-bold mb-2 tracking-tight text-center"
+                style={{
+                  color: "var(--color-ink, #0A1F18)",
+                  fontFamily: "var(--font-inter-tight), Inter, sans-serif",
+                }}
+              >
                 Hei! Hva kan jeg hjelpe deg med?
               </h2>
-              <p className="text-sm text-center mb-8 max-w-md text-on-surface-variant">
-                AI Coach kjenner dine runder, treningshistorikk og mal. Spor om
+              <p
+                className="text-sm text-center mb-8 max-w-md leading-relaxed"
+                style={{ color: "var(--color-ink-muted, #5C6B62)" }}
+              >
+                AI Coach kjenner dine runder, treningshistorikk og mål. Spør om
                 hva som helst relatert til golfen din.
               </p>
 
@@ -247,9 +268,20 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
                   animate={{ opacity: 1, scale: 1 }}
                   className="w-full max-w-lg mb-8"
                 >
-                  <div className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-ai-light border border-ai/15">
-                    <div className="w-2 h-2 rounded-full bg-ai mt-1.5 flex-shrink-0" />
-                    <p className="text-ai-text">{quickInsight}</p>
+                  <div
+                    className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm"
+                    style={{
+                      background: "var(--color-primary-soft, #E8F0EC)",
+                      border: "1px solid rgba(0,88,64,0.16)",
+                    }}
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
+                      style={{ background: "var(--color-primary, #005840)" }}
+                    />
+                    <p style={{ color: "var(--color-primary-deep, #003B2A)" }}>
+                      {quickInsight}
+                    </p>
                   </div>
                 </motion.div>
               )}
