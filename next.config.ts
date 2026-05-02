@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/webp", "image/avif"],
     minimumCacheTTL: 60,
+    // Next.js 16 krever eksplisitt liste over tillatte quality-verdier.
+    // Inkluder vanlige verdier brukt i komponenter (75 default, 78 for hero, 85 for galleri).
+    qualities: [60, 70, 75, 78, 80, 85, 90, 95, 100],
   },
   // Enable compression
   compress: true,
