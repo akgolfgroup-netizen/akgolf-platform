@@ -35,7 +35,7 @@ export default async function DashboardLayout({
           <div className="min-h-screen flex bg-surface relative">
             <PlayerHQSidebar user={user} />
             <MobileHeader />
-            <main className="flex-1 min-h-screen p-4 lg:p-8 pt-18 lg:pt-8 relative z-10">
+            <main className="flex-1 p-4 lg:p-8 pt-18 lg:pt-8 relative z-10 min-w-0">
               <PlayerHQTrialBanner status={playerhqStatus} />
               <TrialBannerWrapper
                 subscriptionStatus={user.subscriptionStatus as SubscriptionStatus | null}
