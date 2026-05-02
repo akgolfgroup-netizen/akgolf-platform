@@ -4,8 +4,15 @@ import { useMemo } from "react";
 import { format, startOfWeek, addDays, differenceInDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Download, Plus } from "lucide-react";
-import type { StreakData } from "@/components/portal/dagbok/streak-card";
 import { HeroStreak } from "./hero-streak";
+
+export interface StreakData {
+  currentStreak: number;
+  longestStreak: number;
+  lastTrainingDate: Date;
+  streakFreezesRemaining: number;
+}
+
 import { MilestoneCard } from "./milestone-card";
 import { Heatmap90d } from "./heatmap-90d";
 import { VolumeCards } from "./volume-cards";
