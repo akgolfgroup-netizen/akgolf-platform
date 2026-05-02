@@ -5,6 +5,7 @@ interface MilestoneCardProps {
   currentSessions: number;
   goalRounds: number;
   weeksAhead: number;
+  eta?: string;
 }
 
 export function MilestoneCard({
@@ -12,6 +13,7 @@ export function MilestoneCard({
   currentSessions,
   goalRounds,
   weeksAhead,
+  eta,
 }: MilestoneCardProps) {
   const pct = Math.min(100, Math.round((currentSessions / Math.max(1, goalSessions)) * 100));
 
@@ -80,6 +82,14 @@ export function MilestoneCard({
             {aheadLabel}
           </div>
         </div>
+        {eta && (
+          <div>
+            <div className="font-mono text-[9px] text-ink-subtle tracking-[0.14em] uppercase">
+              ETA
+            </div>
+            <div className="text-xl font-bold text-ink">{eta}</div>
+          </div>
+        )}
       </div>
     </div>
   );

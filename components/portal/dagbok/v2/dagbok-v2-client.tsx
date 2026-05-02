@@ -236,8 +236,21 @@ export function DagbokV2Client({
 
   const yearStart = new Date(now.getFullYear(), 0, 1);
   const dayOfYear = differenceInDays(now, yearStart) + 1;
-  const expectedSessions = Math.round((dayOfYear / 365) * 400);
+  const goalSessions = 400;
+  const expectedSessions = Math.round((dayOfYear / 365) * goalSessions);
   const weeksAhead = Math.round((within.length - expectedSessions) / 8);
+
+  const milestoneEta = (() => {
+    if (within.length === 0) return "—";
+    if (within.length >= goalSessions) return "Nådd";
+    const ratePerDay = within.length / dayOfYear;
+    if (ratePerDay <= 0) return "—";
+    const remaining = goalSessions - within.length;
+    const daysToGoal = Math.ceil(remaining / ratePerDay);
+    const etaDate = new Date(now.getTime() + daysToGoal * dayMs);
+    if (etaDate.getFullYear() > now.getFullYear()) return "Etter nyttår";
+    return format(etaDate, "d. MMM", { locale: nb });
+  })();
 
   return (
     <div className="-mx-6 lg:-mx-8 -mt-8 lg:-mt-10 p-6 lg:p-7 bg-surface">
@@ -282,10 +295,11 @@ export function DagbokV2Client({
           roundsDelta={roundsDelta}
         />
         <MilestoneCard
-          goalSessions={400}
+          goalSessions={goalSessions}
           currentSessions={within.length}
           goalRounds={52}
           weeksAhead={weeksAhead}
+          eta={milestoneEta}
         />
       </div>
 
