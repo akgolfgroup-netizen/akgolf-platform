@@ -9,6 +9,7 @@ import { TrendCard } from "@/components/portal/dashboard-bento/trend-card";
 import { AiInsightCard } from "@/components/portal/dashboard-bento/ai-insight-card";
 import { StreakCard } from "@/components/portal/dashboard-bento/streak-card";
 import { ShortcutsRow } from "@/components/portal/dashboard-bento/shortcuts-row";
+import { OnboardingBanner } from "@/components/portal/dashboard-bento/onboarding-banner";
 import { PlanHealthAutoCard } from "@/components/portal/technical-plan";
 
 const MONTHS = [
@@ -102,9 +103,19 @@ export function DashboardV2Client(props: DashboardV3Props) {
   const sessionWhen = nextBooking ? formatBookingWhen(nextBooking.startTime) : null;
   const focusValue = coachInsight?.primaryFocus ?? null;
 
+  // Onboarding-status: bruker trenger HCP/klubb hvis ingen handicap registrert
+  const needsGolfId = handicap.current === null;
+  // Coach-tildeling: ingen coachInsight tyder pa at coach ikke har gjennomgatt enda
+  const needsCoach = !coachInsight;
+
   return (
     <div className="min-h-screen bg-surface p-4 lg:p-7">
       <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-4 lg:gap-5">
+        <OnboardingBanner
+          needsOnboarding={!!props.needsOnboarding}
+          needsGolfId={needsGolfId}
+          needsCoach={needsCoach}
+        />
         <HeroCard
           weekLabel={weekLabel}
           statusLabel={planPct !== null && planPct >= 80 ? "I rute" : "Hold fokus"}

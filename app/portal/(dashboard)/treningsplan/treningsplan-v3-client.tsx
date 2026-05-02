@@ -299,12 +299,12 @@ export function TrainingPlannerV3({
       {/* Hovedkalender-område */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
-            <h2 className="text-xl font-semibold text-inverse-on-surface">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
+          <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+            <h2 className="text-lg sm:text-xl font-semibold text-inverse-on-surface">
               {weekInfo.label}
             </h2>
-            <span className="text-sm text-inverse-on-surface/60">{weekInfo.range}</span>
+            <span className="text-xs sm:text-sm text-inverse-on-surface/60">{weekInfo.range}</span>
             
             {/* Uke-navigasjon */}
             <div className="flex items-center gap-1">
@@ -368,26 +368,26 @@ export function TrainingPlannerV3({
         </div>
 
         {/* Statistikk-bar */}
-        <div className="flex items-center gap-6 mb-4 px-4 py-3 bg-inverse-surface/50 rounded-lg">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-6 mb-4 px-3 sm:px-4 py-2.5 sm:py-3 bg-inverse-surface/50 rounded-lg">
           <div className="flex items-center gap-2">
             <Icon name="schedule" className="w-4 h-4 text-inverse-on-surface/60" />
-            <span className="text-sm text-inverse-on-surface/70">
+            <span className="text-xs sm:text-sm text-inverse-on-surface/70">
               <span className="font-semibold text-inverse-on-surface">{stats.totalMinutes}</span> min totalt
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-inverse-on-surface/70">
+            <span className="text-xs sm:text-sm text-inverse-on-surface/70">
               <span className="font-semibold text-inverse-on-surface">{stats.completed}</span>/{stats.total} fullført
             </span>
           </div>
-          {/* Fokus-fordeling */}
-          <div className="flex items-center gap-2 ml-auto">
+          {/* Fokus-fordeling — scrollbar pa mobil */}
+          <div className="flex items-center gap-2 sm:ml-auto -mx-3 sm:mx-0 px-3 sm:px-0 overflow-x-auto sm:overflow-visible scrollbar-none w-full sm:w-auto">
             {Object.entries(stats.byFocus).map(([focus, minutes]) => {
               const colors = FOCUS_COLORS[focus] || FOCUS_COLORS.TEK;
               return (
                 <div
                   key={focus}
-                  className={`px-2 py-1 rounded text-xs font-medium ${colors.bg} ${colors.text}`}
+                  className={`shrink-0 px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${colors.bg} ${colors.text}`}
                 >
                   {focus}: {minutes} min
                 </div>
