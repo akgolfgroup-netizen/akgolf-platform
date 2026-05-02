@@ -14,8 +14,8 @@ import {
   getBlockedTimesForPeriod,
 } from "./actions";
 import AvailabilityBlockedTimes from "./availability-blocked-times";
-import AvailabilityMonthCalendar from "@/components/portal/admin/kalender/availability-month-calendar";
-import GoogleCalendarPicker from "@/components/portal/admin/kalender/google-calendar-picker";
+import AvailabilityMonthCalendar from "@/components/admin/kalender/availability-month-calendar";
+import GoogleCalendarPicker from "@/components/admin/kalender/google-calendar-picker";
 
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 const DAY_INDICES = [1, 2, 3, 4, 5, 6, 0];

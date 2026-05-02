@@ -7,7 +7,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getWeek } from "date-fns";
-import { AdminNotificationBell } from "@/components/portal/admin/AdminNotificationBell";
+import { AdminNotificationBell } from "@/components/admin/notifications/AdminNotificationBell";
 import { cn } from "@/lib/utils";
 
 interface MCTopbarProps {

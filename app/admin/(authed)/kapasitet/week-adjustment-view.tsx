@@ -3,10 +3,10 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useTransition } from "react";
-import { WeekSelector } from "@/components/portal/admin/week-selector";
-import { CapacityGauge } from "@/components/portal/admin/capacity-gauge";
-import { WeekAdjustmentGrid } from "@/components/portal/admin/week-adjustment-grid";
-import { OverbookingAlert } from "@/components/portal/admin/overbooking-alert";
+import { WeekSelector } from "@/components/admin/kapasitet/week-selector";
+import { CapacityGauge } from "@/components/admin/kapasitet/capacity-gauge";
+import { WeekAdjustmentGrid } from "@/components/admin/kapasitet/week-adjustment-grid";
+import { OverbookingAlert } from "@/components/admin/kapasitet/overbooking-alert";
 
 import { AdminSelect } from "@/components/portal/mission-control/ui";
 import { Card } from "@/components/ui/card";

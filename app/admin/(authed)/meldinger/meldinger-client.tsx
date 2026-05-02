@@ -8,12 +8,12 @@ import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
  ChannelFilter,
  type Channel,
-} from "@/components/portal/admin/meldinger/ChannelFilter";
+} from "@/components/admin/meldinger/ChannelFilter";
 import {
  MessageList,
  type MessageStatus,
-} from "@/components/portal/admin/meldinger/MessageList";
-import { MessageDetail } from "@/components/portal/admin/meldinger/MessageDetail";
+} from "@/components/admin/meldinger/MessageList";
+import { MessageDetail } from "@/components/admin/meldinger/MessageDetail";
 import {
  approveMessage,
  rejectMessage,

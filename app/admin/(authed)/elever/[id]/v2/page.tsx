@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 import { getStudent360 } from "./get-student-360";
-import { Hero360 } from "@/components/portal/admin/student-360/Hero360";
-import { KontaktinfoCard } from "@/components/portal/admin/student-360/KontaktinfoCard";
-import { GolfCard } from "@/components/portal/admin/student-360/GolfCard";
-import { CoachingCard } from "@/components/portal/admin/student-360/CoachingCard";
-import { TrainingCard } from "@/components/portal/admin/student-360/TrainingCard";
-import { MentalForecastCard } from "@/components/portal/admin/student-360/MentalForecastCard";
-import { TestsCard } from "@/components/portal/admin/student-360/TestsCard";
-import { EconomyCard } from "@/components/portal/admin/student-360/EconomyCard";
-import { SignalsCard } from "@/components/portal/admin/student-360/SignalsCard";
+import { Hero360 } from "@/components/admin/spillerprofil-360/Hero360";
+import { KontaktinfoCard } from "@/components/admin/spillerprofil-360/KontaktinfoCard";
+import { GolfCard } from "@/components/admin/spillerprofil-360/GolfCard";
+import { CoachingCard } from "@/components/admin/spillerprofil-360/CoachingCard";
+import { TrainingCard } from "@/components/admin/spillerprofil-360/TrainingCard";
+import { MentalForecastCard } from "@/components/admin/spillerprofil-360/MentalForecastCard";
+import { TestsCard } from "@/components/admin/spillerprofil-360/TestsCard";
+import { EconomyCard } from "@/components/admin/spillerprofil-360/EconomyCard";
+import { SignalsCard } from "@/components/admin/spillerprofil-360/SignalsCard";
 
 export const metadata = {
   title: "Spillerprofil 360° | AK Golf CoachHQ",

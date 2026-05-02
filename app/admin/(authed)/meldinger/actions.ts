@@ -10,8 +10,8 @@ import { getTwilioClient } from "@/lib/portal/sms/twilio";
 import { logger } from "@/lib/logger";
 import { nanoid } from "nanoid";
 import { prisma } from "@/lib/portal/prisma";
-import type { Channel } from "@/components/portal/admin/meldinger/ChannelFilter";
-import type { MessageStatus } from "@/components/portal/admin/meldinger/MessageList";
+import type { Channel } from "@/components/admin/meldinger/ChannelFilter";
+import type { MessageStatus } from "@/components/admin/meldinger/MessageList";
 
 // ── Typer ──────────────────────────────────────────────
 
