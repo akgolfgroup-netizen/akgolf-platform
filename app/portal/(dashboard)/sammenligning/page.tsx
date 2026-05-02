@@ -1,6 +1,12 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { TierGate } from "@/components/portal/ui/tier-gate";
 import { getPeerComparisonData } from "./actions";
+import {
+  getNationalBenchmark,
+  getNationalPercentages,
+  getPyramidLevels,
+  pyramidLevelCodeForHcp,
+} from "@/lib/portal/sammenligning/actions";
 import { SubscriptionTier } from "@prisma/client";
 import { SammenligningShell } from "@/components/portal/sammenligning/v2/sammenligning-shell";
 import { SammenligningPageHeader } from "@/components/portal/sammenligning/v2/sammenligning-page-header";
@@ -28,33 +34,17 @@ function pctToFill(value: number, min: number, max: number): number {
   return Math.max(8, Math.min(96, ((value - min) / (max - min)) * 100));
 }
 
-const PYRAMID_LEVELS: Omit<PyramidLevel, "isYou">[] = [
-  { level: "A", name: "Tour-spiller", desc: "Hovedtour · topp 0,1 %", hcpRange: "+5.0 ↓", population: 12 },
-  { level: "B", name: "Challenge-tour", desc: "Scratch · topp 1 %", hcpRange: "+2.0 ↓", population: 38 },
-  { level: "C", name: "Elite amatør", desc: "Nord · topp 5 %", hcpRange: "0–4.0", population: 94 },
-  { level: "D", name: "Klubbelite", desc: "Topp klubb-amatører", hcpRange: "4.1–7.5", population: 218 },
-  { level: "E", name: "Kompetent klubbspiller", desc: "Hovedtyngde lavt HCP", hcpRange: "7.6–11.0", population: 412 },
-  { level: "F", name: "Erfaren spiller", desc: "Hovedtyngde", hcpRange: "11.1–15.0", population: 684 },
-  { level: "G", name: "Bogey-spiller", desc: "Jevn utvikling", hcpRange: "15.1–20.0", population: 540 },
-  { level: "H–K", name: "Mosjonist · ny spiller", desc: "Opplæring & klubbliv", hcpRange: "20.1+", population: 820 },
-];
-
-function pyramidLevelForHcp(hcp: number): string {
-  if (hcp <= -5) return "A";
-  if (hcp <= 2) return "B";
-  if (hcp <= 4) return "C";
-  if (hcp <= 7.5) return "D";
-  if (hcp <= 11) return "E";
-  if (hcp <= 15) return "F";
-  if (hcp <= 20) return "G";
-  return "H–K";
-}
-
 export default async function SammenligningPage() {
   const user = await requirePortalUser();
   const userTier = (user?.subscriptionTier ?? "VISITOR") as SubscriptionTier;
 
-  const data = await getPeerComparisonData();
+  // Hent peer-data + nasjonalt benchmark + AK-pyramide parallelt.
+  const [data, nationalSG, nationalPct, pyramidLevels] = await Promise.all([
+    getPeerComparisonData(),
+    getNationalBenchmark(),
+    getNationalPercentages(),
+    getPyramidLevels(),
+  ]);
 
   return (
     <SammenligningShell>
@@ -70,7 +60,12 @@ export default async function SammenligningPage() {
             }
           />
         ) : (
-          <SammenligningContent data={data} />
+          <SammenligningContent
+            data={data}
+            nationalSG={nationalSG}
+            nationalPct={nationalPct}
+            pyramidLevels={pyramidLevels}
+          />
         )}
       </TierGate>
     </SammenligningShell>
@@ -82,24 +77,40 @@ type ContentData = Exclude<
   null | { error: string }
 >;
 
-function SammenligningContent({ data }: { data: ContentData }) {
+function SammenligningContent({
+  data,
+  nationalSG,
+  nationalPct,
+  pyramidLevels,
+}: {
+  data: ContentData;
+  nationalSG: Awaited<ReturnType<typeof getNationalBenchmark>>;
+  nationalPct: Awaited<ReturnType<typeof getNationalPercentages>>;
+  pyramidLevels: Awaited<ReturnType<typeof getPyramidLevels>>;
+}) {
   const percentile = Math.round(
     (data.aboveAverageCount / Math.max(1, data.totalSGCategories)) * 100
   );
 
-  const yourLevelCode = pyramidLevelForHcp(data.handicap);
-  const yourLevel = PYRAMID_LEVELS.find((l) => l.level === yourLevelCode);
-  const levels: PyramidLevel[] = PYRAMID_LEVELS.map((l) => ({
+  // Bruk skillLevel-koden fra peer-data (ikke en uavhengig HCP-mapping).
+  // Pyramide-kortet kollapser H-K til ett band.
+  const yourLevelCode = pyramidLevelCodeForHcp(data.handicap);
+  const yourLevel = pyramidLevels.find((l) => l.level === yourLevelCode);
+  const levels: PyramidLevel[] = pyramidLevels.map((l) => ({
     ...l,
     isYou: l.level === yourLevelCode,
   }));
 
   // Identify weakest SG area for focus callout
   const sgKeys = [
-    { key: "sgOffTheTee", label: "SG Off-the-tee" },
-    { key: "sgApproach", label: "SG Approach" },
-    { key: "sgAroundTheGreen", label: "SG Around the green" },
-    { key: "sgPutting", label: "SG Putting" },
+    { key: "sgOffTheTee", label: "SG Off-the-tee", nat: nationalSG.sgOffTheTee },
+    { key: "sgApproach", label: "SG Approach", nat: nationalSG.sgApproach },
+    {
+      key: "sgAroundTheGreen",
+      label: "SG Around the green",
+      nat: nationalSG.sgAroundTheGreen,
+    },
+    { key: "sgPutting", label: "SG Putting", nat: nationalSG.sgPutting },
   ] as const;
 
   const weakest = sgKeys
@@ -144,15 +155,15 @@ function SammenligningContent({ data }: { data: ContentData }) {
             &nbsp;&nbsp;<span style={{ color: "#6BB1FF" }}>●</span> Peer (
             {data.skillLevel.labelNO})
             &nbsp;&nbsp;<span style={{ color: "rgba(255,255,255,0.45)" }}>●</span>{" "}
-            AK-pyramide
+            PGA Tour-snitt
           </>
         }
       />
       <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
-        {sgKeys.map(({ key, label }) => {
+        {sgKeys.map(({ key, label, nat }) => {
           const mine = data.myStats[key];
           const peer = data.peerStats[key];
-          const allValues = [mine, peer, 0];
+          const allValues = [mine, peer, nat];
           const min = Math.min(...allValues) - 0.5;
           const max = Math.max(...allValues) + 0.5;
           const delta = mine - peer;
@@ -160,7 +171,11 @@ function SammenligningContent({ data }: { data: ContentData }) {
           const rows: ComparisonRow[] = [
             { label: "Du", value: fmtSG(mine), pct: pctToFill(mine, min, max) },
             { label: "Peer", value: fmtSG(peer), pct: pctToFill(peer, min, max) },
-            { label: "Pyramide", value: "+0.00", pct: pctToFill(0, min, max) },
+            {
+              label: "Pyramide",
+              value: fmtSG(nat),
+              pct: pctToFill(nat, min, max),
+            },
           ];
           return (
             <ComparisonCard
@@ -191,7 +206,11 @@ function SammenligningContent({ data }: { data: ContentData }) {
               value: `${data.peerStats.girPct} %`,
               pct: data.peerStats.girPct,
             },
-            { label: "Pyramide", value: "48 %", pct: 48 },
+            {
+              label: "Pyramide",
+              value: `${nationalPct.girPct} %`,
+              pct: nationalPct.girPct,
+            },
           ]}
           deltaLabel="vs peer"
           deltaValue={`${data.myStats.girPct - data.peerStats.girPct >= 0 ? "+" : ""}${data.myStats.girPct - data.peerStats.girPct} %-poeng`}
@@ -213,7 +232,11 @@ function SammenligningContent({ data }: { data: ContentData }) {
               value: `${data.peerStats.fairwayPct} %`,
               pct: data.peerStats.fairwayPct,
             },
-            { label: "Pyramide", value: "55 %", pct: 55 },
+            {
+              label: "Pyramide",
+              value: `${nationalPct.fairwayPct} %`,
+              pct: nationalPct.fairwayPct,
+            },
           ]}
           deltaLabel="vs peer"
           deltaValue={`${data.myStats.fairwayPct - data.peerStats.fairwayPct >= 0 ? "+" : ""}${data.myStats.fairwayPct - data.peerStats.fairwayPct} %-poeng`}

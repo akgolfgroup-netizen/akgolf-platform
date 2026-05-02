@@ -120,8 +120,33 @@ export function HoleMap({
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="w-full h-full bg-surface-soft flex items-center justify-center rounded-xl">
-        <p className="text-sm text-ink-muted">Mapbox-token mangler</p>
+      <div
+        className="w-full h-full flex flex-col items-center justify-center text-center px-6 rounded-xl"
+        style={{
+          background: "var(--color-surface-soft, #EDF1EE)",
+          border: "1px dashed var(--color-line, #E4EAE6)",
+        }}
+      >
+        <MapPin
+          className="w-10 h-10 mb-3"
+          style={{ color: "var(--color-ink-subtle, #8A958E)" }}
+        />
+        <p
+          className="text-sm font-bold mb-1"
+          style={{
+            color: "var(--color-ink, #0A1F18)",
+            fontFamily: "var(--font-inter-tight), Inter, sans-serif",
+          }}
+        >
+          Kart-modus er ikke aktivert
+        </p>
+        <p
+          className="text-xs max-w-sm"
+          style={{ color: "var(--color-ink-muted, #5C6B62)" }}
+        >
+          Mapbox-token mangler. Be om at kart-funksjonen aktiveres ved å
+          kontakte AK Golf-support.
+        </p>
       </div>
     );
   }
