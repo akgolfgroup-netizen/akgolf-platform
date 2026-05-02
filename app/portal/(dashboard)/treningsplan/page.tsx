@@ -30,7 +30,8 @@ interface TreningsplanPageProps {
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
   const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
-  const activeView = view ?? "planner";
+  // Default V3-kalender (calendar). Bruk ?view=planner for gammel planner.
+  const activeView = view ?? "calendar";
 
   const plan = await getActivePlan();
   const periodization = await getCurrentPeriodization();

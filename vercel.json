@@ -63,6 +63,10 @@
       "schedule": "30 3 * * *"
     },
     {
+      "path": "/api/portal/cron/weekly-replan",
+      "schedule": "0 5 * * 1"
+    },
+    {
       "path": "/api/cron/coaching-forecast-backtest",
       "schedule": "0 4 * * *"
     },

@@ -19,6 +19,7 @@ import type { LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { updateProfile } from "@/app/portal/(dashboard)/profil/actions";
+import { CalendarSyncSettings } from "@/components/portal/kalender/calendar-sync-settings";
 import { SettingsShell } from "./settings-shell";
 import {
   FieldInput,
@@ -211,6 +212,10 @@ export function SettingsPageClientV2({ profile }: SettingsPageClientV2Props) {
         meta="Ikke tilkoblet"
         action={<PrimaryButton>Koble til</PrimaryButton>}
       />
+
+      <div className="mt-4">
+        <CalendarSyncSettings />
+      </div>
 
       {/* VARSLER */}
       <PanelHeader title="Varsler" sub="NÅR · HVOR · HVA" />

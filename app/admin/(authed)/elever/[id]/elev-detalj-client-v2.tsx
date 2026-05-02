@@ -12,12 +12,11 @@ import {
   LayoutDashboard,
   Flag,
   Dumbbell,
-  Brain,
   Activity,
-  Wallet,
-  BellRing,
+  Bot,
+  ClipboardCheck,
 } from "lucide-react";
-import { McButton, McPill } from "@/components/admin/mc-v2";
+import { McButton } from "@/components/admin/mc-v2";
 import type { getStudentProfile } from "./actions";
 import { ProfilTab } from "./tabs/profil-tab";
 import { TreningTab } from "./tabs/trening-tab";
@@ -90,6 +89,12 @@ export function ElevDetaljClientV2({ profile }: Props) {
             </Link>
             <Link href={`/admin/bookinger/ny?student=${profile.id}`}>
               <McButton icon={<CalendarPlus className="w-3.5 h-3.5" />}>Bok økt</McButton>
+            </Link>
+            <Link href={`/admin/elever/${profile.id}/tester`}>
+              <McButton icon={<ClipboardCheck className="w-3.5 h-3.5" />}>Tester</McButton>
+            </Link>
+            <Link href={`/admin/elever/${profile.id}/coach-agent`}>
+              <McButton icon={<Bot className="w-3.5 h-3.5" />}>Coach AI</McButton>
             </Link>
             <Link href={`/admin/treningsplan?student=${profile.id}`}>
               <McButton variant="accent" icon={<Target className="w-3.5 h-3.5" />}>Sett mål</McButton>
