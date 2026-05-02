@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { UploadForm } from "@/components/portal/trackman/upload-form";
+import { ImportedSessionsList } from "@/components/portal/trackman/imported-sessions-list";
 
 export const metadata: Metadata = {
   title: "Last opp TrackMan | PlayersHQ",
@@ -27,6 +28,9 @@ export default async function TrackManUploadPage() {
         </p>
       </div>
       <UploadForm clubs={clubs} />
+      <div className="pt-2 border-t border-[var(--color-line-soft,#EDF1EE)]">
+        <ImportedSessionsList />
+      </div>
     </div>
   );
 }

@@ -8,10 +8,19 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-import { uploadTrackmanImage, uploadTrackmanCsv } from "@/lib/portal/trackman/upload-actions";
+import {
+  uploadTrackmanImage,
+  uploadTrackmanCsv,
+  previewTrackmanCsv,
+} from "@/lib/portal/trackman/upload-actions";
+import type {
+  CsvPreviewResult,
+  CsvPreviewError,
+} from "@/lib/portal/trackman/upload-actions";
 import { Tabs } from "@/components/ui/tabs";
 import { UploadMetadataFields } from "./upload-metadata-fields";
 import { UploadStatus } from "./upload-status";
+import { CsvPreview } from "./csv-preview";
 
 interface UploadFormProps {
   clubs: string[];
@@ -57,6 +66,9 @@ export function UploadForm({ clubs }: UploadFormProps) {
     success: null,
   });
   const [dragOver, setDragOver] = useState(false);
+  const [csvPreview, setCsvPreview] = useState<
+    CsvPreviewResult | CsvPreviewError | null
+  >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const reset = useCallback(() => {
@@ -70,6 +82,7 @@ export function UploadForm({ clubs }: UploadFormProps) {
       error: null,
       success: null,
     });
+    setCsvPreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, []);
 
@@ -107,6 +120,12 @@ export function UploadForm({ clubs }: UploadFormProps) {
           error: null,
           success: null,
         }));
+        // Kjor preview parsing for spilleren bekrefter import
+        setCsvPreview(null);
+        void file.text().then(async (text) => {
+          const result = await previewTrackmanCsv(text);
+          setCsvPreview(result);
+        });
       }
     },
     [tab]
@@ -246,13 +265,19 @@ export function UploadForm({ clubs }: UploadFormProps) {
           <FileSpreadsheet className="w-5 h-5 text-primary" />
           <span className="text-sm text-ink flex-1 truncate">{state.file.name}</span>
           <button
-            onClick={() => setState((s) => ({ ...s, file: null, preview: null }))}
+            onClick={() => {
+              setState((s) => ({ ...s, file: null, preview: null }));
+              setCsvPreview(null);
+            }}
             className="p-1 rounded hover:bg-line transition-colors"
           >
             <X className="w-4 h-4 text-ink-muted" />
           </button>
         </div>
       )}
+
+      {/* CSV preview — vises for upload-knappen, gir spilleren sjanse til a verifisere */}
+      {tab === "csv" && state.file && <CsvPreview preview={csvPreview} />}
 
       {/* Metadata form */}
       <UploadMetadataFields
@@ -271,7 +296,12 @@ export function UploadForm({ clubs }: UploadFormProps) {
       {/* Upload button */}
       <button
         onClick={handleUpload}
-        disabled={!state.file || state.isUploading || isPending}
+        disabled={
+          !state.file ||
+          state.isUploading ||
+          isPending ||
+          (tab === "csv" && csvPreview !== null && !csvPreview.ok)
+        }
         className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-h-[48px]"
       >
         {state.isUploading || isPending ? (

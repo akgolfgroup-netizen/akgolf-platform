@@ -12,6 +12,7 @@ import {
   updatePlayerMetrics,
   updateClubDispersion,
 } from "./session-analytics";
+import { parseTrackManCSV, convertToMetric } from "@/lib/portal/golf/trackman-parser";
 
 export interface UploadMetadata {
   sessionDate: Date;
@@ -29,6 +30,94 @@ export interface UploadImageResult {
 export interface UploadCsvResult {
   sessionId: string;
   shotsImported: number;
+}
+
+export interface CsvPreviewShot {
+  shotNumber: number;
+  club: string;
+  ballSpeed: number | null;
+  carry: number | null;
+  totalDistance: number | null;
+  smashFactor: number | null;
+}
+
+export interface CsvPreviewResult {
+  ok: true;
+  totalShots: number;
+  clubs: { club: string; count: number }[];
+  firstShots: CsvPreviewShot[];
+}
+
+export interface CsvPreviewError {
+  ok: false;
+  error: string;
+  hint?: string;
+}
+
+/**
+ * Parser CSV uten a lagre. Brukes til a vise preview for spilleren godkjenner import.
+ * Returnerer enten oppsummering eller en strukturert feil med hint.
+ */
+export async function previewTrackmanCsv(
+  csvText: string,
+): Promise<CsvPreviewResult | CsvPreviewError> {
+  await requirePortalUser();
+
+  if (!csvText || typeof csvText !== "string") {
+    return { ok: false, error: "Tom fil eller ugyldig innhold." };
+  }
+
+  if (csvText.length > 5_000_000) {
+    return {
+      ok: false,
+      error: "Filen er for stor (over 5 MB).",
+      hint: "Eksporter en kortere okt eller del filen opp.",
+    };
+  }
+
+  try {
+    const rawShots = parseTrackManCSV(csvText);
+    if (rawShots.length === 0) {
+      return {
+        ok: false,
+        error: "Ingen gyldige slag funnet i filen.",
+        hint: "Sjekk at du eksporterte fra TrackMan Range/Performance med kolonnene Club, Ball Speed, Carry.",
+      };
+    }
+
+    const metric = rawShots.map(convertToMetric);
+
+    // Klubb-fordeling
+    const clubMap = new Map<string, number>();
+    for (const shot of metric) {
+      clubMap.set(shot.club, (clubMap.get(shot.club) ?? 0) + 1);
+    }
+    const clubs = Array.from(clubMap.entries())
+      .map(([club, count]) => ({ club, count }))
+      .sort((a, b) => b.count - a.count);
+
+    const firstShots: CsvPreviewShot[] = metric.slice(0, 5).map((s, i) => ({
+      shotNumber: i + 1,
+      club: s.club,
+      ballSpeed: s.ballSpeed,
+      carry: s.carry,
+      totalDistance: s.totalDistance,
+      smashFactor: s.smashFactor,
+    }));
+
+    return {
+      ok: true,
+      totalShots: metric.length,
+      clubs,
+      firstShots,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Klarte ikke a lese filen.",
+      hint: "Sjekk at filen er en gyldig TrackMan CSV-eksport.",
+    };
+  }
 }
 
 function getClubCategory(club: string): string {
@@ -128,6 +217,43 @@ export async function uploadTrackmanImage(
     confidence: parsed.confidence,
     notes: parsed.notes,
   };
+}
+
+/**
+ * Sletter en TrackMan-sesjon (alle slag + analytics + Trackman-session).
+ * Sjekker eierskap. Brukes fra import-historikk-listen.
+ */
+export async function deleteTrackmanSession(
+  sessionId: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const user = await requirePortalUser();
+
+  if (!sessionId || typeof sessionId !== "string") {
+    return { ok: false, error: "Mangler sessionId" };
+  }
+
+  const owner = await prisma.trackManShotData.findFirst({
+    where: { sessionId, userId: user.id },
+    select: { id: true },
+  });
+
+  if (!owner) {
+    return { ok: false, error: "Sesjon ikke funnet" };
+  }
+
+  await prisma.$transaction([
+    prisma.trackManSessionAnalytics.deleteMany({
+      where: { sessionId, userId: user.id },
+    }),
+    prisma.trackManShotData.deleteMany({
+      where: { sessionId, userId: user.id },
+    }),
+    prisma.trackmanSession.deleteMany({
+      where: { id: sessionId, userId: user.id },
+    }),
+  ]);
+
+  return { ok: true };
 }
 
 /**
