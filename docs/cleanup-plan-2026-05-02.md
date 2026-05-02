@@ -207,16 +207,14 @@ Disse har **ingen objektivt riktig svar fra audit alene**. Begge/alle varianter 
 
 ---
 
-### B. `coachhq/` (5/4) vs `coachhq-dark/` (15/21) vs `mc-v2/` (9/12)
+### B. `coachhq/` (5/4) vs `coachhq-dark/` (15/21) vs `mc-v2/` (9/12) ✅ FERDIG 2026-05-02
 
 **Situasjon:**
 - `coachhq/` — kun nav-config + lette komponenter, brukes av elev-sider.
 - `coachhq-dark/` — dominerende UI-shell, brukes av admin landing, anlegg, dagens-fokus-client.
 - `mc-v2/` — ennå annen variant, brukes av hub/elever-client-v2.
 
-Tre admin-design-varianter er **direkte i konflikt med ditt designsystem** (`design-system.md` peker på Brand Guide V2.0 + `coachhq-reference.html` som eneste sannhet).
-
-**Anbefaling:** Bestem én vinner. `coachhq-dark/` er den med flest importer og navn-match til Brand Guide V2.0. **Forslag:** Standardiser på `coachhq-dark/`, migrer `mc-v2/` og `coachhq/` inn i den. Krever gjennomgang av alle admin-route-pages.
+**Utført Tier 3B 2026-05-02:** Konsolidert til `coachhq-dark/`. Slettet `mc-v2/` (10 filer) og `coachhq/dark-cockpit.tsx`. Migrert 14 importer-filer (10 mc-v2 + 4 dark-cockpit). Utvidet `coachhq-dark/Primitives.tsx` med `KpiCard`, `StatCard`, `Empty`, `Table`, `TOKENS` + nye filer `ActivityItem.tsx` og `avatar.ts`. `coachhq/IconRail.tsx`/`NameList.tsx`/`coachhq-nav-config.ts`/`LiveStatusFooter.tsx` beholdt som byggesteiner for `CoachHQSidebar`. Netto reduksjon: −10 filer.
 
 ---
 

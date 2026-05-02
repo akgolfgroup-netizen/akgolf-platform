@@ -16,7 +16,7 @@ import {
   Bot,
   ClipboardCheck,
 } from "lucide-react";
-import { McButton } from "@/components/admin/mc-v2";
+import { Button } from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "./actions";
 import { ProfilTab } from "./tabs/profil-tab";
 import { TreningTab } from "./tabs/trening-tab";
@@ -85,19 +85,19 @@ export function ElevDetaljClientV2({ profile }: Props) {
               <div className="text-[22px] font-bold text-white mt-0.5 tabular-nums">{hcp !== null ? hcp.toFixed(1) : "—"}</div>
             </div>
             <Link href={`/admin/meldinger?to=${profile.id}`}>
-              <McButton icon={<MessageCircle className="w-3.5 h-3.5" />}>Melding</McButton>
+              <Button icon={<MessageCircle className="w-3.5 h-3.5" />}>Melding</Button>
             </Link>
             <Link href={`/admin/bookinger/ny?student=${profile.id}`}>
-              <McButton icon={<CalendarPlus className="w-3.5 h-3.5" />}>Bok økt</McButton>
+              <Button icon={<CalendarPlus className="w-3.5 h-3.5" />}>Bok økt</Button>
             </Link>
             <Link href={`/admin/elever/${profile.id}/tester`}>
-              <McButton icon={<ClipboardCheck className="w-3.5 h-3.5" />}>Tester</McButton>
+              <Button icon={<ClipboardCheck className="w-3.5 h-3.5" />}>Tester</Button>
             </Link>
             <Link href={`/admin/elever/${profile.id}/coach-agent`}>
-              <McButton icon={<Bot className="w-3.5 h-3.5" />}>Coach AI</McButton>
+              <Button icon={<Bot className="w-3.5 h-3.5" />}>Coach AI</Button>
             </Link>
             <Link href={`/admin/treningsplan?student=${profile.id}`}>
-              <McButton variant="accent" icon={<Target className="w-3.5 h-3.5" />}>Sett mål</McButton>
+              <Button variant="accent" icon={<Target className="w-3.5 h-3.5" />}>Sett mål</Button>
             </Link>
           </div>
         </div>

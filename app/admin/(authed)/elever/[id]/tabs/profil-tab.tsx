@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Dumbbell, MessageSquare, Trophy, AlertTriangle, Calendar } from "lucide-react";
-import { McCard, McCardHeader, McPill } from "@/components/admin/mc-v2";
+import { Card, CardHeader, Pill } from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "../actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -52,12 +52,12 @@ export function ProfilTab({ profile }: { profile: Profile }) {
 
       {/* HCP + Mål */}
       <div className="grid lg:grid-cols-[2fr_1fr] gap-4">
-        <McCard>
-          <McCardHeader title="HCP-utvikling · 12 måneder" sub={`${profile.HandicapEntry.length} oppdateringer`} />
+        <Card>
+          <CardHeader title="HCP-utvikling · 12 måneder" sub={`${profile.HandicapEntry.length} oppdateringer`} />
           <HcpChart entries={profile.HandicapEntry} />
-        </McCard>
-        <McCard>
-          <McCardHeader title="Aktive mål" sub={`${activeGoals.length} av ${profile.Goal.length}`} />
+        </Card>
+        <Card>
+          <CardHeader title="Aktive mål" sub={`${activeGoals.length} av ${profile.Goal.length}`} />
           {activeGoals.length === 0 ? (
             <p className="text-[12px] text-white/45 py-2">Ingen aktive mål.</p>
           ) : (
@@ -79,13 +79,13 @@ export function ProfilTab({ profile }: { profile: Profile }) {
               })}
             </div>
           )}
-        </McCard>
+        </Card>
       </div>
 
       {/* Aktivitet + Sidepanel */}
       <div className="grid lg:grid-cols-[2fr_1fr] gap-4">
-        <McCard>
-          <McCardHeader title="Siste aktivitet" sub="14 dager" />
+        <Card>
+          <CardHeader title="Siste aktivitet" sub="14 dager" />
           {activities.length === 0 ? (
             <p className="text-[12px] text-white/45 py-2">Ingen aktivitet enda.</p>
           ) : (
@@ -98,19 +98,19 @@ export function ProfilTab({ profile }: { profile: Profile }) {
                     <div className="text-[13px] font-medium text-white">{a.title}</div>
                     <div className="font-mono text-[11px] mt-0.5 tracking-[0.04em] truncate text-white/45">{a.meta}</div>
                   </div>
-                  {a.tagTone ? <McPill tone={a.tagTone}>{a.tag}</McPill> : <span className="text-[11px] text-white/45">{a.tag}</span>}
+                  {a.tagTone ? <Pill tone={a.tagTone}>{a.tag}</Pill> : <span className="text-[11px] text-white/45">{a.tag}</span>}
                 </div>
               ))}
             </div>
           )}
-        </McCard>
+        </Card>
 
         <div className="flex flex-col gap-4">
           <SignalCard variant="up" icon={<Trophy className="w-3.5 h-3.5" />} title="3 PR siste 30d" body="Foreslå turneringsmål — spilleren er klar for å konkurrere." />
           <SignalCard variant="warn" icon={<AlertTriangle className="w-3.5 h-3.5" />} title="Around-green svakest" body="Chip- og pitch-volum kan økes. Anbefal short-game-blokk neste 2 uker." />
           {profile.UpcomingBooking.length > 0 && (
-            <McCard>
-              <McCardHeader title="Neste opp" sub="planlagt" />
+            <Card>
+              <CardHeader title="Neste opp" sub="planlagt" />
               <div className="flex flex-col gap-2">
                 {profile.UpcomingBooking.slice(0, 3).map((b) => (
                   <div key={b.id} className="flex gap-2.5 items-center py-2 px-3 rounded-md" style={{ background: "rgba(209,248,67,0.08)", borderLeft: "3px solid #D1F843" }}>
@@ -122,7 +122,7 @@ export function ProfilTab({ profile }: { profile: Profile }) {
                   </div>
                 ))}
               </div>
-            </McCard>
+            </Card>
           )}
         </div>
       </div>

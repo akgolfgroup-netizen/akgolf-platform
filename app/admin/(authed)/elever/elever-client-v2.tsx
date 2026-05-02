@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, UserPlus, SlidersHorizontal, ChevronDown } from "lucide-react";
-import { McPageHead, McButton, McPill, McTable, McKpiCard } from "@/components/admin/mc-v2";
+import { PageHead, Button, Pill, Table, KpiCard } from "@/components/admin/coachhq-dark";
 import type { StudentListData, StudentRow } from "./actions";
 
 interface Props {
@@ -50,23 +50,23 @@ export function EleverClientV2({ initialData }: Props) {
 
   return (
     <div className="space-y-5">
-      <McPageHead
+      <PageHead
         eyebrow="Spillere · Oversikt"
         title="Alle spillere"
         description="Administrer spillere, se status og klikk for full profil."
         actions={
-          <McButton variant="accent" icon={<UserPlus className="w-3.5 h-3.5" />}>
+          <Button variant="accent" icon={<UserPlus className="w-3.5 h-3.5" />}>
             Ny spiller
-          </McButton>
+          </Button>
         }
       />
 
       {/* KPI-rad */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <McKpiCard label="Totalt" value={stats.total} />
-        <McKpiCard label="Aktive" value={stats.active} tone="success" />
-        <McKpiCard label="Nye denne mnd" value={stats.newThisMonth} tone="accent" />
-        <McKpiCard label="Risiko" value={stats.atRisk} tone="warning" />
+        <KpiCard label="Totalt" value={stats.total} />
+        <KpiCard label="Aktive" value={stats.active} tone="success" />
+        <KpiCard label="Nye denne mnd" value={stats.newThisMonth} tone="accent" />
+        <KpiCard label="Risiko" value={stats.atRisk} tone="warning" />
       </div>
 
       {/* Toolbar */}
@@ -100,7 +100,7 @@ export function EleverClientV2({ initialData }: Props) {
           Risiko
         </FilterChip>
 
-        <McButton
+        <Button
           variant="ghost"
           icon={<SlidersHorizontal className="w-3.5 h-3.5" />}
           onClick={() => {
@@ -110,11 +110,11 @@ export function EleverClientV2({ initialData }: Props) {
           className="ml-auto"
         >
           Nullstill
-        </McButton>
+        </Button>
       </div>
 
       {/* Tabell */}
-      <McTable
+      <Table
         columns={[
           {
             key: "name",
@@ -158,9 +158,9 @@ export function EleverClientV2({ initialData }: Props) {
             width: "100px",
             render: (s) =>
               s.isActive ? (
-                <McPill tone="success">Aktiv</McPill>
+                <Pill tone="success">Aktiv</Pill>
               ) : (
-                <McPill tone="default">Inaktiv</McPill>
+                <Pill tone="default">Inaktiv</Pill>
               ),
           },
           {
@@ -169,9 +169,9 @@ export function EleverClientV2({ initialData }: Props) {
             width: "100px",
             render: (s) =>
               s.hasActivePlan ? (
-                <McPill tone="accent">Aktiv plan</McPill>
+                <Pill tone="accent">Aktiv plan</Pill>
               ) : (
-                <McPill tone="default">Ingen</McPill>
+                <Pill tone="default">Ingen</Pill>
               ),
           },
           {

@@ -18,15 +18,15 @@ import {
 } from "lucide-react";
 import { CoachMyelinOverview } from "@/components/portal/technical-plan";
 import {
-  McPageHead,
-  McKpiCard,
-  McCard,
-  McCardHeader,
-  McPill,
-  McButton,
-} from "@/components/admin/mc-v2";
-import type { ActivityItem } from "@/components/admin/mc-v2/McActivityItem";
-import { McActivityItem as ActivityRow } from "@/components/admin/mc-v2/McActivityItem";
+  PageHead,
+  KpiCard,
+  Card,
+  CardHeader,
+  Pill,
+  Button,
+} from "@/components/admin/coachhq-dark";
+import type { ActivityItemData as ActivityItem } from "@/components/admin/coachhq-dark";
+import { ActivityItem as ActivityRow } from "@/components/admin/coachhq-dark";
 import type {
   HubStats,
   HubModuleCounts,
@@ -50,7 +50,7 @@ export function HubClientV2({ userName, stats, counts, activity }: Props) {
 
   return (
     <div className="space-y-6">
-      <McPageHead
+      <PageHead
         eyebrow="CoachHQ · Hub"
         title={`${greeting}, ${userName.split(" ")[0]}`}
         description={
@@ -59,24 +59,24 @@ export function HubClientV2({ userName, stats, counts, activity }: Props) {
             : "Alt du trenger for dagen — én oversikt."
         }
         actions={
-          <McButton variant="accent" icon={<Plus className="w-3.5 h-3.5" />}>
+          <Button variant="accent" icon={<Plus className="w-3.5 h-3.5" />}>
             <Link href="/admin/bookinger/ny" className="text-inherit no-underline">
               Ny booking
             </Link>
-          </McButton>
+          </Button>
         }
       />
 
       {/* KPI-rad */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <McKpiCard
+        <KpiCard
           label="Bookinger i dag"
           value={counts.todaysFocusCount}
           icon={<CalendarDays className="w-4 h-4" />}
           tone={counts.todaysFocusCount > 0 ? "accent" : "default"}
           sub={counts.todaysFocusCount > 0 ? `${counts.todaysFocusCount} bekreftet` : "Ingen i dag"}
         />
-        <McKpiCard
+        <KpiCard
           label="Inntekt denne uken"
           value={stats.mtdRevenueK}
           unit="k"
@@ -84,14 +84,14 @@ export function HubClientV2({ userName, stats, counts, activity }: Props) {
           tone="success"
           sub="MTD"
         />
-        <McKpiCard
+        <KpiCard
           label="Aktive spillere"
           value={stats.activeStudents}
           icon={<Users className="w-4 h-4" />}
           tone="default"
           sub={`${stats.weeklySessionsCount} økter denne uken`}
         />
-        <McKpiCard
+        <KpiCard
           label="Belegg"
           value={stats.utilizationPct}
           unit="%"
@@ -128,8 +128,8 @@ function QuickActions() {
   ];
 
   return (
-    <McCard>
-      <McCardHeader title="Hurtighandlinger" sub="vanlige oppgaver" />
+    <Card>
+      <CardHeader title="Hurtighandlinger" sub="vanlige oppgaver" />
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {actions.map((a) => (
           <Link
@@ -143,7 +143,7 @@ function QuickActions() {
           </Link>
         ))}
       </div>
-    </McCard>
+    </Card>
   );
 }
 
@@ -168,11 +168,11 @@ function ActivityPanel({ items }: { items: HubActivityItem[] }) {
   }));
 
   return (
-    <McCard>
-      <McCardHeader
+    <Card>
+      <CardHeader
         title="Aktivitet"
         sub="siste 24 timer"
-        action={<McPill tone="accent">{items.length} nye</McPill>}
+        action={<Pill tone="accent">{items.length} nye</Pill>}
       />
       {mapped.length === 0 ? (
         <p className="text-[13px] text-white/40 py-4">Ingen aktivitet siste 24 timer.</p>
@@ -181,7 +181,7 @@ function ActivityPanel({ items }: { items: HubActivityItem[] }) {
           <ActivityRow key={item.id} item={item} isLast={i === mapped.length - 1} />
         ))
       )}
-    </McCard>
+    </Card>
   );
 }
 
@@ -196,8 +196,8 @@ function ModulePanel({ counts }: { counts: HubModuleCounts }) {
   ];
 
   return (
-    <McCard>
-      <McCardHeader title="Moduler" sub="hopp til" />
+    <Card>
+      <CardHeader title="Moduler" sub="hopp til" />
       <div className="flex flex-col gap-1">
         {modules.map((m) => (
           <Link
@@ -207,13 +207,13 @@ function ModulePanel({ counts }: { counts: HubModuleCounts }) {
           >
             <span className="font-medium">{m.label}</span>
             <div className="flex items-center gap-2">
-              {m.count > 0 && <McPill tone={m.tone}>{m.count}</McPill>}
+              {m.count > 0 && <Pill tone={m.tone}>{m.count}</Pill>}
               <ChevronRight className="w-3.5 h-3.5 text-white/30" />
             </div>
           </Link>
         ))}
       </div>
-    </McCard>
+    </Card>
   );
 }
 

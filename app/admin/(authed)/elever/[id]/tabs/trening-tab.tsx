@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Dumbbell, Clock, TrendingUp } from "lucide-react";
-import { McCard, McCardHeader, McEmpty } from "@/components/admin/mc-v2";
+import { Card, CardHeader, Empty } from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "../actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -20,10 +20,10 @@ export function TreningTab({ profile }: { profile: Profile }) {
         <Stat label="HCP-trend" value={profile.handicap !== null ? profile.handicap.toFixed(1) : "—"} />
       </div>
 
-      <McCard>
-        <McCardHeader title="Coaching-økter" sub="siste 20" />
+      <Card>
+        <CardHeader title="Coaching-økter" sub="siste 20" />
         {sessions.length === 0 ? (
-          <McEmpty title="Ingen økter" body="Ingen coaching-økter registrert ennå." />
+          <Empty title="Ingen økter" body="Ingen coaching-økter registrert ennå." />
         ) : (
           <div className="flex flex-col">
             {sessions.map((s, i) => (
@@ -51,7 +51,7 @@ export function TreningTab({ profile }: { profile: Profile }) {
             ))}
           </div>
         )}
-      </McCard>
+      </Card>
     </div>
   );
 }

@@ -15,14 +15,14 @@ import {
   ChevronRight,
 } from "lucide-react";
 import {
-  DarkPageHead,
-  DarkButton,
-  DarkPill,
-  DarkStatCard,
-  DARK_TOKENS,
+  PageHead,
+  Button,
+  Pill,
+  StatCard,
+  TOKENS,
   avatarColor,
   getInitials,
-} from "@/components/admin/coachhq/dark-cockpit";
+} from "@/components/admin/coachhq-dark";
 import type { StudentListData, StudentRow } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -60,7 +60,7 @@ function getHcpVariant(
 function HcpPill({ value }: { value: number | null }) {
   const variant = getHcpVariant(value);
   const styles: Record<string, React.CSSProperties> = {
-    elite: { background: DARK_TOKENS.accent, color: "#0A1F18" },
+    elite: { background: TOKENS.accent, color: "#0A1F18" },
     adv: { background: "rgba(42,125,90,0.18)", color: "#6FCBA1" },
     mid: { background: "rgba(0,122,255,0.12)", color: "#6FB3FF" },
     beg: { background: "rgba(196,138,50,0.18)", color: "#E8B967" },
@@ -190,27 +190,27 @@ export function StudentsClient({ initialData }: Props) {
 
   return (
     <>
-      <DarkPageHead
+      <PageHead
         eyebrow="Personer"
         title="Alle spillere"
-        subtitle="Sortér på HCP, SG-trend, eller siste runde. Klikk en rad for full profil."
+        description="Sortér på HCP, SG-trend, eller siste runde. Klikk en rad for full profil."
         actions={
           <>
-            <DarkButton variant="ghost" onClick={() => handleExport(filtered)}>
+            <Button variant="ghost" onClick={() => handleExport(filtered)}>
               <Download className="w-3.5 h-3.5" />
               Eksport CSV
-            </DarkButton>
+            </Button>
             <Link href="/admin/elever/oversikt">
-              <DarkButton>
+              <Button>
                 <Users className="w-3.5 h-3.5" />
                 Inviter mange
-              </DarkButton>
+              </Button>
             </Link>
             <Link href="/admin/elever?ny=1">
-              <DarkButton variant="primary">
+              <Button variant="primary">
                 <UserPlus className="w-3.5 h-3.5" />
                 Ny spiller
-              </DarkButton>
+              </Button>
             </Link>
           </>
         }
@@ -218,18 +218,18 @@ export function StudentsClient({ initialData }: Props) {
 
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
-        <DarkStatCard label="Aktive" value={data.stats.active} />
-        <DarkStatCard label="Nye 30 d" value={`+${data.stats.newThisMonth}`} />
-        <DarkStatCard
+        <StatCard label="Aktive" value={data.stats.active} />
+        <StatCard label="Nye 30 d" value={`+${data.stats.newThisMonth}`} />
+        <StatCard
           label="Inaktive 14 d+"
           value={inactiveCount}
-          valueColor={DARK_TOKENS.danger}
+          valueColor={TOKENS.danger}
         />
-        <DarkStatCard label="Snitt HCP" value={avgHcp} />
-        <DarkStatCard
+        <StatCard label="Snitt HCP" value={avgHcp} />
+        <StatCard
           label="Snitt SG-trend"
           value="+0.18"
-          valueColor={DARK_TOKENS.success}
+          valueColor={TOKENS.success}
         />
       </div>
 
@@ -238,8 +238,8 @@ export function StudentsClient({ initialData }: Props) {
         <div
           className="flex items-center gap-2 rounded-lg px-3 py-2"
           style={{
-            background: DARK_TOKENS.card,
-            border: `1px solid ${DARK_TOKENS.line}`,
+            background: TOKENS.card,
+            border: `1px solid ${TOKENS.line}`,
             width: 320,
           }}
         >
@@ -298,7 +298,7 @@ export function StudentsClient({ initialData }: Props) {
         </FilterChip>
 
         <div className="ml-auto flex gap-2">
-          <DarkButton
+          <Button
             variant="ghost"
             onClick={() => {
               setTierFilter("all");
@@ -309,12 +309,12 @@ export function StudentsClient({ initialData }: Props) {
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             Nullstill filter
-          </DarkButton>
+          </Button>
           <Link href="/admin/elever/oversikt">
-            <DarkButton variant="ghost">
+            <Button variant="ghost">
               <LayoutGrid className="w-3.5 h-3.5" />
               Kort
-            </DarkButton>
+            </Button>
           </Link>
         </div>
       </div>
@@ -323,8 +323,8 @@ export function StudentsClient({ initialData }: Props) {
       <div
         className="rounded-[14px] overflow-hidden"
         style={{
-          background: DARK_TOKENS.card,
-          border: `1px solid ${DARK_TOKENS.line}`,
+          background: TOKENS.card,
+          border: `1px solid ${TOKENS.line}`,
           boxShadow:
             "0 1px 2px rgba(10,31,24,0.03), 0 6px 20px rgba(255,255,255,0.04)",
         }}
@@ -337,7 +337,7 @@ export function StudentsClient({ initialData }: Props) {
               "32px 2fr 90px 1.2fr 0.8fr 0.8fr 100px 80px 24px",
             color: "rgba(255,255,255,0.45)",
             background: "rgba(255,255,255,0.025)",
-            borderBottom: `1px solid ${DARK_TOKENS.line}`,
+            borderBottom: `1px solid ${TOKENS.line}`,
           }}
         >
           <div />
@@ -382,7 +382,7 @@ export function StudentsClient({ initialData }: Props) {
                   borderBottom:
                     i === pageRows.length - 1
                       ? "none"
-                      : `1px solid ${DARK_TOKENS.line}`,
+                      : `1px solid ${TOKENS.line}`,
                 }}
               >
                 <div
@@ -415,7 +415,7 @@ export function StudentsClient({ initialData }: Props) {
                 </div>
                 <div
                   className="font-mono tabular-nums"
-                  style={{ color: sg.up ? DARK_TOKENS.success : DARK_TOKENS.danger }}
+                  style={{ color: sg.up ? TOKENS.success : TOKENS.danger }}
                 >
                   {sg.up ? "+" : "−"}
                   {Math.abs(sg.value).toFixed(2)}
@@ -440,9 +440,9 @@ export function StudentsClient({ initialData }: Props) {
                   style={{
                     color:
                       last.tone === "alert"
-                        ? DARK_TOKENS.danger
+                        ? TOKENS.danger
                         : last.tone === "warn"
-                          ? DARK_TOKENS.warn
+                          ? TOKENS.warn
                           : "rgba(255,255,255,0.55)",
                   }}
                 >
@@ -450,11 +450,11 @@ export function StudentsClient({ initialData }: Props) {
                 </div>
                 <div>
                   {status === "active" ? (
-                    <DarkPill variant="success">Aktiv</DarkPill>
+                    <Pill tone="success">Aktiv</Pill>
                   ) : status === "trending-down" ? (
-                    <DarkPill variant="warn">Trender ned</DarkPill>
+                    <Pill tone="warn">Trender ned</Pill>
                   ) : (
-                    <DarkPill variant="danger">Inaktiv</DarkPill>
+                    <Pill tone="danger">Inaktiv</Pill>
                   )}
                 </div>
                 <div>
@@ -470,7 +470,7 @@ export function StudentsClient({ initialData }: Props) {
           className="flex items-center justify-between px-[18px] py-3.5 text-[12px]"
           style={{
             background: "rgba(255,255,255,0.025)",
-            borderTop: `1px solid ${DARK_TOKENS.line}`,
+            borderTop: `1px solid ${TOKENS.line}`,
             color: "rgba(255,255,255,0.55)",
           }}
         >
@@ -526,13 +526,13 @@ function FilterChip({
         active
           ? {
               background: "rgba(209,248,67,0.10)",
-              color: DARK_TOKENS.accent,
+              color: TOKENS.accent,
               border: "1px solid rgba(209,248,67,0.30)",
             }
           : {
-              background: DARK_TOKENS.card,
+              background: TOKENS.card,
               color: "rgba(255,255,255,0.7)",
-              border: `1px solid ${DARK_TOKENS.line}`,
+              border: `1px solid ${TOKENS.line}`,
             }
       }
     >
@@ -559,9 +559,9 @@ function PageBtn({
       onClick={onClick}
       className="px-2.5 py-1 rounded-md text-[12px] disabled:opacity-40 disabled:cursor-not-allowed"
       style={{
-        background: active ? DARK_TOKENS.accent : DARK_TOKENS.card,
+        background: active ? TOKENS.accent : TOKENS.card,
         color: active ? "#0A1F18" : "#fff",
-        border: `1px solid ${active ? DARK_TOKENS.accent : DARK_TOKENS.line}`,
+        border: `1px solid ${active ? TOKENS.accent : TOKENS.line}`,
         fontWeight: active ? 600 : 400,
       }}
     >

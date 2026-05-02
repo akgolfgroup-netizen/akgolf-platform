@@ -24,12 +24,12 @@ import {
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
-  DarkButton,
-  DarkPill,
-  DARK_TOKENS,
+  Button,
+  Pill,
+  TOKENS,
   avatarColor,
   getInitials,
-} from "@/components/admin/coachhq/dark-cockpit";
+} from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "./actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -49,7 +49,7 @@ function ProfileHero({ profile }: { profile: Profile }) {
       className="relative rounded-[18px] overflow-hidden mb-0"
       style={{
         background: "linear-gradient(135deg, #0D2E23 0%, #143A2D 100%)",
-        border: `1px solid ${DARK_TOKENS.line}`,
+        border: `1px solid ${TOKENS.line}`,
         height: 240,
       }}
     >
@@ -86,13 +86,13 @@ function ProfileHero({ profile }: { profile: Profile }) {
           <div className="pb-1 min-w-0">
             <div
               className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] inline-flex items-center gap-2 mb-1.5"
-              style={{ color: DARK_TOKENS.accent }}
+              style={{ color: TOKENS.accent }}
             >
               <span
                 className="w-1.5 h-1.5 rounded-full"
                 style={{
-                  background: DARK_TOKENS.accent,
-                  boxShadow: `0 0 8px ${DARK_TOKENS.accent}`,
+                  background: TOKENS.accent,
+                  boxShadow: `0 0 8px ${TOKENS.accent}`,
                 }}
               />
               {profile.subscriptionTier ?? "Spiller"} ·{" "}
@@ -135,7 +135,7 @@ function ProfileHero({ profile }: { profile: Profile }) {
           >
             <div
               className="font-mono text-[9px] uppercase tracking-[0.14em]"
-              style={{ color: DARK_TOKENS.accent }}
+              style={{ color: TOKENS.accent }}
             >
               HCP
             </div>
@@ -145,22 +145,22 @@ function ProfileHero({ profile }: { profile: Profile }) {
           </div>
           <div className="flex gap-2 pb-1.5">
             <Link href={`/admin/meldinger?to=${profile.id}`}>
-              <DarkButton>
+              <Button>
                 <MessageCircle className="w-3.5 h-3.5" />
                 Melding
-              </DarkButton>
+              </Button>
             </Link>
             <Link href={`/admin/bookinger/ny?student=${profile.id}`}>
-              <DarkButton>
+              <Button>
                 <CalendarPlus className="w-3.5 h-3.5" />
                 Bok økt
-              </DarkButton>
+              </Button>
             </Link>
             <Link href={`/admin/treningsplan?student=${profile.id}`}>
-              <DarkButton variant="accent">
+              <Button variant="accent">
                 <Target className="w-3.5 h-3.5" />
                 Sett mål
-              </DarkButton>
+              </Button>
             </Link>
           </div>
         </div>
@@ -191,8 +191,8 @@ function ProfileTabs({ active, onChange }: { active: TabId; onChange: (id: TabId
       className="sticky z-[5] -mx-7 px-7 flex gap-0"
       style={{
         top: 58,
-        background: DARK_TOKENS.bg,
-        borderBottom: `1px solid ${DARK_TOKENS.line}`,
+        background: TOKENS.bg,
+        borderBottom: `1px solid ${TOKENS.line}`,
         marginTop: -1,
       }}
     >
@@ -206,8 +206,8 @@ function ProfileTabs({ active, onChange }: { active: TabId; onChange: (id: TabId
             onClick={() => onChange(t.id)}
             className="px-[18px] py-3.5 text-[13px] font-medium cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap transition-colors"
             style={{
-              color: isActive ? DARK_TOKENS.accent : "rgba(255,255,255,0.55)",
-              borderBottom: `2px solid ${isActive ? DARK_TOKENS.accent : "transparent"}`,
+              color: isActive ? TOKENS.accent : "rgba(255,255,255,0.55)",
+              borderBottom: `2px solid ${isActive ? TOKENS.accent : "transparent"}`,
               fontWeight: isActive ? 600 : 500,
               marginBottom: -1,
             }}
@@ -224,9 +224,9 @@ function ProfileTabs({ active, onChange }: { active: TabId; onChange: (id: TabId
                       ? "rgba(209,248,67,0.20)"
                       : "rgba(255,255,255,0.10)",
                   color: t.alert
-                    ? DARK_TOKENS.danger
+                    ? TOKENS.danger
                     : isActive
-                      ? DARK_TOKENS.accent
+                      ? TOKENS.accent
                       : "rgba(255,255,255,0.75)",
                 }}
               >
@@ -259,8 +259,8 @@ function Panel({
     <div
       className="rounded-[14px] p-[18px]"
       style={{
-        background: DARK_TOKENS.card,
-        border: `1px solid ${DARK_TOKENS.line}`,
+        background: TOKENS.card,
+        border: `1px solid ${TOKENS.line}`,
       }}
     >
       <div className="flex items-center justify-between mb-3.5">
@@ -302,7 +302,7 @@ function StatBlock({
       className="rounded-[10px] px-3.5 py-3"
       style={{
         background: "rgba(255,255,255,0.025)",
-        border: `1px solid ${DARK_TOKENS.line}`,
+        border: `1px solid ${TOKENS.line}`,
       }}
     >
       <div
@@ -322,9 +322,9 @@ function StatBlock({
             style={{
               color:
                 subTone === "up"
-                  ? DARK_TOKENS.success
+                  ? TOKENS.success
                   : subTone === "down"
-                    ? DARK_TOKENS.danger
+                    ? TOKENS.danger
                     : "rgba(255,255,255,0.5)",
             }}
           >
@@ -351,20 +351,20 @@ function SignalCard({
     up: {
       background: "rgba(209,248,67,0.10)",
       border: "1px solid rgba(209,248,67,0.25)",
-      borderLeft: `3px solid ${DARK_TOKENS.accent}`,
-      iconColor: DARK_TOKENS.accent,
+      borderLeft: `3px solid ${TOKENS.accent}`,
+      iconColor: TOKENS.accent,
     },
     warn: {
       background: "rgba(196,138,50,0.10)",
       border: "1px solid rgba(196,138,50,0.30)",
-      borderLeft: `3px solid ${DARK_TOKENS.warn}`,
-      iconColor: DARK_TOKENS.warn,
+      borderLeft: `3px solid ${TOKENS.warn}`,
+      iconColor: TOKENS.warn,
     },
     danger: {
       background: "rgba(184,66,51,0.10)",
       border: "1px solid rgba(184,66,51,0.30)",
-      borderLeft: `3px solid ${DARK_TOKENS.danger}`,
-      iconColor: DARK_TOKENS.danger,
+      borderLeft: `3px solid ${TOKENS.danger}`,
+      iconColor: TOKENS.danger,
     },
   } as const;
   const s = styleMap[variant];
@@ -397,7 +397,7 @@ function SgRow({ cat, value }: { cat: string; value: number }) {
         <div
           className="absolute top-0 bottom-0 rounded"
           style={{
-            background: pos ? DARK_TOKENS.success : DARK_TOKENS.danger,
+            background: pos ? TOKENS.success : TOKENS.danger,
             left: pos ? "50%" : undefined,
             right: pos ? undefined : "50%",
             width: `${widthPct}%`,
@@ -406,7 +406,7 @@ function SgRow({ cat, value }: { cat: string; value: number }) {
       </div>
       <span
         className="font-mono text-[12px] font-semibold text-right tabular-nums"
-        style={{ color: pos ? DARK_TOKENS.success : DARK_TOKENS.danger }}
+        style={{ color: pos ? TOKENS.success : TOKENS.danger }}
       >
         {pos ? "+" : "−"}
         {Math.abs(value).toFixed(2)}
@@ -462,7 +462,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
         <StatBlock
           label="SG / runde"
           value={sgPerRound !== null ? `+${(sgPerRound as number).toFixed(2)}` : "—"}
-          valueColor={DARK_TOKENS.success}
+          valueColor={TOKENS.success}
         />
         <StatBlock
           label="Aktivitet 30d"
@@ -473,7 +473,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
         <StatBlock
           label="Streak"
           value={streak !== null ? `${streak}d` : "—"}
-          valueColor={DARK_TOKENS.accent}
+          valueColor={TOKENS.accent}
         />
       </div>
 
@@ -484,8 +484,8 @@ function OversiktTab({ profile }: { profile: Profile }) {
           sub={`${profile.HandicapEntry.length} oppdateringer`}
           action={
             <div className="flex gap-1.5">
-              <DarkPill variant="accent">PR siste 30d</DarkPill>
-              <DarkPill variant="success">På mål</DarkPill>
+              <Pill tone="accent">PR siste 30d</Pill>
+              <Pill tone="success">På mål</Pill>
             </div>
           }
         >
@@ -494,7 +494,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
         <Panel
           title="Aktive mål"
           sub={`${activeGoals.length} av ${profile.Goal.length} på sporet`}
-          action={<DarkPill variant="accent">Mission Board →</DarkPill>}
+          action={<Pill tone="accent">Mission Board →</Pill>}
         >
           {activeGoals.length === 0 ? (
             <p className="m-0 text-[12px]" style={{ color: "rgba(255,255,255,0.55)" }}>
@@ -512,14 +512,14 @@ function OversiktTab({ profile }: { profile: Profile }) {
                     className="rounded-[10px] p-3.5"
                     style={{
                       background: "rgba(255,255,255,0.025)",
-                      border: `1px solid ${DARK_TOKENS.line}`,
+                      border: `1px solid ${TOKENS.line}`,
                     }}
                   >
                     <div className="flex justify-between text-[12px] mb-2">
                       <span className="font-medium text-white">{g.title}</span>
                       <span
                         className="font-mono font-semibold"
-                        style={{ color: DARK_TOKENS.accent }}
+                        style={{ color: TOKENS.accent }}
                       >
                         {progress}%
                       </span>
@@ -527,7 +527,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
                     <div className="h-1.5 rounded overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
                       <div
                         className="h-full rounded"
-                        style={{ width: `${progress}%`, background: DARK_TOKENS.accent }}
+                        style={{ width: `${progress}%`, background: TOKENS.accent }}
                       />
                     </div>
                     {g.targetDate && (
@@ -551,7 +551,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
         <Panel
           title="Siste aktivitet"
           sub="14 dager"
-          action={<DarkPill>Se alt →</DarkPill>}
+          action={<Pill>Se alt →</Pill>}
         >
           {activities.length === 0 ? (
             <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.55)" }}>
@@ -583,7 +583,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
                           ? "rgba(209,248,67,0.16)"
                           : "rgba(175,82,222,0.18)",
                       color:
-                        a.iconClass === "session" ? DARK_TOKENS.accent : DARK_TOKENS.violet,
+                        a.iconClass === "session" ? TOKENS.accent : TOKENS.violet,
                     }}
                   >
                     {a.icon}
@@ -598,7 +598,7 @@ function OversiktTab({ profile }: { profile: Profile }) {
                     </div>
                   </div>
                   {a.tagTone === "success" ? (
-                    <DarkPill variant="success">{a.tag}</DarkPill>
+                    <Pill tone="success">{a.tag}</Pill>
                   ) : (
                     <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.55)" }}>
                       {a.tag}
@@ -617,12 +617,12 @@ function OversiktTab({ profile }: { profile: Profile }) {
             <SgRow cat="Putting" value={0.26} />
             <div
               className="mt-3 pt-3 flex justify-between text-[12px]"
-              style={{ borderTop: `1px dashed ${DARK_TOKENS.line}` }}
+              style={{ borderTop: `1px dashed ${TOKENS.line}` }}
             >
               <span style={{ color: "rgba(255,255,255,0.55)" }}>Total SG</span>
               <span
                 className="font-mono font-semibold"
-                style={{ color: DARK_TOKENS.success }}
+                style={{ color: TOKENS.success }}
               >
                 +0.42 / runde
               </span>
@@ -653,10 +653,10 @@ function OversiktTab({ profile }: { profile: Profile }) {
                     className="flex gap-2.5 items-center py-2.5 px-3 rounded-md"
                     style={{
                       background: "rgba(209,248,67,0.10)",
-                      borderLeft: `3px solid ${DARK_TOKENS.accent}`,
+                      borderLeft: `3px solid ${TOKENS.accent}`,
                     }}
                   >
-                    <Calendar className="w-3.5 h-3.5 shrink-0" style={{ color: DARK_TOKENS.accent }} />
+                    <Calendar className="w-3.5 h-3.5 shrink-0" style={{ color: TOKENS.accent }} />
                     <div className="flex-1 min-w-0">
                       <div className="text-[12px] font-semibold text-white">
                         {format(new Date(b.startTime), "EEEE d. MMM · HH:mm", { locale: nb })}
@@ -735,7 +735,7 @@ function HcpChart({
       <line x1="0" y1="80" x2={W} y2="80" stroke="rgba(255,255,255,0.05)" />
       <line x1="0" y1="120" x2={W} y2="120" stroke="rgba(255,255,255,0.05)" />
       <polygon points={areaPoints} fill="rgba(209,248,67,0.10)" />
-      <polyline points={points} fill="none" stroke={DARK_TOKENS.accent} strokeWidth="2" />
+      <polyline points={points} fill="none" stroke={TOKENS.accent} strokeWidth="2" />
       <text x="4" y="44" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="JetBrains Mono">
         {max.toFixed(1)}
       </text>

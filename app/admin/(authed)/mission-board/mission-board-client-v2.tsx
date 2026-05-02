@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Circle, Play, CheckCircle2, Plus, Filter, LayoutList } from "lucide-react";
-import { McPageHead, McButton, McPill } from "@/components/admin/mc-v2";
+import { PageHead, Button, Pill } from "@/components/admin/coachhq-dark";
 import type { MissionBoardData, MissionCard, MissionStatus } from "./actions";
 
 interface Props {
@@ -27,33 +27,33 @@ export function MissionBoardClientV2({ board }: Props) {
 
   return (
     <div className="space-y-6">
-      <McPageHead
+      <PageHead
         eyebrow="Mission Board · Kanban"
         title="Hva jobber vi mot?"
         description={`${total} aktive oppdrag fordelt på ${COLUMNS.length} faser. Klikk et kort for detaljer.`}
         actions={
           <>
-            <McButton
+            <Button
               variant="ghost"
               icon={<Filter className="w-3.5 h-3.5" />}
               onClick={() => router.push("/admin/elever")}
             >
               Alle oppdrag
-            </McButton>
-            <McButton
+            </Button>
+            <Button
               variant="ghost"
               icon={<LayoutList className="w-3.5 h-3.5" />}
               onClick={() => router.push("/admin/elever/oversikt")}
             >
               Tabell-visning
-            </McButton>
-            <McButton
+            </Button>
+            <Button
               variant="primary"
               icon={<Plus className="w-3.5 h-3.5" />}
               onClick={() => router.push("/admin/bookinger/ny")}
             >
               Nytt oppdrag
-            </McButton>
+            </Button>
           </>
         }
       />
@@ -194,9 +194,9 @@ function MissionCardView({ card, onClick }: { card: MissionCard; onClick: () => 
       <div className="mt-2.5 flex items-center justify-between">
         <div className="flex gap-1 flex-wrap">
           {card.tags.map((tag) => (
-            <McPill key={tag} tone="default">
+            <Pill key={tag} tone="default">
               {tag}
-            </McPill>
+            </Pill>
           ))}
         </div>
         {card.assignee && (

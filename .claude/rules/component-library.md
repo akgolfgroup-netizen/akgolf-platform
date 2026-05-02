@@ -3,6 +3,29 @@
 Sjekk ALLTID denne filen FØR du bygger en ny komponent.
 Gjenbruk eksisterende — aldri bygg duplikater.
 
+## CoachHQ Dark — admin-primitiver (Brand Guide V2.0, eneste sannhetskilde fra 2026-05-02)
+
+Tre tidligere admin-design-trær (`mc-v2/`, `coachhq/dark-cockpit`, `coachhq-dark/`) er konsolidert til **`coachhq-dark/`**. Bruk kun denne for nye admin-flater.
+
+| Eksport | Fil | Bruk |
+|---|---|---|
+| `CoachHQDarkShell` | components/admin/coachhq-dark/CoachHQDarkShell.tsx | Wrapper for alle admin-route-pages |
+| `CoachHQDarkRail` | components/admin/coachhq-dark/CoachHQDarkRail.tsx | Smal ikon-rail (56px) |
+| `CoachHQDarkNav` | components/admin/coachhq-dark/CoachHQDarkNav.tsx | Navnliste (200px) |
+| `CoachHQDarkTopbar` | components/admin/coachhq-dark/CoachHQDarkTopbar.tsx | Topbar med crumbs + handlinger |
+| `PageHead` | components/admin/coachhq-dark/PageHead.tsx | Eyebrow + tittel + beskrivelse + actions |
+| `Card`, `CardHeader` | components/admin/coachhq-dark/Primitives.tsx | Standard mørke kort |
+| `Button` | components/admin/coachhq-dark/Primitives.tsx | variant: default \| primary \| accent \| ghost |
+| `Pill` | components/admin/coachhq-dark/Primitives.tsx | tone: default/accent/success/warn/danger/info/violet (+ aliaser) |
+| `KpiCard` | components/admin/coachhq-dark/Primitives.tsx | Stor KPI med tone, ikon og sub |
+| `StatCard` | components/admin/coachhq-dark/Primitives.tsx | Kompakt label + verdi |
+| `Empty` | components/admin/coachhq-dark/Primitives.tsx | Tom-tilstand for kort |
+| `Table<T>` | components/admin/coachhq-dark/Primitives.tsx | Generisk dark-tabell |
+| `Eyebrow`, `MonoLabel` | components/admin/coachhq-dark/Primitives.tsx | JetBrains Mono labels |
+| `TOKENS` | components/admin/coachhq-dark/Primitives.tsx | bg/card/line/primary/accent/success/warn/danger/blue/violet |
+| `ActivityItem` + `ActivityItemData` | components/admin/coachhq-dark/ActivityItem.tsx | Aktivitets-rad med ikon + tittel + when |
+| `avatarColor`, `getInitials` | components/admin/coachhq-dark/avatar.ts | Avatar-hjelpere |
+
 ## Markedsside Kontakt v2 (Brand Guide V2.0 — pixel-rebuild 2026-04-29)
 Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens/g10-kontakt.html`.
 Default visning av `/kontakt`. Bruker `/api/contact`-endepunktet for skjema-submit.

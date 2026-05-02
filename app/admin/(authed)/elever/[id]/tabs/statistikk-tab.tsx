@@ -1,6 +1,6 @@
 "use client";
 
-import { McCard, McCardHeader, McEmpty } from "@/components/admin/mc-v2";
+import { Card, CardHeader, Empty } from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "../actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -18,8 +18,8 @@ export function StatistikkTab({ profile }: { profile: Profile }) {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
-        <McCard>
-          <McCardHeader title="Strokes Gained · 30d" sub="vs. HCP-snitt" />
+        <Card>
+          <CardHeader title="Strokes Gained · 30d" sub="vs. HCP-snitt" />
           <SgRow cat="Off the tee" value={0.18} />
           <SgRow cat="Approach" value={0.08} />
           <SgRow cat="Around green" value={-0.1} />
@@ -28,12 +28,12 @@ export function StatistikkTab({ profile }: { profile: Profile }) {
             <span className="text-white/45">Total SG</span>
             <span className="font-mono font-semibold text-[#6FCBA1]">+0.42 / runde</span>
           </div>
-        </McCard>
+        </Card>
 
-        <McCard>
-          <McCardHeader title="HCP-historikk" sub={`${profile.HandicapEntry.length} oppdateringer`} />
+        <Card>
+          <CardHeader title="HCP-historikk" sub={`${profile.HandicapEntry.length} oppdateringer`} />
           {profile.HandicapEntry.length < 2 ? (
-            <McEmpty title="For lite data" body="Ikke nok HCP-registreringer for å vise trend." />
+            <Empty title="For lite data" body="Ikke nok HCP-registreringer for å vise trend." />
           ) : (
             <div className="space-y-2">
               {profile.HandicapEntry.slice(-5).map((h) => (
@@ -44,7 +44,7 @@ export function StatistikkTab({ profile }: { profile: Profile }) {
               ))}
             </div>
           )}
-        </McCard>
+        </Card>
       </div>
     </div>
   );

@@ -24,14 +24,14 @@ import {
   Zap,
 } from "lucide-react";
 import {
-  DarkPageHead,
-  DarkButton,
-  DarkPill,
-  DarkStatCard,
-  DARK_TOKENS,
+  PageHead,
+  Button,
+  Pill,
+  StatCard,
+  TOKENS,
   avatarColor,
   getInitials,
-} from "@/components/admin/coachhq/dark-cockpit";
+} from "@/components/admin/coachhq-dark";
 import type { ElevOversiktRow } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -110,8 +110,8 @@ function SpillerCard({ row, gruppe, nowMs }: SpillerCardProps) {
       href={`/admin/elever/${row.id}`}
       className={`block rounded-[14px] p-4 transition-all hover:-translate-y-px ${getFlagClass(gruppe)}`}
       style={{
-        background: DARK_TOKENS.card,
-        border: `1px solid ${DARK_TOKENS.line}`,
+        background: TOKENS.card,
+        border: `1px solid ${TOKENS.line}`,
         borderLeftColor: flagColor,
         paddingLeft: flagColor ? 14 : 16,
       }}
@@ -150,33 +150,33 @@ function SpillerCard({ row, gruppe, nowMs }: SpillerCardProps) {
         {gruppe === "trenger-handling" && (
           <>
             {row.lastActivity ? (
-              <DarkPill variant="coral">
+              <Pill tone="coral">
                 Inaktiv{" "}
                 {Math.floor(
                   (nowMs - new Date(row.lastActivity).getTime()) / 86400000,
                 )}
                 d
-              </DarkPill>
+              </Pill>
             ) : (
-              <DarkPill variant="coral">Aldri aktiv</DarkPill>
+              <Pill tone="coral">Aldri aktiv</Pill>
             )}
-            <DarkPill variant="amber">Lavt engasjement</DarkPill>
+            <Pill tone="amber">Lavt engasjement</Pill>
           </>
         )}
         {gruppe === "stiger" && (
           <>
-            <DarkPill variant="lime">PR-ramme</DarkPill>
-            <DarkPill variant="green">{row.adherencePct}% adherence</DarkPill>
+            <Pill tone="lime">PR-ramme</Pill>
+            <Pill tone="green">{row.adherencePct}% adherence</Pill>
           </>
         )}
         {gruppe === "stabile" && (
-          <DarkPill>{row.hasActivePlan ? "Pro plan" : "Klubbrunder"}</DarkPill>
+          <Pill>{row.hasActivePlan ? "Pro plan" : "Klubbrunder"}</Pill>
         )}
       </div>
 
       <div
         className="grid grid-cols-3 gap-2.5 mt-3.5 pt-3.5"
-        style={{ borderTop: `1px solid ${DARK_TOKENS.line}` }}
+        style={{ borderTop: `1px solid ${TOKENS.line}` }}
       >
         <Stat label="HCP" value={row.currentHcp !== null ? row.currentHcp.toFixed(1) : "—"} />
         <Stat
@@ -184,16 +184,16 @@ function SpillerCard({ row, gruppe, nowMs }: SpillerCardProps) {
           value={`${row.adherencePct}%`}
           color={
             row.adherencePct >= 80
-              ? DARK_TOKENS.success
+              ? TOKENS.success
               : row.adherencePct >= 50
-                ? DARK_TOKENS.warn
-                : DARK_TOKENS.danger
+                ? TOKENS.warn
+                : TOKENS.danger
           }
         />
         <Stat
           label="Aktivitet"
           value={`${row.weeklyHours}t`}
-          color={sgUp ? undefined : DARK_TOKENS.warn}
+          color={sgUp ? undefined : TOKENS.warn}
         />
       </div>
 
@@ -213,7 +213,7 @@ function SpillerCard({ row, gruppe, nowMs }: SpillerCardProps) {
 
       <div
         className="flex items-center justify-between mt-3 pt-3"
-        style={{ borderTop: `1px dashed ${DARK_TOKENS.line}` }}
+        style={{ borderTop: `1px dashed ${TOKENS.line}` }}
       >
         <span
           className="font-mono text-[10px] tracking-[0.06em] inline-flex items-center gap-1.5"
@@ -224,7 +224,7 @@ function SpillerCard({ row, gruppe, nowMs }: SpillerCardProps) {
         </span>
         <span
           className="text-[11px] font-semibold inline-flex items-center gap-1"
-          style={{ color: DARK_TOKENS.accent }}
+          style={{ color: TOKENS.accent }}
         >
           {gruppe === "trenger-handling"
             ? row.lastActivity
@@ -331,17 +331,17 @@ export function ElevOversiktClient({ rows }: Props) {
 
   return (
     <>
-      <DarkPageHead
+      <PageHead
         eyebrow="Personer · Visuell oversikt"
         title="Hvem trenger oppmerksomhet?"
-        subtitle="Kort per spiller gruppert på risiko og framgang. Røde markører = trenger handling. Grønne = stiger."
+        description="Kort per spiller gruppert på risiko og framgang. Røde markører = trenger handling. Grønne = stiger."
         actions={
           <>
             <div
               className="inline-flex rounded-lg p-0.5"
               style={{
-                background: DARK_TOKENS.card,
-                border: `1px solid ${DARK_TOKENS.line}`,
+                background: TOKENS.card,
+                border: `1px solid ${TOKENS.line}`,
               }}
             >
               <Link href="/admin/elever">
@@ -359,7 +359,7 @@ export function ElevOversiktClient({ rows }: Props) {
                 className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md font-mono text-[11px] tracking-[0.06em]"
                 style={{
                   background: "rgba(209,248,67,0.14)",
-                  color: DARK_TOKENS.accent,
+                  color: TOKENS.accent,
                 }}
               >
                 <LayoutGrid className="w-3 h-3" />
@@ -367,10 +367,10 @@ export function ElevOversiktClient({ rows }: Props) {
               </button>
             </div>
             <Link href="/admin/elever?ny=1">
-              <DarkButton variant="primary">
+              <Button variant="primary">
                 <UserPlus className="w-3.5 h-3.5" />
                 Ny spiller
-              </DarkButton>
+              </Button>
             </Link>
           </>
         }
@@ -378,14 +378,14 @@ export function ElevOversiktClient({ rows }: Props) {
 
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
-        <DarkStatCard label="Stiger" value={stats.stiger} valueColor={DARK_TOKENS.success} />
-        <DarkStatCard label="Stabile" value={stats.stabile} />
-        <DarkStatCard label="Synker" value={stats.synker} valueColor={DARK_TOKENS.warn} />
-        <DarkStatCard label="Inaktive 14d+" value={stats.inaktive} valueColor={DARK_TOKENS.danger} />
-        <DarkStatCard
+        <StatCard label="Stiger" value={stats.stiger} valueColor={TOKENS.success} />
+        <StatCard label="Stabile" value={stats.stabile} />
+        <StatCard label="Synker" value={stats.synker} valueColor={TOKENS.warn} />
+        <StatCard label="Inaktive 14d+" value={stats.inaktive} valueColor={TOKENS.danger} />
+        <StatCard
           label="Nye 30d"
           value="+0"
-          valueColor={DARK_TOKENS.accent}
+          valueColor={TOKENS.accent}
         />
       </div>
 
@@ -394,8 +394,8 @@ export function ElevOversiktClient({ rows }: Props) {
         <div
           className="flex items-center gap-2 rounded-lg px-3 py-2"
           style={{
-            background: DARK_TOKENS.card,
-            border: `1px solid ${DARK_TOKENS.line}`,
+            background: TOKENS.card,
+            border: `1px solid ${TOKENS.line}`,
             width: 320,
           }}
         >
@@ -432,15 +432,15 @@ export function ElevOversiktClient({ rows }: Props) {
           <span
             className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] text-white"
             style={{
-              background: DARK_TOKENS.card,
-              border: `1px solid ${DARK_TOKENS.line}`,
+              background: TOKENS.card,
+              border: `1px solid ${TOKENS.line}`,
             }}
           >
             <ArrowUpDown className="w-3 h-3" style={{ color: "rgba(255,255,255,0.5)" }} />
             Sortér: Risiko først{" "}
             <ChevronDown className="w-3 h-3" style={{ color: "rgba(255,255,255,0.5)" }} />
           </span>
-          <DarkButton
+          <Button
             variant="ghost"
             onClick={() => {
               setSearch("");
@@ -449,7 +449,7 @@ export function ElevOversiktClient({ rows }: Props) {
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             Nullstill filter
-          </DarkButton>
+          </Button>
         </div>
       </div>
 
@@ -489,10 +489,10 @@ export function ElevOversiktClient({ rows }: Props) {
           />
           {grouped.stabile.length > visibleStabile.length && (
             <div className="text-center mt-7">
-              <DarkButton onClick={() => setStabileLimit((n) => n + 12)}>
+              <Button onClick={() => setStabileLimit((n) => n + 12)}>
                 <ChevronDown className="w-3.5 h-3.5" />
                 Vis {grouped.stabile.length - visibleStabile.length} stabile spillere til
-              </DarkButton>
+              </Button>
             </div>
           )}
         </>
@@ -502,8 +502,8 @@ export function ElevOversiktClient({ rows }: Props) {
         <div
           className="rounded-[14px] py-14 text-center text-[13px]"
           style={{
-            background: DARK_TOKENS.card,
-            border: `1px solid ${DARK_TOKENS.line}`,
+            background: TOKENS.card,
+            border: `1px solid ${TOKENS.line}`,
             color: "rgba(255,255,255,0.55)",
           }}
         >
@@ -554,7 +554,7 @@ function GruppeSeksjon({
         >
           {count} spillere{extra ? ` — ${extra}` : ""}
         </span>
-        <div className="flex-1 h-px" style={{ background: DARK_TOKENS.line }} />
+        <div className="flex-1 h-px" style={{ background: TOKENS.line }} />
       </div>
       <div
         className="grid gap-3.5"
@@ -586,13 +586,13 @@ function FilterChip({
         active
           ? {
               background: "rgba(209,248,67,0.10)",
-              color: DARK_TOKENS.accent,
+              color: TOKENS.accent,
               border: "1px solid rgba(209,248,67,0.30)",
             }
           : {
-              background: DARK_TOKENS.card,
+              background: TOKENS.card,
               color: "rgba(255,255,255,0.7)",
-              border: `1px solid ${DARK_TOKENS.line}`,
+              border: `1px solid ${TOKENS.line}`,
             }
       }
     >

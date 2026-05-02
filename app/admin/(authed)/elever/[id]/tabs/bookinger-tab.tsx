@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
-import { McCard, McCardHeader, McEmpty, McPill } from "@/components/admin/mc-v2";
+import { Card, CardHeader, Empty, Pill } from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "../actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -22,10 +22,10 @@ export function BookingerTab({ profile }: { profile: Profile }) {
 
   return (
     <div className="pt-5 space-y-4">
-      <McCard>
-        <McCardHeader title="Kommende bookinger" sub="planlagt" />
+      <Card>
+        <CardHeader title="Kommende bookinger" sub="planlagt" />
         {upcoming.length === 0 ? (
-          <McEmpty title="Ingen kommende" body="Ingen planlagte bookinger fremover." />
+          <Empty title="Ingen kommende" body="Ingen planlagte bookinger fremover." />
         ) : (
           <div className="flex flex-col">
             {upcoming.map((b, i) => (
@@ -33,12 +33,12 @@ export function BookingerTab({ profile }: { profile: Profile }) {
             ))}
           </div>
         )}
-      </McCard>
+      </Card>
 
-      <McCard>
-        <McCardHeader title="Historikk" sub="siste 20" />
+      <Card>
+        <CardHeader title="Historikk" sub="siste 20" />
         {past.length === 0 ? (
-          <McEmpty title="Ingen historikk" body="Ingen tidligere bookinger registrert." />
+          <Empty title="Ingen historikk" body="Ingen tidligere bookinger registrert." />
         ) : (
           <div className="flex flex-col">
             {past.map((b, i) => (
@@ -46,7 +46,7 @@ export function BookingerTab({ profile }: { profile: Profile }) {
             ))}
           </div>
         )}
-      </McCard>
+      </Card>
     </div>
   );
 }
@@ -81,7 +81,7 @@ function BookingRow({ booking, isLast }: { booking: BookingItem; isLast: boolean
         <div className="text-[13px] font-medium text-white">{svcName ?? "Økt"}</div>
         <div className="font-mono text-[11px] text-white/45 mt-0.5">{format(start, "EEEE d. MMM · HH:mm", { locale: nb })}</div>
       </div>
-      <McPill tone={isCancelled ? "danger" : isConfirmed ? "success" : "warning"}>{status}</McPill>
+      <Pill tone={isCancelled ? "danger" : isConfirmed ? "success" : "warning"}>{status}</Pill>
     </div>
   );
 }

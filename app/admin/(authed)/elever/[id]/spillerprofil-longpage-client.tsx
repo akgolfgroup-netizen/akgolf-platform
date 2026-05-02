@@ -27,12 +27,12 @@ import {
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
-  DarkButton,
-  DarkPill,
-  DARK_TOKENS,
+  Button,
+  Pill,
+  TOKENS,
   avatarColor,
   getInitials,
-} from "@/components/admin/coachhq/dark-cockpit";
+} from "@/components/admin/coachhq-dark";
 import type { getStudentProfile } from "./actions";
 
 type Profile = NonNullable<Awaited<ReturnType<typeof getStudentProfile>>>;
@@ -79,7 +79,7 @@ function CompactHero({ profile }: { profile: Profile }) {
       className="col-span-full relative flex items-center gap-[18px] px-5 py-4 rounded-[14px] mb-1.5 overflow-hidden"
       style={{
         background: "linear-gradient(135deg, rgba(13,46,35,1) 0%, rgba(20,58,45,1) 100%)",
-        border: `1px solid ${DARK_TOKENS.line}`,
+        border: `1px solid ${TOKENS.line}`,
       }}
     >
       <div
@@ -162,7 +162,7 @@ function HeroStatMini({
       </div>
       <div
         className="text-[16px] font-bold tabular-nums tracking-[-0.01em] mt-0.5"
-        style={{ color: highlight ? DARK_TOKENS.accent : "#fff" }}
+        style={{ color: highlight ? TOKENS.accent : "#fff" }}
       >
         {value}
       </div>
@@ -180,8 +180,8 @@ function TocSidebar({ active, profileId }: { active: SectionId; profileId: strin
       className="sticky rounded-xl p-2"
       style={{
         top: 80,
-        background: DARK_TOKENS.card,
-        border: `1px solid ${DARK_TOKENS.line}`,
+        background: TOKENS.card,
+        border: `1px solid ${TOKENS.line}`,
       }}
     >
       <div
@@ -199,9 +199,9 @@ function TocSidebar({ active, profileId }: { active: SectionId; profileId: strin
             href={`#sec-${s.id}`}
             className="flex items-center gap-2 px-2.5 py-[7px] rounded-md text-[12px] mb-px"
             style={{
-              color: isActive ? DARK_TOKENS.accent : "rgba(255,255,255,0.7)",
+              color: isActive ? TOKENS.accent : "rgba(255,255,255,0.7)",
               background: isActive ? "rgba(209,248,67,0.10)" : "transparent",
-              borderLeft: `2px solid ${isActive ? DARK_TOKENS.accent : "transparent"}`,
+              borderLeft: `2px solid ${isActive ? TOKENS.accent : "transparent"}`,
             }}
           >
             <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -210,7 +210,7 @@ function TocSidebar({ active, profileId }: { active: SectionId; profileId: strin
               <span
                 className="font-mono text-[9px]"
                 style={{
-                  color: s.alert ? DARK_TOKENS.danger : "rgba(255,255,255,0.4)",
+                  color: s.alert ? TOKENS.danger : "rgba(255,255,255,0.4)",
                 }}
               >
                 {s.badge}
@@ -221,28 +221,28 @@ function TocSidebar({ active, profileId }: { active: SectionId; profileId: strin
       })}
       <div
         className="mt-4 pt-3 flex flex-col gap-1.5"
-        style={{ borderTop: `1px solid ${DARK_TOKENS.line}` }}
+        style={{ borderTop: `1px solid ${TOKENS.line}` }}
       >
         <Link href={`/admin/meldinger?to=${profileId}`}>
-          <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
+          <Button className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
             <MessageCircle className="w-3 h-3" />
             Melding
-          </DarkButton>
+          </Button>
         </Link>
         <Link href={`/admin/bookinger/ny?student=${profileId}`}>
-          <DarkButton className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
+          <Button className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full">
             <CalendarPlus className="w-3 h-3" />
             Bok økt
-          </DarkButton>
+          </Button>
         </Link>
         <Link href={`/admin/treningsplan?student=${profileId}`}>
-          <DarkButton
+          <Button
             variant="accent"
             className="!justify-start !text-[11px] !px-2.5 !py-1.5 !w-full"
           >
             <Target className="w-3 h-3" />
             Sett mål
-          </DarkButton>
+          </Button>
         </Link>
       </div>
     </aside>
@@ -275,12 +275,12 @@ function Section({
   const [collapsed, setCollapsed] = useState(false);
   const iconColors: Record<SectionTone, { bg: string; color: string }> = {
     default: { bg: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.7)" },
-    lime: { bg: "rgba(209,248,67,0.16)", color: DARK_TOKENS.accent },
-    green: { bg: "rgba(42,125,90,0.22)", color: DARK_TOKENS.success },
-    violet: { bg: "rgba(175,82,222,0.22)", color: DARK_TOKENS.violet },
-    blue: { bg: "rgba(0,122,255,0.20)", color: DARK_TOKENS.blue },
-    amber: { bg: "rgba(196,138,50,0.22)", color: DARK_TOKENS.warn },
-    coral: { bg: "rgba(184,66,51,0.22)", color: DARK_TOKENS.danger },
+    lime: { bg: "rgba(209,248,67,0.16)", color: TOKENS.accent },
+    green: { bg: "rgba(42,125,90,0.22)", color: TOKENS.success },
+    violet: { bg: "rgba(175,82,222,0.22)", color: TOKENS.violet },
+    blue: { bg: "rgba(0,122,255,0.20)", color: TOKENS.blue },
+    amber: { bg: "rgba(196,138,50,0.22)", color: TOKENS.warn },
+    coral: { bg: "rgba(184,66,51,0.22)", color: TOKENS.danger },
   };
   const ic = iconColors[tone];
   return (
@@ -288,8 +288,8 @@ function Section({
       id={`sec-${id}`}
       className="rounded-[14px] overflow-hidden"
       style={{
-        background: DARK_TOKENS.card,
-        border: `1px solid ${DARK_TOKENS.line}`,
+        background: TOKENS.card,
+        border: `1px solid ${TOKENS.line}`,
         scrollMarginTop: 76,
       }}
     >
@@ -355,7 +355,7 @@ function StatBlock({ label, value, sub, subTone }: { label: string; value: strin
       className="rounded-[10px] px-3.5 py-3"
       style={{
         background: "rgba(255,255,255,0.025)",
-        border: `1px solid ${DARK_TOKENS.line}`,
+        border: `1px solid ${TOKENS.line}`,
       }}
     >
       <div
@@ -372,9 +372,9 @@ function StatBlock({ label, value, sub, subTone }: { label: string; value: strin
             style={{
               color:
                 subTone === "up"
-                  ? DARK_TOKENS.success
+                  ? TOKENS.success
                   : subTone === "down"
-                    ? DARK_TOKENS.danger
+                    ? TOKENS.danger
                     : "rgba(255,255,255,0.5)",
             }}
           >
@@ -399,7 +399,7 @@ function SgRow({ cat, value }: { cat: string; value: number }) {
         <div
           className="absolute top-0 bottom-0 rounded"
           style={{
-            background: pos ? DARK_TOKENS.success : DARK_TOKENS.danger,
+            background: pos ? TOKENS.success : TOKENS.danger,
             left: pos ? "50%" : undefined,
             right: pos ? undefined : "50%",
             width: `${widthPct}%`,
@@ -408,7 +408,7 @@ function SgRow({ cat, value }: { cat: string; value: number }) {
       </div>
       <span
         className="font-mono text-[12px] font-semibold text-right tabular-nums"
-        style={{ color: pos ? DARK_TOKENS.success : DARK_TOKENS.danger }}
+        style={{ color: pos ? TOKENS.success : TOKENS.danger }}
       >
         {pos ? "+" : "−"}
         {Math.abs(value).toFixed(2)}
@@ -428,13 +428,13 @@ function GoalRow({
   pct: number;
   color?: string;
 }) {
-  const c = color ?? DARK_TOKENS.accent;
+  const c = color ?? TOKENS.accent;
   return (
     <div
       className="grid gap-3.5 px-3.5 py-3 rounded-[10px] mb-2"
       style={{
         background: "rgba(255,255,255,0.025)",
-        border: `1px solid ${DARK_TOKENS.line}`,
+        border: `1px solid ${TOKENS.line}`,
         gridTemplateColumns: "1fr auto",
       }}
     >
@@ -486,7 +486,7 @@ function MoneyRow({ desc, sub, date, amt }: { desc: string; sub: string; date: s
       </span>
       <span
         className="font-mono text-[13px] font-semibold tabular-nums"
-        style={{ color: DARK_TOKENS.success }}
+        style={{ color: TOKENS.success }}
       >
         {amt}
       </span>
@@ -513,20 +513,20 @@ function SignalCard({
     up: {
       background: "rgba(209,248,67,0.10)",
       border: "1px solid rgba(209,248,67,0.25)",
-      borderLeft: `3px solid ${DARK_TOKENS.accent}`,
-      iconColor: DARK_TOKENS.accent,
+      borderLeft: `3px solid ${TOKENS.accent}`,
+      iconColor: TOKENS.accent,
     },
     warn: {
       background: "rgba(196,138,50,0.10)",
       border: "1px solid rgba(196,138,50,0.30)",
-      borderLeft: `3px solid ${DARK_TOKENS.warn}`,
-      iconColor: DARK_TOKENS.warn,
+      borderLeft: `3px solid ${TOKENS.warn}`,
+      iconColor: TOKENS.warn,
     },
     danger: {
       background: "rgba(184,66,51,0.10)",
       border: "1px solid rgba(184,66,51,0.30)",
-      borderLeft: `3px solid ${DARK_TOKENS.danger}`,
-      iconColor: DARK_TOKENS.danger,
+      borderLeft: `3px solid ${TOKENS.danger}`,
+      iconColor: TOKENS.danger,
     },
   } as const;
   const s = styleMap[variant];
@@ -597,8 +597,8 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           sub="Q2 2025 · 30d"
           pills={
             <>
-              <DarkPill variant="accent">På sporet</DarkPill>
-              <DarkPill variant="success">3 PR</DarkPill>
+              <Pill tone="accent">På sporet</Pill>
+              <Pill tone="success">3 PR</Pill>
             </>
           }
         >
@@ -622,11 +622,11 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
               color: "rgba(255,255,255,0.85)",
             }}
           >
-            <Sparkles className="w-3.5 h-3.5 inline-block mr-1.5 -mb-0.5" style={{ color: DARK_TOKENS.violet }} />
+            <Sparkles className="w-3.5 h-3.5 inline-block mr-1.5 -mb-0.5" style={{ color: TOKENS.violet }} />
             {profile.name ?? "Spilleren"} er i{" "}
-            <strong style={{ color: DARK_TOKENS.accent }}>topp 5%</strong> av Performance-spillerne siste 30 dager.
+            <strong style={{ color: TOKENS.accent }}>topp 5%</strong> av Performance-spillerne siste 30 dager.
             Putting har eksplodert (+0.26 SG) etter tempo-fokus i april.{" "}
-            <strong style={{ color: DARK_TOKENS.warn }}>Around-green</strong> er nå svakeste ledd —
+            <strong style={{ color: TOKENS.warn }}>Around-green</strong> er nå svakeste ledd —
             anbefaler 2 ukers short-game-blokk før neste klubbmesterskap.
           </div>
         </Section>
@@ -638,7 +638,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<Flag className="w-4 h-4" />}
           title="Golf-ferdigheter"
           sub={`Strokes Gained · ferdighetsnivå · ${profile.HandicapEntry.length} oppdateringer`}
-          pills={<DarkPill variant="blue">SG +0.42</DarkPill>}
+          pills={<Pill tone="blue">SG +0.42</Pill>}
         >
           <div className="grid lg:grid-cols-2 gap-3.5">
             <div>
@@ -649,10 +649,10 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
               <SgRow cat="Putting" value={0.26} />
               <div
                 className="mt-3 pt-3 flex justify-between text-[12px]"
-                style={{ borderTop: `1px dashed ${DARK_TOKENS.line}` }}
+                style={{ borderTop: `1px dashed ${TOKENS.line}` }}
               >
                 <span style={{ color: "rgba(255,255,255,0.55)" }}>Total SG</span>
-                <span className="font-mono font-semibold" style={{ color: DARK_TOKENS.success }}>
+                <span className="font-mono font-semibold" style={{ color: TOKENS.success }}>
                   +0.42 / runde
                 </span>
               </div>
@@ -693,7 +693,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<Dumbbell className="w-4 h-4" />}
           title="Coaching"
           sub={`${profile.CoachingSession.length} økter siste 90d · primærcoach Anders K.`}
-          pills={<DarkPill variant="success">På Performance-plan</DarkPill>}
+          pills={<Pill tone="success">På Performance-plan</Pill>}
         >
           <div className="grid grid-cols-3 gap-3 mb-4">
             <StatBlock label="Økter 90d" value={`${profile.CoachingSession.length}`} />
@@ -705,14 +705,14 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
             className="px-3.5 py-3.5 rounded-[10px]"
             style={{
               background: "rgba(255,255,255,0.025)",
-              border: `1px solid ${DARK_TOKENS.line}`,
+              border: `1px solid ${TOKENS.line}`,
             }}
           >
             <div className="flex justify-between items-center mb-2.5">
               <strong className="text-white text-[13px]">
                 {profile.ActivePlan?.title ?? "Ingen aktiv plan"}
               </strong>
-              {profile.ActivePlan && <DarkPill variant="accent">Pågår</DarkPill>}
+              {profile.ActivePlan && <Pill tone="accent">Pågår</Pill>}
             </div>
             <div className="flex gap-1.5 mb-1.5">
               {Array.from({ length: 10 }).map((_, i) => (
@@ -720,7 +720,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
                   key={i}
                   className="flex-1 h-1.5 rounded"
                   style={{
-                    background: i < 4 ? DARK_TOKENS.accent : "rgba(255,255,255,0.10)",
+                    background: i < 4 ? TOKENS.accent : "rgba(255,255,255,0.10)",
                   }}
                 />
               ))}
@@ -741,7 +741,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
                     className="px-3.5 py-3 rounded-md"
                     style={{
                       background: "rgba(175,82,222,0.10)",
-                      borderLeft: `3px solid ${DARK_TOKENS.violet}`,
+                      borderLeft: `3px solid ${TOKENS.violet}`,
                     }}
                   >
                     <div
@@ -767,7 +767,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<Brain className="w-4 h-4" />}
           title="Mental"
           sub="Selvrapportering · stemning · pre-runde-rutine"
-          pills={<DarkPill variant="violet">Stabil</DarkPill>}
+          pills={<Pill tone="violet">Stabil</Pill>}
         >
           <p className="m-0 text-[13px]" style={{ color: "rgba(255,255,255,0.7)" }}>
             Stemnings-grid og selvrapportering kommer snart. Kobles til AI-Coach mood-prompts.
@@ -781,7 +781,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<Activity className="w-4 h-4" />}
           title="Trening"
           sub="Fysisk · søvn · kosthold"
-          pills={<DarkPill variant="warn">2 risikofaktorer</DarkPill>}
+          pills={<Pill tone="warn">2 risikofaktorer</Pill>}
         >
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <StatBlock label="Søvn snitt 30d" value="7.2t" sub="↗" subTone="up" />
@@ -797,7 +797,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<Hammer className="w-4 h-4" />}
           title="Utstyr"
           sub="Bag-setup · siste fitting"
-          pills={<DarkPill variant="blue">Fitted feb 2025</DarkPill>}
+          pills={<Pill tone="blue">Fitted feb 2025</Pill>}
         >
           {[
             ["Driver", "TaylorMade Stealth 2 · 9°", "FUJIKURA VENTUS BLACK 6S"],
@@ -838,8 +838,8 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           sub="Abonnement · betalinger · pakker"
           pills={
             <>
-              <DarkPill variant="success">Aktiv</DarkPill>
-              <DarkPill>Performance Plus</DarkPill>
+              <Pill tone="success">Aktiv</Pill>
+              <Pill>Performance Plus</Pill>
             </>
           }
         >
@@ -861,7 +861,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<BellRing className="w-4 h-4" />}
           title="Signaler"
           sub="Automatiske flagg · 2 åpne"
-          pills={<DarkPill variant="danger">2 åpne</DarkPill>}
+          pills={<Pill tone="danger">2 åpne</Pill>}
         >
           <SignalCard
             variant="up"
@@ -872,17 +872,17 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
             actions={
               <>
                 <Link href={`/admin/turneringer?student=${profile.id}`}>
-                  <DarkButton variant="accent">
+                  <Button variant="accent">
                     <Target className="w-3 h-3" />
                     Sett turneringsmål
-                  </DarkButton>
+                  </Button>
                 </Link>
-                <DarkButton
+                <Button
                   variant="ghost"
                   onClick={() => alert("Signal avvist")}
                 >
                   Avvis
-                </DarkButton>
+                </Button>
               </>
             }
           />
@@ -895,17 +895,17 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
             actions={
               <>
                 <Link href={`/admin/treningsplan?student=${profile.id}&fokus=short-game`}>
-                  <DarkButton variant="accent">
+                  <Button variant="accent">
                     <Zap className="w-3 h-3" />
                     Lag short-game-plan
-                  </DarkButton>
+                  </Button>
                 </Link>
-                <DarkButton
+                <Button
                   variant="ghost"
                   onClick={() => alert("Snoozed 7 dager")}
                 >
                   Snooze 7d
-                </DarkButton>
+                </Button>
               </>
             }
           />
@@ -918,7 +918,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
           icon={<History className="w-4 h-4" />}
           title="Aktivitet"
           sub="Full historikk · siste 90 dager"
-          pills={<DarkPill>{profile.Booking.length + profile.CoachingSession.length} hendelser</DarkPill>}
+          pills={<Pill>{profile.Booking.length + profile.CoachingSession.length} hendelser</Pill>}
         >
           {[...profile.Booking].slice(0, 8).map((b) => (
             <div
@@ -939,7 +939,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
                 className="w-7 h-7 rounded-md grid place-items-center"
                 style={{
                   background: "rgba(209,248,67,0.16)",
-                  color: DARK_TOKENS.accent,
+                  color: TOKENS.accent,
                 }}
               >
                 <Dumbbell className="w-3.5 h-3.5" />
@@ -955,7 +955,7 @@ export function SpillerprofilLongpageClient({ profile }: Props) {
                   {(extractInstructorName(b.Instructor) ?? "—").toUpperCase()}
                 </div>
               </div>
-              <DarkPill variant="success">Fullført</DarkPill>
+              <Pill tone="success">Fullført</Pill>
             </div>
           ))}
           {profile.Booking.length === 0 && (

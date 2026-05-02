@@ -8,6 +8,32 @@
 
 ---
 
+## 2026-05-02 — Tier 3B: konsolidert tre admin-design-trær til coachhq-dark/
+
+**Jobbet med:** Tier 3B fra `docs/cleanup-plan-2026-05-02.md` — slått sammen tre parallelle admin-primitive-sett (`mc-v2/`, `coachhq/dark-cockpit`, `coachhq-dark/`) til ett. Brand Guide V2.0 (`coachhq-reference.html`) er nå eneste designreferanse.
+
+- **Utvidet `components/admin/coachhq-dark/Primitives.tsx`** med `TOKENS` (bg/card/line/primary/accent/success/warn/danger/blue/violet), `KpiCard`, `StatCard`, `Empty`, `Table<T>` + tone-aliaser på `Pill` (lime/green/amber/coral/blue/warning) for migreringskompatibilitet.
+- **Nye filer:** `coachhq-dark/ActivityItem.tsx` (flyttet fra `mc-v2/McActivityItem.tsx`, type omdøpt til `ActivityItemData`), `coachhq-dark/avatar.ts` (`getInitials` + `avatarColor`, flyttet fra `coachhq/dark-cockpit.tsx`).
+- **Migrerte 10 mc-v2-importere:** `hub-client-v2.tsx`, `elever-client-v2.tsx`, `elev-detalj-client-v2.tsx`, `tabs/{bookinger,coaching,statistikk,profil,trening}-tab.tsx`, `mission-board-client-v2.tsx`, `bookinger-client-v2.tsx`. `Mc*` → ikke-prefiks (`McCard`→`Card` etc.).
+- **Migrerte 4 dark-cockpit-importere:** `students-client.tsx`, `oversikt/elev-oversikt-client.tsx`, `[id]/spillerprofil-tabs-client.tsx`, `[id]/spillerprofil-longpage-client.tsx`. `Dark*` → uten prefiks, `variant=` → `tone=` på Pill, `subtitle=` → `description=` på PageHead, `DARK_TOKENS` → `TOKENS`.
+- **Slettet:** hele `components/admin/mc-v2/` (10 filer) + `components/admin/coachhq/dark-cockpit.tsx`. Beholdt `coachhq/IconRail.tsx`/`NameList.tsx`/`coachhq-nav-config.ts`/`LiveStatusFooter.tsx` — disse er byggesteiner for `CoachHQSidebar` (LiveStatusFooter brukes internt av NameList).
+
+**Netto reduksjon:** −10 filer i `components/admin/`. Ett admin-design-tre. `npx tsc --noEmit` rent for alle migrerte filer (gjenværende TS-feil i `app/portal/login/page.tsx` er pre-eksisterende framer-motion-easing-feil, ikke relatert).
+
+**Visuell endring:** Tidligere `McCard` (`rgba(255,255,255,0.025)` lysere bg) er nå `Card` (`#0D2E23` mørkere/grønnere). Dette er ønsket retning per Brand Guide V2.0, men bør verifiseres i nettleser når dev-server kan startes.
+
+**Nøkkelfiler:**
+- Endret: `components/admin/coachhq-dark/Primitives.tsx`, `components/admin/coachhq-dark/index.ts`, 14 admin-client-filer
+- Nye: `components/admin/coachhq-dark/ActivityItem.tsx`, `components/admin/coachhq-dark/avatar.ts`
+- Slettet: `components/admin/mc-v2/` (mappe), `components/admin/coachhq/dark-cockpit.tsx`
+- Dokumentasjon: `.claude/rules/component-library.md` (ny CoachHQ Dark-seksjon), `docs/cleanup-plan-2026-05-02.md` (Tier 3B markert ✅)
+
+**Neste steg:**
+1. Visuell verifisering i nettleser når Supabase-env er på plass: `/admin`, `/admin/elever`, `/admin/elever/oversikt`, `/admin/elever/[id]`, `/admin/mission-board`, `/admin/bookinger`.
+2. Tier 3 gjenstår: 3A (dashboard vs dashboard-bento), 3C (website vs website-v2), 3D (booking vs booking-v2). Hver er separat sprint-oppgave.
+
+---
+
 ## 2026-04-25 — Treningsplan: AI-RECOMMENDED, øvelses-metadata, maler-fane, drag-resize, coach-feedback
 
 **Jobbet med:** Bygget de 5 gjenstående treningsplan-funksjonene fra plan-fil `lag-en-plan-for-harmonic-quail.md`. Alle TS-feil i `treningsplan/`-modulen ryddet (også 3 pre-eksisterende i `actions.ts` og `treningsplan-planner.tsx`).

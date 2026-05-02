@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export interface ActivityItem {
+export interface ActivityItemData {
   id: string;
   icon: ReactNode;
   iconBg: string;
@@ -10,12 +10,12 @@ export interface ActivityItem {
   when: string;
 }
 
-interface McActivityItemProps {
-  item: ActivityItem;
+interface ActivityItemProps {
+  item: ActivityItemData;
   isLast?: boolean;
 }
 
-export function McActivityItem({ item, isLast }: McActivityItemProps) {
+export function ActivityItem({ item, isLast }: ActivityItemProps) {
   return (
     <div
       className="flex items-start gap-3 py-3"

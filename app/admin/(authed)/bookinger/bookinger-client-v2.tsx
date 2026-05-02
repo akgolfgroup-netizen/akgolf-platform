@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { CalendarPlus, ChevronDown, Download, Filter, List, CalendarDays } from "lucide-react";
-import { McPageHead, McButton, McKpiCard } from "@/components/admin/mc-v2";
+import { PageHead, Button, KpiCard } from "@/components/admin/coachhq-dark";
 import type { BookingDayGroup, BookingRow, BookingStat, CoachFilter } from "@/components/admin/bookinger/booking-types";
 
 type ViewMode = "list" | "calendar";
@@ -60,18 +60,18 @@ export function BookingerClientV2({ groups, stats, coaches, totalCount, todayCou
 
   return (
     <div className="space-y-5">
-      <McPageHead
+      <PageHead
         eyebrow="Plan · Bookinger"
         title="Alle bookinger"
         description="Kommende og historiske økter på tvers av coachene."
         actions={
           <>
-            <McButton variant="ghost" icon={<Download className="w-3.5 h-3.5" />} onClick={handleExport}>
+            <Button variant="ghost" icon={<Download className="w-3.5 h-3.5" />} onClick={handleExport}>
               Eksport
-            </McButton>
-            <McButton variant="ghost" icon={<Filter className="w-3.5 h-3.5" />} onClick={() => { setSearch(""); setFilter("all"); }}>
+            </Button>
+            <Button variant="ghost" icon={<Filter className="w-3.5 h-3.5" />} onClick={() => { setSearch(""); setFilter("all"); }}>
               Nullstill filter
-            </McButton>
+            </Button>
             <Link href="/admin/bookinger/ny" className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-[12.5px] font-bold transition hover:opacity-90 no-underline" style={{ background: "#D1F843", color: "#0A1F18" }}>
               <CalendarPlus className="w-3.5 h-3.5" strokeWidth={2} /> Ny booking
             </Link>
@@ -82,7 +82,7 @@ export function BookingerClientV2({ groups, stats, coaches, totalCount, todayCou
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {stats.map((s) => (
-          <McKpiCard
+          <KpiCard
             key={s.label}
             label={s.label}
             value={s.value}
@@ -171,9 +171,9 @@ function ListView({ groups, visibleDays, onLoadMore }: { groups: BookingDayGroup
 
       {groups.length > visibleDays && (
         <div className="border-t px-4 py-3 text-center" style={{ borderColor: "rgba(255,255,255,0.04)", background: "rgba(255,255,255,0.01)" }}>
-          <McButton variant="ghost" icon={<ChevronDown className="w-3.5 h-3.5" />} onClick={onLoadMore}>
+          <Button variant="ghost" icon={<ChevronDown className="w-3.5 h-3.5" />} onClick={onLoadMore}>
             Last flere
-          </McButton>
+          </Button>
         </div>
       )}
     </div>
