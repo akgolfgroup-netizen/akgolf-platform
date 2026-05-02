@@ -45,19 +45,52 @@ export function DagbokV2Client({
 }: DagbokV2ClientProps) {
   const now = new Date();
 
+  const dayMs = 24 * 60 * 60 * 1000;
+
   const within = useMemo(() => {
-    const limit = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+    const limit = new Date(now.getTime() - 90 * dayMs);
     return logs.filter((l) => new Date(l.date) >= limit);
-  }, [logs, now]);
+  }, [logs, now, dayMs]);
+
+  const previous90d = useMemo(() => {
+    const start = new Date(now.getTime() - 180 * dayMs);
+    const end = new Date(now.getTime() - 90 * dayMs);
+    return logs.filter((l) => {
+      const d = new Date(l.date);
+      return d >= start && d < end;
+    });
+  }, [logs, now, dayMs]);
+
+  const isRound = (focusArea: string | null) => {
+    const fa = (focusArea ?? "").toLowerCase();
+    return fa.includes("round") || fa.includes("runde") || fa.includes("spill");
+  };
 
   const sessions90d = within.length;
   const minutes90d = within.reduce((acc, l) => acc + (l.durationMinutes ?? 0), 0);
   const hours90d = Math.round(minutes90d / 60);
+  const rounds90d = within.filter((l) => isRound(l.focusArea)).length;
 
-  const rounds90d = within.filter((l) => {
-    const fa = (l.focusArea ?? "").toLowerCase();
-    return fa.includes("round") || fa.includes("runde") || fa.includes("spill");
-  }).length;
+  const sessionsPrev = previous90d.length;
+  const minutesPrev = previous90d.reduce((acc, l) => acc + (l.durationMinutes ?? 0), 0);
+  const hoursPrev = Math.round(minutesPrev / 60);
+  const roundsPrev = previous90d.filter((l) => isRound(l.focusArea)).length;
+
+  const formatPctDelta = (now: number, prev: number): string | null => {
+    if (prev === 0) return null;
+    const pct = Math.round(((now - prev) / prev) * 100);
+    return pct === 0 ? null : `${pct > 0 ? "+" : ""}${pct}%`;
+  };
+
+  const formatAbsDelta = (now: number, prev: number): string | null => {
+    const diff = now - prev;
+    if (diff === 0) return null;
+    return `${diff > 0 ? "+" : ""}${diff}`;
+  };
+
+  const sessionsDelta = formatPctDelta(sessions90d, sessionsPrev);
+  const hoursDelta = formatPctDelta(hours90d, hoursPrev);
+  const roundsDelta = formatAbsDelta(rounds90d, roundsPrev);
 
   const heatmapEntries = within.map((l) => ({
     date: new Date(l.date).toISOString().slice(0, 10),
@@ -244,6 +277,9 @@ export function DagbokV2Client({
           sessions90d={sessions90d}
           hours90d={hours90d}
           rounds90d={rounds90d}
+          sessionsDelta={sessionsDelta}
+          hoursDelta={hoursDelta}
+          roundsDelta={roundsDelta}
         />
         <MilestoneCard
           goalSessions={400}

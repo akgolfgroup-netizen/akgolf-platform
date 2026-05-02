@@ -6,6 +6,22 @@ interface HeroStreakProps {
   sessions90d: number;
   hours90d: number;
   rounds90d: number;
+  sessionsDelta?: string | null;
+  hoursDelta?: string | null;
+  roundsDelta?: string | null;
+}
+
+function Delta({ value }: { value: string | null | undefined }) {
+  if (!value) return null;
+  const isNegative = value.startsWith("-");
+  return (
+    <small
+      className="text-[11px] font-medium ml-1.5"
+      style={{ color: isNegative ? "#F49283" : "#D1F843" }}
+    >
+      {value}
+    </small>
+  );
 }
 
 export function HeroStreak({
@@ -14,6 +30,9 @@ export function HeroStreak({
   sessions90d,
   hours90d,
   rounds90d,
+  sessionsDelta,
+  hoursDelta,
+  roundsDelta,
 }: HeroStreakProps) {
   const nextMilestone = streakDays < 60 ? 60 : streakDays < 100 ? 100 : 200;
   const daysToMilestone = Math.max(0, nextMilestone - streakDays);
@@ -44,6 +63,7 @@ export function HeroStreak({
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {sessions90d}
+            <Delta value={sessionsDelta} />
           </div>
         </div>
         <div className="p-3 rounded-xl bg-white/5">
@@ -52,6 +72,7 @@ export function HeroStreak({
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {hours90d}
+            <Delta value={hoursDelta} />
           </div>
         </div>
         <div className="p-3 rounded-xl bg-white/5">
@@ -60,6 +81,7 @@ export function HeroStreak({
           </div>
           <div className="text-[22px] font-bold mt-0.5 tracking-tight">
             {rounds90d}
+            <Delta value={roundsDelta} />
           </div>
         </div>
       </div>
