@@ -183,7 +183,19 @@ function NameListLink({
         className="w-4 h-4 shrink-0"
         strokeWidth={isActive ? 2.4 : 2}
       />
-      <span className="truncate">{item.label}</span>
+      <span className="truncate flex-1">{item.label}</span>
+      {item.badge ? (
+        <span
+          className="ml-auto shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider"
+          style={{
+            background: "rgba(209,248,67,0.16)",
+            color: "var(--color-accent)",
+            border: "1px solid rgba(209,248,67,0.32)",
+          }}
+        >
+          {item.badge}
+        </span>
+      ) : null}
     </Link>
   );
 }

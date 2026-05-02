@@ -113,3 +113,6 @@ __pycache__/
 *.pth
 *.h5
 *.ckpt
+
+# Generated TypeScript types (Supabase)
+types/

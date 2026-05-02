@@ -16,6 +16,8 @@ export interface PlayerHQNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
+  /** Optional badge label vist til hoyre for label (f.eks. "Beta", "Ny") */
+  badge?: string;
 }
 
 export interface PlayerHQNavSection {
@@ -59,7 +61,7 @@ export const PLAYERHQ_NAV: PlayerHQNavSection[] = [
     label: "Evaluer",
     items: [
       { href: "/portal/statistikk", label: "Statistikk", icon: BarChart3 },
-      { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles },
+      { href: "/portal/ai-coach", label: "AI Coach", icon: Sparkles, badge: "Beta" },
     ],
   },
 ];
