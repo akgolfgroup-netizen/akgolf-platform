@@ -17,6 +17,15 @@ import { MonoLabel } from "@/components/portal/patterns";
 interface PyramidFilterProps {
   selectedFilter: string | null;
   onFilterChange: (focus: string | null) => void;
+  /**
+   * Faktisk fordeling per niva basert pa planlagte minutter denne uken.
+   * Hvis ikke angitt, vises alle som 0% (tomt-state).
+   */
+  distribution?: Partial<Record<PyramidLevel, number>>;
+  /**
+   * Ukenummer som vises i header. Defaulter til "Denne uken" hvis ikke angitt.
+   */
+  weekLabel?: string;
 }
 
 // Farger matcher AKPyramide-komponenten (v3.1 data-viz)
@@ -32,27 +41,36 @@ const PYRAMID_CONFIG: {
   { level: "TURN", label: "Turnering", color: "var(--color-data-coral)" },
 ];
 
-// TODO: Hent faktisk progress fra server (TrainingLog-aggregering)
-const PROGRESS_PERCENT = 60;
-
 export function PyramidFilter({
   selectedFilter,
   onFilterChange,
+  distribution,
+  weekLabel,
 }: PyramidFilterProps) {
   const handleLevelClick = (level: string) => {
     onFilterChange(selectedFilter === level ? null : level);
   };
 
+  // Beregn prosent per niva basert pa fordeling. Total skal vaere 100%.
+  const total = distribution
+    ? Object.values(distribution).reduce((s, v) => s + (v ?? 0), 0)
+    : 0;
+  const getPercent = (level: PyramidLevel): number => {
+    if (!distribution || total === 0) return 0;
+    return Math.round(((distribution[level] ?? 0) / total) * 100);
+  };
+
   return (
     <div className="space-y-3">
       <MonoLabel size="xs" uppercase className="text-inverse-on-surface/60 block">
-        ◆ AK-Pyramiden · Uke 17
+        ◆ AK-Pyramiden · {weekLabel ?? "Denne uken"}
       </MonoLabel>
 
       <div className="space-y-2">
         {PYRAMID_CONFIG.map(({ level, label, color }) => {
           const isSelected = selectedFilter === level;
           const isDimmed = selectedFilter !== null && !isSelected;
+          const percent = getPercent(level);
 
           return (
             <button
@@ -68,7 +86,7 @@ export function PyramidFilter({
                 <div
                   className="absolute inset-y-0 left-0 transition-all duration-500"
                   style={{
-                    width: `${PROGRESS_PERCENT}%`,
+                    width: `${percent}%`,
                     backgroundColor: color,
                     opacity: isSelected ? 1 : 0.7,
                     boxShadow: isSelected ? `0 0 12px ${color}` : "none",
@@ -102,7 +120,7 @@ export function PyramidFilter({
                   </div>
 
                   <MonoLabel size="xs" className="text-inverse-on-surface/50">
-                    {PROGRESS_PERCENT}%
+                    {percent}%
                   </MonoLabel>
                 </div>
 

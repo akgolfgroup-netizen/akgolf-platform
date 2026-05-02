@@ -295,7 +295,7 @@ export function TrainingPlannerV3({
   }, [filteredSessions]);
 
   return (
-    <div className="flex h-[calc(100vh-12rem)] gap-4">
+    <div className="flex min-h-[calc(100vh-12rem)] lg:h-[calc(100vh-12rem)] gap-4 flex-col lg:flex-row">
       {/* Hovedkalender-område */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
@@ -462,6 +462,12 @@ export function TrainingPlannerV3({
         }}
         onFilterChange={setSelectedFilter}
         selectedFilter={selectedFilter}
+        pyramidDistribution={
+          stats.byFocus as Partial<
+            Record<"FYS" | "TEK" | "SLAG" | "SPILL" | "TURN", number>
+          >
+        }
+        weekLabel={weekInfo.label}
       />
 
       {/* Session Detail Modal */}

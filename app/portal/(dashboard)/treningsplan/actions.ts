@@ -1863,13 +1863,31 @@ export async function duplicateSession(sessionId: string) {
     _max: { sortOrder: true },
   });
 
+  // Smart kopi-tittel: "Foo" → "Foo 2", "Foo 2" → "Foo 3", "Foo (kopi)" → "Foo 2"
+  // (rydder opp legacy "(kopi)"-suffix samtidig)
+  const baseTitle = source.title.replace(/\s*\(kopi\)\s*$/g, "").replace(/\s+\d+$/, "").trim();
+  const siblings = await prisma.trainingPlanSession.findMany({
+    where: { weekId: source.weekId, dayOfWeek: source.dayOfWeek },
+    select: { title: true },
+  });
+  const baseRegex = new RegExp(`^${baseTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:\\s+(\\d+))?\\s*(?:\\(kopi\\))?\\s*$`);
+  let highest = 1;
+  for (const s of siblings) {
+    const match = s.title.match(baseRegex);
+    if (match) {
+      const num = match[1] ? parseInt(match[1], 10) : 1;
+      if (num > highest) highest = num;
+    }
+  }
+  const newTitle = `${baseTitle} ${highest + 1}`;
+
   const newId = nanoid();
   await prisma.trainingPlanSession.create({
     data: {
       id: newId,
       weekId: source.weekId,
       dayOfWeek: source.dayOfWeek,
-      title: `${source.title} (kopi)`,
+      title: newTitle,
       description: source.description,
       durationMinutes: source.durationMinutes,
       focusArea: source.focusArea,

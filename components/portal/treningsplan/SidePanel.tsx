@@ -13,12 +13,20 @@ interface SidePanelProps {
   onAddSession: (template: StandardTemplate) => void;
   onFilterChange: (focus: string | null) => void;
   selectedFilter: string | null;
+  /** Faktisk minutter-fordeling per pyramide-niva for aktive uke */
+  pyramidDistribution?: Partial<
+    Record<"FYS" | "TEK" | "SLAG" | "SPILL" | "TURN", number>
+  >;
+  /** Ukenummer-tekst (f.eks. "Uke 18") */
+  weekLabel?: string;
 }
 
 export function SidePanel({
   onAddSession,
   onFilterChange,
   selectedFilter,
+  pyramidDistribution,
+  weekLabel,
 }: SidePanelProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -70,6 +78,8 @@ export function SidePanel({
             <PyramidFilter
               selectedFilter={selectedFilter}
               onFilterChange={onFilterChange}
+              distribution={pyramidDistribution}
+              weekLabel={weekLabel}
             />
           </div>
 
