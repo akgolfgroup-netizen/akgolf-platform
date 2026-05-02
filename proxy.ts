@@ -9,9 +9,8 @@ import { NextResponse, type NextRequest } from "next/server";
 // ============================================================
 
 // Sjekk begge env-vars (NEXT_PUBLIC_* fungerer best via Vercel CLI; .trim() handterer trailing \n)
-const MAINTENANCE_MODE =
-  process.env.MAINTENANCE_MODE?.trim() === "true" ||
-  process.env.NEXT_PUBLIC_MAINTENANCE_MODE?.trim() === "true";
+// TEMP: Vedlikeholdsmodus deaktivert — cache-problem
+const MAINTENANCE_MODE = false;
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
 // ============================================================
