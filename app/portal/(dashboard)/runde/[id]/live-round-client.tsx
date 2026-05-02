@@ -2,6 +2,8 @@
 
 
 import { Icon } from "@/components/ui/icon";
+import Link from "next/link";
+import { Map } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -152,19 +154,33 @@ export function LiveRoundClient({
   return (
     <div className="max-w-lg mx-auto space-y-4 pb-20">
       {/* Header Card */}
-      <PremiumCard padding="md" className="flex items-center justify-between">
-        <div>
-          <h1 className="font-bold text-on-surface">{courseName}</h1>
+      <PremiumCard padding="md" className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="font-bold text-on-surface truncate">{courseName}</h1>
           <p className="text-sm text-on-surface-variant">
-            {holesCompleted} av {holes.length} hull • 
+            {holesCompleted} av {holes.length} hull •
             <span className={cn("font-medium ml-1", vsPar > 0 ? "text-error" : vsPar < 0 ? "text-primary-container" : "text-on-surface")}>
               {vsPar > 0 ? "+" : ""}{vsPar}
             </span>
           </p>
         </div>
-        <div className="text-right">
-          <p className="text-2xl font-bold text-on-surface tabular-nums">{totalScore || "–"}</p>
-          <p className="text-xs text-on-surface-variant">Totalt</p>
+        <div className="flex items-center gap-3 shrink-0">
+          <Link
+            href={`/portal/runde/${roundId}/kart`}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all hover:translate-y-[-1px]"
+            style={{
+              background: "var(--color-accent, #D1F843)",
+              color: "var(--color-ink, #0A1F18)",
+            }}
+            aria-label="Apne kart-modus med GPS"
+          >
+            <Map className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Kart</span>
+          </Link>
+          <div className="text-right">
+            <p className="text-2xl font-bold text-on-surface tabular-nums">{totalScore || "–"}</p>
+            <p className="text-xs text-on-surface-variant">Totalt</p>
+          </div>
         </div>
       </PremiumCard>
 
