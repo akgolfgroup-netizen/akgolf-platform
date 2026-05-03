@@ -29,7 +29,7 @@ export async function GET(request: Request) {
   );
   if (!rateLimit.allowed) {
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=error&reason=rate_limited`
+      `${BASE_URL}/admin/kalender?google=error&reason=rate_limited`
     );
   }
 
@@ -41,13 +41,13 @@ export async function GET(request: Request) {
   if (error) {
     logger.warn("[Google Calendar Callback] OAuth-feil mottatt");
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=error&reason=auth_failed`
+      `${BASE_URL}/admin/kalender?google=error&reason=auth_failed`
     );
   }
 
   if (!code || !state) {
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=error&reason=missing_params`
+      `${BASE_URL}/admin/kalender?google=error&reason=missing_params`
     );
   }
 
@@ -82,12 +82,12 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=connected`
+      `${BASE_URL}/admin/kalender?google=connected`
     );
   } catch {
     logger.error("[Google Calendar Callback] Callback-behandling feilet");
     return NextResponse.redirect(
-      `${BASE_URL}/portal/kalender?google=error`
+      `${BASE_URL}/admin/kalender?google=error`
     );
   }
 }
