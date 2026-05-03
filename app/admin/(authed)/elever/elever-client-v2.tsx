@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, UserPlus, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { PageHead, Button, Pill, Table, KpiCard } from "@/components/admin/coachhq-dark";
 import type { StudentListData, StudentRow } from "./actions";
+import { NyEleveDialog } from "./ny-eleve-dialog";
 
 interface Props {
   initialData: StudentListData;
@@ -18,6 +19,7 @@ export function EleverClientV2({ initialData }: Props) {
   const [filter, setFilter] = useState<FilterKey>("all");
   const [students] = useState(initialData.students);
   const [stats] = useState(initialData.stats);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -55,10 +57,25 @@ export function EleverClientV2({ initialData }: Props) {
         title="Alle spillere"
         description="Administrer spillere, se status og klikk for full profil."
         actions={
-          <Button variant="accent" icon={<UserPlus className="w-3.5 h-3.5" />}>
+          <Button
+            variant="accent"
+            icon={<UserPlus className="w-3.5 h-3.5" />}
+            onClick={() => setDialogOpen(true)}
+          >
             Ny spiller
           </Button>
         }
+      />
+
+      <NyEleveDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onCreated={(result) => {
+          router.refresh();
+          if (result.isNewUser) {
+            router.push(`/admin/elever/${result.userId}`);
+          }
+        }}
       />
 
       {/* KPI-rad */}

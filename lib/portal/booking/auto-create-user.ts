@@ -18,10 +18,11 @@ const SALT_ROUNDS = 12;
  */
 export async function autoCreateUser(
   email: string,
-  name: string
+  name: string,
+  phone?: string
 ): Promise<AutoCreateResult> {
   const supabase = createServiceClient();
-  
+
   // Check if user already exists
   const { data: existing, error: existingError } = await supabase
     .from("User")
@@ -39,17 +40,19 @@ export async function autoCreateUser(
 
   // Generate a random password (will be sent in welcome email)
   const tempPassword = randomBytes(6).toString("base64url"); // ~8 chars
-  
+
   // Hash the password with bcrypt
   const hashedPassword = await bcrypt.hash(tempPassword, SALT_ROUNDS);
 
   // Create user with hashed password
+  const normalizedPhone = phone?.trim() || null;
   const { data: user, error: createError } = await supabase
     .from("User")
     .insert({
       id: randomUUID(),
       email,
       name,
+      phone: normalizedPhone,
       role: "STUDENT",
       password: hashedPassword,
       updatedAt: new Date().toISOString(),
