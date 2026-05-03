@@ -104,7 +104,7 @@ export function HomeV2Client() {
       <main id="main-content">
 
       {/* HERO — next/image for optimalisert LCP (var CSS background-image, 407 KB) */}
-      <section className="relative flex min-h-screen items-end overflow-hidden pb-20">
+      <section className="relative isolate flex min-h-screen items-end overflow-hidden pb-20">
         <Image
           src="/images/hero/forside.jpg"
           alt=""
@@ -112,7 +112,7 @@ export function HomeV2Client() {
           priority
           sizes="100vw"
           quality={78}
-          className="object-cover object-[center_30%] -z-10"
+          className="object-cover object-[center_30%]"
         />
         {/* Mobil: tyngre overlay slik at hvit hero-tekst forblir lesbar pa lyse partier av bildet */}
         <div
