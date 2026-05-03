@@ -65,6 +65,8 @@ export function RundeV2Client({
       style={{ background: "#0A1F18" }}
     >
       {/* Course aerial bg (placeholder gradient until SVG asset wired) */}
+      {/* TODO [BLOCKER]: course-aerial.svg mangler i public/.
+          Krever asset-leveranse før produksjon. */}
       <div
         className="absolute inset-0"
         style={{
