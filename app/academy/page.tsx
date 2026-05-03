@@ -52,8 +52,8 @@ export default function AcademyPage() {
               <div className="mt-8 flex flex-wrap gap-3.5">
                 <a
                   href="/academy/abonnement"
-                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)]"
-                  style={{ background: "var(--color-accent)", color: "var(--color-ink)" }}
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,88,64,0.25)]"
+                  style={{ background: "var(--color-primary)", color: "white" }}
                 >
                   Se treningsabonnement
                   <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
