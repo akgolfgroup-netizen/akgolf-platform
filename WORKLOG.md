@@ -37,6 +37,11 @@ Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
   (i stedet for service_role)
 - Faktisk e-postmal-innhold (tabellen er tom)
 
+### Notater
+- Audit-en sa 2 Anthropic modul-load-bugs, faktisk var det 3 —
+  `lib/skills/anthropic.ts` ble missed. Alle tre fikset i
+  `fix/lazy-anthropic-client`.
+
 ---
 
 ## 2026-05-02 — Tier 3B: konsolidert tre admin-design-trær til coachhq-dark/
