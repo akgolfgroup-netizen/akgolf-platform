@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { createServiceClient } from "@/lib/supabase/server";
-import { Resend } from "resend";
+import { getResend } from "@/lib/portal/email/resend";
 import { render } from "@react-email/components";
 import { WelcomeDay0Email } from "@/lib/portal/email/templates/welcome-day0";
 import { WelcomeDay1Email } from "@/lib/portal/email/templates/welcome-day1";
@@ -9,13 +9,20 @@ import { WelcomeDay3Email } from "@/lib/portal/email/templates/welcome-day3";
 
 export const dynamic = "force-dynamic";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function GET(request: NextRequest) {
   // Verify cron secret
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const resend = getResend();
+  if (!resend) {
+    logger.error("RESEND_API_KEY ikke konfigurert — welcome-sequence cron kan ikke sende e-post");
+    return NextResponse.json(
+      { error: "Email service not configured" },
+      { status: 503 }
+    );
   }
 
   const supabase = createServiceClient();
