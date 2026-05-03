@@ -156,3 +156,25 @@ Siste arbeidslogg finnes i **`WORKLOG.md`** i rot-mappen. Les alltid denne førs
 git log --oneline -10          # Siste commits
 cat WORKLOG.md                  # Siste arbeidslogg
 ```
+
+### Vercel deployment
+
+This repo deploys to the Vercel project **akgolf-website** 
+(team: akgolfgroup-netizens-projects). Production domain: www.akgolf.no.
+
+Verify local link:
+    cat .vercel/project.json
+Should show "projectName":"akgolf-website".
+
+Pushes to main auto-deploy via Vercel's Git integration. No manual 
+`vercel deploy` needed for production.
+
+NEVER run `vercel link` and select "Create new project" — that creates 
+ghost projects in the team workspace. If `.vercel/project.json` is 
+missing on a new machine, run:
+    vercel link --project akgolf-website
+
+Never run any `vercel` command from outside the repo root. Doing so 
+creates stray `.vercel/` folders in whatever directory you happened 
+to be in (most commonly $HOME). If you find one, delete it:
+    rm -rf ~/.vercel
