@@ -126,5 +126,15 @@ Heritage Grid (M3) var gjeldende fra 2026-04-19 til 2026-04-25. Erstattet av Bra
 
 **Stitch-referanseskjermer** under `design-ref/stitch/heritage/` er nå historisk referanse — ikke bruk dem som kildebilde for ny kode. Bruk `public/design-reference/*.html` i stedet.
 
+## Vercel env-vars — gotchas (lært 2026-05-03)
+
+- **Sensitive-flaggede variabler kan IKKE settes for Development environment** i Vercel. Bare Production og Preview. Dette er Vercel-policy, ikke bug.
+- **VAPID-konfig krever 4 env-vars:** `VAPID_PRIVATE_KEY`, `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_CONTACT_EMAIL`, `VAPID_SUBJECT`. Server-side `VAPID_PUBLIC_KEY` er IKKE nødvendig — server bruker bare private key.
+- **Ved kopiering av base64-strenger fra .env-filer:** pass på literal `\n` i enden (escape-sekvens som tekst). Bryter URL-safe base64-validering.
+
+## Vercel-CLI-begrensning for Claude Code
+
+- `vercel env add` krever interaktiv stdin og kan ikke kjøres fra Claude Codes Bash-tool. For env-var-mutasjoner: bruk Vercel Dashboard manuelt, IKKE CLI via Claude Code. Manuell UI er raskere og tryggere for engangs-jobber.
+
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.
