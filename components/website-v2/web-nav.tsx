@@ -1,19 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 
 interface WebNavProps {
-  active?: "home" | "academy" | "junior" | "pricing" | "course" | "about";
+  active?: "home" | "academy" | "junior" | "pricing";
 }
 
 const NAV_ITEMS: { key: NonNullable<WebNavProps["active"]>; label: string; href: string }[] = [
   { key: "home", label: "Hjem", href: "/?v=2" },
   { key: "academy", label: "Academy", href: "/academy?v=2" },
   { key: "pricing", label: "Priser", href: "/pricing?v=2" },
-  { key: "course", label: "Bane", href: "/?v=2" },
-  { key: "about", label: "Om oss", href: "/?v=2" },
 ];
 
 export function WebNav({ active = "home" }: WebNavProps) {
@@ -36,6 +35,13 @@ export function WebNav({ active = "home" }: WebNavProps) {
     };
   }, [menuOpen]);
 
+  // Mørk tekst når nav-bg er solid (etter scroll) ELLER på en landingsside
+  // med lys hero (alt utenom forsiden, som har mørkt hero-bilde).
+  const useDarkText = solid || active !== "home";
+  const logoSrc = useDarkText
+    ? "/logos/ak-golf-logo-primary-on-light.svg"
+    : "/logos/ak-golf-logo-white-on-dark.svg";
+
   return (
     <>
       <nav
@@ -46,23 +52,19 @@ export function WebNav({ active = "home" }: WebNavProps) {
         }`}
       >
         <Link
-          href="/?v=2"
-          className={`flex items-center gap-2.5 text-[18px] font-extrabold tracking-[-0.02em] ${
-            solid ? "text-[var(--akgolf-ink,#0A1F18)]" : "text-white"
-          }`}
-          style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          href="/"
+          aria-label="AK Golf — Hjem"
+          className="flex items-center"
           onClick={() => setMenuOpen(false)}
         >
-          <span
-            className="grid h-8 w-8 place-items-center rounded-lg text-[13px] font-extrabold tracking-[-0.04em]"
-            style={{
-              background: "var(--akgolf-accent, #D1F843)",
-              color: "#0A1F18",
-            }}
-          >
-            AK
-          </span>
-          AK Golf
+          <Image
+            src={logoSrc}
+            alt="AK Golf"
+            width={120}
+            height={32}
+            priority
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -76,13 +78,20 @@ export function WebNav({ active = "home" }: WebNavProps) {
                 aria-current={isActive ? "page" : undefined}
                 className={`text-sm transition-colors ${
                   isActive
-                    ? solid
-                      ? "font-bold text-[var(--akgolf-ink,#0A1F18)]"
+                    ? useDarkText
+                      ? "font-bold"
                       : "font-semibold text-white"
-                    : solid
-                      ? "font-medium text-[var(--akgolf-text,#324D45)] hover:text-[var(--akgolf-ink,#0A1F18)]"
+                    : useDarkText
+                      ? "font-medium hover:opacity-100"
                       : "font-medium text-white/85 hover:text-white"
                 }`}
+                style={
+                  useDarkText
+                    ? {
+                        color: isActive ? "var(--color-ink)" : "var(--color-ink-muted)",
+                      }
+                    : undefined
+                }
               >
                 {item.label}
               </Link>
@@ -94,8 +103,9 @@ export function WebNav({ active = "home" }: WebNavProps) {
         <Link
           href="/portal/login"
           className={`hidden text-[13px] font-medium md:inline-flex ${
-            solid ? "text-[var(--akgolf-text,#324D45)]" : "text-white/85"
+            useDarkText ? "" : "text-white/85"
           }`}
+          style={useDarkText ? { color: "var(--color-ink-muted)" } : undefined}
         >
           Logg inn
         </Link>
@@ -104,7 +114,7 @@ export function WebNav({ active = "home" }: WebNavProps) {
         <Link
           href="/booking-v2?v=2"
           className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-[12px] sm:text-[13px] font-bold tracking-[-0.005em] transition-all hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)] md:ml-0"
-          style={{ background: "var(--akgolf-accent, #D1F843)", color: "#0A1F18" }}
+          style={{ background: "var(--color-accent)", color: "var(--color-ink)" }}
         >
           Bli medlem
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.4} />
@@ -117,8 +127,9 @@ export function WebNav({ active = "home" }: WebNavProps) {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
           className={`md:hidden inline-flex items-center justify-center rounded-lg p-2 transition-colors ${
-            solid ? "text-[var(--akgolf-ink,#0A1F18)] hover:bg-black/5" : "text-white hover:bg-white/10"
+            useDarkText ? "hover:bg-black/5" : "text-white hover:bg-white/10"
           }`}
+          style={useDarkText ? { color: "var(--color-ink)" } : undefined}
         >
           {menuOpen ? (
             <X className="h-6 w-6" strokeWidth={2.2} />
@@ -153,9 +164,10 @@ export function WebNav({ active = "home" }: WebNavProps) {
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`block text-[28px] font-bold tracking-[-0.02em] transition-colors ${
-                        isActive ? "text-[var(--akgolf-accent,#D1F843)]" : "text-white hover:text-[var(--akgolf-accent,#D1F843)]"
-                      }`}
+                      className="block text-[28px] font-bold tracking-[-0.02em] transition-colors hover:text-[var(--color-accent)]"
+                      style={{
+                        color: isActive ? "var(--color-accent)" : "white",
+                      }}
                     >
                       {item.label}
                     </Link>
@@ -176,7 +188,7 @@ export function WebNav({ active = "home" }: WebNavProps) {
                 href="/booking-v2?v=2"
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-[14px] font-bold tracking-[-0.005em]"
-                style={{ background: "var(--akgolf-accent, #D1F843)", color: "#0A1F18" }}
+                style={{ background: "var(--color-accent)", color: "var(--color-ink)" }}
               >
                 Bli medlem
                 <ArrowRight className="h-4 w-4" strokeWidth={2.4} />

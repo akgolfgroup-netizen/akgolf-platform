@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ArrowRight, Check, Target, Calendar, BarChart3, Users, Sparkles } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { ACADEMY_HERO, FINAL_CTA } from "@/lib/website-constants";
@@ -71,9 +72,14 @@ export default function AcademyPage() {
               className="relative aspect-[4/3] overflow-hidden rounded-3xl"
               style={{ background: "var(--color-primary-soft)" }}
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Target className="h-20 w-20" style={{ color: "var(--color-primary)" }} />
-              </div>
+              <Image
+                src="/images/hero/academy.jpg"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

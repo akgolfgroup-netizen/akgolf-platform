@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ArrowRight, Check, Users, Calendar, Target } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
-import { JUNIOR_HERO, JUNIOR_PROGRAMS, JUNIOR_FAQ } from "@/lib/website-constants";
+import { JUNIOR_HERO, JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_GFGK_V2, JUNIOR_WANG_V2 } from "@/lib/website-constants";
 
 export const metadata: Metadata = {
   title: "Junior Academy",
@@ -57,9 +58,14 @@ export default function JuniorAcademyPage() {
               className="relative aspect-[4/3] overflow-hidden rounded-3xl"
               style={{ background: "var(--color-primary-soft)" }}
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Users className="h-20 w-20" style={{ color: "var(--color-primary)" }} />
-              </div>
+              <Image
+                src="/images/hero/junior.jpg"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -117,6 +123,56 @@ export default function JuniorAcademyPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Partners */}
+      <section className="px-4 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="mb-10 max-w-xl">
+            <div
+              className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em]"
+              style={{ color: "var(--color-primary)", fontFamily: "var(--font-jetbrains-mono)" }}
+            >
+              Samarbeidspartnere
+            </div>
+            <h2
+              className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold leading-[1.1] tracking-[-0.025em]"
+              style={{ color: "var(--color-ink)", fontFamily: "var(--font-inter-tight)" }}
+            >
+              I tett samarbeid med klubb og skole.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {[JUNIOR_GFGK_V2, JUNIOR_WANG_V2].map((partner) => (
+              <div
+                key={partner.heading}
+                className="rounded-2xl border p-6"
+                style={{
+                  background: "var(--color-card)",
+                  borderColor: "var(--color-line)",
+                  boxShadow: "0 1px 2px rgba(15,31,24,0.04), 0 4px 12px rgba(15,31,24,0.04)",
+                }}
+              >
+                <div
+                  className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: "var(--color-primary)", fontFamily: "var(--font-jetbrains-mono)" }}
+                >
+                  {partner.label}
+                </div>
+                <h3
+                  className="mb-3 text-xl font-semibold"
+                  style={{ color: "var(--color-ink)", fontFamily: "var(--font-inter-tight)" }}
+                >
+                  {partner.heading}
+                </h3>
+                <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: "var(--color-ink-muted)" }}>
+                  {partner.description}
+                </p>
               </div>
             ))}
           </div>

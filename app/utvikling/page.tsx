@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ArrowRight, Check, Code, Building2, GraduationCap } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { UTVIKLING_HERO, SOFTWARE_FEATURES, KLUBB_FEATURES } from "@/lib/website-constants";
@@ -57,9 +58,14 @@ export default function UtviklingPage() {
               className="relative aspect-[4/3] overflow-hidden rounded-3xl"
               style={{ background: "var(--color-primary-soft)" }}
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Code className="h-20 w-20" style={{ color: "var(--color-primary)" }} />
-              </div>
+              <Image
+                src="/images/hero/utvikling.jpg"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

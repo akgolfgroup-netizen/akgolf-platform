@@ -4,7 +4,7 @@ import { WebFooter } from "./web-footer";
 
 interface LandingShellProps {
   children: ReactNode;
-  active?: "home" | "academy" | "junior" | "pricing" | "course" | "about";
+  active?: "home" | "academy" | "junior" | "pricing";
 }
 
 export function LandingShell({ children, active = "home" }: LandingShellProps) {
