@@ -14,6 +14,7 @@ const ALLOWED_EXTENSIONS = [".m4a", ".mp3", ".wav", ".webm", ".mp4", ".ogg"];
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const AUDIO_BUCKET = "coaching-audio";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 /**

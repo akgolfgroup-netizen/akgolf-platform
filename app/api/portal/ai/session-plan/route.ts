@@ -6,6 +6,8 @@ import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { isStaff } from "@/lib/portal/rbac";
 import { logger } from "@/lib/logger";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
 

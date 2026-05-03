@@ -5,6 +5,7 @@ import { isStaff } from "@/lib/portal/rbac";
 import { logger } from "@/lib/logger";
 import Anthropic from "@anthropic-ai/sdk";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 interface ChatMessage {

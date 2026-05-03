@@ -10,6 +10,7 @@ import {
 import { syncDrillToNotion } from "@/lib/portal/notion/drill-sync";
 import { nanoid } from "nanoid";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 /** Rate limit: 10 per time for drill-generering */

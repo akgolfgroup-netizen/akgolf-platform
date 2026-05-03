@@ -8,6 +8,7 @@ import { addDays } from "date-fns";
 import { nanoid } from "nanoid";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
