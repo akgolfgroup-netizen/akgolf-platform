@@ -9,6 +9,7 @@ import { ContentType, ContentStatus } from "@prisma/client";
 import Anthropic from "@anthropic-ai/sdk";
 import { syncContentToNotion } from "@/lib/portal/notion/content-sync";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 // ── Rate limit: 5 per time for innholdsgenerering ──

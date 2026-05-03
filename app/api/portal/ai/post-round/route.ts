@@ -4,6 +4,7 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 /**

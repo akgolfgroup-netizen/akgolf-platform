@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/portal/ai/mental/entries — Add a mental scorecard entry
  */

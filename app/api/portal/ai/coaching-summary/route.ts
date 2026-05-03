@@ -7,6 +7,8 @@ import { isStaff } from "@/lib/portal/rbac";
 import { appendCoachingSessionToProfile } from "@/lib/portal/notion/player-profiles";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
   if (!user || !isStaff(user.role)) {

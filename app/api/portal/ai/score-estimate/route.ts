@@ -3,6 +3,8 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { estimateScoreForCourse } from "@/lib/portal/golf/decade-caddy";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/portal/ai/score-estimate — List cached score estimates
  * POST /api/portal/ai/score-estimate — Generate new score estimate

@@ -3,6 +3,8 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { nanoid } from "nanoid";
 
+export const dynamic = "force-dynamic";
+
 const GAME_TYPE_PREFIX = {
   NEAR_GAME: "NEAR",
   PUTTING_GAME: "PUTT",

@@ -3,6 +3,8 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 import { nanoid } from "nanoid";
 
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/portal/ai/mental/rounds — Create a new round
  */

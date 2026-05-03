@@ -4,6 +4,7 @@ import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
 import Anthropic from "@anthropic-ai/sdk";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 interface ChatMessage {

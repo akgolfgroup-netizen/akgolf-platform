@@ -5,6 +5,7 @@ import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { logger } from "@/lib/logger";
 import { generateNextSessionDraft } from "@/lib/portal/ai/next-session-orchestrator";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 /**

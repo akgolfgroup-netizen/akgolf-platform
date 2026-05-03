@@ -12,6 +12,7 @@ import {
   type DifficultyLevel,
 } from "@/lib/portal/ai/generate-drill";
 
+export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 const RATE_LIMIT = { limit: 20, windowSeconds: 3600 };
