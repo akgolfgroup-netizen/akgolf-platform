@@ -25,6 +25,7 @@ import {
   computeWeekStats,
 } from "./kalender-week-data";
 import { KalenderWeekGrid } from "@/components/admin/kalender/kalender-week-grid";
+import GoogleCalendarPicker from "@/components/admin/kalender/google-calendar-picker";
 
 type Props = {
   initialBookings: CalendarBooking[];
@@ -126,6 +127,11 @@ export default function KalenderClient({
             <CalendarPlus className="h-3.5 w-3.5" strokeWidth={2} /> Ny booking
           </Link>
         </div>
+      </div>
+
+      {/* Google Calendar-synk (lys-tema-wrapper for å matche pickerens design-tokens) */}
+      <div className="mb-5 rounded-xl bg-surface text-on-surface">
+        <GoogleCalendarPicker />
       </div>
 
       {/* Toolbar */}

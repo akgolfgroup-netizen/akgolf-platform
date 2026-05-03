@@ -27,6 +27,7 @@ import {
 } from "@/lib/portal/booking/cache";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
+import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { logger } from "@/lib/logger";
 import { createClient } from "@supabase/supabase-js";
 import type { BookingDraft } from "./draft";
@@ -353,6 +354,30 @@ export async function createBookingV2(input: {
       }).catch((err: unknown) =>
         logger.error("[booking-v2/create] confirmation SMS failed", err),
       );
+    }
+
+    // Google Calendar-sync (non-blocking — feiler stille hvis trener
+    // ikke har koblet Google, tokens er utløpt, eller API er nede).
+    if (instructor.userId) {
+      syncBookingToCalendar(instructor.userId, {
+        id: bookingId,
+        serviceName: service.name,
+        startTime,
+        endTime,
+        instructorName: instructor.User?.name ?? undefined,
+        location: "AK Golf studio",
+      })
+        .then(async (eventId) => {
+          if (eventId) {
+            await supabase
+              .from("Booking")
+              .update({ googleCalendarEventId: eventId })
+              .eq("id", bookingId);
+          }
+        })
+        .catch((err: unknown) =>
+          logger.error("[booking-v2/create] Calendar sync failed", err),
+        );
     }
 
     return {
