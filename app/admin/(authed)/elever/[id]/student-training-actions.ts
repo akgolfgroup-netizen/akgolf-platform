@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { createServerSupabase, createServiceClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import {
   calculateDegradation,
@@ -32,7 +32,7 @@ async function requireStaff() {
 
 export async function getStudentTrainingPlan(studentId: string) {
   await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: plan } = await supabase
     .from("TrainingPlan")
@@ -78,7 +78,7 @@ export async function getStudentTrainingPlan(studentId: string) {
 
 export async function getStudentTrainingLogs(studentId: string, limit = 20) {
   await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: logs } = await supabase
     .from("TrainingLog")
@@ -265,7 +265,7 @@ export async function addCoachNote(
   note: string
 ) {
   const user = await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   // Verify the log belongs to the student
   const { data: log } = await supabase
