@@ -16,16 +16,16 @@ BEGIN;
 ALTER TABLE "Round" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "round_select_own" ON "Round" FOR SELECT
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "round_insert_own" ON "Round" FOR INSERT
-  WITH CHECK ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  WITH CHECK ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "round_update_own" ON "Round" FOR UPDATE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "round_delete_own" ON "Round" FOR DELETE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 -- =============================================================================
 -- 2.2 HoleResult (joine via Round)
@@ -64,16 +64,16 @@ CREATE POLICY "hole_result_delete_via_round" ON "HoleResult" FOR DELETE
 ALTER TABLE "TrackmanSession" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "trackman_session_select_own" ON "TrackmanSession" FOR SELECT
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "trackman_session_insert_own" ON "TrackmanSession" FOR INSERT
-  WITH CHECK ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  WITH CHECK ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "trackman_session_update_own" ON "TrackmanSession" FOR UPDATE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "trackman_session_delete_own" ON "TrackmanSession" FOR DELETE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 -- =============================================================================
 -- 2.4 TrainingGroup
@@ -83,17 +83,17 @@ ALTER TABLE "TrainingGroup" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "training_group_select_member_or_coach" ON "TrainingGroup" FOR SELECT
   USING (
-    "coachId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text)
-    OR id IN (
-      SELECT "groupId" FROM "GroupMembership" gm
+    "coachId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text)
+    OR "TrainingGroup".id IN (
+      SELECT gm."groupId" FROM "GroupMembership" gm
       JOIN "User" u ON gm."userId" = u.id
       WHERE u."supabaseId" = (auth.uid())::text AND gm.active = true
     )
   );
 
 CREATE POLICY "training_group_mutate_coach_only" ON "TrainingGroup" FOR ALL
-  USING ("coachId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text))
-  WITH CHECK ("coachId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("coachId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text))
+  WITH CHECK ("coachId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 -- =============================================================================
 -- 2.5 GroupMembership
@@ -103,20 +103,20 @@ ALTER TABLE "GroupMembership" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "group_membership_select_self_or_coach" ON "GroupMembership" FOR SELECT
   USING (
-    "userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text)
+    "userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text)
     OR "groupId" IN (
-      SELECT id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
+      SELECT tg.id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
       WHERE u."supabaseId" = (auth.uid())::text
     )
   );
 
 CREATE POLICY "group_membership_mutate_coach_only" ON "GroupMembership" FOR ALL
   USING ("groupId" IN (
-    SELECT id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
+    SELECT tg.id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
     WHERE u."supabaseId" = (auth.uid())::text
   ))
   WITH CHECK ("groupId" IN (
-    SELECT id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
+    SELECT tg.id FROM "TrainingGroup" tg JOIN "User" u ON tg."coachId" = u.id
     WHERE u."supabaseId" = (auth.uid())::text
   ));
 
@@ -156,7 +156,7 @@ ALTER TABLE "GroupSessionRSVP" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "group_session_rsvp_select_self_or_coach" ON "GroupSessionRSVP" FOR SELECT
   USING (
-    "userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text)
+    "userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text)
     OR "sessionId" IN (
       SELECT gs.id FROM "GroupSession" gs
       JOIN "TrainingGroup" tg ON gs."groupId" = tg.id
@@ -166,13 +166,13 @@ CREATE POLICY "group_session_rsvp_select_self_or_coach" ON "GroupSessionRSVP" FO
   );
 
 CREATE POLICY "group_session_rsvp_insert_self" ON "GroupSessionRSVP" FOR INSERT
-  WITH CHECK ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  WITH CHECK ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "group_session_rsvp_update_self" ON "GroupSessionRSVP" FOR UPDATE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 CREATE POLICY "group_session_rsvp_delete_self" ON "GroupSessionRSVP" FOR DELETE
-  USING ("userId" IN (SELECT id FROM "User" WHERE "supabaseId" = (auth.uid())::text));
+  USING ("userId" IN (SELECT "User".id FROM "User" WHERE "User"."supabaseId" = (auth.uid())::text));
 
 -- =============================================================================
 -- 2.8 EmailTemplate (DROP + CREATE)
