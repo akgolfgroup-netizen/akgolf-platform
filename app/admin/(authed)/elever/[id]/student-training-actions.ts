@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServerSupabase, createServiceClient } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import {
   calculateDegradation,
@@ -125,7 +125,7 @@ export async function getStudentTrainingLogs(studentId: string, limit = 20) {
 
 export async function getStudentRoundStats(studentId: string, limit = 10) {
   await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: rounds } = await supabase
     .from("RoundStats")
@@ -143,7 +143,7 @@ export async function getStudentRoundStats(studentId: string, limit = 10) {
 
 export async function getStudentRounds(studentId: string, limit = 10) {
   await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: rounds } = await supabase
     .from("Round")
@@ -243,7 +243,7 @@ export async function getStudentTrackManSessions(
   limit = 5
 ) {
   await requireStaff();
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: sessions } = await supabase
     .from("TrackmanSession")

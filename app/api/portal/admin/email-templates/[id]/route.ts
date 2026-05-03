@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
@@ -30,7 +30,7 @@ export async function PUT(
       );
     }
 
-    const supabase = await createServerSupabase();
+    const supabase = createServiceClient();
     const { data: template, error } = await supabase
       .from("EmailTemplate")
       .update({
@@ -73,7 +73,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const supabase = await createServerSupabase();
+    const supabase = createServiceClient();
     
     const { error } = await supabase
       .from("EmailTemplate")
