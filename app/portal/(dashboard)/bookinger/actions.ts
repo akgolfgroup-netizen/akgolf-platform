@@ -13,6 +13,7 @@ import { getResend, FROM_EMAIL } from "@/lib/portal/email/resend";
 import { BookingCancelledEmail } from "@/lib/portal/email/templates/booking-cancelled";
 import { isStaff } from "@/lib/portal/rbac";
 import { notifyNextOnWaitlist } from "@/lib/portal/booking/waitlist";
+import { removeFromCalendar } from "@/lib/portal/calendar/google-calendar";
 
 const bookingInclude = `
   *,
@@ -120,7 +121,7 @@ export async function cancelBooking(
     .select(`
       *,
       ServiceType (name),
-      Instructor (User (name, email)),
+      Instructor (userId, User (name, email)),
       User (name, email)
     `)
     .eq("id", id)
@@ -205,6 +206,18 @@ export async function cancelBooking(
   if (policy.refundPercent === 100 && booking.paymentMethod === "NONE") {
     releaseSession(booking.studentId).catch((err) =>
       logger.error("[cancelBooking] Failed to release session quota", err)
+    );
+  }
+
+  // Slett Google Calendar-event (non-blocking — feiler stille)
+  const bookingInstructor = first<{ userId?: string | null; User?: unknown }>(
+    booking.Instructor,
+  );
+  const calendarEventId = booking.googleCalendarEventId as string | null | undefined;
+  const calendarUserId = bookingInstructor?.userId ?? null;
+  if (calendarEventId && calendarUserId) {
+    removeFromCalendar(calendarUserId, calendarEventId).catch((err) =>
+      logger.error("[cancelBooking] Google Calendar removal failed", err),
     );
   }
 

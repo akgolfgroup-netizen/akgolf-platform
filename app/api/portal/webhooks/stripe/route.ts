@@ -6,6 +6,7 @@ import { stripe } from "@/lib/portal/stripe";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
 import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
+import { syncBookingToCalendar } from "@/lib/portal/calendar/google-calendar";
 import { nanoid } from "nanoid";
 import {
   createQuotaForNewSubscription,
@@ -80,9 +81,10 @@ async function handleStripeEvent(
         amount,
         vatAmount,
         startTime,
+        endTime,
         ServiceType:serviceTypeId (name, duration, vatRate),
         User:studentId (name, email),
-        Instructor:instructorId (User:userId (name, email, phone)),
+        Instructor:instructorId (userId, User:userId (name, email, phone)),
         Location:locationId (name)
       `;
 
@@ -165,6 +167,7 @@ async function handleStripeEvent(
       const userArray = booking.User as unknown as Array<{ name?: string; email?: string }>;
       const user = userArray?.[0] ?? null;
       const instructorArray = booking.Instructor as unknown as Array<{
+        userId?: string;
         User?: Array<{ name?: string; email?: string; phone?: string }>
       }>;
       const instructor = instructorArray?.[0] ?? null;
@@ -197,6 +200,32 @@ async function handleStripeEvent(
           startTime: new Date(booking.startTime),
           duration: serviceType?.duration ?? 60,
         }).catch((err) => logger.error("[Stripe Webhook] SMS send failed", err));
+      }
+
+      // Google Calendar-sync (non-blocking — feiler stille hvis trener ikke
+      // har koblet Google, tokens er utløpt, eller Google API er nede).
+      const instructorUserId = instructor?.userId;
+      const bookingEndTime = (booking as { endTime?: string }).endTime;
+      if (instructorUserId && bookingEndTime) {
+        syncBookingToCalendar(instructorUserId, {
+          id: booking.id,
+          serviceName: serviceType?.name ?? "Coaching",
+          startTime: new Date(booking.startTime),
+          endTime: new Date(bookingEndTime),
+          instructorName: instructorUser?.name ?? undefined,
+          location: location?.name ?? "Gamle Fredrikstad Golfklubb",
+        })
+          .then(async (eventId) => {
+            if (eventId) {
+              await supabase
+                .from("Booking")
+                .update({ googleCalendarEventId: eventId })
+                .eq("id", booking.id);
+            }
+          })
+          .catch((err) =>
+            logger.error("[Stripe Webhook] Calendar sync failed", err),
+          );
       }
     }
   } else if (event.type === "payment_intent.payment_failed") {
