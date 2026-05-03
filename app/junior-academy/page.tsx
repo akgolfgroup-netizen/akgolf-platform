@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, Check, Users, Calendar, Target } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { JUNIOR_HERO, JUNIOR_PROGRAMS, JUNIOR_FAQ, JUNIOR_GFGK_V2, JUNIOR_WANG_V2 } from "@/lib/website-constants";
 

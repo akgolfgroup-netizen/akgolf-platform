@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, Check, Code, Building2, GraduationCap } from "lucide-react";
+import { ArrowRight, Code, Building2 } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { UTVIKLING_HERO, SOFTWARE_FEATURES, KLUBB_FEATURES } from "@/lib/website-constants";
 
