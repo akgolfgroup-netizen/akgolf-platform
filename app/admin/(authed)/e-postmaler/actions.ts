@@ -2,7 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isAdmin } from "@/lib/portal/rbac";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 
@@ -10,7 +10,7 @@ export async function getTemplates() {
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: templates } = await supabase
     .from("EmailTemplate")
@@ -33,7 +33,7 @@ export async function createTemplate(data: {
     throw new Error("Navn og emne er obligatorisk");
   }
 
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: template } = await supabase
     .from("EmailTemplate")
@@ -64,7 +64,7 @@ export async function updateTemplate(
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   const { data: template } = await supabase
     .from("EmailTemplate")
@@ -86,7 +86,7 @@ export async function deleteTemplate(id: string) {
   const user = await requirePortalUser();
   if (!isAdmin(user.role)) throw new Error("Ingen tilgang");
 
-  const supabase = await createServerSupabase();
+  const supabase = createServiceClient();
 
   await supabase.from("EmailTemplate").delete().eq("id", id);
 

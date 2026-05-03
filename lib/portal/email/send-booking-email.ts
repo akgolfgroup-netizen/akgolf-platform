@@ -5,7 +5,7 @@ import { getResend, FROM_EMAIL } from "./resend";
 import { BookingConfirmedEmail } from "./templates/booking-confirmed";
 import { InstructorNewBookingEmail } from "./templates/instructor-new-booking";
 import { BookingCancelledEmail } from "./templates/booking-cancelled";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 
 interface BookingEmailData {
   bookingId: string;
@@ -37,7 +37,7 @@ async function getEmailTemplate(
   templateName: string
 ): Promise<{ subject: string; htmlContent: string } | null> {
   try {
-    const supabase = await createServerSupabase();
+    const supabase = createServiceClient();
     const { data: template } = await supabase
       .from("EmailTemplate")
       .select("subject, htmlContent")
