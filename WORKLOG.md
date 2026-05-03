@@ -8,6 +8,37 @@
 
 ---
 
+## 2026-05-03 — Pre-launch ryddedugnad
+
+Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
+
+### Fikset i dag
+- Resend lazy-init (build-feil borte)
+- Vercel-rom ryddet (fantom-prosjekt slettet, repo linket riktig)
+- RLS aktivert på 8 tabeller (Round, HoleResult, TrackmanSession,
+  TrainingGroup, GroupMembership, GroupSession, GroupSessionRSVP,
+  EmailTemplate)
+- Coach-flata bruker service_role for å lese students data
+- Pre-eksisterende bugs i student-training-actions.ts fixet
+  (getStudentTrainingPlan, getStudentTrainingLogs, addCoachNote)
+
+### Sprint 1.5 — kvalitet
+- Hardkodede hex-verdier → designsystem-tokens
+- TS-feil i portal/login + live-round-client
+- console.log → lib/logger
+- Material Symbols → Lucide
+- Stripe SDK lazy-init (samme bug som Resend hadde)
+- Anthropic SDK lazy-init (2 filer)
+- Prisma migrate drift (3 saker)
+- Prisma-stub for RLS-migration markert applied
+
+### Sprint 2 — features
+- Coach-tilgang til students data via RLS-policy
+  (i stedet for service_role)
+- Faktisk e-postmal-innhold (tabellen er tom)
+
+---
+
 ## 2026-05-02 — Tier 3B: konsolidert tre admin-design-trær til coachhq-dark/
 
 **Jobbet med:** Tier 3B fra `docs/cleanup-plan-2026-05-02.md` — slått sammen tre parallelle admin-primitive-sett (`mc-v2/`, `coachhq/dark-cockpit`, `coachhq-dark/`) til ett. Brand Guide V2.0 (`coachhq-reference.html`) er nå eneste designreferanse.
