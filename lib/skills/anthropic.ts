@@ -1,10 +1,7 @@
 // Anthropic Claude-klient for skills
 
 import Anthropic from "@anthropic-ai/sdk";
-
-export const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+import { getAnthropic } from "@/lib/anthropic/client";
 
 export const MODELS = {
   HAIKU: "claude-haiku-4-5-20251001",
@@ -58,7 +55,7 @@ export async function runSkill(opts: RunSkillOptions): Promise<SkillResult> {
   const start = Date.now();
   const model = MODELS[opts.model];
 
-  const response = await anthropic.messages.create({
+  const response = await getAnthropic().messages.create({
     model,
     max_tokens: opts.maxTokens ?? 1500,
     system: `${BASE_SYSTEM_PROMPT}\n\n${opts.systemPrompt}`,
