@@ -5,7 +5,7 @@
  * a structured, actionable training prescription.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropic } from "@/lib/anthropic/client";
 import type { USIResult } from "./compute-usi";
 import type { GapAnalysis } from "./gap-analysis";
 
@@ -19,8 +19,6 @@ export interface TrainingPrescriptionResult {
   gapAnalysisJson: Record<string, unknown>;
   reasoning: string;
 }
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SYSTEM_PROMPT = `Du er AK Golf-akademiets AI-treningscoach.
 Din oppgave er å generere en konkret, handlingsbar treningspreskripsjon basert på spillerens Unified Skill Index (USI) og gap-analyse.
@@ -71,7 +69,7 @@ Gap-analyse:
 
 Generer preskripsjon.`;
 
-  const response = await client.messages.create({
+  const response = await getAnthropic().messages.create({
     model: "claude-sonnet-4-5-20250514",
     max_tokens: 1024,
     system: SYSTEM_PROMPT,

@@ -1,11 +1,9 @@
 // lib/coach/ai/generate-response.ts
 
-import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropic } from "@/lib/anthropic/client";
 import { logger } from "@/lib/logger";
 import { routeToModel, categorizeMessage, type AIModel, type MessageCategory } from "./model-router";
 import { findSimilarResponses } from "./learning";
-
-const anthropic = new Anthropic();
 
 /** Konfidensterskel for auto-send (0.95 = 95%) */
 export const AUTO_SEND_CONFIDENCE_THRESHOLD = 0.95;
@@ -88,7 +86,7 @@ async function callClaudeModel(
   messageContent: string,
   senderName: string
 ): Promise<string> {
-  const response = await anthropic.messages.create({
+  const response = await getAnthropic().messages.create({
     model,
     max_tokens: 1024,
     system: systemPrompt,
