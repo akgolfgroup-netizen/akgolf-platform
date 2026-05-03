@@ -31,6 +31,9 @@ Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
 - Anthropic SDK lazy-init (2 filer)
 - Prisma migrate drift (3 saker)
 - Prisma-stub for RLS-migration markert applied
+- Audit alle 69 POST-only non-streaming routes for manglende
+  force-dynamic — krever individuell verifikasjon per route, ikke
+  blanket fix.
 
 ### Sprint 2 — features
 - Coach-tilgang til students data via RLS-policy
