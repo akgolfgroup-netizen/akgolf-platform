@@ -27,7 +27,7 @@ export function AboutPageClient() {
         fontFamily: "var(--font-inter), Inter, sans-serif",
       }}
     >
-      <WebNav active="about" />
+      <WebNav />
 
       {/* HERO */}
       <section

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { ArrowRight, Check, Users, Calendar, Target } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Check } from "lucide-react";
 import { LandingShell } from "@/components/website-v2/LandingShell";
 import { JUNIOR_HERO, JUNIOR_PROGRAMS, JUNIOR_FAQ } from "@/lib/website-constants";
+import { JuniorPartnerSection } from "@/components/website-v2/junior-academy/partner-section";
 
 export const metadata: Metadata = {
   title: "Junior Academy",
@@ -57,9 +59,14 @@ export default function JuniorAcademyPage() {
               className="relative aspect-[4/3] overflow-hidden rounded-3xl"
               style={{ background: "var(--color-primary-soft)" }}
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Users className="h-20 w-20" style={{ color: "var(--color-primary)" }} />
-              </div>
+              <Image
+                src="/images/hero/junior.jpg"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -122,6 +129,8 @@ export default function JuniorAcademyPage() {
           </div>
         </div>
       </section>
+
+      <JuniorPartnerSection />
 
       {/* FAQ */}
       <section className="px-4 py-16 md:px-8 md:py-24">

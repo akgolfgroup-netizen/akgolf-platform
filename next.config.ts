@@ -53,7 +53,10 @@ const nextConfig: NextConfig = {
   },
   // Redirects for old URLs
   async redirects() {
-    return [];
+    return [
+      { source: "/junioracademy", destination: "/junior-academy", permanent: true },
+      { source: "/junioracademy/:path*", destination: "/junior-academy/:path*", permanent: true },
+    ];
   },
   // Webpack optimization
   webpack: (config, { isServer }) => {
