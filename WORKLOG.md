@@ -45,6 +45,26 @@ Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
   `lib/skills/anthropic.ts` ble missed. Alle tre fikset i
   `fix/lazy-anthropic-client`.
 
+### Landing pre-launch (PR #27, merget 2026-05-03 11:01 UTC)
+- Bug 1: `/junioracademy` → `/junior-academy` 308-redirect i
+  `next.config.ts` (også `:path*` for subpaths)
+- Bug 2: Logo i header byttet fra tekst+badge til ekte SVG fra
+  `public/logos/` (white-on-dark for forsiden, primary-on-light ellers)
+- Bug 3: Nav-tekst-kontrast — `useDarkText`-tilstand i `web-nav.tsx`
+  sørger for mørk tekst på alle landingssider unntatt forsiden før
+  scroll. Hardkodede `--akgolf-*` byttet til Brand Guide V2.0-tokens.
+- Bug 4: Fjernet "Bane" og "Om oss" fra `WebNav` desktop + mobil-drawer
+  + `LandingShell['active']`-typen. `about-page-client.tsx` ryddet.
+- Bug 5: Hero-bilder via `next/image` på /academy, /utvikling,
+  /junior-academy (`hero/{academy,utvikling,junior}.jpg`).
+- Bug 6: Academy "Se treningsabonnement"-CTA byttet fra accent (lime)
+  til primary (#005840) med hvit tekst — bedre kontrast på cream
+  surface-bg.
+- Bug 7: Ny `JuniorPartnerSection` under
+  `components/website-v2/junior-academy/partner-section.tsx` rendrer
+  `JUNIOR_GFGK_V2` + `JUNIOR_WANG_V2` side-om-side.
+- Kjent rest: forside-hero-bilde-bug — egen PR.
+
 ---
 
 ## 2026-05-02 — Tier 3B: konsolidert tre admin-design-trær til coachhq-dark/
