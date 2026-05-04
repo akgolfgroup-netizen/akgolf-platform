@@ -8,6 +8,34 @@
 
 ---
 
+## 2026-05-03 — Dev-environment isolasjon (kveld)
+
+Oppdaget at lokal `npm run dev` har pekt direkte mot prod-DB via `.env`. Resultat: 131 test-User-rader (`@example.com`) i prod-DB siden 17. april.
+
+### Funn
+- Supabase-branching virker IKKE for dette repoet. Branching kopierer kun Supabase CLI-historikken (7 migrations), men Prisma eier hovedmodellene (49 migrations). RLS-migration på branch feiler med `relation "User" does not exist` fordi Prisma-tabellene ikke finnes der.
+- Drift mellom `supabase/migrations/` (9 filer) og prod (`list_migrations` returnerer 7). 3 filer er ikke registrert: `20260410_booking_focus_area.sql`, `20260410_payment_transaction_unique_provider_ref.sql`, `20260501_adaptiv_treningsmotor.sql`. P2-funn.
+
+### Aksjoner
+- Test-branch `dev` (project_ref `icddleugqbqyfsqfuzgs`) opprettet kl 18:37 UTC, slettet kl ~18:42 UTC etter `MIGRATIONS_FAILED`. Kostnaden løp ~5 min.
+- DB-passord rotert i Supabase Dashboard. Nytt passord lagt i `.env`, `.env.local`, Vercel.
+- Plan for separat dev-prosjekt skrevet: `plans/dev-environment-setup.md` ($10/mnd, venter på godkjenning).
+
+### Neste steg
+- Anders godkjenner $10/mnd → opprett `akgolf-dev`-prosjekt
+- Migrer Prisma først, deretter Supabase CLI (i den rekkefølgen)
+- Seed med `seed-simple.ts` + ny `seed-dev-auth.ts` for innloggbar admin (anders@akgolf.no / Akgolf!Dev2026)
+- Smoke-test P0-1 (Ny spiller-knapp) trygt mot dev-prosjekt
+- Fortsett med P0-2 til P0-6 etterpå
+
+### Parkert som P2
+- Rensing av 131 test-User-rader i prod (FK-relasjoner til mange tabeller — egen plan-sesjon)
+- Migration drift mellom mappe og prod (3 filer ikke applied i prod)
+- Markus-data i `seed-config.ts` (heter "Hatlelid", website-constants har "Røinås Pedersen") — ikke smugles inn i denne sesjonen
+- `seed-simple.ts` feiler på Spillerportal-service (linje 131) når `coachId` er null. ServiceType-raden insertes OK, men `prisma.instructor.update({where:{id: undefined}})` krasjer. Fix: legg til `if (!instructorId) continue;` før update-kallet. Påvirker: services etter "Spillerportal" i SERVICES-rekkefølgen blir ikke seedet. P2 — fikses i egen PR senere.
+
+---
+
 ## 2026-05-03 — Pre-launch ryddedugnad
 
 Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
