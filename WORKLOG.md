@@ -8,6 +8,28 @@
 
 ---
 
+## 2026-05-05 — Booking: revertert til Acuity (PR #32, merget)
+
+Anders så Miklagard på akgolf.no/booking — booking-v2 lokasjonsvelger viste alle Locations fra DB. Pre-launch valg: skru av v2-redirecten og bruke fungerende Acuity-flyten.
+
+### Fikset
+- Fjernet BOOKING_V2 feature-flag-blokken i `proxy.ts` (56 linjer slettet, ingen orphan-referanser igjen).
+- `/booking` rendrer nå alltid `app/booking/page.tsx` (Acuity-iframe for Anders + Markus, GFGK).
+
+### Filer
+- Endret: `proxy.ts`
+
+### Notater
+- `BOOKING_V2_ENABLED`-env-var i Vercel er no-op nå — kan slettes manuelt fra Dashboard.
+- `app/booking-v2/*` beholdes i kodebasen til Tier 3D-cleanup.
+- Pre-eksisterende build-failure i CI (samme på PR #30) — lint-feilen var der før, ikke forårsaket av denne PR.
+
+### Neste steg
+- Verifiser akgolf.no/booking i prod etter Vercel auto-deploy.
+- Ved neste runde: Tier 3D — slett `app/booking-v2/`-mappen + `lib/booking-v2/` helt.
+
+---
+
 ## 2026-05-03 — Pre-launch ryddedugnad
 
 Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
