@@ -14,19 +14,6 @@ const MAINTENANCE_MODE =
   process.env.NEXT_PUBLIC_MAINTENANCE_MODE?.trim() === "true";
 const BYPASS_KEY = process.env.MAINTENANCE_BYPASS_KEY;
 
-// ============================================================
-// BOOKING V2 FEATURE-FLAG
-// ============================================================
-// BOOKING_V2_ENABLED=true   → alle besøk på /booking redirecter til /booking-v2
-// BOOKING_V2_ENABLED=false  → ingen redirect (eksisterende /booking rendres)
-//
-// Per-bruker bypass: ?bookingv2=1 på /booking-ruten setter cookie i 30 dager,
-// slik at Anders kan teste den nye flyten i prod uten å skru på global flag.
-// ?bookingv2=0 fjerner cookie igjen.
-// ============================================================
-const BOOKING_V2_ENABLED = process.env.BOOKING_V2_ENABLED === "true";
-const BOOKING_V2_COOKIE = "ak_bookingv2";
-
 // Ruter som ALLTID er tilgjengelige (selv i vedlikeholdsmodus)
 //
 // /booking er bevisst FJERNET — under maintenance skal kun Acuity-CTAer
@@ -91,49 +78,6 @@ export default async function proxy(request: NextRequest) {
 
       if (!hasBypassCookie) {
         return NextResponse.rewrite(new URL("/maintenance", request.url));
-      }
-    }
-  }
-
-  // ============================================================
-  // 1.5 BOOKING V2 FEATURE-FLAG
-  // ============================================================
-  // Kun /booking (eksakt eller med undersider, men IKKE /booking-v2 selv)
-  if (
-    pathname === "/booking" ||
-    (pathname.startsWith("/booking/") && !pathname.startsWith("/booking-v2"))
-  ) {
-    const queryFlag = request.nextUrl.searchParams.get("bookingv2");
-    const cookieFlag =
-      request.cookies.get(BOOKING_V2_COOKIE)?.value === "true";
-
-    // Eksplisitt opt-out via query — fjern cookie og fortsett til /booking
-    if (queryFlag === "0") {
-      const response = NextResponse.next({ request });
-      response.cookies.delete(BOOKING_V2_COOKIE);
-      return response;
-    }
-
-    // Eksplisitt opt-in via query — sett cookie og redirect til v2
-    if (queryFlag === "1") {
-      const target = new URL("/booking-v2", request.url);
-      const response = NextResponse.redirect(target);
-      response.cookies.set(BOOKING_V2_COOKIE, "true", {
-        httpOnly: false, // Bruker skal kunne se status hvis hen lurer
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 30, // 30 dager
-        path: "/",
-      });
-      return response;
-    }
-
-    // Implisitt: enten global flag, eller bruker har bypass-cookie
-    if (BOOKING_V2_ENABLED || cookieFlag) {
-      // Bevar undersider via path-mapping (f.eks. /booking/[id]/cancel håndteres
-      // ikke av v2 ennå, så kun rot-ruten redirectes for å unngå brutte lenker)
-      if (pathname === "/booking") {
-        return NextResponse.redirect(new URL("/booking-v2", request.url));
       }
     }
   }
