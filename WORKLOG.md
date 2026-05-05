@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-05-05 — Funksjonskatalog for PlayerHQ-portering
+
+- Generert `docs/player-portal-functions.json` (412 KB, valid JSON) som maskinlesbar katalog over hele spillerportalen — grunnlag for portering til PlayerHQ.
+- 827 funksjoner katalogisert (server actions + lib/portal) med signatur, prisma-modeller, lib-avhengigheter og tag (player-core/training/booking/social/analytics/ai/admin-only/infrastructure).
+- 473 komponenter listet med filsti, props og linjeantall fra `docs/player-portal-inventory.md`.
+- 6 splitting-kandidater identifisert (filer >600 linjer): `treningsplan/actions.ts` (2483), `dashboard-actions.ts` (1037), `pro-players-config.ts` (803), `notifications/triggers.ts` (735), `statistikk/actions.ts` (630), `google-calendar/sync.ts` (615).
+- Neste steg: starte selve PlayerHQ-portering basert på katalogen — begynn med `player-core` og `infrastructure`.
+
+---
+
 ## 2026-05-03 — Pre-launch ryddedugnad
 
 Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
