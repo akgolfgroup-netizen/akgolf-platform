@@ -8,6 +8,12 @@
 
 ---
 
+## 2026-05-05 — Audit
+
+- audit: komplett CoachHQ feature-kartlegging (`docs/coachhq-feature-audit.md`)
+
+---
+
 ## 2026-05-03 — Pre-launch ryddedugnad
 
 Lansert med teknisk gjeld, sikkerhets-bug-er lukket.
