@@ -1,7 +1,7 @@
 "use server";
 
 import { requirePortalUser } from "@/lib/portal/auth";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServerSupabase, createServiceClient } from "@/lib/supabase/server";
 import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath } from "next/cache";
 
@@ -32,7 +32,9 @@ export async function getStudentProfile(studentId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) return null;
 
-  const supabase = await createServerSupabase();
+  // Service-role bypasser RLS — coach-flata trenger lese-tilgang til alle students.
+  // Etablert mønster (samme som student-training-actions.ts).
+  const supabase = createServiceClient();
 
   const { data: student } = await supabase
     .from("User")
