@@ -8,6 +8,16 @@
 
 ---
 
+## 2026-05-05 — Funksjonskatalog for CoachHQ-portering
+
+- Generert `docs/coachhq-functions.json` (190 KB, valid JSON) — maskinlesbar katalog over CoachHQ (admin-flata) som speiler PlayerHQ-katalogen.
+- 326 funksjoner katalogisert i 8 tags: players (29), training (32), booking (46), groups (21), comms (13), ai (3), ops (41), infrastructure (141).
+- 209 komponenter fra `components/portal/mission-control/` og `components/admin/`.
+- 5 splitting-kandidater (filer >600 linjer): `treningsplan/actions.ts` (703), `coaching-board/actions.ts` (653), `grupper/actions.ts` (606), `notifications/triggers.ts` (735), `google-calendar/sync.ts` (615).
+- Neste steg: starte CoachHQ-portering basert på katalogen.
+
+---
+
 ## 2026-05-05 — Funksjonskatalog for PlayerHQ-portering
 
 - Generert `docs/player-portal-functions.json` (412 KB, valid JSON) som maskinlesbar katalog over hele spillerportalen — grunnlag for portering til PlayerHQ.
