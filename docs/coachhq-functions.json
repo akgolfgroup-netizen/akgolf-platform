@@ -4,12 +4,12 @@
     "totalFunctions": 326,
     "totalComponents": 209,
     "byTag": {
-      "players": 29,
+      "players": 27,
       "training": 32,
       "booking": 46,
       "groups": 21,
       "comms": 13,
-      "ai": 3,
+      "ai": 5,
       "ops": 41,
       "infrastructure": 141
     },
@@ -3318,7 +3318,7 @@
       "file": "app/admin/elever/[id]/coach-agent/actions.ts",
       "signature": "export async function sendCoachAgentMessage(studentId: string, message: string)",
       "source": "server-action",
-      "tag": "players",
+      "tag": "ai",
       "prismaModels": [],
       "libDependencies": [
         "@/lib/portal/agents/coach-plan-agent",
@@ -3331,7 +3331,7 @@
       "file": "app/admin/elever/[id]/coach-agent/actions.ts",
       "signature": "export async function listCoachAgentSessions(studentId: string)",
       "source": "server-action",
-      "tag": "players",
+      "tag": "ai",
       "prismaModels": [],
       "libDependencies": [
         "@/lib/portal/agents/coach-plan-agent",
