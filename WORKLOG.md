@@ -8,6 +8,15 @@
 
 ---
 
+## 2026-05-06 — Enkel norsk funksjonsoversikt
+
+- Generert `docs/akgolf-funksjoner.md` (87 KB, 1884 linjer) med enkel norsk beskrivelse av alle 1150 funksjoner (824 PlayerHQ + 326 CoachHQ).
+- Strukturert per tag → per fil → bullet per funksjon.
+- Beskrivelser via verb-prefiks-mønster + golf-glossar.
+- Lett å lese for ikke-tekniske brukere; supplerer JSON-katalogene.
+
+---
+
 ## 2026-05-05 — Funksjonskatalog for CoachHQ-portering
 
 - Generert `docs/coachhq-functions.json` (190 KB, valid JSON) — maskinlesbar katalog over CoachHQ (admin-flata) som speiler PlayerHQ-katalogen.
