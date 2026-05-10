@@ -280,40 +280,40 @@ model CoachingPackage {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model CoachingSession {
-  id                String          @id
-  bookingId         String          @unique
-  studentId         String
-  instructorId      String
-  sessionDate       DateTime
-  primaryFocus      String?
-  secondaryFocus    String?
-  techniquesCovered String[]
-  drillsAssigned    String[]
-  instructorNotes   String?
-  studentNotes      String?
-  videoUrls         String[]
-  homework          String?
-  progressRating    Int?
-  followUpSent      Boolean         @default(false)
-  followUpDate      DateTime?
-  nextBookingId     String?
-  retentionStatus   RetentionStatus @default(ACTIVE)
-  aiSummary         String?
-  aiKeyPoints       String[]        @default([])
-  aiFocusAreas      String[]        @default([])
-  aiActionItems     String[]        @default([])
-  aiGeneratedAt     DateTime?
-  uploadedFilePath  String?
-  rawTranscript     String?
-  publishedToStudent Boolean        @default(false)
-  publishedAt       DateTime?
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime
-  notionPageId      String?
-  Booking           Booking         @relation(fields: [bookingId], references: [id])
-  Instructor        Instructor      @relation(fields: [instructorId], references: [id])
-  User              User            @relation(fields: [studentId], references: [id])
-  TrackmanSession   TrackmanSession[]
+  id                 String            @id
+  bookingId          String            @unique
+  studentId          String
+  instructorId       String
+  sessionDate        DateTime
+  primaryFocus       String?
+  secondaryFocus     String?
+  techniquesCovered  String[]
+  drillsAssigned     String[]
+  instructorNotes    String?
+  studentNotes       String?
+  videoUrls          String[]
+  homework           String?
+  progressRating     Int?
+  followUpSent       Boolean           @default(false)
+  followUpDate       DateTime?
+  nextBookingId      String?
+  retentionStatus    RetentionStatus   @default(ACTIVE)
+  aiSummary          String?
+  aiKeyPoints        String[]          @default([])
+  aiFocusAreas       String[]          @default([])
+  aiActionItems      String[]          @default([])
+  aiGeneratedAt      DateTime?
+  uploadedFilePath   String?
+  rawTranscript      String?
+  publishedToStudent Boolean           @default(false)
+  publishedAt        DateTime?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime
+  notionPageId       String?
+  Booking            Booking           @relation(fields: [bookingId], references: [id])
+  Instructor         Instructor        @relation(fields: [instructorId], references: [id])
+  User               User              @relation(fields: [studentId], references: [id])
+  TrackmanSession    TrackmanSession[]
 
   @@index([retentionStatus])
   @@index([studentId])
@@ -504,10 +504,10 @@ model ExerciseDefinition {
   isSystemDrill      Boolean            @default(false)
   createdById        String?
   tags               String[]
-  csTargetMin        Int?               // 60 = 60% av spillerens ClubSpeed
-  csTargetMax        Int?               // 70 = 70%
-  clubKey            String?            // "driver", "7iron", "pw", etc.
-  distanceBucket     String?            // "50-100", "100-150", "150-200", "200+", "tee", "putting"
+  csTargetMin        Int? // 60 = 60% av spillerens ClubSpeed
+  csTargetMax        Int? // 70 = 70%
+  clubKey            String? // "driver", "7iron", "pw", etc.
+  distanceBucket     String? // "50-100", "100-150", "150-200", "200+", "tee", "putting"
   createdAt          DateTime           @default(now())
   updatedAt          DateTime
   User               User?              @relation(fields: [createdById], references: [id])
@@ -650,11 +650,11 @@ model Location {
 }
 
 model InstructorLocation {
-  id           String   @id
+  id           String     @id
   instructorId String
   locationId   String
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
   Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   Location     Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
 
@@ -730,17 +730,17 @@ model PaymentTransaction {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model PeriodizationPeriod {
-  id               String         @id
-  studentId        String?
-  periodType       String
-  startDate        DateTime       @db.Date
-  endDate          DateTime       @db.Date
-  label            String?
-  createdById      String?
-  focusAllocation  Json?          @default("{}")
-  createdAt        DateTime       @default(now())
-  User             User?          @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  TrainingPlan     TrainingPlan[]
+  id              String         @id
+  studentId       String?
+  periodType      String
+  startDate       DateTime       @db.Date
+  endDate         DateTime       @db.Date
+  label           String?
+  createdById     String?
+  focusAllocation Json?          @default("{}")
+  createdAt       DateTime       @default(now())
+  User            User?          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  TrainingPlan    TrainingPlan[]
 
   @@index([studentId])
 }
@@ -1075,17 +1075,17 @@ model TournamentPrep {
 }
 
 model TrackmanSession {
-  id                 String           @id
-  userId             String
-  sessionDate        DateTime
-  club               String
-  shots              Json
-  averages           Json
-  coachingSessionId  String?
-  sourceType         String           @default("manual") // manual, csv, image, api
-  createdAt          DateTime         @default(now())
-  User               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  CoachingSession    CoachingSession? @relation(fields: [coachingSessionId], references: [id], onDelete: SetNull)
+  id                String           @id
+  userId            String
+  sessionDate       DateTime
+  club              String
+  shots             Json
+  averages          Json
+  coachingSessionId String?
+  sourceType        String           @default("manual") // manual, csv, image, api
+  createdAt         DateTime         @default(now())
+  User              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CoachingSession   CoachingSession? @relation(fields: [coachingSessionId], references: [id], onDelete: SetNull)
 
   @@index([sessionDate])
   @@index([userId])
@@ -1210,20 +1210,20 @@ model TrackManSessionAnalytics {
 
 /// Player goals - long-term and short-term goals tied to a player
 model PlayerGoals {
-  id            String    @id
-  userId        String
-  goalType      String    // HCP, TOURNAMENT, SKILL, FITNESS, OTHER
-  title         String
-  description   String?
-  targetDate    DateTime?
-  targetValue   Float?
-  currentValue  Float?
-  priority      Int       @default(2) // 1=high, 2=medium, 3=low
-  isActive      Boolean   @default(true)
-  achievedAt    DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime
-  User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String    @id
+  userId       String
+  goalType     String // HCP, TOURNAMENT, SKILL, FITNESS, OTHER
+  title        String
+  description  String?
+  targetDate   DateTime?
+  targetValue  Float?
+  currentValue Float?
+  priority     Int       @default(2) // 1=high, 2=medium, 3=low
+  isActive     Boolean   @default(true)
+  achievedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime
+  User         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isActive])
   @@index([targetDate])
@@ -1491,38 +1491,38 @@ model UnifiedSkillIndex {
 }
 
 model Sponsor {
-  id              String                  @id @default(cuid())
-  name            String
-  contactName     String?
-  contactEmail    String?
-  contactPhone    String?
-  logoUrl         String?
-  websiteUrl      String?
-  tier            String                  @default("STANDARD")
-  annualValueNok  Int?
-  contractStart   DateTime?
-  contractEnd     DateTime?
-  notes           String?
-  isActive        Boolean                 @default(true)
-  createdAt       DateTime                @default(now())
-  updatedAt       DateTime                @updatedAt
-  players         SponsorPlayerRelation[]
+  id             String                  @id @default(cuid())
+  name           String
+  contactName    String?
+  contactEmail   String?
+  contactPhone   String?
+  logoUrl        String?
+  websiteUrl     String?
+  tier           String                  @default("STANDARD")
+  annualValueNok Int?
+  contractStart  DateTime?
+  contractEnd    DateTime?
+  notes          String?
+  isActive       Boolean                 @default(true)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  players        SponsorPlayerRelation[]
 
   @@index([isActive])
 }
 
 model SponsorPlayerRelation {
-  id              String   @id @default(cuid())
+  id              String    @id @default(cuid())
   sponsorId       String
   userId          String
-  startedAt       DateTime @default(now())
+  startedAt       DateTime  @default(now())
   endedAt         DateTime?
   monthlyValueNok Int?
   notes           String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  Sponsor         Sponsor  @relation(fields: [sponsorId], references: [id], onDelete: Cascade)
-  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  Sponsor         Sponsor   @relation(fields: [sponsorId], references: [id], onDelete: Cascade)
+  User            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([sponsorId, userId])
   @@index([userId])
@@ -1840,19 +1840,19 @@ model TrainingLog {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingPlan {
-  id                                  String               @id
+  id                                  String                @id
   studentId                           String
   createdById                         String
   title                               String
   description                         String?
   goals                               String?
   periodType                          String
-  startDate                           DateTime             @db.Date
-  endDate                             DateTime             @db.Date
-  isActive                            Boolean              @default(true)
-  aiGenerated                         Boolean              @default(false)
+  startDate                           DateTime              @db.Date
+  endDate                             DateTime              @db.Date
+  isActive                            Boolean               @default(true)
+  aiGenerated                         Boolean               @default(false)
   periodizationPeriodId               String?
-  createdAt                           DateTime             @default(now())
+  createdAt                           DateTime              @default(now())
   updatedAt                           DateTime
   groupId                             String?
   /// Coach-kommentar på plan-nivå (skrevet av staff). Vises til spilleren under tittelen.
@@ -1865,11 +1865,11 @@ model TrainingPlan {
   /// Plan-spesifikk pyramide-fordeling (FYS/TEK/SLAG/SPILL/TURN i prosent, sum 100).
   /// Overstyrer kategori-default fra category-engine når satt.
   pyramidDistribution                 Json?
-  User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
-  User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
-  User_TrainingPlan_coachFeedbackById User?                @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
-  PeriodizationPeriod                 PeriodizationPeriod? @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
-  TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  User_TrainingPlan_createdByIdToUser User                  @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
+  User_TrainingPlan_studentIdToUser   User                  @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
+  User_TrainingPlan_coachFeedbackById User?                 @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
+  PeriodizationPeriod                 PeriodizationPeriod?  @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
+  TrainingGroup                       TrainingGroup?        @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
   DismissedAdjustment                 DismissedAdjustment[]
   PlanSuggestion                      PlanSuggestion[]
@@ -1901,9 +1901,9 @@ model PlanSuggestion {
   resolvedById    String?
   rejectionReason String?
 
-  TrainingPlan        TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
-  User_proposedBy     User         @relation("PlanSuggestion_proposedBy", fields: [proposedById], references: [id], onDelete: Cascade)
-  User_resolvedBy     User?        @relation("PlanSuggestion_resolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+  TrainingPlan    TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  User_proposedBy User         @relation("PlanSuggestion_proposedBy", fields: [proposedById], references: [id], onDelete: Cascade)
+  User_resolvedBy User?        @relation("PlanSuggestion_resolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
 
   @@index([planId, status])
   @@index([proposedById])
@@ -1927,7 +1927,7 @@ model TrainingGroup {
 }
 
 model GroupSession {
-  id              String                    @id
+  id              String                   @id
   groupId         String
   title           String
   description     String?
@@ -1936,11 +1936,11 @@ model GroupSession {
   endTime         DateTime
   recurrenceRule  String?
   recurrenceUntil DateTime?
-  isActive        Boolean                   @default(true)
-  createdAt       DateTime                  @default(now())
-  updatedAt       DateTime                  @default(now()) @updatedAt
-  Group           TrainingGroup             @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  Location        Location?                 @relation("GroupSessionLocation", fields: [locationId], references: [id], onDelete: SetNull)
+  isActive        Boolean                  @default(true)
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @default(now()) @updatedAt
+  Group           TrainingGroup            @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  Location        Location?                @relation("GroupSessionLocation", fields: [locationId], references: [id], onDelete: SetNull)
   occurrences     GroupSessionOccurrence[]
   rsvps           GroupSessionRSVP[]
 
@@ -1949,15 +1949,15 @@ model GroupSession {
 }
 
 model GroupSessionRSVP {
-  id              String       @id
-  sessionId       String
-  userId          String
-  occurrenceDate  DateTime     @db.Date
-  status          String       @default("GOING")
-  respondedAt     DateTime     @default(now())
-  note            String?
-  GroupSession    GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String       @id
+  sessionId      String
+  userId         String
+  occurrenceDate DateTime     @db.Date
+  status         String       @default("GOING")
+  respondedAt    DateTime     @default(now())
+  note           String?
+  GroupSession   GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([sessionId, userId, occurrenceDate])
   @@index([userId])
@@ -1978,17 +1978,17 @@ model ParentChildRelation {
 }
 
 model GroupSessionOccurrence {
-  id                  String       @id
-  sessionId           String
-  originalDate        DateTime     @db.Date
-  isCancelled         Boolean      @default(false)
-  overrideStartTime   DateTime?
-  overrideEndTime     DateTime?
-  overrideLocationId  String?
-  note                String?
-  createdAt           DateTime     @default(now())
-  GroupSession        GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  OverrideLocation    Location?    @relation("GroupOccurrenceLocation", fields: [overrideLocationId], references: [id], onDelete: SetNull)
+  id                 String       @id
+  sessionId          String
+  originalDate       DateTime     @db.Date
+  isCancelled        Boolean      @default(false)
+  overrideStartTime  DateTime?
+  overrideEndTime    DateTime?
+  overrideLocationId String?
+  note               String?
+  createdAt          DateTime     @default(now())
+  GroupSession       GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  OverrideLocation   Location?    @relation("GroupOccurrenceLocation", fields: [overrideLocationId], references: [id], onDelete: SetNull)
 
   @@unique([sessionId, originalDate])
 }
@@ -2078,12 +2078,12 @@ model TrainingPlanTemplate {
 /// Persisterer at en bruker har avvist plan-deviation-forslag for en plan.
 /// Brukes til å skjule banneren i 7 dager.
 model DismissedAdjustment {
-  id          String   @id
-  userId      String
-  planId      String
-  dismissedAt DateTime @default(now())
-  expiresAt   DateTime
-  User        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String       @id
+  userId       String
+  planId       String
+  dismissedAt  DateTime     @default(now())
+  expiresAt    DateTime
+  User         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   TrainingPlan TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
 
   @@index([userId, planId])
@@ -2247,32 +2247,46 @@ model User {
   CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
 
-  TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
-  GroupMemberships                            GroupMembership[]
-  GroupSessionRSVP                            GroupSessionRSVP[]
-  ParentRelations                             ParentChildRelation[]      @relation("ParentRelations")
-  ChildRelations                              ParentChildRelation[]      @relation("ChildRelations")
-  dataConsentAt                               DateTime?
-  dataConsentScope                            Json?
-  averageScore                                Float?
-  ageYears                                    Int?
-  weeklyTrainingHours                         Float?
-  homeCourseId                                String?
-  playerType                                  PlayerType                 @default(HOBBY)
-  TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
+  TrainingGroups      TrainingGroup[]       @relation("TrainingGroupCoach")
+  GroupMemberships    GroupMembership[]
+  GroupSessionRSVP    GroupSessionRSVP[]
+  ParentRelations     ParentChildRelation[] @relation("ParentRelations")
+  ChildRelations      ParentChildRelation[] @relation("ChildRelations")
+  dataConsentAt       DateTime?
+  dataConsentScope    Json?
+  averageScore        Float?
+  ageYears            Int?
+  weeklyTrainingHours Float?
+  homeCourseId        String?
+  playerType          PlayerType            @default(HOBBY)
+  TalentPlayerLink    TalentPlayer?         @relation("TalentPlayerLinkedUser")
 
   // Nye relasjoner (adaptiv treningsmotor)
-  homeCourse              HomeCourse?
-  clubSpeedProfile        ClubSpeedProfile?
-  allocations             PlayerAllocation[]
-  consentGrants           ConsentGrant[]
-  dataAccessLogs          DataAccessLog[]
-  calendarEvents          CalendarEvent[]
-  tournamentRegistrations TournamentRegistration[]
-  coachAssignmentsAsStudent CoachAssignment[] @relation("CoachAssignmentUser")
-  coachAssignmentsAsCoach   CoachAssignment[] @relation("CoachAssignmentCoach")
-  agentSessionsAsCoach     CoachAgentSession[] @relation("CoachAgentSessionCoach")
-  agentSessionsAsStudent   CoachAgentSession[] @relation("CoachAgentSessionStudent")
+  homeCourse                HomeCourse?
+  clubSpeedProfile          ClubSpeedProfile?
+  allocations               PlayerAllocation[]
+  consentGrants             ConsentGrant[]
+  dataAccessLogs            DataAccessLog[]
+  calendarEvents            CalendarEvent[]
+  tournamentRegistrations   TournamentRegistration[]
+  coachAssignmentsAsStudent CoachAssignment[]        @relation("CoachAssignmentUser")
+  coachAssignmentsAsCoach   CoachAssignment[]        @relation("CoachAssignmentCoach")
+  agentSessionsAsCoach      CoachAgentSession[]      @relation("CoachAgentSessionCoach")
+  agentSessionsAsStudent    CoachAgentSession[]      @relation("CoachAgentSessionStudent")
+
+  // Sprint 0 HQ relasjoner
+  DrillScores          DrillScore[]      @relation("DrillScorePlayer")
+  LiveSessionsAsCoach  LiveSessionLog[]  @relation("LiveSessionCoach")
+  LiveSessionsAsPlayer LiveSessionLog[]  @relation("LiveSessionPlayer")
+  PlanActions          PlanAction[]      @relation("PlanActionPlayer")
+  GroupChannelsCreated GroupChannel[]    @relation("GroupChannelCreator")
+  GroupMessagesSent    GroupMessage[]    @relation("GroupMessageSender")
+  ComplianceScores     ComplianceScore[] @relation("CompliancePlayer")
+  RoundInsights        RoundInsight[]    @relation("RoundInsightPlayer")
+  VideoSubmissions     VideoSubmission[] @relation("VideoPlayer")
+  VideoAssessments     VideoAssessment[] @relation("VideoAssessor")
+  QueueItems           QueueItem[]       @relation("QueuePlayer")
+  SessionEditLogs      SessionEditLog[]  @relation("SessionEditor")
 }
 
 model UserCapability {
@@ -2337,8 +2351,8 @@ model HomeCourse {
   golfboxId               String?
   totalLengthMeters       Int
   par                     Int
-  holes                   Json     // [{ hole: 1, par: 4, lengthMeters: 380 }, ...]
-  dominantApproachBuckets Json     // beregnet, cached: { "50-100": 0.25, "100-150": 0.40, ... }
+  holes                   Json // [{ hole: 1, par: 4, lengthMeters: 380 }, ...]
+  dominantApproachBuckets Json // beregnet, cached: { "50-100": 0.25, "100-150": 0.40, ... }
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
@@ -2352,7 +2366,7 @@ model ClubSpeedProfile {
   source       ClubSpeedSource
   measuredAt   DateTime        @default(now())
   testResultId String?
-  clubs        Json            // { driver: { fullCS: 153, carry: 245 }, "7iron": { fullCS: 113, carry: 160 }, ... }
+  clubs        Json // { driver: { fullCS: 153, carry: 245 }, "7iron": { fullCS: 113, carry: 160 }, ... }
   validUntil   DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
@@ -2361,15 +2375,15 @@ model ClubSpeedProfile {
 }
 
 model CoachAssignment {
-  id        String                  @id @default(cuid())
+  id        String                @id @default(cuid())
   userId    String
-  user      User                    @relation("CoachAssignmentUser", fields: [userId], references: [id], onDelete: Cascade)
+  user      User                  @relation("CoachAssignmentUser", fields: [userId], references: [id], onDelete: Cascade)
   coachId   String
-  coach     User                    @relation("CoachAssignmentCoach", fields: [coachId], references: [id], onDelete: Cascade)
-  status    CoachAssignmentStatus   @default(ACTIVE)
-  scope     CoachAssignmentScope    @default(FULL)
+  coach     User                  @relation("CoachAssignmentCoach", fields: [coachId], references: [id], onDelete: Cascade)
+  status    CoachAssignmentStatus @default(ACTIVE)
+  scope     CoachAssignmentScope  @default(FULL)
   createdBy CoachAssignmentSource
-  startedAt DateTime                @default(now())
+  startedAt DateTime              @default(now())
   endedAt   DateTime?
   notes     String?
 
@@ -2406,18 +2420,18 @@ model DataAccessLog {
 }
 
 model PlayerAllocation {
-  id              String           @id @default(cuid())
-  userId          String
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  generatedAt     DateTime         @default(now())
-  validFrom       DateTime
-  validTo         DateTime
-  weeklyHours     Float
-  weeks           Json             // WeeklyAllocation[]
-  rationale       String[]         // bullet-liste
-  source          AllocationSource
-  inputSnapshot   Json             // hele input-objektet for sporbarhet
-  rationaleAi     String?          // AI-justeringskommentar (Tier 3 hybrid)
+  id            String           @id @default(cuid())
+  userId        String
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  generatedAt   DateTime         @default(now())
+  validFrom     DateTime
+  validTo       DateTime
+  weeklyHours   Float
+  weeks         Json // WeeklyAllocation[]
+  rationale     String[] // bullet-liste
+  source        AllocationSource
+  inputSnapshot Json // hele input-objektet for sporbarhet
+  rationaleAi   String? // AI-justeringskommentar (Tier 3 hybrid)
 
   @@index([userId, generatedAt])
 }
@@ -2427,7 +2441,7 @@ model CalendarEvent {
   userId    String
   user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   source    CalendarEventSource
-  sourceId  String              // FK-id til original entity
+  sourceId  String // FK-id til original entity
   title     String
   startsAt  DateTime
   endsAt    DateTime
@@ -2436,21 +2450,21 @@ model CalendarEvent {
   createdAt DateTime            @default(now())
   updatedAt DateTime            @updatedAt
 
-  @@index([userId, startsAt])
   @@unique([userId, source, sourceId])
+  @@index([userId, startsAt])
 }
 
 model TournamentRegistration {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   name       String
   startsAt   DateTime
   endsAt     DateTime?
   course     String?
-  importance Int      // 1-5 (NM=5, klubbmesterskap=3, vanlig=2)
+  importance Int // 1-5 (NM=5, klubbmesterskap=3, vanlig=2)
   notes      String?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
 
   @@index([userId, startsAt])
 }
@@ -2463,7 +2477,7 @@ model CoachAgentSession {
   student       User     @relation("CoachAgentSessionStudent", fields: [studentId], references: [id])
   prompt        String
   response      String
-  appliedPlanId String?  // FK til generated plan (TrainingPlan)
+  appliedPlanId String? // FK til generated plan (TrainingPlan)
   createdAt     DateTime @default(now())
 
   @@index([coachId, createdAt])
@@ -2730,8 +2744,8 @@ model Course {
   longitude    Float?
   gpsData      Json?
   geojson      Json?
-  boundsLat    Json?         // { min: number, max: number }
-  boundsLng    Json?         // { min: number, max: number }
+  boundsLat    Json? // { min: number, max: number }
+  boundsLng    Json? // { min: number, max: number }
   createdAt    DateTime      @default(now())
   updatedAt    DateTime
   GameSession  GameSession[]
@@ -2755,7 +2769,7 @@ model Hole {
   greenLat        Float?
   greenLon        Float?
   strategy        Json?
-  strategyOverlay Json?        // fairway/rough/bunker/green polygoner
+  strategyOverlay Json? // fairway/rough/bunker/green polygoner
   Course          Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   HoleResult      HoleResult[]
   Shot            Shot[]
@@ -2765,13 +2779,13 @@ model Hole {
 }
 
 model Round {
-  id              String       @id
+  id              String          @id
   userId          String
   courseId        String
   date            DateTime
   startTime       DateTime?
   endTime         DateTime?
-  teeColor        String       @default("yellow")
+  teeColor        String          @default("yellow")
   weather         String?
   windSpeed       Int?
   windDir         String?
@@ -2790,9 +2804,9 @@ model Round {
   decadeScore     Float?
   preRoutineScore Float?
   pressureLevel   Int?
-  isComplete      Boolean      @default(false)
-  source          String       @default("MANUAL")
-  createdAt       DateTime     @default(now())
+  isComplete      Boolean         @default(false)
+  source          String          @default("MANUAL")
+  createdAt       DateTime        @default(now())
   updatedAt       DateTime
   gameSessionId   String?
   HoleResult      HoleResult[]
@@ -2907,19 +2921,19 @@ model Shot {
 }
 
 model ClubInBag {
-  id              String   @id @default(dbgenerated("(gen_random_uuid())::text"))
-  userId          String
-  club            String
-  loft            Float?
-  shaft           String?
-  avgCarryMeters  Float?
-  avgTotalMeters  Float?
-  isInActiveBag   Boolean  @default(true)
-  position        Int      @default(0)
-  notes           String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId         String
+  club           String
+  loft           Float?
+  shaft          String?
+  avgCarryMeters Float?
+  avgTotalMeters Float?
+  isInActiveBag  Boolean  @default(true)
+  position       Int      @default(0)
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, club])
   @@index([userId])
@@ -2927,17 +2941,17 @@ model ClubInBag {
 }
 
 model RoundLiveState {
-  id                String   @id @default(dbgenerated("(gen_random_uuid())::text"))
-  roundId           String   @unique
-  currentHoleNumber Int      @default(1)
-  currentShotNumber Int      @default(0)
-  isPaused          Boolean  @default(false)
+  id                String    @id @default(dbgenerated("(gen_random_uuid())::text"))
+  roundId           String    @unique
+  currentHoleNumber Int       @default(1)
+  currentShotNumber Int       @default(0)
+  isPaused          Boolean   @default(false)
   pausedAt          DateTime?
-  lastActivityAt    DateTime @default(now())
+  lastActivityAt    DateTime  @default(now())
   deviceId          String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  Round             Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  Round             Round     @relation(fields: [roundId], references: [id], onDelete: Cascade)
 
   @@index([roundId])
 }
@@ -3291,6 +3305,20 @@ enum Capability {
 
   // Talent-dashboardet (scouting av norske/nordiske turneringsdata)
   TALENT_DASHBOARD_VIEW
+
+  // Sprint 0 — AI-agenter
+  AGENT_APPROVE
+  AGENT_CONFIG
+
+  // Sprint 0 — Fasiliteter
+  FACILITY_VIEW_PUBLIC
+
+  // Sprint 0 — Coaching-okter
+  SESSION_RECORD
+  SESSION_VIEW_ANY
+
+  // Sprint 0 — Rapporter
+  REPORTS_EXPORT
 }
 
 enum LibraryItemType {
@@ -3315,10 +3343,10 @@ enum LibraryItemSource {
 }
 
 model LibraryItem {
-  id      String            @id
-  type    LibraryItemType
-  status  LibraryItemStatus @default(DRAFT)
-  source  LibraryItemSource @default(AK_METHODOLOGY)
+  id     String            @id
+  type   LibraryItemType
+  status LibraryItemStatus @default(DRAFT)
+  source LibraryItemSource @default(AK_METHODOLOGY)
 
   title   String
   summary String
@@ -3562,15 +3590,15 @@ model TalentPlayer {
 }
 
 model TalentTournamentResult {
-  id                 String       @id @default(cuid())
+  id                 String         @id @default(cuid())
   playerId           String
-  player             TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  player             TalentPlayer   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   source             TalentSource
   tournamentName     String
   tournamentDate     DateTime
-  classCode          String         // raadata-klassekode for sporbarhet
+  classCode          String // raadata-klassekode for sporbarhet
   ageGroup           TalentAgeGroup @default(UKJENT)
-  holes              Int            // 9 eller 18 — kritisk for å unngå mix
+  holes              Int // 9 eller 18 — kritisk for å unngå mix
   par                Int
   position           Int?
   totalScore         Int?
@@ -3578,9 +3606,9 @@ model TalentTournamentResult {
   rounds             Int[]
   region             String?
   rawSourceId        String?
-  scoreReconstructed Boolean      @default(false)
-  excludeFromUi      Boolean      @default(false)
-  createdAt          DateTime     @default(now())
+  scoreReconstructed Boolean        @default(false)
+  excludeFromUi      Boolean        @default(false)
+  createdAt          DateTime       @default(now())
 
   @@unique([playerId, source, tournamentDate, tournamentName, classCode], name: "uniq_result")
   @@index([source, tournamentDate])
@@ -3592,17 +3620,17 @@ model TalentPlayerStats {
   playerId            String
   player              TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
   year                Int
-  holesSegment        Int          // 9 eller 18 — aldri bland
+  holesSegment        Int // 9 eller 18 — aldri bland
   totalResults        Int
   totalRounds         Int
-  avgRound            Float?       // null hvis totalRounds < 3
+  avgRound            Float? // null hvis totalRounds < 3
   bestRound           Int?
   worstRound          Int?
   top3Count           Int          @default(0)
   top10Count          Int          @default(0)
   cutsMade            Int          @default(0)
   improvementPerYear  Float?
-  dataConfidenceScore Float        // 0-1
+  dataConfidenceScore Float // 0-1
   computedAt          DateTime     @default(now())
 
   @@unique([playerId, year, holesSegment], name: "uniq_stats")
@@ -3616,8 +3644,8 @@ model BookingV2WaitlistSignup {
   id            String    @id @default(cuid())
   email         String
   phone         String?
-  preferredDay  String?   // any | weekday | weekend
-  preferredTime String?   // any | morning | afternoon | evening
+  preferredDay  String? // any | weekday | weekend
+  preferredTime String? // any | morning | afternoon | evening
   serviceTypeId String?
   trainerId     String?
   status        String    @default("WAITING") // WAITING | NOTIFIED | CONVERTED | EXPIRED
@@ -3696,3 +3724,306 @@ enum CalendarEventSource {
   BOOKING
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// Sprint 0 — Nye modeller for AK Golf HQ
+// ═══════════════════════════════════════════════════════════════════════════
+
+model DrillScore {
+  id           String   @id @default(cuid())
+  playerId     String
+  exerciseId   String
+  score        Float
+  reps         Int?
+  durationSecs Int?
+  notes        String?
+  recordedAt   DateTime @default(now())
+  sessionId    String?
+  createdAt    DateTime @default(now())
+
+  Player User @relation("DrillScorePlayer", fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([exerciseId])
+  @@index([recordedAt])
+}
+
+model DrillBenchmark {
+  id           String   @id @default(cuid())
+  exerciseId   String
+  categoryCode String // A-K spillerkategori
+  metric       String // "score" | "reps" | "time"
+  p25          Float // 25. percentil
+  p50          Float // Median
+  p75          Float // 75. percentil
+  p90          Float // 90. percentil
+  sampleSize   Int      @default(0)
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  @@unique([exerciseId, categoryCode, metric])
+}
+
+model LiveSessionLog {
+  id            String    @id @default(cuid())
+  coachId       String
+  playerId      String
+  startedAt     DateTime  @default(now())
+  endedAt       DateTime?
+  status        String    @default("active") // "active" | "paused" | "completed" | "cancelled"
+  notes         String?
+  planSessionId String? // Kobling til TrainingPlanSession
+  createdAt     DateTime  @default(now())
+
+  Coach     User              @relation("LiveSessionCoach", fields: [coachId], references: [id])
+  Player    User              @relation("LiveSessionPlayer", fields: [playerId], references: [id])
+  Exercises LiveExerciseLog[]
+
+  @@index([coachId])
+  @@index([playerId])
+  @@index([startedAt])
+}
+
+model LiveExerciseLog {
+  id           String   @id @default(cuid())
+  sessionId    String
+  exerciseId   String?
+  exerciseName String
+  reps         Int      @default(0)
+  sets         Int      @default(0)
+  durationSecs Int?
+  clubUsed     String?
+  notes        String?
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  LiveSession LiveSessionLog @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  ClubLogs    LiveClubLog[]
+
+  @@index([sessionId])
+}
+
+model LiveClubLog {
+  id            String   @id @default(cuid())
+  exerciseLogId String
+  clubKey       String // "driver", "7iron", "pw", etc.
+  reps          Int      @default(0)
+  avgSpeed      Float? // Gjennomsnittlig kolvehastighet
+  notes         String?
+  createdAt     DateTime @default(now())
+
+  ExerciseLog LiveExerciseLog @relation(fields: [exerciseLogId], references: [id], onDelete: Cascade)
+
+  @@index([exerciseLogId])
+}
+
+model PlanAction {
+  id              String    @id @default(cuid())
+  agentId         String // "plan-generator" | "drill-recommender" etc.
+  playerId        String
+  title           String
+  description     String
+  proposedChange  Json?
+  urgency         String    @default("medium") // "low" | "medium" | "high" | "critical"
+  status          String    @default("pending") // "pending" | "approved" | "rejected" | "executed" | "expired"
+  rationale       String?
+  confidence      Float     @default(0.5)
+  resolvedBy      String?
+  resolvedAt      DateTime?
+  rejectionReason String?
+  expiresAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+  Player User @relation("PlanActionPlayer", fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId, status])
+  @@index([agentId])
+  @@index([urgency])
+}
+
+model ShotLog {
+  id             String   @id @default(cuid())
+  roundId        String
+  holeNumber     Int
+  shotNumber     Int
+  clubUsed       String?
+  distanceYards  Float?
+  lie            String? // "tee" | "fairway" | "rough" | "bunker" | "green"
+  result         String? // "hit" | "miss_left" | "miss_right" | "short" | "long"
+  penaltyStrokes Int      @default(0)
+  notes          String?
+  latitude       Float?
+  longitude      Float?
+  createdAt      DateTime @default(now())
+
+  @@index([roundId])
+  @@index([holeNumber])
+}
+
+model GroupChannel {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdById String
+  isArchived  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  CreatedBy User           @relation("GroupChannelCreator", fields: [createdById], references: [id])
+  Messages  GroupMessage[]
+
+  @@index([createdById])
+}
+
+model GroupMessage {
+  id        String   @id @default(cuid())
+  channelId String
+  senderId  String
+  content   String
+  parentId  String? // For trad-svar
+  isEdited  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Channel      GroupChannel       @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  Sender       User               @relation("GroupMessageSender", fields: [senderId], references: [id])
+  ReadReceipts GroupMessageRead[]
+
+  @@index([channelId, createdAt])
+  @@index([senderId])
+}
+
+model GroupMessageRead {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+
+  Message GroupMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@index([userId])
+}
+
+model ComplianceScore {
+  id                String   @id @default(cuid())
+  playerId          String
+  planId            String?
+  weekNumber        Int?
+  sessionsPlanned   Int      @default(0)
+  sessionsCompleted Int      @default(0)
+  score             Float    @default(0) // 0-100
+  period            String   @default("week") // "week" | "month" | "plan"
+  calculatedAt      DateTime @default(now())
+
+  Player User @relation("CompliancePlayer", fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([calculatedAt])
+}
+
+model RoundInsight {
+  id          String   @id @default(cuid())
+  roundId     String
+  playerId    String
+  insightType String // "strength" | "weakness" | "pattern" | "recommendation"
+  area        String? // "driving" | "approach" | "short_game" | "putting"
+  title       String
+  description String
+  confidence  Float    @default(0.5)
+  aiGenerated Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  Player User @relation("RoundInsightPlayer", fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([roundId])
+  @@index([playerId])
+}
+
+model VideoSubmission {
+  id           String   @id @default(cuid())
+  playerId     String
+  coachId      String?
+  videoUrl     String
+  thumbnailUrl String?
+  title        String?
+  description  String?
+  swingType    String? // "full" | "pitch" | "chip" | "putt" | "bunker"
+  clubUsed     String?
+  status       String   @default("pending") // "pending" | "reviewed" | "archived"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  Player      User              @relation("VideoPlayer", fields: [playerId], references: [id], onDelete: Cascade)
+  Assessments VideoAssessment[]
+
+  @@index([playerId])
+  @@index([coachId])
+  @@index([status])
+}
+
+model VideoAssessment {
+  id           String   @id @default(cuid())
+  submissionId String
+  coachId      String
+  feedback     String
+  annotations  Json? // Tidsstemplede kommentarer pa videoen
+  rating       Int? // 1-5
+  createdAt    DateTime @default(now())
+
+  Submission VideoSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  Coach      User            @relation("VideoAssessor", fields: [coachId], references: [id])
+
+  @@index([submissionId])
+  @@index([coachId])
+}
+
+model QueueItem {
+  id            String    @id @default(cuid())
+  type          String // "video" | "feedback" | "plan_review" | "test_result"
+  priority      Int       @default(0) // Hoyere = mer urgent
+  playerId      String
+  assignedTo    String?
+  referenceId   String? // ID til VideoSubmission, TrainingPlan, etc.
+  referenceType String?
+  status        String    @default("open") // "open" | "in_progress" | "done" | "snoozed"
+  dueAt         DateTime?
+  slaMinutes    Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  Player User @relation("QueuePlayer", fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([status, priority])
+  @@index([assignedTo])
+  @@index([playerId])
+  @@index([dueAt])
+}
+
+model SlaConfig {
+  id             String   @id @default(cuid())
+  itemType       String   @unique // "video" | "feedback" | "plan_review" | "test_result"
+  targetMinutes  Int // Maks responstid i minutter
+  warningMinutes Int // Varsel nar denne grensen naermer seg
+  escalateAfter  Int? // Eskaler etter X minutter
+  isActive       Boolean  @default(true)
+  updatedAt      DateTime @updatedAt
+
+  @@index([itemType])
+}
+
+model SessionEditLog {
+  id         String   @id @default(cuid())
+  sessionId  String // TrainingPlanSession.id
+  editedById String
+  changeType String // "create" | "update" | "delete" | "move"
+  before     Json?
+  after      Json?
+  reason     String?
+  createdAt  DateTime @default(now())
+
+  Editor User @relation("SessionEditor", fields: [editedById], references: [id])
+
+  @@index([sessionId])
+  @@index([editedById])
+  @@index([createdAt])
+}

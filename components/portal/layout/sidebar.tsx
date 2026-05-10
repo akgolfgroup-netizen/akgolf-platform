@@ -1,27 +1,28 @@
 "use client";
 
 /**
- * Portal Sidebar — Heritage Grid 1:1.
+ * Portal Sidebar — Sprint 0 HQ Foundation (lys variant).
  *
- * Kilde: design-ref/stitch/heritage/dashboard_mission_control/code.html
- *        (aside-seksjonen, linje 1-60 av <aside>)
- *
- * Eksakte klasser fra Heritage:
- * - Container: h-screen w-64 bg-primary-container py-8 gap-y-6
- * - Header: px-8 mb-4, h1 text-surface text-lg, p text-[#d2f000] text-[11px] widest
- * - Active: bg-[#d2f000] text-[#154212] rounded-lg mx-4 px-4 py-3 text-[11px] widest
- *   + icon FILLED
- * - Inactive: text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface
- * - Subscription: bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4
- * - Bottom links: px-4 py-2 text-[#fdf9f0]/70 hover:text-surface text-[11px]
+ * Bakgrunn: hvit (#FFFFFF), border-right: 1px #F0EDE5
+ * Active: pill rgba(0,88,64,0.08), 12px radius, tekst #005840
+ * Muted tekst: #5E5C57
  */
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
-import { Icon } from "@/components/ui/icon";
-import { AKLogo } from "@/components/website/AKLogo";
+import {
+  LayoutDashboard,
+  ClipboardList,
+  Calendar,
+  BarChart3,
+  User,
+  LogOut,
+  X,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
@@ -29,32 +30,33 @@ import { useSidebar } from "./sidebar-context";
 interface NavItem {
   href: string;
   label: string;
-  iconName: string;
+  icon: LucideIcon;
   matchPaths?: string[];
 }
 
-// Lansering 2026-04-30: kun 3 hovedmenypunkter aktive.
-// Spillerprofil-info vises pa dashboard. WIP-ruter (timeplan, dagbok, runde,
-// statistikk, talent, etc.) er fortsatt aktive paa URL men skjult fra navigasjon
-// til de er klare for lansering.
 const NAV_ITEMS: NavItem[] = [
-  { href: "/portal", label: "Dashboard", iconName: "dashboard" },
+  { href: "/portal", label: "Dashboard", icon: LayoutDashboard },
   {
     href: "/portal/treningsplan",
     label: "Treningsplan",
-    iconName: "assignment",
-    matchPaths: ["/portal/treningsplan/uke", "/portal/treningsplan/analyse"],
+    icon: ClipboardList,
+    matchPaths: ["/portal/treningsplan/uke", "/portal/treningsplan/analyse", "/portal/treningsplan/live-session"],
   },
   {
     href: "/portal/teknisk-plan",
     label: "Teknisk Plan",
-    iconName: "target",
+    icon: Wrench,
   },
   {
     href: "/portal/bookinger",
     label: "Bookinger",
-    iconName: "calendar_month",
+    icon: Calendar,
     matchPaths: ["/portal/bookinger/ny", "/portal/bookinger/venteliste"],
+  },
+  {
+    href: "/portal/statistikk",
+    label: "Statistikk",
+    icon: BarChart3,
   },
 ];
 
@@ -67,6 +69,7 @@ function NavLink({
   pathname: string;
   onClick?: () => void;
 }) {
+  const Icon = item.icon;
   const isExactHome = item.href === "/portal" && pathname === "/portal";
   const isSubMatch = item.href !== "/portal" && pathname.startsWith(item.href);
   const isExtraMatch = item.matchPaths?.some((p) => pathname.startsWith(p));
@@ -77,13 +80,17 @@ function NavLink({
       href={item.href}
       onClick={onClick}
       className={cn(
-        "flex items-center gap-3 rounded-lg mx-4 px-4 py-3 uppercase text-[11px] font-medium tracking-widest transition-all",
+        "flex items-center gap-3 mx-3 px-3 py-2.5 text-[13px] font-medium transition-colors",
         active
-          ? "bg-[#d2f000] text-[#154212]"
-          : "text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface",
+          ? "text-[#005840]"
+          : "text-[#5E5C57] hover:text-[#0A1F18]",
       )}
+      style={{
+        borderRadius: 12,
+        background: active ? "rgba(0,88,64,0.08)" : "transparent",
+      }}
     >
-      <Icon name={item.iconName} size={20} filled={active} />
+      <Icon className="w-[18px] h-[18px] shrink-0" strokeWidth={1.75} />
       <span>{item.label}</span>
     </Link>
   );
@@ -100,29 +107,43 @@ function SidebarBody({
   onSignOut: () => void;
   onNavClick?: () => void;
 }) {
-  void user;
+  const displayName = user.name ?? user.email ?? "Spiller";
+  const initials = displayName
+    .split(/[\s@]/)[0]
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <>
       {/* Header */}
-      <div className="px-8 mb-4">
+      <div className="px-5 mb-6">
         <Link
           href="/portal"
           onClick={onNavClick}
-          className="flex items-center gap-3"
+          className="flex items-center gap-2.5"
           aria-label="AK Golf — Hjem"
         >
-          <AKLogo variant="inverted" size={28} />
-          <div className="flex flex-col">
-            <h1 className="text-surface font-bold text-lg tracking-tight leading-none">AK Golf</h1>
-            <p className="uppercase text-[10px] font-medium tracking-widest text-[#d2f000] mt-0.5">
-              Precision Performance
-            </p>
-          </div>
+          <span
+            className="w-8 h-8 rounded-lg grid place-items-center font-bold text-[12px]"
+            style={{
+              background: "#005840",
+              color: "#FFFFFF",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            AK
+          </span>
+          <span
+            className="text-[14px] font-medium"
+            style={{ color: "#0A1F18", letterSpacing: "-0.01em" }}
+          >
+            AK Golf
+          </span>
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1">
+      <nav className="flex-1 space-y-0.5">
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.href}
@@ -133,28 +154,28 @@ function SidebarBody({
         ))}
       </nav>
 
-      {/* Bottom block: Subscription + Support/Sign out */}
-      <div className="px-4 mt-auto space-y-4">
-        <div className="bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4">
-          <p className="text-[10px] text-[#d2f000] font-bold tracking-widest mb-2 uppercase">
-            Subscription
-          </p>
-          <Link
-            href="/portal/abonnement"
-            onClick={onNavClick}
-            className="block w-full bg-[#d2f000] text-[#154212] py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-center hover:opacity-90 transition-opacity"
+      {/* Bottom: profil + logg ut */}
+      <div className="px-3 mt-auto pt-4" style={{ borderTop: "1px solid #F0EDE5" }}>
+        <div className="flex items-center gap-2.5 px-3 py-2.5 mb-1">
+          <span
+            className="w-8 h-8 rounded-full grid place-items-center text-[11px] font-bold shrink-0"
+            style={{ background: "#005840", color: "#FFFFFF" }}
           >
-            Upgrade Pro
-          </Link>
+            {initials}
+          </span>
+          <span className="text-[13px] font-medium text-[#0A1F18] truncate">
+            {displayName}
+          </span>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-0.5">
           <Link
             href="/portal/profil"
             onClick={onNavClick}
-            className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
+            className="flex items-center gap-3 px-3 py-2 text-[12px] font-medium text-[#5E5C57] hover:text-[#0A1F18] transition-colors"
+            style={{ borderRadius: 12 }}
           >
-            <Icon name="person" size={20} />
+            <User className="w-4 h-4" strokeWidth={1.75} />
             <span>Profil</span>
           </Link>
           <button
@@ -162,10 +183,11 @@ function SidebarBody({
               onSignOut();
               onNavClick?.();
             }}
-            className="w-full flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
+            className="w-full flex items-center gap-3 px-3 py-2 text-[12px] font-medium text-[#5E5C57] hover:text-[#0A1F18] transition-colors"
+            style={{ borderRadius: 12 }}
           >
-            <Icon name="logout" size={20} />
-            <span>Sign out</span>
+            <LogOut className="w-4 h-4" strokeWidth={1.75} />
+            <span>Logg ut</span>
           </button>
         </div>
       </div>
@@ -195,10 +217,10 @@ export function Sidebar({ user }: SidebarProps) {
     <>
       {/* Desktop sidebar */}
       <aside
-        className="h-screen w-64 fixed left-0 top-0 flex flex-col py-8 gap-y-6 shadow-2xl z-40 hidden lg:flex"
+        className="h-screen w-60 fixed left-0 top-0 flex-col py-6 gap-y-4 z-40 hidden lg:flex"
         style={{
-          background: "#2d5a27",
-          boxShadow: "0 0 40px rgba(21, 66, 18, 0.2)",
+          background: "#FFFFFF",
+          borderRight: "1px solid #F0EDE5",
         }}
       >
         <SidebarBody user={user} pathname={pathname} onSignOut={handleSignOut} />
@@ -213,22 +235,25 @@ export function Sidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 z-40 bg-on-surface/50 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-[#0A1F18]/30 backdrop-blur-sm lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 z-50 flex h-screen w-64 flex-col py-8 gap-y-6 lg:hidden"
-              style={{ background: "#2d5a27" }}
+              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.32 }}
+              className="fixed left-0 top-0 z-50 flex h-screen w-60 flex-col py-6 gap-y-4 lg:hidden"
+              style={{
+                background: "#FFFFFF",
+                borderRight: "1px solid #F0EDE5",
+              }}
             >
               <button
                 onClick={close}
-                className="absolute right-4 top-4 rounded-lg p-2 text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface transition-colors"
+                className="absolute right-3 top-3 rounded-lg p-2 text-[#5E5C57] hover:text-[#0A1F18] transition-colors"
                 aria-label="Lukk meny"
               >
-                <Icon name="close" size={20} />
+                <X className="w-5 h-5" strokeWidth={1.75} />
               </button>
               <SidebarBody
                 user={user}

@@ -58,7 +58,7 @@ export function CoachHQDarkRail({ user }: CoachHQDarkRailProps) {
     <aside
       className="h-full flex flex-col items-center py-3 gap-1 border-r"
       style={{
-        background: "#0A1F18",
+        background: "#061210",
         borderColor: "rgba(255,255,255,0.05)",
       }}
     >

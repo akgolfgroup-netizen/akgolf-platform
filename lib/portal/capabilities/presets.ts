@@ -17,6 +17,9 @@ export const CAPABILITY_PRESETS: CapabilityPreset[] = [
       Capability.BOOKING_VIEW_OWN,
       Capability.BOOKING_MANAGE,
       Capability.LIBRARY_VIEW,
+      Capability.SESSION_RECORD,
+      Capability.FACILITY_VIEW_PUBLIC,
+      Capability.AGENT_APPROVE,
     ],
   },
   {
@@ -40,6 +43,11 @@ export const CAPABILITY_PRESETS: CapabilityPreset[] = [
       Capability.BOOKING_VIEW_OWN,
       Capability.BOOKING_VIEW_ALL,
       Capability.BOOKING_MANAGE,
+      Capability.SESSION_RECORD,
+      Capability.SESSION_VIEW_ANY,
+      Capability.FACILITY_VIEW_PUBLIC,
+      Capability.AGENT_APPROVE,
+      Capability.REPORTS_EXPORT,
     ],
   },
   {

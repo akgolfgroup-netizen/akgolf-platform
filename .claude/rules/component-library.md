@@ -1,4 +1,4 @@
-# Komponentbibliotek — AK Golf Platform
+# Komponentbibliotek — AK Golf HQ
 
 Sjekk ALLTID denne filen FØR du bygger en ny komponent.
 Gjenbruk eksisterende — aldri bygg duplikater.
@@ -142,14 +142,106 @@ Pixel-naer implementasjon av `public/design-reference/handoff-2026-04-27/screens
 | FacilityList | components/admin/FacilityList.tsx | Bookinger gruppert per fasilitet med status-badge per type |
 | AddActivityModal | components/admin/AddActivityModal.tsx | Modal for å legge til ny FacilityBooking (fasilitet, person, type, dato, tid, varighet) |
 
+## Sprint 0 — Delte komponenter (Brand Guide V2.0 + HQ Foundation)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| PyramideRinger | components/shared/PyramideRinger.tsx | 5 konsentriske SVG-buer for treningspyramide (FYS/TEK/SLAG/SPILL/TURN) |
+| SgRadarChart | components/shared/SgRadarChart.tsx | 4-akset SVG-radar for Strokes Gained |
+| HcpTrendChart | components/shared/HcpTrendChart.tsx | HCP-trend SVG med lime gradient-fill |
+| SessionCard | components/shared/SessionCard.tsx | Treningsokt-kort med venstre pyramide-stripe |
+| MetricCard | components/shared/MetricCard.tsx | KPI-kort med stort mono-tall og delta |
+| EmptyState | components/shared/EmptyState.tsx | Tom-tilstand med ikon, tittel, CTA |
+| ChatBubble | components/shared/ChatBubble.tsx | Speilvendt melding for sender/mottaker |
+| WeekPills | components/shared/WeekPills.tsx | Horisontale pills for ukenavigsjon (U1-U6) |
+| StreakGrid | components/shared/StreakGrid.tsx | 14/30-dagers prikk-grid for streaks |
+| PlanActionCard | components/admin/coachhq-dark/PlanActionCard.tsx | AI-agent forslag med urgency-stripe |
+
+## Kalender-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| AkCalendar | components/shared/calendar/AkCalendar.tsx | Fullscreen kalender med dag/uke/maaned/aar-visning |
+| MonthView | components/shared/calendar/MonthView.tsx | Maanedsvisning med event-pills |
+| WeekView | components/shared/calendar/WeekView.tsx | 7-dagers grid med tidsblokker |
+| DayView | components/shared/calendar/DayView.tsx | Dagvisning med timeplan 08-20 |
+| YearView | components/shared/calendar/YearView.tsx | 12 mini-maaneder med aktivitetsprikker |
+
+## Statistikk-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| SgBarChart | components/shared/charts/SgBarChart.tsx | Strokes Gained horisontale barer (+/- rundt 0) |
+| ScoreDistribution | components/shared/charts/ScoreDistribution.tsx | Score-fordeling histogram |
+| ComparisonBar | components/shared/charts/ComparisonBar.tsx | Spillerverdi vs peer vs benchmark |
+| PercentilDial | components/shared/charts/PercentilDial.tsx | Halvsirkel-gauge (0-100) |
+| RoundSummaryCard | components/shared/RoundSummaryCard.tsx | Kompakt runde-sammendrag |
+
+## Treningsdata-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| ComplianceChart | components/shared/ComplianceChart.tsx | Ukentlig gjennomforing (planlagt vs fullfort) |
+| PeriodizationTimeline | components/shared/PeriodizationTimeline.tsx | Aarsplan med fargekodede perioder |
+| DrillProgressCard | components/shared/DrillProgressCard.tsx | Drill-fremgang med score-trend og benchmark |
+| TrainingVolumeChart | components/shared/TrainingVolumeChart.tsx | Treningsvolum stablet per pyramide-omrade |
+
+## Coaching-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| PlayerTimeline | components/shared/PlayerTimeline.tsx | Vertikal tidslinje med okter, tester, milepaler |
+| SignalBadge | components/shared/SignalBadge.tsx | Coaching-signal pill med severity-farge |
+| CoachNoteCard | components/shared/CoachNoteCard.tsx | Coach-notat med tidsstempel og kategori |
+| PriorityQueueList | components/shared/PriorityQueueList.tsx | Prioritert oppgaveliste med SLA-timer |
+| AlertCard | components/shared/AlertCard.tsx | SLA-brudd-varsling med severity |
+| SlaProgressBar | components/shared/SlaProgressBar.tsx | Tid brukt vs SLA-grense progress |
+| PlayerRiskCard | components/shared/PlayerRiskCard.tsx | Churn-risiko-indikator |
+| PlayerQuickStats | components/shared/PlayerQuickStats.tsx | Inline HCP/SG/streak per spiller-rad |
+| CoachLoadChart | components/shared/CoachLoadChart.tsx | Coach-kapasitet og utnyttelse |
+
+## Live Session-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| RepLoggingPanel | components/shared/RepLoggingPanel.tsx | Store +/- knapper for rep-logging |
+| SessionTimerCard | components/shared/SessionTimerCard.tsx | Stoppeklokke for coaching-okter |
+
+## Spiller-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| GoalProgressCard | components/shared/GoalProgressCard.tsx | Mal-fremgang med target vs naverdi |
+| CourseCard | components/shared/CourseCard.tsx | Bane-info med glassmorfisk overlay |
+
+## Video-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| VideoPlayerCard | components/shared/VideoPlayerCard.tsx | Video med tidsstemplede kommentarer |
+| SwingAnnotationPanel | components/shared/SwingAnnotationPanel.tsx | Tegne pa video-frame for swing-analyse |
+
+## Interaksjon og flow-komponenter (Sprint 0 komponentbibliotek)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| ConfirmDialog | components/shared/ConfirmDialog.tsx | Bekreftelsesmodal med default/danger variant |
+| FilterPanel | components/shared/FilterPanel.tsx | Horisontal filterrad (select, multi-select, date-range) |
+| SearchInput | components/shared/SearchInput.tsx | Sok-felt med debounce og nullstill |
+| ActionMenu | components/shared/ActionMenu.tsx | Tre-prikker-meny med handlinger |
+| FormModal | components/shared/FormModal.tsx | Modal med skjema, validering, submit |
+| LoadingSkeleton | components/shared/LoadingSkeleton.tsx | Skeleton-loader (card/metric/chart/list/profile/timeline) |
+| ErrorRetry | components/shared/ErrorRetry.tsx | Feilvisning med retry-knapp |
+| StepperProgress | components/shared/StepperProgress.tsx | Multi-steg-indikator (Steg X av Y) |
+| ToastProvider | components/shared/ToastProvider.tsx | Sonner toast-wrapper med AK Golf-styling |
+| toast-helpers | components/shared/toast-helpers.ts | showSuccess/showError/showWarning/showInfo |
+
 ## Delte UI-komponenter (shadcn/ui)
-Se components/ui/ for shadcn primitiver (Button, Dialog, Card, etc.)
+Installerte primitiver i components/ui/:
+avatar, badge, breadcrumb, button, card, checkbox, command, dialog, dropdown-menu,
+input, label, popover, scroll-area, select, separator, sheet, skeleton, slider,
+switch, tabs, textarea, tooltip
 
 ## Motion-wrappers
 Se components/motion/ for Framer Motion wrappers.
 
 ## Regler
-- Nye komponenter i components/portal/{feature}/ 
+- Nye komponenter i components/portal/{feature}/ eller components/shared/
 - Maks 300 linjer per fil
 - Registrer nye komponenter i denne filen umiddelbart
 - Bruk kun Tailwind-tokens fra design-system.md
+- Toast: bruk `showSuccess`/`showError` fra `@/components/shared/toast-helpers`
+- Modaler: bruk ConfirmDialog for bekreftelser, FormModal for skjemaer
+- Loading: bruk LoadingSkeleton med riktig variant
+- Feil: bruk ErrorRetry med onRetry callback

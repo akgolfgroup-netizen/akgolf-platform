@@ -1,4 +1,4 @@
-# Språk og terminologi — AK Golf Platform
+# Språk og terminologi — AK Golf HQ
 
 > **ENESTE SANNHETSKILDE** for hvordan vi skriver i UI, e-poster, varsler og dokumentasjon.
 > Når du skriver brukervendt tekst — sjekk denne filen først.
@@ -11,7 +11,7 @@
 
 **Spiller, aldri elev.**
 
-Brukervendt tekst i AK Golf Platform skal alltid bruke **spiller** — aldri "elev" eller "student". Dette gjelder UI, e-poster, varsler, dokumenter, mockups og markedsmateriell.
+Brukervendt tekst i AK Golf HQ skal alltid bruke **spiller** — aldri "elev" eller "student". Dette gjelder UI, e-poster, varsler, dokumenter, mockups og markedsmateriell.
 
 | Forbudt | Bruk i stedet |
 |---|---|

@@ -1,10 +1,55 @@
-# WORKLOG — AK Golf Platform
+# WORKLOG — AK Golf HQ
 
 > **Hvordan bruke denne filen:**
 > 1. Når du avslutter en økt, skriv 3–5 kulepunkter om hva du jobbet med.
 > 2. List nøyaktige filer og mapper.
 > 3. Skriv neste steg.
 > 4. Når du starter en ny AI-sesjon, si: *"Les WORKLOG.md og fortsett arbeidet."*
+
+---
+
+## 2026-05-10 — Sprint 0: HQ Foundation + Designsystem
+
+### Branch: `feature/sprint-0-hq-foundation`
+
+### Fullfort
+- **Steg 0:** Branding style guide HTML (public/branding-style-guide.html)
+- **Steg 1:** Dokumentasjon — handover-spec, design-inspirasjon, branding-regler
+- **Steg 2:** Design tokens oppdatert — varm krem surface (#FAFAF7), varmere tekst/borders, accent-utvidelse, sidebar-tokens, landing-tokens, nye radius/shadow/motion
+- **Steg 2b:** Screen builder prompt-system + /build-screen og /redesign-screen commands
+- **Steg 3:** Prisma schema — 15 nye modeller (DrillScore, DrillBenchmark, LiveSessionLog, LiveExerciseLog, LiveClubLog, PlanAction, ShotLog, GroupChannel, GroupMessage, GroupMessageRead, ComplianceScore, RoundInsight, VideoSubmission, VideoAssessment, QueueItem, SlaConfig, SessionEditLog)
+- **Steg 4:** CBAC — 6 nye capabilities (AGENT_APPROVE, AGENT_CONFIG, FACILITY_VIEW_PUBLIC, SESSION_RECORD, SESSION_VIEW_ANY, REPORTS_EXPORT)
+- **Steg 5:** Signal/skill/agent typer — 6 nye filer med typer og stubs
+- **Steg 6:** Sidebar redesign — PlayerHQ lys, CoachHQ nav lys med lime-pill
+- **Steg 7:** Primitiver — avatar allerede flat, CoachHQ Rail oppdatert til #061210
+- **Steg 8:** 10 nye komponenter (PyramideRinger, SgRadarChart, HcpTrendChart, SessionCard, MetricCard, EmptyState, ChatBubble, WeekPills, StreakGrid, PlanActionCard)
+- **Steg 9:** 9 nye rute-stubs med auth-guards
+
+### Filer endret/opprettet
+- `app/globals.css` — oppdaterte tokens
+- `.claude/rules/design-system.md` — komplett ny
+- `.claude/rules/branding.md` — ny
+- `.claude/rules/screen-builder.md` — ny
+- `.claude/rules/component-library.md` — oppdatert
+- `.claude/rules/gotchas.md` — oppdatert
+- `.claude/commands/build-screen.md` + `redesign-screen.md` — nye
+- `docs/handover-akgolf-hq.md` + `docs/design-inspiration.md` — nye
+- `prisma/schema.prisma` — 15 nye modeller + 6 nye capabilities
+- `lib/portal/capabilities/catalog.ts` + `presets.ts` — oppdatert
+- `lib/portal/signals/` — 3 nye filer
+- `lib/portal/skills/types.ts` — ny
+- `lib/portal/agents/types.ts` + `runner.ts` — nye
+- `components/portal/layout/sidebar.tsx` — redesignet (lys)
+- `components/admin/coachhq-dark/CoachHQDarkNav.tsx` — redesignet (lys)
+- `components/admin/coachhq-dark/CoachHQDarkRail.tsx` — oppdatert (#061210)
+- `components/shared/` — 9 nye komponenter
+- `components/admin/coachhq-dark/PlanActionCard.tsx` — ny
+- 9 nye page.tsx route stubs
+
+### Neste steg
+- Sprint 1: Treningsplan-rebuild + Live Session
+- Verifiser sidebar visuelt i browser
+- Test Prisma-migrasjon mot Supabase
 
 ---
 
