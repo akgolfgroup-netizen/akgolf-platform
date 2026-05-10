@@ -18,19 +18,20 @@ Inter Tight (headlines) + Inter (body) + JetBrains Mono (tall) via `next/font/go
 - Stripe forventer øre: `service.price * 100`.
 - Aldri vis MVA på kundevendte sider.
 
-## CSS / Design — Brand Guide V2.0 (eneste gjeldende, etter rebrand 2026-04-25)
-- Én `app/globals.css` for hele appen. Aldri lag globals.css i undermapper.
-- Designfasit: `public/design-reference/*.html` — kopier Tailwind-tokens 1:1.
-- **Primary:** `#005840` (--color-primary). **Accent/CTA:** `#D1F843` (--color-accent).
-- **Surface:** `#F4F6F4` (--color-surface). **Card:** `#FFFFFF` (--color-card).
-- **Sidebar:** `#0F1F18` (--color-sidebar) — admin og dark contrast cards.
-- **Tekst:** `#0A1F18` (--color-ink), muted `#5C6B62`, subtle `#8A958E`.
-- **Status:** success `#2A7D5A`, warning `#C48A32`, danger `#B84233`.
-- **Border:** `--color-line` (#E4EAE6), soft `--color-line-soft` (#EDF1EE).
+## CSS / Design — Sprint 0 HQ Foundation (2026-05-10)
+- En `app/globals.css` for hele appen. Aldri lag globals.css i undermapper.
+- **Primary:** `#005840`. **Accent:** `#D1F843`, hover `#C2EE2F`, on `#0A1F18`.
+- **Surface:** `#FAFAF7` (varm krem, var #F4F6F4). **Card:** `#FFFFFF`.
+- **Accent-utvidelse:** `accent-bg` rgba(209,248,67,0.12), `accent-fill` rgba(209,248,67,0.25).
+- **Tekst (varmere):** ink `#0A1F18`, muted `#5E5C57`, subtle `#9C9990`, disabled `#C4C0B8`.
+- **Status (raffinert):** success `#1A7D56`, warning `#B8852A`, danger `#A32D2D`.
+- **Border (varmere):** line `#E5E3DD`, line-soft `#EFEDE6`.
+- **Radius:** kort 20px, knapper 12px, input 10px.
+- **Sidebar:** PlayerHQ er LYS (#FFFFFF), CoachHQ rail mork (#061210) + nav lys (#FAFAF7).
 - **Fonts:** Inter Tight + Inter + JetBrains Mono. Aldri DM Sans i ny kode.
-- **Ikoner:** `lucide-react`. Aldri Material Symbols i ny kode. Aldri emojier.
-- **Heritage-tokens er LEGACY** — beholdes som `--legacy-*` aliaser i globals.css. Mass-migrering i Sprint 2.
-- Se `.claude/rules/design-system.md` for full token-liste.
+- **Ikoner:** `lucide-react`, stroke-width 1.75. Aldri Material Symbols. Aldri emojier.
+- **Heritage-tokens er LEGACY** — beholdes som `--legacy-*`. Mass-migrering i Sprint 2.
+- Se `.claude/rules/design-system.md` + `.claude/rules/branding.md` for full info.
 
 ## Komponenter
 - Lucide icons kan ikke sendes som props fra Server → Client Components. Bruk `iconName` string + ICON_MAP.

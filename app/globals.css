@@ -17,37 +17,67 @@
    * Se .claude/rules/design-system.md for dokumentasjon
    * ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* Core Brand — Brand Guide V2.0 */
-  --color-primary: #005840;            /* Skogsgrønn — primær brand */
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * SPRINT 0 HQ FOUNDATION — Oppdatert token-sett (2026-05-10)
+   * Varmere toner, bold lime, raffinerte farger
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Core Brand */
+  --color-primary: #005840;            /* Skogsgronn — primaer brand */
   --color-primary-hover: #00472f;
   --color-primary-soft: #E8F0EC;
   --color-primary-deep: #003B2A;
   --color-primary-alt: #005840;
 
-  --color-accent: #D1F843;             /* High-energy lime — CTA */
-  --color-accent-soft: #ECFCC0;
+  /* Accent (CTA og energy) */
+  --color-accent: #D1F843;             /* High-energy lime */
+  --color-accent-hover: #C2EE2F;
+  --color-accent-on: #0A1F18;          /* Tekst PA lime-bg */
+  --color-accent-soft: #ECFCC0;        /* Subtile accent-bokser */
   --color-accent-deep: #A6C734;
+  --color-accent-bg: rgba(209,248,67,0.12);   /* Featured kort-bakgrunn */
+  --color-accent-fill: rgba(209,248,67,0.25); /* Progress-bars, gradient-fill */
   --color-secondary: #D1F843;
 
-  --color-surface: #F4F6F4;            /* Varm cream-bakgrunn */
+  /* Surface (varm krem) */
+  --color-surface: #FAFAF7;            /* Varm krem bakgrunn (var #F4F6F4) */
+  --color-surface-alt: #F5F2EA;        /* Differensierte seksjoner (sand) */
   --color-card: #FFFFFF;
-  --color-surface-soft: #EDF1EE;
-  --color-background-beige: #F4F6F4;
+  --color-surface-soft: #EFEDE6;       /* Varmere (var #EDF1EE) */
+  --color-background-beige: #FAFAF7;
 
-  --color-sidebar: #0F1F18;            /* Mørk admin-sidebar / dark contrast */
+  /* Sidebar — mork kontrast (legacy CoachHQ rail) */
+  --color-sidebar: #0F1F18;
   --color-sidebar-hover: #172B22;
   --color-sidebar-divider: #1F3329;
   --color-sidebar-muted: #A4B1AA;
 
-  --color-ink: #0A1F18;                /* Primærtekst — warm dark */
-  --color-ink-muted: #5C6B62;
-  --color-ink-subtle: #6F7A74;            /* WCAG AA — 4.6:1 mot hvit (var #8A958E = 2.85:1) */
+  /* Player Sidebar (lys) */
+  --player-sidebar-bg: #FFFFFF;
+  --player-sidebar-border: #F0EDE5;
+  --player-sidebar-active: rgba(0,88,64,0.08);
+
+  /* Coach Sidebar */
+  --coach-rail-bg: #061210;
+  --coach-nav-bg: #FAFAF7;
+  --coach-nav-active: rgba(209,248,67,0.30);
+
+  /* Landing */
+  --landing-hero-bg: #0A0A0A;
+  --landing-hero-text: #FFFFFF;
+
+  /* Tekst (varmere gra-toner) */
+  --color-ink: #0A1F18;                /* Primaertekst — warm dark */
+  --color-ink-muted: #5E5C57;          /* Varmere (var #5C6B62) */
+  --color-ink-subtle: #9C9990;         /* Varmere (var #8A958E) */
+  --color-ink-disabled: #C4C0B8;
   --color-text: #0A1F18;               /* Alias */
   --color-on-surface: #0A1F18;         /* Alias */
-  --color-muted: #5C6B62;
+  --color-muted: #5E5C57;
 
-  --color-line: #E4EAE6;               /* Standard border */
-  --color-line-soft: #EDF1EE;
+  /* Borders (varmere) */
+  --color-line: #E5E3DD;               /* Varmere (var #E4EAE6) */
+  --color-line-soft: #EFEDE6;          /* Varmere (var #EDF1EE) */
 
   /* LEGACY — Heritage-tokens, beholdt for bakoverkompatibilitet (Sprint 2-migrering) */
   --legacy-color-forest: #154212;      /* Heritage primary (gammel) */
@@ -136,15 +166,19 @@
   --color-surface-secondary: #ECF0EF;
   --color-snow: #FFFFFF;
 
-  /* Semantic Colors — Brand Guide V2.0 */
-  --color-success: #2A7D5A;
-  --color-success-light: #E8F5EF;
+  /* Semantic Colors — Sprint 0 raffinert */
+  --color-success: #1A7D56;
+  --color-success-bg: #E5F1EA;
+  --color-success-light: #E5F1EA;
   --color-success-text: #1A4D36;
-  --color-error: #B84233;
-  --color-error-light: #FCEAE8;
+  --color-danger: #A32D2D;
+  --color-danger-bg: #FAE3E3;
+  --color-error: #A32D2D;
+  --color-error-light: #FAE3E3;
   --color-error-text: #7A2C22;
-  --color-warning: #C48A32;
-  --color-warning-light: #FDF4E4;
+  --color-warning: #B8852A;
+  --color-warning-bg: #FFF0D6;
+  --color-warning-light: #FFF0D6;
   --color-warning-text: #7A5520;
   --color-info: #007AFF;
   --color-info-light: #EFF6FF;
@@ -270,45 +304,52 @@
   --tracking-caption: 0.05em;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* MOTION — Apple-inspired                                                     */
+  /* MOTION — Sprint 0 (aldri bounce/spring)                                    */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);  /* Entrance ease-out */
   --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-out-expo: cubic-bezier(0, 0.55, 0.45, 1);
 
+  --duration-micro: 120ms;
+  --duration-short: 200ms;
+  --duration-medium: 320ms;
   --duration-fast: 150ms;
   --duration-normal: 300ms;
   --duration-slow: 500ms;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* SHADOWS — Subtle, layered                                                   */
+  /* SHADOWS — Sprint 0 (mykere, varmere)                                       */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.02);
-  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 2px rgba(15,31,24,0.04), 0 4px 12px rgba(15,31,24,0.04);
+  --shadow-card-hover: 0 1px 2px rgba(15,31,24,0.06), 0 14px 32px rgba(15,31,24,0.08);
+  --shadow-rim: inset 0 0 0 1px rgba(15,31,24,0.06);
+  --shadow-accent-glow: 0 0 0 1px rgba(209,248,67,0.5), 0 8px 24px rgba(209,248,67,0.18);
   --shadow-card-hover-deep: 0 20px 60px rgba(0, 0, 0, 0.08);
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
-  /* BORDERS & RADIUS                                                            */
+  /* BORDERS & RADIUS — Sprint 0                                                */
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
-  --border-color: #D5DFDB;
-  --border-color-light: #ECF0EF;
+  --border-color: #E5E3DD;
+  --border-color-light: #EFEDE6;
 
-  /* Radius — Modern large corners fra screenshots
-   * Standard: 16px (lg), Hero/Featured: 32px (3xl), Pills: full
-   */
+  /* Radius — Sprint 0 oppdatert */
+  --radius-card: 1.25rem;   /* 20px — standard kort */
+  --radius-sidebar-pill: 0.75rem; /* 12px */
+  --radius-button: 0.75rem; /* 12px */
+  --radius-input: 0.625rem; /* 10px */
   --radius-sm: 0.5rem;      /* 8px */
-  --radius-md: 0.75rem;     /* 12px - buttons */
-  --radius-lg: 1rem;        /* 16px - standard cards */
-  --radius-xl: 1.5rem;      /* 24px - large cards */
-  --radius-2xl: 2rem;       /* 32px - featured cards */
-  --radius-3xl: 2.5rem;     /* 40px - hero sections */
-  --radius-card: 1.25rem;   /* 20px legacy */
+  --radius-md: 0.75rem;     /* 12px */
+  --radius-lg: 1rem;        /* 16px */
+  --radius-xl: 1.5rem;      /* 24px */
+  --radius-2xl: 2rem;       /* 32px */
+  --radius-3xl: 2.5rem;     /* 40px */
   --radius-pill: 980px;
   --radius-full: 9999px;
 
@@ -468,10 +509,10 @@
   --color-on-error: #ffffff;
   --color-on-error-container: #93000a;
 
-  /* Surface — Brand Guide V2.0 overstyring (var Heritage kremhvit, nå BG V2.0 cool cream) */
-  --color-surface: #F4F6F4;
+  /* Surface — Sprint 0 varm krem */
+  --color-surface: #FAFAF7;
   --color-surface-bright: #FFFFFF;
-  --color-surface-dim: #E4EAE6;
+  --color-surface-dim: #E5E3DD;
   --color-surface-container-lowest: #FFFFFF;
   --color-surface-container-low: #EDF1EE;
   --color-surface-container: #E4EAE6;
@@ -485,7 +526,7 @@
   --color-inverse-on-surface: #F4F6F4;
 
   /* Background + outline */
-  --color-background: #F4F6F4;
+  --color-background: #FAFAF7;
   --color-outline: #72796E;
   --color-outline-variant: #C2C9BB;
   /* LEGACY (Heritage-verdier som var her) */

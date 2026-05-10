@@ -75,7 +75,9 @@ All detaljert regelinformasjon ligger i `.claude/rules/`:
 | `prisma-auth.md` | Supabase ID vs Prisma ID, enum-verdier, create-regler |
 | `code-style.md` | TypeScript, komponent-organisering, styling, animasjoner |
 | `architecture.md` | Mappestruktur, auth-flyt, API-mønstre, roller, integrasjoner |
-| `design-system.md` | **ENESTE gjeldende design-system** — Heritage M3-tokens, DM Sans, Material Symbols, kildebilder |
+| `design-system.md` | **ENESTE gjeldende design-system** — Sprint 0 Foundation tokens, Inter/Inter Tight/JetBrains Mono, Lucide |
+| `branding.md` | Designretning, lime-bruk, anti-AI-regler |
+| `screen-builder.md` | Oppskrift for bygging/redesign av skjermer |
 | `component-library.md` | Eksisterende komponenter — sjekk før du lager nye |
 
 **Ufravikelig:** Nye feil → legg til i `gotchas.md` umiddelbart.
@@ -121,7 +123,7 @@ Se `docs/status/` for oppdatert status:
 - Prisma singleton: `import { prisma } from "@/lib/portal/prisma"`
 - Prisma-relasjoner: PascalCase (`User`, `CoachingPackage`)
 - E-post: React Email i `lib/portal/email/templates/`
-- Design: Heritage M3 — se `.claude/rules/design-system.md`
+- Design: Sprint 0 Foundation — se `.claude/rules/design-system.md` + `branding.md`
 - Aldri emojier, aldri sertifiseringer, aldri MVA på kundesider
 
 ## Commit-konvensjoner

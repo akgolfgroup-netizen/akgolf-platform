@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * CoachHQ Nav — Sprint 0 HQ Foundation.
+ * Rail: beholder mork (#061210).
+ * Navnliste: lys (#FAFAF7), lime-pill active.
+ */
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -59,18 +65,10 @@ const NAV: NavSection[] = [
   {
     label: "Operasjon",
     items: [
-      {
-        href: "/admin/coaching-board",
-        label: "Coaching Board",
-        icon: Kanban,
-      },
+      { href: "/admin/coaching-board", label: "Coaching Board", icon: Kanban },
       { href: "/admin/mission-board", label: "Mission Board", icon: Flag },
       { href: "/admin/focus", label: "Focus", icon: Zap },
-      {
-        href: "/admin/godkjenninger",
-        label: "Godkjenninger",
-        icon: CheckSquare,
-      },
+      { href: "/admin/godkjenninger", label: "Godkjenninger", icon: CheckSquare },
     ],
   },
   {
@@ -86,7 +84,7 @@ const NAV: NavSection[] = [
     items: [
       { href: "/admin/kalender", label: "Kalender", icon: Calendar },
       { href: "/admin/bookinger", label: "Bookinger", icon: ClipboardList },
-      { href: "/admin/okter", label: "Økter", icon: Dumbbell },
+      { href: "/admin/okter", label: "Okter", icon: Dumbbell },
       { href: "/admin/treningsplan", label: "Treningsplan", icon: ClipboardList },
       { href: "/admin/tilgjengelighet", label: "Tilgjengelighet", icon: Clock },
     ],
@@ -102,13 +100,13 @@ const NAV: NavSection[] = [
   {
     label: "Innsikt",
     items: [
-      { href: "/admin/okonomi", label: "Økonomi", icon: Wallet },
+      { href: "/admin/okonomi", label: "Okonomi", icon: Wallet },
       { href: "/admin/rapporter", label: "Rapporter", icon: BarChart3 },
       { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     ],
   },
   {
-    label: "Verktøy",
+    label: "Verktoy",
     items: [
       { href: "/admin/meldinger", label: "Meldinger", icon: MessageCircle },
       { href: "/admin/library", label: "Library", icon: BookOpen },
@@ -129,14 +127,14 @@ export function CoachHQDarkNav({ user }: { user?: NavUser }) {
     <nav
       className="h-full flex flex-col py-3.5 px-3 overflow-y-auto border-r"
       style={{
-        background: "#0A1F18",
-        borderColor: "rgba(255,255,255,0.04)",
+        background: "#FAFAF7",
+        borderColor: "#F0EDE5",
       }}
     >
       <Link href="/admin" className="px-2 mb-4 flex items-center gap-2.5">
         <span
           className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-[12px] tracking-tight shrink-0"
-          style={{ background: "#D1F843", color: "#0A1F18" }}
+          style={{ background: "#005840", color: "#FFFFFF" }}
         >
           AK
         </span>
@@ -148,14 +146,14 @@ export function CoachHQDarkNav({ user }: { user?: NavUser }) {
               fontSize: "10px",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.55)",
+              color: "#9C9990",
             }}
           >
             AK Golf
           </span>
           <span
             className="block text-[13px] font-semibold leading-tight"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "#0A1F18" }}
           >
             CoachHQ
           </span>
@@ -173,7 +171,7 @@ export function CoachHQDarkNav({ user }: { user?: NavUser }) {
                 fontSize: "9px",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.4)",
+                color: "#9C9990",
               }}
             >
               {section.label}
@@ -188,18 +186,18 @@ export function CoachHQDarkNav({ user }: { user?: NavUser }) {
       {user && (
         <div
           className="px-2 pt-3 mt-2 border-t flex items-center gap-2.5"
-          style={{ borderColor: "rgba(255,255,255,0.06)" }}
+          style={{ borderColor: "#F0EDE5" }}
         >
           <span
             className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0"
-            style={{ background: "#005840", color: "#D1F843" }}
+            style={{ background: "#005840", color: "#FFFFFF" }}
             title={user.name ?? user.email ?? "Profil"}
           >
             {initials}
           </span>
           <span
             className="text-[12px] font-medium truncate"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "#0A1F18" }}
           >
             {user.name ?? "Coach"}
           </span>
@@ -219,17 +217,19 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
   return (
     <Link
       href={item.href}
-      className="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] transition-colors"
+      className="flex items-center gap-2.5 px-2.5 py-2 text-[13px] transition-colors"
       style={{
-        background: isActive ? "rgba(209,248,67,0.14)" : "transparent",
-        color: isActive ? "#D1F843" : "rgba(255,255,255,0.75)",
+        borderRadius: 12,
+        background: isActive ? "rgba(209,248,67,0.30)" : "transparent",
+        color: isActive ? "#0A1F18" : "#5E5C57",
+        fontWeight: isActive ? 600 : 400,
       }}
       aria-current={isActive ? "page" : undefined}
     >
       <Icon
         className="w-[15px] h-[15px] shrink-0"
-        strokeWidth={1.8}
-        style={{ color: isActive ? "#D1F843" : undefined }}
+        strokeWidth={1.75}
+        style={{ color: isActive ? "#005840" : undefined }}
       />
       <span className="flex-1 truncate">{item.label}</span>
       {item.badge && (
@@ -238,10 +238,10 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
           style={{
             background:
               item.badge.tone === "muted"
-                ? "rgba(255,255,255,0.12)"
+                ? "#EFEDE6"
                 : "#D1F843",
             color:
-              item.badge.tone === "muted" ? "rgba(255,255,255,0.75)" : "#0A1F18",
+              item.badge.tone === "muted" ? "#5E5C57" : "#0A1F18",
             fontFamily: "'JetBrains Mono', monospace",
             paddingTop: "1px",
             paddingBottom: "1px",

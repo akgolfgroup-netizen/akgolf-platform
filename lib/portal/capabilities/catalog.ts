@@ -336,6 +336,53 @@ export const CAPABILITY_CATALOG: CapabilityDefinition[] = [
     description: "Trigge periodiske jobber utenom normal tidsplan.",
     requiresMfa: true,
   },
+
+  // Sprint 0 — AI-agenter
+  {
+    capability: Capability.AGENT_APPROVE,
+    group: "system",
+    label: "Godkjenne AI-handlinger",
+    description: "Godkjenne eller avvise forslag fra AI-agenter (plan-generator, drill-recommender, etc.).",
+  },
+  {
+    capability: Capability.AGENT_CONFIG,
+    group: "system",
+    label: "Konfigurere AI-agenter",
+    description: "Endre innstillinger for AI-agenter (aktivering, konfidensterskel, maks handlinger).",
+    requiresMfa: true,
+  },
+
+  // Sprint 0 — Fasiliteter
+  {
+    capability: Capability.FACILITY_VIEW_PUBLIC,
+    group: "booking",
+    label: "Se offentlige fasiliteter",
+    description: "Oversikt over tilgjengelige fasiliteter og ledig kapasitet.",
+  },
+
+  // Sprint 0 — Coaching-okter
+  {
+    capability: Capability.SESSION_RECORD,
+    group: "mission-board",
+    label: "Registrere live-okter",
+    description: "Starte, pausere og avslutte live coaching-okter med logging.",
+  },
+  {
+    capability: Capability.SESSION_VIEW_ANY,
+    group: "mission-board",
+    label: "Se alle coaching-okter",
+    description: "Lesetilgang til alle coaching-okter, ikke bare egne.",
+    requires: [Capability.MB_VIEW_ALL_PLAYERS],
+  },
+
+  // Sprint 0 — Rapporter
+  {
+    capability: Capability.REPORTS_EXPORT,
+    group: "finance",
+    label: "Eksportere rapporter",
+    description: "Generere og laste ned rapporter i CSV/PDF-format.",
+    requires: [Capability.FINANCE_VIEW],
+  },
 ];
 
 export function getCapabilityDefinition(
