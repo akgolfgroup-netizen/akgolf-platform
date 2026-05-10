@@ -1,4 +1,4 @@
-# WORKLOG — AK Golf Platform
+# WORKLOG — AK Golf HQ
 
 > **Hvordan bruke denne filen:**
 > 1. Når du avslutter en økt, skriv 3–5 kulepunkter om hva du jobbet med.

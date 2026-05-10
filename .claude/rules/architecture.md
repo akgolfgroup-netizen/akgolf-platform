@@ -1,4 +1,4 @@
-# Arkitektur — AK Golf Platform
+# Arkitektur — AK Golf HQ
 
 ## Tre flater i samme app
 

@@ -1,4 +1,4 @@
-# AK Golf Platform
+# AK Golf HQ
 
 Premium golfcoaching-plattform for AK Golf Group. Norskspråklig markedsside med komplett portal/dashboard-system for elever og instruktører.
 

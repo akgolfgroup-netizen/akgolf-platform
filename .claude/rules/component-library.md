@@ -1,4 +1,4 @@
-# Komponentbibliotek — AK Golf Platform
+# Komponentbibliotek — AK Golf HQ
 
 Sjekk ALLTID denne filen FØR du bygger en ny komponent.
 Gjenbruk eksisterende — aldri bygg duplikater.

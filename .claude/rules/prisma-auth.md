@@ -1,4 +1,4 @@
-# Prisma og Auth-regler — AK Golf Website/Portal
+# Prisma og Auth-regler — AK Golf HQ
 
 ## KRITISK: Supabase ID vs Prisma ID
 

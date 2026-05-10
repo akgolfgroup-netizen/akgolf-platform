@@ -1,4 +1,4 @@
-# AK Golf Platform
+# AK Golf HQ
 
 ## Prosjektmål
 

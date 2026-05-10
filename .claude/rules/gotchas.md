@@ -1,4 +1,4 @@
-# Gotchas — AK Golf Platform
+# Gotchas — AK Golf HQ
 
 **Les denne før du skriver kode.** Se `prisma-auth.md` for Prisma/auth-regler.
 

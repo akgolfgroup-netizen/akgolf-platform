@@ -1,4 +1,4 @@
-# Kodestil — AK Golf Website/Portal
+# Kodestil — AK Golf HQ
 
 ## TypeScript
 
